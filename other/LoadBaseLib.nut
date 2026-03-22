@@ -1,0 +1,7 @@
+IncludeScript("chaosmvm/gameplay-applications")
+IncludeScript("chaosmvm/weapons-abilities")
+IncludeScript("chaosmvm/flame_sentry")
+IncludeScript("chaosmvm/longbow-sentry")
+IncludeScript("chaosmvm/join-message")
+IncludeScript("chaosmvm/item-helper")
+IncludeScript("translations")

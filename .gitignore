@@ -1,0 +1,13 @@
+Titan/
+SDK/
+give_tf_weapon/
+vssaxtonhale/
+Testing/
+infection/
+
+*.cache
+
+ROR2.nut
+showevents.nut
+weapons-abilities-test.nut
+trace_filter.nut
