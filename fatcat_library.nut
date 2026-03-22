@@ -3136,22 +3136,20 @@ function ROOT::SetPopfileName(name)
 // TODO: Add to Snippets
 function ROOT::RunWithDelay(func, delay = 0.0)
 {
-	local func_name = UniqueString()
-		GetScope(Worldspawn)[func_name] <- function()
-		{
-			delete GetScope(Worldspawn)[func_name]
-			func()
-		}
-	EntFireByHandle(Worldspawn, "CallScriptFunction", func_name, delay, null, null)
-	// printf("Running %s with a %f delay\n", func.tostring(), delay)
-	return func_name
+	local dummy = dummy_ent()
+	dummy.GetScriptScope()["Run"] <- function()
+	{
+		dummy.Kill()
+		func()
+	}.bindenv(this)
 
 }
 // TODO: Add to Snippets
 function ROOT::CreateTimer(on_timer_func, first_delay = 0.0)
 {
-	local func_name = UniqueString()
-	GetScope(Worldspawn)[func_name] <- function() {	
+	local dummy = dummy_ent()
+	dummy.GetScriptScope()["Run"] <- function()
+	{
 		try
 		{
 			local delay = on_timer_func()
@@ -3170,7 +3168,7 @@ function ROOT::CreateTimer(on_timer_func, first_delay = 0.0)
 			delete GetScope(Worldspawn)[func_name]
 			throw err
 		}
-	}
+	}.bindenv(this)
 
 	EntFireByHandle(Worldspawn, "CallScriptFunction", func_name, first_delay, null, null)
 	return func_name
