@@ -3133,7 +3133,14 @@ function ROOT::GetPopfileName()
 
 function ROOT::SetPopfileName(name)
 	SetPropString(ObjResource, "m_iszMvMPopfileName", name)
-// TODO: Add to Snippets
+
+function ROOT::dummy_ent() {
+	// logic_relay does not take up an edict
+	local relay = CreateByClassname("logic_relay")
+	relay.ValidateScriptScope()
+	return relay
+}
+
 function ROOT::RunWithDelay(func, delay = 0.0)
 {
 	local dummy = dummy_ent()
@@ -3143,8 +3150,10 @@ function ROOT::RunWithDelay(func, delay = 0.0)
 		func()
 	}.bindenv(this)
 
+	EntFireByHandle(dummy, "CallScriptFunction", "Run", delay, null, null)
+	return dummy
 }
-// TODO: Add to Snippets
+
 function ROOT::CreateTimer(on_timer_func, first_delay = 0.0)
 {
 	local dummy = dummy_ent()
@@ -3153,40 +3162,43 @@ function ROOT::CreateTimer(on_timer_func, first_delay = 0.0)
 		try
 		{
 			local delay = on_timer_func()
+
 			if (delay == null)
 			{
-				delete GetScope(Worldspawn)[func_name]
+				dummy.Kill()
 				return
 			}
-				// Delays which are less or equal to 0 will be executed in the current tick which leads to an infinite loop
+
+			// Delays which are less or equal to 0 will be executed in the current tick which leads to an infinite loop
 			if (delay <= 0.0)
 				delay = 0.01
-			EntFireByHandle(Worldspawn, "CallScriptFunction", func_name, delay, null, null)
+
+			EntFireByHandle(dummy, "CallScriptFunction", "Run", delay, null, null)
 		}
 		catch (err)
 		{
-			delete GetScope(Worldspawn)[func_name]
+			dummy.Kill()
 			throw err
 		}
 	}.bindenv(this)
 
-	EntFireByHandle(Worldspawn, "CallScriptFunction", func_name, first_delay, null, null)
-	return func_name
+	EntFireByHandle(dummy, "CallScriptFunction", "Run", first_delay, null, null)
+	return dummy
 }
 
-// TODO: Add to Snippets
-function ROOT::KillTimer(func_name)
+
+function ROOT::KillTimer(timer)
 {
-	if (func_name in GetScope(Worldspawn))
-		delete GetScope(Worldspawn)[func_name]
+	if (timer.IsValid())
+		timer.Kill()
 }
-// TODO: Add to Snippets
-function ROOT::FireTimer(func_name)
+
+function ROOT::FireTimer(timer)
 {
-	if (func_name in GetScope(Worldspawn))
+	if (timer.IsValid())
 	{
-		GetScope(Worldspawn)[func_name]()
-		KillTimer(func_name)
+		timer.GetScriptScope()["Run"]()
+		KillTimer(timer)
 	}
 }
 
