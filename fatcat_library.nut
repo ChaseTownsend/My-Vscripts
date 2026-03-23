@@ -93,57 +93,56 @@ if(!("FatCatLibTimeStamp" in ROOT))
 function SetLibraryTimeStamp(timestamp)
 	FatCatLibTimeStamp <- timestamp
 
-::ValidLibrarySettings <- [
+::ValidLibrarySettings <- {
 	// If True removes the unused spy watch viewmodel from every bot on spawn
 	// -1 Edict per bot
-	"KillWatchViewmodels"
+	"KillWatchViewmodels" : false
 	// Only Print Errors to Console
-	"ConsoleErrors"
+	"ConsoleErrors" : false
 	// Print a different Error Message to All Clients
-	"PublicErrors"
-]
+	"PublicErrors" : true
+}
 
 function IsValidSetting(setting)
-	return ValidSettings.find(setting) != null
+	return setting in ValidLibrarySettings
 
-function ReloadLibrary()
+function ROOT::ReloadLibrary()
 {
 	local flag = "FatCatLibForce" in ROOT ? FatCatLibForce : false
 
 	if(flag == false)
 		ToggleForceFlag(true)
-	// IncludeScript("fatcat_library")
+	IncludeScript("fatcat_library")
 	if(flag == false)
 		ToggleForceFlag(false)
-
-	throw "I need to test this, so DONT use this"
 }
 
-function SetLibrarySettings(settings_table = {})
+function ROOT::SetLibrarySettings(settings_table = {})
 {
 	if(!("FatCatLibSettings" in ROOT))
 	{
 		::FatCatLibSettings <-{}
-		foreach (setting in ValidLibrarySettings)
+		foreach (setting, def in ValidLibrarySettings)
 		{
-			FatCatLibSettings[setting] <- setting == "PublicErrors" ? true : false
+			FatCatLibSettings[setting] <- def
 		}
 	}
 
-	foreach (setting in ValidLibrarySettings)
+	foreach (setting, def in ValidLibrarySettings)
 	{
 		if(!(setting in FatCatLibSettings))
-			FatCatLibSettings[setting] <- setting == "PublicErrors" ? true : false
+			FatCatLibSettings[setting] <- def
 	}
 
 	foreach (setting, value in settings_table)
 	{
 		if(!IsValidSetting(setting))
 			continue
-		if(FatCatLibSettings[setting] == settings_table.setting)
+
+		if(FatCatLibSettings[setting] == settings_table[setting])
 			continue
 
-		FatCatLibSettings[setting] <- settings_table.setting
+		FatCatLibSettings[setting] <- settings_table[setting]
 
 		local ChatPrint = @(message) ("PrintToChatAll" in ROOT ? PrintToChatAll(message) : ClientPrint(null, 3, message))
 		ChatPrint(format(FATCATLIB_PREFIX+"Set \x03%s\x01 to \"\x05%s\x01\"\n", setting.tostring(), value.tostring()))
@@ -154,10 +153,10 @@ function SetLibrarySettings(settings_table = {})
 function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
-if (!SetLibraryVersion("1.15.9", 0))
+if (!SetLibraryVersion("1.15.10", 0))
 	return
 
-SetLibraryTimeStamp("3-19-2026_14:26")
+SetLibraryTimeStamp("3-22-2026_23:25")
 
 SetLibrarySettings({
 	// KillWatchViewmodels = false
@@ -5049,17 +5048,32 @@ seterrorhandler(function(e)
 		STACK.append(format("%s line [%d]\n", s.src, s.line))
 	}
 	local Chat = @(m) (printl(m))
-	if(("PublicErrors" in FatCatLibSettings && FatCatLibSettings.PublicErrors != true) && "ConsoleErrors" in FatCatLibSettings && FatCatLibSettings.ConsoleErrors == false)
-		PrintToAdmins(3, format("\x07FF0000AN ERROR HAS OCCURRED [%s].\nCheck console for details", e))
-	if("PublicErrors" in FatCatLibSettings && FatCatLibSettings.PublicErrors == true)
+	if(!("ConsoleErrors" in FatCatLibSettings) || !("PublicErrors" in FatCatLibSettings))
+		SetLibrarySettings({}) // Init settings to default
+	
+	local console = FatCatLibSettings.ConsoleErrors
+	local public = FatCatLibSettings.PublicErrors
+
+	if(public == true)
 	{
 		PrintToChatAll(format("\x07FF0000A VSCRIPT ERROR HAS OCCURRED [%s].", e)+" Please report to @The Fatcat in #"+(IsPotato() ? "scripting" : "bug-reports") + " with a screenshot")
 
 		foreach (stackinfo in STACK)
 		{
-			PrintToChatAll(stackinfo.len() < 200 ? stackinfo : stackinfo.slice(0, 200))
+			if(stackinfo.len() > 200)
+			{
+				PrintToChatAll(stackinfo.slice(0, 200))
+				PrintToChatAll(stackinfo.slice(200))
+			}
+			else 
+				PrintToChatAll(stackinfo)
 		}
 	}
+	if(console == true)
+	{
+		PrintToAdmins(3, format("\x07FF0000AN ERROR HAS OCCURRED [%s].\nCheck console for details", e))
+	}
+		
 
 	Chat(format("\n====== TIMESTAMP: %g ======\nAN ERROR HAS OCCURRED [%s]", Time(), e))
 	Chat("CALLSTACK")
