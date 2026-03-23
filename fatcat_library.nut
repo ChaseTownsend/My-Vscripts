@@ -3152,7 +3152,7 @@ function ROOT::RunWithDelay(func, delay = 0.0)
 	EntFireByHandle(dummy, "CallScriptFunction", "Run", delay, null, null)
 	return dummy
 }
-// TODO: Add to Snippets
+
 function ROOT::CreateTimer(on_timer_func, first_delay = 0.0)
 {
 	local dummy = dummy_ent()
