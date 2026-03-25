@@ -2743,9 +2743,9 @@ function CNavMesh::GetNav()
 	return t
 }
 
-function CNavMesh::GetLargestArea( NoSpawns = false )
+function CNavMesh::GetLargestArea( NoSpawns = false, SavedNav = false )
 {
-	local areas = GetNav()
+	local areas = SavedNav ? SavedNav : GetNav()
 	local lArea = 0.0
 	local lMesh = null
 	foreach (_, mesh in areas)
