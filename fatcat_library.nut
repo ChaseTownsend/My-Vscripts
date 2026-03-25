@@ -2736,6 +2736,13 @@ function CTFBaseBoss::RegisterHurtPercentCallback(perc, callback)
 	ConnectOutput(OutputName, OutputName)
 }
 
+function CNavMesh::GetNav() 
+{
+	local t = {}
+	GetAllAreas(t)
+	return t
+}
+
 function CTFNavArea::GetArea()
 	return sqrt(GetSizeX()*GetSizeY())
 
