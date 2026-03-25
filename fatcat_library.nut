@@ -2743,6 +2743,25 @@ function CNavMesh::GetNav()
 	return t
 }
 
+function CNavMesh::GetLargestArea( NoSpawns = false )
+{
+	local areas = GetNav()
+	local lArea = 0.0
+	local lMesh = null
+	foreach (_, mesh in areas)
+	{
+		if(NoSpawns && mesh.IsTFInSpawnroom())
+			continue
+		local a = mesh.GetArea()
+		if(a > lArea)
+		{
+			lArea = a
+			lMesh = mesh
+		}
+	}
+	return lMesh
+}
+
 function CTFNavArea::GetArea()
 	return sqrt(GetSizeX()*GetSizeY())
 
