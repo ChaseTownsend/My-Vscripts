@@ -508,6 +508,10 @@ function ROOT::GetRuneCondition(rune)
 ::TF_TEAM_COLOR_REPROG_B 	<- "\x0766AAFF"
 ::TF_TEAM_COLOR_SPEC 		<- "\x07CCCCCC"
 
+////////// HealPlayer types
+::T_HEAL_NONE 	<- -1
+::T_HEAL_HEALER <- 0
+::T_HEAL_PACK 	<- 1
 
 ///// MISC
 // Should be 51 for
@@ -2144,6 +2148,101 @@ function CTFPlayer::GetActiveHealers()
 	}
 	return healers
 }
+
+// TODO: Add to Snippets
+function CTFPlayer::AddHealth(amount)
+	SetHealth(GetHealth()+amount)
+// TODO: Add to Snippets
+function CTFPlayer::RemoveHealth(amount)
+	SetHealth(GetHealth()-amount)
+// TODO: Add to Snippets
+function CTFPlayer::GetOverHealCapMult(start)
+{
+	local cap_mult = start
+	cap_mult *= HookMultAttributes("patient overheal penalty")
+	cap_mult *= GetActiveWeapon().GetAttribute("mult_patient_overheal_penalty_active", 1.0)
+	return cap_mult
+}
+// TODO: Add to Snippets
+function CTFPlayer::HealPlayer(amount, overheal = false, overheal_cap = false, display = true, type = T_HEAL_NONE)
+{
+	local mult = 1.0
+	mult *= HookMultAttributes("healing received penalty")
+	mult *= HookMultAttributes("healing received bonus")
+
+	if(type == T_HEAL_HEALER)
+	{
+		mult *= HookMultAttributes("health from healers reduced")
+		mult *= HookMultAttributes("health from healers increased")
+		mult *= HookMultAttributes("reduced_healing_from_medics")
+		mult *= GetActiveWeapon().GetAttribute("mult_health_fromhealers_penalty_active", 1.0)
+		if(HookAdditiveAttributes("mod weapon blocks healing"))
+			return // Cannot be healed
+	}
+	else if(type == T_HEAL_PACK) 
+	{
+		mult *= HookMultAttributes("health from packs increased")
+		mult *= HookMultAttributes("health from packs decreased")
+	}
+
+	amount *= mult
+
+	if(overheal && !overheal_cap)
+		AddHealth(amount)
+	else if(overheal && overheal_cap)
+	{
+		local max = GetMaxHealth() + (GetMaxHealth() * GetOverHealCapMult(overheal_cap))
+		AddHealth(amount)
+		if(GetHealth() > max)
+			SetHealth(max)
+	}
+	else if(GetHealth() >= GetMaxHealth())
+		{}
+	else if(GetHealth()+amount >= GetMaxHealth())
+		SetHealth(GetMaxHealth())
+	else AddHealth(amount)
+
+
+	if(display)
+		SendGlobalGameEvent("player_healonhit", {
+			entindex = entindex()
+			amount = amount
+			manual = true
+		})
+}
+// TODO: Add to Snippets
+function CTFPlayer::HookMultAttributes(attribute, weapons = true)
+{
+	local mult = 1.0
+	mult *= GetCustomAttribute(attribute, 1.0)
+	if(!weapons)
+		return mult
+	local weps = GetAllWeapons()
+	foreach (weapon in weps)
+	{
+		if(weapon.GetAttribute("provide on active", 0) && weapon != GetActiveWeapon())
+			continue
+		mult *= weapon.GetAttribute(attribute, 1.0)
+	}
+	return mult
+}
+// TODO: Add to Snippets
+function CTFPlayer::HookAdditiveAttributes(attribute, weapons = true)
+{
+	local amount = 0.0
+	amount += GetCustomAttribute(attribute, 0.0)
+	if(!weapons)
+		return amount
+	local weps = GetAllWeapons()
+	foreach (weapon in weps)
+	{
+		if(weapon.GetAttribute("provide on active", 0) && weapon != GetActiveWeapon())
+			continue
+		amount += weapon.GetAttribute(attribute, 0)
+	}
+	return amount
+}
+
 /* 
 function CTFPlayer::CreateParticle(particle, duration = -1)
 {
@@ -3150,6 +3249,7 @@ function ROOT::GetEveryTankWithin(center, radius)
 }
 
 ::Gamerules 		<- FindByClassname(null, "tf_gamerules")
+::MvMStats 			<- FindByClassname(null, "tf_mann_vs_machine_stats")
 ::PlayerManager 	<- FindByClassname(null, "tf_player_manager")
 ::ObjResource 		<- FindByClassname(null, "tf_objective_resource")
 ::Worldspawn 		<- Entities.First()
@@ -3658,12 +3758,18 @@ function ROOT::PrecacheObject(thing)
 	{
 		return (40 + (20 * log10(radius / 36.0))).tointeger()
 	}
-	function RandomVec3(min, max, type = "int")
+	/* function RandomVec3(min, max, type = "int")
 	{
 		if(type == "int")
 			return Vector(RandomInt(min, max), RandomInt(min, max), RandomInt(min, max))
 		if(type == "float")
 			return Vector(RandomFloat(min, max), RandomFloat(min, max), RandomFloat(min, max))
+	} */
+	function RandomVec(min, max)
+	{
+		local v = Vector()
+		v.Random(min, max)
+		return v
 	}
 	function Distance(point1, point2)
 	{
@@ -3685,6 +3791,13 @@ function Vector::Normalize()
 	local new = this
 	new.Norm()
 	return new
+}
+
+function Vector::Random(min, max)
+{	//VALVE_RAND_MAX == 0x7FFF
+	this.x = min + (::RandomInt(0, 0x7FFF).tofloat() / 0x7FFF) * (max - min);
+	this.y = min + (::RandomInt(0, 0x7FFF).tofloat() / 0x7FFF) * (max - min);
+	this.z = min + (::RandomInt(0, 0x7FFF).tofloat() / 0x7FFF) * (max - min);
 }
 
 function ROOT::DummyB( ... )
