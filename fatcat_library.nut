@@ -2864,6 +2864,9 @@ function CNavMesh::GetLargestArea( NoSpawns = false, SavedNav = false )
 function CTFNavArea::GetArea()
 	return sqrt(GetSizeX()*GetSizeY())
 
+function CTFNavArea::GetLargestSide()
+	return GetSizeX() > GetSizeY() ? GetSizeX() : GetSizeY()
+
 function CTFNavArea::IsTFInSpawnroom()
 	return HasAttributeTF(TF_NAV_SPAWN_ROOM_BLUE) || HasAttributeTF(TF_NAV_SPAWN_ROOM_RED)
 
