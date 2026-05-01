@@ -161,7 +161,6 @@ function ROOT::ReloadLibrary()
 		ToggleForceFlag(false)
 }
 
-
 function ROOT::SetLibrarySettings(settings_table = {})
 {
 	if(!("FatCatLibSettings" in ROOT))
@@ -4355,7 +4354,7 @@ function ROOT::OnRemoveCondListener(cond, name, func)
 	scope.OnRemoveCond[cond][name] <- func
 }
 // Cool thing i can do, "this" is actually the player >:), ROOT could also work, but this makes sense
-/* Host.OnAddCondListener(TF_COND_TAUNTING, "Test" function() {
+/* OnAddCondListener(TF_COND_TAUNTING, "Test" function() {
 	StopTaunt(true)
 	RemoveCondEx(TF_COND_TAUNTING, true)
 	// ApplyAbsVelocityImpulse(Vector(0, 0, 300))
