@@ -15,7 +15,4 @@ It contains a bunch of helper functions and new functions that Make vscript just
 - Decimate  :  Swedish <br>
 - Kimmy  :  Polish <br>
 - Calamari : Japanese <br>
-- Hanon  :  Danish <br>
-[PR #9](https://github.com/ChaseTownsend/My-Vscripts/pull/9)
-<br>
-[PR #9](https://github.com/ChaseTownsend/My-Vscripts/pull/9)
+- Hanon  :  Danish ( WIP ) <a href="https://github.com/ChaseTownsend/My-Vscripts/pull/9">Pull Request 9</a> <br>
