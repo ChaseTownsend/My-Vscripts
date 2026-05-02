@@ -51,14 +51,16 @@ function ReadCheckpoint(player)
 		file[file.find(string)] = temp
 	}
 
-	// printl(file.len())
-	Assert(file.len() == 7, "Checkpoint File is BAD!")
-
+	if(file.len() != 4)
+	{
+		player.PrintToChat("Broken Checkpoint File! Resetting file.")
+		SaveWaveData(true)
+		return
+	}
 
 	local map = "FUCK"
 	local mission = "FUCK the second"
 	local waves = "1/1"
-	local endTime = 1
 	local command = "0000"
 	local valid = false
 
@@ -66,9 +68,7 @@ function ReadCheckpoint(player)
 	map = ArrayToString(file[0])
 	mission = ArrayToString(file[1])
 	waves = ArrayToString(file[2])
-	endTime = ArrayToString(file[3]).tointeger()
-	command = ArrayToString(file[4])
-	valid = file[5][2].tointeger() == 1
+	command = ArrayToString(file[3])
 	}
 	catch (e)
 	{
@@ -79,11 +79,7 @@ function ReadCheckpoint(player)
 	// printl(map)
 	// printl(mission)
 	// printl(waves)
-	// printl(endTime)
 	// printl(command)
-	// printl(valid)
-
-	// printl(endTime - GetTimeOfDay())
 
 	if(GetMapName() != map)
 		return player.GetTranslatedAndFormattedString("CHECKPOINT_WRONG_MAP")
@@ -91,57 +87,19 @@ function ReadCheckpoint(player)
 	if(GetPopfileName() != mission)
 		return player.GetTranslatedAndFormattedString("CHECKPOINT_WRONG_MISS")
 
-	waves = split(waves, "/")
-
 	local starting_wave = waves[0].tointeger()
 	local max_wave = waves[1].tointeger()
 
-	// if(starting_wave == 1)
-		// return "The Checkpoint Saved on wave 1?"
+	if(GetCurrentWaveNumber() == starting_wave)
+		return 
 
 	if(max_wave != GetMaximumWaveNumber())
 		return "Checkpoints Maximum waves is different from current Maximum!"
 
-	if(endTime < GetTimeOfDay())
-		return player.GetTranslatedAndFormattedString("CHECKPOINT_EXPIRE")
-
 	if(!valid)
 		return "That Checkpoint is not Valid!"
 
-	InvalidateCheckpoint()
-
 	return starting_wave
-}
-
-function InvalidateCheckpoint()
-{
-	local file = StringToArray(FileToString(WAVE_SAVE_FILE))
-	local index = null
-	local last_2s = []
-	local letter_idx = 0
-	foreach (string in file)
-	{
-		letter_idx += 1
-		last_2s.append(string)
-		if(last_2s.len() > 2)
-			last_2s.remove(0)
-		if(last_2s[0] == "_" && last_2s[1] == "_")
-		{
-			index = letter_idx
-			break
-		}
-	}
-
-	if(index == null)
-		return //printl("GUG")
-
-	// printl(file[index])
-
-	file[index] = 0
-
-	// printl(file[index])
-
-	StringToFile(WAVE_SAVE_FILE, ArrayToString(file))
 }
 
 function GetTimeOfDay()
@@ -157,23 +115,28 @@ function GetTimeOfDay()
 	return ActualTime
 }
 
-function SaveWaveData()
+function SaveWaveData(Reset = false)
 {
 	local save 		= ""
 	local wave 		= GetCurrentWaveNumber()
 	local max_wave 	= GetMaximumWaveNumber()
 	local map_name 	= GetMapName()
 
-	local ActualTime = GetTimeOfDay()
-
 	local Command = format("%04d", RandomInt(0, 9999))
 
 	save += map_name + ":\n"
 	save += GetPopfileName() + ":\n"
-	save += (wave + "/" + max_wave) + ":\n"
-	save += (ActualTime + SAVE_LIFETIME) + ":\n"
-	save += Command + ":\n"
-	save += "__" + 1 + ":\n"
+
+	if(Reset)
+	{
+		save += (wave + "/" + max_wave) + ":\n"
+		save += Command + ":\n"
+	}
+	else
+	{
+		save += "1/" + max_wave + ":\n"
+		save += "0000:\n"
+	}
 	StringToFile(WAVE_SAVE_FILE, save)
 
 	return Command
