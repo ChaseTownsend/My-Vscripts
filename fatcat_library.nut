@@ -748,16 +748,20 @@ catch (e)
 	}
 }
 
+::FUNNI <- "I ever tell you about the time Keith and I made fireworks? Now, I didn't know shit about chemistry, but Keith figured \"Gasoline burns, doesn't it?\" Heh, third-degree burns on 95 percent of his body. Man, people in the next city over were calling to complain about the smell of burning skin."
+
+
+
 
 ///////////////////////////////////////
-function CTFPlayer::PrintToHud(message)
-	ClientPrint(this, HUD_PRINTCENTER, message != null ? message.tostring() : NULL_S)
+function CTFPlayer::PrintToHud(message = "")
+	PrintBetter(this, message, HUD_PRINTCENTER)
 
-function CTFPlayer::PrintToChat(message)
-	ClientPrint(this, HUD_PRINTTALK, message != null ? message.tostring() : NULL_S)
+function CTFPlayer::PrintToChat(message = "") // add default so it wont print "NULL" if left blank
+	PrintBetter(this, message, HUD_PRINTTALK)
 
-function CTFPlayer::PrintToConsole(message)
-	ClientPrint(this, HUD_PRINTCONSOLE, message != null ? message.tostring() : NULL_S)
+function CTFPlayer::PrintToConsole(message = "")
+	PrintBetter(this, message, HUD_PRINTCONSOLE)
 
 function CTFPlayer::IsOnGround()
 	return GetPropEntity(this, "m_hGroundEntity") != null
@@ -3442,15 +3446,70 @@ function ROOT::CleanUpAndFormatString(msg, ...)
 	return msg
 }
 
+function ROOT::PrintBetter(player, message, level = HUD_PRINTTALK)
+{
+	local PRINT = @(m) ClientPrint(player, level, m)
+	if(message == null)
+	{
+		PRINT(NULL_S)
+		return
+	}
+	if(message.len() <= MAX_CLIENT_PRINT_DATA)
+	{
+		PRINT(message)
+		return
+	}
+
+	local buffer = [{chars = 0, strings = []}]
+
+	local string_buff = split(message, " ")
+
+	local stringidx = 0
+	foreach ( string in string_buff )
+	{
+		local idx = buffer.len() - 1
+
+		if(!("chars" in buffer[idx]))
+			buffer[idx].chars <- 0
+		if(!("strings" in buffer[idx]))
+			buffer[idx].strings <- []
+
+		local chars = buffer[idx].chars
+		local strings = buffer[idx].strings
+
+		if(chars + (string.len()+1) > MAX_CLIENT_PRINT_DATA)
+		{
+			foreach (str in strings)
+				buffer[idx].strings[strings.find(str)] = str + " "
+
+			buffer.append({chars = 0, strings = []})
+
+			PRINT(ArrayToString(buffer[idx].strings))
+		}
+
+		buffer[idx].chars += (string.len()+1)
+		buffer[idx].strings.append(string)
+
+		if(stringidx+1 == string_buff.len())
+		{
+			foreach (str in strings)
+				buffer[idx].strings[strings.find(str)] = str + " "
+			PRINT(ArrayToString(buffer[idx].strings))
+		}
+
+		stringidx++
+	}
+}
+
 ///////// Printing functions
 ////// HUD PRINTS //////
 function ROOT::PrintToHudAll(msg)
-	ClientPrint(null, HUD_PRINTCENTER, msg == null ? NULL_S : msg.tostring())
+	PrintBetter(null, msg, HUD_PRINTCENTER)
 /**
  * @param {string} msg
  */
 function ROOT::PrintToHudAllF(msg, ...)
-	ClientPrint(null, HUD_PRINTCENTER, CleanUpAndFormatString.acall([this, msg].extend(vargv)))
+	PrintBetter(null, CleanUpAndFormatString.acall([this, msg].extend(vargv)), HUD_PRINTCENTER)
 function ROOT::TranslateToHudAll( ... )
 {
 	foreach (player in m_aHumans)
@@ -3468,10 +3527,10 @@ function ROOT::PrintToHudAllFilter(msg, filter = [])
 }
 ///// CHAT PRINTS /////
 function ROOT::PrintToChatAll(msg)
-	ClientPrint(null, HUD_PRINTTALK, msg == null ? NULL_S : msg.tostring())
+	PrintBetter(null, msg, HUD_PRINTTALK)
 
 function ROOT::PrintToChatAllF(msg, ...)
-	ClientPrint(null, HUD_PRINTTALK, CleanUpAndFormatString.acall([this, msg].extend(vargv)))
+	PrintBetter(null, CleanUpAndFormatString.acall([this, msg].extend(vargv)), HUD_PRINTTALK)
 
 function ROOT::TranslateToChatAll( ... )
 {
@@ -3491,22 +3550,21 @@ function ROOT::PrintToChatAllFilter(msg, filter = [])
 
 ///// CONSOLE PRINTS /////
 function ROOT::PrintToConsoleAll(msg)
-	ClientPrint(null, HUD_PRINTCONSOLE, msg == null ? NULL_S : msg.tostring())
+	PrintBetter(null, msg, HUD_PRINTCONSOLE)
 /**
  * @param {string} msg
  */
 function ROOT::PrintToConsoleAllF(msg, ...)
-	ClientPrint(null, HUD_PRINTCONSOLE, CleanUpAndFormatString.acall([this, msg].extend(vargv)))
+	PrintBetter(null, CleanUpAndFormatString.acall([this, msg].extend(vargv)), HUD_PRINTCONSOLE)
 
 ///// OTHER PRINTS /////
 function ROOT::PrintToAdmins(level, message)
 {
 	foreach (player in m_aHumans)
 	{
-		if(player.IsAdmin())
-		{
-			ClientPrint(player, level, message)
-		}
+		if(!player.IsAdmin())
+			continue
+		PrintBetter(player, message, level)
 	}
 }
 /**
