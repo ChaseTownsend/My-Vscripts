@@ -5,6 +5,7 @@ vssaxtonhale/
 Testing/
 infection/
 
-.vscode/*.py
+.vscode/analyze_strings.py
+.vscode/Antigravity- ParseTranslations.py
 .vscode/settings.json
 *.cache
