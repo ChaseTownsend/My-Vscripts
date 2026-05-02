@@ -16,3 +16,4 @@ It contains a bunch of helper functions and new functions that Make vscript just
 - Kimmy  :  Polish <br>
 - Calamari : Japanese <br>
 - Hanon  :  Danish <br>
+- Ryo  :  Spanish <br>

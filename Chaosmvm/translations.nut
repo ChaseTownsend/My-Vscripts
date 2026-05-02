@@ -5,9 +5,10 @@ if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatC
 // Standard Chinese		--		Pepper[^▽^] 	(pepper_1656 on Discord)
 // Swedish				--		Decimate 		(decimatetf on Discord)
 // Russian				--		Liverfull 		(liverfullprod@gmail.com)
-// Polish				--		Kimmy 		 	(steamcommunity.com/id/KimmyPL/)
-// Japanese				--		Calamari         (steamcommunity.com/id/Bipedal_Calamari)
+// Polish				--		Kimmy 		 	(steamcommunity.com/id/KimmyPL)
+// Japanese				--		Calamari        (steamcommunity.com/id/Bipedal_Calamari)
 // Danish  				--		Thyme			(thyme1 on Discord)
+// Spanish  			--		Ryo				(steamcommunity.com/id/ryo567)
 
 ::IH_color <- "\x08FFFF00DD"
 ::IH_text_color <- "\x08FFFFFFBB"
