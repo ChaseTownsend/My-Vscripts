@@ -8,6 +8,24 @@
 ::MOD_TF2C <- "Team Fortress 2 Classified"
 ::MOD_L4D2 <- "Left 4 Dead 2"
 
+/* if(!("__DoIncludeScript" in ROOT))
+{
+	ROOT.__DoIncludeScript <- DoIncludeScript
+
+	function ROOT::DoIncludeScript(file, scope = null)
+	{
+		if(file != "fatcat_library")
+		{
+			if(file == "trace_filter")
+				SetScriptVersion(file, "- DEPENDENCY -")
+			else
+				SetScriptVersion(file, "unknown")
+		}
+		__DoIncludeScript(file, scope)
+	}
+} */
+
+
 if("GetModName" in ROOT)
 {
 	local Mod = GetModName()
@@ -21,17 +39,6 @@ else
 	function ROOT::GetModName()
 		return MOD_TF2
 }
-
-/* if(!("__DoIncludeScript" in ROOT))
-{
-	ROOT.__DoIncludeScript <- DoIncludeScript
-
-	function ROOT::DoIncludeScript(file, scope = null)
-	{
-		SetScriptVersion(file, "__unknown__")
-		__DoIncludeScript(file, scope)
-	}
-} */
 
 /**
  * Sets the library version

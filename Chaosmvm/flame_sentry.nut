@@ -124,7 +124,7 @@ function FlameSentry()
 	if(CanDealDamage)
 	{
 		TraceHullGather(trace)
-		foreach (index, hit in trace.hits)
+		foreach (_, hit in trace.hits)
 		{
 			EntitysHit.append(hit.enthit)
 		}
