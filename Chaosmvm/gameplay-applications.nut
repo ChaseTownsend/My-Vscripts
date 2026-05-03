@@ -1,7 +1,7 @@
 if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
-SetScriptVersion("GameplayApplications", "4.5.1")
+SetScriptVersion("GameplayApplications", "4.6.0")
 
 local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", THINKER_PERSIST)
 
@@ -62,13 +62,23 @@ local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", 
 	additive_range = 50
 	base_damage = 3125
 }
-/*/
 
-SetLibrarySettings({"OnCondPostHooks" : true})
+if(!("OnCondPostHooks" in FatCatLibSettings))
+	SetLibrarySettings()
+
+if(FatCatLibSettings["OnCondPostHooks"] == false)
+{
+	SetLibrarySettings({"OnCondPostHooks" : true})
+	ReloadLibrary()
+}
+
 
 OnAddCondListener(TF_COND_REPROGRAMMED, "BlutsuagerShit", function () {
-	printl(this)
-}) */
+	// printl(this + " : " + this.GetUserName())
+
+	if(!("ReProgrammer" in GetScope(this)) || GetScope(this).ReProgrammer == null || !GetScope(this).ReProgrammer.IsValid())
+		RemoveReprogram()
+})
 
 PrecacheSound(BlutsaugerSettings.sound)
 
@@ -85,10 +95,7 @@ AddChatTrigger(["shape", "class", "change", "changeclass", "switch", "shapeshift
 	if(!player)
 		return
 	if(vargv.len() != 1)
-	{
-		player.PrintToChat("\x07FF0000[►] No class specified. Try again.")
-		return
-	}
+		return player.PrintToChat("\x07FF0000[►] No class specified. Try again.")
 
 	local name = vargv[0].tolower()
 	local class_index = TF_CLASS_UNDEFINED
@@ -111,15 +118,9 @@ AddChatTrigger(["shape", "class", "change", "changeclass", "switch", "shapeshift
 	else if(startswith(name, "sp"))
 		class_index = TF_CLASS_SPY
 	else if(startswith(name, "civ"))
-	{
-		player.PrintToChat("This aint TF2Classified, And it Wont be Supported.")
-		return
-	}
+		return player.PrintToChat("This aint TF2Classified, And it Wont be Supported.")
 	else
-	{
-		player.PrintToChat("\x07FF0000[►] Failed to determine desired class. Try again.")
-		return
-	}
+		return player.PrintToChat("\x07FF0000[►] Failed to determine desired class. Try again.")
 
 	if(player.InRespawnRoom())
 		player.ForceChangeClass(class_index, true)
@@ -244,11 +245,7 @@ function GameplayThink()
 			if(bot.InRespawnRoom(true))
 				bot.UndoReprogram()
 			else if(!bot.IsValidReprogramTarget() || bot.GetPlayerClass() == TF_CLASS_MEDIC)
-			{
-				bot.RemoveCondEx(TF_COND_REPROGRAMMED, true)
-				foreach(attribute in BlutsaugerRemoveAttributes)
-					bot.RemoveCustomAttribute(attribute)
-			}
+				bot.RemoveReprogram()
 			else 
 				ReprogrammedBots.append(bot)
 		}
@@ -847,7 +844,7 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 					if(!self.IsPressingButton(IN_ATTACK2))
 						return -1
 
-					self.PrintToHud("Debug: (KILLING ROBOTS!)")
+					self.PrintToHud("[Activating Kill Switch]")
 
 					foreach (robot in m_aRobots)
 					{

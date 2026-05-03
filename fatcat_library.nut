@@ -148,7 +148,7 @@ function ROOT::SetScriptVersion(item, version)
 
 	// Allows Callbacks for after a cond is applied (maximum delay 1-3 frame)
 	// reload library after setting this
-	"OnCondPostHooks" : false
+	"OnCondPostHooks" : true
 
 	// test
 	"TestPurgeString" : false
@@ -205,7 +205,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format)
-if (!SetLibraryVersion("04.29.2026.20", 0))
+if (!SetLibraryVersion("05.02.2026.20", 0))
 	return
 
 SetLibrarySettings({})
@@ -756,9 +756,6 @@ catch (e)
 }
 
 ::FUNNI <- "I ever tell you about the time Keith and I made fireworks? Now, I didn't know shit about chemistry, but Keith figured \"Gasoline burns, doesn't it?\" Heh, third-degree burns on 95 percent of his body. Man, people in the next city over were calling to complain about the smell of burning skin."
-
-
-
 
 ///////////////////////////////////////
 function CTFPlayer::PrintToHud(message = "")
@@ -2848,6 +2845,21 @@ function CTFBot::UndoReprogram()
 	TakeDamage(GetMaxHealth()*100, DMG_GENERIC, FirstEntity())
 }
 
+//TODO: Add to Snippets
+function CTFBot::RemoveReprogram()
+{
+	if(!this||!IsValid()||IsDead())
+		return
+
+	RemoveCondEx(TF_COND_REPROGRAMMED, true)
+
+	if("BlutsaugerRemoveAttributes" in ROOT)
+	{
+		foreach(attribute in BlutsaugerRemoveAttributes)
+			RemoveCustomAttribute(attribute)
+	}
+}
+
 
 /////////
 /**
@@ -3592,7 +3604,7 @@ function ROOT::PrintClass(clas, filter = [])
 /**
  * @param {table|array|class} collection
  */
-function ROOT::PrintCollection(collection, filter = [], indentation = 0, no_indent_header = false)
+function ROOT::PrintCollection(collection, filter = [], indentation = 0, header_prefix = "")
 {
 	local type = typeof collection
 	if(type != "table" && type != "array" && type != "class")
@@ -3609,7 +3621,15 @@ function ROOT::PrintCollection(collection, filter = [], indentation = 0, no_inde
 		indents += "\t"
 	}
 
-	PrintToConsoleAll((no_indent_header ? "" : indents) + collection.tostring() + " " + ((type == "table" || type == "class") ? "{" : "["))
+	local header_str = ""
+	if (typeof header_prefix == "bool")
+		header_str = header_prefix ? "" : indents
+	else if (typeof header_prefix == "string" && header_prefix != "")
+		header_str = header_prefix
+	else
+		header_str = indents
+
+	PrintToConsoleAll(header_str + collection.tostring() + " " + ((type == "table" || type == "class") ? "{" : "["))
 	foreach (key, value in collection)
 	{
 		// Skip internal Squirrel variables and filtered keys
@@ -3626,8 +3646,8 @@ function ROOT::PrintCollection(collection, filter = [], indentation = 0, no_inde
 		
 		if(valType == "table" || valType == "array" || valType == "class")
 		{
-			print(itemIndents + keyDisplay + " : ")
-			PrintCollection(value, filter, indentation + 1, true)
+			local prefix = itemIndents + keyDisplay + " : "
+			PrintCollection(value, filter, indentation + 1, prefix)
 		}
 		else if(valType == "function" || valType == "native function")
 			PrintToConsoleAll(itemIndents + "function (" + keyDisplay + "): " + value)
@@ -4388,13 +4408,20 @@ function ROOT::OnAddCondListener(cond, name, func)
 
 	local scope = GetScope(FindByName(null, "OnCondition"))
 	if(!("OnAddCond" in scope))
-		scope.OnAddCond <- array(TF_COND_RANGE, {})
+	{
+		scope.OnAddCond <- array(TF_COND_RANGE)
+		for (local i = 0; i < TF_COND_RANGE; i++)
+			scope.OnAddCond[i] = {}
+	}
 
 	if(name in scope.OnAddCond[cond])
 		printl("Warning, Trying to Add an AddCondListener with an already registered name!")
 
 	scope.OnAddCond[cond][name] <- func
 }
+
+// scope.OnAddCond = [/* index 0 */ {"noZooming" : player.Suidide}] // 131 total
+
 // TODO: Add to Snippets
 /**
  * @param {integer} cond
@@ -4410,8 +4437,12 @@ function ROOT::OnRemoveCondListener(cond, name, func)
 		return printl("Warning! OnCondPostHooks is Disabled")
 		
 	local scope = GetScope(FindByName(null, "OnCondition"))
-	if(!("OnAddCond" in scope))
-		scope.OnRemoveCond <- array(TF_COND_RANGE, {})
+	if(!("OnRemoveCond" in scope))
+	{
+		scope.OnRemoveCond <- array(TF_COND_RANGE)
+		for (local i = 0; i < TF_COND_RANGE; i++)
+			scope.OnRemoveCond[i] = {}
+	}
 
 	if(name in scope.OnRemoveCond[cond])
 		printl("Warning, Trying to Add an RemoveCondListener with an already registered name!")
@@ -5442,42 +5473,109 @@ if(!("OnCondPostHooks" in FatCatLibSettings))
 
 if(FatCatLibSettings["OnCondPostHooks"] == true) 
 {
-	CreateThinker("OnCondition", function() {
-		foreach (player in Players)
+// remove indent
+CreateThinker("OnCondition", function() {
+	local funcScope = GetScope(FindByName(null, "OnCondition"))
+
+	if(!("OnAddCond" in funcScope) || type(funcScope.OnAddCond) != "array")
+	{
+		funcScope.OnAddCond <- array(TF_COND_RANGE)
+		for (local i = 0; i < TF_COND_RANGE; i++)
+			funcScope.OnAddCond[i] = {}
+	}
+	if(!("OnRemoveCond" in funcScope) || type(funcScope.OnRemoveCond) != "array")
+	{
+		funcScope.OnRemoveCond <- array(TF_COND_RANGE)
+		for (local i = 0; i < TF_COND_RANGE; i++)
+			funcScope.OnRemoveCond[i] = {}
+	}
+
+	for (local CondNum = 0; CondNum < TF_COND_RANGE; CondNum++) 
+	{
+		local condition = funcScope.OnAddCond[CondNum]
+		if(condition.len() == 0)
+			continue
+		foreach (_name, func in condition)
 		{
-			local scope = GetScope(player)
-			if(!("CheckedAddconds" in scope))
-				scope.CheckedAddconds <- array(TF_COND_RANGE, false) //conds go from 0 (TF_COND_AIMING) to 130 (TF_COND_IMMUNE_TO_PUSHBACK)
-			
-			local funcScope = GetScope(FindByName(null, "OnCondition"))
-
-			if(!("OnAddCond" in funcScope))
-				funcScope.OnAddCond <- array(TF_COND_RANGE, [])
-
-			if(!("OnRemoveCond" in scope))
-				funcScope.OnRemoveCond <- array(TF_COND_RANGE, [])
-			
-			for (local cond = 0; cond < TF_COND_RANGE; cond++) 
+			foreach (player in Players)
 			{
-				local WasInCond = scope.CheckedAddconds[cond]
-				if(!WasInCond && player.InCond(cond))
+				local scope = GetScope(player)
+				if(!("CheckedAddconds" in scope))
+					scope.CheckedAddconds <- array(TF_COND_RANGE, false)
+				
+				local WasInCond = scope.CheckedAddconds[CondNum]
+
+				if(!WasInCond && player.InCond(CondNum))
 				{
-					// printl("Called OnAddCond for cond "+cond+" Frame: "+GetFrameCount())
-					foreach (func in funcScope.OnAddCond[cond])
-						func.call(player)
-				}
-				else if(WasInCond && !player.InCond(cond))
-				{
-					// printl("Called OnRemoveCond for cond "+cond+" Frame: "+GetFrameCount())
-					foreach (func in funcScope.OnRemoveCond[cond])
-						func.call(player)
+					printl("Called OnAddCond for cond "+CondNum+" Frame: "+GetFrameCount())
+					func.call(player)
 				}
 
-				scope.CheckedAddconds[cond] = player.InCond(cond)
+				scope.CheckedAddconds[CondNum] = player.InCond(CondNum)
 			}
 		}
-		return -1
-	}, THINKER_PERSIST)
+	}
+
+	for (local CondNum = 0; CondNum < TF_COND_RANGE; CondNum++) 
+	{
+		local condition = funcScope.OnRemoveCond[CondNum]
+		if(condition.len() == 0)
+			continue
+		foreach (_name, func in condition)
+		{
+			foreach (player in Players)
+			{
+				local scope = GetScope(player)
+				if(!("CheckedAddconds" in scope))
+					scope.CheckedAddconds <- array(TF_COND_RANGE, false)
+				
+				local WasInCond = scope.CheckedAddconds[CondNum]
+
+				if(WasInCond && !player.InCond(CondNum))
+				{
+					printl("Called OnRemoveCond for cond "+CondNum+" Frame: "+GetFrameCount())
+					func.call(player)
+				}
+				scope.CheckedAddconds[CondNum] = player.InCond(CondNum)
+			}
+		}
+	}
+
+	return -1
+
+	/* foreach (player in Players)
+	{
+		local scope = GetScope(player)
+		if(!("CheckedAddconds" in scope))
+			scope.CheckedAddconds <- array(TF_COND_RANGE, false) //conds go from 0 (TF_COND_AIMING) to 130 (TF_COND_IMMUNE_TO_PUSHBACK)
+
+		for (local cond = 0; cond < TF_COND_RANGE; cond++) 
+		{
+			local WasInCond = scope.CheckedAddconds[cond]
+
+			if(ProcessOnAdd)
+			{
+				if(!WasInCond && player.InCond(cond))
+				{
+					printl("Called OnAddCond for cond "+cond+" Frame: "+GetFrameCount())
+					foreach (_name, func in funcScope.OnAddCond[cond])
+						func.call(player)
+				}
+			}
+			else if(ProcessOnRemove)
+			{
+				if(WasInCond && !player.InCond(cond))
+				{
+					// printl("Called OnRemoveCond for cond "+cond+" Frame: "+GetFrameCount())
+					foreach (_name, func in funcScope.OnRemoveCond[cond])
+						func.call(player)
+				}
+			}
+
+			scope.CheckedAddconds[cond] = player.InCond(cond)
+		}
+	} */
+}, THINKER_PERSIST)
 }
 else if(FindByName(null, "OnCondition"))
 	FindByName(null, "OnCondition").Kill()
@@ -6294,21 +6392,21 @@ AddChatTrigger("addattr", function(player, ...) {
 
 }, "IsAdmin") */
 
-RegisterAdminTrigger("disable_errors", function(_player, ...) {
+RegisterAdminTrigger("disable_errors", function(_, ...) {
 	SetLibrarySettings({
 		"ConsoleErrors" : true
 		"PublicErrors" : false
 	})
 })
 
-RegisterAdminTrigger("enable_errors", function(_player, ...) {
+RegisterAdminTrigger("enable_errors", function(__ORIGINAL_Regenerate, ...) {
 	SetLibrarySettings({
 		"ConsoleErrors" : false
 		"PublicErrors" : true
 	})
 })
 
-RegisterAdminTrigger(["lib_reload", "reload_library"], function(_player, ...) {
+RegisterAdminTrigger(["lib_reload", "reload_library"], function(_, ...) {
 	ReloadLibrary()
 })
 
@@ -6342,10 +6440,7 @@ RegisterAdminTrigger("cvar", function(player, ...) {
 		local ret = func(cvar)
 		if(ret == "hunter2")
 		{
-			ret = ""
-			for (local i = 0; i < RandomInt(12, 64); i++) {
-				ret += "*"
-			}
+			ret = "***PROTECTED***"
 		}
 
 		return player.PrintToChat(format(FATCATLIB_PREFIX+" Querying Cvar \"%s\": \"%s\"", cvar, ret.tostring()))
@@ -6358,13 +6453,27 @@ RegisterAdminTrigger("cvar", function(player, ...) {
 	return player.PrintToChat(format(FATCATLIB_PREFIX+" Set Cvar \"%s\": \"%s\"", cvar, vargv[1]))
 })
 
-RegisterAdminTrigger("purge", function(_player, ...) {
+RegisterAdminTrigger("purge", function(_, ...) {
 	if(!("TestPurgeString" in FatCatLibSettings))
 		SetLibrarySettings()
 	local value = FatCatLibSettings["TestPurgeString"]
 	SetLibrarySettings({
 		"TestPurgeString" : !value
 	})
+})
+
+RegisterAdminTrigger("test_tank", function(player, ...) {
+	local trace = {
+		start = player.EyePosition()
+		end = player.GetEyeOffset(16000)
+		mask = MASK_WORLD
+		ignore = player
+	}
+
+	TraceLineEx(trace)
+
+	CreateTestTank(trace.pos, player.EyeAngles())
+	return player.PrintToChat("Created A Test Tank")
 })
 
 
@@ -6437,7 +6546,7 @@ function ROOT::FixShittyPlayersBug()
 {
 	if(GetCurrentWaveNumber() > 1)
 		return
-	foreach(player in Players)
+	foreach(player in m_aHumans)
 	{
 		player.ForceRegenerateAndRespawn()
 	}
