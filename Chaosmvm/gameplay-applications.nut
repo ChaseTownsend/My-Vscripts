@@ -1,7 +1,7 @@
 if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
-SetScriptVersion("GameplayApplications", "4.6.0")
+SetScriptVersion("GameplayApplications", "4.6.1")
 
 local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", THINKER_PERSIST)
 
@@ -63,6 +63,17 @@ local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", 
 	base_damage = 3125
 }
 
+::CustomDamageOverrides <- array(TF_DMG_CUSTOM_RANGE)
+CustomDamageOverrides[TF_DMG_CUSTOM_SPELL_SKELETON] 	= 8500
+CustomDamageOverrides[TF_DMG_CUSTOM_SPELL_MIRV] 		= 15000
+CustomDamageOverrides[TF_DMG_CUSTOM_SPELL_METEOR] 		= 3000
+CustomDamageOverrides[TF_DMG_CUSTOM_SPELL_LIGHTNING] 	= 5000
+CustomDamageOverrides[TF_DMG_CUSTOM_SPELL_FIREBALL] 	= 15000
+CustomDamageOverrides[TF_DMG_CUSTOM_SPELL_MONOCULUS] 	= 12500
+CustomDamageOverrides[TF_DMG_CUSTOM_SPELL_BLASTJUMP] 	= 22500
+CustomDamageOverrides[TF_DMG_CUSTOM_SPELL_BATS] 		= 10000
+CustomDamageOverrides[TF_DMG_CUSTOM_SPELL_TELEPORT] 	= 10000
+
 if(!("OnCondPostHooks" in FatCatLibSettings))
 	SetLibrarySettings()
 
@@ -118,7 +129,7 @@ AddChatTrigger(["shape", "class", "change", "changeclass", "switch", "shapeshift
 	else if(startswith(name, "sp"))
 		class_index = TF_CLASS_SPY
 	else if(startswith(name, "civ"))
-		return player.PrintToChat("This aint TF2Classified, And it Wont be Supported.")
+		return player.PrintToChat("\x07FF0000[►] This aint TF2Classified, And it Wont be Supported.")
 	else
 		return player.PrintToChat("\x07FF0000[►] Failed to determine desired class. Try again.")
 
@@ -173,7 +184,6 @@ AddChatTrigger("equip" function(player, ...) {
 		player.PrintToChat("\"mutated\" or \"3\": Gives Mutated Milk\n")
 		return
 	}
-
 
 	if(ret_item)
 	{
@@ -249,13 +259,6 @@ function GameplayThink()
 			else 
 				ReprogrammedBots.append(bot)
 		}
-
-		/* if(bot.InCond(TF_COND_REPROGRAMMED) && (!bot.IsValidReprogramTarget()))
-		{
-			bot.RemoveCondEx(TF_COND_REPROGRAMMED, true)
-			foreach(attribute in BlutsaugerRemoveAttributes)
-				bot.RemoveCustomAttribute(attribute)
-		} */
 
 		local Corrosion = bot.GetCorrosion()
 
@@ -380,13 +383,12 @@ function GameplayThink()
 	return -1
 }
 
-
-
 function ROOT::ModifyCallbackDamage(params, victim, attacker, weapon, inflictor)
 {
-	if(params.damage_custom > (1<<7))
+	local custom = params.damage_custom
+	if(custom > (1<<7))
 		return
-	switch (params.damage_custom)
+	switch (custom)
 	{
 	case TF_DMG_CUSTOM_BACKSTAB: {
 		local iExplosiveShot = weapon.GetAttribute("explosive sniper shot", 0)
@@ -439,7 +441,7 @@ function ROOT::ModifyCallbackDamage(params, victim, attacker, weapon, inflictor)
 	case TF_DMG_CUSTOM_KART: {	// [11/12/25] Please, dear god, why do i have to do this stupid hack
 		params.early_out <- true
 		victim.TakeDamageCustom(inflictor, attacker, attacker.GetSpellBook(), Vector(), victim.GetOrigin(), KART_DMG, params.damage_type, TF_DMG_CUSTOM_TRIGGER_HURT)
-		return params
+		return
 	}
 	break;
 	case TF_DMG_CUSTOM_SPELL_SKELETON:
@@ -450,6 +452,14 @@ function ROOT::ModifyCallbackDamage(params, victim, attacker, weapon, inflictor)
 			victim.AddCondEx(TF_COND_MARKEDFORDEATH, 10, attacker)
 	break;
 	}
+
+	if(custom > 0 && custom < TF_DMG_CUSTOM_END)
+	{
+		local result = CustomDamageOverrides[custom]
+		if(result != -1)
+			params.damage = result
+	}
+	
 }
 
 function ROOT::ProcessChaosWeaponHit(params, victim, attacker, weapon, _inflictor)
@@ -720,7 +730,7 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 		}
 		if(!attacker)
 			return
-		if(attacker.IsBot())
+		if(attacker.IsBot())1
 		{
 			if(attacker.HasBotTag("NoChatter"))
 				return
@@ -888,8 +898,9 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 		local player = params.player
 		local scope = GetScope(player)
 
-		if("ReProgrammer" in scope && scope.ReProgrammer != null && !scope.ReProgrammer.IsBot())
+		if("ReProgrammer" in scope && scope.ReProgrammer != null && !scope.ReProgrammer.IsBot() && scope.ReProgrammer.IsValid())
 			scope.ReProgrammer.TranslateToChat("REPROG_BOT_LEAVE", player.GetUserName())
+			
 		scope.ReProgrammer <- null
 	}
 	function OnGameEvent_mvm_begin_wave(_)

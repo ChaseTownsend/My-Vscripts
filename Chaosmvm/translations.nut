@@ -56,6 +56,7 @@ if("SetScriptVersion" in getroottable())
 		CHECKPOINT_WRONG_MAP	= CHECKPOINT_ERROR+"That checkpoint was not set for this map."
 		CHECKPOINT_WRONG_MISS	= CHECKPOINT_ERROR+"That checkpoint was not set for this mission."
 		CHECKPOINT_EXPIRE		= CHECKPOINT_ERROR+"That checkpoint has expired."
+		CHECKPOINT_CURRENT      = CHECKPOINT_ERROR+"Current wave already matches checkpoint."
 		CHECKPOINT_RESTORE		= "\x0744CC44Restored to last saved checkpoint."
 		CHECKPOINT_RESTORE_HUD	= "Restored to last saved checkpoint."
 		//---------------------------------------------------------
@@ -688,7 +689,8 @@ if("SetScriptVersion" in getroottable())
 		CHECKPOINT_CREATED		= "\x077c8cc2Checkpoint created:\x078165cf [/%s]"
 		CHECKPOINT_WRONG_MAP	= CHECKPOINT_ERROR+"That checkpoint was not set for this map."
 		CHECKPOINT_WRONG_MISS	= CHECKPOINT_ERROR+"That checkpoint was not set for this mission."
-		CHECKPOINT_EXPIRE		= CHECKPOINT_ERROR+"That checkpoint has expired."
+		// CHECKPOINT_EXPIRE		= CHECKPOINT_ERROR+"That checkpoint has expired."
+		CHECKPOINT_CURRENT      = CHECKPOINT_ERROR+"Current wave already matches checkpoint." // TODO UPDATE TRANSLATION!
 		CHECKPOINT_RESTORE		= "\x0744CC44Restored to last saved checkpoint."
 		CHECKPOINT_RESTORE_HUD	= "Restored to last saved checkpoint."
 		//---------------------------------------------------------
@@ -1327,7 +1329,8 @@ if("SetScriptVersion" in getroottable())
 		CHECKPOINT_CREATED		= "\x077c8cc2Checkpoint created:\x078165cf [/%s]"
 		CHECKPOINT_WRONG_MAP	= CHECKPOINT_ERROR+"Den punkten var inte inställd för denna karta."
 		CHECKPOINT_WRONG_MISS	= CHECKPOINT_ERROR+"Den punkten var inte inställd för detta uppdrag."
-		CHECKPOINT_EXPIRE		= CHECKPOINT_ERROR+"Den punkten har tagit slut."
+		// CHECKPOINT_EXPIRE		= CHECKPOINT_ERROR+"Den punkten har tagit slut."
+		CHECKPOINT_CURRENT      = CHECKPOINT_ERROR+"Current wave already matches checkpoint." // TODO UPDATE TRANSLATION!
 		CHECKPOINT_RESTORE		= "\x0744CC44Restored till senaste sparade punkt."
 		CHECKPOINT_RESTORE_HUD	= "Återställde till senaste sparade punkt."
 		//---------------------------------------------------------
@@ -1960,7 +1963,8 @@ if("SetScriptVersion" in getroottable())
 		CHECKPOINT_CREATED		= "\x077c8cc2Контрольная точка была установлена:\x078165cf [/%s]"
 		CHECKPOINT_WRONG_MAP	= CHECKPOINT_ERROR+"Эта контрольная точка не была установлена для этой карты."
 		CHECKPOINT_WRONG_MISS	= CHECKPOINT_ERROR+"Эта контрольная точка не была установлена для этой миссии."
-		CHECKPOINT_EXPIRE		= CHECKPOINT_ERROR+"Срок действия этой контрольной точки истёк."
+		// CHECKPOINT_EXPIRE		= CHECKPOINT_ERROR+"Срок действия этой контрольной точки истёк."
+		CHECKPOINT_CURRENT      = CHECKPOINT_ERROR+"Current wave already matches checkpoint." // TODO UPDATE TRANSLATION!
 		CHECKPOINT_RESTORE		= "\x0744CC44Последняя сохранённая контрольная точка была восстановлена."
 		CHECKPOINT_RESTORE_HUD	= "Последняя сохранённая контрольная точка была восстановлена."
 		//---------------------------------------------------------
@@ -2599,7 +2603,8 @@ if("SetScriptVersion" in getroottable())
 		CHECKPOINT_CREATED		= "\x077c8cc2Utworzono punkt kontrolny:\x078165cf [/%s]"
 		CHECKPOINT_WRONG_MAP	= CHECKPOINT_ERROR+"Ten punkt kontrolny nie został ustawiony dla tej mapy."
 		CHECKPOINT_WRONG_MISS	= CHECKPOINT_ERROR+"Ten punkt kontrolny nie został ustawiony dla tej misji."
-		CHECKPOINT_EXPIRE		= CHECKPOINT_ERROR+"Ten punkt kontrolny wygasł."
+		// CHECKPOINT_EXPIRE		= CHECKPOINT_ERROR+"Ten punkt kontrolny wygasł."
+		CHECKPOINT_CURRENT      = CHECKPOINT_ERROR+"Current wave already matches checkpoint." // TODO UPDATE TRANSLATION!
 		CHECKPOINT_RESTORE		= "\x0744CC44Przywrócono do ostatniego zapisanego punktu kontrolnego."
 		CHECKPOINT_RESTORE_HUD	= "Przywrócono do ostatniego zapisanego punktu kontrolnego."
 		//---------------------------------------------------------
@@ -3232,7 +3237,8 @@ if("SetScriptVersion" in getroottable())
 		CHECKPOINT_CREATED		= "\x077c8cc2Checkpoint created:\x078165cf [/%s]"
 		CHECKPOINT_WRONG_MAP	= CHECKPOINT_ERROR+"そのチェックポイントは、このマップでは設定されていません"
 		CHECKPOINT_WRONG_MISS	= CHECKPOINT_ERROR+"そのチェックポイントは、今回の任務のために設置されたものではありません"
-		CHECKPOINT_EXPIRE		= CHECKPOINT_ERROR+"そのチェックポイントは期限が切れています"
+		// CHECKPOINT_EXPIRE		= CHECKPOINT_ERROR+"そのチェックポイントは期限が切れています"
+		CHECKPOINT_CURRENT      = CHECKPOINT_ERROR+"Current wave already matches checkpoint." // TODO UPDATE TRANSLATION!
 		CHECKPOINT_RESTORE		= "\x0744CC44最後に保存されたチェックポイントに戻りました"
 		CHECKPOINT_RESTORE_HUD	= "最後に保存されたチェックポイントに戻りました"
 		//---------------------------------------------------------
@@ -3865,7 +3871,8 @@ if("SetScriptVersion" in getroottable())
 		CHECKPOINT_CREATED		= "\x077c8cc2Checkpoint created:\x078165cf [/%s]"
 		CHECKPOINT_WRONG_MAP	= CHECKPOINT_ERROR+"Dette checkpoint blev ikke sat for denne bane."
 		CHECKPOINT_WRONG_MISS	= CHECKPOINT_ERROR+"Dette checkpoint blev ikke sat for denne mission."
-		CHECKPOINT_EXPIRE		= CHECKPOINT_ERROR+"Dette checkpoint er udløbet."
+		// CHECKPOINT_EXPIRE		= CHECKPOINT_ERROR+"Dette checkpoint er udløbet."
+		CHECKPOINT_CURRENT      = CHECKPOINT_ERROR+"Current wave already matches checkpoint." // TODO UPDATE TRANSLATION!
 		CHECKPOINT_RESTORE		= "\x0744CC44Gendannet til sidst gemte checkpoint."
 		CHECKPOINT_RESTORE_HUD	= "Gendannet til sidst gemte checkpoint."
 		//---------------------------------------------------------
@@ -4498,7 +4505,8 @@ if("SetScriptVersion" in getroottable())
 		CHECKPOINT_CREATED		= "\x077c8cc2Punto de control creado:\x078165cf [/%s]"
 		CHECKPOINT_WRONG_MAP	= CHECKPOINT_ERROR+"Ese punto de control no era para este mapa."
 		CHECKPOINT_WRONG_MISS	= CHECKPOINT_ERROR+"Ese punto de control no era para esta misión."
-		CHECKPOINT_EXPIRE		= CHECKPOINT_ERROR+"Ese punto de control ha caducado."
+		// CHECKPOINT_EXPIRE		= CHECKPOINT_ERROR+"Ese punto de control ha caducado."
+		CHECKPOINT_CURRENT      = CHECKPOINT_ERROR+"Current wave already matches checkpoint." // TODO UPDATE TRANSLATION!
 		CHECKPOINT_RESTORE		= "\x0744CC44Resaturado en el último punto de control."
 		CHECKPOINT_RESTORE_HUD	= "Resaturado en el último punto de control."
 		//---------------------------------------------------------

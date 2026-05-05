@@ -4,14 +4,10 @@ if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatC
 SetScriptVersion("WaveSave", "1.0.0")
 
 ::CHECKPOINT_ERROR <- "\x07bf4137"
-
-::SECPERMIN 	<- 60
-::SECPERHOUR 	<- SECPERMIN*60
-
 ::WAVE_SAVE_FILE 	<- "checkpoint.txt"
-::SAVE_LIFETIME 	<- (69*SECPERMIN) // 60 mins
 
-::CheckpointCommand <- ""
+if(!("CheckpointCommand" in ROOT))
+	::CheckpointCommand <- ""
 
 ::WaveVoteCallback <- function(player, ...) {
 
@@ -29,13 +25,14 @@ SetScriptVersion("WaveSave", "1.0.0")
 	TranslateToChatAll("CHECKPOINT_RESTORE")
 	TranslateToHudAll("CHECKPOINT_RESTORE_HUD")
 
-	// ONLY WORKS WITH RAFMOD
-	EntFireNew(FindByClassname(null, "point_populator_interface"), "$JumpToWave", ret.tostring())
+	printl("RETURNED VALUE!  " + ret.tostring())
 
-	RemoveChatTrigger(CheckpointCommand)
+	// ONLY WORKS WITH RAFMOD
+	EntFireNew(FindByClassname(null, "point_populator_interface"), "$JumpToWave", ret.tostring(), 0.1)
 }
 
-function ReadCheckpoint(player)
+
+function GetFileInfo()
 {
 	local file = split(FileToString(WAVE_SAVE_FILE), ":")
 	foreach (string in file)
@@ -51,18 +48,44 @@ function ReadCheckpoint(player)
 		file[file.find(string)] = temp
 	}
 
-	if(file.len() != 4)
+	if(file.len() != 5)
 	{
+		printl(file.len())
 		player.PrintToChat("Broken Checkpoint File! Resetting file.")
 		SaveWaveData(true)
+		return null
+	}
+
+	return file
+}
+
+function LoadCheckpointCMD()
+{
+	local file = GetFileInfo()
+
+	local command = "0000"
+
+	try {
+	command = ArrayToString(file[3])
+	}
+	catch (e)
+	{
+		PrintToChatAllF("Something fucked up : %s", e)
 		return
 	}
+
+	AddChatTrigger(command, WaveVoteCallback)
+}
+
+
+function ReadCheckpoint(player)
+{
+	local file = GetFileInfo()
 
 	local map = "FUCK"
 	local mission = "FUCK the second"
 	local waves = "1/1"
 	local command = "0000"
-	local valid = false
 
 	try {
 	map = ArrayToString(file[0])
@@ -87,32 +110,20 @@ function ReadCheckpoint(player)
 	if(GetPopfileName() != mission)
 		return player.GetTranslatedAndFormattedString("CHECKPOINT_WRONG_MISS")
 
-	local starting_wave = waves[0].tointeger()
-	local max_wave = waves[1].tointeger()
+	local saved_wave = waves.slice(0, 1).tointeger()
+	local max_wave = waves.slice(2).tointeger()
+	
+	// printl("Current Wave Num "+GetCurrentWaveNumber())
+	// printl("Saved Wave Num "+saved_wave)
+	// printl(max_wave)
 
-	if(GetCurrentWaveNumber() == starting_wave)
-		return 
+	if(GetCurrentWaveNumber() >= saved_wave)
+		return player.GetTranslatedAndFormattedString("CHECKPOINT_CURRENT")
 
 	if(max_wave != GetMaximumWaveNumber())
 		return "Checkpoints Maximum waves is different from current Maximum!"
 
-	if(!valid)
-		return "That Checkpoint is not Valid!"
-
-	return starting_wave
-}
-
-function GetTimeOfDay()
-{
-	local cur_time = {}
-	LocalTime(cur_time)
-
-	local ActualTime = 0.0
-	ActualTime += cur_time.hour * SECPERHOUR
-	ActualTime += cur_time.minute * SECPERMIN
-	ActualTime += cur_time.second
-
-	return ActualTime
+	return saved_wave
 }
 
 function SaveWaveData(Reset = false)
@@ -129,13 +140,13 @@ function SaveWaveData(Reset = false)
 
 	if(Reset)
 	{
-		save += (wave + "/" + max_wave) + ":\n"
-		save += Command + ":\n"
+		save += "1/" + max_wave + ":\n"
+		save += "0000:\n"
 	}
 	else
 	{
-		save += "1/" + max_wave + ":\n"
-		save += "0000:\n"
+		save += (wave + "/" + max_wave) + ":\n"
+		save += Command + ":\n"
 	}
 	StringToFile(WAVE_SAVE_FILE, save)
 
@@ -152,9 +163,6 @@ function WaveEndLogic()
 	AddChatTrigger(CheckpointCommand, WaveVoteCallback)
 
 	TranslateToChatAll("CHECKPOINT_CREATED", CheckpointCommand)
-
-	// PrintToChatAllF("\x077c8cc2Checkpoint created:\x078165cf [/%s]", CheckpointCommand)
-	// PrintToChatAllF("Use \x03/%s\x01 to return back to this wave on a server Crash / Restart!", CheckpointCommand)
 }
 
 if("WaveSaving" in ROOT) ::WaveSaving.clear()

@@ -205,7 +205,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format)
-if (!SetLibraryVersion("05.02.2026.20", 0))
+if (!SetLibraryVersion("05.04.2026.21", 0))
 	return
 
 SetLibrarySettings({})
@@ -508,17 +508,18 @@ BONUS_EFFECT_REMAP[kBonusEffect_Stomp] 					= BONUS_EFFECT_STOMP
 ::SF_TRIGGER_ONLY_NPCS_IN_VEHICLES 			<- (1<<11)
 ::SF_TRIGGER_DISALLOW_BOTS 					<- (1<<12)
 
-
 ////////// Custom DamageCustoms
+::TF_DMG_CUSTOM_RANGE					<- TF_DMG_CUSTOM_END+1
 ::TF_DMG_CUSTOM_IGNORE_EVENTS 			<- (1<<7)
 ::TF_DMG_CUSTOM_NO_CALLBACKS 			<- (1<<8)
 ::TF_DMG_CUSTOM_NO_CALLBACKS_IGNORE 	<- (TF_DMG_CUSTOM_IGNORE_EVENTS|TF_DMG_CUSTOM_NO_CALLBACKS)
+::TF_DMG_CUSTOM_IGNORE_INTERNAL 		<- (1<<31)
 
 function ROOT::IsCustomFlags(dmg_custom)
 	return dmg_custom >= (1<<7)
 
-function ROOT::HasFCUSTOMDmgCustom(dmg_custom)
-	return dmg_custom >= (1<<7)
+function ROOT::HasCustomFlag(dmg_custom, flag)
+	return IsCustomFlags(dmg_custom) && (dmg_custom & flag)
 
 ////////// RUNES
 ::RUNE_NONE 				<- -1
@@ -599,12 +600,6 @@ function ROOT::GetRuneCondition(rune)
 ::PROP_SPELL_CHARGES 	<- "m_iSpellCharges"
 ::PROP_SPELL_INDEX 		<- "m_iSelectedSpellIndex"
 ::PROP_PLAYER_STEAMID	<- "m_szNetworkIDString"
-
-::ADMINFLAGS <- {}
-ADMINFLAGS["None"] 		<- 0x0000
-ADMINFLAGS["Generic"] 	<- 0x0001
-ADMINFLAGS["Noclip"] 	<- 0x0002
-
 
 ::Invincible_Conds <- [
 	TF_COND_PHASE,
@@ -986,6 +981,14 @@ function CTFPlayer::GetCurrentRune()
 	return RUNE_NONE
 }
 
+/**
+ * @param {integer} rune
+ */
+function CTFPlayer::HasRune(rune)
+{
+	return GetCurrentRune() == rune
+}
+
 function CTFPlayer::GetRuneResistance()
 {
 	if( GetCurrentRune() == RUNE_RESIST )
@@ -1345,19 +1348,6 @@ function CTFPlayer::IsAdmin()
 	])
 }
 
-function CTFPlayer::GetAdminFlags()
-{
-	if(!IsAdmin())
-		return ADMINFLAGS["None"]
-	local id = GetPropString(this, PROP_PLAYER_STEAMID)
-	if(id == "[U:1:969530867]" || id == "[U:1:101345257]")
-	{
-		return ADMINFLAGS["Generic"]|ADMINFLAGS["Noclip"]
-	}
-
-	return ADMINFLAGS["None"]
-}
-
 /**
  * @param {integer} index
  */
@@ -1469,7 +1459,7 @@ function CTFPlayer::GetMaximumPrimaryAmmo()
 			ammo_mult *= weapon.GetAttribute("maxammo primary reduced", 1)
 		}
 	}
-	if(IsCarryingRune() && InCond(TF_COND_RUNE_HASTE))	
+	if(HasRune(RUNE_HASTE))	
 		ammo_mult *= 2
 	
 	return (round == true ? ceil(ammo * ammo_mult) : (ammo * ammo_mult))
@@ -1519,7 +1509,7 @@ function CTFPlayer::GetMaximumSecondaryAmmo()
 			ammo_mult *= weapon.GetAttribute("maxammo secondary reduced", 1)
 		}
 	}
-	if(IsCarryingRune() && InCond(TF_COND_RUNE_HASTE))	
+	if(HasRune(RUNE_HASTE))	
 		ammo_mult *= 2
 	return (round ? ceil(ammo * ammo_mult) : (ammo * ammo_mult))
 }
@@ -1546,7 +1536,7 @@ function CTFPlayer::GetMaximumMetal()
 			metal_mult *= weapon.GetAttribute("maxammo metal reduced", 1)
 		}
 	}
-	if(IsCarryingRune() && InCond(TF_COND_RUNE_HASTE))	
+	if(HasRune(RUNE_HASTE))	
 		metal_mult *= 2
 	return metal * metal_mult
 }
@@ -1679,12 +1669,9 @@ function CTFPlayer::GetTranslatedAndFormattedString(...)
 
 function CTFPlayer::TranslateToChat(...)
 {
+	if(!this||!IsValid())
+		return
 	local msg = GetTranslatedAndFormattedString.acall([this].extend(vargv))
-	if(msg.len() > MAX_CLIENT_PRINT_DATA)
-	{
-		error("Warning! a Message is too long!!!\n")
-		error(msg + "\n")
-	}
 	PrintToChat(msg)
 }
 
@@ -3467,7 +3454,15 @@ function ROOT::CleanUpAndFormatString(msg, ...)
 
 function ROOT::PrintBetter(player, message, level = HUD_PRINTTALK)
 {
-	local PRINT = @(m) ClientPrint(player, level, m)
+	local PRINT = function(m) {
+		if(m.len() > MAX_CLIENT_PRINT_DATA)
+		{
+			error("Warning! a Message is too long!!!\n")
+			error(m + "\n")
+		}
+
+		ClientPrint(player, level, m)
+	}
 	if(message == null)
 	{
 		PRINT(NULL_S)
@@ -5173,7 +5168,7 @@ function ROOT::AddChatTrigger(trigger, callback, ...)
 function ROOT::RegisterAdminTrigger(trigger, callback)
 	AddChatTrigger(trigger, callback, "IsAdmin")
 /**
- * @param {string|array} trigger
+ * @param {string|[string]} trigger
  */
 function ROOT::RemoveChatTrigger(trigger)
 {
@@ -5214,7 +5209,7 @@ function ROOT::ClearDamageCallbacks()
 		"worldspawn" : {}
 	}
 /**
- * @param {string|array} entity_name
+ * @param {string|[string]} entity_name
  * @param {string} callback_name
  * @param {function} callback
  */
@@ -5239,6 +5234,10 @@ function ROOT::RegisterDamageCallback(entity_name, callback_name, callback)
 	}
 }
 
+/**
+ * @param {string|[string]} entity_name
+ * @param {string} callback_name
+ */
 function ROOT::RemoveDamageCallback(entity_name, callback_name)
 {
 	if(typeof entity_name == "string")
@@ -5272,6 +5271,9 @@ function ROOT::RemoveDamageCallback(entity_name, callback_name)
 	}
 }
 // INNER FUNCTION
+/**
+ * @param {table} params
+ */
 function ParamsToDamageCallbackData(params)
 	return {
 		victim 				= params.const_entity
@@ -5289,21 +5291,21 @@ function ParamsToDamageCallbackData(params)
 		others_damaged		= params.damaged_other_players
 }
 
-function ROOT::GetModifiedDamage(type)
+/**
+ * Returns the seconds of the day
+ * i.e. 0 - 86399
+ */
+function ROOT::GetTimeOfDay()
 {
-	local array = array(88, -1)
-	if(type < 0 || type > array.len())
-		type = 0
-	array[TF_DMG_CUSTOM_SPELL_SKELETON] 	= 8500
-	array[TF_DMG_CUSTOM_SPELL_MIRV] 		= 15000
-	array[TF_DMG_CUSTOM_SPELL_METEOR] 		= 3000
-	array[TF_DMG_CUSTOM_SPELL_LIGHTNING] 	= 5000
-	array[TF_DMG_CUSTOM_SPELL_FIREBALL] 	= 15000
-	array[TF_DMG_CUSTOM_SPELL_MONOCULUS] 	= 12500
-	array[TF_DMG_CUSTOM_SPELL_BLASTJUMP] 	= 22500
-	array[TF_DMG_CUSTOM_SPELL_BATS] 		= 10000
-	array[TF_DMG_CUSTOM_SPELL_TELEPORT] 	= 10000
-	return array[type]
+	local cur_time = {}
+	LocalTime(cur_time)
+
+	local ActualTime = 0
+	ActualTime += cur_time.hour * SECPERHOUR
+	ActualTime += cur_time.minute * SECPERMIN
+	ActualTime += cur_time.second
+
+	return ActualTime
 }
 
 if(!("Players" in ROOT))
@@ -5500,6 +5502,8 @@ CreateThinker("OnCondition", function() {
 			foreach (player in Players)
 			{
 				local scope = GetScope(player)
+				if(scope == null)
+					continue
 				if(!("CheckedAddconds" in scope))
 					scope.CheckedAddconds <- array(TF_COND_RANGE, false)
 				
@@ -5507,7 +5511,7 @@ CreateThinker("OnCondition", function() {
 
 				if(!WasInCond && player.InCond(CondNum))
 				{
-					printl("Called OnAddCond for cond "+CondNum+" Frame: "+GetFrameCount())
+					// printl("Called OnAddCond for cond "+CondNum+" Frame: "+GetFrameCount())
 					func.call(player)
 				}
 
@@ -5533,7 +5537,7 @@ CreateThinker("OnCondition", function() {
 
 				if(WasInCond && !player.InCond(CondNum))
 				{
-					printl("Called OnRemoveCond for cond "+CondNum+" Frame: "+GetFrameCount())
+					// printl("Called OnRemoveCond for cond "+CondNum+" Frame: "+GetFrameCount())
 					func.call(player)
 				}
 				scope.CheckedAddconds[CondNum] = player.InCond(CondNum)
@@ -5650,16 +5654,13 @@ else if(FindByName(null, "OnCondition"))
 		if("first_blood" 		in eventdata) 	delete eventdata.first_blood
 		if("feign_death" 		in eventdata) 	delete eventdata.feign_death
 
-		if(eventdata.custom != TF_DMG_CUSTOM_IGNORE_EVENTS)
+		if(!HasCustomFlag(eventdata.custom, TF_DMG_CUSTOM_IGNORE_EVENTS))
 			FireScriptEvent(victim.IsBot() ? "BotDeath" : "HumanDeath", eventdata)
 	}
 	function OnScriptHook_OnTakeDamage(params)
 	{
-		if(params.damage_custom & TF_DMG_CUSTOM_IGNORE_EVENTS)
-		{
-			params.early_out = true
+		if(HasCustomFlag(params.damage_custom, TF_DMG_CUSTOM_IGNORE_INTERNAL))
 			return
-		}
 		local eventdata = clone params
 
 		local victim = params.const_entity
@@ -5682,7 +5683,7 @@ else if(FindByName(null, "OnCondition"))
 		// Shitty Infinite Reflect loop fix
 		if(eventdata.damage_custom == TF_DMG_CUSTOM_RUNE_REFLECT)
 		{
-			if(victim.IsPlayer() && attacker.IsPlayer() && victim.InCond(TF_COND_RUNE_REFLECT) && attacker.InCond(TF_COND_RUNE_REFLECT))
+			if(victim.IsPlayer() && attacker.IsPlayer() && victim.HasRune(RUNE_REFLECT) && attacker.HasRune(RUNE_REFLECT))
 			{
 				params.damage_type = params.damage_type | DMG_PREVENT_PHYSICS_FORCE
 				params.damage_force = Vector(1, 1, 1)
@@ -5725,12 +5726,7 @@ else if(FindByName(null, "OnCondition"))
 			}
 		}
 
-		local override_damage = GetModifiedDamage(params.damage_stats)
-
-		if(override_damage != -1)
-			params.damage = override_damage
-
-		if(eventdata.damage_custom != TF_DMG_CUSTOM_IGNORE_EVENTS)
+		if(!HasCustomFlag(eventdata.damage_custom, TF_DMG_CUSTOM_IGNORE_EVENTS))
 		{
 			if(victim && victim.IsValid() && victim.IsPlayer())
 				FireScriptEvent(victim.IsBot() ? "PostTakeDamageBot" : "PostTakeDamageHuman", eventdata)
@@ -5795,7 +5791,7 @@ else if(FindByName(null, "OnCondition"))
 		if("crit" 		in eventdata) delete eventdata.crit
 		if("minicrit" 	in eventdata) delete eventdata.minicrit
 
-		if(eventdata.damage_custom != TF_DMG_CUSTOM_IGNORE_EVENTS)
+		if(!HasCustomFlag(eventdata.damage_custom, TF_DMG_CUSTOM_IGNORE_EVENTS))
 			FireScriptEvent(victim.IsBot() ? "PostBotHurt" : "PostHumanHurt", eventdata)
 	}
 	function OnGameEvent_player_spawn(params)
@@ -5914,12 +5910,7 @@ else if(FindByName(null, "OnCondition"))
 
 			foreach (filter in filters)
 			{
-				if(type(filter) == type(1))
-				{
-					if((player.GetAdminFlags() & flfilterags) == filter)
-						PassedFilters = true
-				}
-				else if(filter == "IsAdmin" && player.IsAdmin())
+				if(filter == "IsAdmin" && player.IsAdmin())
 					PassedFilters = true
 				else if(filter == "IsEventJudge" && player.IsEventJudge())
 					PassedFilters = true
@@ -6472,8 +6463,17 @@ RegisterAdminTrigger("test_tank", function(player, ...) {
 
 	TraceLineEx(trace)
 
-	CreateTestTank(trace.pos, player.EyeAngles())
+	local tank = CreateTestTank(trace.pos, player.EyeAngles())
+
+	tank.AcceptInput("SetSpeed", "0", player, player)
+	tank.AcceptInput("$SetTurnRate", "0", player, player)
 	return player.PrintToChat("Created A Test Tank")
+})
+
+RegisterAdminTrigger("kill_tank", function(player, ...) {
+	if(FindByName(null, "Test_Tank"))
+		FindByName(null, "Test_Tank").Kill()
+	return player.PrintToChat("Killed Test Tank")
 })
 
 
@@ -6546,6 +6546,10 @@ function ROOT::FixShittyPlayersBug()
 {
 	if(GetCurrentWaveNumber() > 1)
 		return
+
+	if(m_aHumans.len() != 1)
+		return
+
 	foreach(player in m_aHumans)
 	{
 		player.ForceRegenerateAndRespawn()
