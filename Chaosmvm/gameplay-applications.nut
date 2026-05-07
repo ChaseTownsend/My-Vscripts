@@ -210,7 +210,8 @@ RegisterSpawnCallback("tf_projectile_rocket", "BlutsaugerRocket", function(entit
 	SetDestroyCallback(entity, function() {
 		local scope = GetScope(self)
 		local Cancel = @() owner.GetWeaponInSlotNew(SLOT_SECONDARY).IncreaseUberChargePercent(BlutsaugerSettings.refund)
-		// owner.PrintToChat("Your Rocket: i dies now but did i deal damage to a player?  "+("DamagedPlayer" in GetScope(self) && DamagedPlayer.tostring()))
+		// printl("Check 0")
+		// owner.PrintToChat("Your Rocket: i dies now but did i deal damage to a player?  "+(DamagedPlayer ? DamagedPlayer : "null"))
 		if(scope.DamagedPlayer == null)
 			return Cancel()
 
@@ -218,6 +219,8 @@ RegisterSpawnCallback("tf_projectile_rocket", "BlutsaugerRocket", function(entit
 		local damaged = scope.DamagedPlayer
 
 		local same = closest == damaged
+
+		// printl("Check 1")
 
 		if(closest == null && damaged)
 		{
@@ -232,6 +235,8 @@ RegisterSpawnCallback("tf_projectile_rocket", "BlutsaugerRocket", function(entit
 			same = true
 		}
 
+		// printl("Check 2")
+
 		if(!same && !closest.IsPlayer() && damaged.IsPlayer())
 		{
 			closest = damaged
@@ -239,6 +244,8 @@ RegisterSpawnCallback("tf_projectile_rocket", "BlutsaugerRocket", function(entit
 		}
 		else if(!closest.IsPlayer() && !damaged.IsPlayer())
 			return Cancel()
+
+		// printl("Check 3")
 
 		if(!same && !closest.IsEnemy() && damaged.IsEnemy())
 		{
@@ -248,13 +255,17 @@ RegisterSpawnCallback("tf_projectile_rocket", "BlutsaugerRocket", function(entit
 		else if(!closest.IsEnemy() && !damaged.IsEnemy())
 			return Cancel()
 
-		if(!same && !closest.IsValidReprogramTarget(true) && damaged.IsValidReprogramTarget(true))
-		{
-			closest = damaged
-			same = true
-		}
-		else if(!closest.IsValidReprogramTarget(true) && !damaged.IsValidReprogramTarget(true))
-			return Cancel()
+		// printl("Check 4")
+
+		// if(!same && !closest.IsValidReprogramTarget(true) && damaged.IsValidReprogramTarget(true))
+		// {
+		// 	closest = damaged
+		// 	same = true
+		// }
+		// else if(!closest.IsValidReprogramTarget(true) && !damaged.IsValidReprogramTarget(true))
+		// 	return Cancel()
+
+		// printl("Check 5")
 
 		if(!same)
 		{
@@ -302,7 +313,8 @@ RegisterSpawnCallback("tf_projectile_rocket", "BlutsaugerRocket", function(entit
 		break
 
 		case TF_CLASS_SPY:
-			action = "Spy"
+			"Spy"
+			target.AddThink(@() target.RemoveDisguise(), "NoDisguise")
 		break
 
 		case TF_CLASS_MEDIC:
@@ -312,6 +324,7 @@ RegisterSpawnCallback("tf_projectile_rocket", "BlutsaugerRocket", function(entit
 			target.AddCustomAttribute("effect cond override", 33, -1)
 			target.TeamFortress_SetSpeed()
 			target.AddBotAttribute(IGNORE_ENEMIES)
+			target.RemoveCondEx(TF_COND_CRITBOOSTED_PUMPKIN, true)
 		break
 		}
 
@@ -323,13 +336,12 @@ RegisterSpawnCallback("tf_projectile_rocket", "BlutsaugerRocket", function(entit
 
 		scope.EndReprogramTime <- Time() + duration
 		scope.ReProgrammer <- owner
-		function scope::OnDeath() {
-			try {
-				printl(self)
-			}
-			catch(e)
-				printl(e)
+		local function OnDeath()  {
+			if("EndReprogramTime" in GetScope(self)) 
+				delete GetScope(self).EndReprogramTime
+			self.RemoveCondEx(TF_COND_REPROGRAMMED, true)
 		}
+		scope.OnDeath <- OnDeath
 
 		EmitSoundEx({
 			sound_name = BlutsaugerSettings.sound
@@ -653,6 +665,8 @@ RegisterDamageCallback("player", "GameplayPlayer" function(params) {
 
 	if(inflictor && inflictor.GetClassname() == "tf_projectile_rocket" && victim.GetTeam() == TF_TEAM_PVE_INVADERS)
 	{
+		if(!("DamagedPlayer" in GetScope(inflictor)))
+			GetScope(inflictor).DamagedPlayer <- null
 		if(!victim.IsInvincible() && GetScope(inflictor).DamagedPlayer == null)
 			GetScope(inflictor).DamagedPlayer <- victim
 	}

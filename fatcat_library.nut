@@ -3631,6 +3631,8 @@ function ROOT::CleanUpAndFormatString(msg, ...)
 
 function ROOT::PrintBetter(player, message, level = HUD_PRINTTALK)
 {
+	if(typeof message != "string")
+		message = message.tostring()
 	local PRINT = function(m) {
 		if(m.len() > MAX_CLIENT_PRINT_DATA)
 		{
@@ -5860,6 +5862,7 @@ CreateThinker("OnEntityPostSpawn" , function() {
 		foreach(_callback_name, callback in PostSpawnCallbacks[entity.GetClassname()])
 		{
 			callback(entity)
+			// printf("Applied SpawnCallback %s to %s\n", _callback_name.tostring(), entity.tostring())
 		}
 	}
 	return -1
