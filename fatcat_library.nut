@@ -205,7 +205,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format)
-if (!SetLibraryVersion("05.06.2026.20", 0))
+if (!SetLibraryVersion("05.06.2026.23", 0))
 	return
 
 SetLibrarySettings({})
@@ -237,6 +237,12 @@ if (!("FoldedNetProps" in ROOT)) // make sure folding is only done once
 		}
 	}
 }
+
+/*
+  =================
+  === CONSTANTS ===
+  =================
+*/
 
 ////////////// DEFINES ////////////////
 //////// Slot indexs
@@ -632,8 +638,6 @@ function ROOT::GetRuneCondition(rune)
 	1, 		// idk
 ]
 
-
-
 ::PRIMARY_AMMO_TABLE <- {
 	"minigun" : 200
 	"flamethrower" : 200
@@ -698,6 +702,17 @@ function ROOT::GetRuneCondition(rune)
 	"jar" : -1
 }
 
+/*
+  ========================
+  === END OF CONSTANTS ===
+  ========================
+*/
+
+/*
+  ======================
+  === MISSION MAKERS ===
+  ======================
+*/
 if(!("MissionMakers" in ROOT))
 	::MissionMakers <- []
 
@@ -709,7 +724,17 @@ function ROOT::RemoveMissionMaker(id)
 	if(MissionMakers.find(id))
 		MissionMakers.remove(MissionMakers.find(id))
 }
+/*
+  =============================
+  === END OF MISSION MAKERS ===
+  =============================
+*/
 
+/*
+  ======================
+  === CVAR FUNCTIONS ===
+  ======================
+*/
 /**
  * @param {string} cvar
  */
@@ -737,6 +762,37 @@ function ROOT::GetCvarStr(cvar)
 	return Convars.GetStr(cvar)
 ROOT.GetCvarString <- ROOT.GetCvarStr
 
+function ROOT::GetClientConVar(cvar, entindex)
+	return Convars.GetClientConvarValue(cvar, entindex)
+
+
+/**
+ * @param {string} convar
+ * @param {any} value
+ */
+function ROOT::SetCvar(convar, value, admin_notify = false, notify_all = false)
+{
+	local PrintToChatAll = @(m) ("PrintToChatAll" in ROOT ? PrintToChatAll(m) : ClientPrint(null, 3, m))
+	local PrintToAdmins = @(l, m) ("PrintToAdmins" in ROOT ? PrintToAdmins(l, m) : ClientPrint(null, 2, m))
+	if(!IsConvarAllowed(convar))
+	{
+		PrintToChatAll("\x07FF4040:SetCvar: \x01Warning Cvar \"\x03"+convar+"\x01\" is Not on the Allowlist!")
+		return
+	}
+
+	Convars.SetValue(convar, value)
+	if( notify_all )
+		PrintToChatAll("Server cvar \'" + convar + "\' changed to " + value)
+	else if( admin_notify )
+		PrintToAdmins(3, "Server cvar \'" + convar + "\' changed to " + value)
+}
+
+/*
+  =============================
+  === END OF CVAR FUNCTIONS ===
+  =============================
+*/
+
 try {
 	IncludeScript("trace_filter")
 }
@@ -752,6 +808,17 @@ catch (e)
 
 ::FUNNI <- "I ever tell you about the time Keith and I made fireworks? Now, I didn't know shit about chemistry, but Keith figured \"Gasoline burns, doesn't it?\" Heh, third-degree burns on 95 percent of his body. Man, people in the next city over were calling to complain about the smell of burning skin."
 
+/*
+  =============================
+  === START CLASS FUNCTIONS ===
+  =============================
+*/
+
+/*
+  ======================
+  === PLAYER METHODS ===
+  ======================
+*/
 ///////////////////////////////////////
 function CTFPlayer::PrintToHud(message = "")
 	PrintBetter(this, message, HUD_PRINTCENTER)
@@ -1179,17 +1246,6 @@ function CTFPlayer::InRespawnRoom(any = false)
 
 		respawnroom.RemoveSolidFlags(FSOLID_NOT_SOLID)
 		respawnroom.SetCollisionGroup(0)
-		// local trace =
-		// {
-		// 	start =       GetOrigin()
-		// 	end =         GetOrigin()
-		// 	hullmin =     GetPlayerMins()
-		// 	hullmax =     GetPlayerMaxs()
-		// 	mask =        CONTENTS_SOLID
-		// }
-		// // DebugDrawBox(GetOrigin(), GetPlayerMins(), GetPlayerMaxs(), 255, 255, 0, 0, 100)
-		// // ShowBBOX(respawnroom, Vector(255, 0, 0), 0, 100)
-		// TraceHull(trace)
 
 		local trace = {
 			start = GetOrigin(),
@@ -1216,6 +1272,8 @@ function CTFPlayer::InRespawnRoom(any = false)
 }
 /**
  * @returns {bool}
+ * 
+ * @deprecated
  */
 function CTFPlayer::InAnyRespawnRoom()
 	return InRespawnRoom(true)
@@ -1343,7 +1401,7 @@ function CTFPlayer::IsMissionMaker()
 
 function CTFPlayer::IsAdmin()
 {
-	return IsMissionMaker() || IsEventJudge() || IsInArray(GetPropString(this, PROP_PLAYER_STEAMID), [
+	return IsMissionMaker() || IsInArray(GetPropString(this, PROP_PLAYER_STEAMID), [
 		"[U:1:969530867]"	// Fatcat
 		"[U:1:101345257]"	// ShadowBolt
 		"[U:1:1768280682]"	// MiirioKing
@@ -2211,11 +2269,10 @@ function CTFPlayer::FixAmmo()
 		if(weapon.HasAttribute("mod use metal ammo type", 0))
 			SetPropInt(weapon, "m_iPrimaryAmmoType", TF_AMMO_METAL)
 
-		// the cleavers and mad milk, TODO: make TF_WEAPON_ constants
-		if(weapon.GetIDX() == 812 || weapon.GetIDX() == 833 || weapon.GetIDX() == 222)
+		if(weapon.HasAttribute("item_meter_starts_empty_DISPLAY_ONLY", 0) && weapon.HasAttribute("item_meter_charge_type_3_DISPLAY_ONLY", 0) != 1)
 		{
 			SetThrowableAmmo(0)
-			SetThrowableCharge(50)
+			SetThrowableCharge(weapon.GetAttribute("item_meter_starts_empty_DISPLAY_ONLY", 0).tointeger())
 		}
 	}
 }
@@ -2667,9 +2724,7 @@ function CTFPlayer::AttachParticle(particle, duration = -1, attachment_point = P
 	trigger.Destroy()
 
 	if(duration > 0)
-	{
 		PlayerFire("DispatchEffect", "ParticleEffectStop", duration)
-	}
 }
 
 function CTFPlayer::EmitSoundTo(sound, data = {})
@@ -2723,6 +2778,13 @@ function CTFPlayer::IsEnemy()
 	return wearable
 } */
 
+/*
+  =============================
+  === END OF PLAYER METHODS ===
+  =============================
+*/
+
+
 ::NoFormatToBot <- [
 	"PrintToChat"
 	"PrintToHud"
@@ -2738,6 +2800,12 @@ function CTFPlayer::IsEnemy()
 	"CalculateEHP"
 	"GenerateAndWearItem"
 ]
+
+/*
+  ===================
+  === BOT METHODS ===
+  ===================
+*/
 
 // somewhat stolen from ZI
 foreach ( key, value in CTFPlayer )
@@ -2869,21 +2937,18 @@ function CTFBot::UndoReprogram()
 	TakeDamage(GetMaxHealth()*100, DMG_GENERIC, FirstEntity())
 }
 
-//TODO: Add to Snippets
-function CTFBot::RemoveReprogram()
-{
-	if(!this||!IsValid()||IsDead())
-		return
+/*
+  ==========================
+  === END OF BOT METHODS ===
+  ==========================
+*/
 
-	RemoveCondEx(TF_COND_REPROGRAMMED, true)
 
-	if("BlutsaugerRemoveAttributes" in ROOT)
-	{
-		foreach(attribute in BlutsaugerRemoveAttributes)
-			RemoveCustomAttribute(attribute)
-	}
-}
-
+/*
+  ======================
+  === WEAPON METHODS ===
+  ======================
+*/
 
 /////////
 /**
@@ -3348,6 +3413,13 @@ function CTFWeaponBase::CanStomp()
 		return false
 	return canstomp
 }
+
+/*
+  =============================
+  === END OF WEAPON METHODS ===
+  =============================
+*/
+
 /**
  * @param {integer} ItemID
  */
@@ -3396,6 +3468,12 @@ function ROOT::GetItemModelName(ItemID)
 	"GetSpeedMod",
 	"ShootPosition",
 ]
+/*
+  ==========================
+  === ECONENTITY METHODS ===
+  ==========================
+*/
+
 foreach ( key, value in CTFWeaponBase )
 {
 	if ( typeof( value ) == "function" )
@@ -3412,6 +3490,18 @@ function CEconEntity::IsMeleeWeapon()
 function CEconEntity::GetSlot()
 	return -1
 
+/*
+  =================================
+  === END OF ECONENTITY METHODS ===
+  =================================
+*/
+
+/*
+  ====================
+  === TANK METHODS ===
+  ====================
+*/
+
 function CTFBaseBoss::Disabledamage( events = true )
 	SetPropInt(this, "m_takedamage", events ? DAMAGE_EVENTS_ONLY : DAMAGE_NO)
 /**
@@ -3424,6 +3514,19 @@ function CTFBaseBoss::RegisterHurtPercentCallback(perc, callback)
 	GetScope(this)[OutputName] <- callback
 	ConnectOutput(OutputName, OutputName)
 }
+
+/*
+  ===========================
+  === END OF TANK METHODS ===
+  ===========================
+*/
+
+/*
+  =======================
+  === NAVMESH METHODS ===
+  =======================
+*/
+
 // TheNavMesh!
 function CNavMesh::GetNav() 
 {
@@ -3454,6 +3557,18 @@ function CNavMesh::GetLargestArea( NoSpawns = false, SavedNav = false )
 	return lMesh
 }
 
+/*
+  ==============================
+  === END OF NAVMESH METHODS ===
+  ==============================
+*/
+
+/*
+  =======================
+  === NAVAREA METHODS ===
+  =======================
+*/
+
 function CTFNavArea::GetArea()
 	return sqrt(GetSizeX()*GetSizeY())
 
@@ -3463,17 +3578,29 @@ function CTFNavArea::GetLargestSide()
 function CTFNavArea::IsTFInSpawnroom()
 	return HasAttributeTF(TF_NAV_SPAWN_ROOM_BLUE) || HasAttributeTF(TF_NAV_SPAWN_ROOM_RED)
 
-/**
- * @param {CTFPlayer} player
- * 
- * @deprecated
- */
-function ROOT::GetWeaponInSlot(player, slot = 0)
-{
-	if( !player ) return null
-	DeprecatedWarning(getstackinfos(1), getstackinfos(2))
-	return player.GetWeaponInSlot(slot)
-}
+/*
+  ==============================
+  === END OF NAVAREA METHODS ===
+  ==============================
+*/
+
+/*
+  ============================
+  === END OF CLASS METHODS ===
+  ============================
+*/
+
+/*
+  ================================
+  === START OF OTHER FUNCTIONS ===
+  ================================
+*/
+
+/*
+  ==========================
+  === PRINTING FUNCTIONS ===
+  ==========================
+*/
 
 function ROOT::CleanUpAndFormatString(msg, ...)
 {
@@ -3565,7 +3692,6 @@ function ROOT::PrintBetter(player, message, level = HUD_PRINTTALK)
 	}
 }
 
-///////// Printing functions
 ////// HUD PRINTS //////
 function ROOT::PrintToHudAll(msg)
 	PrintBetter(null, msg, HUD_PRINTCENTER)
@@ -3702,6 +3828,18 @@ function ROOT::PrintCollection(collection, filter = [], indentation = 0, header_
 	PrintToConsoleAll(indents + ((type == "table" || type == "class") ? "}" : "]"))
 }
 
+/*
+  =================================
+  === END OF PRINTING FUNCTIONS ===
+  =================================
+*/
+
+/*
+  =======================================
+  === START OF ENTITY DEBUG FUNCTIONS ===
+  =======================================
+*/
+
 //// Entity Debug
 function ROOT::ShowBBOX(entity, rgb = Vector(255, 0, 0), alpha = 5, duration = 5)
 {
@@ -3730,11 +3868,21 @@ function ROOT::DebugDrawTrigger(trigger, color = Vector(255, 128, 0), alpha = 5,
 	else if (trigger.GetSolid() == 3)
 		DebugDrawBoxAngles(trigger.GetOrigin(), GetPropVector(trigger, "m_Collision.m_vecMins"), GetPropVector(trigger, "m_Collision.m_vecMaxs"), trigger.GetAbsAngles(), Vector( color.x, color.y, color.z ), alpha, duration)
 }
-
+/*
+  =====================================
+  === END OF ENTITY DEBUG FUNCTIONS ===
+  =====================================
+*/
+// TODO: MOVE TO GENERAL FUNCTIONS
 function ROOT::IsListenServer()
 	return !IsDedicatedServer()
 	
-//// Entity Functions
+/*
+  ========================
+  === ENTITY FUNCTIONS ===
+  ========================
+*/
+/// Credit to LizardOfOz in TF2Maps Discord
 function ROOT::EnableStringPurge(entity)
 {
 	if( !entity )
@@ -3743,11 +3891,8 @@ function ROOT::EnableStringPurge(entity)
 	return entity
 }
 
-/// Credit to LizardOfOz in TF2Maps Discord
 function ROOT::CreateByClassname(classname)
 	return EnableStringPurge(Entities.CreateByClassname(classname))
-
-/// DISPATCH SPAWN NOT NEEDED
 
 function ROOT::FindByClassname(previous, classname)
 	return EnableStringPurge(Entities.FindByClassname(previous, classname))
@@ -3841,6 +3986,349 @@ function ROOT::GetScope(entity)
 	return entity.GetScriptScope()
 }
 /**
+ * @returns {[CBaseEntity]} Empty Array or Array of CBaseEntity
+ */
+function ROOT::GetAllEntitiesByClassname(classname)
+{
+	local list = []
+	for (local entity; entity = FindByClassname(entity, classname); )
+	{
+		if(entity != null) list.append(entity)
+	}
+	return list
+}
+/**
+ * @param {Vector} center
+ * @returns {[CBaseEntity]} Empty Array or Array of CBaseEntity
+ */
+function ROOT::GetAllEntitiesByClassnameWithin(classname, center, radius)
+{
+	local list = []
+	for (local entity; entity = FindByClassnameWithin(entity, classname, center, radius); )
+	{
+		if(entity != null) list.append(entity)
+	}
+	return list
+}
+/**
+ * @param {string} targetname
+ * @returns {[CBaseEntity]} Empty Array or Array of CBaseEntity
+ */
+function ROOT::GetAllEntitiesByTargetname(targetname)
+{
+	local list = []
+	for (local entity; entity = FindByName(entity, targetname); )
+	{
+		if(entity != null) list.append(entity)
+	}
+	return list
+}
+/**
+ * @param {string} targetname
+ * @param {Vector} center
+ * @param {integer|float} radius
+ * @returns {[CBaseEntity]} Empty Array or Array of CBaseEntity
+ */
+function ROOT::GetAllEntitiesByTargetnameWithin(targetname, center, radius)
+{
+	local list = []
+	for (local entity; entity = FindByNameWithin(entity, targetname, center, radius); )
+	{
+		if(entity != null) list.append(entity)
+	}
+	return list
+}
+/**
+ * @returns {[CTFPlayer]} Empty Array or Array of CTFPlayer
+ */
+function ROOT::GetAllPlayers(team = false, radius = false, alive = true)
+{
+	local players = []
+ 
+	if (type(radius) == "array")
+	{
+		foreach (player in GetAllEntitiesByClassnameWithin("player", radius[0], radius[1]))
+		{
+			if (team) { if (player.GetTeam() != team) continue }
+			if (alive) { if (!player.IsAlive()) continue }
+			
+			players.append(player)
+		}
+	}
+	else
+	{
+		foreach (player in GetAllEntitiesByClassname("player"))
+		{
+			if (team) { if (player.GetTeam() != team) continue }
+			if (alive) { if (!player.IsAlive()) continue }
+			
+			players.append(player)
+		}
+	}
+	return players
+}
+/**
+ * @returns {[CTFBaseBoss]} Empty Array or Array of CTFBaseBoss
+ */
+function ROOT::GetEveryTank()
+{
+	local list = []
+	foreach	(tank in GetAllEntitiesByClassname("tank_boss"))
+	{
+		if(tank != null) list.append(tank)
+	}
+	return list
+}
+/**
+ * @param {Vector} center
+ * @param {integer|float} radius
+ * @returns {[CTFBaseBoss]} Empty Array or Array of CTFBaseBoss
+ */
+function ROOT::GetEveryTankWithin(center, radius)
+{
+	local list = []
+	foreach (tank in GetAllEntitiesByClassnameWithin("tank_boss", center, radius))
+	{
+		if(tank != null) list.append(tank)
+	}
+	return list
+}
+
+/**
+ * @param {CBaseEntity} entity
+ */
+function ROOT::IsValidEnemy(entity)
+{
+	if(entity.GetTeam() != TF_TEAM_PVE_INVADERS) return false
+
+	foreach(classname in [ "player", "tank_boss", "obj_dispenser", "obj_sentrygun", "obj_teleporter" ])
+	{
+		if(entity.GetClassname() == classname)
+			return true
+	}
+	return false
+}
+
+/**
+ * @param {CBaseEntity} entity
+ */
+function ROOT::IsEntityAProjectile(entity)
+	return startswith(entity.GetClassname(), "tf_projectile")
+	
+function ROOT::CreateTestTank(origin = Vector(0, 0, 0), angles = QAngle(0, 0, 0))
+{
+	if(FindByName(null, "Test_Tank"))
+		FindByName(null, "Test_Tank").Kill()
+
+	local tank = SpawnEntityFromTable("tank_boss", {
+		targetname = "Test_Tank"
+		health = (1<<31) - 1
+	})
+	tank.SetAbsOrigin(origin)
+	tank.SetAbsAngles(angles)
+	return tank
+}
+/**
+ * @param {CBaseEntity} entity
+ * @returns {CTFPlayer|null}
+ */
+function ROOT::GetBuilder(entity)
+{
+	EnableStringPurge(entity)
+	if(!HasProp(entity, "m_hBuilder")) return null
+
+	return EnableStringPurge(GetPropEntity(entity, "m_hBuilder"))
+}
+/**
+ * @param {CBaseEntity} entity
+ * @returns {CTFPlayer|null}
+ */
+function ROOT::GetLauncher(entity)
+{
+	EnableStringPurge(entity)
+	if(!HasProp(entity, "m_hLauncher")) return null
+	return EnableStringPurge(GetPropEntity(entity, "m_hLauncher"))
+}
+/**
+ * @param {CBaseEntity} flag
+ */
+function ROOT::GetFlagStatus(flag)
+{
+	EnableStringPurge(flag)
+	if(!HasProp(flag, "m_nFlagStatus")) return -1
+	return GetPropInt(flag, "m_nFlagStatus")
+}
+/**
+ * @param {CBaseEntity} entity
+ */
+function ROOT::GetState(entity)
+{
+	EnableStringPurge(entity)
+	if(!HasProp(entity, "m_iState")) return -1
+	return GetPropInt(entity, "m_iState")
+}
+/**
+ * @param {CBaseEntity} entity
+ */
+function ROOT::ClearThinks(entity)
+{
+	SetPropString(entity, "m_iszScriptThinkFunction", "")
+	AddThinkToEnt(entity, "")
+}
+/**
+ * @param {CBaseEntity} object
+ */
+function ROOT::IsBuilding(object)
+	return startswith(object.GetClassname(), "obj_")
+
+/**
+ * @param {CBaseEntity} object
+ */
+function ROOT::IsTank(object)
+	return endswith(object.GetClassname(), "boss")
+
+/**
+ * @param {CBaseEntity} building
+ */
+function ROOT::IsBuildingValid(building)
+{
+	if(!building) return false
+	EnableStringPurge(building)
+	if(!HasProp(building, "m_bServerOverridePlacement")) return false
+	return GetPropBool(building, "m_bServerOverridePlacement")
+}
+
+/**
+ * @param {CBaseEntity} sentry
+ */
+function ROOT::GetSentryAngles(sentry)
+	return QAngle((GetPropFloatArray(sentry, "m_flPoseParameter", 0) * -100 + 50) * DEG2RAD, (GetPropFloatArray(sentry, "m_flPoseParameter", 1) * -360 + 180 + sentry.GetAbsAngles().y) * DEG2RAD, 0)
+
+/**
+ * @param {QAngle} Angle
+ */
+function ROOT::ConvertAngleToEndpoint(Angle, length = 600)
+	return Vector(cos(Angle.Pitch()) * cos(Angle.Yaw()), cos(Angle.Pitch()) * sin(Angle.Yaw()), -sin(Angle.Pitch())) * length
+
+/**
+ * @param {CBaseEntity} entity
+ * @param {function} callback
+ */
+function ROOT::SetDestroyCallback(entity, callback)
+{
+	local scope = GetScope(entity)
+	scope.setdelegate({}.setdelegate({
+			parent   = scope.getdelegate()
+			id       = entity.GetScriptId()
+			index    = entity.entindex()
+			callback = callback
+			_get = function(k)
+			{
+				return parent[k]
+			}
+			_delslot = function(k)
+			{
+				if (k == id)
+				{
+					entity = EntIndexToHScript(index)
+					local scope = GetScope(entity)
+					scope.self <- entity
+					callback.pcall(scope)
+				}
+				delete parent[k]
+			}
+		})
+	)
+}
+
+/**
+ * @param {CBaseEntity|string} target
+ */
+function ROOT::EntFireNew(target, action, input = "", delay = -1, activator = null, caller = null)
+{
+	if(typeof target != "string" && target.IsPlayer() && action == "RunScriptCode")
+	{
+		target.RunScriptCode(input, delay)
+		return
+	}
+		
+	if(type(target) == "string")
+		DoEntFire(target, action, input, delay, activator, caller)
+	else if(type(target) == "instance")
+		EntFireByHandle(target, action, input, delay, activator, caller)
+	PurgeString(action)
+	PurgeString(input)
+}
+
+function ROOT::CreateKillIcon(icon)
+{
+	if(FindByClassname(null, icon))
+		return FindByClassname(null, icon)
+	local classicon = SpawnEntityFromTable( "info_target", { classname = icon })
+	// dont know if we want to Create a class icon forever
+	// and access it after puting into a global variable
+	// ROOT[icon] <- classicon
+	PurgeString(icon)
+	return classicon;
+}
+
+function ROOT::PurgeString(string)
+{
+	if(!("TestPurgeString" in FatCatLibSettings))
+		SetLibrarySettings()
+	if(FatCatLibSettings["TestPurgeString"] == false)
+		return
+
+	if ( !string || !( 0 in string ) )
+		return
+
+	local temp = CreateByClassname( "info_null" )
+	SetPropString( temp, "m_iName", string )
+	EnableStringPurge(temp)
+	temp.DispatchSpawn()
+	// temp.Kill()
+}
+
+
+
+::Gamerules 		<- FindByClassname(null, "tf_gamerules")
+::MvMStats 			<- FindByClassname(null, "tf_mann_vs_machine_stats")
+::PlayerManager 	<- FindByClassname(null, "tf_player_manager")
+::ObjResource 		<- FindByClassname(null, "tf_objective_resource")
+::Worldspawn 		<- FirstEntity()
+
+/**
+ * Gets the Current Wave this mission is On.
+ * @returns {integer}
+ */
+function ROOT::GetCurrentWaveNumber()
+	return GetPropInt(ObjResource, "m_nMannVsMachineWaveCount")
+/**
+ * Gets the Total Waves in this Mission.
+ * @returns {integer}
+ */
+function ROOT::GetMaximumWaveNumber()
+	return GetPropInt(ObjResource, "m_nMannVsMachineMaxWaveCount")
+/**
+ * Gets this Population files Name in the scoreboard.
+ * @returns {string}
+ */
+function ROOT::GetPopfileName()
+	return GetPropString(ObjResource, "m_iszMvMPopfileName")
+/**
+ * Sets this Population files Name in the scoreboard.
+ * @param {string} name
+ */
+function ROOT::SetPopfileName(name)
+	SetPropString(ObjResource, "m_iszMvMPopfileName", name)
+
+/*
+  ===============================
+  === END OF ENTITY FUNCTIONS ===
+  ===============================
+*/
+
+/**
  * @param {CTFPlayer|CBaseEntity} target
  * @param {integer} team 
  */
@@ -3907,6 +4395,13 @@ function ROOT::IsWaveStarted()
 		GetScope(Gamerules).IsWaveStarted <- false
 	return GetScope(Gamerules).IsWaveStarted
 }
+
+/*
+  ================================
+  === STRING PARSING FUNCTIONS ===
+  ================================
+*/
+
 /**
  * @param {string} string
  */
@@ -3942,134 +4437,46 @@ function ROOT::RemoveCommandTrigger(string, triggers = ["/", "!"])
 		return string
 	return ArrayToString(StringToArray(string).slice(1))
 }
-
-//// Get Every/All Entitys functions
-function ROOT::GetAllEntitiesByClassname(classname)
-{
-	local list = []
-	for (local entity; entity = FindByClassname(entity, classname); )
-	{
-		if(entity != null) list.append(entity)
-	}
-	return list
-}
 /**
- * @param {Vector} center
+ * @param {string|[string]} trigger
  */
-function ROOT::GetAllEntitiesByClassnameWithin(classname, center, radius)
+function ROOT::RemoveChatTrigger(trigger)
 {
-	local list = []
-	for (local entity; entity = FindByClassnameWithin(entity, classname, center, radius); )
+	local errors = []
+	if(typeof trigger == "string")
 	{
-		if(entity != null) list.append(entity)
+		if(trigger in ChatTriggers)
+			delete ChatTriggers[trigger]
 	}
-	return list
-}
-/**
- * @param {string} targetname
- */
-function ROOT::GetAllEntitiesByTargetname(targetname)
-{
-	local list = []
-	for (local entity; entity = FindByName(entity, targetname); )
+	else if(typeof trigger == "array")
 	{
-		if(entity != null) list.append(entity)
-	}
-	return list
-}
-/**
- * @param {string} targetname
- * @param {Vector} center
- * @param {integer|float} radius
- */
-function ROOT::GetAllEntitiesByTargetnameWithin(targetname, center, radius)
-{
-	local list = []
-	for (local entity; entity = FindByNameWithin(entity, targetname, center, radius); )
-	{
-		if(entity != null) list.append(entity)
-	}
-	return list
-}
-
-function ROOT::GetAllPlayers(team = false, radius = false, alive = true)
-{
-	local players = []
- 
-	if (type(radius) == "array")
-	{
-		foreach (player in GetAllEntitiesByClassnameWithin("player", radius[0], radius[1]))
+		foreach (trig in trigger)
 		{
-			if (team) { if (player.GetTeam() != team) continue }
-			if (alive) { if (!player.IsAlive()) continue }
-			
-			players.append(player)
+			if(typeof trig != "string")
+			{
+				errors.append(format("AddChatTrigger: Item %s : Unknown Type %s when Removing Chat Trigger", trig.tostring(), typeof trig))
+				continue
+			}
+			if(trig in ChatTriggers)
+				delete ChatTriggers[trig]
 		}
 	}
-	else
-	{
-		foreach (player in GetAllEntitiesByClassname("player"))
-		{
-			if (team) { if (player.GetTeam() != team) continue }
-			if (alive) { if (!player.IsAlive()) continue }
-			
-			players.append(player)
-		}
-	}
-	return players
+	else throw format("AddChatTrigger: Unknown Type %s when Removing Chat Trigger", typeof trigger)
+	if(errors.len() != 0)
+		PrintArray(errors)
 }
 
+/*
+  =======================================
+  === END OF STRING PARSING FUNCTIONS ===
+  =======================================
+*/
 
-//
-function ROOT::GetEveryTank()
-{
-	local list = []
-	foreach	(tank in GetAllEntitiesByClassname("tank_boss"))
-	{
-		if(tank != null) list.append(tank)
-	}
-	return list
-}
-/**
- * @param {Vector} center
- * @param {integer|float} radius
- */
-function ROOT::GetEveryTankWithin(center, radius)
-{
-	local list = []
-	foreach (tank in GetAllEntitiesByClassnameWithin("tank_boss", center, radius))
-	{
-		if(tank != null) list.append(tank)
-	}
-	return list
-}
-
-::Gamerules 		<- FindByClassname(null, "tf_gamerules")
-::MvMStats 			<- FindByClassname(null, "tf_mann_vs_machine_stats")
-::PlayerManager 	<- FindByClassname(null, "tf_player_manager")
-::ObjResource 		<- FindByClassname(null, "tf_objective_resource")
-::Worldspawn 		<- FirstEntity()
-
-/**
- * @returns {integer}
- */
-function ROOT::GetCurrentWaveNumber()
-	return GetPropInt(ObjResource, "m_nMannVsMachineWaveCount")
-/**
- * @returns {integer}
- */
-function ROOT::GetMaximumWaveNumber()
-	return GetPropInt(ObjResource, "m_nMannVsMachineMaxWaveCount")
-/**
- * @returns {string}
- */
-function ROOT::GetPopfileName()
-	return GetPropString(ObjResource, "m_iszMvMPopfileName")
-/**
- * @param {string} name
- */
-function ROOT::SetPopfileName(name)
-	SetPropString(ObjResource, "m_iszMvMPopfileName", name)
+/*
+  ========================
+  === TIMING FUNCTIONS ===
+  ========================
+*/
 
 function ROOT::dummy_ent() {
 	// logic_relay does not take up an edict
@@ -4171,20 +4578,33 @@ RunWithDelay(@() printl("Firing and killing a timer..."), 7.0)
 RunWithDelay(@() FireTimer(timer), 7.0)
  */
 
+/*
+  ===============================
+  === END OF TIMING FUNCTIONS ===
+  ===============================
+*/
 
-//// Helps make code look nice
+/*
+  ======================
+  === MISC FUNCTIONS ===
+  ======================
+*/
+
 /**
  * @param {table} scope
+ * @deprecated
  */
 function ROOT::IsNotInScope(item, scope)
 	return (!(item in scope))
 /**
  * @param {string} item
+ * @deprecated
  */
 function ROOT::IsNotInTable(item, table)
 	return (!(item in table))
 /**
  * @param {integer} dmg_type
+ * @deprecated Do not use! likely to get removed in some later date
  */
 function ROOT::IsDamageTypeSpell(dmg_type)
 	return dmg_type >= 65 && dmg_type <= 75
@@ -4195,7 +4615,9 @@ function ROOT::IsInArray(item, array)
 	return array.find(item) != null
 
 
-//// Misc player/entity Functions
+function ROOT::IsPotato()
+	return "__potato" in ROOT
+
 /**
  * @param {Vector} point
  */
@@ -4250,20 +4672,6 @@ function ROOT::IsHullInRespawnRoom(start, min, max)
 }
 
 /**
- * @param {CBaseEntity} entity
- */
-function ROOT::IsValidEnemy(entity)
-{
-	if(entity.GetTeam() != TF_TEAM_PVE_INVADERS) return false
-
-	foreach(classname in [ "player", "tank_boss", "obj_dispenser", "obj_sentrygun", "obj_teleporter" ])
-	{
-		if(entity.GetClassname() == classname)
-			return true
-	}
-	return false
-}
-/**
  * @param {Vector} point2
  */
 function ROOT::CanPointSeePoint(point1, point2)
@@ -4276,81 +4684,7 @@ function ROOT::CanPointSeePoint(point1, point2)
 	TraceLineEx(trace)
 	return !trace.hit
 }
-/**
- * @param {CBaseEntity} entity
- * @returns {CTFPlayer|null}
- */
-function ROOT::GetBuilder(entity)
-{
-	EnableStringPurge(entity)
-	if(!HasProp(entity, "m_hBuilder")) return null
 
-	local entity = GetPropEntity(entity, "m_hBuilder")
-	return EnableStringPurge(entity)
-}
-/**
- * @param {CBaseEntity} entity
- * @returns {CTFPlayer|null}
- */
-function ROOT::GetLauncher(entity)
-{
-	EnableStringPurge(entity)
-	if(!HasProp(entity, "m_hLauncher")) return null
-
-	local entity = GetPropEntity(entity, "m_hLauncher")
-	return EnableStringPurge(entity)
-}
-/**
- * @param {CBaseEntity} flag
- */
-function ROOT::GetFlagStatus(flag)
-{
-	if(!flag) return -1
-	EnableStringPurge(flag)
-	if(!HasProp(flag, "m_nFlagStatus")) return -1
-	return GetPropInt(flag, "m_nFlagStatus")
-}
-/**
- * @param {CBaseEntity} entity
- */
-function ROOT::GetState(entity)
-{
-	EnableStringPurge(entity)
-	if(!HasProp(entity, "m_iState")) return -1
-	return GetPropInt(entity, "m_iState")
-}
-/**
- * @param {CBaseEntity} entity
- */
-function ROOT::ClearThinks(entity)
-{
-	SetPropString(entity, "m_iszScriptThinkFunction", "")
-	AddThinkToEnt(entity, "")
-}
-/**
- * @param {CBaseEntity} object
- */
-function ROOT::IsBuilding(object)
-{
-	return startswith(object.GetClassname(), "obj_")
-}
-/**
- * @param {CBaseEntity} object
- */
-function ROOT::IsTank(object)
-{
-	return endswith(object.GetClassname(), "boss")
-}
-/**
- * @param {CBaseEntity} building
- */
-function ROOT::IsBuildingValid(building)
-{
-	if(!building) return false
-	EnableStringPurge(building)
-	if(!HasProp(building, "m_bServerOverridePlacement")) return false
-	return GetPropBool(building, "m_bServerOverridePlacement")
-}
 /**
  * @param {table} info
  */
@@ -4364,46 +4698,151 @@ function ROOT::EmitGlobalSound(info)
 		// entity = "entity" in info ? info.entity : null
 		filter_type = RECIPIENT_FILTER_GLOBAL
 	})
-/**
- * @param {CBaseEntity} sentry
- */
-function ROOT::GetSentryAngles(sentry)
-	return QAngle((GetPropFloatArray(sentry, "m_flPoseParameter", 0) * -100 + 50) * DEG2RAD, (GetPropFloatArray(sentry, "m_flPoseParameter", 1) * -360 + 180 + sentry.GetAbsAngles().y) * DEG2RAD, 0)
-/**
- * @param {QAngle} Angle
- */
-function ROOT::ConvertAngleToEndpoint(Angle, length = 600)
-	return Vector(cos(Angle.Pitch()) * cos(Angle.Yaw()), cos(Angle.Pitch()) * sin(Angle.Yaw()), -sin(Angle.Pitch())) * length
-/**
- * @param {CBaseEntity} entity
- * @param {function} callback
- */
-function ROOT::SetDestroyCallback(entity, callback)
+
+
+// TODO: Add to Snippets
+function ROOT::CreateParticle(particle, origin, angle = QAngle(-90, 0, 0))
 {
-	local scope = GetScope(entity)
-	scope.setdelegate({}.setdelegate({
-			parent   = scope.getdelegate()
-			id       = entity.GetScriptId()
-			index    = entity.entindex()
-			callback = callback
-			_get = function(k)
-			{
-				return parent[k]
-			}
-			_delslot = function(k)
-			{
-				if (k == id)
-				{
-					entity = EntIndexToHScript(index)
-					local scope = GetScope(entity)
-					scope.self <- entity
-					callback.pcall(scope)
-				}
-				delete parent[k]
-			}
-		})
-	)
+	local temp = SpawnEntityFromTable("info_particle_system", {effect_name = particle})
+	temp.SetAbsOrigin(origin)
+	temp.SetAbsAngles(angle)
+	temp.AcceptInput("Start", "", null, null)
+	EntFireNew(temp, "Stop", "", TICK_DUR*3)
+	EntFireNew(temp, "Kill", "", TICK_DUR*5)
+	return temp
 }
+
+
+/**
+ * Creates a Pickup
+ * 
+ * @param {Vector} 		origin 		The position where to spawn the Pickup.
+ * @param {Vector} 		angles 		The angles to spawn the Pickup with.
+ * @param {Vector} 		velocity 	The Vecocity to spawn the Pickup with.
+ * @param {integer} 	team 		Which Team can pick this up.
+ * @param {string} 		model 		The Model for the Pickup.
+ * @param {string} 		sound 		Optional sound to cache and play on pickup.
+ * @param {float} 		lifetime 	How long the Pickup should live for.
+ * @param {function} 	func	 	What function to run when the pickup is picked up
+ */
+function ROOT::CreatePickup(table)
+{
+	if ( type(table) != "table" )
+		return null
+
+	PrecacheModel(table.model)
+	PrecacheSound(table.sound)
+	
+	local pickup = SpawnEntityFromTable("item_armor", {
+		origin = table.origin
+		angles = table.angles
+		teamnum = table.team
+		spawnflags = (1 << 30) // no bot support
+	})
+
+	pickup.SetModel(table.model)
+	pickup.SetSolid(SOLID_BBOX)
+	pickup.SetMoveType(MOVETYPE_FLYGRAVITY, 1)
+	pickup.SetAbsVelocity(table.velocity)
+
+	GetScope(pickup).life_time <- Time() + table.lifetime
+	GetScope(pickup).LifeTime <- function() { if(Time() >= life_time) {self.Kill()} }
+	AddThinkToEnt(pickup, "LifeTime")
+	GetScope(pickup).OnPlayerTouch <- table.func
+	pickup.ConnectOutput( "OnPlayerTouch", "OnPlayerTouch" )
+
+	return pickup
+}
+
+/**
+ * @param {table} data
+ */
+function ROOT::CreateTankPath(data)
+{
+	foreach (PathName, PathData in data)
+	{
+		local Paths = {}
+		foreach (i, TrackData in PathData)
+		{
+			Paths[i] <- {}
+			Assert("origin" in TrackData, "Missing origin in Path Data! ABORTING!!")
+
+			local origin = TrackData.origin
+			local target = "target" in TrackData ? TrackData.target : format("%s_%i", PathName, i + 2)
+
+			printl(target)
+			Paths[i].path_track <- {
+				origin		= origin
+				targetname 	= i == 0 ? PathName : format("%s_%i", PathName, i + 1)
+				target		= target
+			}
+			foreach(k, v in TrackData)
+			{
+				if(startswith(k, "OnPass"))
+					Paths[i].path_track[k] <- v
+			}
+			printl("Created a path_track "+format("%s_%i", PathName, i + 1)+" at "+origin.ToKVString()+" with a target of " +target)
+			DebugDrawBox(origin, Vector(-12,-12,-12), Vector(12, 12, 12), 255, 0, 0, 100, 60)
+		}
+		SpawnEntityGroupFromTable(Paths)
+	}
+}
+
+::DMG_BIT_NAMES <- {}
+DMG_BIT_NAMES[DMG_GENERIC] 				<- "DMG_GENERIC"
+DMG_BIT_NAMES[DMG_CRUSH] 				<- "DMG_CRUSH"
+DMG_BIT_NAMES[DMG_BULLET] 				<- "DMG_BULLET"
+DMG_BIT_NAMES[DMG_SLASH] 				<- "DMG_SLASH"
+DMG_BIT_NAMES[DMG_BURN] 				<- "DMG_BURN"
+DMG_BIT_NAMES[DMG_VEHICLE] 				<- "DMG_VEHICLE"
+DMG_BIT_NAMES[DMG_FALL] 				<- "DMG_FALL"
+DMG_BIT_NAMES[DMG_BLAST] 				<- "DMG_BLAST"
+DMG_BIT_NAMES[DMG_CLUB] 				<- "DMG_CLUB"
+DMG_BIT_NAMES[DMG_SHOCK] 				<- "DMG_SHOCK"
+DMG_BIT_NAMES[DMG_SONIC] 				<- "DMG_SONIC"
+DMG_BIT_NAMES[DMG_ENERGYBEAM] 			<- "DMG_ENERGYBEAM"
+DMG_BIT_NAMES[DMG_PREVENT_PHYSICS_FORCE]<- "DMG_PREVENT_PHYSICS_FORCE"
+DMG_BIT_NAMES[DMG_NEVERGIB] 			<- "DMG_NEVERGIB"
+DMG_BIT_NAMES[DMG_ALWAYSGIB] 			<- "DMG_ALWAYSGIB"
+DMG_BIT_NAMES[DMG_DROWN] 				<- "DMG_DROWN"
+DMG_BIT_NAMES[DMG_PARALYZE] 			<- "DMG_PARALYZE"
+DMG_BIT_NAMES[DMG_NERVEGAS] 			<- "DMG_NERVEGAS"
+DMG_BIT_NAMES[DMG_POISON] 				<- "DMG_POISON"
+DMG_BIT_NAMES[DMG_RADIATION] 			<- "DMG_RADIATION"
+DMG_BIT_NAMES[DMG_DROWNRECOVER] 		<- "DMG_DROWNRECOVER"
+DMG_BIT_NAMES[DMG_ACID] 				<- "DMG_ACID/DMG_CRIT"
+DMG_BIT_NAMES[DMG_SLOWBURN] 			<- "DMG_SLOWBURN"
+DMG_BIT_NAMES[DMG_REMOVENORAGDOLL] 		<- "DMG_REMOVENORAGDOLL"
+DMG_BIT_NAMES[DMG_PHYSGUN] 				<- "DMG_PHYSGUN"
+DMG_BIT_NAMES[DMG_PLASMA] 				<- "DMG_PLASMA"
+DMG_BIT_NAMES[DMG_AIRBOAT] 				<- "DMG_AIRBOAT"
+DMG_BIT_NAMES[DMG_DISSOLVE] 			<- "DMG_DISSOLVE"
+DMG_BIT_NAMES[DMG_BLAST_SURFACE] 		<- "DMG_BLAST_SURFACE"
+DMG_BIT_NAMES[DMG_DIRECT] 				<- "DMG_DIRECT"
+DMG_BIT_NAMES[DMG_BUCKSHOT] 			<- "DMG_BUCKSHOT"
+/**
+ * @param {integer} bits
+ */
+function ROOT::PrintDamageBits(bits)
+{
+	for (local i = 0; i < 32; i++) {
+		local bit = 1 << i
+		if(bits & bit)
+			printl("Damage has "+DMG_BIT_NAMES[bit])
+	}
+}
+
+/*
+  =============================
+  === END OF MISC FUNCTIONS ===
+  =============================
+*/
+
+/*
+  ==============================
+  === BENCHMARKING FUNCTIONS ===
+  ==============================
+*/
 
 //// Developer?
 // RealTime() // returns real time (independent of game) in seconds
@@ -4436,6 +4875,18 @@ function ROOT::PrintBenchmarkTime(text = "")
 	else 
 		StopBenchmark()
 }
+
+/*
+  =====================================
+  === END OF BENCHMARKING FUNCTIONS ===
+  =====================================
+*/
+
+/*
+  ==========================
+  === CONDHOOK FUNCTIONS ===
+  ==========================
+*/
 
 // TODO: Add to Snippets
 /**
@@ -4501,93 +4952,14 @@ function ROOT::OnRemoveCondListener(cond, name, func)
 	// ApplyAbsVelocityImpulse(Vector(0, 0, 300))
 }) */
 
-/**
- * @param {string} convar
- * @param {any} value
- */
-function ROOT::SetCvar(convar, value, admin_notify = false, notify_all = false)
-{
-	if(!IsConvarAllowed(convar))
-	{
-		PrintToChatAllF("\x07FF4040:SetCvar: \x01Warning Cvar \"\x03%s\x01\" is Not on the Allowlist!")
-		// PrintToAdmins(3, "\x07FF0000fatcat_library::SetCvar: \x01Warning Cvar \"\x03" + convar + "\x01\" is Not on the Allowlist!")
-		// PrintToAdmins(2, "fatcat_library::SetCvar: Warning Cvar \"" + convar + "\" is Not on the Allowlist!")
-		return
-	}
+/*
+  =================================
+  === END OF CONDHOOK FUNCTIONS ===
+  =================================
+*/
 
-	Convars.SetValue(convar, value)
-	if( notify_all )
-		PrintToChatAll("Server cvar \'" + convar + "\' changed to " + value)
-	else if( admin_notify )
-		PrintToAdmins(3, "Server cvar \'" + convar + "\' changed to " + value)
-}
 
-function ROOT::IsPotato()
-	return "__potato" in ROOT
-/**
- * @param {CBaseEntity|string} target
- */
-function ROOT::EntFireNew(target, action, input = "", delay = -1, activator = null, caller = null)
-{
-	if(typeof target != "string" && target.IsPlayer() && action == "RunScriptCode")
-	{
-		target.RunScriptCode(input, delay)
-		return
-	}
-		
-	if(type(target) == "string")
-		DoEntFire(target, action, input, delay, activator, caller)
-	else if(type(target) == "instance")
-		EntFireByHandle(target, action, input, delay, activator, caller)
-	PurgeString(action)
-	PurgeString(input)
-}
 
-function ROOT::CreateKillIcon(icon)
-{
-	if(FindByClassname(null, icon))
-		return FindByClassname(null, icon)
-	local classicon = SpawnEntityFromTable( "info_target", { classname = icon })
-	// dont know if we want to Create a class icon forever
-	// and access it after puting into a global variable
-	// ROOT[icon] <- classicon
-	PurgeString(icon)
-	return classicon;
-}
-
-function ROOT::PurgeString(string)
-{
-	if(!("TestPurgeString" in FatCatLibSettings))
-		SetLibrarySettings()
-	if(FatCatLibSettings["TestPurgeString"] == false)
-		return
-
-	if ( !string || !( 0 in string ) )
-		return
-
-	local temp = CreateByClassname( "info_null" )
-	SetPropString( temp, "m_iName", string )
-	SetPropBool( temp, "m_bForcePurgeFixedupStrings", true )
-	temp.DispatchSpawn()
-	// temp.Kill()
-}
-
-function ROOT::GetClientConVar(cvar, entindex)
-	return Convars.GetClientConvarValue(cvar, entindex)
-
-function ROOT::CreateTestTank(origin = Vector(0, 0, 0), angles = QAngle(0, 0, 0))
-{
-	if(FindByName(null, "Test_Tank"))
-		FindByName(null, "Test_Tank").Kill()
-
-	local tank = SpawnEntityFromTable("tank_boss", {
-		targetname = "Test_Tank"
-		health = (1<<31) - 1
-	})
-	tank.SetAbsOrigin(origin)
-	tank.SetAbsAngles(angles)
-	return tank
-}
 /**
  * @param {table} trace
  */
@@ -4619,11 +4991,7 @@ function ROOT::DrawTraceHull(trace, starting_color = Vector(255, 0, 0), ending_c
  */
 function ROOT::DeprecatedWarning(info1, info2)
 	error(format("FatCatLibrary::%s  :  %s on Line %i is running a Deprecated Version of %s\n", info1.func, info2.src, info2.line, info1.func))
-/**
- * @param {CBaseEntity} entity
- */
-function ROOT::IsEntityAProjectile(entity)
-	return startswith(entity.GetClassname(), "tf_projectile")
+
 
 function ROOT::PrecacheObject(thing)
 {
@@ -4645,7 +5013,13 @@ function ROOT::PrecacheObject(thing)
 	else if ( ret == -1 || ret == false )
 		throw format("Failed to Precache Object \"%s\"", thing)
 }
-//// Math
+
+/*
+  ======================
+  === MATH FUNCTIONS ===
+  ======================
+*/
+
 ::MATH <- {
 	/**
 	 * @param {integer} b
@@ -4743,10 +5117,37 @@ function ROOT::PrecacheObject(thing)
 	 * @param {integer} num
 	 */
 	function OneInChance(num)
-	{
 		return RandomChance() <= (1.0/num.tofloat())
+
+	/**
+	 * @return {integer} The Seconds since 12:00 AM, 0 - 86399
+	 */
+	function TimeOfDay()
+	{
+		local cur_time = {}
+		LocalTime(cur_time)
+
+		local ActualTime = 0
+		ActualTime += cur_time.hour * SECPERHOUR
+		ActualTime += cur_time.minute * SECPERMIN
+		ActualTime += cur_time.second
+
+		return ActualTime
 	}
 }
+
+/*
+  =============================
+  === END OF MATH FUNCTIONS ===
+  =============================
+*/
+
+/*
+  ======================
+  === VECTOR METHODS ===
+  ======================
+*/
+
 /**
  * @returns {Vector}
  */
@@ -4783,6 +5184,19 @@ function Vector::DistanceTo(point2)
 		return -1
 	}
 }
+
+/*
+  =============================
+  === END OF VECTOR METHODS ===
+  =============================
+*/
+
+/*
+  ========================
+  === VECTOR2D METHODS ===
+  ========================
+*/
+
 /**
  * @returns {Vector2D}
  */
@@ -4793,25 +5207,36 @@ function Vector2D::Normalize()
 	return new
 }
 
-function ROOT::DummyB( ... )
-	return true
-function ROOT::DummyN( ... )
-	return 1
-function ROOT::DummyV( ... )
-	return Vector()
+/*
+  ===============================
+  === END OF VECTOR2D METHODS ===
+  ===============================
+*/
 
-
+/*
+  ============================
+  === DEPRECATED FUNCTIONS ===
+  ============================
+*/
+/**
+ * @deprecated Use MATH.Min instead.
+ */
 function ROOT::min(a, b)
 {
 	DeprecatedWarning(getstackinfos(1), getstackinfos(2))
 	return (b < a) ? b : a;
 }
+/**
+ * @deprecated use MATH.Max instead.
+ */
 function ROOT::max(a, b)
 {
 	DeprecatedWarning(getstackinfos(1), getstackinfos(2))
 	return (a < b) ? b : a;
 }
-
+/**
+ * @deprecated use MATH.Clamp instead.
+ */
 function ROOT::clamp( val, minVal, maxVal )
 {
 	DeprecatedWarning(getstackinfos(1), getstackinfos(2))
@@ -4824,6 +5249,9 @@ function ROOT::clamp( val, minVal, maxVal )
 	else
 		return val;
 }
+/**
+ * @deprecated use MATH.RemapVal instead.
+ */
 function ROOT::remapValue(val, A, B, C, D)
 {
 	DeprecatedWarning(getstackinfos(1), getstackinfos(2))
@@ -4831,6 +5259,9 @@ function ROOT::remapValue(val, A, B, C, D)
 		return val >= B ? D : C;
 	return C + (D - C) * (val - A) / (B - A);
 }
+/**
+ * @deprecated use MATH.RemapValClamped instead.
+ */
 function ROOT::remapValueClamped(val, A, B, C, D)
 {
 	DeprecatedWarning(getstackinfos(1), getstackinfos(2))
@@ -4841,25 +5272,59 @@ function ROOT::remapValueClamped(val, A, B, C, D)
 
 	return C + (D - C) * cVal;
 }
+/**
+ * @deprecated use MATH.ConvertRadiusToSndLvl instead.
+ */
 function ROOT::ConvertRadiusToSndLvl(radius)
 {
 	DeprecatedWarning(getstackinfos(1), getstackinfos(2))
 	return (40 + (20 * log10(radius / 36.0))).tointeger()
 }
-// TODO: Add to Snippets
-function ROOT::CreateParticle(particle, origin, angle = QAngle(-90, 0, 0))
+
+/**
+ * @param {CTFPlayer} player
+ * @deprecated use player.GetWeaponInSlot instead.
+ */
+function ROOT::GetWeaponInSlot(player, slot = 0)
 {
-	local temp = SpawnEntityFromTable("info_particle_system", {effect_name = particle})
-	temp.SetAbsOrigin(origin)
-	temp.SetAbsAngles(angle)
-	temp.AcceptInput("Start", "", null, null)
-	EntFireNew(temp, "Stop", "", TICK_DUR*3)
-	EntFireNew(temp, "Kill", "", TICK_DUR*5)
-	return temp
+	if( !player ) return null
+	DeprecatedWarning(getstackinfos(1), getstackinfos(2))
+	return player.GetWeaponInSlot(slot)
 }
+
+/**
+ * @deprecated use MATH.TimeOfDay instead.
+ */
+function ROOT::GetTimeOfDay()
+{
+	DeprecatedWarning(getstackinfos(1), getstackinfos(2))
+	local cur_time = {}
+	LocalTime(cur_time)
+
+	local ActualTime = 0
+	ActualTime += cur_time.hour * SECPERHOUR
+	ActualTime += cur_time.minute * SECPERMIN
+	ActualTime += cur_time.second
+
+	return ActualTime
+}
+
+/*
+  ===================================
+  === END OF DEPRECATED FUNCTIONS ===
+  ===================================
+*/
+
 
 if(!("CORROSION_ICON" in ROOT))
 	::CORROSION_ICON <- CreateKillIcon("infection_acid_puddle")
+
+/*
+  ==================================
+  === CUSTOM EXPLOSION FUNCTIONS ===
+  ==================================
+*/
+
 ////
 /**
  * Creates a base explosion to use
@@ -5073,124 +5538,18 @@ function ROOT::CreateSlamAoE(table)
 		entity = table.owner
 	})
 }
-/**
- * Creates a Pickup
- * 
- * @param {Vector} 		origin 		The position where to spawn the Pickup.
- * @param {Vector} 		angles 		The angles to spawn the Pickup with.
- * @param {Vector} 		velocity 	The Vecocity to spawn the Pickup with.
- * @param {integer} 	team 		Which Team can pick this up.
- * @param {string} 		model 		The Model for the Pickup.
- * @param {string} 		sound 		Optional sound to cache and play on pickup.
- * @param {float} 		lifetime 	How long the Pickup should live for.
- * @param {function} 	func	 	What function to run when the pickup is picked up
- */
-function ROOT::CreatePickup(table)
-{
-	if ( type(table) != "table" )
-		return null
 
-	PrecacheModel(table.model)
-	PrecacheSound(table.sound)
-	
-	local pickup = SpawnEntityFromTable("item_armor", {
-		origin = table.origin
-		angles = table.angles
-		teamnum = table.team
-		spawnflags = (1 << 30) // no bot support
-	})
+/*
+  =========================================
+  === END OF CUSTOM EXPLOSION FUNCTIONS ===
+  =========================================
+*/
 
-	pickup.SetModel(table.model)
-	pickup.SetSolid(SOLID_BBOX)
-	pickup.SetMoveType(MOVETYPE_FLYGRAVITY, 1)
-	pickup.SetAbsVelocity(table.velocity)
-	// EnableStringPurge(pickup)
-
-	GetScope(pickup).life_time <- Time() + table.lifetime
-	GetScope(pickup).LifeTime <- function() { if(Time() >= life_time) {self.Kill()} }
-	AddThinkToEnt(pickup, "LifeTime")
-	GetScope(pickup).OnPlayerTouch <- table.func
-	pickup.ConnectOutput( "OnPlayerTouch", "OnPlayerTouch" )
-
-	return pickup
-}
-/**
- * @param {table} data
- */
-function ROOT::CreateTankPath(data)
-{
-	foreach (PathName, PathData in data)
-	{
-		local Paths = {}
-		foreach (i, TrackData in PathData)
-		{
-			Paths[i] <- {}
-			Assert("origin" in TrackData, "Missing origin in Path Data! ABORTING!!")
-
-			local origin = TrackData.origin
-			local target = "target" in TrackData ? TrackData.target : format("%s_%i", PathName, i + 2)
-
-			printl(target)
-			Paths[i].path_track <- {
-				origin		= origin
-				targetname 	= i == 0 ? PathName : format("%s_%i", PathName, i + 1)
-				target		= target
-			}
-			foreach(k, v in TrackData)
-			{
-				if(startswith(k, "OnPass"))
-					Paths[i].path_track[k] <- v
-			}
-			printl("Created a path_track "+format("%s_%i", PathName, i + 1)+" at "+origin.ToKVString()+" with a target of " +target)
-			DebugDrawBox(origin, Vector(-12,-12,-12), Vector(12, 12, 12), 255, 0, 0, 100, 60)
-		}
-		SpawnEntityGroupFromTable(Paths)
-	}
-}
-
-::DMG_BIT_NAMES <- {}
-DMG_BIT_NAMES[DMG_GENERIC] 				<- "DMG_GENERIC"
-DMG_BIT_NAMES[DMG_CRUSH] 				<- "DMG_CRUSH"
-DMG_BIT_NAMES[DMG_BULLET] 				<- "DMG_BULLET"
-DMG_BIT_NAMES[DMG_SLASH] 				<- "DMG_SLASH"
-DMG_BIT_NAMES[DMG_BURN] 				<- "DMG_BURN"
-DMG_BIT_NAMES[DMG_VEHICLE] 				<- "DMG_VEHICLE"
-DMG_BIT_NAMES[DMG_FALL] 				<- "DMG_FALL"
-DMG_BIT_NAMES[DMG_BLAST] 				<- "DMG_BLAST"
-DMG_BIT_NAMES[DMG_CLUB] 				<- "DMG_CLUB"
-DMG_BIT_NAMES[DMG_SHOCK] 				<- "DMG_SHOCK"
-DMG_BIT_NAMES[DMG_SONIC] 				<- "DMG_SONIC"
-DMG_BIT_NAMES[DMG_ENERGYBEAM] 			<- "DMG_ENERGYBEAM"
-DMG_BIT_NAMES[DMG_PREVENT_PHYSICS_FORCE]<- "DMG_PREVENT_PHYSICS_FORCE"
-DMG_BIT_NAMES[DMG_NEVERGIB] 			<- "DMG_NEVERGIB"
-DMG_BIT_NAMES[DMG_ALWAYSGIB] 			<- "DMG_ALWAYSGIB"
-DMG_BIT_NAMES[DMG_DROWN] 				<- "DMG_DROWN"
-DMG_BIT_NAMES[DMG_PARALYZE] 			<- "DMG_PARALYZE"
-DMG_BIT_NAMES[DMG_NERVEGAS] 			<- "DMG_NERVEGAS"
-DMG_BIT_NAMES[DMG_POISON] 				<- "DMG_POISON"
-DMG_BIT_NAMES[DMG_RADIATION] 			<- "DMG_RADIATION"
-DMG_BIT_NAMES[DMG_DROWNRECOVER] 		<- "DMG_DROWNRECOVER"
-DMG_BIT_NAMES[DMG_ACID] 				<- "DMG_ACID/DMG_CRIT"
-DMG_BIT_NAMES[DMG_SLOWBURN] 			<- "DMG_SLOWBURN"
-DMG_BIT_NAMES[DMG_REMOVENORAGDOLL] 		<- "DMG_REMOVENORAGDOLL"
-DMG_BIT_NAMES[DMG_PHYSGUN] 				<- "DMG_PHYSGUN"
-DMG_BIT_NAMES[DMG_PLASMA] 				<- "DMG_PLASMA"
-DMG_BIT_NAMES[DMG_AIRBOAT] 				<- "DMG_AIRBOAT"
-DMG_BIT_NAMES[DMG_DISSOLVE] 			<- "DMG_DISSOLVE"
-DMG_BIT_NAMES[DMG_BLAST_SURFACE] 		<- "DMG_BLAST_SURFACE"
-DMG_BIT_NAMES[DMG_DIRECT] 				<- "DMG_DIRECT"
-DMG_BIT_NAMES[DMG_BUCKSHOT] 			<- "DMG_BUCKSHOT"
-/**
- * @param {integer} bits
- */
-function ROOT::PrintDamageBits(bits)
-{
-	for (local i = 0; i < 32; i++) {
-		local bit = 1 << i
-		if(bits & bit)
-			printl("Damage has "+DMG_BIT_NAMES[bit])
-	}
-}
+/*
+  ==============================
+  === CHAT TRIGGER FUNCTIONS ===
+  ==============================
+*/
 
 if(!("ChatTriggers" in ROOT))
 	::ChatTriggers <- {}
@@ -5218,35 +5577,19 @@ function ROOT::AddChatTrigger(trigger, callback, ...)
 }
 function ROOT::RegisterAdminTrigger(trigger, callback)
 	AddChatTrigger(trigger, callback, "IsAdmin")
-/**
- * @param {string|[string]} trigger
- */
-function ROOT::RemoveChatTrigger(trigger)
-{
-	local errors = []
-	if(typeof trigger == "string")
-	{
-		if(trigger in ChatTriggers)
-			delete ChatTriggers[trigger]
-	}
-	else if(typeof trigger == "array")
-	{
-		foreach (trig in trigger)
-		{
-			if(typeof trig != "string")
-			{
-				errors.append(format("AddChatTrigger: Item %s : Unknown Type %s when Removing Chat Trigger", trig.tostring(), typeof trig))
-				continue
-			}
-			if(trig in ChatTriggers)
-				delete ChatTriggers[trig]
-		}
-	}
-	else throw format("AddChatTrigger: Unknown Type %s when Removing Chat Trigger", typeof trigger)
-	if(errors.len() != 0)
-		PrintArray(errors)
-}
 
+/*
+  =====================================
+  === END OF CHAT TRIGGER FUNCTIONS ===
+  =====================================
+*/
+
+
+/*
+  =================================
+  === DAMAGE CALLBACK FUNCTIONS ===
+  =================================
+*/
 
 if(!("RegisteredDmgCallbacks" in ROOT))
 	::RegisteredDmgCallbacks <- {
@@ -5342,22 +5685,17 @@ function ParamsToDamageCallbackData(params)
 		others_damaged		= params.damaged_other_players
 }
 
-/**
- * Returns the seconds of the day
- * i.e. 0 - 86399
- */
-function ROOT::GetTimeOfDay()
-{
-	local cur_time = {}
-	LocalTime(cur_time)
+/*
+  ========================================
+  === END OF DAMAGE CALLBACK FUNCTIONS ===
+  ========================================
+*/
 
-	local ActualTime = 0
-	ActualTime += cur_time.hour * SECPERHOUR
-	ActualTime += cur_time.minute * SECPERMIN
-	ActualTime += cur_time.second
-
-	return ActualTime
-}
+/*
+  ================================
+  === PLAYER PARSING FUNCTIONS ===
+  ================================
+*/
 
 if(!("Players" in ROOT))
 	::Players <- []
@@ -5414,6 +5752,19 @@ function ROOT::ValidatePlayerArray()
 	}
 	return true	
 }
+
+/*
+  =======================================
+  === END OF PLAYER PARSING FUNCTIONS ===
+  =======================================
+*/
+
+/*
+  ===========================
+  === ADVANCED STAT STUFF ===
+  ===========================
+*/
+
 if(!("m_iDamage" in GetScope(PlayerManager)))
 	GetScope(PlayerManager).m_iDamage <- array(MAX_CLIENTS+1, 0)
 
@@ -5423,9 +5774,17 @@ if(!("m_iDamageBoss" in GetScope(PlayerManager)))
 if(!("m_iHealing" in GetScope(PlayerManager)))
 	GetScope(PlayerManager).m_iHealing <- array(MAX_CLIENTS+1, 0)
 
-function ROOT::GetGameText()
-	return FindByName(null, "GlobalGameText") ? FindByName(null, "GlobalGameText") : SpawnEntityFromTable("game_text", {targetname = "GlobalGameText", holdtime = 0.5})
+/*
+  ==================================
+  === END OF ADVANCED STAT STUFF ===
+  ==================================
+*/
 
+/*
+  ================================
+  === SPAWN CALLBACK FUNCTIONS ===
+  ================================
+*/
 
 if(!("PostSpawnCallbacks" in ROOT))
 	::PostSpawnCallbacks <- {}
@@ -5518,122 +5877,109 @@ CreateThinker("OnEntityPostSpawn" , function() {
 })
 */
 
-// if(FindByName(null, "OnCondition"))
-	// FindByName(null, "OnCondition").Kill()
+/*
+  =======================================
+  === END OF SPAWN CALLBACK FUNCTIONS ===
+  =======================================
+*/
+
+/*
+  =============================
+  === ONCOND HOOK FUNCTIONS ===
+  =============================
+*/
 
 if(!("OnCondPostHooks" in FatCatLibSettings))
 	SetLibrarySettings()
 
 if(FatCatLibSettings["OnCondPostHooks"] == true) 
 {
-// remove indent
-CreateThinker("OnCondition", function() {
-	local funcScope = GetScope(FindByName(null, "OnCondition"))
+	CreateThinker("OnCondition", function() {
+		local funcScope = GetScope(FindByName(null, "OnCondition"))
 
-	if(!("OnAddCond" in funcScope) || type(funcScope.OnAddCond) != "array")
-	{
-		funcScope.OnAddCond <- array(TF_COND_RANGE)
-		for (local i = 0; i < TF_COND_RANGE; i++)
-			funcScope.OnAddCond[i] = {}
-	}
-	if(!("OnRemoveCond" in funcScope) || type(funcScope.OnRemoveCond) != "array")
-	{
-		funcScope.OnRemoveCond <- array(TF_COND_RANGE)
-		for (local i = 0; i < TF_COND_RANGE; i++)
-			funcScope.OnRemoveCond[i] = {}
-	}
-
-	for (local CondNum = 0; CondNum < TF_COND_RANGE; CondNum++) 
-	{
-		local condition = funcScope.OnAddCond[CondNum]
-		if(condition.len() == 0)
-			continue
-		foreach (_name, func in condition)
+		if(!("OnAddCond" in funcScope) || type(funcScope.OnAddCond) != "array")
 		{
-			foreach (player in Players)
-			{
-				local scope = GetScope(player)
-				if(scope == null)
-					continue
-				if(!("CheckedAddconds" in scope))
-					scope.CheckedAddconds <- array(TF_COND_RANGE, false)
-				
-				local WasInCond = scope.CheckedAddconds[CondNum]
-
-				if(!WasInCond && player.InCond(CondNum))
-				{
-					// printl("Called OnAddCond for cond "+CondNum+" Frame: "+GetFrameCount())
-					func.call(player)
-				}
-
-				scope.CheckedAddconds[CondNum] = player.InCond(CondNum)
-			}
+			funcScope.OnAddCond <- array(TF_COND_RANGE)
+			for (local i = 0; i < TF_COND_RANGE; i++)
+				funcScope.OnAddCond[i] = {}
 		}
-	}
-
-	for (local CondNum = 0; CondNum < TF_COND_RANGE; CondNum++) 
-	{
-		local condition = funcScope.OnRemoveCond[CondNum]
-		if(condition.len() == 0)
-			continue
-		foreach (_name, func in condition)
+		if(!("OnRemoveCond" in funcScope) || type(funcScope.OnRemoveCond) != "array")
 		{
-			foreach (player in Players)
-			{
-				local scope = GetScope(player)
-				if(!("CheckedAddconds" in scope))
-					scope.CheckedAddconds <- array(TF_COND_RANGE, false)
-				
-				local WasInCond = scope.CheckedAddconds[CondNum]
-
-				if(WasInCond && !player.InCond(CondNum))
-				{
-					// printl("Called OnRemoveCond for cond "+CondNum+" Frame: "+GetFrameCount())
-					func.call(player)
-				}
-				scope.CheckedAddconds[CondNum] = player.InCond(CondNum)
-			}
+			funcScope.OnRemoveCond <- array(TF_COND_RANGE)
+			for (local i = 0; i < TF_COND_RANGE; i++)
+				funcScope.OnRemoveCond[i] = {}
 		}
-	}
 
-	return -1
-
-	/* foreach (player in Players)
-	{
-		local scope = GetScope(player)
-		if(!("CheckedAddconds" in scope))
-			scope.CheckedAddconds <- array(TF_COND_RANGE, false) //conds go from 0 (TF_COND_AIMING) to 130 (TF_COND_IMMUNE_TO_PUSHBACK)
-
-		for (local cond = 0; cond < TF_COND_RANGE; cond++) 
+		for (local CondNum = 0; CondNum < TF_COND_RANGE; CondNum++) 
 		{
-			local WasInCond = scope.CheckedAddconds[cond]
-
-			if(ProcessOnAdd)
+			local condition = funcScope.OnAddCond[CondNum]
+			if(condition.len() == 0)
+				continue
+			foreach (_name, func in condition)
 			{
-				if(!WasInCond && player.InCond(cond))
+				foreach (player in Players)
 				{
-					printl("Called OnAddCond for cond "+cond+" Frame: "+GetFrameCount())
-					foreach (_name, func in funcScope.OnAddCond[cond])
+					local scope = GetScope(player)
+					if(scope == null)
+						continue
+					if(!("CheckedAddconds" in scope))
+						scope.CheckedAddconds <- array(TF_COND_RANGE, false)
+					
+					local WasInCond = scope.CheckedAddconds[CondNum]
+
+					if(!WasInCond && player.InCond(CondNum))
+					{
+						// printl("Called OnAddCond for cond "+CondNum+" Frame: "+GetFrameCount())
 						func.call(player)
-				}
-			}
-			else if(ProcessOnRemove)
-			{
-				if(WasInCond && !player.InCond(cond))
-				{
-					// printl("Called OnRemoveCond for cond "+cond+" Frame: "+GetFrameCount())
-					foreach (_name, func in funcScope.OnRemoveCond[cond])
-						func.call(player)
-				}
-			}
+					}
 
-			scope.CheckedAddconds[cond] = player.InCond(cond)
+					scope.CheckedAddconds[CondNum] = player.InCond(CondNum)
+				}
+			}
 		}
-	} */
-}, THINKER_PERSIST)
+
+		for (local CondNum = 0; CondNum < TF_COND_RANGE; CondNum++) 
+		{
+			local condition = funcScope.OnRemoveCond[CondNum]
+			if(condition.len() == 0)
+				continue
+			foreach (_name, func in condition)
+			{
+				foreach (player in Players)
+				{
+					local scope = GetScope(player)
+					if(!("CheckedAddconds" in scope))
+						scope.CheckedAddconds <- array(TF_COND_RANGE, false)
+					
+					local WasInCond = scope.CheckedAddconds[CondNum]
+
+					if(WasInCond && !player.InCond(CondNum))
+					{
+						// printl("Called OnRemoveCond for cond "+CondNum+" Frame: "+GetFrameCount())
+						func.call(player)
+					}
+					scope.CheckedAddconds[CondNum] = player.InCond(CondNum)
+				}
+			}
+		}
+
+		return -1
+	}, THINKER_PERSIST)
 }
 else if(FindByName(null, "OnCondition"))
 	FindByName(null, "OnCondition").Kill()
+
+/*
+  ===================================
+  === END OF ONCOND HOOK FUNCTIONS ===
+  ====================================
+*/
+
+/*
+  =============================
+  === CUSTOM EVENT HANDLING ===
+  =============================
+*/
 
 // Makes Custom Events to listen to
 ::ChaosCustomEvents <- {
@@ -6356,16 +6702,42 @@ else if(FindByName(null, "OnCondition"))
 }
 __CollectGameEventCallbacks(ChaosCustomEvents)
 
+/*
+  ====================================
+  === END OF CUSTOM EVENT HANDLING ===
+  ====================================
+*/
+
+/*
+  ========================
+  === LIBRARY COMMANDS ===
+  ========================
+*/
+
 AddChatTrigger(["lib_version", "lib_versions"], function(_player, ...) {
 	PrintToChatAllF("\x07D000D0► FatCatLib ◄\x03 Version\x01: \x04%s\x01 - \x03sub_version\x01: \x04%s\x01", FatCatLibVersion.version, FatCatLibVersion.sub_version.tostring())
 
 	foreach (item, value in FatCatLibScriptsVersion)
 		PrintToChatAllF("\x07D000D0► FatCatLib ◄\x03 %s\x01: \x04%s\x01", item, value)
 })
+
 AddChatTrigger("lib_info", function(_player, ...) {
 	PrintToChatAllF("\x07D000D0► FatCatLib ◄\x03 Version\x01: \x04%s\x01 - \x03sub_version\x01: \x04%s\x01", FatCatLibVersion.version, FatCatLibVersion.sub_version.tostring())
 })
-RegisterAdminTrigger("lib_force", function(_player, ...) {
+
+/*
+  ===============================
+  === END OF LIBRARY COMMANDS ===
+  ===============================
+*/
+
+/*
+  ==============================
+  === LIBRARY ADMIN COMMANDS ===
+  ==============================
+*/
+
+RegisterAdminTrigger("lib_force", function(_, ...) {
 	if("FatCatLibForce" in ROOT)
 		::FatCatLibForce <- !FatCatLibForce
 	else
@@ -6381,58 +6753,6 @@ RegisterAdminTrigger("noclip", function(player, ...) {
 	else 
 		player.SetMoveType(MOVETYPE_NOCLIP, MOVECOLLIDE_DEFAULT)
 })
-/* 
-AddChatTrigger("addattr", function(player, ...) {
-	if(!player)
-		return
-	if(player.GetSteamID() != "[U:1:969530867]")
-		return
-
-	printl("start")
-
-	local attrib = ""
-
-	local ReadingAttrib = false
-	foreach (arg in vargv)
-	{
-		if(ReadingAttrib)
-		{
-			attrib += arg
-			continue
-		}
-
-		local escape = "\x27"
-
-		local test = 39
-
-		printl(test.tochar())
-
-		printf("%X\n", test.tochar())
-
-		printl(escape)
-
-		// printf("%X\n", escape.tochar())
-
-		printl(arg[arg.len()-1])
-		printl(arg[0])
-
-		printl("endof arg == '? "+(arg[arg.len()-1] == escape))
-		printl("startof arg == '? "+(arg[0] == escape))
-		
-		if(arg[arg.len()-1] == "\x27")
-			break
-			
-		if(startswith(arg, "\x39"))
-		{
-			attrib += arg
-			ReadingAttrib = true
-			continue
-		}
-	}
-	printl(attrib)
-	printl("end")
-
-}, "IsAdmin") */
 
 RegisterAdminTrigger("disable_errors", function(_, ...) {
 	SetLibrarySettings({
@@ -6441,7 +6761,7 @@ RegisterAdminTrigger("disable_errors", function(_, ...) {
 	})
 })
 
-RegisterAdminTrigger("enable_errors", function(__ORIGINAL_Regenerate, ...) {
+RegisterAdminTrigger("enable_errors", function(_, ...) {
 	SetLibrarySettings({
 		"ConsoleErrors" : false
 		"PublicErrors" : true
@@ -6517,7 +6837,6 @@ RegisterAdminTrigger("test_tank", function(player, ...) {
 	local tank = CreateTestTank(trace.pos, player.EyeAngles())
 
 	tank.AcceptInput("SetSpeed", "0", player, player)
-	tank.AcceptInput("$SetTurnRate", "0", player, player)
 	return player.PrintToChat("Created A Test Tank")
 })
 
@@ -6552,6 +6871,12 @@ RegisterAdminTrigger("uber", function(player, ...) {
 
 	return player.PrintToChat("Set your uber to "+uber+"%")
 })
+
+/*
+  =====================================
+  === END OF LIBRARY ADMIN COMMANDS ===
+  =====================================
+*/
 
 
 // the admins wowow

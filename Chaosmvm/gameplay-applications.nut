@@ -1,7 +1,7 @@
 if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
-SetScriptVersion("GameplayApplications", "5.0.0")
+SetScriptVersion("GameplayApplications", "5.0.1")
 
 local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", THINKER_PERSIST)
 
@@ -162,11 +162,11 @@ AddChatTrigger("equip" function(player, ...) {
 
 	if(player.IsGHeavy())
 	{
-		player.PrintToChat("This item is too dangerous to equip right now...")
+		player.PrintToChat("Your item is too dangerous to equip right now...")
 		return
 	}
 
-	if((startswith(item, "brea") || item == "1") && player_class == TF_CLASS_HEAVYWEAPONS)
+	if((item == "bread" || item == "1") && player_class == TF_CLASS_HEAVYWEAPONS)
 		ret_item = ["tf_weapon_fists", 1100]
 	else if((item == "mark" || item == "jarate" || item == "2") && player_class == TF_CLASS_SNIPER)
 		ret_item = ["tf_weapon_jar", 1105]
@@ -177,7 +177,7 @@ AddChatTrigger("equip" function(player, ...) {
 		player.PrintToChat("Incorrect Arguments, Allowed arguments are . . .")
 		player.PrintToChat("\"bread\" or \"1\": Gives Bread Bite")
 		player.PrintToChat("\"mark\" or \"2\": Gives Self-Aware Beauty Mark")
-		player.PrintToChat("\"mutated\" or \"3\": Gives Mutated Milk\n")
+		player.PrintToChat("\"mutated\" or \"3\": Gives Mutated Milk")
 		return
 	}
 
@@ -319,8 +319,17 @@ RegisterSpawnCallback("tf_projectile_rocket", "BlutsaugerRocket", function(entit
 
 		EntFireNew(target, "$BotCommand", ActionCommand)
 
-		GetScope(target).EndReprogramTime <- Time() + duration
-		GetScope(target).ReProgrammer <- owner
+		local scope = GetScope(target)
+
+		scope.EndReprogramTime <- Time() + duration
+		scope.ReProgrammer <- owner
+		function scope::OnDeath() {
+			try {
+				printl(self)
+			}
+			catch(e)
+				printl(e)
+		}
 
 		EmitSoundEx({
 			sound_name = BlutsaugerSettings.sound
@@ -342,7 +351,15 @@ function GameplayThink()
 	foreach (bot in m_aRobots)
 	{
 		if(bot.IsDead())
+		{
+			if(bot.IsReprogrammed())
+			{
+				if("EndReprogramTime" in GetScope(bot)) 
+					delete GetScope(bot).EndReprogramTime
+				bot.RemoveCondEx(TF_COND_REPROGRAMMED, true)
+			}
 			continue
+		}
 
 		if(bot.IsAlive() && !bot.IsReprogrammed())
 			AliveBots += 1
@@ -402,7 +419,6 @@ function GameplayThink()
 			}
 		}
 		
-
 		// 
 		Human.SetGravity(DEFAULT_GRAVITY)
 		Human.RemoveCondEx(TF_COND_SWIMMING_NO_EFFECTS, true)
@@ -427,7 +443,6 @@ function GameplayThink()
 
 		if(activeIDX == TF_WEAPON_TOMISLAV)
 			Human.TranslateToHud("TOMISLAV_HEAT", ("Hits" in GetScope(active) ? GetScope(active).Hits/10 : -1))
-
 
 		if(primaryIDX == TF_WEAPON_TOMISLAV)
 		{
@@ -533,7 +548,6 @@ function ROOT::ModifyCallbackDamage(params, victim, attacker, weapon, inflictor)
 			if(victim.IsPlayer())
 				victim.AddCondEx(TF_COND_MARKEDFORDEATH_SILENT, TICK_DUR, attacker)
 		}
-		// SetPropFloat(victim, "m_flDamageAccumulator", 1.1) // technically adds 1 damage
 		// Minimum falling dmg is 1000
 		params.damage = MATH.Max(-FallingVel * FALL_DMG_MULT, 1000)
 	}
@@ -611,40 +625,6 @@ function ROOT::ProcessChaosWeaponHit(params, victim, attacker, weapon, _inflicto
 		spell_book.ModifySpells(TF_SPELL_HEAL, 5)
 	}
 	break;
-	/* case TF_WEAPON_BLUTSAUGER:
-	{
-		if(!victim.IsPlayer())
-			break
-
-		if(victim.GetTeam() == TF_TEAM_PVE_DEFENDERS)
-			break
-
-		if( !victim.IsValidReprogramTarget() || victim.GetPlayerClass() == TF_CLASS_MEDIC || victim.GetTeam() == TF_TEAM_RED)
-		{
-			attacker.GetWeaponInSlotNew(SLOT_SECONDARY).IncreaseUberChargePercent(BlutsaugerSettings.refund)
-			if(!victim.IsValidReprogramTarget())
-				attacker.TranslateToChat("REPROG_BOT_STRONG", victim.GetUserName())
-			else if(victim.GetPlayerClass() == TF_CLASS_MEDIC)
-				attacker.TranslateToChat("REPROG_BOT_NOT_SUIT", victim.GetUserName())
-			return
-		}
-		TranslateToChatAll("REPROG_BOT_MESSAGE", attacker.GetUserName(), victim.GetUserName())
-
-		EntFireNew(victim, "$BotCommand", "switch_action Mobber -duration "+BlutsaugerSettings.duration)
-
-		// RunWithDelay(@() victim.UndoReprogram(), BlutsaugerSettings.duration)
-
-		GetScope(victim).EndReprogramTime <- Time() + BlutsaugerSettings.duration
-
-		GetScope(victim).ReProgrammer <- attacker
-
-		EmitSoundEx({
-			sound_name = BlutsaugerSettings.sound
-			entity = victim
-			sound_level = MATH.ConvertRadiusToSndLvl(BlutsaugerSettings.sound_radius)
-		})
-	}
-	break; */
 	case TF_WEAPON_BREAD_BITE:
 	{
 		if( !victim.IsPlayer() || !(params.damage_type & DMG_CRITICAL))
@@ -653,11 +633,6 @@ function ROOT::ProcessChaosWeaponHit(params, victim, attacker, weapon, _inflicto
 			break
 				
 		// attacker.PrintToHud("Made Corrosion on " + victim)
-		/* EmitSoundEx({
-			sound_name = ""
-			entity = victim
-			sound_level = 80
-		}) */
 		victim.MakeCorrosion(attacker, weapon)
 	}
 	break;
@@ -678,7 +653,7 @@ RegisterDamageCallback("player", "GameplayPlayer" function(params) {
 
 	if(inflictor && inflictor.GetClassname() == "tf_projectile_rocket" && victim.GetTeam() == TF_TEAM_PVE_INVADERS)
 	{
-		if(!victim.IsInvincible())
+		if(!victim.IsInvincible() && GetScope(inflictor).DamagedPlayer == null)
 			GetScope(inflictor).DamagedPlayer <- victim
 	}
 
@@ -785,20 +760,6 @@ RegisterDamageCallback("tf_zombie", "GameplaySkeletons", function(params) {
 	params.victim.TakeDamageCustom(params.inflictor, params.attacker, null, Vector(), Vector(), 5.0, DMG_GENERIC, TF_DMG_CUSTOM_NO_CALLBACKS)
 })
 
-/* RegisterDamageCallback(["prop_dynamic", "prop_static"], "Attackables", function (params) {
-	if((params.damage_custom & TF_DMG_CUSTOM_IGNORE_EVENTS) || params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
-		return
-
-	local victim 	= params.victim
-	local attacker 	= params.attacker
-	local weapon 	= null
-	local inflictor	= params.inflictor
-
-	if(inflictor && inflictor.GetClassname() == "tf_projectile_rocket")
-		GetScope(inflictor).DidDamage <- false
-}) */
-
-
 
 if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 ::GameplayEvents <- {
@@ -821,11 +782,13 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 	{
 		local victim = params.victim
 		local attacker = params.attacker
+
 		if("OnDeath" in GetScope(victim))
 		{
 			GetScope(victim).OnDeath()
 			delete GetScope(victim).OnDeath
 		}
+
 		if(!attacker)
 			return
 		if(attacker.IsBot())
@@ -862,11 +825,22 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 
 		switch (weaponIDX)
 		{
-			case TF_WEAPON_LOLLICHOP: { spell_book.ModifySpells(TF_SPELL_METEOR, 2, scope.m_iKills, 10) ; return }
-			case TF_WEAPON_SHORT_CIRCUT: { spell_book.ModifySpells(TF_SPELL_LIGHTNING, 2, scope.m_iKills, 10) ; return }
-			case TF_WEAPON_CLAIDHEAMH_MOR: { spell_book.ModifySpells(TF_SPELL_MONOCULUS, 2, scope.m_iKills, 10) ; return }
-			case TF_WEAPON_UNARMED_COMBAT: { spell_book.ModifySpells(TF_SPELL_SKELETON, 2, scope.m_iKills, 10) ; return }
-			case TF_WEAPON_CONSCIENTIOUS_OBJECTOR: { if(scope.m_iKills % 10 == 0 && spell_book.GetSpellCharges().tointeger() != SpellDefaults[spell_book.GetSpellIndex()+2].tointeger()) { attacker.RollSpell() } ; return }
+			case TF_WEAPON_LOLLICHOP:
+				spell_book.ModifySpells(TF_SPELL_METEOR, 2, scope.m_iKills, 10)
+			break
+			case TF_WEAPON_SHORT_CIRCUT:
+				spell_book.ModifySpells(TF_SPELL_LIGHTNING, 2, scope.m_iKills, 10)
+			break
+			case TF_WEAPON_CLAIDHEAMH_MOR: 
+				spell_book.ModifySpells(TF_SPELL_MONOCULUS, 2, scope.m_iKills, 10)
+			break
+			case TF_WEAPON_UNARMED_COMBAT: 
+				spell_book.ModifySpells(TF_SPELL_SKELETON, 2, scope.m_iKills, 10)
+			break
+			case TF_WEAPON_CONSCIENTIOUS_OBJECTOR:
+				if((scope.m_iKills % 10) == 0 && spell_book.GetSpellCharges() != SpellDefaults[spell_book.GetSpellIndex()+2])
+					attacker.RollSpell()
+			break
 		}
 	}
 	function OnScriptEvent_HumanResupply(params)
@@ -887,11 +861,14 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 	}
 	function OnScriptEvent_HumanSpawn(params)
 	{
-		if(!params.player)
-			return
 		local player = params.player
+		if(!player)
+			return
+
 		RunWithDelay(@() player.FixAmmo(), 0.1)
+		
 		local spellbook = player.GetSpellBook()
+
 		foreach (weapon in player.GetAllWeapons())
 		{
 			if(weapon.IsWearable())
