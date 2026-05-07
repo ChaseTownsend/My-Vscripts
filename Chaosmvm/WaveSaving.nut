@@ -1,7 +1,7 @@
 if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
-SetScriptVersion("WaveSave", "1.0.0")
+SetScriptVersion("WaveSave", "1.0.1")
 
 ::CHECKPOINT_ERROR <- "\x07bf4137"
 ::WAVE_SAVE_FILE 	<- "checkpoint.txt"
@@ -73,6 +73,8 @@ function LoadCheckpointCMD()
 		PrintToChatAllF("Something fucked up : %s", e)
 		return
 	}
+
+	::CheckpointCommand <- command
 
 	AddChatTrigger(command, WaveVoteCallback)
 }
@@ -159,11 +161,14 @@ function WaveEndLogic()
 		return	// final wave complete
 	if(CheckpointCommand != "")
 		RemoveChatTrigger(CheckpointCommand)
+		
 	::CheckpointCommand <- SaveWaveData()
 	AddChatTrigger(CheckpointCommand, WaveVoteCallback)
 
 	TranslateToChatAll("CHECKPOINT_CREATED", CheckpointCommand)
 }
+
+LoadCheckpointCMD()
 
 if("WaveSaving" in ROOT) ::WaveSaving.clear()
 ::WaveSaving <- {

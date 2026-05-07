@@ -2,7 +2,7 @@ IncludeScript("fatcat_library")
 PrecacheSound("weapons/teleporter_send.wav")
 PrecacheSound("weapons/teleporter_receive.wav")
 
-SetScriptVersion("longbow_sentry", "1.0.6")
+SetScriptVersion("longbow_sentry", "1.0.7")
 
 ///// Events! /////
 ::longbow_events <- {
@@ -76,6 +76,8 @@ function LongBowSentry()
 
 	self.GetActiveWeapon().PrimaryAttack()
 
+	// local particle = CreateParticle("dxhr_sniper_rail_red", building_blueprint.GetCenter())
+
 	local particle = SpawnEntityFromTable("info_particle_system", {
 		effect_name = "dxhr_sniper_rail_red",
 		origin = building_blueprint.GetCenter(),
@@ -83,15 +85,18 @@ function LongBowSentry()
 	})
 	SetPropEntityArray(particle, "m_hControlPointEnts", building_blueprint, 0)
 	SetPropEntityArray(particle, "m_hControlPointEnts", building_blueprint, 1)
-	EntFireNew(particle, "Kill", null, 6)
 	building_blueprint.Teleport(true, trace.endpos, false, QAngle(), false, Vector())
 
-	local particle2 = SpawnEntityFromTable("info_particle_system", {
-		effect_name = "teleported_red",
-		origin = building_blueprint.GetOrigin(),
-		angles = Vector(0, -90, 0)
-		start_active = 1
-	})
+	EntFireNew(particle, "Kill", "", TICK_DUR*5)
+
+	CreateParticle("teleported_red", building_blueprint.GetOrigin())
+
+	// local particle2 = SpawnEntityFromTable("info_particle_system", {
+	// 	effect_name = "teleported_red",
+	// 	origin = building_blueprint.GetOrigin(),
+	// 	angles = Vector(0, -90, 0)
+	// 	start_active = 1
+	// })
 
 	// if (IsListenServer()) ShowAABB(building_blueprint, Vector4D(255, 125, 0, 0), 10)
 

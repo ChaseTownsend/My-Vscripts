@@ -21,7 +21,7 @@ if(!("CHECKPOINT_ERROR" in getroottable()))
 	::CHECKPOINT_ERROR <- "\x07bf4137"
 
 if("SetScriptVersion" in getroottable())
-	SetScriptVersion("Translations", "1.6.0")
+	SetScriptVersion("Translations", "1.6.1")
 
 ::TRANSLATION_TABLE <- {
 	english = {
@@ -45,17 +45,17 @@ if("SetScriptVersion" in getroottable())
 		MEGACRUSH 				= "MEGA-CRUSH"
 		VITALRESURGENCE 		= "VITAL RESURGENCE"
 		VEHICULARMANNSLAUGHTER 	= "VEHICULAR MANNSLAUGHTER"
-		TEST 					= "Test Ability"
+		TEST 					= "Test Ability" // Dont Translate this
 		NO_MONEY				= "You can't afford this! (Cost: $%s, you have: $%s)" // Dont Translate this, my own project
 		REPROG_BOT_STRONG		= TF_TEAM_COLOR_REPROG_B+"%s\x01 is too resistant and cannot be reprogrammed."
 		REPROG_BOT_NOT_SUIT		= TF_TEAM_COLOR_REPROG_B+"%s\x01 is not suitable for combat and cannot be reprogrammed."
+		REPROG_BOT_MICRO		= TF_TEAM_COLOR_REPROG_B+"%s\x01 is a Micro bot! Reprogramming Micro bots lobotomizes them!" // TODO:
 		REPROG_BOT_LEAVE		= TF_TEAM_COLOR_SPEC+"%s died."
 		REPROG_BOT_MESSAGE 		= TF_TEAM_COLOR_RED+"%s\x01 has reprogrammed "+TF_TEAM_COLOR_REPROG_B+"%s\x01!"
 		//---------------------------------------------------------
 		CHECKPOINT_CREATED		= "\x077c8cc2Checkpoint created:\x078165cf [/%s]"
 		CHECKPOINT_WRONG_MAP	= CHECKPOINT_ERROR+"That checkpoint was not set for this map."
 		CHECKPOINT_WRONG_MISS	= CHECKPOINT_ERROR+"That checkpoint was not set for this mission."
-		CHECKPOINT_EXPIRE		= CHECKPOINT_ERROR+"That checkpoint has expired."
 		CHECKPOINT_CURRENT      = CHECKPOINT_ERROR+"Current wave already matches checkpoint."
 		CHECKPOINT_RESTORE		= "\x0744CC44Restored to last saved checkpoint."
 		CHECKPOINT_RESTORE_HUD	= "Restored to last saved checkpoint."
@@ -679,17 +679,17 @@ if("SetScriptVersion" in getroottable())
 		MEGACRUSH 				= "粉碎之拳"
 		VITALRESURGENCE 		= "生机勃发"
 		VEHICULARMANNSLAUGHTER 	= "车载屠宰场"
-		TEST 					= "测试用能力"
+		TEST 					= "Test Ability" // Dont Translate this
 		NO_MONEY				= "You can't afford this! (Cost: $%s, you have: $%s)" // Dont Translate this, my own project
 		REPROG_BOT_STRONG		= TF_TEAM_COLOR_REPROG_B+"%s\x01 抵抗了你的重编程."
 		REPROG_BOT_NOT_SUIT		= TF_TEAM_COLOR_REPROG_B+"%s\x01 不适合战斗且无法被重编程."
+		REPROG_BOT_MICRO		= TF_TEAM_COLOR_REPROG_B+"%s\x01 is a Micro bot! Reprogramming Micro bots lobotomizes them!" // TODO:
 		REPROG_BOT_LEAVE		= TF_TEAM_COLOR_SPEC+"%s 死亡."
 		REPROG_BOT_MESSAGE 		= TF_TEAM_COLOR_RED+"%s\x01 重编程了 "+TF_TEAM_COLOR_REPROG_B+"%s\x01!"
 		//--------------------------------------------------------- // TODO: TRANSLATE
 		CHECKPOINT_CREATED		= "\x077c8cc2Checkpoint created:\x078165cf [/%s]"
 		CHECKPOINT_WRONG_MAP	= CHECKPOINT_ERROR+"That checkpoint was not set for this map."
 		CHECKPOINT_WRONG_MISS	= CHECKPOINT_ERROR+"That checkpoint was not set for this mission."
-		// CHECKPOINT_EXPIRE		= CHECKPOINT_ERROR+"That checkpoint has expired."
 		CHECKPOINT_CURRENT      = CHECKPOINT_ERROR+"Current wave already matches checkpoint." // TODO UPDATE TRANSLATION!
 		CHECKPOINT_RESTORE		= "\x0744CC44Restored to last saved checkpoint."
 		CHECKPOINT_RESTORE_HUD	= "Restored to last saved checkpoint."
@@ -1319,17 +1319,17 @@ if("SetScriptVersion" in getroottable())
 		MEGACRUSH 				= "MEGA-KROSS"
 		VITALRESURGENCE 		= "LIVSGÖRANDE ÅTERUPPSTÅENDE"
 		VEHICULARMANNSLAUGHTER 	= "FORDRON MANNSSLAKT"
-		TEST 					= "Test Ability"
+		TEST 					= "Test Ability" // Dont Translate this
 		NO_MONEY				= "You can't afford this! (Cost: $%s, you have: $%s)" // Dont Translate this, my own project
 		REPROG_BOT_STRONG		= TF_TEAM_COLOR_REPROG_B+"%s\x01 motstås för mycket och kan inte omprogrammeras."
 		REPROG_BOT_NOT_SUIT		= TF_TEAM_COLOR_REPROG_B+"%s\x01 inte lämplig för strid och kan inte omprogrammeras."
+		REPROG_BOT_MICRO		= TF_TEAM_COLOR_REPROG_B+"%s\x01 is a Micro bot! Reprogramming Micro bots lobotomizes them!" // TODO:
 		REPROG_BOT_LEAVE		= TF_TEAM_COLOR_SPEC+"%s dog."
 		REPROG_BOT_MESSAGE 		= TF_TEAM_COLOR_RED+"%s\x01 har omprogrammerats "+TF_TEAM_COLOR_REPROG_B+"%s\x01!"
 		//---------------------------------------------------------
 		CHECKPOINT_CREATED		= "\x077c8cc2Checkpoint created:\x078165cf [/%s]"
 		CHECKPOINT_WRONG_MAP	= CHECKPOINT_ERROR+"Den punkten var inte inställd för denna karta."
 		CHECKPOINT_WRONG_MISS	= CHECKPOINT_ERROR+"Den punkten var inte inställd för detta uppdrag."
-		// CHECKPOINT_EXPIRE		= CHECKPOINT_ERROR+"Den punkten har tagit slut."
 		CHECKPOINT_CURRENT      = CHECKPOINT_ERROR+"Current wave already matches checkpoint." // TODO UPDATE TRANSLATION!
 		CHECKPOINT_RESTORE		= "\x0744CC44Restored till senaste sparade punkt."
 		CHECKPOINT_RESTORE_HUD	= "Återställde till senaste sparade punkt."
@@ -1953,17 +1953,17 @@ if("SetScriptVersion" in getroottable())
 		MEGACRUSH 				= "МЕГА-РАЗРУШЕНИЕ"
 		VITALRESURGENCE 		= "ЖИЗНЕННОЕ ВОЗРОЖДЕНИЕ"
 		VEHICULARMANNSLAUGHTER 	= "ТРАНСПОРТНОЕ СРЕДСТВО"
-		TEST 					= "Test Ability"
+		TEST 					= "Test Ability" // Dont Translate this
 		NO_MONEY				= "You can't afford this! (Cost: $%s, you have: $%s)" // Dont Translate this, my own project
 		REPROG_BOT_STRONG		= TF_TEAM_COLOR_REPROG_B+"%s\x01 слишком устойчив и не может быть перепрограммирован."
 		REPROG_BOT_NOT_SUIT		= TF_TEAM_COLOR_REPROG_B+"%s\x01 не подходит для боя и не может быть перепрограммирован."
+		REPROG_BOT_MICRO		= TF_TEAM_COLOR_REPROG_B+"%s\x01 is a Micro bot! Reprogramming Micro bots lobotomizes them!" // TODO:
 		REPROG_BOT_LEAVE		= TF_TEAM_COLOR_SPEC+"%s уничтожен."
 		REPROG_BOT_MESSAGE 		= TF_TEAM_COLOR_RED+"%s\x01 перепрограммировал "+TF_TEAM_COLOR_REPROG_B+"%s\x01!"
 		//---------------------------------------------------------
 		CHECKPOINT_CREATED		= "\x077c8cc2Контрольная точка была установлена:\x078165cf [/%s]"
 		CHECKPOINT_WRONG_MAP	= CHECKPOINT_ERROR+"Эта контрольная точка не была установлена для этой карты."
 		CHECKPOINT_WRONG_MISS	= CHECKPOINT_ERROR+"Эта контрольная точка не была установлена для этой миссии."
-		// CHECKPOINT_EXPIRE		= CHECKPOINT_ERROR+"Срок действия этой контрольной точки истёк."
 		CHECKPOINT_CURRENT      = CHECKPOINT_ERROR+"Current wave already matches checkpoint." // TODO UPDATE TRANSLATION!
 		CHECKPOINT_RESTORE		= "\x0744CC44Последняя сохранённая контрольная точка была восстановлена."
 		CHECKPOINT_RESTORE_HUD	= "Последняя сохранённая контрольная точка была восстановлена."
@@ -2593,17 +2593,17 @@ if("SetScriptVersion" in getroottable())
 		MEGACRUSH 				= "MEGAZGNIOT"
 		VITALRESURGENCE 		= "WITALNE ODRODZENIE"
 		VEHICULARMANNSLAUGHTER 	= "POJAZDOWA MASAKRA"
-		TEST 					= "Zdolność testowa"
+		TEST 					= "Test Ability" // Dont Translate this
 		NO_MONEY				= "You can't afford this! (Cost: $%s, you have: $%s)" // Dont Translate this, my own project
 		REPROG_BOT_STRONG		= TF_TEAM_COLOR_REPROG_B+"%s\x01 ma za dużą odporność i nie można go przeprogramować."
 		REPROG_BOT_NOT_SUIT		= TF_TEAM_COLOR_REPROG_B+"%s\x01 nie jest przystosowany do walki i nie można go przeprogramować."
+		REPROG_BOT_MICRO		= TF_TEAM_COLOR_REPROG_B+"%s\x01 is a Micro bot! Reprogramming Micro bots lobotomizes them!" // TODO:
 		REPROG_BOT_LEAVE		= TF_TEAM_COLOR_SPEC+"%s zginął."
 		REPROG_BOT_MESSAGE 		= TF_TEAM_COLOR_RED+"%s\x01 przeprogramował "+TF_TEAM_COLOR_REPROG_B+"%s\x01!"
 		//---------------------------------------------------------
 		CHECKPOINT_CREATED		= "\x077c8cc2Utworzono punkt kontrolny:\x078165cf [/%s]"
 		CHECKPOINT_WRONG_MAP	= CHECKPOINT_ERROR+"Ten punkt kontrolny nie został ustawiony dla tej mapy."
 		CHECKPOINT_WRONG_MISS	= CHECKPOINT_ERROR+"Ten punkt kontrolny nie został ustawiony dla tej misji."
-		// CHECKPOINT_EXPIRE		= CHECKPOINT_ERROR+"Ten punkt kontrolny wygasł."
 		CHECKPOINT_CURRENT      = CHECKPOINT_ERROR+"Current wave already matches checkpoint." // TODO UPDATE TRANSLATION!
 		CHECKPOINT_RESTORE		= "\x0744CC44Przywrócono do ostatniego zapisanego punktu kontrolnego."
 		CHECKPOINT_RESTORE_HUD	= "Przywrócono do ostatniego zapisanego punktu kontrolnego."
@@ -3231,13 +3231,13 @@ if("SetScriptVersion" in getroottable())
 		NO_MONEY				= "You can't afford this! (Cost: $%s, you have: $%s)" // Dont Translate this, my own project
 		REPROG_BOT_STRONG		= TF_TEAM_COLOR_REPROG_B+"%s\x01 耐性があり、再プログラムできませんでした"
 		REPROG_BOT_NOT_SUIT		= TF_TEAM_COLOR_REPROG_B+"%s\x01 戦闘には適しておらず、再プログラムもできませんでした"
+		REPROG_BOT_MICRO		= TF_TEAM_COLOR_REPROG_B+"%s\x01 is a Micro bot! Reprogramming Micro bots lobotomizes them!" // TODO:
 		REPROG_BOT_LEAVE		= TF_TEAM_COLOR_SPEC+"%s died."
 		REPROG_BOT_MESSAGE 		= TF_TEAM_COLOR_RED+"%s\x01 再プログラム完了 "+TF_TEAM_COLOR_REPROG_B+"%s\x01!"
 		//---------------------------------------------------------
 		CHECKPOINT_CREATED		= "\x077c8cc2Checkpoint created:\x078165cf [/%s]"
 		CHECKPOINT_WRONG_MAP	= CHECKPOINT_ERROR+"そのチェックポイントは、このマップでは設定されていません"
 		CHECKPOINT_WRONG_MISS	= CHECKPOINT_ERROR+"そのチェックポイントは、今回の任務のために設置されたものではありません"
-		// CHECKPOINT_EXPIRE		= CHECKPOINT_ERROR+"そのチェックポイントは期限が切れています"
 		CHECKPOINT_CURRENT      = CHECKPOINT_ERROR+"Current wave already matches checkpoint." // TODO UPDATE TRANSLATION!
 		CHECKPOINT_RESTORE		= "\x0744CC44最後に保存されたチェックポイントに戻りました"
 		CHECKPOINT_RESTORE_HUD	= "最後に保存されたチェックポイントに戻りました"
@@ -3861,17 +3861,17 @@ if("SetScriptVersion" in getroottable())
 		MEGACRUSH 				= "MEGA-KNUS"
 		VITALRESURGENCE 		= "VITAL GENOPSTANDELSE"
 		VEHICULARMANNSLAUGHTER 	= "TRAFIKDRAB"
-		TEST 					= "Test Ability"
+		TEST 					= "Test Ability" // Dont Translate this
 		NO_MONEY				= "You can't afford this! (Cost: $%s, you have: $%s)" // Dont Translate this, my own project
 		REPROG_BOT_STRONG		= TF_TEAM_COLOR_REPROG_B+"%s\x01 er for modstandsdygtig og kan ikke omprogrammeres."
 		REPROG_BOT_NOT_SUIT		= TF_TEAM_COLOR_REPROG_B+"%s\x01 er ikke egnet til kamp og kan ikke omprogrammeres."
+		REPROG_BOT_MICRO		= TF_TEAM_COLOR_REPROG_B+"%s\x01 is a Micro bot! Reprogramming Micro bots lobotomizes them!" // TODO:
 		REPROG_BOT_LEAVE		= TF_TEAM_COLOR_SPEC+"%s døde."
 		REPROG_BOT_MESSAGE 		= TF_TEAM_COLOR_RED+"%s\x01 har omprogrammeret "+TF_TEAM_COLOR_REPROG_B+"%s\x01!"
 		//---------------------------------------------------------
 		CHECKPOINT_CREATED		= "\x077c8cc2Checkpoint created:\x078165cf [/%s]"
 		CHECKPOINT_WRONG_MAP	= CHECKPOINT_ERROR+"Dette checkpoint blev ikke sat for denne bane."
 		CHECKPOINT_WRONG_MISS	= CHECKPOINT_ERROR+"Dette checkpoint blev ikke sat for denne mission."
-		// CHECKPOINT_EXPIRE		= CHECKPOINT_ERROR+"Dette checkpoint er udløbet."
 		CHECKPOINT_CURRENT      = CHECKPOINT_ERROR+"Current wave already matches checkpoint." // TODO UPDATE TRANSLATION!
 		CHECKPOINT_RESTORE		= "\x0744CC44Gendannet til sidst gemte checkpoint."
 		CHECKPOINT_RESTORE_HUD	= "Gendannet til sidst gemte checkpoint."
@@ -4495,17 +4495,17 @@ if("SetScriptVersion" in getroottable())
 		MEGACRUSH 				= "MEGAIMPACTO"
 		VITALRESURGENCE 		= "RESURGIMIENTO VITAL"
 		VEHICULARMANNSLAUGHTER 	= "MANNSACRE SOBRE RUEDAS"
-		TEST 					= "Habilidad de prueba"
+		TEST 					= "Test Ability" // Dont Translate this
 		NO_MONEY				= "You can't afford this! (Cost: $%s, you have: $%s)" // Dont Translate this, my own project
 		REPROG_BOT_STRONG		= TF_TEAM_COLOR_REPROG_B+"%s\x01 resiste demasiado y no puede reprogramarse."
 		REPROG_BOT_NOT_SUIT		= TF_TEAM_COLOR_REPROG_B+"%s\x01 no vale para combatir y no puede reprogramarse."
+		REPROG_BOT_MICRO		= TF_TEAM_COLOR_REPROG_B+"%s\x01 is a Micro bot! Reprogramming Micro bots lobotomizes them!" // TODO:
 		REPROG_BOT_LEAVE		= TF_TEAM_COLOR_SPEC+"%s ha muerto."
 		REPROG_BOT_MESSAGE 		= TF_TEAM_COLOR_RED+"%s\x01 ha reprogramado a "+TF_TEAM_COLOR_REPROG_B+"%s\x01."
 		//---------------------------------------------------------
 		CHECKPOINT_CREATED		= "\x077c8cc2Punto de control creado:\x078165cf [/%s]"
 		CHECKPOINT_WRONG_MAP	= CHECKPOINT_ERROR+"Ese punto de control no era para este mapa."
 		CHECKPOINT_WRONG_MISS	= CHECKPOINT_ERROR+"Ese punto de control no era para esta misión."
-		// CHECKPOINT_EXPIRE		= CHECKPOINT_ERROR+"Ese punto de control ha caducado."
 		CHECKPOINT_CURRENT      = CHECKPOINT_ERROR+"Current wave already matches checkpoint." // TODO UPDATE TRANSLATION!
 		CHECKPOINT_RESTORE		= "\x0744CC44Resaturado en el último punto de control."
 		CHECKPOINT_RESTORE_HUD	= "Resaturado en el último punto de control."

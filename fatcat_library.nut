@@ -148,7 +148,7 @@ function ROOT::SetScriptVersion(item, version)
 
 	// Allows Callbacks for after a cond is applied (maximum delay 1-3 frame)
 	// reload library after setting this
-	"OnCondPostHooks" : true
+	"OnCondPostHooks" : false
 
 	// test
 	"TestPurgeString" : false
@@ -205,7 +205,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format)
-if (!SetLibraryVersion("05.04.2026.21", 0))
+if (!SetLibraryVersion("05.06.2026.20", 0))
 	return
 
 SetLibrarySettings({})
@@ -370,7 +370,7 @@ if (!("FoldedNetProps" in ROOT)) // make sure folding is only done once
 ::BONUS_EFFECT_WATERBALLOON		<- 4 	// default: 3 // Unused
 ::BONUS_EFFECT_DRAGONS_FURY		<- 5	// default: 5
 ::BONUS_EFFECT_STOMP			<- 6	// default: 6
-::BONUS_EFFECT_REMAP <- array(7, -1)
+::BONUS_EFFECT_REMAP <- array(7, 0)
 BONUS_EFFECT_REMAP[kBonusEffect_Crit] 					= BONUS_EFFECT_CRIT
 BONUS_EFFECT_REMAP[kBonusEffect_MiniCrit] 				= BONUS_EFFECT_MINICRIT
 BONUS_EFFECT_REMAP[kBonusEffect_DoubleDonk] 			= BONUS_EFFECT_DOUBLEDONK
@@ -998,13 +998,15 @@ function CTFPlayer::GetRuneResistance()
 	else return 1.0
 }
 
-function CTFPlayer::IsValidReprogramTarget()
+function CTFPlayer::IsValidReprogramTarget(medics = false)
 {
 	if(!IsBot())
 		return false
 	if(HasBotAttribute(USE_BOSS_HEALTH_BAR))
 		return false
 	if(HasBotTag("HardWired"))
+		return false
+	if(medics == false && GetPlayerClass() == TF_CLASS_MEDIC)
 		return false
 	return true
 }
@@ -2283,6 +2285,20 @@ function CTFPlayer::EquipItem(classname, idx, swit = true, attrib_overrides = {}
 
 	local old_wep = GetWeaponInSlotNew(weapon.GetSlot())
 	local myweaps_idx = GetMyWeaponsArray().find(old_wep)
+
+	if(myweaps_idx == null)
+	{
+		for(local i = 0; i <= MAX_WEAPONS; i++)
+		{
+			local w = GetPropEntityArray(this, "m_hMyWeapons", i)
+			if(w == null || !w.isvalid())
+			{
+				myweaps_idx = i
+				break
+			}
+		}
+	}
+
 	old_wep.Destroy()
 
 	SetPropEntityArray(this, "m_hMyWeapons", null, myweaps_idx)
@@ -2655,6 +2671,27 @@ function CTFPlayer::AttachParticle(particle, duration = -1, attachment_point = P
 		PlayerFire("DispatchEffect", "ParticleEffectStop", duration)
 	}
 }
+
+function CTFPlayer::EmitSoundTo(sound, data = {})
+{
+	local sound_data = {
+		sound_name = sound
+		filter_type = RECIPIENT_FILTER_SINGLE_PLAYER
+		entity = this
+	}
+	if("channel" in data) 		sound_data.channel <- data.channel
+	if("volume" in data) 		sound_data.volume <- data.volume
+	if("sound_level" in data) 	sound_data.sound_level <- data.sound_level
+	if("flags" in data) 		sound_data.flags <- data.flags
+	if("pitch" in data) 		sound_data.pitch <- data.pitch
+	if("special_dsp" in data) 	sound_data.special_dsp <- data.special_dsp
+	if("delay" in data) 		sound_data.delay <- data.delay
+	if("sound_time" in data) 	sound_data.sound_time <- data.sound_time
+	EmitSoundEx(sound_data)
+}
+
+function CTFPlayer::IsEnemy()
+	return GetTeam() == TF_TEAM_BLUE
 
 /* function CTFPlayer::CreateWearable( idx, model )
 {
@@ -3298,6 +3335,19 @@ function CTFWeaponBase::GetSwordSpeedMod()
 		return 1.0
 	return 1.0 + (MATH.Min( MAX_DECAPITATIONS, GetOwner().GetHeads() ) * 0.08);
 }
+
+/**
+ * Returns if the weapon is capable of stomping
+ */
+function CTFWeaponBase::CanStomp()
+{
+	local canstomp = (GetAttribute("boots falling stomp", 0) != 0 || GetAttribute("thermal_thruster", 0) != 0)
+	if(!GetOwner())
+		return canstomp
+	else if(GetAttribute("provide on active", 0) && GetOwner().GetActiveWeapon() != this)
+		return false
+	return canstomp
+}
 /**
  * @param {integer} ItemID
  */
@@ -3374,7 +3424,7 @@ function CTFBaseBoss::RegisterHurtPercentCallback(perc, callback)
 	GetScope(this)[OutputName] <- callback
 	ConnectOutput(OutputName, OutputName)
 }
-
+// TheNavMesh!
 function CNavMesh::GetNav() 
 {
 	local t = {}
@@ -3791,7 +3841,7 @@ function ROOT::GetScope(entity)
 	return entity.GetScriptScope()
 }
 /**
- * @param {CTFPlayer} target
+ * @param {CTFPlayer|CBaseEntity} target
  * @param {integer} team 
  */
 function ROOT::GetClosestPlayer(target, team = TF_TEAM_BLUE, offset = Vector())
@@ -4805,6 +4855,7 @@ function ROOT::CreateParticle(particle, origin, angle = QAngle(-90, 0, 0))
 	temp.AcceptInput("Start", "", null, null)
 	EntFireNew(temp, "Stop", "", TICK_DUR*3)
 	EntFireNew(temp, "Kill", "", TICK_DUR*5)
+	return temp
 }
 
 if(!("CORROSION_ICON" in ROOT))
@@ -6474,6 +6525,32 @@ RegisterAdminTrigger("kill_tank", function(player, ...) {
 	if(FindByName(null, "Test_Tank"))
 		FindByName(null, "Test_Tank").Kill()
 	return player.PrintToChat("Killed Test Tank")
+})
+
+RegisterAdminTrigger("setspell", function(player, ...) {
+	if(vargv.len() != 2)
+		return player.PrintToChat("Incorrect Arguments [spell_index, charges] ")
+	local book = player.GetSpellBook()
+
+	if(!book)
+		return
+
+	local index = vargv[0].tointeger()
+	local charges = vargv[1].tointeger()
+
+	book.SetSpellIndex(index)
+	book.SetSpellCharges(charges)
+})
+
+RegisterAdminTrigger("uber", function(player, ...) {
+	if(vargv.len() > 1)
+		return player.PrintToChat("Incorrect Arguments [{uber}] ")
+
+	local uber = vargv.len() == 0 ? 100.0 : vargv[0].tofloat()
+
+	player.GetWeaponClassname("tf_weapon_medigun").SetUberChargePercent(uber)
+
+	return player.PrintToChat("Set your uber to "+uber+"%")
 })
 
 
