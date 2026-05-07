@@ -9,7 +9,7 @@ local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", 
 	TimeBeforeHeatLost = 5.0
 	HeatLostPerSecond = 15
 	Attributes = [
-		//	[	AttributeName, 					AttributeChange, 	StartingValue, 	MaxValue, 	MinValue]
+	//	[	AttributeName, 						AttributeChange, 	StartingValue, 	MaxValue, 	MinValue]
 		[	"damage bonus", 					0.008, 				1, 				9, 			1		],
 		[	"fire rate bonus", 					-0.00025, 			1, 				1, 			0.75	],
 		[	"max health additive bonus", 		1, 					0, 				1000, 		0		],
