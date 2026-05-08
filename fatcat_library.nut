@@ -2748,6 +2748,12 @@ function CTFPlayer::EmitSoundTo(sound, data = {})
 function CTFPlayer::IsEnemy()
 	return GetTeam() == TF_TEAM_BLUE
 
+function CTFPlayer::PrintConds()
+{
+	for(local cond = 0; cond <= TF_COND_RANGE; cond++)
+		printl("In Cond "+cond+"? "+InCond(cond))
+}
+
 /* function CTFPlayer::CreateWearable( idx, model )
 {
 	local dummy = CreateByClassname( "tf_weapon_parachute" )
@@ -6077,6 +6083,13 @@ else if(FindByName(null, "OnCondition"))
 		{
 			params.damage_position 					<- victim.GetOrigin() + Vector(0, 0, 32)
 			eventdata.damage_position 				<- params.damage_position
+		}
+
+		// [5/7/26]
+		// why do vanilla conditions do this shit
+		if(victim.IsPlayer() && !victim.InRespawnRoom() && victim.InCond(TF_COND_INVULNERABLE_WEARINGOFF))
+		{
+			victim.RemoveCondEx(TF_COND_INVULNERABLE_WEARINGOFF, true)
 		}
 
 		// [1/1/26]
