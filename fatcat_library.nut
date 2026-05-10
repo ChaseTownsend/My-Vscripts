@@ -254,6 +254,14 @@ if (!("FoldedNetProps" in ROOT)) // make sure folding is only done once
 ::SLOT_PDA       <- 5
 ::SLOT_PDA2      <- 6
 ::SLOT_COUNT     <- 7
+//////// Slot indexs
+::STRIPSLOT_PRIMARY		<- (1)
+::STRIPSLOT_SECONDARY	<- (1 << 1)
+::STRIPSLOT_MELEE		<- (1 << 2)
+::STRIPSLOT_PDA			<- (1 << 3)
+::STRIPSLOT_PDA2		<- (1 << 4)
+::STRIPSLOT_ACTION		<- (1 << 5)
+::STRIPSLOT_COSMETICS	<- (1 << 6)
 
 //////// MathLib
 ::DEG2RAD	<- 0.0174532924
@@ -1582,7 +1590,7 @@ function CTFPlayer::GetMaximumMetal()
 	local metal_mult = 1
 	foreach (weapon in GetAllWeapons())
 	{
-		if(weapon.HasAttribute("provide on active", 0) == 1)
+		if(weapon.HasAdditiveAttribute("provide on active"))
 		{
 			if(GetActiveWeapon() == weapon)
 			{
@@ -1972,10 +1980,10 @@ function CTFPlayer::RemoveCorrosion()
 if(!("__CORROSION_DEBUG" in ROOT))
 	::__CORROSION_DEBUG <- false
 /**
- * @param {CTFPlayer} 		Attacker
- * @param {CTFWeaponBase} 	Weapon
+ * @param {CTFPlayer} 		attacker
+ * @param {CTFWeaponBase} 	weapon
  */
-function CTFPlayer::MakeCorrosion(Attacker, Weapon)
+function CTFPlayer::MakeCorrosion(attacker, weapon)
 {
 	if(IsInvincible())
 	{
@@ -1983,27 +1991,37 @@ function CTFPlayer::MakeCorrosion(Attacker, Weapon)
 		return;
 	}
 
-	if(Weapon.getclass() != CTFWeaponBase)
-		return;
-		
-	if(Weapon.GetIDX() != TF_WEAPON_BREAD_BITE)
-	{
-		if(__CORROSION_DEBUG)
-		{
-			PrintToHudAll(format("CTFPlayer::MakeCorrosion got %d for Weapon IDX!!!", Weapon.GetIDX()))
-			PrintToChatAll(format("CTFPlayer::MakeCorrosion got %d for Weapon IDX!!!", Weapon.GetIDX()))
-		}
+	if(!weapon)
 		return
-	}
+
+	if(weapon.getclass() != CTFWeaponBase)
+		return;
+
+	// if(weapon.GetIDX() != TF_WEAPON_BREAD_BITE)
+	// {
+	// 	if(__CORROSION_DEBUG)
+	// 	{
+	// 		PrintToHudAll(format("CTFPlayer::MakeCorrosion got %d for Weapon IDX!!!", weapon.GetIDX()))
+	// 		PrintToChatAll(format("CTFPlayer::MakeCorrosion got %d for Weapon IDX!!!", weapon.GetIDX()))
+	// 	}
+	// 	return
+	// }
 
 	if(__CORROSION_DEBUG) PrintToChatAll(format("Made Corrosion on %s", tostring()))
 
 	SetColor("205 245 135")
 
+	// if DmgPerc == 1.0 then it does 100% dmg
+	// the default value is normally 0.25%
+
 	GetScope(this).Corrosion <- {
-		hAttacker = Attacker
-		hWeapon = Weapon
-		flNextTick = Time() + 1.0
+		hAttacker 		= attacker
+		hWeapon 		= weapon
+		flNextTick 		= Time() + weapon.GetAdditiveAttribute("corrosion tick duration", 1.0)
+		flTickDur 		= weapon.GetAdditiveAttribute("corrosion tick duration", 1.0)
+		flDmgPerc 		= weapon.GetAdditiveAttribute("corrosion damage percent", 0.25) / 100.0
+		iDmgAdd 		= weapon.GetAdditiveAttribute("corrosion damage add", 250)
+		bMakesPuddle 	= weapon.GetAdditiveAttribute("corrosion drop puddle") != 0
 	}
 }
 
@@ -2014,19 +2032,40 @@ function CTFPlayer::CorrosionTick()
 		RemoveCorrosion()
 		return
 	}
-	if(!HasCorrosion())
+	else if(!HasCorrosion())
 		return
 	
+	/* 
+	Corrosion.hAttacker
+	Corrosion.hWeapon
+	Corrosion.flNextTick
+	Corrosion.flTickDur
+	Corrosion.flDmgPerc
+	Corrosion.iDmgAdd
+	 */
 
 	local Corrosion = GetCorrosion()
-	Corrosion.flNextTick <- Time() + 1.0
+	Corrosion.flNextTick <- Time() + Corrosion.flTickDur
 	
-	if(__CORROSION_DEBUG) printf("%s took Corrosion Damage! Attacker : %s, Weapon : %s, Damage : %f\n", tostring(), Corrosion.hAttacker.tostring(), Corrosion.hWeapon.tostring(), 250+GetMaxHealth()/400)
-	TakeDamageEx(CORROSION_ICON, Corrosion.hAttacker, Corrosion.hWeapon, Vector(), Vector(), 250+GetMaxHealth()/400, DMG_GENERIC|DMG_PREVENT_PHYSICS_FORCE)
+	local damage = Corrosion.iDmgAdd + (GetMaxHealth() * Corrosion.flDmgPerc)
+
+	damage *= HookMultAttributes("corrosion dmg taken mult")
+
+	// so if we suspect the defaults of 250 add and 0.25 percent, than
+	// if we have 20000 hp, we are doing ( 250 + (20000 * (0.25/100)))
+	// or ( dmg_add + ( max_hp * ( percent/100 ) ) )
+	// but no / 100 since that was handled in MakeCorrosion
+	// so the final amount would be (250 + 50) or 300
+
+	if(__CORROSION_DEBUG) printf("%s took Corrosion Damage! Attacker : %s, Weapon : %s, Damage : %f\n", 
+		tostring(), Corrosion.hAttacker.tostring(), Corrosion.hWeapon.tostring(), damage)
+	TakeDamageEx(CORROSION_ICON, Corrosion.hAttacker, Corrosion.hWeapon, Vector(), Vector(), damage, DMG_GENERIC|DMG_PREVENT_PHYSICS_FORCE)
 }
 
 function CTFPlayer::CanHaveCorrosion()
 {
+	if(HasCorrosion())
+		return false
 	if(CanRemoveCorrosion())
 		return false
 	if(IsBot() && HasBotTag("NoCorrode"))
@@ -2261,15 +2300,22 @@ function CTFPlayer::FixAmmo()
 		if(weapon.IsWearable())
 			continue
 		weapon.SetClip1(0)
-		if(weapon.HasAttribute("auto fires full clip penalty", 0) || weapon.HasAttribute("auto fires full clip", 0))
+		if(weapon.HasAdditiveAttribute("auto fires full clip penalty") || weapon.HasAdditiveAttribute("auto fires full clip"))
 			weapon.SetClip1(0)
 		else 
 			weapon.SetClip1(weapon.GetMaxClip1())
 
-		if(weapon.HasAttribute("mod use metal ammo type", 0))
+		if(weapon.HasAdditiveAttribute("mod use metal ammo type"))
 			SetPropInt(weapon, "m_iPrimaryAmmoType", TF_AMMO_METAL)
 
-		if(weapon.HasAttribute("item_meter_starts_empty_DISPLAY_ONLY", 0) && weapon.HasAttribute("item_meter_charge_type_3_DISPLAY_ONLY", 0) != 1)
+		if (weapon.HasAdditiveAttribute("throwable starts empty"))
+			SetThrowableAmmo(0)
+		if (weapon.HasAdditiveAttribute("throwable start charge"))
+			SetThrowableCharge(weapon.GetAttribute("throwable start charge", 0))
+			
+
+		// Deprecated soon
+		if(weapon.HasAdditiveAttribute("item_meter_starts_empty_DISPLAY_ONLY") && weapon.GetAttribute("item_meter_charge_type_3_DISPLAY_ONLY", 0) != 1)
 		{
 			SetThrowableAmmo(0)
 			SetThrowableCharge(weapon.GetAttribute("item_meter_starts_empty_DISPLAY_ONLY", 0).tointeger())
@@ -2529,38 +2575,42 @@ function CTFPlayer::HealPlayer(amount, overheal = false, overheal_cap = false, d
  * @param {string} attribute
  * @returns {float}
  */
-function CTFPlayer::HookMultAttributes(attribute, weapons = true)
+function CTFPlayer::HookMultAttributes(attribute, Mode = 3, def_plr = 1.0, def_wep = 1.0)
 {
-	local mult = 1.0
-	mult *= GetCustomAttribute(attribute, 1.0)
-	if(!weapons)
-		return mult
-	local weps = GetAllWeapons()
-	foreach (weapon in weps)
+	local amount = 1.0
+	if(MATH.BitWise(Mode, 1))
+		amount *= GetCustomAttribute(attribute, def_plr)
+	if(MATH.BitWise(Mode, 2))
 	{
-		if(weapon.GetAttribute("provide on active", 0) && weapon != GetActiveWeapon())
-			continue
-		mult *= weapon.GetAttribute(attribute, 1.0)
+		foreach (weapon in GetAllWeapons())
+		{
+			if(weapon.GetAttribute("provide on active", 0) && weapon != GetActiveWeapon())
+				continue
+			amount *= weapon.GetAttribute(attribute, def_wep)
+		}
 	}
-	return mult
+
+	return amount
 }
 /**
  * @param {string} attribute
  * @returns {float}
  */
-function CTFPlayer::HookAdditiveAttributes(attribute, weapons = true)
+function CTFPlayer::HookAdditiveAttributes(attribute, Mode = 3, def_plr = 0, def_wep = 0)
 {
 	local amount = 0.0
-	amount += GetCustomAttribute(attribute, 0.0)
-	if(!weapons)
-		return amount
-	local weps = GetAllWeapons()
-	foreach (weapon in weps)
+	if(MATH.BitWise(Mode, 1))
+		amount += GetCustomAttribute(attribute, def_plr)
+	if(MATH.BitWise(Mode, 2))
 	{
-		if(weapon.GetAttribute("provide on active", 0) && weapon != GetActiveWeapon())
-			continue
-		amount += weapon.GetAttribute(attribute, 0)
+		foreach (weapon in GetAllWeapons())
+		{
+			if(weapon.GetAttribute("provide on active", 0) && weapon != GetActiveWeapon())
+				continue
+			amount += weapon.GetAttribute(attribute, def_wep)
+		}
 	}
+
 	return amount
 }
 /**
@@ -2729,6 +2779,7 @@ function CTFPlayer::AttachParticle(particle, duration = -1, attachment_point = P
 
 function CTFPlayer::EmitSoundTo(sound, data = {})
 {
+	PrecacheSound(sound)
 	local sound_data = {
 		sound_name = sound
 		filter_type = RECIPIENT_FILTER_SINGLE_PLAYER
@@ -2753,6 +2804,84 @@ function CTFPlayer::PrintConds()
 	for(local cond = 0; cond <= TF_COND_RANGE; cond++)
 		printl("In Cond "+cond+"? "+InCond(cond))
 }
+/**
+ * @param {integer} slot
+ */
+function CTFPlayer::StripItemSlot(slot)
+{
+	if(slot == 0)
+		return
+	slot = slot.tointeger()
+	local bit = @(a, b) MATH.BitWise(a,b)
+	local wep = null
+	if(bit(slot, STRIPSLOT_PRIMARY))
+	{
+		wep = GetWeaponInSlotNew(SLOT_PRIMARY)
+		if(wep)
+			wep.Destroy()
+	}
+	if(bit(slot, STRIPSLOT_SECONDARY))
+	{
+		wep = GetWeaponInSlotNew(SLOT_SECONDARY)
+		if(wep)
+			wep.Destroy()
+	}
+	if(bit(slot, STRIPSLOT_MELEE))
+	{
+		wep = GetWeaponInSlotNew(SLOT_MELEE)
+		if(wep)
+			wep.Destroy()
+	}
+	if(bit(slot, STRIPSLOT_PDA))
+	{
+		wep = GetWeaponInSlotNew(SLOT_PDA)
+		if(wep)
+			wep.Destroy()
+	}
+	if(bit(slot, STRIPSLOT_PDA2))
+	{
+		wep = GetWeaponInSlotNew(SLOT_PDA2)
+		if(wep)
+			wep.Destroy()
+	}
+	if(bit(slot, STRIPSLOT_ACTION))
+	{
+		wep = GetWeaponInSlotNew(SLOT_UTILITY)
+		if(wep)
+			wep.Destroy()
+	}
+	if(bit(slot, STRIPSLOT_COSMETICS))
+		RemoveWearables()
+}
+
+function CTFPlayer::CanStomp()
+{
+	foreach (wep in GetAllWeapons())
+	{
+		if(wep.CanStomp())
+			return true
+	}
+	return false
+}
+/**
+ * @returns {CTFWeaponBase|[CTFWeaponBase]|null}
+ */
+function CTFPlayer::GetStompWeapon()
+{
+	local weps = []
+	foreach (wep in GetAllWeapons())
+	{
+		if(wep.CanStomp())
+			weps.append(wep)
+	}
+	if(weps.len() == 0)
+		return null
+	else if(weps.len() == 1)
+		return weps[0]
+	else
+		return weps
+}
+
 
 /* function CTFPlayer::CreateWearable( idx, model )
 {
@@ -2949,6 +3078,98 @@ function CTFBot::UndoReprogram()
   ==========================
 */
 
+/*
+  ==============================
+  === CUSTOM ATTRIBUTE STUFF ===
+  ==============================
+*/
+if(!("CUSTOM_ATTRIBUTES_DEFINES" in ROOT))
+	::CUSTOM_ATTRIBUTES_DEFINES <- []
+if(!("CUSTOM_ATTRIBUTE_WEAPONS" in ROOT))
+	::CUSTOM_ATTRIBUTE_WEAPONS <- {}
+
+/**
+ * @param {string} attrib
+ */
+function ROOT::DEFINE_CUSTOM_ATTRIBUTE(attrib)
+{
+	if(GET_CUSTOM_ATTRIBUTE(attrib) == null)
+		CUSTOM_ATTRIBUTES_DEFINES.append(attrib)
+}
+/**
+ * @param {string} attrib
+ */
+function ROOT::REMOVE_CUSTOM_ATTRIBUTE(attrib)
+{
+	if(GET_CUSTOM_ATTRIBUTE(attrib) != null)
+		CUSTOM_ATTRIBUTES_DEFINES.remove(CUSTOM_ATTRIBUTES_DEFINES.find(attrib))
+}
+/**
+ * @param {integer} idx
+ * @param {string} attrib
+ * @param {integer|float} value
+ */
+function ROOT::DEFINE_CUSTOM_WEAPON_ATTRIBUTE(idx, attrib, value)
+{
+	if(!GET_CUSTOM_ATTRIBUTE(attrib))
+		return
+	if(!(idx in CUSTOM_ATTRIBUTE_WEAPONS))
+		CUSTOM_ATTRIBUTE_WEAPONS[idx] <- {}
+	
+	CUSTOM_ATTRIBUTE_WEAPONS[idx][attrib] <- value
+}
+/**
+ * @param {integer} idx
+ * @param {string} attrib
+ */
+function ROOT::REMOVE_CUSTOM_WEAPON_ATTRIBUTE(idx, attrib)
+{
+	if(!GET_CUSTOM_ATTRIBUTE(attrib))
+		return
+	if(!(idx in CUSTOM_ATTRIBUTE_WEAPONS))
+		return
+	if(!(attrib in CUSTOM_ATTRIBUTE_WEAPONS[idx]))
+		return
+
+	delete CUSTOM_ATTRIBUTE_WEAPONS[idx][attrib]
+}
+
+function ROOT::GET_CUSTOM_ATTRIBUTE(attrib)
+	return CUSTOM_ATTRIBUTES_DEFINES.find(attrib) != null
+/**
+ * @param {integer} idx
+ * @param {string} attrib
+ */
+function ROOT::GET_CUSTOM_WEAPON_ATTRIBUTE(idx, attrib)
+{
+	if(!(idx in CUSTOM_ATTRIBUTE_WEAPONS))
+		return false
+
+	return attrib in CUSTOM_ATTRIBUTE_WEAPONS[idx]
+}
+/**
+ * @param {integer} idx
+ * @param {string} attrib
+ * 
+ * @returns {integer|float} Will return def if not found
+ */
+function ROOT::GET_CUSTOM_ATTRIBUTE_VALUE(idx, attrib, def = 0)
+{
+	if(GET_CUSTOM_ATTRIBUTE(attrib) == null)
+		return def
+
+	if(!GET_CUSTOM_WEAPON_ATTRIBUTE(idx, attrib))
+		return def
+	
+	return CUSTOM_ATTRIBUTE_WEAPONS[idx][attrib]
+}
+
+/*
+  =====================================
+  === END OF CUSTOM ATTRIBUTE STUFF ===
+  =====================================
+*/
+
 
 /*
   ======================
@@ -2957,12 +3178,69 @@ function CTFBot::UndoReprogram()
 */
 
 /////////
+if(!("_GetAttribute" in CTFWeaponBase))
+{
+	CTFWeaponBase._GetAttribute <- CTFWeaponBase.GetAttribute
+	CEconEntity._GetAttribute <- CEconEntity.GetAttribute
+	/**
+	 * Modified version that can hook our custom attributes
+	 * @param {string} attrib
+	 * @param {float} def
+	 * @returns {float}
+	 */
+	function CTFWeaponBase::GetAttribute(attrib, def)
+	{
+		if(!this)
+			return 0
+		if(GET_CUSTOM_ATTRIBUTE(attrib))
+			return GET_CUSTOM_ATTRIBUTE_VALUE(GetIDX(), attrib, def)
+		
+		return _GetAttribute(attrib, def)
+	}
+	/**
+	 * 
+	 * @param {string} attrib
+	 * @param {float} def
+	 * @returns {float}
+	 */
+	function CEconEntity::GetAttribute(attrib, def)
+	{
+		if(!this)
+			return 0
+		if(GET_CUSTOM_ATTRIBUTE(attrib))
+			return GET_CUSTOM_ATTRIBUTE_VALUE(GetIDX(), attrib, def)
+
+		return _GetAttribute(attrib, def)
+	}
+}
+
 /**
  * @param {string} attrib
  * @param {float|integer} def_val
+ * @deprecated Use HasAdditiveAttribute or HasMultAttribute instead
  */
 function CTFWeaponBase::HasAttribute(attrib, def_val)
 	return GetAttribute(attrib, def_val) != def_val
+/**
+ * @param {string} attrib
+ */
+function CTFWeaponBase::HasAdditiveAttribute(attrib, def = 0)
+	return GetAttribute(attrib, def) != def
+/**
+ * @param {string} attrib
+ */
+function CTFWeaponBase::HasMultAttribute(attrib, def = 1.0)
+	return GetAttribute(attrib, def) != def
+/**
+ * @param {string} attrib
+ */
+function CTFWeaponBase::GetAdditiveAttribute(attrib, def = 0)
+	return GetAttribute(attrib, def)
+/**
+ * @param {string} attrib
+ */
+function CTFWeaponBase::GetMultAttribute(attrib, def = 1.0)
+	return GetAttribute(attrib, def)
 /**
  * @returns {integer}
  */
@@ -4840,6 +5118,44 @@ function ROOT::PrintDamageBits(bits)
 	}
 }
 
+function ROOT::IsDamageTaunt(damagecustom)
+{
+	return damagecustom == TF_DMG_CUSTOM_TAUNTATK_HADOUKEN
+		|| damagecustom == TF_DMG_CUSTOM_TAUNTATK_ARROW_STAB
+		|| damagecustom == TF_DMG_CUSTOM_TAUNTATK_ALLCLASS_GUITAR_RIFF
+		|| damagecustom == TF_DMG_CUSTOM_TAUNTATK_ARMAGEDDON
+		|| damagecustom == TF_DMG_CUSTOM_TAUNTATK_HIGH_NOON
+		|| damagecustom == TF_DMG_CUSTOM_TAUNTATK_BARBARIAN_SWING
+		|| damagecustom == TF_DMG_CUSTOM_TAUNTATK_ENGINEER_ARM_KILL
+		|| damagecustom == TF_DMG_CUSTOM_TAUNTATK_ENGINEER_GUITAR_SMASH
+		|| damagecustom == TF_DMG_CUSTOM_TAUNTATK_TRICKSHOT
+		|| damagecustom == TF_DMG_CUSTOM_TAUNTATK_FENCING
+		|| damagecustom == TF_DMG_CUSTOM_TAUNTATK_GRAND_SLAM
+		|| damagecustom == TF_DMG_CUSTOM_TAUNTATK_GRENADE
+		|| damagecustom == TF_DMG_CUSTOM_TAUNTATK_UBERSLICE
+		|| damagecustom == TF_DMG_CUSTOM_TAUNTATK_GASBLAST;
+}
+
+function ROOT::ToggleSlowDown(amount = 1.0, sound = "", revert_sound = "", revert = 0.0)
+{
+	PrecacheSound(sound)
+	PrecacheSound(revert_sound)
+	local overlay = amount == 1.0 ? "" : "debug/yuv"
+	foreach (player in m_aHumans)
+	{
+		player.SetScriptOverlayMaterial(overlay)
+		if(sound != "")
+			player.EmitSoundTo(sound)
+	}
+
+	SetCvar("host_timescale", amount)
+
+	if(amount != 1.0 && revert != 0.0)
+	{
+		RunWithDelay(@() ToggleSlowDown(1.0, revert_sound), revert*amount)
+	}
+}
+
 /*
   =============================
   === END OF MISC FUNCTIONS ===
@@ -5034,7 +5350,7 @@ function ROOT::PrecacheObject(thing)
 	 */
 	function BitWise(a, b)
 	{
-		return (a & b) == b
+		return (a.tointeger() & b.tointeger()) == b.tointeger()
 	}
 	/**
 	 * Returns the Smaller Value
@@ -5984,6 +6300,48 @@ else if(FindByName(null, "OnCondition"))
   ====================================
 */
 
+function FireWeaponCheck()
+{
+	if(self.IsDead())
+		return 0.1
+	foreach(wep in self.GetAllWeapons())
+	{
+		if(wep.GetClassname() == "tf_weapon_flamethrower")
+		{
+			if(GetPropBool(GetPropEntity(wep, "LocalFlameThrowerData.m_hFlameManager"), "m_bIsFiring"))
+			{
+				FireScriptEvent("PlayerFireWeapon", {player = self, weapon = wep})
+				self.AddCondEx(wep.GetAttribute("add cond on attack", -1), wep.GetAttribute("add cond on attack duration", -1), self)
+			}
+			continue
+		}
+		else if(wep.IsMeleeWeapon())
+		{
+			if(GetPropInt(self, "m_Shared.m_iNextMeleeCrit") == 0)
+			{
+				FireScriptEvent("PlayerFireWeapon", {player = self, weapon = wep})
+				SetPropInt(self, "m_Shared.m_iNextMeleeCrit", -2)
+
+				self.AddCondEx(wep.GetAttribute("add cond on attack", -1), wep.GetAttribute("add cond on attack duration", -1), self)
+			}
+			continue
+		}
+
+		local scope = GetScope(wep)
+		if(!("LastFireTime" in scope))
+			scope.LastFireTime <- 0.0
+
+		local FireTime = GetPropFloat(wep, "m_flLastFireTime")
+		
+		if(FireTime > scope.LastFireTime)
+		{
+			FireScriptEvent("PlayerFireWeapon", {player = self, weapon = wep})
+			self.AddCondEx(wep.GetAttribute("add cond on attack", -1), wep.GetAttribute("add cond on attack duration", -1), self)
+			scope.LastFireTime = FireTime
+		}
+	}
+}
+
 /*
   =============================
   === CUSTOM EVENT HANDLING ===
@@ -6032,6 +6390,14 @@ else if(FindByName(null, "OnCondition"))
 		if("customkill" in eventdata)	eventdata.custom <- eventdata.customkill
 		else 							eventdata.custom <- 0
 
+		if(victim.HasCorrosion())
+		{
+			local corrosion = victim.GetCorrosion()
+			if(corrosion.bMakesPuddle)
+				victim.MakeCorrosionPuddle()
+			victim.RemoveCorrosion()
+		}
+
 		// overridden
 		delete eventdata.userid
 		delete eventdata.weapon_logclassname
@@ -6067,34 +6433,221 @@ else if(FindByName(null, "OnCondition"))
 	{
 		if(HasCustomFlag(params.damage_custom, TF_DMG_CUSTOM_IGNORE_INTERNAL))
 			return
-		local eventdata = clone params
+
+		local IsCrit = MATH.BitWise(params.damage_type, DMG_CRITICAL) 
+		local IsFall = MATH.BitWise(params.damage_type, DMG_FALL)
+		local IsCrush = MATH.BitWise(params.damage_type, DMG_CRUSH)
 
 		local victim = params.const_entity
 		local attacker = params.attacker
-		
-		eventdata.victim 							<- victim
-		if(victim.IsPlayer()) eventdata.hit_group 	<- GetPropInt(victim, "m_LastHitGroup")
-		eventdata.damage_custom 					<- params.damage_stats
-		eventdata.base_damage 						<- params.const_base_damage
-		eventdata.penetration_count 				<- params.player_penetration_count
-		eventdata.others_damaged 					<- params.damaged_other_players
+		// local inflictor = params.inflictor
+		// local weapon = params.weapon
 
-		if(params.weapon && params.weapon.GetClassname() == "tf_weapon_flamethrower")
+		if(IsCrush && victim.IsPlayer() && victim.HookAdditiveAttributes("crush dmg immunity"))
+			params.early_out <- true
+
+		if(params.damage_custom == TF_DMG_CUSTOM_SUICIDE && victim.IsPlayer() && victim.HookAdditiveAttributes("prevent suicide"))
+			params.early_out <- true
+
+		if(attacker && attacker.IsPlayer())
 		{
-			params.damage_position 					<- victim.GetOrigin() + Vector(0, 0, 32)
-			eventdata.damage_position 				<- params.damage_position
+			if(params.damage_custom >= TF_DMG_CUSTOM_SPELL_TELEPORT && params.damage_custom < TF_DMG_CUSTOM_KART)
+			{
+				local spell_book = attacker.GetSpellBook()
+				if(spell_book)
+					params.weapon = spell_book
+			}
+			switch(params.damage_custom)
+			{
+			case TF_DMG_CUSTOM_SPELL_SKELETON:
+				params.damage *= attacker.HookMultAttributes("spellskeletons dmg mult")
+			break
+			case TF_DMG_CUSTOM_SPELL_MIRV:
+				params.damage *= attacker.HookMultAttributes("spellmirv dmg mult")
+			break
+			case TF_DMG_CUSTOM_SPELL_METEOR:
+				params.damage *= attacker.HookMultAttributes("spellmeteor dmg mult")
+			break
+			case TF_DMG_CUSTOM_SPELL_LIGHTNING:
+				params.damage *= attacker.HookMultAttributes("spelllightningorb dmg mult")
+			break
+			case TF_DMG_CUSTOM_SPELL_FIREBALL:
+				params.damage *= attacker.HookMultAttributes("spellfireball dmg mult")
+			break
+			case TF_DMG_CUSTOM_SPELL_MONOCULUS:
+				params.damage *= attacker.HookMultAttributes("spelleyeball dmg mult")
+			break
+			case TF_DMG_CUSTOM_SPELL_BLASTJUMP:
+				params.damage *= attacker.HookMultAttributes("spelljump dmg mult")
+			break
+			case TF_DMG_CUSTOM_SPELL_BATS:
+				params.damage *= attacker.HookMultAttributes("spellbats dmg mult")
+			break
+
+			case TF_DMG_CUSTOM_BLEEDING:
+				if(IsCrit || attacker.IsCritBoosted() && params.weapon && params.weapon.GetAdditiveAttribute("allow crit bleed"))
+				{
+					params.damage_type = (3 * params.weapon.GetMultAttribute("mult crit dmg"))
+				}
+			break
+			case TF_DMG_CUSTOM_BOOTS_STOMP:
+				if(attacker.HookAdditiveAttributes("stomp uses velocity"))
+				{
+					local FallingVel = victim.GetAbsVelocity().z
+					local PrevFallingVel = "LastVel" in GetScope(victim) ? GetScope(victim).LastVel.z : 0
+
+					if(PrevFallingVel < FallingVel)
+						FallingVel = PrevFallingVel
+
+					if(FallingVel > 0)
+						FallingVel = -600
+
+					params.damage = FallingVel * attacker.HookMultAttributes("stomp dmg mult")
+				}
+				else
+				{
+					params.damage *= attacker.HookMultAttributes("stomp dmg mult")
+				}
+
+				local stomp_wep = attacker.GetActiveWeapon()
+
+				if(attacker.GetWeaponInSlotNew(SLOT_SECONDARY).IsWearable() && attacker.GetWeaponInSlotNew(SLOT_SECONDARY).CanStomp())
+					stomp_wep = attacker.GetWeaponInSlotNew(SLOT_SECONDARY)
+
+				params.weapon = stomp_wep
+
+			break
+			}
+			if(IsDamageTaunt(params.damage_custom))
+			{
+				params.damage *= attacker.HookMultAttributes("taunt dmg mult")
+				if(attacker.GetActiveWeapon())
+					params.damage *= attacker.GetActiveWeapon().GetMultAttribute("taunt dmg mult active")
+			}
 		}
+
+		local weapon = params.weapon
+
+		if(victim.IsPlayer())
+		{
+			switch(params.damage_custom)
+			{
+			case TF_DMG_CUSTOM_SPELL_SKELETON:
+				params.damage *= victim.HookMultAttributes("spellskeletons dmg taken mult")
+			break
+			case TF_DMG_CUSTOM_SPELL_MIRV:
+				params.damage *= victim.HookMultAttributes("spellmirv dmg taken mult")
+			break
+			case TF_DMG_CUSTOM_SPELL_METEOR:
+				params.damage *= victim.HookMultAttributes("spellmeteor dmg taken mult")
+			break
+			case TF_DMG_CUSTOM_SPELL_LIGHTNING:
+				params.damage *= victim.HookMultAttributes("spelllightningorb dmg taken mult")
+			break
+			case TF_DMG_CUSTOM_SPELL_FIREBALL:
+				params.damage *= victim.HookMultAttributes("spellfireball dmg taken mult")
+			break
+			case TF_DMG_CUSTOM_SPELL_MONOCULUS:
+				params.damage *= victim.HookMultAttributes("spelleyeball dmg taken mult")
+			break
+			case TF_DMG_CUSTOM_SPELL_BLASTJUMP:
+				params.damage *= victim.HookMultAttributes("spelljump dmg taken mult")
+			break
+			case TF_DMG_CUSTOM_SPELL_BATS:
+				params.damage *= victim.HookMultAttributes("spellbats dmg taken mult")
+			break
+
+			case TF_DMG_CUSTOM_BOOTS_STOMP:
+				params.damage *= victim.HookMultAttributes("stomp dmg taken mult")
+			}
+			if(IsFall && (!attacker || !attacker.IsPlayer()))
+			{
+				params.damage *= victim.HookMultAttributes("fall dmg taken mult")
+				if(victim.HookAdditiveAttributes("fall damage causes aoe"))
+				{
+					local FallingVel = victim.GetAbsVelocity().z
+					local PrevFallingVel = "LastVel" in GetScope(victim) ? GetScope(victim).LastVel.z : 0
+
+					if(PrevFallingVel < FallingVel)
+						FallingVel = PrevFallingVel
+
+					local MIN_FallingVel = victim.HookAdditiveAttributes("fall damage causes aoe min speed")
+
+					local AOE_Radius = victim.HookAdditiveAttributes("fall damage causes aoe radius")
+					if(AOE_Radius = 0)
+						AOE_Radius = 300
+
+					local AOE_damage = victim.HookAdditiveAttributes("fall damage causes aoe dmg mult")
+					if(AOE_damage = 0)
+						AOE_damage = 10
+
+					// victim.PrintToHud("Falling at: "+FallingVel+"\nWe need less than this: "+MIN_FallingVel)
+
+					if(FallingVel < 0 && victim.GetGroundEntity() && FallingVel <= MIN_FallingVel)
+					{
+						CreateSlamAoE({
+							owner = victim,
+							weapon = victim.GetActiveWeapon(),
+							center = victim.GetOrigin()+Vector(0, 0, -16),
+							radius = AOE_Radius,
+							damage = -FallingVel * AOE_damage,
+							ignore = [],
+						})
+					}
+				}
+			}
+		}
+
+		if(victim.IsPlayer() && attacker && attacker.IsPlayer())
+		{
+			if(victim.CanHaveCorrosion() && weapon)
+			{
+				if(weapon.GetAdditiveAttribute("corrosion on hit") != 0)
+					victim.MakeCorrosion(attacker, weapon)
+				else if(weapon.GetAdditiveAttribute("corrosion on crit") != 0 && MATH.BitWise(params.damage_type, DMG_CRITICAL))
+					victim.MakeCorrosion(attacker, weapon)
+				// attacker.PrintToHud("Made Corrosion on " + victim)
+			}
+
+			switch(params.damage_custom)
+			{
+			case TF_DMG_CUSTOM_BOOTS_STOMP:
+				if(weapon && weapon.GetAdditiveAttribute("cond on stomped"))
+					victim.AddCondEx(weapon.GetAdditiveAttribute("cond on stomped", -1), weapon.GetAdditiveAttribute("cond on stomped duration", 1), attacker)
+				if(weapon && weapon.GetAdditiveAttribute("cond on stomp"))
+					attacker.AddCondEx(weapon.GetAdditiveAttribute("cond on stomp", -1), weapon.GetAdditiveAttribute("cond on stomp duration", 1), attacker)
+			break
+			}
+		}
+
+		if(victim.GetClassname() in RegisteredDmgCallbacks && !(params.damage_custom & TF_DMG_CUSTOM_NO_CALLBACKS))
+		{
+			foreach (_callback_name, callback in RegisteredDmgCallbacks[victim.GetClassname()])
+			{
+				local ReturningData = ParamsToDamageCallbackData(clone params)
+
+				// Call the Callback with this table
+				callback(ReturningData)
+
+				foreach ( key, value in ReturningData )
+					params[key] <- value
+			}
+		}
+
+		if(weapon && weapon.GetClassname() == "tf_weapon_flamethrower")
+			params.damage_position <- victim.GetOrigin() + Vector(0, 0, 32)
+
+		if(params.damage_position == Vector())
+			params.damage_position <- victim.GetOrigin() + Vector(0, 0, 32)
 
 		// [5/7/26]
 		// why do vanilla conditions do this shit
 		if(victim.IsPlayer() && !victim.InRespawnRoom() && victim.InCond(TF_COND_INVULNERABLE_WEARINGOFF))
-		{
 			victim.RemoveCondEx(TF_COND_INVULNERABLE_WEARINGOFF, true)
-		}
 
 		// [1/1/26]
 		// Shitty Infinite Reflect loop fix
-		if(eventdata.damage_custom == TF_DMG_CUSTOM_RUNE_REFLECT)
+		if(params.damage_custom == TF_DMG_CUSTOM_RUNE_REFLECT)
 		{
 			if(victim.IsPlayer() && attacker.IsPlayer() && victim.HasRune(RUNE_REFLECT) && attacker.HasRune(RUNE_REFLECT))
 			{
@@ -6104,8 +6657,18 @@ else if(FindByName(null, "OnCondition"))
 			}
 		}
 
-		if(	eventdata.damage_custom == TF_DMG_CUSTOM_BLEEDING || eventdata.damage_custom == TF_DMG_CUSTOM_BURNING )
+		if(	params.damage_custom == TF_DMG_CUSTOM_BLEEDING || params.damage_custom == TF_DMG_CUSTOM_BURNING )
 			params.damage_type = params.damage_type | DMG_PREVENT_PHYSICS_FORCE
+
+		local eventdata = clone params
+
+		eventdata.victim 							<- victim
+		if(victim.IsPlayer()) eventdata.hit_group 	<- GetPropInt(victim, "m_LastHitGroup")
+		else eventdata.hit_group 					<- 0
+		eventdata.damage_custom 					<- params.damage_stats
+		eventdata.base_damage 						<- params.const_base_damage
+		eventdata.penetration_count 				<- params.player_penetration_count
+		eventdata.others_damaged 					<- params.damaged_other_players
 
 		// useless
 		delete eventdata.damage_bonus
@@ -6123,21 +6686,6 @@ else if(FindByName(null, "OnCondition"))
 		delete eventdata.const_base_damage
 		delete eventdata.player_penetration_count
 		delete eventdata.damaged_other_players
-
-
-		if(victim.GetClassname() in RegisteredDmgCallbacks && !(params.damage_custom & TF_DMG_CUSTOM_NO_CALLBACKS))
-		{
-			foreach (_callback_name, callback in RegisteredDmgCallbacks[victim.GetClassname()])
-			{
-				local ReturningData = ParamsToDamageCallbackData(clone params)
-
-				// Call the Callback with this table
-				callback(ReturningData)
-
-				foreach ( key, value in ReturningData )
-					params[key] <- value
-			}
-		}
 
 		if(!HasCustomFlag(eventdata.damage_custom, TF_DMG_CUSTOM_IGNORE_EVENTS))
 		{
@@ -6211,19 +6759,35 @@ else if(FindByName(null, "OnCondition"))
 	{
 		local eventdata = clone params
 
-		eventdata.player <- GetPlayerFromUserID(params.userid)
-		Assert(eventdata.player && eventdata.player.IsPlayer(), "player_spawn Received a NULL/Non player")
+		local player = GetPlayerFromUserID(params.userid)
+		eventdata.player <- player
 
-		ClearThinks(eventdata.player)
-		if(!eventdata.player.IsBot())
+		Assert(player && player.IsPlayer(), "player_spawn Received a NULL/Non player")
+
+		ClearThinks(player)
+		if(!player.IsBot())
 		{
-			eventdata.player.SetUpThinkTable()
-			if("PreservedThinks" in GetScope(eventdata.player) && GetScope(eventdata.player).PreservedThinks.len() != 0)
+			player.SetUpThinkTable()
+			if("PreservedThinks" in GetScope(player) && GetScope(player).PreservedThinks.len() != 0)
 			{
-				foreach (name, data in GetScope(eventdata.player).PreservedThinks)
-					eventdata.player.AddPreservedThink(data.delay, data.func, data.offset, name)
+				foreach (name, data in GetScope(player).PreservedThinks)
+					player.AddPreservedThink(data.delay, data.func, data.offset, name)
 			}
+
+			SetPropInt(player, "m_Shared.m_iNextMeleeCrit", -2)
+			player.AddThink(FireWeaponCheck, "FireWeaponCheck")
 		}
+
+		if(player.IsAdmin())
+			SetPropInt(player, "m_autoKickDisabled", 1)
+
+		player.StripItemSlot(player.HookAdditiveAttributes("strip item slot"))
+		
+		foreach (wep in player.GetAllWeapons())
+			player.SetCond(wep.GetAttribute("cond on spawn", -1), wep.GetAttribute("cond on spawn duration", -1))
+
+		player.SetCond(player.GetCustomAttribute("cond on spawn", -1), player.GetCustomAttribute("cond on spawn duration", -1))
+
 		// overridden
 		delete eventdata.userid
 
@@ -6233,10 +6797,10 @@ else if(FindByName(null, "OnCondition"))
 			RunWithDelay(@() (ReCalculatePlayers()), 0.1)
 			RunWithDelay(@() (ReCalculatePlayers()), 1.0)
 			RunWithDelay(@() (ReCalculatePlayers()), 5.0)
-			FireScriptEvent( eventdata.player.IsBot() ? "BotInitialSpawn" : "HumanInitialSpawn", eventdata)
+			FireScriptEvent( player.IsBot() ? "BotInitialSpawn" : "HumanInitialSpawn", eventdata)
 		}
 		else 
-			FireScriptEvent( eventdata.player.IsBot() ? "BotSpawn" : "HumanSpawn", eventdata)
+			FireScriptEvent( player.IsBot() ? "BotSpawn" : "HumanSpawn", eventdata)
 	}
 	function OnGameEvent_player_team(params)
 	{
@@ -6539,7 +7103,7 @@ else if(FindByName(null, "OnCondition"))
 	 * @param {short}		stun_flags	The victim's stun flags at the moment of death
 	 * @param {bool}		rocket_jump	True if the attacker was rocket jumping.
 	 */
-	function OnScriptEvent_BotDeath(_params) 				{}
+	function OnScriptEvent_BotDeath(_params) 				{PrintTable(_params)}
 	function OnScriptEvent_HumanDeath(_params) 				{}
 
 	/**
@@ -6560,7 +7124,7 @@ else if(FindByName(null, "OnCondition"))
 	 * @param {short}		others_damaged		How many players other than the attacker has the damage been applied to.
 	 */
 	function OnScriptEvent_PostTakeDamageBot(_params) 		{}
-	function OnScriptEvent_PostTakeDamageHuman(_params) 		{}
+	function OnScriptEvent_PostTakeDamageHuman(_params) 	{}
 
 	/**
 	 * Fired when the world (or any other entity) is about to take damage (Script Hook).
@@ -6578,7 +7142,7 @@ else if(FindByName(null, "OnCondition"))
 	 * @param {short}		penetration_count	How many players the damage has penetrated so far.
 	 * @param {short}		others_damaged		How many players other than the attacker has the damage been applied to.
 	 */
-	function OnScriptEvent_PostTakeDamageWorld(_params) 		{}
+	function OnScriptEvent_PostTakeDamageWorld(_params) 	{}
 	function OnScriptEvent_PostTakeDamage(_params) 			{}
 
 	/**
@@ -6606,7 +7170,7 @@ else if(FindByName(null, "OnCondition"))
 	 * @param {short}		team		The team index.
 	 */
 	function OnScriptEvent_BotInitialSpawn(_params) 			{}
-	function OnScriptEvent_BotSpawn(_params) 				{}
+	function OnScriptEvent_BotSpawn(_params) 				{PrintTable(_params)}
 
 	/**
 	 * Fired when a bot/player spawns.
@@ -6629,7 +7193,7 @@ else if(FindByName(null, "OnCondition"))
 	 * @param {bool}		silent		True if silent change.
 	 * @param {string}		username	Username of the client.
 	 */
-	function OnScriptEvent_BotTeam(_params) 					{}
+	function OnScriptEvent_BotTeam(_params) 				{}
 	function OnScriptEvent_HumanTeam(_params) 				{}
 
 	/**
@@ -6715,6 +7279,12 @@ else if(FindByName(null, "OnCondition"))
 	 */
 	function OnScriptEvent_WaveFailed(_)					{}
 	function OnScriptEvent_WaveComplete(_)					{}
+
+	/**
+	 * @param {CTFPlayer}		player	The Player who shot this weapon.
+	 * @param {CTFWeaponBase}	weapon	The Weapon the player fired.
+	 */
+	function OnScriptEvent_PlayerFireWeapon(_params)		{}
 }
 __CollectGameEventCallbacks(ChaosCustomEvents)
 
@@ -6886,6 +7456,97 @@ RegisterAdminTrigger("uber", function(player, ...) {
 	player.GetWeaponClassname("tf_weapon_medigun").SetUberChargePercent(uber)
 
 	return player.PrintToChat("Set your uber to "+uber+"%")
+})
+
+RegisterAdminTrigger("bot", function(player, ...) {
+	foreach(player in GetAllPlayers(TF_TEAM_BLUE, false, false))
+	{
+		if(GetClientConVar("name", player.entindex()) == "Johnny Silverhand" && player.IsAlive())
+			return player.PrintToChat("Johnny Silverhand is already Alive!")
+	}
+
+	local data = {
+		team = TF_TEAM_BLUE
+		count = 1
+		maxActive = 1
+		interval = 1
+		suppressFire = true
+	}
+	local trace = {
+		start = player.EyePosition()
+		end = player.GetEyeOffset(16000)
+		mask = MASK_WORLD
+		ignore = player
+	}
+
+	TraceLineEx(trace)
+	data["class"] <- TF_CLASS_HEAVYWEAPONS
+	local gen = SpawnEntityFromTable("bot_generator", data)
+	gen.SetAbsOrigin(trace.pos + Vector(0, 0, 16))
+	local old = GetAllPlayers(TF_TEAM_RED, false, false)
+	gen.AcceptInput("SpawnBot", "", null, null)
+	local new = GetAllPlayers(TF_TEAM_RED, false, false)
+
+	local nnew = []
+
+	foreach(p in new)
+	{
+		if(old.find(p) == null)
+			nnew.append(p)
+	}
+	Assert(nnew.len() == 1, "EXPECTED ONLY 1 RED PLAYER IN THE SAME TICK")
+
+	local bot = nnew[0]
+
+	printl("Creatded bot ["+bot+"] ")
+
+	bot.SetTeam(TF_TEAM_BLUE)
+	RunWithDelay(@() bot.SetTeam(TF_TEAM_BLUE), TICK_DUR)
+	bot.RemoveCondEx(TF_COND_REPROGRAMMED, true)
+
+	bot.AddCustomAttribute("damage force reduction", 0, -1)
+	bot.AddCustomAttribute("cannot taunt", 1, -1)
+	bot.AddCustomAttribute("use robot voice", 1, -1)
+	bot.AddCustomAttribute("no_attack", 1, -1)
+	bot.AddCustomAttribute("move speed penalty", 0.01, -1)
+	bot.AddCustomAttribute("cannot be backstabbed", 1, -1)
+	bot.AddCustomAttribute("max health additive bonus", 499700, -1)
+	bot.AddCustomAttribute("health regen", 50000, -1)
+	bot.AddCustomAttribute("cancle falling damage", 1, -1)
+	bot.SetCustomModelWithClassAnimations("models/bots/heavy/bot_heavy.mdl")
+	bot.SetHealth(500000)
+
+	bot.GenerateAndWearItem("Upgradeable TF_WEAPON_MINIGUN")
+	bot.GetWeaponInSlotNew(SLOT_PRIMARY).AddAttribute("item style override", 1, 0)
+	bot.GenerateAndWearItem("Security Shades")
+	bot.GenerateAndWearItem("The Purity Fist")
+	bot.GenerateAndWearItem("Unusual Cap")
+
+	SetFakeClientConVarValue(bot, "name", "Johnny Silverhand")
+
+	for (local wearable = bot.FirstMoveChild(); wearable != null; wearable = wearable.NextMovePeer())
+	{
+		if (wearable.GetClassname() != "tf_wearable")
+			continue
+		if(wearable.GetIDX() == 1173)
+		{
+			wearable.AddAttribute("set item tint rgb", 826111, 0)
+			wearable.AddAttribute("attach particle effect", 4, 0)
+		}
+	}
+
+	local function OnDeath() {
+		self.SetTeam(TF_TEAM_SPECTATOR)
+	}
+
+	GetScope(bot).OnDeath <- OnDeath
+	
+	bot.AddBotTag("HardWired")
+
+	// RunWithDelay(@() bot.AddBotAttribute(REMOVE_ON_DEATH), TICK_DUR)
+	RunWithDelay(@() bot.AddBotAttribute(IGNORE_ENEMIES), TICK_DUR)
+
+	gen.AcceptInput("kill", "", null, null)
 })
 
 /*

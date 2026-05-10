@@ -21,7 +21,7 @@ if(!("CHECKPOINT_ERROR" in getroottable()))
 	::CHECKPOINT_ERROR <- "\x07bf4137"
 
 if("SetScriptVersion" in getroottable())
-	SetScriptVersion("Translations", "1.6.1")
+	SetScriptVersion("Translations", "1.6.2")
 
 ::TRANSLATION_TABLE <- {
 	english = {
@@ -144,7 +144,7 @@ if("SetScriptVersion" in getroottable())
 		DIRECTHIT_DESC			= " Alt-Fire: Launch a small enemy into the air for an easy minicrit follow-up. Rockets have a small amount of aim assist."
 		//
 		BLACKBOX_NAME			= "BLACK BOX"
-		BLACKBOX_DESC			= " Slow down enemies and inflict bleed. This weapon deals x2 damage against Soldier bots."
+		BLACKBOX_DESC			= " Slow down enemies and inflict bleed."
 		//
 		ROCKETJUMPER_NAME		= "ROCKET JUMPER"
 		ROCKETJUMPER_DESC		= " Slow fire and reload rate, but high damage and large blast radius. Excellent choice for crowd control."
@@ -156,7 +156,7 @@ if("SetScriptVersion" in getroottable())
 		COWMANGLER_DESC			= " Immobilize small enemies on hit. Charged shot freezes enemies for longer. Hold Alt-Fire to supercharge the weapon for a multishot, resulting in even longer freeze."
 		//
 		ORIGINAL_NAME			= "ORIGINAL"
-		ORIGINAL_DESC			= " Hold fire to load a burst-shot of up to 4 rockets. This weapon automatically fires when loaded."
+		ORIGINAL_DESC			= " Hold fire to load a burst-shot of up to 5 rockets. This weapon automatically fires when loaded."
 		//
 		BEGGARSBAZOOKA_NAME		= "BEGGAR'S BAZOOKA"
 		BEGGARSBAZOOKA_DESC		= " Hold fire to load up to 100 rockets before unleashing them in a massive burst. This weapon does NOT overload."
@@ -213,7 +213,7 @@ if("SetScriptVersion" in getroottable())
 		MARKETGARDENER_DESC 	= " Deals massively increased crit damage. After getting a kill, enter an enraged state and gain extra health, resistance and increased damage on all attacks. However any miss is instant death."
 		//
 		DISCIPLINARYACTION_NAME = "DISCIPLINARY ACTION"
-		DISCIPLINARYACTION_DESC	= " Standard option for defense and mobility."
+		DISCIPLINARYACTION_DESC	= " Standard option for defense and mobility. Instantly gain 1/3 Rage meter on hit."
 		//
 		ESCAPEPLAN_NAME			= "ESCAPE PLAN"
 		ESCAPEPLAN_DESC			= " Standard option for defense and mobility."
@@ -481,7 +481,7 @@ if("SetScriptVersion" in getroottable())
 		CRUSADERSCROSSBOW_DESC	= " Gain 0.25% Ubercharge per hit, inflict bleed and gain another 0.5% Ubercharge per tick of bleed damage."
 		//
 		OVERDOSE_NAME 			= "OVERDOSE"
-		OVERDOSE_DESC 			= " Requires and consumes 100% Ubercharge to send a payload that shuts down all nearby small enemies for up to 15s."
+		OVERDOSE_DESC 			= " Requires and consumes 50% Ubercharge to launch an EMP mortar, causing nearby enemies to be unable to move or attack for a short time."
 		///
 		MEDIGUN_NAME			= "MEDI GUN"
 		MEDIGUN_DESC			= " Overheal cap raised to x10 the patient's max health. Deploy a long-lasting level 1 Projectile Shield."
@@ -779,6 +779,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		BLACKBOX_NAME			= "黑匣子"
 		BLACKBOX_DESC			= "攻击可以减速敌人并施加流血效果. 此武器对士兵机器人造成 2 倍伤害."
+		// TODO: Update! " Slow down enemies and inflict bleed."
 		//
 		ROCKETJUMPER_NAME		= "火箭伞兵"
 		ROCKETJUMPER_DESC		= "降低开火速度与装填速度, 大幅提升伤害与爆炸范围. 对集群的敌人更加有效."
@@ -848,6 +849,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		DISCIPLINARYACTION_NAME = "指挥官的军鞭"
 		DISCIPLINARYACTION_DESC	= "标准选择, 提升移动速度与防御."
+		// TODO: Update! " Standard option for defense and mobility. Instantly gain 1/3 Rage meter on hit."
 		//
 		ESCAPEPLAN_NAME			= "逃生计划镐"
 		ESCAPEPLAN_DESC			= "标准选择, 提升移动速度与防御."
@@ -1121,7 +1123,8 @@ if("SetScriptVersion" in getroottable())
 		CRUSADERSCROSSBOW_DESC	= "攻击命中会获得 0.25% Ubercharge充能, 攻击能够施加流血效果并在每次流血时获得 0.5% Ubercharge充能."
 		//
 		OVERDOSE_NAME 			= "过载注射枪"
-		OVERDOSE_DESC 			= "需要花费 100% Ubercharge充能以发射, 可以发射出眩晕机器人 15秒 的爆炸."
+		OVERDOSE_DESC 			= "需要花费 50% Ubercharge充能以发射, 可以发射出眩晕机器人 15秒 的爆炸."
+		// TODO: Update! " Requires and consumes 50% Ubercharge to launch an EMP mortar, causing nearby enemies to be unable to move or attack for a short time."
 		///
 		MEDIGUN_NAME			= "医疗枪"
 		MEDIGUN_DESC			= "能够为治疗对象提供其 10 倍最大生命值的超量治疗. 获得持续时间较长的 1 级能量护盾."
@@ -1419,6 +1422,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		BLACKBOX_NAME			= "SVARTA LÅDAN"
 		BLACKBOX_DESC			= " Sakta ner fiender och utdela blöd. Detta vapen utdelar x2 skada mot Soldatbotar."
+		// TODO: Update! " Slow down enemies and inflict bleed."
 		//
 		ROCKETJUMPER_NAME		= "RAKETHOPPAREN"
 		ROCKETJUMPER_DESC		= " Långsam eldgivning och omladdningshastighet, men hög skada och stor explosionsradie. Utmärkt val för gruppkontroll."
@@ -1430,7 +1434,7 @@ if("SetScriptVersion" in getroottable())
 		COWMANGLER_DESC			= " Immobiliserar små fiender vid träff. Laddade skott stopper fiender längre. Håll ner Alternativattack för att superladda vapnet för ett multiskott, som stoppar de mycket längre."
 		//
 		ORIGINAL_NAME			= "ORIGINALET"
-		ORIGINAL_DESC			= " Håll ner eldgivning till att ladda ett uttrbottsskott med upp till 4 raketer. Detta vapen avfyras automatiskt när den är laddad."
+		ORIGINAL_DESC			= " Håll ner eldgivning till att ladda ett uttrbottsskott med upp till 5 raketer. Detta vapen avfyras automatiskt när den är laddad."
 		//
 		BEGGARSBAZOOKA_NAME		= "RUINERADES RAKETGEVÄR"
 		BEGGARSBAZOOKA_DESC		= " Håll ner eldgivning för att ladda upp till 100 raketer innan man släpper du i ett massivt utbrott. Detta vapen laddas INTE över."
@@ -1488,6 +1492,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		DISCIPLINARYACTION_NAME = "DISCIPLINSÅTGÄRDEN"
 		DISCIPLINARYACTION_DESC	= " Standardval för försvar och rörelse."
+		// TODO: Update! " Standard option for defense and mobility. Instantly gain 1/3 Rage meter on hit."
 		//
 		ESCAPEPLAN_NAME			= "FLYKTPLANEN"
 		ESCAPEPLAN_DESC			= " Standardval för försvar och rörelse."
@@ -1755,7 +1760,8 @@ if("SetScriptVersion" in getroottable())
 		CRUSADERSCROSSBOW_DESC	= " Få 0.25% Uberladdning per träff, utdela blöd och få en till 0.5% Uberladdning per tick av blödskada."
 		//
 		OVERDOSE_NAME 			= "ÖVERDOSERINGEN"
-		OVERDOSE_DESC 			= " Kräver och använder 100% Uberladdning till att skicka en bomb som stänger ner alla nära små fiender för upp till 15s."
+		OVERDOSE_DESC 			= " Kräver och använder 50% Uberladdning till att skicka en bomb som stänger ner alla nära små fiender för upp till 15s."
+		// TODO: Update! " Requires and consumes 50% Ubercharge to launch an EMP mortar, causing nearby enemies to be unable to move or attack for a short time."
 		///
 		MEDIGUN_NAME			= "HÄLSOVAPEN"
 		MEDIGUN_DESC			= " Överhälsa ökad till x10 av patientens max hälsa. Lägg ut en långvarande nivå 1 Projektilsköld."
@@ -2053,6 +2059,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		BLACKBOX_NAME			= "ЧЁРНЫЙ ЯЩИК"
 		BLACKBOX_DESC			= " Замедляет роботов и наносит эффект кровотечения. Наносит удвоенный урон по роботам-солдатам."
+		// TODO: Update! " Slow down enemies and inflict bleed."
 		//
 		ROCKETJUMPER_NAME		= "ТРЕНИРОВОЧНЫЙ РАКЕТОМЁТ"
 		ROCKETJUMPER_DESC		= " Медленная скорость стрельбы и перезарядки, но высокий урон и большой радиус взрыва. Эффективен против толпы."
@@ -2064,7 +2071,7 @@ if("SetScriptVersion" in getroottable())
 		COWMANGLER_DESC			= " Обездвиживает мелких роботов при попадании. Заряженный выстрел оглушает роботов дольше обычного. Удерживайте клавишу альтернативной атаки, чтобы перезарядить оружие для многоснарядного выстрела, что приводит к ещё более длительному оглушению."
 		//
 		ORIGINAL_NAME			= "ПРАРОДИТЕЛЬ"
-		ORIGINAL_DESC			= "Удерживайте клавишу атаки, чтобы зарядить очередь до 4 ракет. Стреляет автоматически при полной обойме."
+		ORIGINAL_DESC			= "Удерживайте клавишу атаки, чтобы зарядить очередь до 5 ракет. Стреляет автоматически при полной обойме."
 		//
 		BEGGARSBAZOOKA_NAME		= "БАЗУКА БРОДЯГИ"
 		BEGGARSBAZOOKA_DESC		= " Удерживайте клавишу атаки, чтобы зарядить до 100 ракет, прежде чем выпустить их мощным залпом. Это оружие НЕ подвержено осечке."
@@ -2122,6 +2129,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		DISCIPLINARYACTION_NAME = "ДИСЦИПЛИНАРНОЕ ВЗЫСКАНИЕ"
 		DISCIPLINARYACTION_DESC	= " Стандартный вариант для защиты и мобильности."
+		// TODO: Update! " Standard option for defense and mobility. Instantly gain 1/3 Rage meter on hit."
 		//
 		ESCAPEPLAN_NAME			= "ПЛАН ЭВАКУАЦИИ"
 		ESCAPEPLAN_DESC			= " Стандартный вариант для защиты и мобильности."
@@ -2395,7 +2403,8 @@ if("SetScriptVersion" in getroottable())
 		CRUSADERSCROSSBOW_DESC	= " Даёт 0,25 % убер-заряда за попадание, наносит кровотечение и ещё 0,5% убер-заряда за каждую секунду урона от кровотечения."
 		//
 		OVERDOSE_NAME 			= "ПЕРЕДОЗ"
-		OVERDOSE_DESC 			= " Требует и расходует 100 % убер-заряда, который отключает всех мелких роботов поблизости на срок до 15 секунд."
+		OVERDOSE_DESC 			= " Требует и расходует 50 % убер-заряда, который отключает всех мелких роботов поблизости на срок до 15 секунд."
+		// TODO: Update! " Requires and consumes 50% Ubercharge to launch an EMP mortar, causing nearby enemies to be unable to move or attack for a short time."
 		///
 		MEDIGUN_NAME			= "ЛЕЧЕБНАЯ ПУШКА"
 		MEDIGUN_DESC			= " Максимальный избыточный запас здоровья увеличен до 10-тикратного от максимального здоровья пациента. Разворачивает долгодействующий щит от снарядов 1-го уровня."
@@ -2693,6 +2702,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		BLACKBOX_NAME			= "CZARNA SKRZYNKA"
 		BLACKBOX_DESC			= " Spowalnia wrogów i wywołuje u nich krwawienie. Zadaje 2x większe obrażenia robożołnierzom."
+		// TODO: Update! " Slow down enemies and inflict bleed."
 		//
 		ROCKETJUMPER_NAME		= "RAKIETOWY SKOCZEK"
 		ROCKETJUMPER_DESC		= " Niska szybkostrzelność i wolne przeładowanie, lecz zadaje duże obrażenia i posiada duży promień wybuchu. Świetna opcja do kontrolowania grup przeciwników."
@@ -2704,7 +2714,7 @@ if("SetScriptVersion" in getroottable())
 		COWMANGLER_DESC			= " Unieruchamia słabszych wrogów przy trafieniu. Naładowany strzał unieruchamia wrogów na dłużej. Przytrzymaj atak alternatywny, by supernaładować broń i oddać serię strzałów, co skutkuje jeszcze dłuższym efektem unieruchomienia."
 		//
 		ORIGINAL_NAME			= "PIERWOWZÓR"
-		ORIGINAL_DESC			= " Przytrzymaj przycisk strzału, by załadować serię aż do 4 rakiet. Strzela automatycznie po załadowaniu."
+		ORIGINAL_DESC			= " Przytrzymaj przycisk strzału, by załadować serię aż do 5 rakiet. Strzela automatycznie po załadowaniu."
 		//
 		BEGGARSBAZOOKA_NAME		= "BAZOOKA BIEDAKA"
 		BEGGARSBAZOOKA_DESC		= " Przytrzymaj przycisk strzału, by załadować aż do 100 rakiet i puść przycisk, by szybko je wystrzelić. Przeładowanie komory NIE doprowadzi do eksplozji."
@@ -2762,6 +2772,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		DISCIPLINARYACTION_NAME = "POSTĘPOWANIE DYSCYPLINARNE"
 		DISCIPLINARYACTION_DESC	= " Standardowa opcja zapewniająca ochronę i mobilność."
+		// TODO: Update! " Standard option for defense and mobility. Instantly gain 1/3 Rage meter on hit."
 		//
 		ESCAPEPLAN_NAME			= "PLAN UCIECZKI"
 		ESCAPEPLAN_DESC			= " Standardowa opcja zapewniająca ochronę i mobilność."
@@ -3029,7 +3040,8 @@ if("SetScriptVersion" in getroottable())
 		CRUSADERSCROSSBOW_DESC	= " Każde trafienie przyznaje 0,25% ładunku ÜberCharge, wywołuje krwawienie i przyznaje dodatkowe 0,5% ładunku ÜberCharge na każdą instancję obrażeń od krwawienia."
 		//
 		OVERDOSE_NAME 			= "KOŃSKA DAWKA"
-		OVERDOSE_DESC 			= " Wymaga i zużywa 100% ładunku ÜberCharge, by wysłać ładunek wyłączający wszystkich pobliskich słabszych wrogów nawet na 15 sekund."
+		OVERDOSE_DESC 			= " Wymaga i zużywa 50% ładunku ÜberCharge, by wysłać ładunek wyłączający wszystkich pobliskich słabszych wrogów nawet na 15 sekund."
+		// TODO: Update! " Requires and consumes 50% Ubercharge to launch an EMP mortar, causing nearby enemies to be unable to move or attack for a short time."
 		///
 		MEDIGUN_NAME			= "MEDIGUN"
 		MEDIGUN_DESC			= " Limit nadleczenia zwiększony do 10x maksymalnego zdrowia pacjenta. Aktywuje długotrwałą tarczę przeciw pociskom poziomu 1."
@@ -3327,6 +3339,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		BLACKBOX_NAME			= "BLACK BOX"
 		BLACKBOX_DESC			= " 敵の動きを鈍らせ、出血ダメージを与える　この武器はソルジャーボットに対して2倍のダメージを与える"
+		// TODO: Update! " Slow down enemies and inflict bleed."
 		//
 		ROCKETJUMPER_NAME		= "ROCKET JUMPER"
 		ROCKETJUMPER_DESC		= " 発射速度とリロード速度は遅いものの、威力が大きく、爆風範囲も広い　群衆に対して最適な選択肢だ"
@@ -3396,6 +3409,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		DISCIPLINARYACTION_NAME = "懲戒ムチ"
 		DISCIPLINARYACTION_DESC	= " 防御と機動性のための標準的な選択肢"
+		// TODO: Update! " Standard option for defense and mobility. Instantly gain 1/3 Rage meter on hit."
 		//
 		ESCAPEPLAN_NAME			= "ESCAPE PLAN"
 		ESCAPEPLAN_DESC			= " 防御と機動性のための標準的な選択肢"
@@ -3664,6 +3678,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		OVERDOSE_NAME 			= "過剰摂取"
 		OVERDOSE_DESC 			= " 100%のユーバーチャージを消費して発動し、周囲の小型敵を最大15秒間無力化する攻撃を放つ"
+		// TODO: Update! " Requires and consumes 50% Ubercharge to launch an EMP mortar, causing nearby enemies to be unable to move or attack for a short time."
 		///
 		MEDIGUN_NAME			= "メディガン"
 		MEDIGUN_DESC			= " オーバーヒールの上限が、対象の最大HPの10倍まで引き上げられる　持続時間の長いレベル1の「投射物シールド」を展開する"
@@ -3961,6 +3976,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		BLACKBOX_NAME			= "DEN SORTE BOKS"
 		BLACKBOX_DESC			= " Sæt farten ned på fjender og påfør blødning. Dette våben gør x2 skade mod Soldier robotter."
+		// TODO: Update! " Slow down enemies and inflict bleed."
 		//
 		ROCKETJUMPER_NAME		= "RAKETHOPPEREN"
 		ROCKETJUMPER_DESC		= " Lav skudhastighed og genladningstid, men høj skade og stor eksplosionsradius. Fremragende valg til at kontrollere store grupper."
@@ -3972,7 +3988,7 @@ if("SetScriptVersion" in getroottable())
 		COWMANGLER_DESC			= " Lammer små fjender ved træf. Et opladet skud lammer fjender i længere tid. Hold Alt-Skyd nede for at oplade våbnet til et multiskud, hvilket resulterer i endnu længere lammelse."
 		//
 		ORIGINAL_NAME			= "ORIGINALEN"
-		ORIGINAL_DESC			= " Hold skudknappen nede for at lade en salve på op til 4 raketter. Våbnet affyres automatisk, når det er ladt."
+		ORIGINAL_DESC			= " Hold skudknappen nede for at lade en salve på op til 5 raketter. Våbnet affyres automatisk, når det er ladt."
 		//
 		BEGGARSBAZOOKA_NAME		= "TIGGERENS BAZOOKA"
 		BEGGARSBAZOOKA_DESC		= " Hold skudknappen inde for at oplade op til 100 raketter, før du affyrer dem i en massiv salve. Dette våben kan IKKE overfyldes."
@@ -4030,6 +4046,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		DISCIPLINARYACTION_NAME = "DISCIPLINÆRSAGEN"
 		DISCIPLINARYACTION_DESC	= " Standardvalg til forsvar og mobilitet."
+		// TODO: Update! " Standard option for defense and mobility. Instantly gain 1/3 Rage meter on hit."
 		//
 		ESCAPEPLAN_NAME			= "REDNINGSPLANEN"
 		ESCAPEPLAN_DESC			= " Standardvalg til forsvar og mobilitet."
@@ -4297,7 +4314,8 @@ if("SetScriptVersion" in getroottable())
 		CRUSADERSCROSSBOW_DESC	= " Få 0,25 % UberLadning ved træffer, påfør blødning og modtag yderligere 0,5 % UberLadning pr. tick af blødningsskade."
 		//
 		OVERDOSE_NAME 			= "OVERDOSEN"
-		OVERDOSE_DESC 			= " Kræver og forbruger 100 % UberLadning for at sende en impuls, der deaktiverer alle små fjender i nærheden i op til 15 sekunder."
+		OVERDOSE_DESC 			= " Kræver og forbruger 50 % UberLadning for at sende en impuls, der deaktiverer alle små fjender i nærheden i op til 15 sekunder."
+		// TODO: Update! " Requires and consumes 50% Ubercharge to launch an EMP mortar, causing nearby enemies to be unable to move or attack for a short time."
 		///
 		MEDIGUN_NAME			= "MEDI-GEVÆR"
 		MEDIGUN_DESC			= " Maksimumgrænsen for Overheal er øget til x10 af patientens maksimale helbred. Brug et langvarigt niveau 1 Projektilskjold."
@@ -4595,6 +4613,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		BLACKBOX_NAME			= "CAJA NEGRA"
 		BLACKBOX_DESC			= " Ralentiza enemigos y causa hemorragia. Esta arma causa daño x2 contra Soldier robot."
+		// TODO: Update! " Slow down enemies and inflict bleed."
 		//
 		ROCKETJUMPER_NAME		= "SALTACOHETES"
 		ROCKETJUMPER_DESC		= " Velocidad de disparo y recarga reducida, pero gran capacidad de daño y alcance de explosiones. Excelente para el control de masas."
@@ -4606,7 +4625,7 @@ if("SetScriptVersion" in getroottable())
 		COWMANGLER_DESC			= " Inmoviliza a enemigos pequeños al impactar. Los disparos cargados inmovilizan durante más tiempo. Al mantener el disparo secundario se sorbecarga el arma, lanzando un multidisparo más inmovilizador."
 		//
 		ORIGINAL_NAME			= "ORIGINAL"
-		ORIGINAL_DESC			= " Al mantener el botón de disparo se carga una ráfaga de 4 cohetes. Esta arma dispara automáticamente al recargarse."
+		ORIGINAL_DESC			= " Al mantener el botón de disparo se carga una ráfaga de 5 cohetes. Esta arma dispara automáticamente al recargarse."
 		//
 		BEGGARSBAZOOKA_NAME		= "BAZUCA DEL MENDIGO"
 		BEGGARSBAZOOKA_DESC		= " Al mantener el botón de disparo se lanza una ráfaga masiva de 100 proyectiles. Esta arma NO se sobrecarga."
@@ -4664,6 +4683,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		DISCIPLINARYACTION_NAME = "ACCIÓN DISCIPLINARIA"
 		DISCIPLINARYACTION_DESC	= " Una opción estándar para defensa y movilidad."
+		// TODO: Update! " Standard option for defense and mobility. Instantly gain 1/3 Rage meter on hit."
 		//
 		ESCAPEPLAN_NAME			= "PLAN DE HUIDA"
 		ESCAPEPLAN_DESC			= " Una opción estándar para defensa y movilidad."
@@ -4931,7 +4951,8 @@ if("SetScriptVersion" in getroottable())
 		CRUSADERSCROSSBOW_DESC	= " Al impactar: Aumenta en 0,25 % la Supercarga, causa hemorragia y aumenta 0,5 % de Supercarga por daño de hemorragia."
 		//
 		OVERDOSE_NAME 			= "SOBREDOSIS"
-		OVERDOSE_DESC 			= " Requiere y consume una Supercarga al 100 % para enviar una carga explosiva que apaga los sistemas de todos los enemigos cercanos hasta 15 segundos."
+		OVERDOSE_DESC 			= " Requiere y consume una Supercarga al 50 % para enviar una carga explosiva que apaga los sistemas de todos los enemigos cercanos hasta 15 segundos."
+		// TODO: Update! " Requires and consumes 50% Ubercharge to launch an EMP mortar, causing nearby enemies to be unable to move or attack for a short time."
 		///
 		MEDIGUN_NAME			= "PISTOLA MÉDICA"
 		MEDIGUN_DESC			= " Se aumenta el límite de exceso de curación hasta x10 la salud máxima del paciente. Despliega un duradero escudo de proyectiles de nivel 1."
