@@ -272,6 +272,7 @@ RegisterSpawnCallback("tf_projectile_healing_bolt", "BlutsaugerFUCK", function(e
 			owner.GetWeaponInSlotNew(SLOT_SECONDARY).IncreaseUberChargePercent(BlutsaugerSettings.refund)
 	})
 })
+
 function GameplayThink()
 {
 	local ReprogrammedBots = []
@@ -281,13 +282,21 @@ function GameplayThink()
 
 	foreach (bot in m_aRobots)
 	{
+		if(!("LastVels" in GetScope(bot)))
+			GetScope(bot).LastVels <- []
+		if(type(GetScope(bot).LastVels) != "array")
+			GetScope(bot).LastVels <- []
+
+		GetScope(bot).LastVels.append(bot.GetAbsVelocity())
+		if(GetScope(bot).LastVels.len() > 6)
+			GetScope(bot).LastVels.remove(0)
+
 		if(bot.IsDead())
 			continue
 
 		if(bot.IsAlive() && !bot.IsReprogrammed())
 			AliveBots += 1
 
-		GetScope(bot).LastVel <- bot.GetAbsVelocity()
 
 		if("EndReprogramTime" in GetScope(bot) && GetScope(bot).EndReprogramTime <= Time())
 			bot.UndoReprogram()
@@ -316,7 +325,14 @@ function GameplayThink()
 
 	foreach (Human in m_aHumans)
 	{
-		GetScope(Human).LastVel <- Human.GetAbsVelocity()
+		if(!("LastVels" in GetScope(Human)))
+			GetScope(Human).LastVels <- []
+		if(type(GetScope(Human).LastVels) != "array")
+			GetScope(Human).LastVels <- []
+			
+		GetScope(Human).LastVels.append(Human.GetAbsVelocity())
+		if(GetScope(Human).LastVels.len() > 6)
+			GetScope(Human).LastVels.remove(0)
 
 		if(!("BetterStatTracking" in FatCatLibSettings))
 			SetLibrarySettings()
@@ -469,12 +485,12 @@ function ROOT::ModifyCallbackDamage(params, victim, attacker, weapon, inflictor)
 	break;
 	}
 
-	if(custom > 0 && custom < TF_DMG_CUSTOM_END)
-	{
-		local result = CustomDamageOverrides[custom]
-		if(result != null)
-			params.damage = result
-	}
+	// if(custom > 0 && custom < TF_DMG_CUSTOM_END)
+	// {
+	// 	local result = CustomDamageOverrides[custom]
+	// 	if(result != null)
+	// 		params.damage = result
+	// }
 }
 
 /**
@@ -535,17 +551,6 @@ function ROOT::ProcessChaosWeaponHit(params, victim, attacker, weapon, _inflicto
 		spell_book.ModifySpells(TF_SPELL_HEAL, 5)
 	}
 	break;
-	/* case TF_WEAPON_BREAD_BITE:
-	{
-		if( !victim.IsPlayer() || !(params.damage_type & DMG_CRITICAL))
-			break
-		if( !victim.CanHaveCorrosion() || victim.HasCorrosion() )
-			break
-				
-		// attacker.PrintToHud("Made Corrosion on " + victim)
-		victim.MakeCorrosion(attacker, weapon)
-	}
-	break; */
 	}
 }
 
@@ -553,73 +558,25 @@ function ROOT::ProcessChaosWeaponHit(params, victim, attacker, weapon, _inflicto
 ClearDamageCallbacks()
 
 RegisterDamageCallback("player", "GameplayPlayer" function(params) {
-	if((params.damage_custom & TF_DMG_CUSTOM_IGNORE_EVENTS) || params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
+	if(!HasCustomFlag(params.damage_custom, TF_DMG_CUSTOM_IGNORE_EVENTS) || params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
 		return
 
 	local victim 	= params.victim
 	local attacker 	= params.attacker
 	local weapon 	= null
 	local inflictor	= params.inflictor
+	
 
-	if(attacker && attacker.IsPlayer() && attacker.GetPlayerClass() == TF_CLASS_MEDIC)
+	if(!attacker)
+		return
+
+	if(attacker.IsPlayer() && attacker.GetPlayerClass() == TF_CLASS_MEDIC)
 	{
 		if(inflictor && inflictor.GetClassname() == "tf_projectile_healing_bolt" && victim.GetTeam() == TF_TEAM_PVE_INVADERS)
 		{
 			GetScope(inflictor).GrantTheFuckingUber <- false
 			inflictor.Destroy()
 			BlutsuagerHit(attacker, victim)
-		}
-	}
-	
-
-	if(!attacker)
-		return
-
-	if (attacker.IsPlayer() && params.damage_custom >= TF_DMG_CUSTOM_SPELL_TELEPORT && params.damage_custom <= TF_DMG_CUSTOM_KART)
-	{
-		local spell_book = attacker.GetSpellBook()
-		if(spell_book)
-			params.weapon = spell_book
-		else
-			params.weapon = attacker.GetWeaponInSlotNew(SLOT_MELEE)
-	}
-	
-	if (attacker.IsPlayer() && params.damage_custom == TF_DMG_CUSTOM_BOOTS_STOMP)
-	{
-		if(attacker.GetWeaponInSlotNew(SLOT_SECONDARY).IsWearable())
-			params.weapon = attacker.GetWeaponInSlotNew(SLOT_SECONDARY)
-		else 
-		{
-			foreach (wep in attacker.GetAllWeapons())
-			{
-				if(wep.CanStomp())
-				{
-					params.weapon = wep
-					break;
-				}
-			}
-		}
-	}
-
-	local FallingVel = victim.GetAbsVelocity().z
-	local PrevFallingVel = "LastVel" in GetScope(victim) ? GetScope(victim).LastVel.z : 0
-
-	if(FallingVel > 0 || PrevFallingVel > 0) {}
-	else if (params.damage_type & DMG_FALL && victim.GetGroundEntity())
-	{
-		if(FallingVel > PrevFallingVel)
-			FallingVel = PrevFallingVel
-		if(victim.GetActiveWeaponIDX() == TF_WEAPON_WARRIOR_SPIRIT && FallingVel < -1500)
-		{
-			CreateSlamAoE({
-				owner = victim,
-				weapon = victim.GetWeapon(TF_WEAPON_WARRIOR_SPIRIT),
-				center = victim.GetOrigin()+Vector(0, 0, -16),
-				radius = 300,
-				damage = -FallingVel * 10,
-				ignore = [],
-			})
-			ScreenShake(victim.GetOrigin(), 25, 2.5, 1.0, 1500, 0, true)
 		}
 	}
 
@@ -639,24 +596,13 @@ RegisterDamageCallback("player", "GameplayPlayer" function(params) {
 })
 
 RegisterDamageCallback(["obj_sentrygun", "obj_teleporter", "obj_dispenser", "tank_boss"], "GameplayOthers", function(params) {
-	if((params.damage_custom & TF_DMG_CUSTOM_IGNORE_EVENTS) || params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
+	if(!HasCustomFlag(params.damage_custom, TF_DMG_CUSTOM_IGNORE_EVENTS) || params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
 		return
 
 	local victim 	= params.victim
 	local attacker 	= params.attacker
-	local weapon 	= null
+	local weapon 	= params.weapon
 	local inflictor	= params.inflictor
-
-	if (attacker.IsPlayer() && params.damage_custom >= TF_DMG_CUSTOM_SPELL_TELEPORT && params.damage_custom <= TF_DMG_CUSTOM_KART)
-	{
-		local spell_book = attacker.GetSpellBook()
-		if(spell_book)
-			params.weapon = spell_book
-		else
-			params.weapon = attacker.GetWeaponInSlotNew(SLOT_MELEE)
-	}
-
-	weapon = params.weapon
 
 	if(!attacker || !weapon || !inflictor || IsPlayerABot(attacker))
 		return
@@ -669,7 +615,7 @@ RegisterDamageCallback(["obj_sentrygun", "obj_teleporter", "obj_dispenser", "tan
 })
 
 RegisterDamageCallback("tf_zombie", "GameplaySkeletons", function(params) {
-	if(params.damage_custom & TF_DMG_CUSTOM_IGNORE_EVENTS)
+	if(!HasCustomFlag(params.damage_custom, TF_DMG_CUSTOM_IGNORE_EVENTS) || params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
 		return
 	params.damage = 0
 	params.victim.TakeDamageCustom(params.inflictor, params.attacker, null, Vector(), Vector(), 5.0, DMG_GENERIC, TF_DMG_CUSTOM_NO_CALLBACKS)

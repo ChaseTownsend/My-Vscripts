@@ -6304,6 +6304,14 @@ function FireWeaponCheck()
 {
 	if(self.IsDead())
 		return 0.1
+
+	local message = "Speeds: \n"
+	foreach(sped in GetScope(self).LastVels)
+	{
+		message += sped.z +"\n"
+	}
+
+	self.PrintToHud(message)
 	foreach(wep in self.GetAllWeapons())
 	{
 		if(wep.GetClassname() == "tf_weapon_flamethrower")
@@ -6340,6 +6348,7 @@ function FireWeaponCheck()
 			scope.LastFireTime = FireTime
 		}
 	}
+	return -1
 }
 
 /*
@@ -6437,7 +6446,7 @@ function FireWeaponCheck()
 		local IsCrit = MATH.BitWise(params.damage_type, DMG_CRITICAL) 
 		local IsFall = MATH.BitWise(params.damage_type, DMG_FALL)
 		local IsCrush = MATH.BitWise(params.damage_type, DMG_CRUSH)
-
+		
 		local victim = params.const_entity
 		local attacker = params.attacker
 		// local inflictor = params.inflictor
@@ -6487,27 +6496,42 @@ function FireWeaponCheck()
 			case TF_DMG_CUSTOM_BLEEDING:
 				if(IsCrit || attacker.IsCritBoosted() && params.weapon && params.weapon.GetAdditiveAttribute("allow crit bleed"))
 				{
-					params.damage_type = (3 * params.weapon.GetMultAttribute("mult crit dmg"))
+					params.damage_type = params.damage_type | DMG_CRITICAL
 				}
 			break
 			case TF_DMG_CUSTOM_BOOTS_STOMP:
 				if(attacker.HookAdditiveAttributes("stomp uses velocity"))
 				{
 					local FallingVel = victim.GetAbsVelocity().z
-					local PrevFallingVel = "LastVel" in GetScope(victim) ? GetScope(victim).LastVel.z : 0
+					print("Our falling velocity is "+FallingVel)
+					foreach (vel in GetScope(victim).LastVels)
+					{
+						print("\nOur Prev falling velocity is "+vel.z)
+						if(vel.z < FallingVel)
+							FallingVel = vel.z
+					}
+					print("\n")
 
-					if(PrevFallingVel < FallingVel)
-						FallingVel = PrevFallingVel
+					// local PrevFallingVel = "LastVel" in GetScope(victim) ? GetScope(victim).LastVel.z : 0
 
-					if(FallingVel > 0)
+					// printf("Our Falling vel is %f and our old falling vel is %f\n", FallingVel, PrevFallingVel)
+
+					// if(PrevFallingVel < FallingVel)
+						// FallingVel = PrevFallingVel
+
+					if(FallingVel >= 0)
 						FallingVel = -600
 
-					params.damage = FallingVel * attacker.HookMultAttributes("stomp dmg mult")
+					printf("Falling velocity is %f, While stomp dmg mult is %f\n", FallingVel, attacker.HookMultAttributes("stomp dmg mult"))
+
+					params.damage = -1 * (FallingVel * attacker.HookMultAttributes("stomp dmg mult"))
 				}
 				else
 				{
 					params.damage *= attacker.HookMultAttributes("stomp dmg mult")
 				}
+
+				printf("Final StompDamage is %f\n", params.damage)
 
 				local stomp_wep = attacker.GetActiveWeapon()
 
@@ -6657,7 +6681,7 @@ function FireWeaponCheck()
 			}
 		}
 
-		if(	params.damage_custom == TF_DMG_CUSTOM_BLEEDING || params.damage_custom == TF_DMG_CUSTOM_BURNING )
+		if(	(params.damage_custom == TF_DMG_CUSTOM_BLEEDING) || (params.damage_custom == TF_DMG_CUSTOM_BURNING) )
 			params.damage_type = params.damage_type | DMG_PREVENT_PHYSICS_FORCE
 
 		local eventdata = clone params
@@ -7103,7 +7127,7 @@ function FireWeaponCheck()
 	 * @param {short}		stun_flags	The victim's stun flags at the moment of death
 	 * @param {bool}		rocket_jump	True if the attacker was rocket jumping.
 	 */
-	function OnScriptEvent_BotDeath(_params) 				{PrintTable(_params)}
+	function OnScriptEvent_BotDeath(_params) 				{}
 	function OnScriptEvent_HumanDeath(_params) 				{}
 
 	/**
@@ -7170,7 +7194,7 @@ function FireWeaponCheck()
 	 * @param {short}		team		The team index.
 	 */
 	function OnScriptEvent_BotInitialSpawn(_params) 			{}
-	function OnScriptEvent_BotSpawn(_params) 				{PrintTable(_params)}
+	function OnScriptEvent_BotSpawn(_params) 				{}
 
 	/**
 	 * Fired when a bot/player spawns.
@@ -7358,7 +7382,7 @@ RegisterAdminTrigger(["lib_reload", "reload_library"], function(_, ...) {
 	ReloadLibrary()
 })
 
-RegisterAdminTrigger("cvar", function(player, ...) {
+RegisterAdminTrigger("vcvar", function(player, ...) {
 	if(vargv.len() < 2)
 		return
 	local cvar = vargv[0]
@@ -7387,9 +7411,7 @@ RegisterAdminTrigger("cvar", function(player, ...) {
 
 		local ret = func(cvar)
 		if(ret == "hunter2")
-		{
 			ret = "***PROTECTED***"
-		}
 
 		return player.PrintToChat(format(FATCATLIB_PREFIX+" Querying Cvar \"%s\": \"%s\"", cvar, ret.tostring()))
 	}
@@ -7459,19 +7481,12 @@ RegisterAdminTrigger("uber", function(player, ...) {
 })
 
 RegisterAdminTrigger("bot", function(player, ...) {
-	foreach(player in GetAllPlayers(TF_TEAM_BLUE, false, false))
+	foreach(bot in GetAllPlayers(TF_TEAM_BLUE, false, false))
 	{
-		if(GetClientConVar("name", player.entindex()) == "Johnny Silverhand" && player.IsAlive())
+		if(GetClientConVar("name", bot.entindex()) == "Johnny Silverhand" && bot.IsAlive())
 			return player.PrintToChat("Johnny Silverhand is already Alive!")
 	}
 
-	local data = {
-		team = TF_TEAM_BLUE
-		count = 1
-		maxActive = 1
-		interval = 1
-		suppressFire = true
-	}
 	local trace = {
 		start = player.EyePosition()
 		end = player.GetEyeOffset(16000)
@@ -7480,30 +7495,22 @@ RegisterAdminTrigger("bot", function(player, ...) {
 	}
 
 	TraceLineEx(trace)
-	data["class"] <- TF_CLASS_HEAVYWEAPONS
-	local gen = SpawnEntityFromTable("bot_generator", data)
-	gen.SetAbsOrigin(trace.pos + Vector(0, 0, 16))
-	local old = GetAllPlayers(TF_TEAM_RED, false, false)
-	gen.AcceptInput("SpawnBot", "", null, null)
-	local new = GetAllPlayers(TF_TEAM_RED, false, false)
 
-	local nnew = []
+	local bots = GetAllPlayers(TF_TEAM_SPECTATOR, false, false)
+	local bot = bots[RandomInt(0, bots.len()-1)]
 
-	foreach(p in new)
-	{
-		if(old.find(p) == null)
-			nnew.append(p)
-	}
-	Assert(nnew.len() == 1, "EXPECTED ONLY 1 RED PLAYER IN THE SAME TICK")
-
-	local bot = nnew[0]
-
-	printl("Creatded bot ["+bot+"] ")
-
+	SetFakeClientConVarValue(bot, "name", "Johnny Silverhand")
+	bot.ForceChangeClass(TF_CLASS_HEAVYWEAPONS, true)
 	bot.SetTeam(TF_TEAM_BLUE)
+	RunWithDelay(@() bot.SetAbsOrigin(trace.pos + Vector(0, 0, 16)), TICK_DUR*1)
+	RunWithDelay(@() bot.SetAbsOrigin(trace.pos + Vector(0, 0, 16)), TICK_DUR*2)
 	RunWithDelay(@() bot.SetTeam(TF_TEAM_BLUE), TICK_DUR)
-	bot.RemoveCondEx(TF_COND_REPROGRAMMED, true)
 
+	RunWithDelay(@() SpawnJohhny(bot))
+})
+
+function SpawnJohhny(bot)
+{
 	bot.AddCustomAttribute("damage force reduction", 0, -1)
 	bot.AddCustomAttribute("cannot taunt", 1, -1)
 	bot.AddCustomAttribute("use robot voice", 1, -1)
@@ -7512,7 +7519,7 @@ RegisterAdminTrigger("bot", function(player, ...) {
 	bot.AddCustomAttribute("cannot be backstabbed", 1, -1)
 	bot.AddCustomAttribute("max health additive bonus", 499700, -1)
 	bot.AddCustomAttribute("health regen", 50000, -1)
-	bot.AddCustomAttribute("cancle falling damage", 1, -1)
+	bot.AddCustomAttribute("cancel falling damage", 1, -1)
 	bot.SetCustomModelWithClassAnimations("models/bots/heavy/bot_heavy.mdl")
 	bot.SetHealth(500000)
 
@@ -7542,12 +7549,9 @@ RegisterAdminTrigger("bot", function(player, ...) {
 	GetScope(bot).OnDeath <- OnDeath
 	
 	bot.AddBotTag("HardWired")
-
-	// RunWithDelay(@() bot.AddBotAttribute(REMOVE_ON_DEATH), TICK_DUR)
 	RunWithDelay(@() bot.AddBotAttribute(IGNORE_ENEMIES), TICK_DUR)
-
-	gen.AcceptInput("kill", "", null, null)
-})
+	RunWithDelay(@() bot.AddBotTag("HardWired"), TICK_DUR)
+}
 
 /*
   =====================================
