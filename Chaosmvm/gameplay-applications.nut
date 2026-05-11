@@ -415,6 +415,7 @@ function GameplayThink()
 			primary.ReapplyProvision()
 		}
 	}
+
 	foreach (tank in GetEveryTank())
 	{
 		EnableStringPurge(tank)
@@ -430,6 +431,19 @@ function GameplayThink()
 	{
 		foreach (bot in ReprogrammedBots)
 			bot.UndoReprogram()
+	}
+
+	if(!("NextCommentaryTime" in GetScope(self)))
+		GetScope(self).NextCommentaryTime <- Time()
+
+	if(NextCommentaryTime <= Time())
+	{
+		local nodes = GetAllEntitiesByClassname("point_commentary_node")
+
+		foreach (node in nodes)
+			node.Kill()
+
+		NextCommentaryTime <- Time() + 0.25
 	}
 
 

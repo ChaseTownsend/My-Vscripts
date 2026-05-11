@@ -2881,6 +2881,33 @@ function CTFPlayer::GetStompWeapon()
 	else
 		return weps
 }
+/**
+ * @return {[CTFWeaponBase|CEconEntity]}
+ */
+function CTFPlayer::GetWearables()
+{
+	local wearables = []
+	for (local wearable = FirstMoveChild(); wearable != null; wearable = wearable.NextMovePeer())
+	{
+		if (wearable.GetClassname() != "tf_wearable")
+			continue
+		wearables.append(wearable)
+	}
+	return wearables
+}
+/**
+ * @return {CTFWeaponBase|CEconEntity|null}
+ */
+function CTFPlayer::GetWearableByIDX(idx)
+{
+	local wearables = GetWearables()
+	foreach(wearable in wearables)
+	{
+		if(wearable.GetIDX() == idx)
+			return wearable
+	}
+	return null
+}
 
 
 /* function CTFPlayer::CreateWearable( idx, model )
@@ -6305,13 +6332,6 @@ function FireWeaponCheck()
 	if(self.IsDead())
 		return 0.1
 
-	local message = "Speeds: \n"
-	foreach(sped in GetScope(self).LastVels)
-	{
-		message += sped.z +"\n"
-	}
-
-	self.PrintToHud(message)
 	foreach(wep in self.GetAllWeapons())
 	{
 		if(wep.GetClassname() == "tf_weapon_flamethrower")
@@ -6502,41 +6522,29 @@ function FireWeaponCheck()
 			case TF_DMG_CUSTOM_BOOTS_STOMP:
 				if(attacker.HookAdditiveAttributes("stomp uses velocity"))
 				{
-					local FallingVel = victim.GetAbsVelocity().z
-					print("Our falling velocity is "+FallingVel)
-					foreach (vel in GetScope(victim).LastVels)
+					local FallingVel = attacker.GetAbsVelocity().z
+					foreach (vel in GetScope(attacker).LastVels)
 					{
-						print("\nOur Prev falling velocity is "+vel.z)
 						if(vel.z < FallingVel)
 							FallingVel = vel.z
 					}
-					print("\n")
 
-					// local PrevFallingVel = "LastVel" in GetScope(victim) ? GetScope(victim).LastVel.z : 0
-
-					// printf("Our Falling vel is %f and our old falling vel is %f\n", FallingVel, PrevFallingVel)
-
-					// if(PrevFallingVel < FallingVel)
-						// FallingVel = PrevFallingVel
+					if(GetScope(attacker))
 
 					if(FallingVel >= 0)
 						FallingVel = -600
 
-					printf("Falling velocity is %f, While stomp dmg mult is %f\n", FallingVel, attacker.HookMultAttributes("stomp dmg mult"))
-
 					params.damage = -1 * (FallingVel * attacker.HookMultAttributes("stomp dmg mult"))
 				}
 				else
-				{
 					params.damage *= attacker.HookMultAttributes("stomp dmg mult")
-				}
-
-				printf("Final StompDamage is %f\n", params.damage)
 
 				local stomp_wep = attacker.GetActiveWeapon()
 
-				if(attacker.GetWeaponInSlotNew(SLOT_SECONDARY).IsWearable() && attacker.GetWeaponInSlotNew(SLOT_SECONDARY).CanStomp())
-					stomp_wep = attacker.GetWeaponInSlotNew(SLOT_SECONDARY)
+				local sec = attacker.GetWeaponInSlotNew(SLOT_SECONDARY)
+
+				if(sec && sec.IsWearable() && sec.CanStomp())
+					stomp_wep = sec
 
 				params.weapon = stomp_wep
 
@@ -6587,8 +6595,11 @@ function FireWeaponCheck()
 			if(IsFall && (!attacker || !attacker.IsPlayer()))
 			{
 				params.damage *= victim.HookMultAttributes("fall dmg taken mult")
+
+				GetScope(victim).FallDamageVel <- victim.GetAbsVelocity().z
 				if(victim.HookAdditiveAttributes("fall damage causes aoe"))
 				{
+					
 					local FallingVel = victim.GetAbsVelocity().z
 					local PrevFallingVel = "LastVel" in GetScope(victim) ? GetScope(victim).LastVel.z : 0
 
@@ -6806,6 +6817,19 @@ function FireWeaponCheck()
 			SetPropInt(player, "m_autoKickDisabled", 1)
 
 		player.StripItemSlot(player.HookAdditiveAttributes("strip item slot"))
+
+		local slot = -1
+		foreach (wep in player.GetAllWeapons())
+		{
+			if(wep.GetAttribute("force slot on spawn", -1) != -1)
+				slot = wep.GetAttribute("force slot on spawn", -1)
+		}
+		if(slot > -1)
+		{
+			local wep = player.GetWeaponInSlotNew(slot)
+			if(wep && !wep.IsWearable())
+				player.Weapon_Switch(wep)
+		}
 		
 		foreach (wep in player.GetAllWeapons())
 			player.SetCond(wep.GetAttribute("cond on spawn", -1), wep.GetAttribute("cond on spawn duration", -1))
@@ -7487,6 +7511,8 @@ RegisterAdminTrigger("bot", function(player, ...) {
 			return player.PrintToChat("Johnny Silverhand is already Alive!")
 	}
 
+	local ent = SpawnEntityFromTable("point_commentary_node" {})
+
 	local trace = {
 		start = player.EyePosition()
 		end = player.GetEyeOffset(16000)
@@ -7497,20 +7523,32 @@ RegisterAdminTrigger("bot", function(player, ...) {
 	TraceLineEx(trace)
 
 	local bots = GetAllPlayers(TF_TEAM_SPECTATOR, false, false)
-	local bot = bots[RandomInt(0, bots.len()-1)]
+	local rand = bots[RandomInt(0, bots.len()-1)]
+	if(rand.IsAlive())
+	{
+		for(local i = 0; i < 20; i++)
+		{
+			rand = bots[RandomInt(0, bots.len()-1)]
+			if(rand.IsDead())
+				break
+
+			Assert(i <= 19, "Failed Finding a suitiable bot for Johhny")
+		}
+	}
+
+	local bot = rand
 
 	SetFakeClientConVarValue(bot, "name", "Johnny Silverhand")
 	bot.ForceChangeClass(TF_CLASS_HEAVYWEAPONS, true)
 	bot.SetTeam(TF_TEAM_BLUE)
-	RunWithDelay(@() bot.SetAbsOrigin(trace.pos + Vector(0, 0, 16)), TICK_DUR*1)
-	RunWithDelay(@() bot.SetAbsOrigin(trace.pos + Vector(0, 0, 16)), TICK_DUR*2)
-	RunWithDelay(@() bot.SetTeam(TF_TEAM_BLUE), TICK_DUR)
-
-	RunWithDelay(@() SpawnJohhny(bot))
+	RunWithDelay(@() SpawnJohhny(bot, trace.pos + Vector(0, 0, 16), ent), TICK_DUR)
 })
 
-function SpawnJohhny(bot)
+function SpawnJohhny(bot, pos, commentary)
 {
+	bot.SetTeam(TF_TEAM_BLUE)
+	bot.SetAbsOrigin(pos)
+
 	bot.AddCustomAttribute("damage force reduction", 0, -1)
 	bot.AddCustomAttribute("cannot taunt", 1, -1)
 	bot.AddCustomAttribute("use robot voice", 1, -1)
@@ -7520,8 +7558,11 @@ function SpawnJohhny(bot)
 	bot.AddCustomAttribute("max health additive bonus", 499700, -1)
 	bot.AddCustomAttribute("health regen", 50000, -1)
 	bot.AddCustomAttribute("cancel falling damage", 1, -1)
+	bot.AddCustomAttribute("airblast vulnerability multiplier", 0.001, -1)
+	bot.AddCustomAttribute("airblast vertical vulnerability multiplier", 0.001, -1)
 	bot.SetCustomModelWithClassAnimations("models/bots/heavy/bot_heavy.mdl")
 	bot.SetHealth(500000)
+	bot.SetCond(TF_COND_HALLOWEEN_THRILLER)
 
 	bot.GenerateAndWearItem("Upgradeable TF_WEAPON_MINIGUN")
 	bot.GetWeaponInSlotNew(SLOT_PRIMARY).AddAttribute("item style override", 1, 0)
@@ -7531,26 +7572,26 @@ function SpawnJohhny(bot)
 
 	SetFakeClientConVarValue(bot, "name", "Johnny Silverhand")
 
-	for (local wearable = bot.FirstMoveChild(); wearable != null; wearable = wearable.NextMovePeer())
+	local Cap = bot.GetWearableByIDX(1173)
+	if(Cap)
 	{
-		if (wearable.GetClassname() != "tf_wearable")
-			continue
-		if(wearable.GetIDX() == 1173)
-		{
-			wearable.AddAttribute("set item tint rgb", 826111, 0)
-			wearable.AddAttribute("attach particle effect", 4, 0)
-		}
+		Cap.AddAttribute("set item tint rgb", 826111, 0)
+		Cap.AddAttribute("attach particle effect", 4, 0)
 	}
 
+	RunWithDelay(@() commentary.Kill(), TICK_DUR*3)
+
 	local function OnDeath() {
+		local ent = SpawnEntityFromTable("point_commentary_node" {})
 		self.SetTeam(TF_TEAM_SPECTATOR)
+		RunWithDelay(@() ent.Kill(), TICK_DUR*3)
 	}
 
 	GetScope(bot).OnDeath <- OnDeath
 	
 	bot.AddBotTag("HardWired")
-	RunWithDelay(@() bot.AddBotAttribute(IGNORE_ENEMIES), TICK_DUR)
-	RunWithDelay(@() bot.AddBotTag("HardWired"), TICK_DUR)
+	bot.AddBotAttribute(IGNORE_ENEMIES)
+	bot.AddBotAttribute(IGNORE_FLAG)
 }
 
 /*
