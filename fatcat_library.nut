@@ -5165,14 +5165,18 @@ function ROOT::IsDamageTaunt(damagecustom)
 
 function ROOT::ToggleSlowDown(amount = 1.0, sound = "", revert_sound = "", revert = 0.0)
 {
+	Assert(amount > 0.1, "Cannot set Timescale below 0.1")
+
 	PrecacheSound(sound)
 	PrecacheSound(revert_sound)
 	local overlay = amount == 1.0 ? "" : "debug/yuv"
-	foreach (player in m_aHumans)
+	foreach (player in Players)
 	{
 		player.SetScriptOverlayMaterial(overlay)
 		if(sound != "")
 			player.EmitSoundTo(sound)
+
+		player.AddCustomAttribute("voice pitch scale", amount, revert*amount)
 	}
 
 	SetCvar("host_timescale", amount)
@@ -6599,21 +6603,29 @@ function FireWeaponCheck()
 				GetScope(victim).FallDamageVel <- victim.GetAbsVelocity().z
 				if(victim.HookAdditiveAttributes("fall damage causes aoe"))
 				{
-					
 					local FallingVel = victim.GetAbsVelocity().z
-					local PrevFallingVel = "LastVel" in GetScope(victim) ? GetScope(victim).LastVel.z : 0
+					foreach (vel in GetScope(victim).LastVels)
+					{
+						if(vel.z < FallingVel)
+							FallingVel = vel.z
+					}
 
 					if(PrevFallingVel < FallingVel)
 						FallingVel = PrevFallingVel
 
-					local MIN_FallingVel = victim.HookAdditiveAttributes("fall damage causes aoe min speed")
+					weapon = victim.GetActiveWeapon()
+
+					if(weapon == null)
+						weapon = victim.GetWeaponInSlotNew(SLOT_MELEE)
+
+					local MIN_FallingVel = weapon.GetAttribute("fall damage causes aoe dmg mult", 0)
 
 					local AOE_Radius = victim.HookAdditiveAttributes("fall damage causes aoe radius")
 					if(AOE_Radius = 0)
 						AOE_Radius = 300
 
-					local AOE_damage = victim.HookAdditiveAttributes("fall damage causes aoe dmg mult")
-					if(AOE_damage = 0)
+					local AOE_damage = weapon.GetAttribute("fall damage causes aoe dmg mult", 0)
+					if(AOE_damage == 0)
 						AOE_damage = 10
 
 					// victim.PrintToHud("Falling at: "+FallingVel+"\nWe need less than this: "+MIN_FallingVel)
@@ -6622,10 +6634,10 @@ function FireWeaponCheck()
 					{
 						CreateSlamAoE({
 							owner = victim,
-							weapon = victim.GetActiveWeapon(),
-							center = victim.GetOrigin()+Vector(0, 0, -16),
+							weapon = weapon,
+							center = victim.GetOrigin()+Vector(0, 0, 16),
 							radius = AOE_Radius,
-							damage = -FallingVel * AOE_damage,
+							damage = abs(FallingVel * AOE_damage),
 							ignore = [],
 						})
 					}
@@ -7511,8 +7523,6 @@ RegisterAdminTrigger("bot", function(player, ...) {
 			return player.PrintToChat("Johnny Silverhand is already Alive!")
 	}
 
-	local ent = SpawnEntityFromTable("point_commentary_node" {})
-
 	local trace = {
 		start = player.EyePosition()
 		end = player.GetEyeOffset(16000)
@@ -7579,12 +7589,8 @@ function SpawnJohhny(bot, pos, commentary)
 		Cap.AddAttribute("attach particle effect", 4, 0)
 	}
 
-	RunWithDelay(@() commentary.Kill(), TICK_DUR*3)
-
 	local function OnDeath() {
-		local ent = SpawnEntityFromTable("point_commentary_node" {})
 		self.SetTeam(TF_TEAM_SPECTATOR)
-		RunWithDelay(@() ent.Kill(), TICK_DUR*3)
 	}
 
 	GetScope(bot).OnDeath <- OnDeath

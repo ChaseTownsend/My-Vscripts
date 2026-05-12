@@ -1,7 +1,7 @@
 if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
-SetScriptVersion("GameplayApplications", "5.0.0")
+SetScriptVersion("GameplayApplications", "5.0.1")
 
 local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", THINKER_PERSIST)
 
@@ -584,9 +584,9 @@ RegisterDamageCallback("player", "GameplayPlayer" function(params) {
 	if(!attacker)
 		return
 
-	if(attacker.IsPlayer() && attacker.GetPlayerClass() == TF_CLASS_MEDIC)
+	if(attacker.IsPlayer() && victim.IsPlayer() && inflictor && inflictor.GetClassname() == "tf_projectile_healing_bolt")
 	{
-		if(inflictor && inflictor.GetClassname() == "tf_projectile_healing_bolt" && victim.GetTeam() == TF_TEAM_PVE_INVADERS)
+		if(attacker.GetPlayerClass() == TF_CLASS_MEDIC && attacker.GetWeaponIDXInSlotNew(SLOT_PRIMARY) == TF_WEAPON_BLUTSAUGER)
 		{
 			GetScope(inflictor).GrantTheFuckingUber <- false
 			inflictor.Destroy()
