@@ -54,7 +54,7 @@ local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", 
 	additive_range = 50
 	base_damage = 3125
 }
-
+// deprecated
 ::CustomDamageOverrides <- array(TF_DMG_CUSTOM_RANGE, null)
 CustomDamageOverrides[TF_DMG_CUSTOM_SPELL_SKELETON] 	= 8500
 CustomDamageOverrides[TF_DMG_CUSTOM_SPELL_MIRV] 		= 15000
