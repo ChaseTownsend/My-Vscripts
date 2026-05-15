@@ -205,7 +205,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format)
-if (!SetLibraryVersion("05.11.2026.19", 0))
+if (!SetLibraryVersion("05.14.2026.20", 0))
 	return
 
 SetLibrarySettings({})
@@ -4686,7 +4686,7 @@ function ROOT::CreateThinker(name, think_func, type = THINKER_NO_PERSIST)
 		AddThinkToEnt(Thinker, think_func)
 	else if (typeof think_func == "function")
 	{
-		local function ThinkerThink() @() think_func()
+		local function ThinkerThink() {think_func()}
  		GetScope(Thinker).ThinkerThink <- ThinkerThink
 		AddThinkToEnt(Thinker, "ThinkerThink")
 	}
