@@ -814,7 +814,7 @@ catch (e)
 	}
 }
 
-::FUNNI <- "I ever tell you about the time Keith and I made fireworks? Now, I didn't know shit about chemistry, but Keith figured \"Gasoline burns, doesn't it?\" Heh, third-degree burns on 95 percent of his body. Man, people in the next city over were calling to complain about the smell of burning skin."
+::test <- "I ever tell you about the time Keith and I made fireworks? Now, I didn't know shit about chemistry, but Keith figured \"Gasoline burns, doesn't it?\" Heh, third-degree burns on 95 percent of his body. Man, people in the next city over were calling to complain about the smell of burning skin."
 
 /*
   =============================
@@ -2136,7 +2136,7 @@ function CTFPlayer::MakeCorrosionPuddle()
 	})
 	scope.Particle.SetAbsOrigin(GetOrigin()+Vector(0, 0, 40))
 
-	scope.GasThink <- function() {
+	local function GasBombThink() {
 		if(!self || !self.IsValid())
 		{
 			if(Particle && Particle.IsValid())
@@ -2152,7 +2152,7 @@ function CTFPlayer::MakeCorrosionPuddle()
 
 		if(IsGasNotValid(self))
 		{
-			GasDestroy()
+			DestroyGasBomb()
 			return 500
 		}
 		foreach(bot in GetAllPlayers(TF_TEAM_PVE_INVADERS, [self.GetOrigin(), 75], true))
@@ -2164,7 +2164,10 @@ function CTFPlayer::MakeCorrosionPuddle()
 		// DebugDrawCircle(self.GetOrigin(), Vector(0, 0, 255), 5, 75, false, 0.15)
 		return 0.1
 	}
-	scope.GasDestroy <- function() {
+
+	scope.GasBombThink <- GasBombThink
+
+	local function DestroyGasBomb() {
 		local idx = GasBombs.find(self)
 		if (idx != null) GasBombs.remove(idx)
 
@@ -2176,7 +2179,10 @@ function CTFPlayer::MakeCorrosionPuddle()
 				
 		self.Destroy()
 	}
-	AddThinkToEnt(Gasbomb, "GasThink")
+
+	scope.DestroyGasBomb <- DestroyGasBomb
+
+	AddThinkToEnt(Gasbomb, "GasBombThink")
 	return Gasbomb
 }
 
@@ -2216,7 +2222,7 @@ function CTFPlayer::SetUpThinkTable()
 {
 	local scope = GetScope(this)
 	scope.ThinkTable <- {}
-	scope.ThinkTableThink <- function() {
+	local function PlayerThinkTableThink() {
 		foreach (_, func_table in ThinkTable)
 		{
 			if(func_table.NextThinkTime <= Time())
@@ -2229,7 +2235,9 @@ function CTFPlayer::SetUpThinkTable()
 		}
 		return -1
 	}
-	AddThinkToEnt(this, "ThinkTableThink")
+	scope.PlayerThinkTableThink <- PlayerThinkTableThink
+
+	AddThinkToEnt(this, "PlayerThinkTableThink")
 	if(IsNotInScope("PreservedThinks", GetScope(this)))
 		GetScope(this).PreservedThinks <- {}
 }
@@ -4678,7 +4686,8 @@ function ROOT::CreateThinker(name, think_func, type = THINKER_NO_PERSIST)
 		AddThinkToEnt(Thinker, think_func)
 	else if (typeof think_func == "function")
 	{
-		GetScope(Thinker).ThinkerThink <- think_func
+		local function ThinkerThink() @() think_func()
+ 		GetScope(Thinker).ThinkerThink <- ThinkerThink
 		AddThinkToEnt(Thinker, "ThinkerThink")
 	}
 	return Thinker
@@ -4801,7 +4810,7 @@ function ROOT::dummy_ent() {
 function ROOT::RunWithDelay(func, delay = 0.0)
 {
 	local dummy = dummy_ent()
-	dummy.GetScriptScope()["Run"] <- function()
+	GetScope(dummy)["Run"] <- function()
 	{
 		dummy.Kill()
 		func()
@@ -4816,7 +4825,7 @@ function ROOT::RunWithDelay(func, delay = 0.0)
 function ROOT::CreateTimer(on_timer_func, first_delay = 0.0)
 {
 	local dummy = dummy_ent()
-	dummy.GetScriptScope()["Run"] <- function()
+	GetScope(dummy)["Run"] <- function()
 	{
 		try
 		{
@@ -5058,8 +5067,10 @@ function ROOT::CreatePickup(table)
 	pickup.SetMoveType(MOVETYPE_FLYGRAVITY, 1)
 	pickup.SetAbsVelocity(table.velocity)
 
+	local function func() { if(Time() >= life_time) {self.Kill()} }
+
 	GetScope(pickup).life_time <- Time() + table.lifetime
-	GetScope(pickup).LifeTime <- function() { if(Time() >= life_time) {self.Kill()} }
+	GetScope(pickup).LifeTime <- func
 	AddThinkToEnt(pickup, "LifeTime")
 	GetScope(pickup).OnPlayerTouch <- table.func
 	pickup.ConnectOutput( "OnPlayerTouch", "OnPlayerTouch" )
@@ -5268,7 +5279,7 @@ function ROOT::OnAddCondListener(cond, name, func)
 	if(name in scope.OnAddCond[cond])
 		printl("Warning, Trying to Add an AddCondListener with an already registered name!")
 
-	scope.OnAddCond[cond][name] <- func
+	scope.OnAddCond[cond][name] <- CondListen
 }
 
 // scope.OnAddCond = [/* index 0 */ {"noZooming" : player.Suidide}] // 131 total
@@ -6147,6 +6158,11 @@ if(!("PostSpawnCallbacks" in ROOT))
 function ROOT::ClearSpawnCallbacks()
 	::PostSpawnCallbacks <- {}
 
+/**
+ * @param {string|array} entity_name
+ * @param {string} callback_name
+ * @param {function} callback
+ */
 function ROOT::RegisterSpawnCallback(entity_name, callback_name, callback)
 {
 	if(typeof entity_name == "array")
