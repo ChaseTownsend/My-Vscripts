@@ -485,6 +485,7 @@ function ROOT::ModifyCallbackDamage(params, victim, attacker, weapon, inflictor)
 	}
 	break;
 	case TF_DMG_CUSTOM_KART: {	// [11/12/25] Please, dear god, why do i have to do this stupid hack
+		printl("Kart HIT!")
 		params.early_out <- true
 		victim.TakeDamageCustom(inflictor, attacker, attacker.GetSpellBook(), Vector(), victim.GetOrigin(), KART_DMG, params.damage_type, TF_DMG_CUSTOM_TRIGGER_HURT)
 		return
@@ -572,7 +573,7 @@ function ROOT::ProcessChaosWeaponHit(params, victim, attacker, weapon, _inflicto
 ClearDamageCallbacks()
 
 RegisterDamageCallback("player", "GameplayPlayer" function(params) {
-	if(!HasCustomFlag(params.damage_custom, TF_DMG_CUSTOM_IGNORE_EVENTS) || params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
+	if(HasCustomFlag(params.damage_custom, TF_DMG_CUSTOM_IGNORE_EVENTS) || params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
 		return
 
 	local victim 	= params.victim
@@ -760,6 +761,9 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 					weapon.SetClip1(1)
 					self.SetPrimaryAmmo(0)
 					self.SetMetal(200)
+
+					if(self.GetWeaponInSlotNew(SLOT_SECONDARY) == null)
+						return 1
 
 					if(self.GetWeaponInSlotNew(SLOT_SECONDARY).GetUberChargePercent() < 1.0)
 					{

@@ -10,12 +10,16 @@ if(!("PrintToServer" in ROOT))
 	function ROOT::PrintToServer(m) {PrintToConsoleAll(m)}
 
 ::SOURCEMOD_EVENT <- ""
-::OnCondHooks <- array(TF_COND_RANGE, null)
-::OnRemoveCondHooks <- array(TF_COND_RANGE, null)
+if(!("OnCondHooks" in ROOT))
+{
+	::OnCondHooks <- array(TF_COND_RANGE, null)
+	for (local i = 0; i < TF_COND_RANGE; i++)
+		OnCondHooks[i] = {}
 
-::PLUGIN_CONTINUE = 0
-::PLUGIN_CHANGED = 1
-::PLUGIN_HANDLED = 2
+	::OnRemoveCondHooks <- array(TF_COND_RANGE, null)
+	for (local i = 0; i < TF_COND_RANGE; i++)
+		OnRemoveCondHooks[i] = {}
+}
 
 /**
  * Clears Existing CondHooks
@@ -84,25 +88,23 @@ function AddRemoveCondHook(cond, name, func)
 		data.cond = -1
 		return data
 	})
-	// this would cancel any condition if you set the cond number to -1
  */
 
 //int client, TFCond cond, float duration, int provider
 /**
  * [ Do Not Manually Call ! ]
  * 
- * Hooks Sourcemods TF2_AddCondition to allow vscript to use it
- * @param {integer} client
- * @param {integer} cond
- * @param {float} duration
- * @param {int} provider
+ * DHooks CTFPlayerShared::AddCondition to allow vscript listen to it
+ * @param {integer} client 	EntIndex of client effected
+ * @param {integer} cond	
+ * @param {float} duration	
+ * @param {int} provider	EntIndex of client credited
  */
 function ROOT::ProccessOnCondHooks(client, cond, duration, provider)
 {
 	local Player = EntIndexToHScript(client)
 
 	local PluginReturn = {
-		ReturnType = PLUGIN_CONTINUE, 
 		cond = cond
 		duration = duration
 		provider = provider
@@ -111,38 +113,12 @@ function ROOT::ProccessOnCondHooks(client, cond, duration, provider)
 	foreach (_name, callback in OnCondHooks[cond])
 	{
 		local data = {cond = PluginReturn.cond, duration = PluginReturn.duration, provider = PluginReturn.provider}
-		if(PluginReturn.ReturnType == PLUGIN_HANDLED)
-		{
-			local cloned_data = clone data
-			callback.call(Player, cloned_data)
-			continue
-		}
-		else
-		{
-			callback(data)
-		}
 
-		if(data.cond == -1)
-			PluginReturn.ReturnType = PLUGIN_HANDLED
+		callback.call(Player, data)
 
-		if(PluginReturn.ReturnType != PLUGIN_HANDLED)
-		{
-			if(data.cond != PluginReturn.cond)
-			{
-				PluginReturn.ReturnType = PLUGIN_CHANGED
-				PluginReturn.cond = data.cond
-			}
-			if(data.duration != PluginReturn.duration)
-			{
-				PluginReturn.ReturnType = PLUGIN_CHANGED
-				PluginReturn.duration = data.duration
-			}
-			if(data.provider != PluginReturn.provider)
-			{
-				PluginReturn.ReturnType = PLUGIN_CHANGED
-				PluginReturn.duration = data.duration
-			}
-		}
+		PluginReturn.cond = data.cond
+		PluginReturn.duration = data.duration
+		PluginReturn.provider = data.provider
 	}
 
 	if(PluginReturn.provider != null && type(PluginReturn.provider) != "integer")
@@ -155,79 +131,38 @@ function ROOT::ProccessOnCondHooks(client, cond, duration, provider)
 			PluginReturn.provider = 0
 		}
 	}
+
+	if(PluginReturn.provider == null)
+		PluginReturn.provider = 0
 
 	return PluginReturn
 }
 /**
  * [ Do Not Manually Call ! ]
  * 
- * Hooks Sourcemods TF2_RemoveCondition to allow vscript to use it
- * @param {integer} client
+ * DHooks CTFPlayerShared::RemoveCondition to allow vscript to listen to it
+ * @param {integer} client	EntIndex of client effected
  * @param {integer} cond
- * @param {float} duration
- * @param {int} provider
  */
-function ROOT::ProccessOnRemoveCondHooks(client, cond, duration, provider)
+function ROOT::ProccessOnRemoveCondHooks(client, cond)
 {
 	local Player = EntIndexToHScript(client)
 
 	local PluginReturn = {
-		ReturnType = PLUGIN_CONTINUE, 
 		cond = cond
-		duration = duration
-		provider = provider
 	}
-
 	foreach (_name, callback in OnRemoveCondHooks[cond])
 	{
-		local data = {cond = PluginReturn.cond, duration = PluginReturn.duration, provider = PluginReturn.provider}
-		if(PluginReturn.ReturnType == PLUGIN_HANDLED)
-		{
-			local cloned_data = clone data
-			callback.call(Player, cloned_data)
-			continue
-		}
-		else
-		{
-			callback(data)
-		}
+		local data = {cond = PluginReturn.cond}
 
-		if(data.cond == -1)
-			PluginReturn.ReturnType = PLUGIN_HANDLED
+		callback.call(Player, data)
 
-		if(PluginReturn.ReturnType != PLUGIN_HANDLED)
-		{
-			if(data.cond != PluginReturn.cond)
-			{
-				PluginReturn.ReturnType = PLUGIN_CHANGED
-				PluginReturn.cond = data.cond
-			}
-			if(data.duration != PluginReturn.duration)
-			{
-				PluginReturn.ReturnType = PLUGIN_CHANGED
-				PluginReturn.duration = data.duration
-			}
-			if(data.provider != PluginReturn.provider)
-			{
-				PluginReturn.ReturnType = PLUGIN_CHANGED
-				PluginReturn.duration = data.duration
-			}
-		}
-	}
-
-	if(PluginReturn.provider != null && type(PluginReturn.provider) != "integer")
-	{
-		try{
-			PluginReturn.provider = PluginReturn.provider.entindex()
-		}
-		catch(e) {
-			PrintToServer(format("(Warning) Tried to get %s's entindex, but it failed with \"%s\"", PluginReturn.provider.tostring(), e))
-			PluginReturn.provider = 0
-		}
+		PluginReturn.cond = data.cond
 	}
 
 	return PluginReturn
 }
+
 
 function ROOT::SendToSourcemod(...)
 {

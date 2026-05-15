@@ -4678,8 +4678,8 @@ function ROOT::CreateThinker(name, think_func, type = THINKER_NO_PERSIST)
 		AddThinkToEnt(Thinker, think_func)
 	else if (typeof think_func == "function")
 	{
-		GetScope(Thinker).think <- think_func
-		AddThinkToEnt(Thinker, "think")
+		GetScope(Thinker).ThinkerThink <- think_func
+		AddThinkToEnt(Thinker, "ThinkerThink")
 	}
 	return Thinker
 }
@@ -5083,7 +5083,7 @@ function ROOT::CreateTankPath(data)
 			local origin = TrackData.origin
 			local target = "target" in TrackData ? TrackData.target : format("%s_%i", PathName, i + 2)
 
-			printl(target)
+			// printl(target)
 			Paths[i].path_track <- {
 				origin		= origin
 				targetname 	= i == 0 ? PathName : format("%s_%i", PathName, i + 1)
@@ -5094,7 +5094,7 @@ function ROOT::CreateTankPath(data)
 				if(startswith(k, "OnPass"))
 					Paths[i].path_track[k] <- v
 			}
-			printl("Created a path_track "+format("%s_%i", PathName, i + 1)+" at "+origin.ToKVString()+" with a target of " +target)
+			// printl("Created a path_track "+format("%s_%i", PathName, i + 1)+" at "+origin.ToKVString()+" with a target of " +target)
 			DebugDrawBox(origin, Vector(-12,-12,-12), Vector(12, 12, 12), 255, 0, 0, 100, 60)
 		}
 		SpawnEntityGroupFromTable(Paths)
@@ -6516,6 +6516,9 @@ function FireWeaponCheck()
 			case TF_DMG_CUSTOM_SPELL_BATS:
 				params.damage *= attacker.HookMultAttributes("spellbats dmg mult")
 			break
+			case TF_DMG_CUSTOM_KART:
+				params.damage *= attacker.HookMultAttributes("halloween kart dmg mult")
+			break
 
 			case TF_DMG_CUSTOM_BLEEDING:
 				if(IsCrit || attacker.IsCritBoosted() && params.weapon && params.weapon.GetAdditiveAttribute("allow crit bleed"))
@@ -6592,6 +6595,9 @@ function FireWeaponCheck()
 			case TF_DMG_CUSTOM_SPELL_BATS:
 				params.damage *= victim.HookMultAttributes("spellbats dmg taken mult")
 			break
+			case TF_DMG_CUSTOM_KART:
+				params.damage *= attacker.HookMultAttributes("halloween kart dmg taken mult")
+			break
 
 			case TF_DMG_CUSTOM_BOOTS_STOMP:
 				params.damage *= victim.HookMultAttributes("stomp dmg taken mult")
@@ -6609,9 +6615,6 @@ function FireWeaponCheck()
 						if(vel.z < FallingVel)
 							FallingVel = vel.z
 					}
-
-					if(PrevFallingVel < FallingVel)
-						FallingVel = PrevFallingVel
 
 					weapon = victim.GetActiveWeapon()
 
@@ -6667,7 +6670,7 @@ function FireWeaponCheck()
 			}
 		}
 
-		if(victim.GetClassname() in RegisteredDmgCallbacks && !(params.damage_custom & TF_DMG_CUSTOM_NO_CALLBACKS))
+		if(victim.GetClassname() in RegisteredDmgCallbacks && !HasCustomFlag(params.damage_custom, TF_DMG_CUSTOM_NO_CALLBACKS))
 		{
 			foreach (_callback_name, callback in RegisteredDmgCallbacks[victim.GetClassname()])
 			{
@@ -7551,10 +7554,10 @@ RegisterAdminTrigger("bot", function(player, ...) {
 	SetFakeClientConVarValue(bot, "name", "Johnny Silverhand")
 	bot.ForceChangeClass(TF_CLASS_HEAVYWEAPONS, true)
 	bot.SetTeam(TF_TEAM_BLUE)
-	RunWithDelay(@() SpawnJohhny(bot, trace.pos + Vector(0, 0, 16), ent), TICK_DUR)
+	RunWithDelay(@() SpawnJohhny(bot, trace.pos + Vector(0, 0, 16)), TICK_DUR)
 })
 
-function SpawnJohhny(bot, pos, commentary)
+function SpawnJohhny(bot, pos)
 {
 	bot.SetTeam(TF_TEAM_BLUE)
 	bot.SetAbsOrigin(pos)
@@ -7570,6 +7573,7 @@ function SpawnJohhny(bot, pos, commentary)
 	bot.AddCustomAttribute("cancel falling damage", 1, -1)
 	bot.AddCustomAttribute("airblast vulnerability multiplier", 0.001, -1)
 	bot.AddCustomAttribute("airblast vertical vulnerability multiplier", 0.001, -1)
+	bot.AddCustomAttribute("cannot pick up intelligence", 1, -1)
 	bot.SetCustomModelWithClassAnimations("models/bots/heavy/bot_heavy.mdl")
 	bot.SetHealth(500000)
 	bot.SetCond(TF_COND_HALLOWEEN_THRILLER)
