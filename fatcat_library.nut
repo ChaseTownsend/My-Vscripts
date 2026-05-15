@@ -5079,6 +5079,9 @@ function ROOT::CreatePickup(table)
 }
 
 /**
+ * The first node is always going to be called what the PathName is
+ * all subsequent nodes have _[index]
+ * i.e. node 1 is "path", while node 2 is "path_2"
  * @param {table} data
  */
 function ROOT::CreateTankPath(data)
