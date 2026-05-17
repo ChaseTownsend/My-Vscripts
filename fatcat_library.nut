@@ -5063,6 +5063,8 @@ if(!("GlobalParticleSpawner" in ROOT))
 
 function ROOT::AttachParticle(entity, particle, attach_type = PATTACH_ABSORIGIN, attach_name = "")
 {
+	if(entity == null || !entity.IsValid())
+		return
 	NetProps.SetPropString(GlobalParticleSpawner, "m_iszParticleName", particle)
 	NetProps.SetPropString(GlobalParticleSpawner, "m_iszAttachmentName", attach_name)
 	NetProps.SetPropInt(GlobalParticleSpawner, "m_nAttachType", attach_type)
