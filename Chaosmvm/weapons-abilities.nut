@@ -74,13 +74,13 @@ function AbilityValid(player, player_class, idx)
 /**
  * Sets up the ability think for the weapon
  * 
- * @param {entity}		weapon 			The weapon to apply the ability to.
- * @param {float}		spawncooldown 	The Abilitys cooldown when created.
- * @param {string}		name 			The NonTranslated name of the weapon.
- * @param {short}		player_class 	Which Class the player needs to be to use the ability (TF_CLASS_UNDEFINED or > TF_CLASS_MAXNORMAL to ignore).
- * @param {short}		idx				The ItemDefIndex of the Weapon.
- * @param {table}		text_parms		Table of Text parameters for the GlobalGameText.
- * @param {function}	ability_func	Function to use when the Ability is used
+ * @param {CTFWeaponBase}	weapon 			The weapon to apply the ability to.
+ * @param {float}			spawncooldown 	The Abilitys cooldown when created.
+ * @param {string}			name 			The NonTranslated name of the weapon.
+ * @param {integer}			player_class 	Which Class the player needs to be to use the ability (TF_CLASS_UNDEFINED or > TF_CLASS_MAXNORMAL to ignore).
+ * @param {integer}			idx				The ItemDefIndex of the Weapon.
+ * @param {table}			text_parms		Table of Text parameters for the GlobalGameText.
+ * @param {function}		ability_func	Function to use when the Ability is used
  */
 function CreateAbility(weapon, spawncooldown, name, player_class, idx, text_parms, ability_func) {
 	local scope = GetScope(weapon)

@@ -54,17 +54,7 @@ local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", 
 	additive_range = 50
 	base_damage = 3125
 }
-// deprecated
-::CustomDamageOverrides <- array(TF_DMG_CUSTOM_RANGE, null)
-CustomDamageOverrides[TF_DMG_CUSTOM_SPELL_SKELETON] 	= 8500
-CustomDamageOverrides[TF_DMG_CUSTOM_SPELL_MIRV] 		= 15000
-CustomDamageOverrides[TF_DMG_CUSTOM_SPELL_METEOR] 		= 3000
-CustomDamageOverrides[TF_DMG_CUSTOM_SPELL_LIGHTNING] 	= 5000
-CustomDamageOverrides[TF_DMG_CUSTOM_SPELL_FIREBALL] 	= 15000
-CustomDamageOverrides[TF_DMG_CUSTOM_SPELL_MONOCULUS] 	= 12500
-CustomDamageOverrides[TF_DMG_CUSTOM_SPELL_BLASTJUMP] 	= 22500
-CustomDamageOverrides[TF_DMG_CUSTOM_SPELL_BATS] 		= 10000
-CustomDamageOverrides[TF_DMG_CUSTOM_SPELL_TELEPORT] 	= 10000
+
 
 if(!("OnCondPostHooks" in FatCatLibSettings))
 	SetLibrarySettings()
@@ -359,8 +349,8 @@ function GameplayThink()
 		}
 
 		// 
-		Human.SetGravity(DEFAULT_GRAVITY)
-		Human.RemoveCondEx(TF_COND_SWIMMING_NO_EFFECTS, true)
+		Human.SetGravity(1.0)
+		// Human.RemoveCondEx(TF_COND_SWIMMING_NO_EFFECTS, true)
 
 		local primary 		= Human.GetWeaponInSlotNew(SLOT_PRIMARY)
 		local primaryIDX 	= Human.GetWeaponIDXInSlotNew(SLOT_PRIMARY)

@@ -592,11 +592,6 @@ function ROOT::GetRuneCondition(rune)
 ::MAX_CLIENTS	 		<- MaxClients().tointeger() 
 ::TF_CLASS_MAXNORMAL 	<- 9
 ::MAX_WEAPONS			<- 8
-::DEFAULT_GRAVITY 		<- 1.0
-::DEFAULT_SIZE 			<- 1.0
-::DEFAULT_COLOR			<- "255 255 255"
-::SOMETHINGFUCKEDUP 	<- -1
-::NULL_S 				<- "null"
 ::TICKRATE 				<- 66
 ::TICK_DUR 				<- 1.0/TICKRATE
 ::MAX_DECAPITATIONS 	<- 4
@@ -828,10 +823,10 @@ catch (e)
   ======================
 */
 ///////////////////////////////////////
-function CTFPlayer::PrintToHud(message = "")
+function CTFPlayer::PrintToHud(message = "") // add default so it wont print "NULL" if left blank
 	PrintBetter(this, message, HUD_PRINTCENTER)
 
-function CTFPlayer::PrintToChat(message = "") // add default so it wont print "NULL" if left blank
+function CTFPlayer::PrintToChat(message = "")
 	PrintBetter(this, message, HUD_PRINTTALK)
 
 function CTFPlayer::PrintToConsole(message = "")
@@ -882,33 +877,11 @@ function CTFPlayer::GetEyeOffset(offset)
 function CTFPlayer::IsPressingButton(button)
 	return ( GetPropInt(this, "m_nButtons") & button ) ? true : false
 
+/**
+ * @deprecated Use GetWeaponInSlotNew instead
+ */
 function CTFPlayer::GetWeaponInSlot(slot = 0)
 	return EnableStringPurge(GetPropEntityArray(this, "m_hMyWeapons", slot))
-
-function CTFPlayer::GetWeaponIDXInSlot(slot = 0)
-	{ local weapon = GetWeaponInSlotNew(slot) ; return weapon ? weapon.GetIDX() : SOMETHINGFUCKEDUP }
-
-function CTFPlayer::GetWeaponIDXInSlotNew(slot = 0)
-	{ local weapon = GetWeaponInSlotNew(slot) ; return weapon ? weapon.GetIDX() : SOMETHINGFUCKEDUP }
-
-function CTFPlayer::GetActiveWeaponIDX()
-	{ local weapon = GetActiveWeapon() ; return weapon ? weapon.GetIDX() : SOMETHINGFUCKEDUP }
-
-function CTFPlayer::GetAbilityWeaponIDX()
-	{ local weapon = GetAbilityWeapon() ; return weapon ? weapon.GetIDX() : SOMETHINGFUCKEDUP }
-
-function CTFPlayer::GetAbilityWeaponIDXs()
-{
-	local idxs = []
-	if(GetAbilityWeapons() == null)
-		return null
-	foreach(weapon in GetAbilityWeapons())
-		idxs.append(weapon.GetIDX())
-	
-	return idxs.len() == 0 ? null : idxs
-}
-function CTFPlayer::IsPressingButton(button = 1)
-	return ( GetPropInt(this, "m_nButtons") & button ) ? true : false
 
 function CTFPlayer::SetAmmoByIndex(index, ammo)
 	SetPropIntArray(this, PROP_PLAYER_AMMO, ammo, index)
@@ -926,12 +899,12 @@ function CTFPlayer::ResetHealth()
 	SetHealth(GetMaxHealth())
 
 function CTFPlayer::ResetColor()
-	AcceptInput("Color", DEFAULT_COLOR, this, this)
+	AcceptInput("Color", "255 255 255", this, this)
 
-function CTFPlayer::SetColor(color = DEFAULT_COLOR)
+function CTFPlayer::SetColor(color = "255 255 255")
 	AcceptInput("Color", color, this, this)
 
-function CTFPlayer::SetScale(scale = DEFAULT_SIZE)
+function CTFPlayer::SetScale(scale = 1.0)
 	SetModelScale(scale, 0)
 
 function CTFPlayer::GetHeads()
@@ -956,20 +929,92 @@ function CTFPlayer::GetFallingVelocity()
 	return GetAbsVelocity().z
 
 function CTFPlayer::IsDucking()
-	return GetFlags() & FL_DUCKING
-CTFPlayer.IsCrouching <- CTFPlayer.IsDucking
+	return (GetFlags() & FL_DUCKING) == FL_DUCKING
 
 function CTFPlayer::IsReprogrammed()
 	return false
 
-function CTFPlayer::TakeUnblockableDamage(damage, attacker = Entities.First(), inflictor = this, weapon = this)
-	TakeDamageCustom(inflictor, attacker, weapon, Vector(0, 0, 1), Vector(0, 0, 0), damage, DMG_GENERIC, TF_DMG_CUSTOM_TRIGGER_HURT)
+function CTFPlayer::IsBot()
+	return false
 
-function CTFPlayer::Suicide()
-	{ SetHealth(0); TakeUnblockableDamage(INT_MAX) }
+function CTFPlayer::SetFoodItemCharge(charge)
+	SetPropFloatArray(this, "m_Shared.m_flItemChargeMeter", charge, 1)
+
+function CTFPlayer::TakeUnblockableDamage(damage, attacker = Entities.First(), inflictor = this, weapon = this)
+	TakeDamageCustom(inflictor, attacker, weapon, Vector(0, 0, 1), GetOrigin(), damage, DMG_GENERIC|DMG_PREVENT_PHYSICS_FORCE, TF_DMG_CUSTOM_TRIGGER_HURT)
 
 function CTFPlayer::SetCond(cond, duration = -1)
 	AddCondEx(cond, duration, this)
+
+function CTFPlayer::GetTrackedDamage()
+	return GetScope(PlayerManager).m_iDamage[entindex()]
+
+function CTFPlayer::SetTrackedDamage( damage = 0 )
+	GetScope(PlayerManager).m_iDamage[entindex()] = damage
+
+function CTFPlayer::GetTrackedHealing()
+	return GetScope(PlayerManager).m_iHealing[entindex()]
+
+function CTFPlayer::SetTrackedHealing( healing = 0 )
+	GetScope(PlayerManager).m_iHealing[entindex()] = healing
+
+function CTFPlayer::GetTrackedTankDamage()
+	return GetScope(PlayerManager).m_iDamageBoss[entindex()]
+
+function CTFPlayer::SetTrackedTankDamage( healing = 0 )
+	GetScope(PlayerManager).m_iDamageBoss[entindex()] = healing
+
+/**
+ * @param {integer} rune
+ */
+function CTFPlayer::HasRune(rune)
+	return GetCurrentRune() == rune
+
+/*
+	Some Funcs can use a different name
+ */
+
+CTFPlayer.IsCrouching <- CTFPlayer.IsDucking
+CTFPlayer.SetJetpackCharge <- CTFPlayer.SetFoodItemCharge
+
+/*
+	Multiline Functions
+ */
+
+function CTFPlayer::GetWeaponIDXInSlot(slot)
+{ 
+	local weapon = GetWeaponInSlotNew(slot)
+	return weapon ? weapon.GetIDX() : -1 
+}
+
+function CTFPlayer::GetWeaponIDXInSlotNew(slot)
+{ 
+	local weapon = GetWeaponInSlotNew(slot)
+	return weapon ? weapon.GetIDX() : -1  
+}
+
+function CTFPlayer::GetActiveWeaponIDX()
+{ 
+	local weapon = GetActiveWeapon()
+	return weapon ? weapon.GetIDX() : -1  
+}
+
+function CTFPlayer::GetAbilityWeaponIDX()
+{ 
+	local weapon = GetAbilityWeapon()
+	return weapon ? weapon.GetIDX() : -1  
+}
+
+function CTFPlayer::GetAbilityWeaponIDXs()
+{
+	local idxs = []
+	if(GetAbilityWeapons() == null)
+		return null
+	foreach(weapon in GetAbilityWeapons())
+		idxs.append(weapon.GetIDX())
+	
+	return idxs.len() == 0 ? null : idxs
+}
 if(!("__ORIGINAL_RemoveCondEx" in CTFPlayer))
 {
 	CTFPlayer.__ORIGINAL_RemoveCondEx <- CTFPlayer.RemoveCondEx
@@ -980,12 +1025,6 @@ if(!("__ORIGINAL_RemoveCondEx" in CTFPlayer))
 		__ORIGINAL_RemoveCondEx(cond, ignoreDuration)
 }
 
-function CTFPlayer::GetTrackedDamage()
-	return GetScope(PlayerManager).m_iDamage[entindex()]
-
-function CTFPlayer::SetTrackedDamage( damage = 0 )
-	GetScope(PlayerManager).m_iDamage[entindex()] = damage
-
 function CTFPlayer::AddTrackedDamage( damage = 0 )
 {
 	if ( type( GetTrackedDamage( ) ) != "integer" )
@@ -995,12 +1034,6 @@ function CTFPlayer::AddTrackedDamage( damage = 0 )
 	SetTrackedDamage( GetTrackedDamage( ) + damage )
 }
 
-function CTFPlayer::GetTrackedHealing()
-	return GetScope(PlayerManager).m_iHealing[entindex()]
-
-function CTFPlayer::SetTrackedHealing( healing = 0 )
-	GetScope(PlayerManager).m_iHealing[entindex()] = healing
-
 function CTFPlayer::AddTrackedHealing( healing = 0 )
 {
 	if ( type( GetTrackedHealing( ) ) != "integer" )
@@ -1009,12 +1042,6 @@ function CTFPlayer::AddTrackedHealing( healing = 0 )
 	}
 	SetTrackedHealing( GetTrackedHealing( ) + healing )
 }
-
-function CTFPlayer::GetTrackedTankDamage()
-	return GetScope(PlayerManager).m_iDamageBoss[entindex()]
-
-function CTFPlayer::SetTrackedTankDamage( healing = 0 )
-	GetScope(PlayerManager).m_iDamageBoss[entindex()] = healing
 
 function CTFPlayer::AddTrackedTankDamage( damage = 0 )
 {
@@ -1056,14 +1083,6 @@ function CTFPlayer::GetCurrentRune()
 	return RUNE_NONE
 }
 
-/**
- * @param {integer} rune
- */
-function CTFPlayer::HasRune(rune)
-{
-	return GetCurrentRune() == rune
-}
-
 function CTFPlayer::GetRuneResistance()
 {
 	if( GetCurrentRune() == RUNE_RESIST )
@@ -1086,12 +1105,11 @@ function CTFPlayer::IsValidReprogramTarget(medics = false)
 	return true
 }
 
-function CTFPlayer::IsBot()
-	return false
-
-function CTFPlayer::SetFoodItemCharge(charge)
-	SetPropFloatArray(this, "m_Shared.m_flItemChargeMeter", charge, 1)
-CTFPlayer.SetJetpackCharge <- CTFPlayer.SetFoodItemCharge
+function CTFPlayer::Suicide()
+{ 
+	SetHealth(0)
+	TakeUnblockableDamage(INT_MAX) 
+}
 
 function CTFPlayer::AddThrowableCharge(charge)
 {
@@ -1120,7 +1138,7 @@ function CTFPlayer::SetThrowableCharge(charge)
 }
 
 function CTFPlayer::SetThrowableAmmo(ammo)
-	SetPropIntArray(this, "m_iAmmo", ammo, TF_AMMO_GRENADES2)
+	SetPropIntArray(this, PROP_PLAYER_AMMO, ammo, TF_AMMO_GRENADES2)
 
 function CTFPlayer::IsUberDraining() 
 {
@@ -1170,7 +1188,7 @@ function CTFPlayer::ForceTaunt(taunt_id)
 function CTFPlayer::GetMyWeaponsArray()
 {
 	local MyWeapons = array(MAX_WEAPONS)
-	for(local i = 0; i < MAX_WEAPONS; i++) { MyWeapons[i] = GetWeaponInSlot(i) }
+	for(local i = 0; i < MAX_WEAPONS; i++) { MyWeapons[i] = GetWeaponInSlotNew(i) }
 	return MyWeapons
 }
 
@@ -1196,7 +1214,7 @@ function CTFPlayer::GetWeaponInSlotNew(slot)
 			return child
 	}
 
-	local weapon = this.GetWeaponInSlot(slot)
+	local weapon = GetWeaponInSlot(slot)
 	if (weapon)
 	{
 		local weaponSlot = weapon.GetSlot()
@@ -1210,7 +1228,7 @@ function CTFPlayer::GetWeaponInSlotNew(slot)
 	for(local i = 0; i < MAX_WEAPONS; i++) 
 	{ 
 		if (i == slot) continue
-		weapon = this.GetWeaponInSlot(i)
+		weapon = GetWeaponInSlot(i)
 		if( weapon == null ) continue
 
 		local weaponSlot = weapon.GetSlot()
@@ -1281,25 +1299,25 @@ function CTFPlayer::InRespawnRoom(any = false)
 /**
  * @returns {bool}
  * 
- * @deprecated
+ * @deprecated Use InRespawnRoom(true) instead
  */
 function CTFPlayer::InAnyRespawnRoom()
 	return InRespawnRoom(true)
 /**
  * @param {float} range
- * @returns {array}
+ * @returns {[CTFPlayer]}
  */
 function CTFPlayer::GetEveryHumanWithin(range, include_me = false)
 	return include_me ? GetAllPlayers(TF_TEAM_PVE_DEFENDERS, range ? [GetOrigin(), range] : range, false) : GetAllPlayers(TF_TEAM_PVE_DEFENDERS, [GetOrigin(), range], false).filter(@(_, value) value != this)
 /**
  * @param {float} range
- * @returns {array}
+ * @returns {[CTFPlayer|CTFBot]}
  */
 function CTFPlayer::GetEveryPlayerWithin(range, include_me = false)
 	return include_me ? GetAllPlayers(false, range ? [GetOrigin(), range] : range, false) : GetAllPlayers(false, range ? [GetOrigin(), range] : range, false).filter(@(_, value) value != this)
 /**
  * @param {float} range
- * @returns {array}
+ * @returns {[CTFBaseBoss]}
  */
 function CTFPlayer::GetEveryTankWithin(range)
 {
@@ -1312,7 +1330,7 @@ function CTFPlayer::GetEveryTankWithin(range)
 }
 /**
  * @param {float} range
- * @returns {array}
+ * @returns {[CTFBot]}
  */
 function CTFPlayer::GetEveryBotWithin(range)
 	return GetAllPlayers(TF_TEAM_PVE_INVADERS, [GetOrigin(), range], false).extend(GetAllPlayers(TF_TEAM_PVE_INVADERS_GIANTS, [GetOrigin(), range], false))
@@ -1335,9 +1353,7 @@ function CTFPlayer::DamageEveryTankWithin(range, damage)
 function CTFPlayer::DamageEveryBotWithin(range, damage)
 {
 	foreach(bot in GetEveryBotWithin(range))
-	{
 		bot.TakeDamage(damage, 0, this)
-	}
 }
 
 function CTFPlayer::RemoveStun()
@@ -1349,13 +1365,11 @@ function CTFPlayer::RemoveStun()
 	SetPropInt(this, "m_Shared.m_iMovementStunParity", 0)
 	RemoveCondEx(TF_COND_STUNNED, true)
 }
-
+// [Insert Title card here]
 function CTFPlayer::IsInvincible()
 {
 	foreach(Condition in Invincible_Conds)
-	{
 		if(InCond(Condition)) return true
-	}
 	return false
 }
 
@@ -1397,10 +1411,6 @@ function CTFPlayer::IsEventJudge()
 		"[U:1:1104797071]"	// Katsu
 	])
 }
-
-		//"[U:1:294258124]"	// Gregarious
-		//"[U:1:889968517]"	// Ralsei
-
 /**
  * @returns {bool}
  */
@@ -2773,14 +2783,7 @@ CTFPlayer.GenerateAndWearItem <- CTFBot.GenerateAndWearItem
  */
 function CTFPlayer::AttachParticle(particle, duration = -1, attachment_point = PATTACH_ABSORIGIN_FOLLOW)
 {
-	local trigger = CreateByClassname("trigger_particle")
-	trigger.KeyValueFromString("particle_name", particle)
-	trigger.KeyValueFromInt("spawnflags", SF_TRIGGER_ALLOW_CLIENTS)
-	trigger.KeyValueFromInt("attachment_type", attachment_point)
-
-	trigger.AcceptInput("StartTouch", "", null, this)
-	trigger.Destroy()
-
+	AttachParticle(this, particle, attachment_point, "")
 	if(duration > 0)
 		PlayerFire("DispatchEffect", "ParticleEffectStop", duration)
 }
@@ -3753,7 +3756,7 @@ function ROOT::GetItemModelName(ItemID)
 	
 	local pootis = ItemID & ( (1 << 16) - 1)
 	
-	SetPropInt(wearable, "m_AttributeManager.m_Item.m_iItemDefinitionIndex", pootis)
+	SetPropInt(wearable, PROP_ITEM_DEF_IDX, pootis)
 	SetPropInt(wearable, "m_AttributeManager.m_Item.m_bInitialized", 1)
 	
 	wearable.DispatchSpawn()
@@ -3963,7 +3966,7 @@ function ROOT::PrintBetter(player, message, level = HUD_PRINTTALK)
 	}
 	if(message == null)
 	{
-		PRINT(NULL_S)
+		PRINT("null")
 		return
 	}
 	if(message.len() <= MAX_CLIENT_PRINT_DATA)
@@ -4291,11 +4294,29 @@ function ROOT::SpawnEntityFromTable(name, keyvalues)
 if (!("_AddThinkToEnt" in ROOT))
 {
 	::_AddThinkToEnt <- AddThinkToEnt
+	/**
+	 * Override the base AddThinkToEnt with a better function that does purging and allows the 
+	 * think function to be a function, by adding it into the entitys scope as __InternalThinkFunc
+	 * @param {CBaseEntity} entity
+	 * @param {string|function} think_func
+	 */
 	function ROOT::AddThinkToEnt(entity, think_func)
 	{
-		_AddThinkToEnt(entity, think_func == null ? "" : think_func)
+		if(think_func == null)
+			think_func = ""
+		if(type(think_func) == "string")
+		{
+			_AddThinkToEnt(entity, think_func)
+		}
+		else if(type(think_func) == "function")
+		{
+			local function __InternalThinkFunc() {think_func()}
+			GetScope(entity).__InternalThinkFunc <- __InternalThinkFunc
+			_AddThinkToEnt(entity, "__InternalThinkFunc")
+		}
 		PurgeString(think_func)
 		PurgeString(entity)
+		PurgeString("__InternalThinkFunc")
 	}
 }
 
@@ -5034,6 +5055,20 @@ function ROOT::CreateParticle(particle, origin, angle = QAngle(-90, 0, 0))
 	return temp
 }
 
+if(!("GlobalParticleSpawner" in ROOT))
+{
+	::GlobalParticleSpawner <- CreateByClassname("trigger_particle")
+	GlobalParticleSpawner.KeyValueFromInt("spawnflags", 64)
+}
+
+function ROOT::AttachParticle(entity, particle, attach_type = PATTACH_ABSORIGIN, attach_name = "")
+{
+	NetProps.SetPropString(GlobalParticleSpawner, "m_iszParticleName", particle)
+	NetProps.SetPropString(GlobalParticleSpawner, "m_iszAttachmentName", attach_name)
+	NetProps.SetPropInt(GlobalParticleSpawner, "m_nAttachType", attach_type)
+	GlobalParticleSpawner.AcceptInput("StartTouch", "", entity, entity)
+}
+
 
 /**
  * Creates a Pickup
@@ -5652,7 +5687,7 @@ function ROOT::ConvertRadiusToSndLvl(radius)
 
 /**
  * @param {CTFPlayer} player
- * @deprecated use player.GetWeaponInSlot instead.
+ * @deprecated use player.GetWeaponInSlotNew instead.
  */
 function ROOT::GetWeaponInSlot(player, slot = 0)
 {
@@ -7007,7 +7042,7 @@ function FireWeaponCheck()
 				attacker[damage_func](eventdata.damage)
 
 		}
-		local event_type = NULL_S
+		local event_type = "null"
 
 		if(IsBuilding(object))
 		{
@@ -7041,7 +7076,7 @@ function FireWeaponCheck()
 		if("boss" 		in eventdata) 	delete eventdata.boss
 
 
-		if(event_type != NULL_S)
+		if(event_type != "null")
 		{
 			if(eventdata.health > 0)
 			{
