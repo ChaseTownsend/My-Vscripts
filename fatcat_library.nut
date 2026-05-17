@@ -5055,11 +5055,17 @@ function ROOT::CreateParticle(particle, origin, angle = QAngle(-90, 0, 0))
 	return temp
 }
 
-if(!("GlobalParticleSpawner" in ROOT))
+if(!("GlobalParticleSpawner" in ROOT) || GlobalParticleSpawner == null)
 {
 	::GlobalParticleSpawner <- CreateByClassname("trigger_particle")
 	GlobalParticleSpawner.KeyValueFromInt("spawnflags", 64)
 }
+else if(!GlobalParticleSpawner.IsValid())
+{
+	::GlobalParticleSpawner <- CreateByClassname("trigger_particle")
+	GlobalParticleSpawner.KeyValueFromInt("spawnflags", 64)
+}
+
 
 function ROOT::AttachParticle(entity, particle, attach_type = PATTACH_ABSORIGIN, attach_name = "")
 {
