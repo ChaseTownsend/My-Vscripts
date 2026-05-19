@@ -115,7 +115,6 @@ function FlameSentry()
 		{
 			if(IsValidEnemy(entity)) return TRACE_OK_CONTINUE
 			else return TRACE_CONTINUE
-			return TRACE_STOP
 		}
 	}
 

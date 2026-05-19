@@ -1,7 +1,7 @@
 if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
-SetScriptVersion("WaveSave", "1.0.1")
+SetScriptVersion("WaveSave", "1.0.2")
 
 ::CHECKPOINT_ERROR <- "\x07bf4137"
 ::WAVE_SAVE_FILE 	<- "checkpoint.txt"
@@ -157,7 +157,7 @@ function SaveWaveData(Reset = false)
 
 function WaveEndLogic()
 {
-	if(GetCurrentWaveNumber() == GetMaximumWaveNumber())
+	if(GetCurrentWaveNumber() == GetMaximumWaveNumber()+1)
 		return	// final wave complete
 	if(CheckpointCommand != "")
 		RemoveChatTrigger(CheckpointCommand)
