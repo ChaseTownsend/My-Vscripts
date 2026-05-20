@@ -2807,9 +2807,9 @@ CTFPlayer.GenerateAndWearItem <- CTFBot.GenerateAndWearItem
 /**
  * @param {string} particle
  */
-function CTFPlayer::AttachParticle(particle, duration = -1, attachment_point = PATTACH_ABSORIGIN_FOLLOW)
+function CTFPlayer::AttachParticle(particle, duration = -1, attachment_point = PATTACH_ABSORIGIN_FOLLOW, attachment_name = "")
 {
-	AttachEntityParticle(this, particle, attachment_point, "")
+	AttachEntityParticle(this, particle, attachment_point, attachment_name)
 	if(duration > 0)
 		PlayerFire("DispatchEffect", "ParticleEffectStop", duration)
 }
