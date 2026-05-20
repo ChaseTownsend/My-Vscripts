@@ -763,7 +763,12 @@ function ROOT::GetCvarInt(cvar)
  * @param {string} cvar
  */
 function ROOT::GetCvarStr(cvar)
-	return Convars.GetStr(cvar)
+{
+	local ret = Convars.GetStr(cvar)
+	if(ret == "hunter2")
+		ret = "***PROTECTED***"
+	return ret
+}
 ROOT.GetCvarString <- ROOT.GetCvarStr
 
 function ROOT::GetClientConVar(cvar, entindex)
@@ -974,7 +979,7 @@ function CTFPlayer::GetPercentHealth(percent)
  * @param {float|integer} percent
  */
 function CTFPlayer::GetPercentMaxHealth(percent)
-	return GetMaxHealth() * (percent / 100)
+	return GetMaxBuffedHealth() * (percent / 100)
 
 /**
  * @param {integer} rune
@@ -4080,23 +4085,25 @@ function ROOT::CleanUpAndFormatString(msg, ...)
 	return msg
 }
 
+/**
+ * @param {CTFPlayer|null} player
+ * @param {any} message
+ * @param {integer} level
+ */
 function ROOT::PrintBetter(player, message, level = HUD_PRINTTALK)
 {
+	if(message == null)
+		message = "null"
 	if(typeof message != "string")
 		message = message.tostring()
 	local PRINT = function(m) {
 		if(m.len() > MAX_CLIENT_PRINT_DATA)
 		{
-			error("Warning! a Message is too long!!!\n")
-			error(m + "\n")
+			printl("Warning! a Message is too long!!!")
+			printl(m)
 		}
 
 		ClientPrint(player, level, m)
-	}
-	if(message == null)
-	{
-		PRINT("null")
-		return
 	}
 	if(message.len() <= MAX_CLIENT_PRINT_DATA)
 	{
@@ -5604,7 +5611,6 @@ function ROOT::PrecacheObject(thing)
 	{
 		return (b < a) ? b : a
 	}
-	// Returns the Larger Value
 	/**
 	 * Returns the Larger Value
 	 * @param {integer|float} a
@@ -6168,13 +6174,14 @@ function ROOT::CreateFireballExplosion(table)
 		weapon = table.owner,
 		inflictor = table.inflictor
 		origin = table.center,
-		radius = 200,
+		radius = "radius" in table ? table.radius : 200
 		damage = table.damage,
 		DmgCustom = TF_DMG_CUSTOM_SPELL_FIREBALL
 		ignores = [],
 		DmgType = DMG_RADIUS_MAX|DMG_IGNITE|DMG_BURN,
 		FuncBeforeDmg = true
 		ExplodeFunc = table.func
+		FuncIgnoreObjects = true
 	})
 }
 
@@ -6762,8 +6769,9 @@ function FireWeaponCheck()
 		
 		local victim = params.const_entity
 		local attacker = params.attacker
-		// local inflictor = params.inflictor
-		// local weapon = params.weapon
+
+		if(victim == null || !victim.IsValid())
+			return
 
 		if(IsCrush && victim.IsPlayer() && victim.HookAdditiveAttributes("crush dmg immunity"))
 			params.early_out <- true
@@ -7850,7 +7858,7 @@ RegisterAdminTrigger("setspell", function(player, ...) {
 	local book = player.GetSpellBook()
 
 	if(!book)
-		return
+		return player.PrintToChat("You dont have a Spell Book Stupid!")
 
 	local index = vargv[0].tointeger()
 	local charges = vargv[1].tointeger()
@@ -7862,6 +7870,8 @@ RegisterAdminTrigger("setspell", function(player, ...) {
 RegisterAdminTrigger("uber", function(player, ...) {
 	if(vargv.len() > 1)
 		return player.PrintToChat("Incorrect Arguments [{uber}] ")
+	if(!player.HasWeaponClassname("tf_weapon_medigun"))
+		return player.PrintToChat("No Medigun Stupid!")
 
 	local uber = vargv.len() == 0 ? 100.0 : vargv[0].tofloat()
 
