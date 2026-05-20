@@ -1714,21 +1714,21 @@ function CTFPlayer::GetTranslatedString(string)
 	local lang = GetLanguage()
 	//hmm, mising all translations?
 	if(!("TRANSLATION_TABLE" in ROOT))
-		return " MISSING TRANSLATION TABLE!!!!!"
+		return " Missing Translation Table!"
 
 	// we dont have this language translated yet, or its missing
 	// default to english
 	if(!(lang in TRANSLATION_TABLE))
 	{
 		lang = "english"
-		PrintToHud("Please contact The Fatcat to assist with adding translations.")
+		PrintToHud("Please contact \"The Fatcat\" to assist with adding translations.")
 	}
 	
 	local translation_table = TRANSLATION_TABLE[lang]
 
 	// so... we dont have this string yet, or is misspelled, idk
 	if(!(string in translation_table))
-		return format(" \x01MISSING TRANSLATION STRING FOR \x01\"\x03%s\x01\"", string.tostring())
+		return format(" \x01Missing Translation String for \"\x03%s\x01\"", string.tostring())
 	
 	return translation_table[string]
 }
