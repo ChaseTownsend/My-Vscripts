@@ -205,7 +205,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format)
-if (!SetLibraryVersion("05.18.2026.21", 0))
+if (!SetLibraryVersion("05.20.2026.00", 0))
 	return
 
 SetLibrarySettings({})
@@ -5219,6 +5219,20 @@ function ROOT::AttachEntityParticle(entity, particle, attach_type = PATTACH_ABSO
 	GlobalParticleSpawner.AcceptInput("StartTouch", "", entity, entity)
 }
 
+/**
+ * @param {CTFWeaponBase|CEconEntity|null} weapon
+ * @param {string} classname
+ */
+function ROOT::IsWeaponClass(weapon, classname, starts = false)
+{
+	if(weapon == null || !weapon.IsValid())
+		return false
+	else if (starts)
+		return startswith(weapon.GetClassname(), classname)
+	else
+		return weapon.GetClassname() == classname
+}
+
 
 /**
  * Creates a Pickup
@@ -6759,7 +6773,7 @@ function FireWeaponCheck()
 
 		if(attacker && attacker.IsPlayer())
 		{
-			if(params.damage_custom >= TF_DMG_CUSTOM_SPELL_TELEPORT && params.damage_custom < TF_DMG_CUSTOM_KART)
+			if(params.damage_custom >= TF_DMG_CUSTOM_SPELL_TELEPORT && params.damage_custom <= TF_DMG_CUSTOM_KART)
 			{
 				local spell_book = attacker.GetSpellBook()
 				if(spell_book)
@@ -6796,13 +6810,14 @@ function FireWeaponCheck()
 			break
 
 			case TF_DMG_CUSTOM_BLEEDING:
-				if(IsCrit || attacker.IsCritBoosted() && params.weapon && !params.weapon.IsPlayer() && params.weapon.GetAdditiveAttribute("allow crit bleed"))
+				if(IsCrit || attacker.IsCritBoosted() && IsWeaponClass(params.weapon, "tf_weapon", true) && params.weapon.GetAdditiveAttribute("allow crit bleed"))
 				{
 					params.damage_type = params.damage_type | DMG_CRITICAL
 				}
 			break
 			case TF_DMG_CUSTOM_BOOTS_STOMP:
-				if(attacker.HookAdditiveAttributes("stomp uses velocity"))
+				local wep = attacker.GetActiveWeapon()
+				if(wep && wep.GetAttribute("stomp uses velocity", 0))
 				{
 					local FallingVel = attacker.GetAbsVelocity().z
 					foreach (vel in GetScope(attacker).LastVels)
@@ -6816,7 +6831,7 @@ function FireWeaponCheck()
 					if(FallingVel >= 0)
 						FallingVel = -600
 
-					params.damage = -1 * (FallingVel * attacker.HookMultAttributes("stomp dmg mult"))
+					params.damage = -1 * (FallingVel * wep.GetMultAttribute("stomp dmg mult"))
 				}
 				else
 					params.damage *= attacker.HookMultAttributes("stomp dmg mult")
@@ -6896,10 +6911,10 @@ function FireWeaponCheck()
 					if(weapon == null)
 						weapon = victim.GetWeaponInSlotNew(SLOT_MELEE)
 
-					local MIN_FallingVel = weapon.GetAttribute("fall damage causes aoe dmg mult", 0)
+					local MIN_FallingVel = weapon.GetAttribute("fall damage causes aoe min speed", 0)
 
-					local AOE_Radius = victim.HookAdditiveAttributes("fall damage causes aoe radius")
-					if(AOE_Radius = 0)
+					local AOE_Radius = weapon.GetAttribute("fall damage causes aoe radius", 0)
+					if(AOE_Radius == 0)
 						AOE_Radius = 300
 
 					local AOE_damage = weapon.GetAttribute("fall damage causes aoe dmg mult", 0)
@@ -6925,7 +6940,7 @@ function FireWeaponCheck()
 
 		if(victim.IsPlayer() && attacker && attacker.IsPlayer())
 		{
-			if(victim.CanHaveCorrosion() && weapon && !weapon.IsPlayer())
+			if(victim.CanHaveCorrosion() && IsWeaponClass(weapon, "tf_weapon", true))
 			{
 				if(weapon.GetAdditiveAttribute("corrosion on hit") != 0)
 					victim.MakeCorrosion(attacker, weapon)
@@ -6937,10 +6952,13 @@ function FireWeaponCheck()
 			switch(params.damage_custom)
 			{
 			case TF_DMG_CUSTOM_BOOTS_STOMP:
-				if(weapon && !weapon.IsPlayer() && weapon.GetAdditiveAttribute("cond on stomped"))
-					victim.AddCondEx(weapon.GetAdditiveAttribute("cond on stomped", -1), weapon.GetAdditiveAttribute("cond on stomped duration", 1), attacker)
-				if(weapon && !weapon.IsPlayer() && weapon.GetAdditiveAttribute("cond on stomp"))
-					attacker.AddCondEx(weapon.GetAdditiveAttribute("cond on stomp", -1), weapon.GetAdditiveAttribute("cond on stomp duration", 1), attacker)
+				if(IsWeaponClass(weapon, "tf_weapon", true))
+				{
+					if(weapon.GetAdditiveAttribute("cond on stomped"))
+						victim.AddCondEx(weapon.GetAdditiveAttribute("cond on stomped", -1), weapon.GetAdditiveAttribute("cond on stomped duration", 1), attacker)
+					if(weapon.GetAdditiveAttribute("cond on stomp"))
+						attacker.AddCondEx(weapon.GetAdditiveAttribute("cond on stomp", -1), weapon.GetAdditiveAttribute("cond on stomp duration", 1), attacker)
+				}
 			break
 			}
 		}

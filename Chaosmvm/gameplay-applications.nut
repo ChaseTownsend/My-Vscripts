@@ -1,7 +1,7 @@
 if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
-SetScriptVersion("GameplayApplications", "5.0.1")
+SetScriptVersion("GameplayApplications", "5.0.2")
 
 local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", THINKER_PERSIST)
 
@@ -475,7 +475,6 @@ function ROOT::ModifyCallbackDamage(params, victim, attacker, weapon, inflictor)
 	}
 	break;
 	case TF_DMG_CUSTOM_KART: {	// [11/12/25] Please, dear god, why do i have to do this stupid hack
-		printl("Kart HIT!")
 		params.early_out <- true
 		victim.TakeDamageCustom(inflictor, attacker, attacker.GetSpellBook(), Vector(), victim.GetOrigin(), KART_DMG, params.damage_type, TF_DMG_CUSTOM_TRIGGER_HURT)
 		return
@@ -489,13 +488,6 @@ function ROOT::ModifyCallbackDamage(params, victim, attacker, weapon, inflictor)
 			victim.AddCondEx(TF_COND_MARKEDFORDEATH, 10, attacker)
 	break;
 	}
-
-	// if(custom > 0 && custom < TF_DMG_CUSTOM_END)
-	// {
-	// 	local result = CustomDamageOverrides[custom]
-	// 	if(result != null)
-	// 		params.damage = result
-	// }
 }
 
 /**
@@ -601,7 +593,7 @@ RegisterDamageCallback("player", "GameplayPlayer" function(params) {
 })
 
 RegisterDamageCallback(["obj_sentrygun", "obj_teleporter", "obj_dispenser", "tank_boss"], "GameplayOthers", function(params) {
-	if(!HasCustomFlag(params.damage_custom, TF_DMG_CUSTOM_IGNORE_EVENTS) || params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
+	if(HasCustomFlag(params.damage_custom, TF_DMG_CUSTOM_IGNORE_EVENTS) || params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
 		return
 
 	local victim 	= params.victim
@@ -620,7 +612,7 @@ RegisterDamageCallback(["obj_sentrygun", "obj_teleporter", "obj_dispenser", "tan
 })
 
 RegisterDamageCallback("tf_zombie", "GameplaySkeletons", function(params) {
-	if(!HasCustomFlag(params.damage_custom, TF_DMG_CUSTOM_IGNORE_EVENTS) || params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
+	if(HasCustomFlag(params.damage_custom, TF_DMG_CUSTOM_IGNORE_EVENTS) || params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
 		return
 	params.damage = 0
 	params.victim.TakeDamageCustom(params.inflictor, params.attacker, null, Vector(), Vector(), 5.0, DMG_GENERIC, TF_DMG_CUSTOM_NO_CALLBACKS)
