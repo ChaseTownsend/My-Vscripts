@@ -205,7 +205,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format)
-if (!SetLibraryVersion("05.20.2026.00", 0))
+if (!SetLibraryVersion("05.20.2026.21", 0))
 	return
 
 SetLibrarySettings({})
@@ -5078,13 +5078,13 @@ RunWithDelay(@() FireTimer(timer), 7.0)
 
 /**
  * @param {table} scope
- * @deprecated
+ * @deprecated this is cleaner, but uses more jump routines
  */
 function ROOT::IsNotInScope(item, scope)
 	return (!(item in scope))
 /**
  * @param {string} item
- * @deprecated
+ * @deprecated this is cleaner, but uses more jump routines
  */
 function ROOT::IsNotInTable(item, table)
 	return (!(item in table))
@@ -5158,6 +5158,7 @@ function ROOT::IsHullInRespawnRoom(start, min, max)
 }
 
 /**
+ * @param {Vector} point1
  * @param {Vector} point2
  */
 function ROOT::CanPointSeePoint(point1, point2)
@@ -5185,8 +5186,11 @@ function ROOT::EmitGlobalSound(info)
 		filter_type = RECIPIENT_FILTER_GLOBAL
 	})
 
-
-// TODO: Add to Snippets
+/**
+ * @param {string} particle
+ * @param {Vector} origin
+ * @param {QAngle} angle
+ */
 function ROOT::CreateParticle(particle, origin, angle = QAngle(-90, 0, 0))
 {
 	local temp = SpawnEntityFromTable("info_particle_system", {effect_name = particle})
@@ -5209,8 +5213,13 @@ else if(!GlobalParticleSpawner.IsValid())
 	GlobalParticleSpawner.KeyValueFromInt("spawnflags", 64)
 }
 
-
-function ROOT::AttachEntityParticle(entity, particle, attach_type = PATTACH_ABSORIGIN, attach_name = "")
+/**
+ * @param {CBaseEntity} entity
+ * @param {string} particle
+ * @param {integer} attach_type
+ * @param {string} attachment_name
+ */
+function ROOT::AttachEntityParticle(entity, particle, attach_type = PATTACH_ABSORIGIN, attachment_name = "")
 {
 	if(entity == null || !entity.IsValid())
 		return
@@ -5406,6 +5415,59 @@ function ROOT::ToggleSlowDown(amount = 1.0, sound = "", revert_sound = "", rever
 		RunWithDelay(@() ToggleSlowDown(1.0, revert_sound), revert*amount)
 	}
 }
+
+::ItemSets <- {}
+
+/**
+ * @param {string} name
+ * @param {table} set
+ */
+function ROOT::CreateItemSet(name, set)
+	ItemSets[name] <- set
+
+function ROOT::ProccessItemSets(client)
+{
+	foreach (_name, set in ItemSets)
+	{
+		if(set.ApplyFor.find(client.GetSteamID()) == null)
+			continue
+		local targets = []
+		if(set.ApplyTo.find("PLAYER") != null)
+			targets.append(client)
+
+		foreach (weapon in client.GetAllWeapons())
+		{
+			if(set.ApplyTo.find(weapon.GetClassname()) != null || set.ApplyTo.find(weapon.GetIDX()) != null)
+				targets.append(weapon)
+		}
+
+		foreach (entity in targets)
+		{
+			local func = "AddAttribute"
+			if(entity.IsPlayer())
+				func = "AddCustomAttribute"
+
+			foreach (attribute, value in set.Attributes)
+			{
+				local val = 0.0
+				try {val = value.tofloat()} catch(_) {}
+				entity[func](attribute, val, -1)
+			}
+		}
+	}
+}
+
+// CreateItemSet("Master of Chaos", {
+// 	ApplyTo = [
+// 		"PLAYER"
+// 	]
+// 	ApplyFor = [
+// 		"[U:1:969530867]"
+// 	]
+// 	Attributes = {
+// 		"max health additive bonus" : "50.0"
+// 	}
+// })
 
 /*
   =============================
@@ -6679,6 +6741,9 @@ function FireWeaponCheck()
 
 // Makes Custom Events to listen to
 ::ChaosCustomEvents <- {
+	/**
+	 * @param {table} params
+	 */
 	function OnGameEvent_post_inventory_application(params)
 	{
 		local eventdata = clone params
@@ -6695,6 +6760,9 @@ function FireWeaponCheck()
 		
 		FireScriptEvent(eventdata.player.IsBot() ? "BotResupply" : "HumanResupply", eventdata)
 	}
+	/**
+	 * @param {table} params
+	 */
 	function OnGameEvent_player_death(params)
 	{
 		local eventdata = clone params
@@ -6758,6 +6826,9 @@ function FireWeaponCheck()
 		if(!HasCustomFlag(eventdata.custom, TF_DMG_CUSTOM_IGNORE_EVENTS))
 			FireScriptEvent(victim.IsBot() ? "BotDeath" : "HumanDeath", eventdata)
 	}
+	/**
+	 * @param {table} params
+	 */
 	function OnScriptHook_OnTakeDamage(params)
 	{
 		if(HasCustomFlag(params.damage_custom, TF_DMG_CUSTOM_IGNORE_INTERNAL))
@@ -7048,6 +7119,9 @@ function FireWeaponCheck()
 				FireScriptEvent("PostTakeDamage", eventdata)
 		}
 	}
+	/**
+	 * @param {table} params
+	 */
 	function OnGameEvent_player_hurt(params)
 	{
 		local eventdata = clone params
@@ -7106,10 +7180,16 @@ function FireWeaponCheck()
 		if(!HasCustomFlag(eventdata.damage_custom, TF_DMG_CUSTOM_IGNORE_EVENTS))
 			FireScriptEvent(victim.IsBot() ? "PostBotHurt" : "PostHumanHurt", eventdata)
 	}
+	/**
+	 * @param {table} params
+	 */
 	function OnGameEvent_player_spawn(params)
 	{
 		local eventdata = clone params
 
+		/**
+		 * @type {CTFPlayer|CTFBot}
+		 */
 		local player = GetPlayerFromUserID(params.userid)
 		eventdata.player <- player
 
@@ -7127,6 +7207,8 @@ function FireWeaponCheck()
 
 			SetPropInt(player, "m_Shared.m_iNextMeleeCrit", -2)
 			player.AddThink(FireWeaponCheck, "FireWeaponCheck")
+
+			RunWithDelay(@() ProccessItemSets(player), TICK_DUR * 3)
 		}
 
 		if(player.IsAdmin())
@@ -7166,6 +7248,9 @@ function FireWeaponCheck()
 		else 
 			FireScriptEvent( player.IsBot() ? "BotSpawn" : "HumanSpawn", eventdata)
 	}
+	/**
+	 * @param {table} params
+	 */
 	function OnGameEvent_player_team(params)
 	{
 		local eventdata = clone params
@@ -7203,6 +7288,9 @@ function FireWeaponCheck()
 		RunWithDelay(@() (ReCalculatePlayers()), 1.0)
 		RunWithDelay(@() (ReCalculatePlayers()), 5.0)
 	}
+	/**
+	 * @param {table} params
+	 */
 	function OnGameEvent_player_say(params)
 	{
 		local eventdata = clone params
@@ -7261,6 +7349,9 @@ function FireWeaponCheck()
 				CallbackInfo[0].acall([ROOT].extend(temp))
 		}
 	}
+	/**
+	 * @param {table} params
+	 */
 	function OnGameEvent_npc_hurt(params)
 	{
 		local eventdata = clone params
@@ -7335,6 +7426,9 @@ function FireWeaponCheck()
 			}
 		}
 	}
+	/**
+	 * @param {table} params
+	 */
 	function OnGameEvent_player_healed(params)
 	{
 		local eventdata = clone params
@@ -7346,6 +7440,9 @@ function FireWeaponCheck()
 		if(eventdata.healer) eventdata.healer.AddTrackedHealing(params.amount)
 		FireScriptEvent(eventdata.patient.IsBot() ? "BotHealed" : "HumanHealed", eventdata)
 	}
+	/**
+	 * @param {table} params
+	 */
 	function OnGameEvent_player_disconnect(params) 
 	{
 		ReCalculatePlayers()
@@ -7374,6 +7471,9 @@ function FireWeaponCheck()
 
 		ValidatePlayers()
 	}
+	/**
+	 * @param {table} params
+	 */
 	function OnGameEvent_player_builtobject(params)
 	{
 		local eventdata = clone params
@@ -7397,6 +7497,9 @@ function FireWeaponCheck()
 		eventdata.object <- EntIndexToHScript(params.index)
 		FireScriptEvent(event_name, eventdata)
 	}
+	/**
+	 * @param {table} params
+	 */
 	function OnGameEvent_player_stunned(params)
 	{
 		local eventdata = clone params
@@ -7407,6 +7510,9 @@ function FireWeaponCheck()
 
 		FireScriptEvent("PlayerStunned", eventdata)
 	}
+	/**
+	 * @param {table} params
+	 */
 	function OnGameEvent_player_activate(params)
 	{
 		local player = GetPlayerFromUserID(params.userid)
@@ -7420,20 +7526,30 @@ function FireWeaponCheck()
 
 		ValidatePlayers()
 	}
-
+	/**
+	 * @param {table} _
+	 */
 	function OnGameEvent_mvm_wave_complete(_)
 	{
 		FireScriptEvent("WaveComplete", {})
 		GetScope(Gamerules).IsWaveStarted <- false
 	}
+	/**
+	 * @param {table} _
+	 */
 	function OnGameEvent_mvm_wave_failed(_)
 	{
 		FireScriptEvent("WaveFailed", {})
 		GetScope(Gamerules).IsWaveStarted <- false
 	}
+	/**
+	 * @param {table} _
+	 */
 	function OnGameEvent_teamplay_round_start(_)
 		GetScope(Gamerules).IsWaveStarted <- false
-
+	/**
+	 * @param {table} _
+	 */
 	function OnGameEvent_mvm_begin_wave(_)
 		GetScope(Gamerules).IsWaveStarted <- true
 
@@ -7738,9 +7854,6 @@ RegisterAdminTrigger("vcvar", function(player, ...) {
 			ret = "***PROTECTED***"
 		return player.PrintToChat(format(FATCATLIB_PREFIX+" Querying Cvar \"%s\": \"%s\"", cvar, ret.tostring()))
 	}
-
-	if(!IsConvarAllowed(cvar))
-		return player.PrintToChat(FATCATLIB_PREFIX+" Cvar \""+cvar+"\" is Unknown or not Allowed!")
 
 	SetCvar(cvar, vargv[1])
 	return player.PrintToChat(format(FATCATLIB_PREFIX+" Set Cvar \"%s\": \"%s\"", cvar, vargv[1]))
