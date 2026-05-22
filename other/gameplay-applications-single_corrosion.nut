@@ -336,8 +336,8 @@ function GameplayThink()
 		{
 			case TF_DMG_CUSTOM_BACKSTAB:
 			{
-				local iExplosiveShot = hWeapon.GetAttribute("explosive sniper shot", 0)
-				if ( iExplosiveShot == 0)
+				local iExplosiveBackstab = hWeapon.GetAttribute("explosive sniper shot", 0)
+				if ( iExplosiveBackstab == 0)
 					break
 
 				local base_range = 160
@@ -351,8 +351,8 @@ function GameplayThink()
 				local info = {
 					owner = hAttacker
 					weapon = hWeapon
-					radius = (base_range + (iExplosiveShot * additive_range)) * flRadiusMult
-					damage = (iExplosiveShot * base_damage / 1.25)
+					radius = (base_range + (iExplosiveBackstab * additive_range)) * flRadiusMult
+					damage = (iExplosiveBackstab * base_damage / 1.25)
 					center = hVictim.GetOrigin() + Vector(0, 0, 16)
 					ignore = [hVictim]
 					dmg_Type = DMG_BLAST

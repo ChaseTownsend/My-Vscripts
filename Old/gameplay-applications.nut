@@ -390,8 +390,8 @@ if("GameplayEvents" in ROOT) ::GameplayEvents <- {}
 		{
 			case TF_DMG_CUSTOM_BACKSTAB:
 			{
-				local iExplosiveShot = hWeapon.GetAttribute("explosive sniper shot", 0)
-				if ( iExplosiveShot == 0)
+				local iExplosiveBackstab = hWeapon.GetAttribute("explosive sniper shot", 0)
+				if ( iExplosiveBackstab == 0)
 					break
 
 				local base_range = 250
@@ -401,14 +401,14 @@ if("GameplayEvents" in ROOT) ::GameplayEvents <- {}
 				local info = {
 					owner = hAttacker
 					weapon = hWeapon
-					radius = (base_range + (iExplosiveShot * additive_range))
-					damage = (iExplosiveShot * base_damage / 1.25)
+					radius = (base_range + (iExplosiveBackstab * additive_range))
+					damage = (iExplosiveBackstab * base_damage / 1.25)
 					center = hVictim.GetOrigin() + Vector(0, 0, 16)
 					ignore = [hVictim]
-					SoundRadius = (base_range + (iExplosiveShot * additive_range)) * 1
+					SoundRadius = (base_range + (iExplosiveBackstab * additive_range)) * 1
 					use_func_on_ignore = true
 					func = function(player){
-						player.StunPlayer(MATH.Clamp(iExplosiveShot - 1, 0, 2), 0.6, TF_STUN_MOVEMENT, hAttacker )
+						player.StunPlayer(MATH.Clamp(iExplosiveBackstab - 1, 0, 2), 0.6, TF_STUN_MOVEMENT, hAttacker )
 					}
 				}
 				CreateKnifeAoETable(info)

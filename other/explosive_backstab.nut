@@ -27,14 +27,14 @@ local base_damage = 40
 		if( params.damage_type & DMG_BLAST )
 			return
 
-		local iExplosiveShot = hWeapon.GetAttribute("explosive sniper shot", 0)
-		if( iExplosiveShot == 0)
+		local iExplosiveBackstab = hWeapon.GetAttribute("explosive sniper shot", 0)
+		if( iExplosiveBackstab == 0)
 			return
 
-		local flDmgRange = base_range + (iExplosiveShot * additive_range)
+		local flDmgRange = base_range + (iExplosiveBackstab * additive_range)
 		local flDmg = (base_damage * hWeapon.GetAttribute("CARD: damage bonus", 1))
 
-		flDmg *= (iExplosiveShot / 2 + 0.5)
+		flDmg *= (iExplosiveBackstab / 2 + 0.5)
 		// 1 / 2 = 	0.5 + 0.5 = 1.0 mult
 		// 2 / 2 = 	1 	+ 0.5 = 1.5 mult
 		// 3 / 2 = 	1.5 + 0.5 = 2.0 mult

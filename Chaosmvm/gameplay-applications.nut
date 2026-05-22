@@ -455,21 +455,21 @@ function ROOT::ModifyCallbackDamage(params, victim, attacker, weapon, inflictor)
 	switch (custom)
 	{
 	case TF_DMG_CUSTOM_BACKSTAB: {
-		local iExplosiveShot = weapon.GetAttribute("explosive sniper shot", 0)
-		if ( iExplosiveShot == 0 )
+		local iExplosiveBackstab = weapon.GetAttribute("explosive sniper shot", 0)
+		if ( iExplosiveBackstab == 0 )
 			break;
 		CreateKnifeAoE({
 			owner = attacker
 			weapon = weapon
-			radius = (EBSettings.base_range + (iExplosiveShot * EBSettings.additive_range))
-			damage = (iExplosiveShot * EBSettings.base_damage / 1.25)
+			radius = (EBSettings.base_range + (iExplosiveBackstab * EBSettings.additive_range))
+			damage = (iExplosiveBackstab * EBSettings.base_damage / 1.25)
 			center = victim.GetOrigin() + Vector(0, 0, 16)
 			ignore = [victim]
-			SoundRadius = (EBSettings.base_range + (iExplosiveShot * EBSettings.additive_range)) * 3
+			SoundRadius = (EBSettings.base_range + (iExplosiveBackstab * EBSettings.additive_range)) * 3
 			func = function(player) {
 				if(!player || !player.IsValid() || !player.IsPlayer())
 					return
-				player.StunPlayer(MATH.Clamp(iExplosiveShot - 1, 0, 2), 0.6, TF_STUN_MOVEMENT, attacker )
+				player.StunPlayer(MATH.Clamp(iExplosiveBackstab - 1, 0, 2), 0.6, TF_STUN_MOVEMENT, attacker )
 			}
 		})
 	}

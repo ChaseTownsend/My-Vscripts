@@ -20,12 +20,12 @@ local base_damage = 150
 		if( params.damage_stats != TF_DMG_CUSTOM_BACKSTAB )
 			return
 
-		local iExplosiveShot = hWeapon.GetAttribute("explosive sniper shot", 0)
-		if( iExplosiveShot == 0)
+		local iExplosiveBackstab = hWeapon.GetAttribute("explosive sniper shot", 0)
+		if( iExplosiveBackstab == 0)
 			return
 
-		local flDmgRange = base_range + (iExplosiveShot * additive_range)
-		local flDmg = (base_damage * iExplosiveShot) * (iExplosiveShot / 2 + 0.5)
+		local flDmgRange = base_range + (iExplosiveBackstab * additive_range)
+		local flDmg = (base_damage * iExplosiveBackstab) * (iExplosiveBackstab / 2 + 0.5)
 		// 1 / 2 = 	0.5 + 0.5 = 1.0 mult
 		// 2 / 2 = 	1 	+ 0.5 = 1.5 mult
 		// 3 / 2 = 	1.5 + 0.5 = 2.0 mult

@@ -5440,6 +5440,13 @@ function ROOT::ProccessItemSets(client)
 			if(set.ApplyTo.find(weapon.GetClassname()) != null || set.ApplyTo.find(weapon.GetIDX()) != null)
 				targets.append(weapon)
 		}
+		foreach (weapon in client.GetWearables())
+		{
+			if(set.ApplyTo.find(weapon.GetClassname()) != null || set.ApplyTo.find(weapon.GetIDX()) != null)
+				targets.append(weapon)
+		}
+
+		
 
 		foreach (entity in targets)
 		{
@@ -5447,27 +5454,52 @@ function ROOT::ProccessItemSets(client)
 			if(entity.IsPlayer())
 				func = "AddCustomAttribute"
 
+			local particle_name = ""
+			local attachment_name = ""
+			local attachment_point = PATTACH_ABSORIGIN
+
 			foreach (attribute, value in set.Attributes)
 			{
+				if(attribute == "custom particle name")
+				{
+					particle_name = value
+					continue
+				}
+				if(attribute == "custom particle attachment")
+				{
+					attachment_name = value
+					continue
+				}
+				if(attribute == "custom attachment point")
+				{
+					attachment_point = value.tointeger()
+					continue
+				}
 				local val = 0.0
-				try {val = value.tofloat()} catch(_) {}
+				try {val = value.tofloat()} catch(_) {printl("Failed to convert \""+value+"\" to a float!")}
 				entity[func](attribute, val, -1)
+				printf("Appled Attribute %s to %s with a value of %g\n", attribute, entity.tostring(), val)
+			}
+
+			if(particle_name != "" && attachment_name != "")
+			{
+				AttachEntityParticle(entity, particle_name, attachment_point, attachment_name)
 			}
 		}
 	}
 }
 
-// CreateItemSet("Master of Chaos", {
-// 	ApplyTo = [
-// 		"PLAYER"
-// 	]
-// 	ApplyFor = [
-// 		"[U:1:969530867]"
-// 	]
-// 	Attributes = {
-// 		"max health additive bonus" : "50.0"
-// 	}
-// })
+CreateItemSet("Master of Chaos", {
+	ApplyTo = [
+		940
+	]
+	ApplyFor = [
+		"[U:1:969530867]"
+	]
+	Attributes = {
+		"attach particle effect" : "3"
+	}
+})
 
 /*
   =============================
@@ -6889,7 +6921,9 @@ function FireWeaponCheck()
 			break
 
 			case TF_DMG_CUSTOM_BLEEDING:
-				if(IsCrit || attacker.IsCritBoosted() && IsWeaponClass(params.weapon, "tf_weapon", true) && params.weapon.GetAdditiveAttribute("allow crit bleed"))
+				if(!IsWeaponClass(params.weapon, "tf_weapon", true))
+					return
+				if(IsCrit || attacker.IsCritBoosted() && params.weapon.GetAdditiveAttribute("allow crit bleed"))
 				{
 					params.damage_type = params.damage_type | DMG_CRITICAL
 				}
@@ -6923,7 +6957,35 @@ function FireWeaponCheck()
 					stomp_wep = sec
 
 				params.weapon = stomp_wep
+			break
+			case TF_DMG_CUSTOM_BACKSTAB:
+				if(!IsWeaponClass(params.weapon, "tf_weapon", true))
+					break
 
+				local weapon = params.weapon
+				local iExplosiveBackstab = weapon.GetAttribute("explosive backstab", 0)
+				if ( iExplosiveBackstab == 0 )
+					break;
+
+				local radius = weapon.GetAttribute("explosive backstab radius", 250) + (iExplosiveBackstab * weapon.GetAttribute("explosive backstab radius add", 50))
+				local damage = weapon.GetAttribute("explosive backstab damage", 3125) + (iExplosiveBackstab * weapon.GetAttribute("explosive backstab damage add", 2500))
+				CreateKnifeAoE({
+					owner = attacker
+					weapon = params.weapon
+					radius = radius
+					damage = damage
+					center = victim.GetCenter()
+					ignore = [victim]
+					SoundRadius = radius * 3
+					/**
+					 * @param {CTFPlayer|CTFBot|CBaseEntity} player
+					 */
+					function func(player) {
+						if(!player || !player.IsValid() || !player.IsPlayer())
+							return
+						player.StunPlayer(MATH.Clamp(iExplosiveBackstab - 1, 0, 2), 0.6, TF_STUN_MOVEMENT, attacker )
+					}
+				})
 			break
 			}
 			if(IsDamageTaunt(params.damage_custom))
@@ -7031,13 +7093,14 @@ function FireWeaponCheck()
 			switch(params.damage_custom)
 			{
 			case TF_DMG_CUSTOM_BOOTS_STOMP:
-				if(IsWeaponClass(weapon, "tf_weapon", true))
-				{
-					if(weapon.GetAdditiveAttribute("cond on stomped"))
-						victim.AddCondEx(weapon.GetAdditiveAttribute("cond on stomped", -1), weapon.GetAdditiveAttribute("cond on stomped duration", 1), attacker)
-					if(weapon.GetAdditiveAttribute("cond on stomp"))
-						attacker.AddCondEx(weapon.GetAdditiveAttribute("cond on stomp", -1), weapon.GetAdditiveAttribute("cond on stomp duration", 1), attacker)
-				}
+				if(!IsWeaponClass(weapon, "tf_weapon", true))
+					break
+
+				if(weapon.GetAdditiveAttribute("cond on stomped"))
+					victim.AddCondEx(weapon.GetAdditiveAttribute("cond on stomped", -1), weapon.GetAdditiveAttribute("cond on stomped duration", 1), attacker)
+
+				if(weapon.GetAdditiveAttribute("cond on stomp"))
+					attacker.AddCondEx(weapon.GetAdditiveAttribute("cond on stomp", -1), weapon.GetAdditiveAttribute("cond on stomp duration", 1), attacker)
 			break
 			}
 		}
@@ -7057,10 +7120,10 @@ function FireWeaponCheck()
 		}
 
 		if(weapon && weapon.GetClassname() == "tf_weapon_flamethrower")
-			params.damage_position <- victim.GetOrigin() + Vector(0, 0, 32)
+			params.damage_position <- victim.GetCenter()
 
 		if(params.damage_position == Vector())
-			params.damage_position <- victim.GetOrigin() + Vector(0, 0, 32)
+			params.damage_position <- victim.GetCenter()
 
 		// [5/7/26]
 		// why do vanilla conditions do this shit
