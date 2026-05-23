@@ -5230,7 +5230,7 @@ function ROOT::AttachEntityParticle(entity, particle, attach_type = PATTACH_ABSO
 	}
 	
 	NetProps.SetPropString(GlobalParticleSpawner, "m_iszParticleName", particle)
-	NetProps.SetPropString(GlobalParticleSpawner, "m_iszAttachmentName", attach_name)
+	NetProps.SetPropString(GlobalParticleSpawner, "m_iszAttachmentName", attachment_name)
 	NetProps.SetPropInt(GlobalParticleSpawner, "m_nAttachType", attach_type)
 	GlobalParticleSpawner.AcceptInput("StartTouch", "", entity, entity)
 }
@@ -5495,9 +5495,12 @@ CreateItemSet("Master of Chaos", {
 	]
 	ApplyFor = [
 		"[U:1:969530867]"
+		"[U:1:101345257]"
 	]
 	Attributes = {
-		"attach particle effect" : "3"
+		// "custom particle name" : "rocket_trail"
+		// "custom particle attachment" : ""
+		// "custom attachment point" : 0
 	}
 })
 
@@ -6206,7 +6209,7 @@ function ROOT::CreateAoE(table)
  * @param {float} 			damage		How much damage to deal.
  * @param {CBaseEntity}		ignore		What entitys to ignore in the explosion.
  * @param {float} 			SoundRadius	Radius in which the sound can be heard
- * @param {function}		ExplodeFunc	Function to use on players hit
+ * @param {function}		func		Function to use on players hit
  */
 function ROOT::CreateKnifeAoE(table)
 {

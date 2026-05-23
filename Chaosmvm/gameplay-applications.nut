@@ -1,7 +1,7 @@
 if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
-SetScriptVersion("GameplayApplications", "5.0.2")
+SetScriptVersion("GameplayApplications", "5.0.3")
 
 local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", THINKER_PERSIST)
 
@@ -614,7 +614,7 @@ RegisterDamageCallback(["obj_sentrygun", "obj_teleporter", "obj_dispenser", "tan
 RegisterDamageCallback("tf_zombie", "GameplaySkeletons", function(params) {
 	if(HasCustomFlag(params.damage_custom, TF_DMG_CUSTOM_IGNORE_EVENTS) || params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
 		return
-	params.damage = 0
+	params.early_out <- true
 	params.victim.TakeDamageCustom(params.inflictor, params.attacker, null, Vector(), Vector(), 5.0, DMG_GENERIC, TF_DMG_CUSTOM_NO_CALLBACKS)
 })
 
