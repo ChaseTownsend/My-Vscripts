@@ -1,5 +1,8 @@
 IncludeScript("fatcat_library")
 
+class ETFCond {}
+
+
 /* // extra to not prevent error
    // remove these when @typedef works
 /**
@@ -21,6 +24,42 @@ if(!("OnCondHooks" in ROOT))
 		OnRemoveCondHooks[i] = {}
 }
 
+if(!("EntitySpawnHooks" in ROOT))
+	::EntitySpawnHooks <- {}
+
+/**
+ * Description
+ * @param {string} classname
+ * @param {function} func
+ * @param {string} Eventname
+ * @returns {string}
+ */
+function ROOT::HookEntitySpawn(classname, func, Eventname = null)
+{
+	local name = Eventname == null ? "EntityHook ["+classname+"]__"+UniqueString() : Eventname
+	if (classname in EntitySpawnHooks)
+	{
+		EntitySpawnHooks[classname][name] <- func
+	}
+	else
+	{
+		EntitySpawnHooks[classname] <- {}
+		EntitySpawnHooks[classname][name] <- func
+	}
+	return name
+}
+
+/**
+ * Removes an Entity Spawn Hook
+ * @param {string} classname
+ * @param {string} name
+ */
+function RemoveEntitySpawnHook(classname, name)
+{
+	if(name in EntitySpawnHooks[classname])
+		delete EntitySpawnHooks[classname][name]
+}
+
 /**
  * Clears Existing CondHooks
  */
@@ -30,7 +69,7 @@ function ClearCondHooks()
 
 /**
  * Removes a Cond Hook
- * @param {integer} cond
+ * @param {ETFCond} cond
  * @param {string} name
  */
 function RemoveCondHook(cond, name)
@@ -41,7 +80,7 @@ function RemoveCondHook(cond, name)
 
 /**
  * Adds a Cond Hook to listen to
- * @param {integer} cond
+ * @param {ETFCond} cond
  * @param {string} name
  * @param {function} func
  */
@@ -61,7 +100,7 @@ function ClearRemoveCondHooks()
 
 /**
  * Removes a RemoveCond Hook
- * @param {integer} cond
+ * @param {ETFCond} cond
  * @param {string} name
  */
 function RemoveRemoveCondHook(cond, name)
@@ -72,7 +111,7 @@ function RemoveRemoveCondHook(cond, name)
 
 /**
  * Adds a RemoveCond Hook to listen to
- * @param {integer} cond
+ * @param {ETFCond} cond
  * @param {string} name
  * @param {function} func
  */
@@ -86,7 +125,6 @@ function AddRemoveCondHook(cond, name, func)
 	Example
 	AddCondHook(TF_COND_CRITBOOSTED, "NoCrits", function(data) {
 		data.cond = -1
-		return data
 	})
  */
 
@@ -96,13 +134,20 @@ function AddRemoveCondHook(cond, name, func)
  * 
  * DHooks CTFPlayerShared::AddCondition to allow vscript listen to it
  * @param {integer} client 	EntIndex of client effected
- * @param {integer} cond	
+ * @param {ETFCond} cond	
  * @param {float} duration	
  * @param {int} provider	EntIndex of client credited
  */
 function ROOT::ProccessOnCondHooks(client, cond, duration, provider)
 {
 	local Player = EntIndexToHScript(client)
+
+	FireScriptEvent("OnPlayerCond", {
+		player = Player
+		cond = cond
+		duration = duration
+		provider = EntIndexToHScript(provider)
+	})
 
 	local PluginReturn = {
 		cond = cond
@@ -142,11 +187,16 @@ function ROOT::ProccessOnCondHooks(client, cond, duration, provider)
  * 
  * DHooks CTFPlayerShared::RemoveCondition to allow vscript to listen to it
  * @param {integer} client	EntIndex of client effected
- * @param {integer} cond
+ * @param {ETFCond} cond
  */
 function ROOT::ProccessOnRemoveCondHooks(client, cond)
 {
 	local Player = EntIndexToHScript(client)
+
+	FireScriptEvent("OnPlayerRemoveCond", {
+		player = Player
+		cond = cond
+	})
 
 	local PluginReturn = {
 		cond = cond
@@ -164,10 +214,65 @@ function ROOT::ProccessOnRemoveCondHooks(client, cond)
 }
 
 
-function ROOT::SendToSourcemod(...)
+/* function ROOT::SendToSourcemod(...)
 {
 	SendGlobalGameEvent(SOURCEMOD_EVENT, {
 		data = vargv
 		manual = true
 	})
+} */
+
+function ROOT::ProccessEntitySpawnHooks(entity_index, classname)
+{
+	FireScriptEvent("OnEntitySpawn", {
+		entindex = entity_index
+		classname = classname
+	})
+	local ReturnData = {
+		prevent_spawn = false
+	}
+	// local entity = EntIndexToHScript(entity_index)
+	foreach (_, hook in EntitySpawnHooks[classname])
+	{
+		/**
+		 * @type {function}
+		 * @param {table} data
+		 */
+		local hook = hook
+		local func_data = {
+			entindex = entity_index
+			classname = classname
+		}
+		hook(func_data)
+
+		if(func_data.entindex == -1 || func_data.classname == "")
+			ReturnData.prevent_spawn = true
+	}
+	return ReturnData
 }
+
+::CollectEvents <- {
+	/**
+	 * Fired when the Dynamic Hook is triggered
+	 * @param {CTFPlayer|CTFBot|null} player
+	 * @param {ETFCond} cond
+	 * @param {float} duration
+	 * @param {CBaseEntity} provider
+	 */
+	function OnScriptEvent_OnPlayerCond(_params) 		{}
+	/**
+	 * Fired when the Dynamic Hook is triggered
+	 * @param {CTFPlayer|CTFBot|null} player
+	 * @param {ETFCond} cond
+	 */
+	function OnScriptEvent_OnPlayerRemoveCond(_params) 	{}
+	/**
+	 * Fired when the Dynamic Hook is triggered
+	 * @param {integer} entindex
+	 * @param {string} classname
+	 */
+	function OnScriptEvent_OnEntitySpawn(_params) 		{}
+}
+
+__CollectGameEventCallbacks(CollectEvents)
+

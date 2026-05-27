@@ -270,16 +270,21 @@ function GameplayThink()
 	if ( Players.len() < 1 || !ValidatePlayerArray() || (m_aHumans.len() + m_aRobots.len()) != Players.len())
 		ReCalculatePlayers()
 
-	foreach (bot in m_aRobots)
+	foreach (/** @type {CTFPlayer}*/ bot in m_aRobots)
 	{
-		if(!("LastVels" in GetScope(bot)))
-			GetScope(bot).LastVels <- []
-		if(type(GetScope(bot).LastVels) != "array")
-			GetScope(bot).LastVels <- []
+		local scope = GetScope(bot)
 
-		GetScope(bot).LastVels.append(bot.GetAbsVelocity())
-		if(GetScope(bot).LastVels.len() > 6)
-			GetScope(bot).LastVels.remove(0)
+		if("DelayGameplayThink" in scope && scope.DelayGameplayThink >= GetFrameCount())
+			continue
+
+		if(!("LastVels" in scope))
+			scope.LastVels <- []
+		if(type(scope.LastVels) != "array")
+			scope.LastVels <- []
+
+		scope.LastVels.append(bot.GetAbsVelocity())
+		if(scope.LastVels.len() > 6)
+			scope.LastVels.remove(0)
 
 		if(bot.IsDead())
 			continue
@@ -288,7 +293,7 @@ function GameplayThink()
 			AliveBots += 1
 
 
-		if("EndReprogramTime" in GetScope(bot) && GetScope(bot).EndReprogramTime <= Time())
+		if("EndReprogramTime" in scope && scope.EndReprogramTime <= Time())
 			bot.UndoReprogram()
 
 		if(bot.IsReprogrammed() && !bot.HasBotTag("RedSupport"))
@@ -792,6 +797,7 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 
 		local scope = GetScope(player)
 		scope.ReProgrammer <- null
+		scope.DelayGameplayThink <- GetFrameCount()+1
 
 		
 		if (FatCatLibSettings.KillWatchViewmodels)
@@ -803,6 +809,7 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 				EntFireNew(viewmodel_watch, "Kill")
 			}
 		}
+
 
 		player.AddCustomAttribute("cannot swim", 1.0, -1)
 	}

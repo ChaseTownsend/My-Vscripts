@@ -123,12 +123,6 @@ if(!("FatCatLibScriptsVersion" in ROOT))
 function ROOT::SetScriptVersion(item, version)
 	FatCatLibScriptsVersion[item] <- version
 
-// if(!("FatCatLibTimeStamp" in ROOT))
-	// ::FatCatLibTimeStamp <- {}
-
-// function SetLibraryTimeStamp(timestamp)
-	// ::FatCatLibTimeStamp <- timestamp
-
 ::ValidLibrarySettings <- {
 	// If True removes the unused spy watch viewmodel from every bot on spawn
 	// -1 Edict per bot
@@ -1648,6 +1642,37 @@ function CTFPlayer::GetMaximumMetal()
 	if(HasRune(RUNE_HASTE))	
 		metal_mult *= 2
 	return metal * metal_mult
+}
+
+function CTFPlayer::GetMaximumGrenades1()
+{
+	local grenades = 1
+	local grenades_mult = 1
+	foreach (weapon in GetAllWeapons())
+	{
+		if(weapon.HasAdditiveAttribute("provide on active"))
+		{
+			if(GetActiveWeapon() == weapon)
+			{
+				grenades_mult *= weapon.GetAttribute("maxammo grenades1 increased", 1)
+			}
+		}
+		else
+		{
+			grenades_mult *= weapon.GetAttribute("maxammo grenades1 increased", 1)
+		}
+	}
+	if(HasRune(RUNE_HASTE))	
+		grenades_mult *= 2
+	return grenades * grenades_mult
+}
+
+function CTFPlayer::GetMaximumGrenades3()
+{
+	local grenades = 1
+	if(HasRune(RUNE_HASTE))	
+		grenades *= 2
+	return grenades
 }
 
 function CTFPlayer::ResetAmmo()
@@ -3429,30 +3454,43 @@ function CTFWeaponBase::GetChargeTime()
 function CTFWeaponBase::SetChargeTime(time)
 	SetPropFloat(this, PROP_CHARGE_TIME, time)
 
+/**
+ * @returns {float}
+ */
+function CTFWeaponBase::GetChargeProgress()
+{
+	if( !GetOwner() )
+		return 0.0
+
+	local max = ammo_type == TF_AMMO_GRENADES1 ? GetOwner().GetMaximumGrenades1() : GetOwner().GetMaximumGrenades3()
+	if( GetOwner().GetAmmoByIndex(ammo_type) < max )
+		return (GetDefaultChargeTime() - (GetPropFloat(this, "m_flEffectBarRegenTime") - Time())) / GetDefaultChargeTime()
+	return 1.0
+}
+
+/**
+ * @returns {float}
+ */
 function CTFWeaponBase::GetDefaultChargeTime()
 {
 	switch (GetClassname().slice(10))
 	{
-		case "jar":
-		case "jar_milk":
-		{
-			return 20
-		}
-		case "jar_gas":
-		{
-			return 60
-		}
-		case "cleaver":
-		{
-			return 5
-		}
-		default:
-		{
-			return -1
-		}
+	case "bat" :
+		return 10.0
+	case "jar":
+	case "jar_milk":
+		return 20.1 // i dont fucking know why its 20.1
+	case "lunchbox":
+		return 30.0
+	case "jar_gas":
+		return 60.0
+	case "cleaver":
+		return 5.1
+	default:
+		return -1.0
 	}
-	return -1
 }
+
 
 function CTFWeaponBase::IsAbilityWeapon()
 	return TF_ABILITYS.values().find(GetIDX()) != null
@@ -3832,6 +3870,12 @@ function CTFWeaponBase::IsBow()
 
 function CTFWeaponBase::IsMinigun()
 	return startswith(GetClassname().slice(10), "minigun")
+
+function CTFWeaponBase::IsFlamethrower()
+	return startswith(GetClassname().slice(10), "flamethrower")
+
+function CTFWeaponBase::IsKnife()
+	return startswith(GetClassname().slice(10), "knife")
 
 function CTFWeaponBase::GetSpeedMod()
 {
@@ -8049,7 +8093,7 @@ RegisterAdminTrigger("setspell", function(player, ...) {
 RegisterAdminTrigger("uber", function(player, ...) {
 	if(vargv.len() > 1)
 		return player.PrintToChat("Incorrect Arguments [{uber}] ")
-	if(!player.HasWeaponClassname("tf_weapon_medigun"))
+	if(!player.HasWeaponClassname("tf_weapon_medigun") || !player.IsPlayerClass(TF_CLASS_MEDIC))
 		return player.PrintToChat("No Medigun Stupid!")
 
 	local uber = vargv.len() == 0 ? 100.0 : vargv[0].tofloat()
