@@ -1,7 +1,7 @@
 if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
-SetScriptVersion("GameplayApplications", "5.0.3")
+SetScriptVersion("GameplayApplications", "5.0.4")
 
 local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", THINKER_PERSIST)
 
@@ -237,8 +237,22 @@ function BlutsuagerHit(owner, victim)
 
 	EntFireNew(victim, "$BotCommand", ActionCommand)
 
+	local MedicSpeed = owner.GetMoveSpeed()
+	local BotSpeed = victim.GetMoveSpeed()
+
+	if(BotSpeed > MedicSpeed * 1.3)
+	{
+		owner.AddCustomAttribute("speed boost when active", 1.3, duration)
+		owner.TeamFortress_SetSpeed()
+	}
+
 	GetScope(victim).EndReprogramTime <- Time() + duration
 	GetScope(victim).ReProgrammer <- owner
+
+	local function OnDeath() {
+		self.UndoReprogram(false)
+	}
+	GetScope(victim).OnDeath <- OnDeath
 
 	EmitSoundEx({
 		sound_name = BlutsaugerSettings.sound
@@ -320,14 +334,15 @@ function GameplayThink()
 
 	foreach (Human in m_aHumans)
 	{
-		if(!("LastVels" in GetScope(Human)))
-			GetScope(Human).LastVels <- []
-		if(type(GetScope(Human).LastVels) != "array")
-			GetScope(Human).LastVels <- []
+		local scope = GetScope(Human)
+		if(!("LastVels" in scope))
+			scope.LastVels <- []
+		if(type(scope.LastVels) != "array")
+			scope.LastVels <- []
 			
-		GetScope(Human).LastVels.append(Human.GetAbsVelocity())
-		if(GetScope(Human).LastVels.len() > 6)
-			GetScope(Human).LastVels.remove(0)
+		scope.LastVels.append(Human.GetAbsVelocity())
+		if(scope.LastVels.len() > 6)
+			scope.LastVels.remove(0)
 
 		if(!("BetterStatTracking" in FatCatLibSettings))
 			SetLibrarySettings()
@@ -362,12 +377,17 @@ function GameplayThink()
 		local active 		= Human.GetActiveWeapon()
 		local activeIDX 	= Human.GetActiveWeaponIDX()
 		local meleeIDX 		= Human.GetWeaponIDXInSlotNew(SLOT_MELEE)
-
-		// for when we get to doing this
-		Human.MultiplyGravity(Human.HookMultAttributes("mult gravity"))
+		
 		if(active)
 			Human.MultiplyGravity(active.GetMultAttribute("mult gravity active"))
 
+		if(human.IsCrouching())
+		{
+			Human.MultiplyGravity(Human.HookMultAttributes("mult gravity crouching"))
+			if(active)
+				Human.MultiplyGravity(active.GetMultAttribute("mult gravity crouching active"))
+		}
+			
 		foreach (item in AddCondIDS)
 		{
 			if(meleeIDX == item[0])
@@ -379,34 +399,34 @@ function GameplayThink()
 
 		if(primaryIDX == TF_WEAPON_TOMISLAV)
 		{
-			local scope = GetScope(primary)
+			local WeaponScope = GetScope(primary)
 
-			if(IsNotInScope("Hits", scope))
-				scope.Hits <- 0
-			if(IsNotInScope("m_flLastHeatHit", scope))
-				scope.m_flLastHeatHit <- Time()
-			if(IsNotInScope("m_flLastHeatLoseTime", scope))
-				scope.m_flLastHeatLoseTime <- Time()
+			if(IsNotInScope("Hits", WeaponScope))
+				WeaponScope.Hits <- 0
+			if(IsNotInScope("m_flLastHeatHit", WeaponScope))
+				WeaponScope.m_flLastHeatHit <- Time()
+			if(IsNotInScope("m_flLastHeatLoseTime", WeaponScope))
+				WeaponScope.m_flLastHeatLoseTime <- Time()
 
 			local HeatLoss = GetRoundState() != GR_STATE_RND_RUNNING ? TOMISLAV_SETTINGS.HeatLostPerSecond * 0.1 : TOMISLAV_SETTINGS.HeatLostPerSecond
 
-			if (scope.Hits >= 1 && 
-				scope.m_flLastHeatHit + TOMISLAV_SETTINGS.TimeBeforeHeatLost.tofloat() <= Time() &&
-				scope.m_flLastHeatLoseTime + (1.0/HeatLoss.tofloat()) <= Time())
+			if (WeaponScope.Hits >= 1 && 
+				WeaponScope.m_flLastHeatHit + TOMISLAV_SETTINGS.TimeBeforeHeatLost.tofloat() <= Time() &&
+				WeaponScope.m_flLastHeatLoseTime + (1.0/HeatLoss.tofloat()) <= Time())
 			{
-				scope.m_flLastHeatLoseTime <- Time()
-				scope.Hits -= 1
+				WeaponScope.m_flLastHeatLoseTime <- Time()
+				WeaponScope.Hits -= 1
 				foreach (attribs in TOMISLAV_SETTINGS.Attributes)
-					primary.CalculateAttributeChange(scope.Hits, attribs[0], attribs[1], attribs[2], attribs[3], attribs[4])
+					primary.CalculateAttributeChange(WeaponScope.Hits, attribs[0], attribs[1], attribs[2], attribs[3], attribs[4])
 
-				primary.AddAttribute("Set DamageType Ignite", (scope.Hits > 400).tointeger(), 0)
-				primary.AddAttribute("ragdolls become ash", (scope.Hits > 700).tointeger(), 0)
-				primary.AddAttribute("turn to gold", (scope.Hits > 1000).tointeger(), 0)
+				primary.AddAttribute("Set DamageType Ignite", (WeaponScope.Hits > 400).tointeger(), 0)
+				primary.AddAttribute("ragdolls become ash", (WeaponScope.Hits > 700).tointeger(), 0)
+				primary.AddAttribute("turn to gold", (WeaponScope.Hits > 1000).tointeger(), 0)
 				if(Human.GetPrimaryAmmo() > Human.GetMaximumPrimaryAmmo())
 					Human.ResetPrimaryAmmo()
 			}
-			if(scope.Hits >= 1000)
-				scope.Hits = 1000
+			if(WeaponScope.Hits >= 1000)
+				WeaponScope.Hits = 1000
 			primary.ReapplyProvision()
 		}
 	}
@@ -738,6 +758,10 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 			if(weapon.GetIDX() == TF_WEAPON_BLUTSAUGER)
 			{
 				player.AddThink(function() {
+
+					/**@type {CTFPlayer} */
+					local self = self
+
 					if(self.GetWeaponIDXInSlotNew(SLOT_PRIMARY) != TF_WEAPON_BLUTSAUGER)
 					{
 						self.RemoveThink("BlutsaugerDisrupt")
@@ -774,6 +798,8 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 						return -1
 
 					self.PrintToHud("[Activating Kill Switch]")
+
+					self.RemoveCustomAttribute("speed boost when active")
 
 					foreach (robot in m_aRobots)
 					{

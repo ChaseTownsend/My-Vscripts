@@ -199,7 +199,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format)
-if (!SetLibraryVersion("05.20.2026.21", 0))
+if (!SetLibraryVersion("05.27.2026.01", 0))
 	return
 
 SetLibrarySettings({})
@@ -802,7 +802,7 @@ try {
 catch (e)
 {
 	try {
-		IncludeScript("chaosmvm/trace_filter")
+		IncludeScript("Chaosmvm/trace_filter")
 	}
 	catch(_) {
 		throw "FAILED TO INCLUDE DEPENDENCY \"trace_filter\"!"
@@ -1238,7 +1238,7 @@ function CTFPlayer::GetWeaponInSlotNew(slot)
 			return child
 	}
 
-	local weapon = GetWeaponInSlot(slot)
+	local weapon = this.GetWeaponInSlot(slot)
 	if (weapon)
 	{
 		local weaponSlot = weapon.GetSlot()
@@ -3252,7 +3252,7 @@ function CTFBot::SayChatterMessage(victim)
 	PrintToChatAll(format("%s%s\x01 :  %s", GetChatColor(), GetUserName(), Message))
 }
 
-function CTFBot::UndoReprogram()
+function CTFBot::UndoReprogram(kill = true)
 {
 	if(!this||!IsValid()||IsDead())
 		return
@@ -3264,9 +3264,12 @@ function CTFBot::UndoReprogram()
 
 	RemoveCondEx(TF_COND_REPROGRAMMED, true)
 
-	Suicide()
-	SetHealth(0)
-	TakeDamage(GetMaxHealth()*100, DMG_GENERIC, FirstEntity())
+	if(kill)
+	{
+		Suicide()
+		SetHealth(0)
+		TakeDamage(GetMaxHealth()*100, DMG_GENERIC, FirstEntity())
+	}
 }
 
 /*
@@ -5127,7 +5130,7 @@ RunWithDelay(@() FireTimer(timer), 7.0)
 function ROOT::IsNotInScope(item, scope)
 	return (!(item in scope))
 /**
- * @param {string} item
+ * @param {any} item
  * @deprecated this is cleaner, but uses more jump routines
  */
 function ROOT::IsNotInTable(item, table)
@@ -5941,6 +5944,7 @@ function Vector::DistanceTo(point2)
 
 /**
  * @returns {Vector2D}
+ * @static
  */
 function Vector2D::Normalize()
 {
