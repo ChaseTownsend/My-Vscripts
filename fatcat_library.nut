@@ -199,7 +199,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format)
-if (!SetLibraryVersion("05.27.2026.01", 0))
+if (!SetLibraryVersion("05.29.2026.14", 0))
 	return
 
 SetLibrarySettings({})
@@ -580,6 +580,97 @@ function ROOT::GetRuneCondition(rune)
 ::T_HEAL_HEALER <- 0
 ::T_HEAL_PACK 	<- 1
 
+//////////
+::TF_WPN_TYPE_PRIMARY 			<- 0
+::TF_WPN_TYPE_SECONDARY			<- 1
+::TF_WPN_TYPE_MELEE				<- 2
+::TF_WPN_TYPE_GRENADE			<- 3
+::TF_WPN_TYPE_BUILDING			<- 4
+::TF_WPN_TYPE_PDA				<- 5
+::TF_WPN_TYPE_ITEM1				<- 6
+::TF_WPN_TYPE_ITEM2				<- 7
+::TF_WPN_TYPE_HEAD				<- 8
+::TF_WPN_TYPE_MISC				<- 9
+::TF_WPN_TYPE_MELEE_ALLCLASS	<- 10
+::TF_WPN_TYPE_SECONDARY2		<- 11
+::TF_WPN_TYPE_PRIMARY2			<- 12
+::TF_WPN_TYPE_ITEM3				<- 13
+::TF_WPN_TYPE_ITEM4				<- 14
+
+// i aint remaking this shit
+enum ProjectileType_t
+{
+	TF_PROJECTILE_NONE,
+	TF_PROJECTILE_BULLET,
+	TF_PROJECTILE_ROCKET,
+	TF_PROJECTILE_PIPEBOMB,
+	TF_PROJECTILE_PIPEBOMB_REMOTE,
+	TF_PROJECTILE_SYRINGE,
+	TF_PROJECTILE_FLARE,
+	TF_PROJECTILE_JAR,
+	TF_PROJECTILE_ARROW,
+	TF_PROJECTILE_FLAME_ROCKET,
+	TF_PROJECTILE_JAR_MILK,
+	TF_PROJECTILE_HEALING_BOLT,
+	TF_PROJECTILE_ENERGY_BALL,
+	TF_PROJECTILE_ENERGY_RING,
+	TF_PROJECTILE_PIPEBOMB_PRACTICE,
+	TF_PROJECTILE_CLEAVER,
+	TF_PROJECTILE_STICKY_BALL,
+	TF_PROJECTILE_CANNONBALL,
+	TF_PROJECTILE_BUILDING_REPAIR_BOLT,
+	TF_PROJECTILE_FESTIVE_ARROW,
+	TF_PROJECTILE_THROWABLE,
+	TF_PROJECTILE_SPELL,
+	TF_PROJECTILE_FESTIVE_JAR,
+	TF_PROJECTILE_FESTIVE_HEALING_BOLT,
+	TF_PROJECTILE_BREADMONSTER_JARATE,
+	TF_PROJECTILE_BREADMONSTER_MADMILK,
+	TF_PROJECTILE_GRAPPLINGHOOK,
+	TF_PROJECTILE_SENTRY_ROCKET,
+	TF_PROJECTILE_BREAD_MONSTER,
+	TF_PROJECTILE_JAR_GAS,
+	TF_PROJECTILE_FLAME_BALL,	
+
+	// Add new entries here!
+
+	TF_NUM_PROJECTILES
+}
+
+::g_szProjectileNames <- [
+	"",
+	"projectile_bullet",
+	"projectile_rocket",
+	"projectile_pipe",
+	"projectile_pipe_remote",
+	"projectile_syringe",
+	"projectile_flare",
+	"projectile_jar",
+	"projectile_arrow",
+	"projectile_flame_rocket",
+	"projectile_jar_milk",
+	"projectile_healing_bolt",
+	"projectile_energy_ball",
+	"projectile_energy_ring",
+	"projectile_pipe_remote_practice",
+	"projectile_cleaver",
+	"projectile_sticky_ball",
+	"projectile_cannonball",
+	"projectile_building_repair_bolt",
+	"projectile_festive_arrow",
+	"projectile_throwable",
+	"projectile_spellfireball",
+	"projectile_festive_urine",
+	"projectile_festive_healing_bolt",
+	"projectfile_breadmonster_jarate",
+	"projectfile_breadmonster_madmilk",
+	"projectile_grapplinghook",
+	"projectile_sentry_rocket",
+	"projectile_bread_monster",
+	"projectile_jar_gas",
+	"tf_projectile_balloffire",
+]
+
 ///// MISC
 // Should be 51 for
 // 40 Bots, 8 Players, 2 Spec, 1 SourceTV
@@ -593,6 +684,19 @@ function ROOT::GetRuneCondition(rune)
 ::MAX_CLIENT_PRINT_DATA <- MAX_USER_MSG_DATA-6
 ::TF_COND_RANGE 		<- 131
 ::TF_JUMP_MIN_SPEED		<- 268.3281572999747
+::TF_WEAPON_SNIPERRIFLE_DAMAGE_MIN 	<- 50 
+::TF_WEAPON_SNIPERRIFLE_DAMAGE_MAX 	<- 150
+::WEAPON_NOCLIP <- 1
+
+::ITEM_FLAG_SELECTONEMPTY		<- (1<<0)
+::ITEM_FLAG_NOAUTORELOAD		<- (1<<1)
+::ITEM_FLAG_NOAUTOSWITCHEMPTY	<- (1<<2)
+::ITEM_FLAG_LIMITINWORLD		<- (1<<3)
+::ITEM_FLAG_EXHAUSTIBLE			<- (1<<4)	// A player can totally exhaust their ammo supply and lose this weapon
+::ITEM_FLAG_DOHITLOCATIONDMG	<- (1<<5)	// This weapon take hit location into account when applying damage
+::ITEM_FLAG_NOAMMOPICKUPS		<- (1<<6)	// Don't draw ammo pickup sprites/sounds when ammo is received
+::ITEM_FLAG_NOITEMPICKUP		<- (1<<7)	// Don't draw weapon pickup when this weapon is picked up by the player
+
 
 ::Host <- GetListenServerHost()
 
@@ -910,6 +1014,12 @@ function CTFPlayer::SetScale(scale = 1.0)
 function CTFPlayer::GetHeads()
 	return GetPropInt(this, "m_Shared.m_iDecapitations")
 
+function CTFPlayer::SetHeads( num )
+	return SetPropInt(this, "m_Shared.m_iDecapitations", num)
+
+function CTFPlayer::AddHeads( num )
+	return SetPropInt(this, "m_Shared.m_iDecapitations", GetHeads() + num)
+
 function CTFPlayer::IsDead()
 	return !IsAlive()
 
@@ -930,6 +1040,9 @@ function CTFPlayer::GetFallingVelocity()
 
 function CTFPlayer::IsDucking()
 	return (GetFlags() & FL_DUCKING) == FL_DUCKING
+
+function CTFPlayer::IsCrouching()
+	return IsPressingButton(IN_DUCK)
 
 function CTFPlayer::IsReprogrammed()
 	return false
@@ -989,16 +1102,45 @@ function CTFPlayer::SetActiveWeapon( weapon )
 
 function CTFPlayer::AreViewModelsFlipped()
 	return GetClientConVar("cl_flipviewmodels", entindex()).tointeger() == 1
+
+/** 
+ * @returns {float}
+ */
+function CTFPlayer::GetDemomanChargeMeter()
+	return GetPropFloat(this, "m_Shared.m_flChargeMeter")
+/** 
+ * @param {float} num
+ */
+function CTFPlayer::SetDemomanChargeMeter(num)
+	SetPropFloat(this, "m_Shared.m_flChargeMeter", num)
+
+/** 
+ * @returns {float}
+ */
+function CTFPlayer::GetRuneCharge()
+	return GetPropFloat(this, "m_Shared.m_flRuneCharge")
+/** 
+ * @param {float} num
+ */
+function CTFPlayer::SetRuneCharge(num)
+	SetPropFloat(this, "m_Shared.m_flRuneCharge", num)
+
+/**
+ * @param {int} playerclass
+ */
+function CTFPlayer::IsPlayerClass(playerclass)
+	return GetPlayerClass() == playerclass
+
 /*
 	Some Funcs can use a different name
  */
 
-CTFPlayer.IsCrouching <- CTFPlayer.IsDucking
 CTFPlayer.SetJetpackCharge <- CTFPlayer.SetFoodItemCharge
+CTFPlayer.SetRazorbackCharge <- CTFPlayer.SetFoodItemCharge
 CTFPlayer.WorldSpaceCenter <- CTFPlayer.GetCenter
 
-CTFBot.IsCrouching <- CTFPlayer.IsDucking
 CTFBot.SetJetpackCharge <- CTFPlayer.SetFoodItemCharge
+CTFBot.SetRazorbackCharge <- CTFPlayer.SetFoodItemCharge
 CTFBot.WorldSpaceCenter <- CTFPlayer.GetCenter
 
 /*
@@ -1142,7 +1284,7 @@ function CTFPlayer::AddThrowableCharge(charge)
 	if(def_time == -1) return;
 
 	def_time *= secondary.GetAttribute("effect bar recharge rate increased", 1)
-	if(secondary.GetClassname().slice(10) == "jar_gas") def_time *= secondary.GetAttribute("mult_item_meter_charge_rate", 1)
+	if(secondary.GetWeaponClass() == "jar_gas") def_time *= secondary.GetAttribute("mult_item_meter_charge_rate", 1)
 	local percent_time = def_time * (charge.tofloat()/100)
 
 	secondary.SetChargeTime(secondary.GetChargeTime() - percent_time)
@@ -1155,7 +1297,7 @@ function CTFPlayer::SetThrowableCharge(charge)
 	if(def_time == -1) return;
 
 	def_time *= secondary.GetAttribute("effect bar recharge rate increased", 1)
-	if(secondary.GetClassname().slice(10) == "jar_gas") def_time *= secondary.GetAttribute("mult_item_meter_charge_rate", 1)
+	if(secondary.GetWeaponClass() == "jar_gas") def_time *= secondary.GetAttribute("mult_item_meter_charge_rate", 1)
 	local percent_time = def_time * ((100 - charge.tofloat())/100)
 
 	secondary.SetChargeTime(Time() + percent_time)
@@ -1389,7 +1531,7 @@ function CTFPlayer::RemoveStun()
 	SetPropInt(this, "m_Shared.m_iMovementStunParity", 0)
 	RemoveCondEx(TF_COND_STUNNED, true)
 }
-// [Insert Title card here]
+// Are they [Insert Title card here]
 function CTFPlayer::IsInvincible()
 {
 	foreach(Condition in Invincible_Conds)
@@ -2717,21 +2859,26 @@ function CTFPlayer::GetMoveSpeed()
 		BaseSpeed = MATH.Min(GetBaseMovespeed( GetPropInt(this, "m_Shared.m_nDisguiseClass") ), BaseSpeed)
 	local speed = BaseSpeed
 
+	local active = GetActiveWeapon()
+
 	if ( InCond( TF_COND_AIMING ) )
 	{
 		local AimMax = 0
 
 		if ( GetPlayerClass() == TF_CLASS_HEAVYWEAPONS )
 			AimMax = 110
-		else if(GetActiveWeapon() && GetActiveWeapon().IsBow())
+		else if( active && active.IsBow() )
 			AimMax = 160
 		else
 			AimMax = 80
 
-		AimMax *= active.GetAttribute("aiming movespeed increased", 1)
-		AimMax *= active.GetAttribute("aiming movespeed decreased", 1)
-		AimMax *= active.GetAttribute("sniper aiming movespeed decreased", 1)
-		
+		if( active )
+		{
+			AimMax *= active.GetAttribute("aiming movespeed increased", 1)
+			AimMax *= active.GetAttribute("aiming movespeed decreased", 1)
+			AimMax *= active.GetAttribute("sniper aiming movespeed decreased", 1)
+		}
+
 		speed = MATH.Min( speed, AimMax );
 	}
 
@@ -2743,8 +2890,8 @@ function CTFPlayer::GetMoveSpeed()
 	if ( InCond( TF_COND_SPEED_BOOST ) && speed > 0.0)
 		speed += MATH.Min( speed * 0.4, WhipBoost )
 
-	if ( GetActiveWeapon() )
-		speed *= GetActiveWeapon().GetSpeedMod()
+	if ( active )
+		speed *= active.GetSpeedMod()
 
 	if ( GetPlayerClass() == TF_CLASS_DEMOMAN )
 	{
@@ -3017,7 +3164,7 @@ function CTFPlayer::CanAttack( CanAttackFlags = 0 )
 	if ( InCond( TF_COND_PHASE ) == true )
 		return false;
 
-	if ( ( GetRoundState() == GR_STATE_TEAM_WIN ) && ( GetWinningTeam() != GetTeamNumber() ) )
+	if ( ( GetRoundState() == GR_STATE_TEAM_WIN ) && ( GetWinningTeam() != GetTeam() ) )
 		return false;
 
 	if ( InCond( TF_COND_HALLOWEEN_KART ) )
@@ -3079,6 +3226,106 @@ function CTFPlayer::ApplyGenericPushbackImpulse( Force, Attacker )
 	ApplyAbsVelocityImpulse( Force )
 }
 
+/**
+ * @param {float} val
+ * @param {bool} bForce
+ */
+function CTFPlayer::AddToSpyCloakMeter( val, bForce )
+{
+	/**@type {CTFWeaponBase} */
+	local watch = GetWeaponClassname("tf_weapon_invis")
+	if ( !watch )
+		return false;
+
+	if ( !bForce )
+	{
+		local iNoItemRegen = watch.GetAttribute("mod_cloak_no_regen_from_items", 0)
+		if ( iNoItemRegen )
+			return false
+
+		// STAGING_SPY
+		// Special cloaks only get cloak if not active and receive a smaller portion
+		local iNoCloakedPickup = watch.GetAttribute("NoCloakWhenCloaked", 0)
+		if ( InCond( TF_COND_STEALTHED ) && iNoCloakedPickup )
+			return false
+		else
+			val *= watch.GetAttribute("ReducedCloakFromAmmo", 1.0)
+	}
+
+	local bResult = ( val > 0 && GetSpyCloakMeter() < 100.0 )
+
+	SetSpyCloakMeter( MATH.Clamp( m_flCloakMeter + val, 0.0, 100.0 ))
+
+	return bResult
+}
+
+/** 
+ * @type {function}
+ * @param {CTFPlayer} pTFAttacker
+ * @returns {bool}
+ */
+function CTFPlayer::CheckBlockBackstab( pTFAttacker )
+{
+	// Resistance blocks backstabs before any items are checked
+	if ( GetCurrentRune() == RUNE_RESIST )
+		return true
+
+	// Check all items for the attribute that blocks a backstab.
+	// Destroy the first item that intercepts the backstab.
+
+	local iBackStabShield = 0
+	local ValidWeapon = null
+	foreach(/**@type {CTFWeaponBase} */weapon in GetAllWeapons())
+	{
+		if(weapon.GetAttribute("backstab shield", 0))
+		{
+			iBackStabShield = 1
+			ValidWeapon = weapon
+			break
+		}
+	}
+	if(iBackStabShield && ValidWeapon)
+	{
+		if((GetPropInt(ValidWeapon, "m_fEffects") & EF_NODRAW) != EF_NODRAW)
+		{
+			if(ValidWeapon.IsWearable())
+			{
+				SetPropInt(ValidWeapon, "m_fEffects", GetPropInt(ValidWeapon, "m_fEffects") | EF_NODRAW)
+				SetRazorbackCharge(0.0)
+			}
+
+			if(IsBot())
+				DelayedThreatNotice(pTFAttacker, 0.5)
+
+			return true
+		}
+	}
+
+	return false;
+}
+
+
+function CTFPlayer::AddTmpDamageBonus( flBonus, flExpiration )
+{
+	AddCondEx( TF_COND_TMPDAMAGEBONUS, flExpiration, this )
+	SetInternalVar("m_flTmpDamageBonusAmount", GetInternalVar("m_flTmpDamageBonusAmount", 1.0) + flBonus)
+}
+
+function CTFPlayer::GetInternalVar(var_name, def = 0)
+{
+	if(!("Internal_Vars" in GetScope(this)))
+		GetScope(this).Internal_Vars <- {}
+	if(!(var_name in GetScope(this).Internal_Vars))
+		GetScope(this).Internal_Vars[var_name] <- def
+
+	return GetScope(this).Internal_Vars[var_name]
+}
+
+function CTFPlayer::SetInternalVar(var_name, value)
+{
+	GetInternalVar(var_name) // cheeky to fix it up so its not missing
+	GetScope(this).Internal_Vars[var_name] <- value
+}
 
 /* function CTFPlayer::CreateWearable( idx, model )
 {
@@ -3476,7 +3723,7 @@ function CTFWeaponBase::GetChargeProgress()
  */
 function CTFWeaponBase::GetDefaultChargeTime()
 {
-	switch (GetClassname().slice(10))
+	switch (GetWeaponClass())
 	{
 	case "bat" :
 		return 10.0
@@ -3701,7 +3948,7 @@ function CTFWeaponBase::IsAbilityActive()
 function CTFWeaponBase::SetRandomSpell(rares = true, lower_rares = false)
 {
 	local spell = RandomInt(TF_SPELL_FIREBALL, rares ? TF_SPELL_SKELETON : TF_SPELL_TELEPORT)
-	if(lower_rares && spell > TF_SPELL_TELEPORT && RandomFloat(0, 1.0) > 0.333)
+	if(lower_rares && spell > TF_SPELL_TELEPORT && MATH.RandomChance() > 0.333)
 	{
 		spell = RandomInt(TF_SPELL_FIREBALL, TF_SPELL_TELEPORT)
 	}
@@ -3865,20 +4112,110 @@ function CTFWeaponBase::ShootPosition()
 function CTFWeaponBase::IsWearable()
 	return IsInArray(GetIDX(), WearableIDXs.Primarys) || IsInArray(GetIDX(), WearableIDXs.Secondarys)
 
+function CTFWeaponBase::GetWeaponClass()
+	return GetClassname().slice(10)
+
 function CTFWeaponBase::IsSniperRifle()
-	return startswith(GetClassname().slice(10), "sniperrifle")
+	return startswith(GetWeaponClass(), "sniperrifle")
 
 function CTFWeaponBase::IsBow()
-	return startswith(GetClassname().slice(10), "compound")
+	return startswith(GetWeaponClass(), "compound")
 
 function CTFWeaponBase::IsMinigun()
-	return startswith(GetClassname().slice(10), "minigun")
+	return startswith(GetWeaponClass(), "minigun")
 
 function CTFWeaponBase::IsFlamethrower()
-	return startswith(GetClassname().slice(10), "flamethrower")
+	return startswith(GetWeaponClass(), "flamethrower")
 
 function CTFWeaponBase::IsKnife()
-	return startswith(GetClassname().slice(10), "knife")
+	return startswith(GetWeaponClass(), "knife")
+
+function CTFWeaponBase::IsSword()
+	return startswith(GetWeaponClass(), "sword") || startswith(GetWeaponClass(), "katana")
+
+function CTFWeaponBase::IsBottle()
+	return startswith(GetWeaponClass(), "bottle")
+
+function CTFWeaponBase::IsRocketLauncher()
+	return startswith(GetWeaponClass(), "rocketlauncher") || startswith(GetWeaponClass(), "particle_cannon")
+
+function CTFWeaponBase::IsPipeLauncher()
+	return startswith(GetWeaponClass(), "grenadelauncher") || startswith(GetWeaponClass(), "cannon")
+
+function CTFWeaponBase::IsStickyLauncher()
+	return startswith(GetWeaponClass(), "pipebomblauncher")
+
+function CTFWeaponBase::IsStickbomb()
+	return startswith(GetWeaponClass(), "stickbomb")
+
+function CTFWeaponBase::IsScattergun()
+	return startswith(GetWeaponClass(), "scattergun") || startswith(GetWeaponClass(), "handgun_scout") || startswith(GetWeaponClass(), "soda_popper") || startswith(GetWeaponClass(), "pep_brawler")
+
+function CTFWeaponBase::IsFlaregun()
+	return startswith(GetWeaponClass(), "flaregun")
+
+function CTFWeaponBase::CanChargeCrit()
+{
+	if(IsSword() || IsBottle())
+		return true
+	// else if (IsStickbomb()) //valve moment
+		// return true
+	return false
+}
+
+function CTFWeaponBase::IsZoomed()
+{
+	if(!IsSniperRifle() || !GetOwner())
+		return false
+	return GetOwner().GetActiveWeapon() == this && GetOwner().InCond(TF_COND_ZOOMED)
+}
+
+function CTFWeaponBase::GetJarateTime()
+{
+	if(GetPropFloat(this, "m_flChargedDamage") == 0.0)
+		return 0.0
+	return GetJarateTimeInternal()
+}
+function CTFWeaponBase::ZoomOut()
+{
+	/** @type {CTFPlayer|null} */
+	local pPlayer = GetOwner()
+
+	if ( !pPlayer )
+		return
+
+	pPlayer.RemoveCondEx( TF_COND_AIMING, true )
+	pPlayer.TeamFortress_SetSpeed()
+
+	// if we are thinking about zooming, cancel it
+	SetPropFloat(this, "m_flUnzoomTime", -1.0)
+	SetPropFloat(this, "m_flRezoomTime", -1.0)
+	AddAttribute("no_jump", 0, -1)
+	SetPropBool(this, "m_bRezoomAfterShot", false)
+	SetPropFloat(this, "m_flChargedDamage", 0.0)
+}
+
+function CTFWeaponBase::BackstabBlocked()
+{
+	local pPlayer = GetOwner()
+	if ( !pPlayer )
+		return
+
+	SetPropFloat(pPlayer, "m_flNextAttack", Time() + 2.0)
+
+	// m_flBlockedTime = gpGlobals->curtime;
+	// SendWeaponAnim( ACT_MELEE_VM_STUN );
+}
+
+function CTFWeaponBase::GetJarateTimeInternal()
+{
+	local flMaxJarateTime = GetAttribute("jarate duration", 0.0)
+	if ( flMaxJarateTime > 0.0 )
+		return MATH.RemapValClamped( GetPropFloat(this, "m_flChargedDamage"), TF_WEAPON_SNIPERRIFLE_DAMAGE_MIN, TF_WEAPON_SNIPERRIFLE_DAMAGE_MAX, 2.0, flMaxJarateTime )
+
+	return 0.0
+}
+
 
 function CTFWeaponBase::GetSpeedMod()
 {
@@ -3915,6 +4252,917 @@ function CTFWeaponBase::CanStomp()
 	else if(GetAttribute("provide on active", 0) && GetOwner().GetActiveWeapon() != this)
 		return false
 	return canstomp
+}
+
+function CTFWeaponBase::GetKillComboCount()
+	return GetPropInt("NonLocalTFWeaponData.m_nKillComboCount")
+
+/** 
+ * @type {function}
+ * @param {float} flDelay
+ * @returns {float}
+ */
+function CTFWeaponBase::ApplyFireDelay( flDelay )
+{
+	local flDelayMult = 1.0
+	flDelayMult *= GetAttribute("fire rate penalty", 1.0)
+	flDelayMult *= GetAttribute("fire rate bonus", 1.0)
+	flDelayMult *= GetAttribute("fire rate penalty HIDDEN", 1.0)
+	flDelayMult *= GetAttribute("fire rate bonus HIDDEN", 1.0)
+	flDelayMult *= GetAttribute("melee attack rate bonus", 1.0)
+
+	local flComboBoost = GetAttribute("kill combo fire rate boost", 1.0)
+	flComboBoost *= GetKillComboCount()
+
+	flDelayMult -= flComboBoost
+
+	// Haste Powerup Rune adds multiplier to fire delay time. Flare guns get double boost
+	/** @type {CTFPlayer|null} */
+	local pPlayer = GetOwner() && GetOwner().IsPlayer() ? GetOwner() : null
+	if ( pPlayer && pPlayer.GetCurrentRune() == RUNE_HASTE )
+	{
+		if ( pPlayerIsPlayerClass( TF_CLASS_PYRO ) && IsFlaregun() )
+			flDelayMult *= 0.25
+		else if ( pPlayer.InCond( TF_COND_POWERUPMODE_DOMINANT ) )
+			flDelayMult *= 0.75
+		else
+			flDelayMult *= 0.50
+	}
+	else if ( pPlayer && ( pPlayer.GetCurrentRune() == RUNE_KING || pPlayer.InCond( TF_COND_KING_BUFFED ) ) )
+		flDelayMult *= 0.75
+
+	return flDelay * flDelayMult
+}
+
+if(!("CTakeDamageInfo" in ROOT))
+	class CTakeDamageInfo {}
+
+if(!("KeyValues" in ROOT))
+	class KeyValues {}
+
+if(!("WeaponData_t" in ROOT))
+{
+	class WeaponData_t
+	{
+		m_nDamage = 0
+		m_nBulletsPerShot = 0
+		m_flRange = 0.0
+		m_flSpread = 0.0
+		m_flPunchAngle = 0.0
+		m_flTimeFireDelay = 0.0 			// Time to delay between firing
+		m_flTimeIdle = 0.0					// Time to idle after firing
+		m_flTimeIdleEmpty = 0.0				// Time to idle after firing last bullet in clip
+		m_flTimeReloadStart = 0.0			// Time to start into a reload (ie. shotgun)
+		m_flTimeReload = 0.0				// Time to reload
+		m_bDrawCrosshair = true				// Should the weapon draw a crosshair
+		m_iProjectile = ProjectileType_t.TF_PROJECTILE_NONE	// The type of projectile this mode fires
+		m_iAmmoPerShot = 0					// How much ammo each shot consumes
+		m_flProjectileSpeed = 0.0			// Start speed for projectiles (nail, etc.); NOTE: union with something non-projectile
+		m_flSmackDelay = 0.0				// how long after swing should damage happen for melee weapons
+		m_bUseRapidFireCrits = false
+
+		constructor();
+	}
+}
+
+if(!("itemFlags_t" in ROOT))
+{
+	class itemFlags_t {
+		m_pFlagName = ""
+		m_iFlagValue = 0
+		constructor(name, value) {
+			this.m_pFlagName = name
+			this.m_iFlagValue = value
+		}
+	}
+
+	::g_ItemFlags <- [
+		itemFlags_t("ITEM_FLAG_SELECTONEMPTY", ITEM_FLAG_SELECTONEMPTY)
+		itemFlags_t("ITEM_FLAG_SELECTONEMPTY",	ITEM_FLAG_SELECTONEMPTY)
+		itemFlags_t("ITEM_FLAG_NOAUTORELOAD",		ITEM_FLAG_NOAUTORELOAD)
+		itemFlags_t("ITEM_FLAG_NOAUTOSWITCHEMPTY", ITEM_FLAG_NOAUTOSWITCHEMPTY)
+		itemFlags_t("ITEM_FLAG_LIMITINWORLD",		ITEM_FLAG_LIMITINWORLD)
+		itemFlags_t("ITEM_FLAG_EXHAUSTIBLE",		ITEM_FLAG_EXHAUSTIBLE)
+		itemFlags_t("ITEM_FLAG_DOHITLOCATIONDMG", ITEM_FLAG_DOHITLOCATIONDMG)
+		itemFlags_t("ITEM_FLAG_NOAMMOPICKUPS",	ITEM_FLAG_NOAMMOPICKUPS)
+		itemFlags_t("ITEM_FLAG_NOITEMPICKUP",		ITEM_FLAG_NOITEMPICKUP)
+	]
+}
+
+if(!("FileWeaponInfo_t" in ROOT))
+{
+	class FileWeaponInfo_t
+	{
+		constructor() {}
+		// Each game can override this to get whatever values it wants from the script.
+		/** 
+		 * @type {function}
+		 * @param {KeyValues} pKeyValuesData
+		 * @param {string} szWeaponName
+		 */
+		function Parse( pKeyValuesData, szWeaponName )
+		{
+			local function GetKey(name, def) {
+				if(name in pKeyValuesData)
+					return pKeyValuesData[name]
+				else return def
+			}
+			// Okay, we tried at least once to look this up...
+			bParsedScript = true
+
+			// Classname
+			szClassName 		= szWeaponName
+			// Printable name
+			szPrintName 		= GetKey( "printname", WEAPON_PRINTNAME_MISSING )
+			// View model & world model
+			szViewModel 		= GetKey( "viewmodel", "" )
+			szWorldModel 		= GetKey( "playermodel", "" )
+			szAnimationPrefix 	= GetKey( "anim_prefix", "" )
+			iSlot 				= GetKey( "bucket", 0 )
+			iPosition 			= GetKey( "bucket_position", 0 )
+
+			iMaxClip1 			= GetKey( "clip_size", WEAPON_NOCLIP )					// Max primary clips gun can hold (assume they don't use clips by default)
+			iMaxClip2 			= GetKey( "clip2_size", WEAPON_NOCLIP )					// Max secondary clips gun can hold (assume they don't use clips by default)
+			iDefaultClip1 		= GetKey( "default_clip", iMaxClip1 )			// amount of primary ammo placed in the primary clip when it's picked up
+			iDefaultClip2 		= GetKey( "default_clip2", iMaxClip2 )		// amount of secondary ammo placed in the secondary clip when it's picked up
+			iWeight 			= GetKey( "weight", 0 )
+
+			iRumbleEffect 		= GetKey( "rumble", -1 )
+			
+			// LAME old way to specify item flags.
+			// Weapon scripts should use the flag names.
+			iFlags 				= GetKey( "item_flags", ITEM_FLAG_LIMITINWORLD )
+
+			for ( local i = 0; i < g_ItemFlags.len(); i++ )
+			{
+				local iVal = GetKey( g_ItemFlags[i].m_pFlagName, -1 );
+				if ( iVal == 0 )
+				{
+					iFlags = iFlags & ~g_ItemFlags[i].m_iFlagValue;
+				}
+				else if ( iVal == 1 )
+				{
+					iFlags = iFlags | g_ItemFlags[i].m_iFlagValue;
+				}
+			}
+
+
+			bShowUsageHint = ( GetKey( "showusagehint", 0 ) != 0 )
+			bAutoSwitchTo = ( GetKey( "autoswitchto", 1 ) != 0 )
+			bAutoSwitchFrom = ( GetKey( "autoswitchfrom", 1 ) != 0 )
+			m_bBuiltRightHanded = ( GetKey( "BuiltRightHanded", 1 ) != 0 )
+			m_bAllowFlipping = ( GetKey( "AllowFlipping", 1 ) != 0 )
+			m_bMeleeWeapon = ( GetKey( "MeleeWeapon", 0 ) != 0 )
+
+			// Primary ammo used
+			local pAmmo = GetKey( "primary_ammo", "None" )
+			if ( pAmmo == "None" )
+				szAmmo1 = ""
+			else
+				szAmmo1 = pAmmo
+			iAmmoType = -1
+			// iAmmoType = GetAmmoDef()->Index( szAmmo1 );
+			
+			// Secondary ammo used
+			pAmmo = GetKey( "secondary_ammo", "None" );
+			if ( pAmmo == "None" )
+				szAmmo2 = ""
+			else
+				szAmmo2 = pAmmo
+			iAmmo2Type = -1
+			// iAmmo2Type = GetAmmoDef()->Index( szAmmo2 );
+
+			// Now read the weapon sounds
+			/* KeyValues *pSoundData = pKeyValuesData->FindKey( "SoundData" );
+			if ( pSoundData )
+			{
+				for ( int i = EMPTY; i < NUM_SHOOT_SOUND_TYPES; i++ )
+				{
+					local soundname = pSoundData->GetString( pWeaponSoundCategories[i] );
+					if ( soundname && soundname[0] )
+					{
+						Q_strncpy( aShootSounds[i], soundname, MAX_WEAPON_STRING );
+					}
+				}
+			} */
+		}
+
+		bParsedScript 		= false
+		bLoadedHudElements 	= false
+
+		// SHARED
+		szClassName 		= ""
+		szPrintName 		= ""			// Name for showing in HUD, etc.
+
+		szViewModel			= ""			// View model of this weapon
+		szWorldModel 		= ""		// Model of this weapon seen carried by the player
+		szAnimationPrefix 	= ""	// Prefix of the animations that should be used by the player carrying this weapon
+		iSlot 				= 0									// inventory slot.
+		iPosition			= 0								// position in the inventory slot.
+		iMaxClip1			= 0								// max primary clip size (-1 if no clip)
+		iMaxClip2			= 0								// max secondary clip size (-1 if no clip)
+		iDefaultClip1 		= 0							// amount of primary ammo in the gun when it's created
+		iDefaultClip2 		= 0							// amount of secondary ammo in the gun when it's created
+		iWeight 			= 0										// this value used to determine this weapon's importance in autoselection.
+		iRumbleEffect 		= 0							// Which rumble effect to use when fired? (xbox)
+		bAutoSwitchTo 		= false							// whether this weapon should be considered for autoswitching to
+		bAutoSwitchFrom 	= false						// whether this weapon can be autoswitched away from when picking up another weapon or ammo
+		iFlags 				= 0									// miscellaneous weapon flags
+		szAmmo1				= ""			// "primary" ammo type
+		szAmmo2				= ""			// "secondary" ammo type
+
+		// Sound blocks
+		aShootSounds 		= array(16, "")	
+
+		iAmmoType 			= 0
+		iAmmo2Type 			= 0
+		m_bMeleeWeapon 		= false		// Melee weapons can always "fire" regardless of ammo.
+
+		// This tells if the weapon was built right-handed (defaults to true).
+		// This helps cl_righthand make the decision about whether to flip the model or not.
+		m_bBuiltRightHanded = false
+		m_bAllowFlipping 	= false	// False to disallow flipping the model, regardless of whether
+													// it is built left or right handed.
+		// SERVER DLL
+
+	}
+}
+
+
+
+if(!("CTFWeaponInfo" in ROOT))
+{
+	class CTFWeaponInfo extends FileWeaponInfo_t
+	{
+		constructor()
+		{
+			m_WeaponData[0] = FileWeaponInfo_t()
+			m_WeaponData[1] = FileWeaponInfo_t()
+
+			m_bGrenade = false
+			m_flDamageRadius = 0.0
+			m_flPrimerTime = 0.0
+			m_bSuppressGrenTimer = false
+			m_bLowerWeapon = false
+
+			m_bHasTeamSkins_Viewmodel = false
+			m_bHasTeamSkins_Worldmodel = false
+
+			m_szMuzzleFlashModel = ""
+			m_flMuzzleFlashModelDuration = 0.0
+			m_szMuzzleFlashParticleEffect = ""
+
+			m_szTracerEffect = ""
+
+			m_szBrassModel = ""
+			m_bDoInstantEjectBrass = true;
+
+			m_szExplosionSound = ""
+			m_szExplosionEffect = ""
+			m_szExplosionPlayerEffect = ""
+			m_szExplosionWaterEffect = ""
+
+			m_iWeaponType = TF_WPN_TYPE_PRIMARY;
+		}
+
+		function destructor() 
+		{
+
+		}
+		/** 
+		 * @type {function}
+		 * @param {KeyValues} pKeyValuesData
+		 * @param {string} szWeaponName
+		 */
+		function Parse( pKeyValuesData, szWeaponName ) 
+		{
+			
+			// base.Parse(pKeyValuesData, szWeaponName)
+
+			local function GetKey(name, def) {
+				if(name in pKeyValuesData)
+					return pKeyValuesData[name]
+				else return def
+			}
+			m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_nDamage				= GetKey( "Damage", 0 )
+			m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_flRange				= GetKey( "Range", 8192.0 )
+			m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_nBulletsPerShot		= GetKey( "BulletsPerShot", 0 )
+			m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_flSpread				= GetKey( "Spread", 0.0 )
+			m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_flPunchAngle			= GetKey( "PunchAngle", 0.0 )
+			m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_flTimeFireDelay		= GetKey( "TimeFireDelay", 0.0 )
+			m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_flTimeIdle			= GetKey( "TimeIdle", 0.0 )
+			m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_flTimeIdleEmpty		= GetKey( "TimeIdleEmpy", 0.0 )
+			m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_flTimeReloadStart	= GetKey( "TimeReloadStart", 0.0 )
+			m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_flTimeReload			= GetKey( "TimeReload", 0.0 )
+			m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_bDrawCrosshair		= GetKey( "DrawCrosshair", 1 ) > 0
+			m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_iAmmoPerShot			= GetKey( "AmmoPerShot", 1 )
+			m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_bUseRapidFireCrits	= ( GetKey( "UseRapidFireCrits", 0 ) != 0 )
+
+			m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_iProjectile = ProjectileType_t.TF_PROJECTILE_NONE
+			local pszProjectileType = GetKey( "ProjectileType", "projectile_none" )
+
+			for ( local i = 0; i < ProjectileType_t.TF_NUM_PROJECTILES ; i++ )
+			{
+				if(pszProjectileType == g_szProjectileNames[i])
+				{
+					m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_iProjectile = i
+					break
+				}
+			}
+
+			m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_flProjectileSpeed	= GetKey( "ProjectileSpeed", 0.0 )
+
+			m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_flSmackDelay			= GetKey( "SmackDelay", 0.2 )
+			m_WeaponData[TF_WEAPON_SECONDARY_MODE].m_flSmackDelay		= GetKey( "Secondary_SmackDelay", 0.2 )
+
+			m_bDoInstantEjectBrass = ( GetKey( "DoInstantEjectBrass", 1 ) != 0 );
+			local pszBrassModel = GetKey( "BrassModel", NULL );
+			if ( pszBrassModel )
+				m_szBrassModel = pszBrassModel
+
+			// Secondary fire mode.
+			// Inherit from primary fire mode
+			m_WeaponData[TF_WEAPON_SECONDARY_MODE].m_nDamage			= GetKey( "Secondary_Damage", m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_nDamage )
+			m_WeaponData[TF_WEAPON_SECONDARY_MODE].m_flRange			= GetKey( "Secondary_Range", m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_flRange )
+			m_WeaponData[TF_WEAPON_SECONDARY_MODE].m_nBulletsPerShot	= GetKey( "Secondary_BulletsPerShot", m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_nBulletsPerShot )
+			m_WeaponData[TF_WEAPON_SECONDARY_MODE].m_flSpread			= GetKey( "Secondary_Spread", m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_flSpread )
+			m_WeaponData[TF_WEAPON_SECONDARY_MODE].m_flPunchAngle		= GetKey( "Secondary_PunchAngle", m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_flPunchAngle )
+			m_WeaponData[TF_WEAPON_SECONDARY_MODE].m_flTimeFireDelay	= GetKey( "Secondary_TimeFireDelay", m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_flTimeFireDelay )
+			m_WeaponData[TF_WEAPON_SECONDARY_MODE].m_flTimeIdle			= GetKey( "Secondary_TimeIdle", m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_flTimeIdle )
+			m_WeaponData[TF_WEAPON_SECONDARY_MODE].m_flTimeIdleEmpty	= GetKey( "Secondary_TimeIdleEmpy", m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_flTimeIdleEmpty )
+			m_WeaponData[TF_WEAPON_SECONDARY_MODE].m_flTimeReloadStart	= GetKey( "Secondary_TimeReloadStart", m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_flTimeReloadStart )
+			m_WeaponData[TF_WEAPON_SECONDARY_MODE].m_flTimeReload		= GetKey( "Secondary_TimeReload", m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_flTimeReload )
+			m_WeaponData[TF_WEAPON_SECONDARY_MODE].m_bDrawCrosshair		= GetKey( "Secondary_DrawCrosshair", m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_bDrawCrosshair ) > 0
+			m_WeaponData[TF_WEAPON_SECONDARY_MODE].m_iAmmoPerShot		= GetKey( "Secondary_AmmoPerShot", m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_iAmmoPerShot )
+			m_WeaponData[TF_WEAPON_SECONDARY_MODE].m_bUseRapidFireCrits	= ( GetKey( "Secondary_UseRapidFireCrits", 0 ) != 0 )
+
+			m_WeaponData[TF_WEAPON_SECONDARY_MODE].m_iProjectile = m_WeaponData[TF_WEAPON_PRIMARY_MODE].m_iProjectile
+			pszProjectileType = GetKey( "Secondary_ProjectileType", "projectile_none" )
+
+			for ( local i = 0; i < ProjectileType_t.TF_NUM_PROJECTILES ; i++ )
+			{
+				if(pszProjectileType == g_szProjectileNames[i])
+				{
+					m_WeaponData[TF_WEAPON_SECONDARY_MODE].m_iProjectile = i
+					break
+				}
+			}	
+
+			local pszWeaponType = GetKey( "WeaponType", "" )
+
+			switch ( pszWeaponType )
+			{
+			case "primary":
+				m_iWeaponType = TF_WPN_TYPE_PRIMARY
+			break
+			case "secondary":
+				m_iWeaponType = TF_WPN_TYPE_SECONDARY
+			break
+			case "melee":
+				m_iWeaponType = TF_WPN_TYPE_MELEE
+			break
+			case "grenade":
+				m_iWeaponType = TF_WPN_TYPE_GRENADE
+			break
+			case "building":
+				m_iWeaponType = TF_WPN_TYPE_BUILDING
+			break
+			case "pda":
+				m_iWeaponType = TF_WPN_TYPE_PDA
+			break
+			case "item1":
+				m_iWeaponType = TF_WPN_TYPE_ITEM1
+			break
+			case "item2":
+				m_iWeaponType = TF_WPN_TYPE_ITEM2
+			break
+			}
+
+			// Grenade data.
+			m_bGrenade					= ( GetKey( "Grenade", 0 ) != 0 )
+			m_flDamageRadius			= GetKey( "DamageRadius", 0.0 )
+			m_flPrimerTime				= GetKey( "PrimerTime", 0.0 )
+			m_bSuppressGrenTimer		= ( GetKey( "PlayGrenTimer", 1 ) <= 0 )
+
+			m_bLowerWeapon				= ( GetKey( "LowerMainWeapon", 0 ) != 0 )
+			m_bHasTeamSkins_Viewmodel	= ( GetKey( "HasTeamSkins_Viewmodel", 0 ) != 0 )
+			m_bHasTeamSkins_Worldmodel	= ( GetKey( "HasTeamSkins_Worldmodel", 0 ) != 0 )
+
+			// Model muzzleflash
+			local pszMuzzleFlashModel = GetKey( "MuzzleFlashModel", null )
+			if ( pszMuzzleFlashModel )
+				m_szMuzzleFlashModel = pszMuzzleFlashModel
+
+			m_flMuzzleFlashModelDuration = GetKey( "MuzzleFlashModelDuration", 0.2 )
+
+			local pszMuzzleFlashParticleEffect = GetKey( "MuzzleFlashParticleEffect", null )
+			if ( pszMuzzleFlashParticleEffect )
+				m_szMuzzleFlashParticleEffect = pszMuzzleFlashParticleEffect
+
+			// Tracer particle effect
+			local pszTracerEffect = GetKey( "TracerEffect", null )
+			if ( pszTracerEffect )
+				m_szTracerEffect = pszTracerEffect
+
+
+			// Explosion effects (used for grenades)
+			local pszSound = GetKey( "ExplosionSound", null )
+			if ( pszSound )
+				m_szExplosionSound = pszSound
+
+			local pszEffect = GetKey( "ExplosionEffect", null )
+			if ( pszEffect )
+				m_szExplosionEffect = pszEffect
+
+			pszEffect = GetKey( "ExplosionPlayerEffect", null )
+			if ( pszEffect )
+				m_szExplosionPlayerEffect = pszEffect
+
+			pszEffect = GetKey( "ExplosionWaterEffect", null )
+			if ( pszEffect )
+				m_szExplosionWaterEffect = pszEffect
+
+			m_bDontDrop = ( GetKey( "DontDrop", 0 ) > 0 )
+		}
+
+		/** 
+		 * @type {function}
+		 * @param {int} iWeapon
+		 * @returns {WeaponData_t}
+		 */
+		function GetWeaponData( iWeapon ) { return m_WeaponData[iWeapon] }
+
+		/** @type {[WeaponData_t]} */
+		m_WeaponData = array(2)
+
+		m_iWeaponType = 0
+		
+		// Grenade.
+		m_bGrenade = false
+		m_flDamageRadius = 0.0
+		m_flPrimerTime = 0.0
+		m_bLowerWeapon = false
+		m_bSuppressGrenTimer = false
+
+		// Skins
+		m_bHasTeamSkins_Viewmodel = false
+		m_bHasTeamSkins_Worldmodel = false
+
+		// Muzzle flash
+		m_szMuzzleFlashModel = ""
+		m_flMuzzleFlashModelDuration = 0.0
+		m_szMuzzleFlashParticleEffect = ""
+
+		// Tracer
+		m_szTracerEffect = ""
+
+		// Eject Brass
+		m_bDoInstantEjectBrass = false
+		m_szBrassModel = ""
+
+		// Explosion Effect
+		m_szExplosionSound = ""
+		m_szExplosionEffect = ""
+		m_szExplosionPlayerEffect = ""
+		m_szExplosionWaterEffect = ""
+
+		m_bDontDrop = false
+	}
+}
+
+// ::g_tGlobalWeaponTypesByClass <- {}
+
+/** 
+ * @type {function}
+ * @returns {CTFWeaponInfo}
+ */
+function CTFWeaponBase::GetWeaponInfo()
+{
+	Assert(GetClassname() in g_tGlobalWeaponTypesByClass, "No Weapon info for \""+GetClassname()+"\" !!!!!")
+	return g_tGlobalWeaponTypesByClass[GetClassname()]
+}
+
+/**
+ * @param {CBaseEntity|null} pVictimBaseEntity
+ * @param {CTFPlayer|null} pAttacker
+ * @param {CTakeDamageInfo} info
+ */
+function CTFWeaponBase::ApplyOnHitAttributes( pVictimBaseEntity, pAttacker, info )
+{
+	if ( !pAttacker )
+		return
+
+	/**@type {CTFPlayer|null} */
+	local pVictim = pVictimBaseEntity && pVictimBaseEntity.IsPlayer() ? pVictimBaseEntity : null
+
+	// Ammo on hit
+	local iModAmmoOnHit = GetAttribute("add onhit addammo", 0)
+	if ( iModAmmoOnHit > 0 )
+	{
+		// this will save the value so we can add it after we're doing firing 
+		// the projectile and have subtracted the ammo for the current shot
+		local flPercentage = iModAmmoOnHit.tofloat() / 100.0
+
+		// No ammo for disguised Spies that are NOT stealthed so you can't use this to check for Spies
+		if ( pVictim && 
+			 pVictim.IsPlayerClass( TF_CLASS_SPY ) && 
+			 pVictim.InCond( TF_COND_DISGUISED ) && 
+			 (pVictim.GetDisguiseTeam() != pVictim.GetTeam()) &&
+			 !( pVictim.IsStealthed() || pVictim.InCond( TF_COND_STEALTHED_BLINK ) ) )
+		{
+			flPercentage = 0.0
+		}
+
+		if(GetOwner())
+			GetOwner().SetInternalVar("m_iAmmoToAdd", GetOwner().GetInternalVar("m_iAmmoToAdd", 0) + flPercentage * info.GetDamage())
+	}
+
+	local iExtraDamageOnHit = GetAttribute("extra damage on hit", 0)
+	if ( iExtraDamageOnHit )
+	{
+		// Adds 'Heads'. Reusing this data field
+		local iDecap = pAttacker.GetHeads()
+		pAttacker.SetHeads( MATH.Min( 200, iDecap + iExtraDamageOnHit ) )
+	}
+
+	// Everything else is only for player enemies or Halloween bosses
+	// We don't want buildables or the tank doing things like giving health or increasing ubercharge
+	// if ( !( pVictim || dynamic_cast< CHalloweenBaseBoss* >( pVictimBaseEntity ) ) )
+	// {
+	// 	return;
+	// }
+	//TODO:
+
+	local bIsSpyRevealed = false
+
+	if ( pVictim )
+	{
+		// Reveal cloaked Spy on hit
+		if ( pVictim.IsPlayerClass( TF_CLASS_SPY ) && pVictim.IsStealthed() )
+		{
+			local iRevealCloakedSpyOnHit = GetAttribute("reveal cloaked victim on hit", 0)
+			if ( iRevealCloakedSpyOnHit > 0 )
+			{
+				pVictim.RemoveInvisibility()
+				bIsSpyRevealed = true
+			}
+		}
+
+		// Reveal disguised Spy on hit
+		if ( pVictim.IsPlayerClass( TF_CLASS_SPY ) && pVictim.InCond( TF_COND_DISGUISED ) )
+		{
+			local iRevealDisguisedSpyOnHit = GetAttribute("reveal disguised victim on hit", 0)
+			if ( iRevealDisguisedSpyOnHit > 0 )
+			{
+				pVictim.RemoveDisguise()
+				bIsSpyRevealed = true
+			}
+		}
+
+		if ( bIsSpyRevealed )
+		{
+			UTIL_ScreenFade( pVictim, Vector4D(255, 255, 255, 255), 0.25, 0.1, FFADE_IN );
+			// pVictim->EmitSound( "Weapon_DRG_Wrench.RevealSpy" );
+		}
+
+		// On hit attributes don't work when you shoot disguised spies
+		if ( pVictim.InCond( TF_COND_DISGUISED ) && pVictim.GetDisguiseTeam() != pVictim.GetTeam() )
+			return
+	}
+
+	// Or from burn damage
+	if ( (info.GetDamageType() & DMG_BURN) )
+		return
+
+	// Heal on hits
+	local iModHealthOnHit = 0
+	iModHealthOnHit += GetAttribute("heal on hit for rapidfire", 0)
+	iModHealthOnHit += GetAttribute("selfdmg on hit for rapidfire", 0)
+	iModHealthOnHit += GetAttribute("heal on hit for slowfire", 0)
+	iModHealthOnHit += GetAttribute("selfdmg on hit for slowfire", 0)
+	if ( iModHealthOnHit )
+	{
+		// Scale Health mod with damage dealt, input being the maximum amount of health possible
+		local flScale = MATH.Clamp( info.GetDamage() / info.GetBaseDamage(), 0.0, 1.0 )
+		iModHealthOnHit = MATH.Max( 3, ( iModHealthOnHit.tofloat() * flScale ).tointeger() )
+	}
+
+	// Charge meter on hit
+	local flChargeRefill = 0.00
+	CALL_ATTRIB_HOOK_FLOAT( flChargeRefill, charge_meter_on_hit );
+	if ( flChargeRefill > 0 )
+	{
+		if ( pAttacker.GetCurrentRune() != RUNE_NONE )
+		{
+			flChargeRefill *= 0.2
+		}
+
+		pAttacker.SetDemomanChargeMeter( pAttacker.GetDemomanChargeMeter() + flChargeRefill * 100.0 );
+	}
+
+	// Speed on hit
+	CALL_ATTRIB_HOOK_INT( iSpeedBoostOnHit, speed_boost_on_hit )
+	if ( iSpeedBoostOnHit )
+	{
+		pAttacker.AddCondEx( TF_COND_SPEED_BOOST, iSpeedBoostOnHit, this )
+	}
+
+	if ( pVictim )
+	{
+		if ( pVictim.InCond( TF_COND_MAD_MILK ) )
+		{
+			local nAmount = info.GetDamage() * 0.6
+			iModHealthOnHit += nAmount;
+
+			// TODO:
+			// CTFPlayer *pProvider = ToTFPlayer( pVictim->m_Shared.GetConditionProvider( TF_COND_MAD_MILK ) );
+			/** @type {CTFPlayer|null} */
+			local pProvider = null
+			if ( pProvider )
+			{
+				// Only give points for the portion they're responsible for
+				if ( pProvider != pAttacker )
+				{
+					// no stats yet
+					// CTF_GameStats.Event_PlayerHealedOtherAssist( pProvider, nAmount );
+				}
+
+				// Show in the medic's UI as primary healing
+				SendGlobalGameEvent("player_healed", {
+					patient = pAttacker.GetUserID()
+					healer = pProvider.GetUserID()
+					amount = iModHealthOnHit
+					// priority = 1
+				})
+
+				// Give them a little bit of Uber
+				local pMedigun = pProvider.GetWeaponClassname("tf_weapon_medigun")
+				if ( pMedigun )
+				{
+					local iHealedAmount = MATH.Max( MATH.Min( pAttacker.GetMaxHealth() - pAttacker.GetHealth(), nAmount ), 0 );
+
+					// On Mediguns, per frame, the amount of uber added is based on 
+					// Default heal rate is 24per second, we scale based on that and frametime
+					pMedigun.IncreaseUberChargePercent( ( iHealedAmount / 24.0 ) * FrameTime() )
+				}
+			}
+		}
+	}
+
+	if ( pAttacker.InCond( TF_COND_REGENONDAMAGEBUFF ) )
+	{
+		local nAmount = info.GetDamage() * IsCvarAllowed("tf_dev_health_on_damage_recover_percentage") ? GetCvarFloat("tf_dev_health_on_damage_recover_percentage") : 0.35
+		iModHealthOnHit += nAmount;
+
+		// Increment provider's healing assist stat
+		local pProvider = null
+		// CTFPlayer *pProvider = ToTFPlayer( pAttacker->m_Shared.GetConditionProvider( TF_COND_REGENONDAMAGEBUFF ) ); // TODO:
+		if ( pProvider && pProvider != pAttacker )
+		{
+			// Only give points for the portion they're responsible for
+			// CTF_GameStats.Event_PlayerHealedOtherAssist( pProvider, nAmount );
+			// no stats
+		}
+	}
+
+	if ( iModHealthOnHit != 0)
+	{
+		if ( iModHealthOnHit > 0 )
+		{
+			pAttacker.HealPlayer(iModHealthOnHit, false, false, false)
+
+			// Increment attacker's healing stat
+			// if ( iHealed )
+			// {
+				// CTF_GameStats.Event_PlayerHealedOther( pAttacker, iHealed );
+			// }
+		}
+		else 
+		{
+			pAttacker.TakeDamageEx( pAttacker, pAttacker, this, Vector(), Vector(), abs(iModHealthOnHit), DMG_GENERIC)
+			// pAttacker->TakeDamage( CTakeDamageInfo( pAttacker, this, (iModHealthOnHit * -1), DMG_GENERIC ) );
+		}
+
+		SendGlobalGameEvent("player_healonhit", {
+			entindex = pAttacker.entindex()
+			weapon_def_index = GetIDX()
+			amount = iModHealthOnHit
+		})
+	}
+
+	// Add ubercharge on hit
+	if ( pAttacker.IsPlayerClass( TF_CLASS_MEDIC ) )
+	{
+		local flUberChargeBonus = GetAttribute("add uber charge on hit", 0.0)
+		if ( flUberChargeBonus )
+		{
+			local pMedigun = GetOwner() ? GetOwner().GetWeaponClassname("tf_weapon_medigun") : null
+			if ( pMedigun )
+			{
+				if ( IsPowerupMode() )
+				{
+					if ( pAttacker.GetCurrentRune() != RUNE_NONE )
+						flUberChargeBonus *= 0.2;
+					else 
+						flUberChargeBonus *= 0.4;
+				}
+				pMedigun.IncreaseUberChargePercent( flUberChargeBonus )
+			}
+		}
+	}
+	
+	// Lower rage on hit.
+	if ( pAttacker.IsPlayerClass( TF_CLASS_SOLDIER ) || pAttacker.IsPlayerClass( TF_CLASS_PYRO ) )
+	{
+		local iRageOnHit = 0
+		iRageOnHit += GetAttribute("mod rage on hit bonus", 0)
+		iRageOnHit -= GetAttribute("mod rage on hit penalty", 0)
+		// pAttacker.ModifyRage( iRageOnHit ); // TODO:
+	}
+
+	// rune charge on hit
+	if ( pAttacker.InCond( TF_COND_RUNE_SUPERNOVA ) )
+	{
+		local flMaxRuneCharge = 400.0;
+		local flAdd = info.GetDamage() * ( 100.0 / flMaxRuneCharge )
+
+		pAttacker.SetRuneCharge( pAttacker.GetRuneCharge() + flAdd )
+	}
+
+	// Increase Boost on hit
+	local iBoostOnDamage = pAttacker.HookAdditiveAttribute("boost on damage")
+	if ( iBoostOnDamage != 0 )
+	{
+		local tf_scout_hype_pep_max = IsCvarAllowed("tf_scout_hype_pep_max") ? GetCvarFloat("tf_scout_hype_pep_max") : 99.0
+		local tf_scout_hype_pep_mod = IsCvarAllowed("tf_scout_hype_pep_mod") ? GetCvarFloat("tf_scout_hype_pep_mod") : 1.0
+		local tf_scout_hype_pep_min_damage = IsCvarAllowed("tf_scout_hype_pep_min_damage") ? GetCvarFloat("tf_scout_hype_pep_min_damage") : 5.0
+		local fHype = MATH.Min( tf_scout_hype_pep_max, pAttacker.GetScoutHypeMeter() + ( MATH.Max( tf_scout_hype_pep_min_damage, info.GetDamage() ) / tf_scout_hype_pep_mod ) )
+		pAttacker.SetScoutHypeMeter( fHype )
+		pAttacker.TeamFortress_SetSpeed()
+	}
+
+	// Procs!
+	if( pVictim )
+	{
+		// Detemine weapon speed
+		local flFireDelay = ApplyFireDelay( GetWeaponInfo().GetWeaponData( 0 ).m_flTimeFireDelay )
+		
+		// Proc chance for AOE Heal
+		local flPPM = GetAttribute("aoe heal chance", 0.0)
+		local flProcChance = flFireDelay * (flPPM / 60.0)
+		
+		if( MATH.RandomChance() < flProcChance )
+			pAttacker.AddCondEx( TF_COND_RADIUSHEAL_ON_DAMAGE, 1.0, this)
+
+		// Proc chance for crit boost
+		flPPM = GetAttribute("crits on damage", 0.0)
+		flProcChance = flFireDelay * (flPPM / 60.0)
+		if( MATH.RandomChance() < flProcChance )
+			pAttacker.AddCondEx( TF_COND_CRITBOOSTED_CARD_EFFECT, 3.0, this)
+
+
+		// Proc chance for stun
+		flPPM = GetAttribute("stun on damage", 0.0)
+		flProcChance = flFireDelay * (flPPM / 60.0)
+		
+		if( MATH.RandomChance() < flProcChance )
+			pVictim.StunPlayer( 3.0, 1.0, TF_STUN_MOVEMENT | TF_STUN_CONTROLS, pAttacker )
+
+
+		// Proc chance for AOE Blast
+		flPPM = GetAttribute("aoe blast on damage", 0.0)
+		flProcChance = flFireDelay * (flPPM / 60.0)
+
+		if ( (MATH.RandomChance() < flProcChance) )
+		{
+			// Stun the source
+			local flStunDuration = 2.0
+			local flStunAmt = 1.0
+			pVictim.StunPlayer( flStunDuration, flStunAmt, TF_STUN_MOVEMENT | TF_STUN_CONTROLS | TF_STUN_NO_EFFECTS, pAttacker )
+
+
+			pVictim.TakeDamageCustom(pAttacker, pAttacker, this, Vector(), Vector(), 75, DMG_GENERIC, TF_DMG_CUSTOM_BLEEDING)
+
+			// Generate an explosion and look for nearby bots
+			CreateBaseExplosion({
+				owner = pAttacker
+				weapon = this
+				origin = pVictim.GetOrigin()
+				ignores = [pVictim]
+				radius = 150.0 // bloat by 50 because my shit
+				damage = 75
+				DmgType = DMG_RADIUS_MAX
+				OnlyPlayers = true
+				/** 
+				 * @param {CTFPlayer} pTFPlayer
+				 */
+				function ExplodeFunc(pTFPlayer)
+				{
+					if(pTFPlayer.IsDead())
+						return
+					if(pTFPlayer.IsInvincible())
+						return
+					if(!pTFPlayer.IsBot()) // disable to work on humans
+						return
+
+					pTFPlayer.StunPlayer( flStunDuration, flStunAmt, TF_STUN_MOVEMENT | TF_STUN_CONTROLS | TF_STUN_NO_EFFECTS, pAttacker )
+					pTFPlayer.EmitSound( "Weapon_Upgrade.ExplosiveHeadshot" )
+				}
+			})
+		}
+
+	}
+
+	// Damage bonus on hit
+	// Disabled because we have no attributes that use it
+
+	
+	local flAddDamageDoneBonusOnHit = GetAttribute("on hit add percent dmg bonus", 1.0)
+	if ( flAddDamageDoneBonusOnHit )
+		pAttacker.AddTmpDamageBonus( flAddDamageDoneBonusOnHit, 10.0 );
+	
+	if ( pVictim )
+	{
+		local iRageStun = 0
+		iRageStun += pAttacker.HookAdditiveAttributes("generate rage on damage")
+		iRageStun += pAttacker.HookAdditiveAttributes("engineer rage on dmg")
+		if ( iRageStun && pAttacker.IsRageDraining() )
+		{
+			// MvM: Heavies can purchase a rage-based knockback+stun effect
+			if ( pAttacker.IsPlayerClass( TF_CLASS_HEAVYWEAPONS ) )
+				pVictim.StunPlayer( 0.25, 1.0, TF_STUN_MOVEMENT | TF_STUN_NO_EFFECTS, pAttacker );
+		}
+
+		// Slow enemy on hit, unless they're being healed by a medic
+		if ( !pVictim.InCond( TF_COND_HEALTH_BUFF ) )
+		{
+			local flSlowEnemy = GetAttribute("slow enemy on hit", 0.0)
+			if ( flSlowEnemy )
+			{
+				if ( MATH.RandomChance() < flSlowEnemy )
+				{
+					// Adjust the stun amount based on distance to the target
+					// close range full stun, falls off to zero at 1536 (1024 window size)
+					local vecDistance = pVictim.GetOrigin() - pAttackerGetOrigin()
+					local flStunAmount = MATH.RemapValClamped( vecDistance.LengthSqr(), (512.0 * 512.0), (1536.0 * 1536.0), 0.60, 0.0 )
+
+					pVictim.StunPlayer( 0.2, flStunAmount, TF_STUN_MOVEMENT, pAttacker );
+				}
+			}
+
+			flSlowEnemy = GetAttribute("slow enemy on hit major", 0.0)
+			if ( flSlowEnemy )
+				pVictim.StunPlayer( flSlowEnemy, 0.4, TF_STUN_MOVEMENT, pAttacker );
+		}
+
+		// Mark for death on hit.
+		local iMarkForDeath = GetAttribute("mark for death", 0)
+		if ( iMarkForDeath )
+		{
+			// Note: this logic isn't perfect, and can do non-obvious things in certain situations. For example,
+			// imagine that we've got two scouts -- if the first scout marks someone, and then the second scout marks
+			// the same guy, and then the first scout marks someone else, the original victim will lose his marked-
+			// for-death status. Conditions don't have any concept of owner. This could be manually tracked for this
+			// condition if it becomes a problem.
+			local last_target = pAttacker.GetInternalVar("m_pMarkedForDeathTarget", null)
+			if(last_target != null && last_target.InCond(TF_COND_MARKEDFORDEATH) )
+				last_target.RemoveCondEx( TF_COND_MARKEDFORDEATH, true )
+
+			local tf_dev_marked_for_death_lifetime = IsCvarAllowed("tf_dev_marked_for_death_lifetime") ? GetCvarFloat("tf_dev_marked_for_death_lifetime") : 15.0
+
+			local flDuration = pVictim.IsMiniBoss() ? tf_dev_marked_for_death_lifetime / 2 : tf_dev_marked_for_death_lifetime
+			pVictim.AddCondEx( TF_COND_MARKEDFORDEATH, flDuration, pAttacker )
+
+			pAttacker.SetInternalVar( "m_pMarkedForDeathTarget", pVictim )
+
+			// ACHIEVEMENT_TF_MVM_SCOUT_MARK_FOR_DEATH
+			if ( IsMannVsMachineMode() )
+			{
+				if ( pAttacker.IsPlayerClass( TF_CLASS_SCOUT ) && ( GetIDX() == 44 ) )
+				{
+					if ( pVictim.IsBot() && ( pVictim.GetTeam() == TF_TEAM_PVE_INVADERS ) )
+						SendGlobalGameEvent("mvm_scout_marked_for_death", {
+							player = pAttacker.entindex()
+							// victim = pVictim.entindex()
+						})
+				}
+			}
+		}
+
+		// Stun airborne enemies who are half a body length higher than attacker
+		local bIsVictimAirborne = !( pVictim.GetFlags() & FL_ONGROUND ) && ( pVictim.GetWaterLevel() == WL_NotInWater );
+
+		local iStunWaistHighAirborne = GetAttribute("mod stun waist high airborne", 0)
+		if ( iStunWaistHighAirborne > 0 && bIsVictimAirborne )
+		{
+			if ( pVictim.GetCenter().z >= pAttacker.EyePosition().z )
+			{
+				// right in the jimmy!
+				pVictim.StunPlayer( iStunWaistHighAirborne, 0.5, TF_STUN_LOSER_STATE | TF_STUN_BOTH, pAttacker );
+				pVictim.EmitSound( "Halloween.PlayerScream" );
+			}
+		}
+	}
 }
 
 /*
@@ -4769,6 +6017,8 @@ function ROOT::SetDestroyCallback(entity, callback)
 
 /**
  * @param {CBaseEntity|string} target
+ * @param {CBaseEntity|null} activator
+ * @param {CBaseEntity|null} caller
  */
 function ROOT::EntFireNew(target, action, input = "", delay = -1, activator = null, caller = null)
 {
@@ -4923,8 +6173,190 @@ function ROOT::IsWaveStarted()
 	return GetScope(Gamerules).IsWaveStarted
 }
 
+if(!("Vector4D" in ROOT))
+{
+	class Vector4D {
+		/** @type {float|integer} */
+		x = null
+
+		/** @type {float|integer} */
+		y = null
+
+		/** @type {float|integer} */
+		z = null
+
+		/** @type {float|integer} */
+		w = null
+
+		constructor(_x = 0.0, _y = 0.0, _z = 0.0, _w = 0.0)
+		{
+			this.x = _x
+			this.y = _y
+			this.z = _z
+			this.w = _w
+		}
+
+		/**
+		 * Returns the sum of both classes's members.
+		 * @type {function}
+		 * @param {Vector4D} other
+		 * @returns {Vector4D}
+		 */
+		function _add(other);
+
+		/**
+		 * Returns the subtraction of both classes's members.
+		 * @type {function}
+		 * @param {Vector4D} other
+		 * @returns {Vector4D}
+		 */
+		function _sub(other);
+
+		/**
+		 * Returns the multiplication of a Vector against a scalar.
+		 * @type {function}
+		 * @param {float} other
+		 * @returns {Vector4D}
+		 */
+		function _mul(other);
+
+		/**
+		 * The scalar product of two vectors.
+		 * @type {function}
+		 * @param {Vector4D} factor
+		 * @returns {float}
+		 */
+		function Dot(factor);
+
+		/**
+		 * Magnitude of the vector.
+		 * @type {function}
+		 * @returns {float}
+		 */
+		function Length();
+
+		/**
+		 * The magnitude of the vector squared.
+		 * @type {function}
+		 * @returns {float}
+		 */
+		function LengthSqr();
+
+		/**
+		 * Normalizes the vector in place and returns its length.
+		 * @type {function}
+		 * @returns {float}
+		 */
+		function Norm();
+
+		/**
+		 * Returns a string without separating commas.
+		 * @type {function}
+		 * @returns {string}
+		 */
+		function ToKVString();
+	}
+}
+
+if(!("Vector4D" in ROOT))
+{
+	/**
+	 * @type {class}
+	 */
+	class Vector2D {
+		/** @type {float|integer} */
+		x = null
+
+		/** @type {float|integer} */
+		y = null
+
+		/**
+		 * Creates a new 2-dimensional vector with the specified Cartesian coordinates.
+		 * @type {function}
+		 * @param {float} _x Defaults to `0.0`
+		 * @param {float} _y Defaults to `0.0`
+		 */
+		constructor(_x = 0.0, _y = 0.0)
+		{
+			this.x = _x
+			this.y = _y
+		}
+
+		/**
+		 * Returns the sum of both classes's members.
+		 * @type {function}
+		 * @param {Vector2D} other
+		 * @returns {Vector2D}
+		 */
+		function _add(other);
+
+		/**
+		 * Returns the subtraction of both classes's members.
+		 * @type {function}
+		 * @param {Vector2D} other
+		 * @returns {Vector2D}
+		 */
+		function _sub(other);
+
+		/**
+		 * Returns the multiplication of a Vector against a scalar.
+		 * @type {function}
+		 * @param {float} other
+		 * @returns {Vector2D}
+		 */
+		function _mul(other);
+
+		/**
+		 * The scalar product of two vectors.
+		 * @type {function}
+		 * @param {Vector2D} factor
+		 * @returns {float}
+		 */
+		function Dot(factor);
+
+		/**
+		 * Magnitude of the vector.
+		 * @type {function}
+		 * @returns {float}
+		 */
+		function Length();
+
+		/**
+		 * The magnitude of the vector squared.
+		 * @type {function}
+		 * @returns {float}
+		 */
+		function LengthSqr();
+
+		/**
+		 * Normalizes the vector in place and returns its length.
+		 * @type {function}
+		 * @returns {float}
+		 */
+		function Norm();
+
+		/**
+		 * Returns a string without separating commas.
+		 * @type {function}
+		 * @returns {string}
+		 */
+		function ToKVString();
+	}
+}
+
+/** 
+ * @type {function}
+ * @param {CTFPlayer|null} pVictim
+ * @param {Vector4D} color
+ * @param {float} fade_time
+ * @param {float} fade_hold
+ * @param {integer} flags
+ */
+function ROOT::UTIL_ScreenFade( pVictim, color, fade_time, fade_hold, flags )
+	ScreenFade( pVictim, color.x, color.y, color.z, color.w, fade_time, fade_hold, flags )
+
 /*
-  ================================
+  ================================ 
   === STRING PARSING FUNCTIONS ===
   ================================
 */
@@ -5944,7 +7376,6 @@ function Vector::DistanceTo(point2)
 
 /**
  * @returns {Vector2D}
- * @static
  */
 function Vector2D::Normalize()
 {
@@ -6113,6 +7544,7 @@ if(!("CORROSION_ICON" in ROOT))
  * @param {Vector}				particle_ang		The angle of the explosion particle. (Default: QAngle(-90, 0, 0))
  * @param {Vector}				particle_offset		How much to offset the explosion particle spawn. (Default: Vector())
  * @param {integer}				DmgType 			The damage types to use (add DMG_RADIUS_MAX to ignore damage falloff). (Default: DMG_GENERIC|DMG_BLAST)
+ * @param {integer}				DmgCustom 			The custom damage type to use.
  * @param {float}				SoundRadius			The radius the sound travels. (Default: radius)
  * @param {float}				SoundDelay			Cooldown between explosion sounds. (Default: 0.5)
  * @param {function}			ExplodeFunc			Callback function for players hit. (Default: null)
@@ -7013,13 +8445,14 @@ function FireWeaponCheck()
 				if(!IsWeaponClass(params.weapon, "tf_weapon", true))
 					break
 
+				/**@type {CTFWeaponBase} */
 				local weapon = params.weapon
 				local iExplosiveBackstab = weapon.GetAttribute("explosive backstab", 0)
 				if ( iExplosiveBackstab == 0 )
 					break;
 
-				local radius = weapon.GetAttribute("explosive backstab radius", 250) + (iExplosiveBackstab * weapon.GetAttribute("explosive backstab radius add", 50))
-				local damage = weapon.GetAttribute("explosive backstab damage", 3125) + (iExplosiveBackstab * weapon.GetAttribute("explosive backstab damage add", 2500))
+				local radius = weapon.GetAttribute("explosive backstab base radius", 250) + (iExplosiveBackstab * weapon.GetAttribute("explosive backstab radius add", 0))
+				local damage = weapon.GetAttribute("explosive backstab base damage", 3125) + (iExplosiveBackstab * weapon.GetAttribute("explosive backstab damage add", 0))
 				CreateKnifeAoE({
 					owner = attacker
 					weapon = params.weapon
@@ -7170,22 +8603,22 @@ function FireWeaponCheck()
 			}
 		}
 
-		if(weapon && weapon.GetClassname() == "tf_weapon_flamethrower")
+		if(weapon && weapon.GetClassname() == "tf_weapon_flamethrower" && victim.IsValid())
 			params.damage_position <- victim.GetCenter()
 
-		if(params.damage_position == Vector())
+		if(params.damage_position == Vector() && victim.IsValid())
 			params.damage_position <- victim.GetCenter()
 
 		// [5/7/26]
 		// why do vanilla conditions do this shit
-		if(victim.IsPlayer() && !victim.InRespawnRoom() && victim.InCond(TF_COND_INVULNERABLE_WEARINGOFF))
+		if(victim.IsValid() && victim.IsPlayer() && !victim.InRespawnRoom() && victim.InCond(TF_COND_INVULNERABLE_WEARINGOFF))
 			victim.RemoveCondEx(TF_COND_INVULNERABLE_WEARINGOFF, true)
 
 		// [1/1/26]
 		// Shitty Infinite Reflect loop fix
 		if(params.damage_custom == TF_DMG_CUSTOM_RUNE_REFLECT)
 		{
-			if(victim.IsPlayer() && attacker.IsPlayer() && victim.HasRune(RUNE_REFLECT) && attacker.HasRune(RUNE_REFLECT))
+			if(victim.IsValid() && victim.IsPlayer() && attacker.IsPlayer() && victim.HasRune(RUNE_REFLECT) && attacker.HasRune(RUNE_REFLECT))
 			{
 				params.damage_type = params.damage_type | DMG_PREVENT_PHYSICS_FORCE
 				params.damage_force = Vector(1, 1, 1)
@@ -7199,8 +8632,10 @@ function FireWeaponCheck()
 		local eventdata = clone params
 
 		eventdata.victim 							<- victim
-		if(victim.IsPlayer()) eventdata.hit_group 	<- GetPropInt(victim, "m_LastHitGroup")
-		else eventdata.hit_group 					<- 0
+		if(victim.IsValid() && victim.IsPlayer()) 
+			eventdata.hit_group 					<- GetPropInt(victim, "m_LastHitGroup")
+		else 
+			eventdata.hit_group 					<- 0
 		eventdata.damage_custom 					<- params.damage_stats
 		eventdata.base_damage 						<- params.const_base_damage
 		eventdata.penetration_count 				<- params.player_penetration_count

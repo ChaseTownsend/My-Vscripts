@@ -89,7 +89,7 @@ function HomingThink()
 			player_point = target.GetCenter() + Vector(0, 0, 32)
 		}
 		else player_point = target.GetCenter()
-	//}
+	}
 
 	//DebugDrawClear()
 	// DebugDrawLine(self.GetOrigin(), player_point, 255, 0, 0, false, 1)

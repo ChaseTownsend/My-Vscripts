@@ -1,7 +1,7 @@
 if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
-SetScriptVersion("GameplayApplications", "5.0.4")
+SetScriptVersion("GameplayApplications", "5.0.5")
 
 local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", THINKER_PERSIST)
 
@@ -175,6 +175,10 @@ AddChatTrigger("equip" function(player, ...) {
 	}
 } )
 
+AddChatTrigger("scoreboard", function(player) {
+
+} )
+
 // if other scripts use SpawnCallbacks then Remove this!!
 ClearSpawnCallbacks()
 
@@ -225,7 +229,7 @@ function BlutsuagerHit(owner, victim)
 	case TF_CLASS_MEDIC:
 		action = "Medic"
 		victim.AddCustomAttribute("mult medigun range", 3, -1)
-		victim.AddCustomAttribute("speed boost when active", 1.3, -1)
+		victim.AddCustomAttribute("move speed bonus blutsauger", 1.3, -1)
 		victim.AddCustomAttribute("effect cond override", 33, -1)
 		victim.TeamFortress_SetSpeed()
 		victim.AddBotAttribute(IGNORE_ENEMIES)
@@ -242,7 +246,7 @@ function BlutsuagerHit(owner, victim)
 
 	if(BotSpeed > MedicSpeed * 1.3)
 	{
-		owner.AddCustomAttribute("speed boost when active", 1.3, duration)
+		owner.AddCustomAttribute("move speed bonus blutsauger", 1.3, duration)
 		owner.TeamFortress_SetSpeed()
 	}
 
@@ -250,6 +254,10 @@ function BlutsuagerHit(owner, victim)
 	GetScope(victim).ReProgrammer <- owner
 
 	local function OnDeath() {
+		local scope = GetScope(self)
+		local owner = ("ReProgrammer" in scope) ? scope.ReProgrammer : null
+		if(owner && owner.IsValid())
+			owner.RemoveCustomAttribute("move speed bonus blutsauger")
 		self.UndoReprogram(false)
 	}
 	GetScope(victim).OnDeath <- OnDeath
@@ -264,6 +272,10 @@ function BlutsuagerHit(owner, victim)
 }
 
 RegisterSpawnCallback("tf_projectile_healing_bolt", "BlutsaugerFUCK", function(entity) {
+	/** @type {CBaseEntity} */
+	local entity = entity
+
+	/** @type {CTFPlayer|null} */
 	local owner = entity.GetOwner()
 	if(!owner || !owner.IsPlayer() || owner.GetWeaponIDXInSlotNew(SLOT_PRIMARY) != TF_WEAPON_BLUTSAUGER)
 		return
@@ -332,7 +344,7 @@ function GameplayThink()
 		}
 	}
 
-	foreach (Human in m_aHumans)
+	foreach (/** @type {CTFPlayer} */Human in m_aHumans)
 	{
 		local scope = GetScope(Human)
 		if(!("LastVels" in scope))
@@ -378,10 +390,12 @@ function GameplayThink()
 		local activeIDX 	= Human.GetActiveWeaponIDX()
 		local meleeIDX 		= Human.GetWeaponIDXInSlotNew(SLOT_MELEE)
 		
+		Human.MultiplyGravity(Human.HookMultAttributes("mult gravity"))
+
 		if(active)
 			Human.MultiplyGravity(active.GetMultAttribute("mult gravity active"))
 
-		if(human.IsCrouching())
+		if(Human.IsCrouching())
 		{
 			Human.MultiplyGravity(Human.HookMultAttributes("mult gravity crouching"))
 			if(active)
@@ -639,8 +653,20 @@ RegisterDamageCallback(["obj_sentrygun", "obj_teleporter", "obj_dispenser", "tan
 RegisterDamageCallback("tf_zombie", "GameplaySkeletons", function(params) {
 	if(HasCustomFlag(params.damage_custom, TF_DMG_CUSTOM_IGNORE_EVENTS) || params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
 		return
+	local victim = params.victim
+	local attacker = params.attacker
 	params.early_out <- true
-	params.victim.TakeDamageCustom(params.inflictor, params.attacker, null, Vector(), Vector(), 5.0, DMG_GENERIC, TF_DMG_CUSTOM_NO_CALLBACKS)
+	if(victim.IsValid())
+		SendGlobalGameEvent("npc_hurt", {
+			entindex = victim.entindex()
+			health = victim.GetHealth()
+			attacker_player = attacker.GetUserID()
+			weaponid = -1
+			damageamount = 5
+			crit = false
+			boss = 0
+		})
+	victim.TakeDamageCustom(null, attacker, null, Vector(), Vector(), 5.0, DMG_GENERIC, TF_DMG_CUSTOM_NO_CALLBACKS)
 })
 
 
@@ -799,7 +825,8 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 
 					self.PrintToHud("[Activating Kill Switch]")
 
-					self.RemoveCustomAttribute("speed boost when active")
+					self.RemoveCustomAttribute("move speed bonus blutsauger")
+					self.TeamFortress_SetSpeed()
 
 					foreach (robot in m_aRobots)
 					{
@@ -825,7 +852,7 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 		scope.ReProgrammer <- null
 		scope.DelayGameplayThink <- GetFrameCount()+1
 
-		
+
 		if (FatCatLibSettings.KillWatchViewmodels)
 		{
 			local viewmodel_watch = GetPropEntityArray(player, "m_hViewModel", 1)
@@ -835,8 +862,6 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 				EntFireNew(viewmodel_watch, "Kill")
 			}
 		}
-
-
 		player.AddCustomAttribute("cannot swim", 1.0, -1)
 	}
 	function OnScriptEvent_BotTeam(params)
