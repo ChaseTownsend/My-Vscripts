@@ -43,7 +43,7 @@ else
 /**
  * Sets the library version
  * @param 	{string} 	lib_version 	The Library version to set to.
- * @param 	{int} 		subversion 		The Library subversion to set to.
+ * @param 	{integer} 		subversion 		The Library subversion to set to.
  * @param 	{bool} 		fail_msg 		If we want to include a fail message
  * @param 	{bool} 		force_include 	If we Force include this library version.
  * @param 	{bool} 		developer 		Developer ... idk
@@ -219,18 +219,199 @@ if (!("ConstantNamingConvention" in ROOT)) // make sure folding is only done onc
 	}
 }
 
-if (!("FoldedNetProps" in ROOT)) // make sure folding is only done once
+// if (!("FoldedNetProps" in ROOT)) // make sure folding is only done once
+// {
+// 	ROOT["FoldedNetProps"] <- "Folds all NetProps to Not require 'NetProps.'"
+// 	foreach (name, method in ::NetProps.getclass())
+// 	{
+// 		// Every 'class' has this
+// 		if (name != "IsValid")
+// 		{
+// 			ROOT[name] <- method.bindenv(::NetProps)
+// 		}
+// 	}
+// }
+
+/** 
+ * @param {CBaseEntity} entity
+ * @param {string} prop
+ * @param {integer} value
+ * @param {integer} index
+ */
+function ROOT::SetPropInt(entity, prop, value, index = 0)
 {
-	ROOT["FoldedNetProps"] <- "Folds all NetProps to Not require 'NetProps.'"
-	foreach (name, method in ::NetProps.getclass())
-	{
-		// Every 'class' has this
-		if (name != "IsValid")
-		{
-			ROOT[name] <- method.bindenv(::NetProps)
-		}
-	}
+	EnableStringPurge(entity)
+	NetProps.SetPropIntArray(entity, prop, value, index)
 }
+
+/** 
+ * @param {CBaseEntity} entity
+ * @param {string} prop
+ * @param {integer} index
+ * @returns {integer} -1 if not found
+ */
+function ROOT::GetPropInt(entity, prop, index = 0)
+{
+	EnableStringPurge(entity)
+	return NetProps.GetPropIntArray(entity, prop, index)
+}
+
+/** 
+ * @param {CBaseEntity} entity
+ * @param {string} prop
+ * @param {float} value
+ * @param {integer} index
+ */
+function ROOT::SetPropFloat(entity, prop, value, index = 0)
+{
+	EnableStringPurge(entity)
+	NetProps.SetPropFloatArray(entity, prop, value, index)
+}
+
+/** 
+ * @param {CBaseEntity} entity
+ * @param {string} prop
+ * @param {integer} index
+ * @returns {float} -1.0 if not found
+ */
+function ROOT::GetPropFloat(entity, prop, index = 0)
+{
+	EnableStringPurge(entity)
+	return NetProps.GetPropFloatArray(entity, prop, index)
+}
+
+/** 
+ * @param {CBaseEntity} entity
+ * @param {string} prop
+ * @param {CBaseEntity} value
+ * @param {integer} index
+ * @returns {CBaseEntity|null}
+ */
+function ROOT::SetPropEntity(entity, prop, value, index = 0)
+{
+	EnableStringPurge(entity)
+	NetProps.SetPropEntityArray(entity, prop, value, index)
+}
+
+/** 
+ * @param {CBaseEntity} entity
+ * @param {string} prop
+ * @param {integer} index
+ * @returns {CBaseEntity|null} null if not found
+ */
+function ROOT::GetPropEntity(entity, prop, index = 0)
+{
+	EnableStringPurge(entity)
+	return NetProps.GetPropEntityArray(entity, prop, index)
+}
+
+
+/** 
+ * @param {CBaseEntity} entity
+ * @param {string} prop
+ * @param {string} value
+ * @param {integer} index
+ */
+function ROOT::SetPropString(entity, prop, value, index = 0)
+{
+	EnableStringPurge(entity)
+	NetProps.SetPropStringArray(entity, prop, value, index)
+}
+
+/** 
+ * @param {CBaseEntity} entity
+ * @param {string} prop
+ * @param {integer} index
+ * @returns {string} "" if not found
+ */
+function ROOT::GetPropString(entity, prop, index = 0)
+{
+	EnableStringPurge(entity)
+	return NetProps.GetPropStringArray(entity, prop, index)
+}
+
+/** 
+ * @param {CBaseEntity} entity
+ * @param {string} prop
+ * @param {bool} value
+ * @param {integer} index
+ */
+function ROOT::SetPropBool(entity, prop, value, index = 0)
+{
+	EnableStringPurge(entity)
+	NetProps.SetPropBoolArray(entity, prop, value, index)
+}
+
+/** 
+ * @param {CBaseEntity} entity
+ * @param {string} prop
+ * @param {integer} index
+ * @returns {bool} false if not found
+ */
+function ROOT::GetPropBool(entity, prop, index = 0)
+{
+	EnableStringPurge(entity)
+	return NetProps.GetPropBoolArray(entity, prop, index)
+}
+
+/** 
+ * @param {CBaseEntity} entity
+ * @param {string} prop
+ * @param {Vector} value
+ * @param {integer} index
+ */
+function ROOT::SetPropVector(entity, prop, value, index = 0)
+{
+	EnableStringPurge(entity)
+	NetProps.SetPropVectorArray(entity, prop, value, index)
+}
+
+/** 
+ * @param {CBaseEntity} entity
+ * @param {string} prop
+ * @param {integer} index
+ * @returns {Vector} Vector(0,0,0) if not found
+ */
+function ROOT::GetPropVector(entity, prop, index = 0)
+{
+	EnableStringPurge(entity)
+	return NetProps.GetPropVectorArray(entity, prop, index)
+}
+
+if(!("SetPropIntArray" in ROOT))
+	ROOT["SetPropIntArray"] <- SetPropInt
+
+if(!("GetPropIntArray" in ROOT))
+	ROOT["GetPropIntArray"] <- GetPropInt
+
+
+if(!("SetPropFloatArray" in ROOT))
+	ROOT["SetPropFloatArray"] <- SetPropFloat
+
+if(!("GetPropFloatArray" in ROOT))
+	ROOT["GetPropFloatArray"] <- GetPropFloat
+
+
+if(!("SetPropBoolArray" in ROOT))
+	ROOT["SetPropBoolArray"] <- SetPropBool
+
+if(!("GetPropBoolArray" in ROOT))
+	ROOT["GetPropBoolArray"] <- GetPropBool
+
+
+if(!("SetPropEntityArray" in ROOT))
+	ROOT["SetPropEntityArray"] <- SetPropEntity
+
+if(!("GetPropEntityArray" in ROOT))
+	ROOT["GetPropEntityArray"] <- GetPropEntity
+
+
+if(!("SetPropVectorArray" in ROOT))
+	ROOT["SetPropVectorArray"] <- SetPropVector
+
+if(!("GetPropVectorArray" in ROOT))
+	ROOT["GetPropVectorArray"] <- GetPropVector
+
 
 /*
   =================
@@ -946,28 +1127,28 @@ function CTFPlayer::GetSteamID()
 	return GetPropString(this, PROP_PLAYER_STEAMID)
 
 function CTFPlayer::GetUserID()
-	return GetPropIntArray(PlayerManager, "m_iUserID", entindex())
+	return GetPropInt(PlayerManager, "m_iUserID", entindex())
 
 function CTFPlayer::GetHealers()
 	return GetPropInt(this, "m_Shared.m_nNumHealers")
 
 function CTFPlayer::GetAmmoByIndex(index)
-	return GetPropIntArray(this, PROP_PLAYER_AMMO, index)
+	return GetPropInt(this, PROP_PLAYER_AMMO, index)
 
 function CTFPlayer::GetPrimaryAmmo()
-	return GetPropIntArray(this, PROP_PLAYER_AMMO, TF_AMMO_PRIMARY)
+	return GetPropInt(this, PROP_PLAYER_AMMO, TF_AMMO_PRIMARY)
 
 function CTFPlayer::GetSecondaryAmmo()
-	return GetPropIntArray(this, PROP_PLAYER_AMMO, TF_AMMO_SECONDARY)
+	return GetPropInt(this, PROP_PLAYER_AMMO, TF_AMMO_SECONDARY)
 
 function CTFPlayer::GetMetal()
-	return GetPropIntArray(this, PROP_PLAYER_AMMO, TF_AMMO_METAL)
+	return GetPropInt(this, PROP_PLAYER_AMMO, TF_AMMO_METAL)
 
 function CTFPlayer::IsOverhealed()
 	return (GetHealth() > GetMaxBuffedHealth())
 
 function CTFPlayer::GetMaxBuffedHealth()
-	return GetPropIntArray(PlayerManager, "m_iMaxBuffedHealth", entindex())
+	return GetPropInt(PlayerManager, "m_iMaxBuffedHealth", entindex())
 
 function CTFPlayer::EyeVector()
 	return EyeAngles().Forward()
@@ -988,16 +1169,16 @@ function CTFPlayer::GetWeaponInSlot(slot = 0)
 	return EnableStringPurge(GetPropEntityArray(this, "m_hMyWeapons", slot))
 
 function CTFPlayer::SetAmmoByIndex(index, ammo)
-	SetPropIntArray(this, PROP_PLAYER_AMMO, ammo, index)
+	SetPropInt(this, PROP_PLAYER_AMMO, ammo, index)
 
 function CTFPlayer::SetPrimaryAmmo(ammo)
-	SetPropIntArray(this, PROP_PLAYER_AMMO, ammo, 1)
+	SetPropInt(this, PROP_PLAYER_AMMO, ammo, 1)
 
 function CTFPlayer::SetSecondaryAmmo(ammo)
-	SetPropIntArray(this, PROP_PLAYER_AMMO, ammo, 2)
+	SetPropInt(this, PROP_PLAYER_AMMO, ammo, 2)
 
 function CTFPlayer::SetMetal(metal)
-	SetPropIntArray(this, PROP_PLAYER_AMMO, metal, 3)
+	SetPropInt(this, PROP_PLAYER_AMMO, metal, 3)
 
 function CTFPlayer::ResetHealth()
 	SetHealth(GetMaxHealth())
@@ -1051,7 +1232,7 @@ function CTFPlayer::IsBot()
 	return false
 
 function CTFPlayer::SetFoodItemCharge(charge)
-	SetPropFloatArray(this, "m_Shared.m_flItemChargeMeter", charge, 1)
+	SetPropFloat(this, "m_Shared.m_flItemChargeMeter", charge, 1)
 
 function CTFPlayer::TakeUnblockableDamage(damage, attacker = Entities.First(), inflictor = this, weapon = this)
 	TakeDamageCustom(inflictor, attacker, weapon, Vector(0, 0, 1), GetOrigin(), damage, DMG_GENERIC|DMG_PREVENT_PHYSICS_FORCE, TF_DMG_CUSTOM_TRIGGER_HURT)
@@ -1126,7 +1307,7 @@ function CTFPlayer::SetRuneCharge(num)
 	SetPropFloat(this, "m_Shared.m_flRuneCharge", num)
 
 /**
- * @param {int} playerclass
+ * @param {integer} playerclass
  */
 function CTFPlayer::IsPlayerClass(playerclass)
 	return GetPlayerClass() == playerclass
@@ -1304,7 +1485,7 @@ function CTFPlayer::SetThrowableCharge(charge)
 }
 
 function CTFPlayer::SetThrowableAmmo(ammo)
-	SetPropIntArray(this, PROP_PLAYER_AMMO, ammo, TF_AMMO_GRENADES2)
+	SetPropInt(this, PROP_PLAYER_AMMO, ammo, TF_AMMO_GRENADES2)
 
 function CTFPlayer::IsUberDraining() 
 {
@@ -2620,7 +2801,7 @@ function CTFPlayer::EquipItem(classname, idx, swit = true, attrib_overrides = {}
 
 	old_wep.Destroy()
 
-	SetPropEntityArray(this, "m_hMyWeapons", null, myweaps_idx)
+	SetPropEntity(this, "m_hMyWeapons", null, myweaps_idx)
 
 	Weapon_Equip(weapon)
 	if(swit)
@@ -3797,17 +3978,17 @@ function CTFWeaponBase::SetPropArray(propertyName, value, index)
 	switch (type(value))
 	{
 		case "string":
-		{ 	SetPropStringArray(this, propertyName, value, index); return 	}
+		{ 	SetPropString(this, propertyName, value, index); return 	}
 		case "integer":
-		{ 	SetPropIntArray(this, propertyName, value, index); return 		}
+		{ 	SetPropInt(this, propertyName, value, index); return 		}
 		case "float":
-		{ 	SetPropFloatArray(this, propertyName, value, index); return 	}
+		{ 	SetPropFloat(this, propertyName, value, index); return 	}
 		case "instance":
-		{ 	SetPropEntityArray(this, propertyName, value, index); return 	}
+		{ 	SetPropEntity(this, propertyName, value, index); return 	}
 		case "bool":
-		{ 	SetPropBoolArray(this, propertyName, value, index); return 		}
+		{ 	SetPropBool(this, propertyName, value, index); return 		}
 		case "vector":
-		{ 	SetPropVectorArray(this, propertyName, value, index); return 	}
+		{ 	SetPropVector(this, propertyName, value, index); return 	}
 		default:
 			printl("Hmm found " + type(value) + " for CTFWeaponBase::SetProp/SetPropArray")
 	}
@@ -4255,7 +4436,7 @@ function CTFWeaponBase::CanStomp()
 }
 
 function CTFWeaponBase::GetKillComboCount()
-	return GetPropInt("NonLocalTFWeaponData.m_nKillComboCount")
+	return GetPropInt(this, "NonLocalTFWeaponData.m_nKillComboCount")
 
 /** 
  * @type {function}
@@ -4687,7 +4868,7 @@ if(!("CTFWeaponInfo" in ROOT))
 
 		/** 
 		 * @type {function}
-		 * @param {int} iWeapon
+		 * @param {integer} iWeapon
 		 * @returns {WeaponData_t}
 		 */
 		function GetWeaponData( iWeapon ) { return m_WeaponData[iWeapon] }
