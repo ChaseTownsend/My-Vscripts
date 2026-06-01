@@ -219,18 +219,18 @@ if (!("ConstantNamingConvention" in ROOT)) // make sure folding is only done onc
 	}
 }
 
-// if (!("FoldedNetProps" in ROOT)) // make sure folding is only done once
-// {
-// 	ROOT["FoldedNetProps"] <- "Folds all NetProps to Not require 'NetProps.'"
-// 	foreach (name, method in ::NetProps.getclass())
-// 	{
-// 		// Every 'class' has this
-// 		if (name != "IsValid")
-// 		{
-// 			ROOT[name] <- method.bindenv(::NetProps)
-// 		}
-// 	}
-// }
+if (!("FoldedNetProps" in ROOT)) // make sure folding is only done once
+{
+	ROOT["FoldedNetProps"] <- "Folds all NetProps to Not require 'NetProps.'"
+	foreach (name, method in ::NetProps.getclass())
+	{
+		// Every 'class' has this
+		if (name != "IsValid")
+		{
+			ROOT[name] <- method.bindenv(::NetProps)
+		}
+	}
+}
 
 /** 
  * @param {CBaseEntity} entity
@@ -290,6 +290,7 @@ function ROOT::GetPropFloat(entity, prop, index = 0)
 function ROOT::SetPropEntity(entity, prop, value, index = 0)
 {
 	EnableStringPurge(entity)
+	EnableStringPurge(value)
 	NetProps.SetPropEntityArray(entity, prop, value, index)
 }
 
@@ -302,7 +303,9 @@ function ROOT::SetPropEntity(entity, prop, value, index = 0)
 function ROOT::GetPropEntity(entity, prop, index = 0)
 {
 	EnableStringPurge(entity)
-	return NetProps.GetPropEntityArray(entity, prop, index)
+	local new_ent = NetProps.GetPropEntityArray(entity, prop, index)
+	EnableStringPurge(new_ent)
+	return new_ent
 }
 
 
@@ -370,7 +373,7 @@ function ROOT::SetPropVector(entity, prop, value, index = 0)
  * @param {CBaseEntity} entity
  * @param {string} prop
  * @param {integer} index
- * @returns {Vector} Vector(0,0,0) if not found
+ * @returns {Vector|instance} Vector(0,0,0) if not found
  */
 function ROOT::GetPropVector(entity, prop, index = 0)
 {
@@ -5709,12 +5712,29 @@ function ROOT::PrintArray(array, filter = [])
 function ROOT::PrintClass(clas, filter = [])
 	PrintCollection(clas, filter)
 /**
- * @param {table|array|class} collection
+ * @param {instance} inst
+ */
+function ROOT::PrintInstance(inst, filter = [])
+	PrintCollection(inst, filter)
+/**
+ * @param {table|array|class|instance} collection
  */
 function ROOT::PrintCollection(collection, filter = [], indentation = 0, header_prefix = "")
 {
 	local type = typeof collection
-	if(type != "table" && type != "array" && type != "class")
+	local obj_class = null
+	try {
+		obj_class = collection.getclass()
+		if (collection instanceof CBaseEntity)
+			type = "entity"
+		else
+			type = "instance"
+	}
+	catch(e) {}
+
+	// printf("got %s for the class of %s\n", obj_class.tostring(), collection.tostring())
+
+	if(type != "table" && type != "array" && type != "class" && type != "instance")
 	{
 		PrintToConsoleAll("Trying to PrintCollection() a " + type)
 		return
@@ -5736,13 +5756,21 @@ function ROOT::PrintCollection(collection, filter = [], indentation = 0, header_
 	else
 		header_str = indents
 
-	PrintToConsoleAll(header_str + collection.tostring() + " " + ((type == "table" || type == "class") ? "{" : "["))
-	foreach (key, value in collection)
+	PrintToConsoleAll(header_str + collection.tostring() + " " + ((type == "table" || type == "class" || type == "instance") ? "{" : "["))
+
+	local keys_source = collection
+	if (type == "instance")
+	{
+		keys_source = obj_class
+	}
+
+	foreach (key, value_in_source in keys_source)
 	{
 		// Skip internal Squirrel variables and filtered keys
 		if(key == "__vname" || key == "__vrefs") continue
 		if(IsInArray(key, filter)) continue
 
+		local value = (type == "instance") ? (key in collection ? collection[key] : value_in_source) : value_in_source
 		local valType = typeof value
 		if(IsInArray(valType, filter)) continue
 		
@@ -5751,7 +5779,7 @@ function ROOT::PrintCollection(collection, filter = [], indentation = 0, header_
 		// If it's an array, show [index] for clarity
 		local keyDisplay = (type == "array") ? "[" + key + "]" : key
 		
-		if(valType == "table" || valType == "array" || valType == "class")
+		if(valType == "table" || valType == "array" || valType == "class" || (valType == "instance" && !(value instanceof CBaseEntity)))
 		{
 			local prefix = itemIndents + keyDisplay + " : "
 			PrintCollection(value, filter, indentation + 1, prefix)
@@ -5761,7 +5789,7 @@ function ROOT::PrintCollection(collection, filter = [], indentation = 0, header_
 		else
 			PrintToConsoleAll(itemIndents + keyDisplay + " : " + value)
 	}
-	PrintToConsoleAll(indents + ((type == "table" || type == "class") ? "}" : "]"))
+	PrintToConsoleAll(indents + ((type == "table" || type == "class" || type == "instance") ? "}" : "]"))
 }
 
 /*
@@ -5823,9 +5851,10 @@ function ROOT::EnableStringPurge(entity)
 {
 	if( !entity )
 		return entity
-	SetPropBool(entity, "m_bForcePurgeFixedupStrings", true)
+	NetProps.SetPropBool(entity, "m_bForcePurgeFixedupStrings", true)
 	return entity
 }
+
 
 function ROOT::CreateByClassname(classname)
 	return EnableStringPurge(Entities.CreateByClassname(classname))
