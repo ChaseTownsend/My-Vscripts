@@ -199,7 +199,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format)
-if (!SetLibraryVersion("06.1.2026.20", 0))
+if (!SetLibraryVersion("06.1.2026.22", 0))
 	return
 
 SetLibrarySettings({})
@@ -8709,7 +8709,7 @@ function FireWeaponCheck()
 			if(attacker.InAirDueToExplosion())
 				params.damage *= attacker.GetActiveWeapon().GetMultAttribute("mult dmg while rocket jumping")
 
-			if(!attacker.IsOnGround())
+			if(!attacker.IsOnGround() && attacker.GetActiveWeapon())
 				params.damage *= attacker.GetActiveWeapon().GetMultAttribute("mult dmg while airborne")
 		}
 
@@ -9025,7 +9025,7 @@ function FireWeaponCheck()
 		player.SetCond(player.GetCustomAttribute("cond on spawn", -1), player.GetCustomAttribute("cond on spawn duration", -1))
 
 		local scope = GetScope(player)
-		if(!("HasSpawned" in scope))
+		if(!("HasSpawned" in scope) && !player.IsBot())
 		{
 			player.PrintToChat("\x01\x07E000E0► FatCatLib ◄   \x03Happy Pride Month!")
 			scope.HasSpawned <- true
