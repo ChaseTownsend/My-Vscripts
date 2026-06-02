@@ -3179,8 +3179,6 @@ function CTFPlayer::AttachParticle(particle, duration = -1, attachment_point = P
 		PlayerFire("DispatchEffect", "ParticleEffectStop", duration)
 }
 
-// Host.AttachParticle( , 15)
-
 function CTFPlayer::EmitSoundTo(sound, data = {})
 {
 	PrecacheSound(sound)
