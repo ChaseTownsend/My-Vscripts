@@ -204,9 +204,6 @@ if (!SetLibraryVersion("06.1.2026.20", 0))
 
 SetLibrarySettings({})
 
-// ClientPrint(null, 3, "Happy Pride Month!")
-// ClientPrint(null, 3, "Gay/Trans people are cool")
-
 if (!("ConstantNamingConvention" in ROOT)) // make sure folding is only done once
 {
 	foreach (enum_table in Constants)
