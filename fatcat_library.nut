@@ -199,10 +199,13 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format)
-if (!SetLibraryVersion("05.29.2026.14", 0))
+if (!SetLibraryVersion("06.1.2026.20", 0))
 	return
 
 SetLibrarySettings({})
+
+// ClientPrint(null, 3, "Happy Pride Month!")
+// ClientPrint(null, 3, "Gay/Trans people are cool")
 
 if (!("ConstantNamingConvention" in ROOT)) // make sure folding is only done once
 {
@@ -432,14 +435,16 @@ if(!("GetPropVectorArray" in ROOT))
 ::SLOT_PDA       <- 5
 ::SLOT_PDA2      <- 6
 ::SLOT_COUNT     <- 7
-//////// Slot indexs
-::STRIPSLOT_PRIMARY		<- (1)
-::STRIPSLOT_SECONDARY	<- (1 << 1)
-::STRIPSLOT_MELEE		<- (1 << 2)
-::STRIPSLOT_PDA			<- (1 << 3)
-::STRIPSLOT_PDA2		<- (1 << 4)
-::STRIPSLOT_ACTION		<- (1 << 5)
-::STRIPSLOT_COSMETICS	<- (1 << 6)
+//////// Strip slot Flags
+::STRIPSLOT_PRIMARY		<- (1)		// 1
+::STRIPSLOT_SECONDARY	<- (1 << 1)	// 2
+::STRIPSLOT_MELEE		<- (1 << 2)	// 4
+::STRIPSLOT_PDA			<- (1 << 3)	// 8
+::STRIPSLOT_PDA2		<- (1 << 4)	// 16
+::STRIPSLOT_ACTION		<- (1 << 5)	// 32
+::STRIPSLOT_COSMETICS	<- (1 << 6)	// 64
+
+// combine these flags to remove multiple slots
 
 //////// MathLib
 ::DEG2RAD	<- 0.0174532924
@@ -1119,6 +1124,15 @@ function CTFPlayer::PrintToChat(message = "")
 
 function CTFPlayer::PrintToConsole(message = "")
 	PrintBetter(this, message, HUD_PRINTCONSOLE)
+
+function CTFPlayer::PrintToHudF(message, ...)
+	PrintBetter(this, CleanUpAndFormatString.acall([this, message ? message : "null"].extend(vargv)), HUD_PRINTCENTER)
+
+function CTFPlayer::PrintToChatF(message, ...)
+	PrintBetter(this, CleanUpAndFormatString.acall([this, message ? message : "null"].extend(vargv)), HUD_PRINTTALK)
+
+function CTFPlayer::PrintToConsoleF(message, ...)
+	PrintBetter(this, CleanUpAndFormatString.acall([this, message ? message : "null"].extend(vargv)), HUD_PRINTTALK)
 
 function CTFPlayer::IsOnGround()
 	return GetPropEntity(this, "m_hGroundEntity") != null
@@ -2204,65 +2218,36 @@ function CTFPlayer::CalculateEHP()
 	local MeleeMult = 1.0
 	local CritMult = 1.0
 	local CondMult = 1.0
-	foreach( weapon in GetAllWeapons() )
+
+	BlastMult 	*= HookMultAttributes("dmg taken from blast increased")
+	BlastMult 	*= HookMultAttributes("dmg taken from blast reduced")
+
+	BulletMult 	*= HookMultAttributes("dmg taken from bullets increased")
+	BulletMult 	*= HookMultAttributes("dmg taken from bullets reduced")
+	BulletMult 	*= HookMultAttributes("CARD: dmg taken from bullets reduced")
+	BulletMult 	*= HookMultAttributes("SET BONUS: dmg taken from bullets increased")
+			
+	FireMult 	*= HookMultAttributes("dmg taken from fire increased")
+	FireMult 	*= HookMultAttributes("dmg taken from fire reduced")
+	FireMult 	*= HookMultAttributes("SET BONUS: dmg taken from fire reduced set bonus")
+
+	AllMult 	*= HookMultAttributes("dmg taken increased")
+
+	MeleeMult 	*= HookMultAttributes("mult dmgtaken from melee")
+
+	CritMult 	*= HookMultAttributes("dmg taken from crit reduced")
+	CritMult 	*= HookMultAttributes("dmg taken from crit increased")
+	CritMult 	*= HookMultAttributes("SET BONUS: dmg taken from crit reduced set bonus")
+
+	local weapon = GetActiveWeapon()
+	if( weapon )
 	{
-		if( weapon.GetAttribute("provide on active", 0) )
-		{
-			if( GetActiveWeapon() != weapon )
-				continue
-		}
+		FireMult *= weapon.GetMultAttribute("dmg taken from fire reduced on active")
+		MeleeMult *= weapon.GetMultAttribute("dmg from melee increased")
+		RangedMult *= weapon.GetMultAttribute("dmg from ranged reduced")
 
-		BlastMult *= weapon.GetAttribute("dmg taken from blast increased",1)
-		BlastMult *= weapon.GetAttribute("dmg taken from blast reduced",1)
-
-		BulletMult *= weapon.GetAttribute("dmg taken from bullets increased",1)
-		BulletMult *= weapon.GetAttribute("dmg taken from bullets reduced",1)
-		BulletMult *= weapon.GetAttribute("CARD: dmg taken from bullets reduced",1)
-		BulletMult *= weapon.GetAttribute("SET BONUS: dmg taken from bullets increased",1)
-				
-		FireMult *= weapon.GetAttribute("dmg taken from fire increased",1)
-		FireMult *= weapon.GetAttribute("dmg taken from fire reduced",1)
-		FireMult *= weapon.GetAttribute("SET BONUS: dmg taken from fire reduced set bonus",1)
-
-		AllMult *= weapon.GetAttribute("dmg taken increased",1)
-
-		MeleeMult *= weapon.GetAttribute("mult dmgtaken from melee",1)
-
-		CritMult *= weapon.GetAttribute("dmg taken from crit reduced",1)
-		CritMult *= weapon.GetAttribute("dmg taken from crit increased",1)
-		CritMult *= weapon.GetAttribute("SET BONUS: dmg taken from crit reduced set bonus",1)
-
-		if( GetActiveWeapon() == weapon )
-		{
-			FireMult *= weapon.GetAttribute("dmg taken from fire reduced on active",1)
-
-			MeleeMult *= weapon.GetAttribute("dmg from melee increased",1)
-
-			RangedMult *= weapon.GetAttribute("dmg from ranged reduced",1)
-
-			AllMult *= weapon.GetAttribute("mult_dmgtaken_active",1)
-		}
+		AllMult *= weapon.GetMultAttribute("mult_dmgtaken_active")
 	}
-	
-	BlastMult *= GetCustomAttribute("dmg taken from blast increased",1)
-	BlastMult *= GetCustomAttribute("dmg taken from blast reduced",1)
-
-	BulletMult *= GetCustomAttribute("dmg taken from bullets increased",1)
-	BulletMult *= GetCustomAttribute("dmg taken from bullets reduced",1)
-	BulletMult *= GetCustomAttribute("CARD: dmg taken from bullets reduced",1)
-	BulletMult *= GetCustomAttribute("SET BONUS: dmg taken from bullets increased",1)
-				
-	FireMult *= GetCustomAttribute("dmg taken from fire increased",1)
-	FireMult *= GetCustomAttribute("dmg taken from fire reduced",1)
-	FireMult *= GetCustomAttribute("SET BONUS: dmg taken from fire reduced set bonus",1)
-
-	AllMult *= GetCustomAttribute("dmg taken increased",1)
-
-	MeleeMult *= GetCustomAttribute("dmg from melee increased",1)
-
-	CritMult *= GetCustomAttribute("dmg taken from crit reduced",1)
-	CritMult *= GetCustomAttribute("dmg taken from crit increased",1)
-	CritMult *= GetCustomAttribute("SET BONUS: dmg taken from crit reduced set bonus",1)
 	
 	if(InMultiCond([TF_COND_MEDIGUN_UBER_FIRE_RESIST, TF_COND_MEDIGUN_SMALL_FIRE_RESIST]))
 		FireMult = 0
@@ -2279,46 +2264,67 @@ function CTFPlayer::CalculateEHP()
 		CondMult *= 0.65
 	
 	if(InCond(TF_COND_STEALTHED))
-		CondMult *= GetCvarFloat("tf_stealth_damage_reduction")
+		CondMult *= IsCvarAllowed("tf_stealth_damage_reduction") ? GetCvarFloat("tf_stealth_damage_reduction") : 1.0 // TODO: get
+
 	if(IsMinicritDebuffed())
 		CondMult *= (1.0 + (0.35 * CritMult))
 
+	if(IsInvincible())
+		CondMult = -1 // dont want to use 0 as we are dividing
+
 	AllMult = AllMult * CondMult
+
+	if(AllMult == 0) 
+		AllMult = -1 // dont want to use 0 as we are dividing
 
 	local InfHP = "\x0700bbffInfinite"
 
-	local BulletHP 	= BulletMult 	<= 0 ? InfHP : format("%.0f", ceil(HP/BulletMult/AllMult))
-	local BlastHP 	= BlastMult 	<= 0 ? InfHP : format("%.0f", ceil(HP/BlastMult/AllMult))
-	local FireHP 	= FireMult 		<= 0 ? InfHP : format("%.0f", ceil(HP/FireMult/AllMult))
-	local MeleeHP 	= MeleeMult 	<= 0 ? InfHP : format("%.0f", ceil(HP/MeleeMult/AllMult))
-	local RangedHP 	= RangedMult 	<= 0 ? InfHP : format("%.0f", ceil(HP/RangedMult/AllMult))
-	local _AllHP 	= AllMult 		<= 0 ? InfHP : format("%.0f", ceil(HP/AllMult))
+	BulletMult = BulletMult * RangedMult
+	BlastMult = BlastMult * RangedMult
+	FireMult = FireMult * RangedMult
+
+
+	local BulletHP 	= BulletMult 	<= 0 ? 0 : ceil(HP/BulletMult/AllMult).tointeger()
+	local BlastHP 	= BlastMult 	<= 0 ? 0 : ceil(HP/BlastMult/AllMult).tointeger()
+	local FireHP 	= FireMult 		<= 0 ? 0 : ceil(HP/FireMult/AllMult).tointeger()
+	local MeleeHP 	= MeleeMult 	<= 0 ? 0 : ceil(HP/MeleeMult/AllMult).tointeger()
+	// local RangedHP 	= RangedMult 	<= 0 ? 0 : ceil(HP/RangedMult/AllMult).tointeger()
+	local _AllHP 	= AllMult 		<= 0 ? 0 : ceil(HP/AllMult).tointeger()
+
+	if(BulletHP <= 0) BulletHP = InfHP
+	else BulletHP = BulletHP.tostring()
+
+	if(BlastHP <= 0) BlastHP = InfHP
+	else BlastHP = BlastHP.tostring()
+
+	if(FireHP <= 0) FireHP = InfHP
+	else FireHP = FireHP.tostring()
+
+	if(MeleeHP <= 0) MeleeHP = InfHP
+	else MeleeHP = MeleeHP.tostring()
+
+	// if(RangedHP == 0) RangedHP = InfHP
+	// else RangedHP = RangedHP.tostring()
+
+	if(_AllHP == 0) _AllHP = InfHP
+	else _AllHP = _AllHP.tostring()
 	
 	local formatstring 	=  "\x0800FF00B0 ** ( Counts Most Active Conditions ) **\n"
 	formatstring 		+= "\x07FFFF00[Effective HP]: \x01\n"
-	formatstring 		+= "\x03Bullet: \x04%s \x01| \x03Blast: \x04%s \x01| \x03Fire: \x04%s\n"
-	formatstring 		+= "\x03Melee: \x04%s \x01| \x03Ranged: \x04%s\n"
-	formatstring 		=  format(formatstring, BulletHP, BlastHP, FireHP, MeleeHP, RangedHP)
+	formatstring 		+= "\x03Bullet: \x04%s \x01| \x03Blast: \x04%s \x01| \x03Fire: \x04%s \x01| \x03Melee: \x04%s \x01"
+	// formatstring 		+= "\x03Melee: \x04%s \x01" //| \x03Ranged: \x04%s\n"
+	PrintToChatF(formatstring, BulletHP, BlastHP, FireHP, MeleeHP/* , RangedHP */)
 
-	PrintToChat(formatstring)
-
-	if(AllMult != 1.00)
-	{	
-		if(AllMult == 0.00) {
-			PrintToChat("\x07FFFF00* \x01You are currently \x07FFFF00unkillable \x01due to a \x0700bbffUniversal Damage Resistance\x01 of \x04100%")
-		}
-		else 
-			PrintToChat(format("\x07FFFF00* \x01Your current base health \x04%i\x01 is effectively \x04%.0f\x01 due to a "+(AllMult <= 1.0 ? "\x0700bbffUniversal Damage Resistance" : "\x07ff4545Universal Damage Vulnerability")+"\x01 of \x04%.2f%%.", HP, ceil(HP/AllMult), fabs(100-(AllMult*100.0))) )
-
-		/* else if(AllMult <= 1.0) {
-			PrintToChat(format("\x07FFFF00* \x01Your current base health \x04%i\x01 is effectively \x04%.0f\x01 due to a \x0700bbffUniversal Damage Resistance\x01 of \x04%.2f%%.", HP, ceil(HP/AllMult), fabs(100-(AllMult*100.0))) )
-		}
-		else {
-			PrintToChat(format("\x07FFFF00* \x01Your current base health \x04%i\x01 is effectively \x04%.0f\x01 due to a \x07ff4545Universal Damage Vulnerability\x01 of \x04%.2f%%.", HP, ceil(HP/AllMult), fabs(100-(AllMult*100.0))) )
-		} */
-	}
-	else if(MeleeMult <= 0 && RangedMult <= 0) {
-		PrintToChat("\x07FFFF00* \x01You are currently \x07FFFF00unkillable \x01due to a combined \x0700bbffRanged + Melee Resistance\x01 of \x04100%")
+	if(AllMult <= 0)
+		PrintToChat("\x07FFFF00* \x01You are currently \x07FFFF00unkillable \x01due to a \x0700bbffUniversal Damage Resistance\x01 of \x04100%")
+	else if (MeleeMult <= 0 && RangedMult <= 0)
+		PrintToChat("\x07FFFF00* \x01You are currently \x07FFFF00unkillable \x01due to having \x04100%\x01 of both \x0700bbffRanged & Melee Resistance\x01")
+	if(AllMult >= 0 && AllMult != 1)
+	{
+		local message = ""
+		if(AllMult <= 1.00) message = "\x0700bbffUniversal Damage Resistance"
+		else 				message = "\x07ff4545Universal Damage Vulnerability"
+		PrintToChatF("\x07FFFF00* \x01Your current base health \x04%i\x01 is effectively \x04%s\x01 due to a %s\x01 of \x04%.2f%%.", HP, _AllHP, message, fabs(100-(AllMult*100.0)))
 	}
 }
 /**
@@ -2901,6 +2907,7 @@ function CTFPlayer::GetActiveHealers()
 	}
 	return healers
 }
+//TODO: move to single line
 /**
  * @param {integer} amount
  */
@@ -3175,6 +3182,8 @@ function CTFPlayer::AttachParticle(particle, duration = -1, attachment_point = P
 		PlayerFire("DispatchEffect", "ParticleEffectStop", duration)
 }
 
+// Host.AttachParticle( , 15)
+
 function CTFPlayer::EmitSoundTo(sound, data = {})
 {
 	PrecacheSound(sound)
@@ -3200,7 +3209,7 @@ function CTFPlayer::EmitSoundTo(sound, data = {})
 	if("sound_time" in data) 	sound_data.sound_time <- data.sound_time
 	EmitSoundEx(sound_data)
 }
-
+// TODO: move to single line
 function CTFPlayer::IsEnemy()
 	return GetTeam() == TF_TEAM_BLUE
 
@@ -3314,6 +3323,7 @@ function CTFPlayer::GetWearableByIDX(idx)
 	return null
 }
 
+// TODO: Move to single line
 function CTFPlayer::HasPasstimeBall()
 	return GetPropBool(this, "m_Shared.m_bHasPasstimeBall")
 
@@ -3510,6 +3520,18 @@ function CTFPlayer::SetInternalVar(var_name, value)
 	GetInternalVar(var_name) // cheeky to fix it up so its not missing
 	GetScope(this).Internal_Vars[var_name] <- value
 }
+
+function CTFPlayer::UseGiantModel(buster = false)
+{
+	if(buster)
+		PlayerFire("SetCustomModelWithClassAnimations", "models/bots/demo/bot_sentry_buster.mdl", TICK_DUR * 2)
+	else
+		PlayerFire("SetCustomModelWithClassAnimations", format("models/bots/%s_boss/bot_%s_boss.mdl", GetPlayerClassName().tolower()), TICK_DUR * 2)
+}
+
+function CTFPlayer::UseRobotModel()
+	PlayerFire("SetCustomModelWithClassAnimations", format("models/bots/%s/bot_%s.mdl", GetPlayerClassName().tolower()), TICK_DUR * 2)
+
 
 /* function CTFPlayer::CreateWearable( idx, model )
 {
@@ -7167,7 +7189,7 @@ function ROOT::ProccessItemSets(client)
 				local val = 0.0
 				try {val = value.tofloat()} catch(_) {printl("Failed to convert \""+value+"\" to a float!")}
 				entity[func](attribute, val, -1)
-				printf("Appled Attribute %s to %s with a value of %g\n", attribute, entity.tostring(), val)
+				// printf("Appled Attribute %s to %s with a value of %g\n", attribute, entity.tostring(), val)
 			}
 
 			if(particle_name != "" && attachment_name != "")
@@ -7178,20 +7200,20 @@ function ROOT::ProccessItemSets(client)
 	}
 }
 
-CreateItemSet("Master of Chaos", {
-	ApplyTo = [
-		940
-	]
-	ApplyFor = [
-		"[U:1:969530867]"
-		"[U:1:101345257]"
-	]
-	Attributes = {
-		// "custom particle name" : "rocket_trail"
-		// "custom particle attachment" : ""
-		// "custom attachment point" : 0
-	}
-})
+// CreateItemSet("Master of Chaos", {
+// 	ApplyTo = [
+// 		940
+// 	]
+// 	ApplyFor = [
+// 		"[U:1:969530867]"
+// 		"[U:1:101345257]"
+// 	]
+// 	Attributes = {
+// 		// "custom particle name" : "rocket_trail"
+// 		// "custom particle attachment" : ""
+// 		// "custom attachment point" : 0
+// 	}
+// })
 
 /*
   =============================
@@ -8688,6 +8710,12 @@ function FireWeaponCheck()
 				if(attacker.GetActiveWeapon())
 					params.damage *= attacker.GetActiveWeapon().GetMultAttribute("taunt dmg mult active")
 			}
+
+			if(attacker.InAirDueToExplosion())
+				params.damage *= attacker.GetActiveWeapon().GetMultAttribute("mult dmg while rocket jumping")
+
+			if(!attacker.IsOnGround())
+				params.damage *= attacker.GetActiveWeapon().GetMultAttribute("mult dmg while airborne")
 		}
 
 		local weapon = params.weapon
@@ -8726,6 +8754,7 @@ function FireWeaponCheck()
 
 			case TF_DMG_CUSTOM_BOOTS_STOMP:
 				params.damage *= victim.HookMultAttributes("stomp dmg taken mult")
+			break
 			}
 			if(IsFall && (!attacker || !attacker.IsPlayer()))
 			{
@@ -8967,13 +8996,20 @@ function FireWeaponCheck()
 			SetPropInt(player, "m_Shared.m_iNextMeleeCrit", -2)
 			player.AddThink(FireWeaponCheck, "FireWeaponCheck")
 
-			RunWithDelay(@() ProccessItemSets(player), TICK_DUR * 3)
+			RunWithDelay(@() ProccessItemSets(player), TICK_DUR * 1)
 		}
 
 		if(player.IsAdmin())
 			SetPropInt(player, "m_autoKickDisabled", 1)
 
 		player.StripItemSlot(player.HookAdditiveAttributes("strip item slot"))
+
+		if(player.HookAdditiveAttributes("use sentrybuster model"))
+			player.UseGiantModel(true)
+		else if(player.HookAdditiveAttributes("use giant robot model"))
+			player.UseGiantModel()
+		else if(player.HookAdditiveAttributes("use robot model"))
+			player.UseRobotModel()
 
 		local slot = -1
 		foreach (wep in player.GetAllWeapons())
@@ -8992,6 +9028,13 @@ function FireWeaponCheck()
 			player.SetCond(wep.GetAttribute("cond on spawn", -1), wep.GetAttribute("cond on spawn duration", -1))
 
 		player.SetCond(player.GetCustomAttribute("cond on spawn", -1), player.GetCustomAttribute("cond on spawn duration", -1))
+
+		local scope = GetScope(player)
+		if(!("HasSpawned" in scope))
+		{
+			player.PrintToChat("\x01\x07E000E0► FatCatLib ◄   \x03Happy Pride Month!")
+			scope.HasSpawned <- true
+		}
 
 		// overridden
 		delete eventdata.userid
@@ -9510,7 +9553,6 @@ function FireWeaponCheck()
 	 * 
 	 */
 	function OnScriptEvent_PlayerStunned(_params)				{}
-
 
 	/**
 	 * Fired when a wave fails/completes
