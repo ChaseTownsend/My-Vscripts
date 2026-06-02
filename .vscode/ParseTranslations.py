@@ -2,21 +2,21 @@
 file = open("chaosmvm/translations.nut", "r", encoding="utf-8")
 
 # Removes a substring from the entire string
-def RemoveSubStringFromString(string, sub_string):
-	new_string = string
+def RemoveSubStringFromString(string: str, sub_string: str) -> str:
+	new_string: str = string
 	while sub_string in new_string:
 		new_string = new_string[0:new_string.find(sub_string)] + new_string[new_string.find(sub_string) + len(sub_string):]
 	return new_string
 
 # Removes multiple substrings from a string
-def RemoveSubStringsFromString(string, substrings):
-	new_string = string
-	for str in substrings:
-		new_string = RemoveSubStringFromString(new_string, str)
+def RemoveSubStringsFromString(string: str, substrings: [str]) -> str:
+	new_string: str = string
+	for string in substrings:
+		new_string = RemoveSubStringFromString(new_string, string)
 	return new_string
 
 # Removes letters after a substring, mostly to remove comments such as "//"
-def RemoveAllLettersAfterSubString(string, sub_string):
+def RemoveAllLettersAfterSubString(string: str, sub_string: str) -> str:
 	if(sub_string not in string):
 		return string
 	return string[0:string.find(sub_string)]
@@ -32,9 +32,7 @@ for line in file:
 		continue
 	if(line == "\n"):
 		continue
-	#parsed_line = RemoveAllLettersAfterSubString(line, "//")
 	parsed_line = RemoveSubStringsFromString(RemoveAllLettersAfterSubString(line, "//"), ["\t", "\n", " "])
-	#parsed_line = RemoveSubStringFromString(RemoveSubStringFromString(RemoveSubStringFromString(RemoveAllLettersAfterSubString(line, "//"), "\t"), "\n"), " ")
 	# Ignore lines that start with single lines comments, and brackets
 	if(len(parsed_line) == 0 or parsed_line[0] == "{" or parsed_line[0] == "}"):
 		continue
