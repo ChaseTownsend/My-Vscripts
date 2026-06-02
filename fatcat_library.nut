@@ -8706,7 +8706,7 @@ function FireWeaponCheck()
 					params.damage *= attacker.GetActiveWeapon().GetMultAttribute("taunt dmg mult active")
 			}
 
-			if(attacker.InAirDueToExplosion())
+			if(attacker.InAirDueToExplosion() && attacker.GetActiveWeapon())
 				params.damage *= attacker.GetActiveWeapon().GetMultAttribute("mult dmg while rocket jumping")
 
 			if(!attacker.IsOnGround() && attacker.GetActiveWeapon())
