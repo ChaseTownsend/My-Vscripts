@@ -4042,7 +4042,7 @@ function CTFWeaponBase::IncrementSpellCharge(num)
  * @returns {bool}
  */
 function CTFWeaponBase::IsHolstered()
-	if(HasProp(this, "m_bHolstered")) { return GetPropInt(this, "m_bHolstered") } else { return false }
+	if(HasProp(this, "m_bHolstered")) { return GetPropBool(this, "m_bHolstered") } else { return false }
 /**
  * @param {integer|float} level
  */
