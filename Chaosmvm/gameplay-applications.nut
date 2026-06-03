@@ -752,11 +752,12 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 	{
 		if(!params.player)
 			return
+		/** @type {CTFPlayer} */
 		local player = params.player
 		RunWithDelay(@() player.FixAmmo(), 0.1)
 		local spellbook = player.GetSpellBook()
 		
-		foreach (weapon in player.GetAllWeapons())
+		foreach (/**@type {CTFWeaponBase} */weapon in player.GetAllWeapons())
 		{
 			if(weapon.IsWearable())
 				continue
@@ -838,6 +839,26 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 					}
 					return -1
 				}, "BlutsaugerDisrupt", 0.15)
+			}
+
+			if(weapon.GetIDX() == 933) // TODO: add constant for [Weatly sapper]
+			{
+				player.AddThink(function() {
+					/** @type {CTFPlayer} */
+					local self = self
+
+					if(self.GetTeam() != TF_TEAM_BLUE || !self.IsStealthed())
+						return -1
+
+					if(self.InRespawnRoom())
+					{
+						self.RemoveAllCond()
+						self.ForceRegenerateAndRespawn()
+						self.PrintToHud("You were Respawned due to trying to enter a robots spawnroom.")
+					}
+
+					return -1
+				}, "NoSpawnSpies")
 			}
 		}
 	}
