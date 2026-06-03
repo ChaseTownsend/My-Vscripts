@@ -8632,7 +8632,7 @@ function FireWeaponCheck()
 
 			case TF_DMG_CUSTOM_BLEEDING:
 				if(!IsWeaponClass(params.weapon, "tf_weapon", true))
-					return
+					break
 				if(IsCrit || attacker.IsCritBoosted() && params.weapon.GetAdditiveAttribute("allow crit bleed"))
 				{
 					params.damage_type = params.damage_type | DMG_CRITICAL
@@ -8648,8 +8648,6 @@ function FireWeaponCheck()
 						if(vel.z < FallingVel)
 							FallingVel = vel.z
 					}
-
-					// if(GetScope(attacker))
 
 					if(FallingVel >= 0)
 						FallingVel = -600
@@ -8747,6 +8745,12 @@ function FireWeaponCheck()
 				params.damage *= attacker.HookMultAttributes("halloween kart dmg taken mult")
 			break
 
+			case TF_DMG_CUSTOM_BLEEDING:
+				params.damage *= victim.HookMultAttributes("bleeding dmg taken mult")
+				if(victim.InCond(TF_COND_PLAGUE) && weapon == null) // best way to tell so far
+					params.damage *= victim.HookMultAttributes("plauge dmg taken mult")
+			break
+
 			case TF_DMG_CUSTOM_BOOTS_STOMP:
 				params.damage *= victim.HookMultAttributes("stomp dmg taken mult")
 			break
@@ -8796,6 +8800,8 @@ function FireWeaponCheck()
 				}
 			}
 		}
+
+		// PrintTable(params)
 
 		if(victim.IsPlayer() && attacker && attacker.IsPlayer())
 		{
