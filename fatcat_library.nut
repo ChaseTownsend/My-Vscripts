@@ -199,7 +199,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format)
-if (!SetLibraryVersion("06.1.2026.22", 0))
+if (!SetLibraryVersion("06.4.2026.15", 0))
 	return
 
 SetLibrarySettings({})
@@ -3067,7 +3067,7 @@ function CTFPlayer::GetMoveSpeed()
 			AimMax *= active.GetAttribute("sniper aiming movespeed decreased", 1)
 		}
 
-		speed = MATH.Min( speed, AimMax );
+		speed = MATH.Min( speed, AimMax )
 	}
 
 	local WhipBoost = 105.0
@@ -3099,10 +3099,10 @@ function CTFPlayer::GetMoveSpeed()
 	if ( GetPropBool(this, "m_Shared.m_bShieldEquipped") )
 		speed *= HookMultAttributes("move speed bonus shield required")
 
-	if ( GetPlayerClass() == TF_CLASS_MEDIC )
+	if ( GetPlayerClass() == TF_CLASS_MEDIC && active )
 	{
 		// QuickFix stuff
-		local flClassResourceLevelMod = GetActiveWeapon().GetAttribute("move speed bonus resource level", 1.0)
+		local flClassResourceLevelMod = active.GetAttribute("move speed bonus resource level", 1.0)
 		if ( flClassResourceLevelMod != 1.0 )
 		{
 			local Medigun = GetWeaponClassname("tf_weapon_medigun")
@@ -3521,11 +3521,11 @@ function CTFPlayer::UseGiantModel(buster = false)
 	if(buster)
 		PlayerFire("SetCustomModelWithClassAnimations", "models/bots/demo/bot_sentry_buster.mdl", TICK_DUR * 2)
 	else
-		PlayerFire("SetCustomModelWithClassAnimations", format("models/bots/%s_boss/bot_%s_boss.mdl", GetPlayerClassName().tolower()), TICK_DUR * 2)
+		PlayerFire("SetCustomModelWithClassAnimations", format("models/bots/%s_boss/bot_%s_boss.mdl", GetPlayerClassName().tolower(), GetPlayerClassName().tolower()), TICK_DUR * 2)
 }
 
 function CTFPlayer::UseRobotModel()
-	PlayerFire("SetCustomModelWithClassAnimations", format("models/bots/%s/bot_%s.mdl", GetPlayerClassName().tolower()), TICK_DUR * 2)
+	PlayerFire("SetCustomModelWithClassAnimations", format("models/bots/%s/bot_%s.mdl", GetPlayerClassName().tolower(), GetPlayerClassName().tolower()), TICK_DUR * 2)
 
 
 /* function CTFPlayer::CreateWearable( idx, model )
@@ -6485,7 +6485,7 @@ if(!("Vector4D" in ROOT))
 	}
 }
 
-if(!("Vector4D" in ROOT))
+if(!("Vector2D" in ROOT))
 {
 	/**
 	 * @type {class}
@@ -8748,7 +8748,7 @@ function FireWeaponCheck()
 			case TF_DMG_CUSTOM_BLEEDING:
 				params.damage *= victim.HookMultAttributes("bleeding dmg taken mult")
 				if(victim.InCond(TF_COND_PLAGUE) && weapon == null) // best way to tell so far
-					params.damage *= victim.HookMultAttributes("plauge dmg taken mult")
+					params.damage *= victim.HookMultAttributes("plague dmg taken mult")
 			break
 
 			case TF_DMG_CUSTOM_BOOTS_STOMP:
@@ -8991,7 +8991,7 @@ function FireWeaponCheck()
 			if("PreservedThinks" in GetScope(player) && GetScope(player).PreservedThinks.len() != 0)
 			{
 				foreach (name, data in GetScope(player).PreservedThinks)
-					player.AddPreservedThink(data.delay, data.func, data.offset, name)
+					player.AddPreservedThink(data.func, name, data.offset)
 			}
 
 			SetPropInt(player, "m_Shared.m_iNextMeleeCrit", -2)

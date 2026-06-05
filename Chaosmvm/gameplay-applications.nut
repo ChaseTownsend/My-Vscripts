@@ -660,7 +660,7 @@ RegisterDamageCallback("tf_zombie", "GameplaySkeletons", function(params) {
 		SendGlobalGameEvent("npc_hurt", {
 			entindex = victim.entindex()
 			health = victim.GetHealth()
-			attacker_player = attacker.GetUserID()
+			attacker_player = attacker.IsPlayer() ? attacker.GetUserID() : -1
 			weaponid = -1
 			damageamount = 5
 			crit = false
