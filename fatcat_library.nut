@@ -285,7 +285,6 @@ function ROOT::GetPropFloat(entity, prop, index = 0)
  * @param {string} prop
  * @param {CBaseEntity} value
  * @param {integer} index
- * @returns {CBaseEntity|null}
  */
 function ROOT::SetPropEntity(entity, prop, value, index = 0)
 {
@@ -5757,7 +5756,7 @@ function ROOT::PrintCollection(collection, filter = [], indentation = 0, header_
 		return
 	}
 
-	Assert(indentation >= 0, "Indentation Cannot be Negative in ROOT::PrintCollection()")
+	Assert(indentation >= 0, "Indentation Cannot be Negative in PrintCollection()")
 
 	// Calculate indentation
 	local indents = ""

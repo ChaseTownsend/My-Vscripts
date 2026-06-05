@@ -142,7 +142,7 @@ function ROOT::ProccessOnCondHooks(client, cond, duration, provider)
 {
 	local Player = EntIndexToHScript(client)
 
-	FireScriptEvent("OnPlayerCond", {
+	FireScriptEvent("PreOnPlayerCond", {
 		player = Player
 		cond = cond
 		duration = duration
@@ -180,6 +180,13 @@ function ROOT::ProccessOnCondHooks(client, cond, duration, provider)
 	if(PluginReturn.provider == null)
 		PluginReturn.provider = 0
 
+	FireScriptEvent("PostOnPlayerCond", {
+		player = Player
+		cond = PluginReturn.cond
+		duration = PluginReturn.duration
+		provider = EntIndexToHScript(PluginReturn.provider)
+	})
+
 	return PluginReturn
 }
 /**
@@ -193,7 +200,7 @@ function ROOT::ProccessOnRemoveCondHooks(client, cond)
 {
 	local Player = EntIndexToHScript(client)
 
-	FireScriptEvent("OnPlayerRemoveCond", {
+	FireScriptEvent("PreOnPlayerRemoveCond", {
 		player = Player
 		cond = cond
 	})
@@ -210,6 +217,11 @@ function ROOT::ProccessOnRemoveCondHooks(client, cond)
 		PluginReturn.cond = data.cond
 	}
 
+	FireScriptEvent("PostOnPlayerRemoveCond", {
+		player = Player
+		cond = PluginReturn.cond
+	})
+
 	return PluginReturn
 }
 
@@ -224,7 +236,7 @@ function ROOT::ProccessOnRemoveCondHooks(client, cond)
 
 function ROOT::ProccessEntitySpawnHooks(entity_index, classname)
 {
-	FireScriptEvent("OnEntitySpawn", {
+	FireScriptEvent("PreOnEntitySpawn", {
 		entindex = entity_index
 		classname = classname
 	})
@@ -248,8 +260,16 @@ function ROOT::ProccessEntitySpawnHooks(entity_index, classname)
 		if(func_data.entindex == -1 || func_data.classname == "")
 			ReturnData.prevent_spawn = true
 	}
+	FireScriptEvent("PostOnEntitySpawn", {
+		entindex = entity_index
+		classname = classname
+		cancel_spawn = ReturnData.prevent_spawn
+	})
+
 	return ReturnData
 }
+
+// function ROOT::Intercept
 
 ::CollectEvents <- {
 	/**
@@ -259,19 +279,28 @@ function ROOT::ProccessEntitySpawnHooks(entity_index, classname)
 	 * @param {float} duration
 	 * @param {CBaseEntity} provider
 	 */
-	function OnScriptEvent_OnPlayerCond(_params) 		{}
+	function OnScriptEvent_PreOnPlayerCond(_params) 			{}
+	function OnScriptEvent_PostOnPlayerCond(_params) 			{}
 	/**
 	 * Fired when the Dynamic Hook is triggered
 	 * @param {CTFPlayer|CTFBot|null} player
 	 * @param {ETFCond} cond
 	 */
-	function OnScriptEvent_OnPlayerRemoveCond(_params) 	{}
+	function OnScriptEvent_PreOnPlayerRemoveCond(_params) 		{}
+	function OnScriptEvent_PostOnPlayerRemoveCond(_params) 		{}
 	/**
 	 * Fired when the Dynamic Hook is triggered
 	 * @param {integer} entindex
 	 * @param {string} classname
 	 */
-	function OnScriptEvent_OnEntitySpawn(_params) 		{}
+	function OnScriptEvent_PreOnEntitySpawn(_params) 			{}
+	/**
+	 * Fired when the Dynamic Hook is triggered
+	 * @param {integer} entindex
+	 * @param {string} classname
+	 * @param {bool}	cancel_spawn only true if entindex == -1 or classname == ""
+	 */
+	function OnScriptEvent_PostOnEntitySpawn(_params) 			{}
 }
 
 __CollectGameEventCallbacks(CollectEvents)
