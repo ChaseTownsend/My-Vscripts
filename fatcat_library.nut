@@ -199,7 +199,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format)
-if (!SetLibraryVersion("06.4.2026.15", 0))
+if (!SetLibraryVersion("06.6.2026.16", 0))
 	return
 
 SetLibrarySettings({})
@@ -868,6 +868,7 @@ enum ProjectileType_t
 ::MAX_USER_MSG_DATA 	<- 255
 ::MAX_CLIENT_PRINT_DATA <- MAX_USER_MSG_DATA-6
 ::TF_COND_RANGE 		<- 131
+::TF_COND_LAST 			<- 130
 ::TF_JUMP_MIN_SPEED		<- 268.3281572999747
 ::TF_WEAPON_SNIPERRIFLE_DAMAGE_MIN 	<- 50 
 ::TF_WEAPON_SNIPERRIFLE_DAMAGE_MAX 	<- 150
@@ -1027,6 +1028,8 @@ function ROOT::RemoveMissionMaker(id)
  */
 function ROOT::IsConvarAllowed(cvar)
 	return Convars.IsConVarOnAllowList(cvar)
+
+ROOT.IsCvarAllowed <- ROOT.IsConvarAllowed
 /**
  * @param {string} cvar
  */
@@ -1324,6 +1327,9 @@ function CTFPlayer::SetRuneCharge(num)
  */
 function CTFPlayer::IsPlayerClass(playerclass)
 	return GetPlayerClass() == playerclass
+
+function CTFPlayer::GetDisguiseClass() 
+	return InCond( TF_COND_DISGUISED_AS_DISPENSER ) ? TF_CLASS_ENGINEER : GetPropInt(this, "m_Shared.m_nDisguiseClass")
 
 /*
 	Some Funcs can use a different name
@@ -2327,10 +2333,10 @@ function CTFPlayer::CalculateEHP()
  * @param {integer} slot
  */
 function CTFPlayer::SwitchWeaponSlot( slot )
-	Weapon_Switch(GetWeaponInSlot(slot))
+	Weapon_Switch(this.GetWeaponInSlot(slot))
 
 function CTFPlayer::IsMinicritDebuffed()
-	return !InCond(TF_COND_DEFENSEBUFF) && InMultiCond([TF_COND_URINE, TF_COND_MARKEDFORDEATH, TF_COND_MARKEDFORDEATH_SILENT])
+	return !InCond(TF_COND_DEFENSEBUFF) && InMultiCond([TF_COND_URINE, TF_COND_MARKEDFORDEATH, TF_COND_MARKEDFORDEATH_SILENT, TF_COND_PASSTIME_PENALTY_DEBUFF])
 /**
  * @returns {bool}
  */
@@ -2926,9 +2932,10 @@ function CTFPlayer::GetOverHealCapMult(start = 1.0)
 	return cap_mult
 }
 /**
- * @param {float} amount
+ * @param {integer|float} amount
+ * @param {float|bool} overheal
  */
-function CTFPlayer::HealPlayer(amount, overheal = false, overheal_cap = false, display = true, type = T_HEAL_NONE)
+function CTFPlayer::HealPlayer(amount, overheal = false, display = true, type = T_HEAL_NONE)
 {
 	local mult = 1.0
 	mult *= HookMultAttributes("healing received penalty")
@@ -2951,20 +2958,26 @@ function CTFPlayer::HealPlayer(amount, overheal = false, overheal_cap = false, d
 
 	amount *= mult
 
-	if(overheal && !overheal_cap)
+	amount = amount.tointeger()
+
+	if(overheal != false && overheal == 1.0 || overheal == true)
 		AddHealth(amount)
-	else if(overheal && overheal_cap)
+	else if(overheal != false && overheal > 1.0)
 	{
-		local max = GetMaxHealth() + (GetMaxHealth() * GetOverHealCapMult(overheal_cap))
+		local max = (GetMaxHealth() * GetOverHealCapMult(overheal.tofloat())).tointeger()
 		AddHealth(amount)
 		if(GetHealth() > max)
+		{
+			amount = GetHealth() - max
 			SetHealth(max)
+		}
 	}
 	else if(GetHealth() >= GetMaxHealth())
 		{}
 	else if(GetHealth()+amount >= GetMaxHealth())
 		SetHealth(GetMaxHealth())
-	else AddHealth(amount)
+	else 
+		AddHealth(amount)
 
 
 	if(display)
@@ -4327,6 +4340,9 @@ function CTFWeaponBase::IsMinigun()
 function CTFWeaponBase::IsFlamethrower()
 	return startswith(GetWeaponClass(), "flamethrower")
 
+function CTFWeaponBase::IsMedigun()
+	return startswith(GetWeaponClass(), "medigun")
+
 function CTFWeaponBase::IsKnife()
 	return startswith(GetWeaponClass(), "knife")
 
@@ -4353,6 +4369,9 @@ function CTFWeaponBase::IsScattergun()
 
 function CTFWeaponBase::IsFlaregun()
 	return startswith(GetWeaponClass(), "flaregun")
+
+function CTFWeaponBase::IsFish()
+	return startswith(GetWeaponClass(), "bat_fish") || startswith(GetWeaponClass(), "slap")
 
 function CTFWeaponBase::CanChargeCrit()
 {
@@ -4930,7 +4949,7 @@ if(!("CTFWeaponInfo" in ROOT))
 	}
 }
 
-// ::g_tGlobalWeaponTypesByClass <- {}
+::g_tGlobalWeaponTypesByClass <- {}
 
 /** 
  * @type {function}
@@ -5048,8 +5067,7 @@ function CTFWeaponBase::ApplyOnHitAttributes( pVictimBaseEntity, pAttacker, info
 	}
 
 	// Charge meter on hit
-	local flChargeRefill = 0.00
-	CALL_ATTRIB_HOOK_FLOAT( flChargeRefill, charge_meter_on_hit );
+	local flChargeRefill = GetAttribute("charge meter on hit", 0.00)
 	if ( flChargeRefill > 0 )
 	{
 		if ( pAttacker.GetCurrentRune() != RUNE_NONE )
@@ -5060,12 +5078,10 @@ function CTFWeaponBase::ApplyOnHitAttributes( pVictimBaseEntity, pAttacker, info
 		pAttacker.SetDemomanChargeMeter( pAttacker.GetDemomanChargeMeter() + flChargeRefill * 100.0 );
 	}
 
+	local iSpeedBoostOnHit = GetAttribute("speed_boost_on_hit", 0)
 	// Speed on hit
-	CALL_ATTRIB_HOOK_INT( iSpeedBoostOnHit, speed_boost_on_hit )
 	if ( iSpeedBoostOnHit )
-	{
 		pAttacker.AddCondEx( TF_COND_SPEED_BOOST, iSpeedBoostOnHit, this )
-	}
 
 	if ( pVictim )
 	{
@@ -5080,13 +5096,6 @@ function CTFWeaponBase::ApplyOnHitAttributes( pVictimBaseEntity, pAttacker, info
 			local pProvider = null
 			if ( pProvider )
 			{
-				// Only give points for the portion they're responsible for
-				if ( pProvider != pAttacker )
-				{
-					// no stats yet
-					// CTF_GameStats.Event_PlayerHealedOtherAssist( pProvider, nAmount );
-				}
-
 				// Show in the medic's UI as primary healing
 				SendGlobalGameEvent("player_healed", {
 					patient = pAttacker.GetUserID()
@@ -5111,7 +5120,7 @@ function CTFWeaponBase::ApplyOnHitAttributes( pVictimBaseEntity, pAttacker, info
 
 	if ( pAttacker.InCond( TF_COND_REGENONDAMAGEBUFF ) )
 	{
-		local nAmount = info.GetDamage() * IsCvarAllowed("tf_dev_health_on_damage_recover_percentage") ? GetCvarFloat("tf_dev_health_on_damage_recover_percentage") : 0.35
+		local nAmount = info.GetDamage() * (IsCvarAllowed("tf_dev_health_on_damage_recover_percentage") ? GetCvarFloat("tf_dev_health_on_damage_recover_percentage") : 0.35)
 		iModHealthOnHit += nAmount;
 
 		// Increment provider's healing assist stat
@@ -5130,17 +5139,10 @@ function CTFWeaponBase::ApplyOnHitAttributes( pVictimBaseEntity, pAttacker, info
 		if ( iModHealthOnHit > 0 )
 		{
 			pAttacker.HealPlayer(iModHealthOnHit, false, false, false)
-
-			// Increment attacker's healing stat
-			// if ( iHealed )
-			// {
-				// CTF_GameStats.Event_PlayerHealedOther( pAttacker, iHealed );
-			// }
 		}
 		else 
 		{
 			pAttacker.TakeDamageEx( pAttacker, pAttacker, this, Vector(), Vector(), abs(iModHealthOnHit), DMG_GENERIC)
-			// pAttacker->TakeDamage( CTakeDamageInfo( pAttacker, this, (iModHealthOnHit * -1), DMG_GENERIC ) );
 		}
 
 		SendGlobalGameEvent("player_healonhit", {
@@ -5190,7 +5192,7 @@ function CTFWeaponBase::ApplyOnHitAttributes( pVictimBaseEntity, pAttacker, info
 	}
 
 	// Increase Boost on hit
-	local iBoostOnDamage = pAttacker.HookAdditiveAttribute("boost on damage")
+	local iBoostOnDamage = pAttacker.HookAdditiveAttributes("boost on damage")
 	if ( iBoostOnDamage != 0 )
 	{
 		local tf_scout_hype_pep_max = IsCvarAllowed("tf_scout_hype_pep_max") ? GetCvarFloat("tf_scout_hype_pep_max") : 99.0
@@ -5205,7 +5207,8 @@ function CTFWeaponBase::ApplyOnHitAttributes( pVictimBaseEntity, pAttacker, info
 	if( pVictim )
 	{
 		// Detemine weapon speed
-		local flFireDelay = ApplyFireDelay( GetWeaponInfo().GetWeaponData( 0 ).m_flTimeFireDelay )
+		// local flFireDelay = ApplyFireDelay( GetWeaponInfo().GetWeaponData( 0 ).m_flTimeFireDelay )
+		local flFireDelay = 1.0
 		
 		// Proc chance for AOE Heal
 		local flPPM = GetAttribute("aoe heal chance", 0.0)
@@ -5277,9 +5280,9 @@ function CTFWeaponBase::ApplyOnHitAttributes( pVictimBaseEntity, pAttacker, info
 	// Disabled because we have no attributes that use it
 
 	
-	local flAddDamageDoneBonusOnHit = GetAttribute("on hit add percent dmg bonus", 1.0)
+	local flAddDamageDoneBonusOnHit = GetAttribute("on hit add percent dmg bonus", 0.0)
 	if ( flAddDamageDoneBonusOnHit )
-		pAttacker.AddTmpDamageBonus( flAddDamageDoneBonusOnHit, 10.0 );
+		pAttacker.AddTmpDamageBonus( flAddDamageDoneBonusOnHit, 10.0 )
 	
 	if ( pVictim )
 	{
@@ -7094,7 +7097,7 @@ function ROOT::IsDamageTaunt(damagecustom)
 		|| damagecustom == TF_DMG_CUSTOM_TAUNTATK_GRAND_SLAM
 		|| damagecustom == TF_DMG_CUSTOM_TAUNTATK_GRENADE
 		|| damagecustom == TF_DMG_CUSTOM_TAUNTATK_UBERSLICE
-		|| damagecustom == TF_DMG_CUSTOM_TAUNTATK_GASBLAST;
+		|| damagecustom == TF_DMG_CUSTOM_TAUNTATK_GASBLAST
 }
 
 function ROOT::ToggleSlowDown(amount = 1.0, sound = "", revert_sound = "", revert = 0.0)
@@ -7496,7 +7499,7 @@ function ROOT::PrecacheObject(thing)
 		return RandomChance() <= (1.0/num.tofloat())
 
 	/**
-	 * @return {integer} The Seconds since 12:00 AM, 0 - 86399
+	 * @returns {integer} The Seconds since 12:00 AM, 0 - 86399
 	 */
 	function TimeOfDay()
 	{
@@ -7536,6 +7539,56 @@ function ROOT::PrecacheObject(thing)
 		}
 
 		return QAngle(pitch, yaw, 0.0)
+	}
+	/** 
+	 * 	hermite basis function for smooth interpolation
+	 * 
+	 * 	Similar to Gain() above, but very cheap to call
+	 * 
+	 * 	value should be between 0 & 1 inclusive
+	 * @param {float} value
+	 * @returns {float}
+	 */
+	function SimpleSpline( value )
+	{
+		local valueSquared = (value * value)
+		return (3 * valueSquared - 2 * valueSquared * value)
+	}
+
+	/** 
+	 * remaps a value in [startInterval, startInterval+rangeInterval] from linear to
+	 * spline using SimpleSpline
+	 * @param {float} val
+	 * @param {float} A
+	 * @param {float} B
+	 * @param {float} C
+	 * @param {float} D
+	 * @returns {float}
+	 */
+	function SimpleSplineRemapVal( val, A, B, C, D )
+	{
+		if ( A == B )
+			return val >= B ? D : C
+		local cVal = (val - A) / (B - A)
+		return C + (D - C) * SimpleSpline( cVal )
+	}
+	/** 
+	 * remaps a value in [startInterval, startInterval+rangeInterval] from linear to
+	 * spline using SimpleSpline
+	 * @param {float} val
+	 * @param {float} A
+	 * @param {float} B
+	 * @param {float} C
+	 * @param {float} D
+	 * @returns {float}
+	 */
+	function SimpleSplineRemapValClamped( val, A, B, C, D )
+	{
+		if ( A == B )
+			return val >= B ? D : C
+		local cVal = (val - A) / (B - A)
+		cVal = MATH.Clamp( cVal, 0.0, 1.0 )
+		return C + (D - C) * SimpleSpline( cVal )
 	}
 }
 
@@ -8696,7 +8749,7 @@ function FireWeaponCheck()
 				})
 			break
 			}
-			if(IsDamageTaunt(params.damage_custom))
+			if(ROOT.IsDamageTaunt(params.damage_custom))
 			{
 				params.damage *= attacker.HookMultAttributes("taunt dmg mult")
 				if(attacker.GetActiveWeapon())
@@ -8886,8 +8939,8 @@ function FireWeaponCheck()
 		delete eventdata.ammo_type
 		delete eventdata.damage_for_force_calc
 		delete eventdata.force_friendly_fire
-		delete eventdata.damage_force
-		delete eventdata.reported_position
+		// delete eventdata.damage_force
+		// delete eventdata.reported_position
 		delete eventdata.early_out
 		delete eventdata.max_damage
 		// overridden

@@ -1,6 +1,6 @@
 if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
-SetScriptVersion("Abilities", "2.7.0")
+SetScriptVersion("Abilities", "2.7.1")
 
 ::Debug_Abilities <- false
 
@@ -202,7 +202,7 @@ function HeavyGoKaboom(player)
 	player.AddAbilityTime(RageSettings.AttackCooldown + 0.2) // cancel taunt delay
 
 	player.RunScriptCode("CancelTaunt()", 0.1)
-	player.RunScriptCode("SetCond(TF_COND_CRITBOOSTED, RageSettings.CondDuration)", 0.1)
+	player.RunScriptCode("SetCond(TF_COND_CRITBOOSTED_USER_BUFF, RageSettings.CondDuration)", 0.1)
 	player.RunScriptCode("SetCond(TF_COND_DEFENSEBUFF, RageSettings.CondDuration)", 0.1)
 	player.RunScriptCode("SetCond(TF_COND_REGENONDAMAGEBUFF, RageSettings.CondDuration)", 0.1)
 
