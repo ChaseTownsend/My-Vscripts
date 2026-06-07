@@ -2391,21 +2391,11 @@ function CTFPlayer::MakeCorrosion(attacker, weapon)
 		return;
 	}
 
-	if(!weapon)
+	if(!weapon || !weapon.IsValid())
 		return
 
 	if(weapon.getclass() != CTFWeaponBase)
 		return;
-
-	// if(weapon.GetIDX() != TF_WEAPON_BREAD_BITE)
-	// {
-	// 	if(__CORROSION_DEBUG)
-	// 	{
-	// 		PrintToHudAll(format("CTFPlayer::MakeCorrosion got %d for Weapon IDX!!!", weapon.GetIDX()))
-	// 		PrintToChatAll(format("CTFPlayer::MakeCorrosion got %d for Weapon IDX!!!", weapon.GetIDX()))
-	// 	}
-	// 	return
-	// }
 
 	if(__CORROSION_DEBUG) PrintToChatAll(format("Made Corrosion on %s", tostring()))
 
@@ -2512,7 +2502,9 @@ function CTFPlayer::MakeCorrosionPuddle()
 		
 		if (lowest_bomb_idx != -1)
 		{
-			GetScope(GasBombs[lowest_bomb_idx]).GasDestroy()
+			local bomb = GasBombs[lowest_bomb_idx]
+			if(bomb)
+				GetScope(bomb).GasDestroy()
 			GasBombs.remove(lowest_bomb_idx)
 		}
 	}
@@ -2775,6 +2767,9 @@ function CTFPlayer::IsGHeavy()
  */
 function CTFPlayer::EquipItem(classname, idx, swit = true, attrib_overrides = {})
 {
+	PrintToChat("Sorry EquipItem is causing issue, please try again tomorrow.")
+	return
+	
 	local weapon = SpawnEntityFromTable(classname, {})
 
 	if(!weapon)
@@ -2795,9 +2790,22 @@ function CTFPlayer::EquipItem(classname, idx, swit = true, attrib_overrides = {}
 
 
 	local old_wep = GetWeaponInSlotNew(weapon.GetSlot())
-	local myweaps_idx = GetMyWeaponsArray().find(old_wep)
 
-	if(myweaps_idx == null)
+	if(old_wep && old_wep.IsWearable())
+	{
+		old_wep.Destroy()
+	}
+	else if(old_wep && !old_wep.IsWearable())
+	{
+		local myweaps_idx = GetMyWeaponsArray().find(old_wep)
+
+		old_wep.Destroy()
+
+		if(myweaps_idx != null)
+			SetPropEntity(this, "m_hMyWeapons", null, myweaps_idx)
+	}
+
+	/* if(myweaps_idx == null)
 	{
 		for(local i = 0; i <= MAX_WEAPONS; i++)
 		{
@@ -2808,11 +2816,7 @@ function CTFPlayer::EquipItem(classname, idx, swit = true, attrib_overrides = {}
 				break
 			}
 		}
-	}
-
-	old_wep.Destroy()
-
-	SetPropEntity(this, "m_hMyWeapons", null, myweaps_idx)
+	} */
 
 	Weapon_Equip(weapon)
 	if(swit)
@@ -3850,7 +3854,7 @@ if(!("_GetAttribute" in CTFWeaponBase))
 	 */
 	function CTFWeaponBase::GetAttribute(attrib, def)
 	{
-		if(!this)
+		if(!this || !this.IsValid())
 			return 0
 		if(GET_CUSTOM_ATTRIBUTE(attrib))
 			return GET_CUSTOM_ATTRIBUTE_VALUE(GetIDX(), attrib, def)
@@ -3865,7 +3869,7 @@ if(!("_GetAttribute" in CTFWeaponBase))
 	 */
 	function CEconEntity::GetAttribute(attrib, def)
 	{
-		if(!this)
+		if(!this || !this.IsValid())
 			return 0
 		if(GET_CUSTOM_ATTRIBUTE(attrib))
 			return GET_CUSTOM_ATTRIBUTE_VALUE(GetIDX(), attrib, def)
