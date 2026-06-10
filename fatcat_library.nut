@@ -199,7 +199,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format)
-if (!SetLibraryVersion("06.6.2026.16", 0))
+if (!SetLibraryVersion("06.6.2026.20", 1))
 	return
 
 SetLibrarySettings({})
@@ -2769,7 +2769,7 @@ function CTFPlayer::EquipItem(classname, idx, swit = true, attrib_overrides = {}
 {
 	PrintToChat("Sorry EquipItem is causing issue, please try again tomorrow.")
 	return
-	
+
 	local weapon = SpawnEntityFromTable(classname, {})
 
 	if(!weapon)
@@ -8699,6 +8699,8 @@ function FireWeaponCheck()
 				if(wep && wep.GetAttribute("stomp uses velocity", 0))
 				{
 					local FallingVel = attacker.GetAbsVelocity().z
+					if(!("LastVels" in GetScope(victim)))
+						GetScope(victim).LastVels <- []
 					foreach (vel in GetScope(attacker).LastVels)
 					{
 						if(vel.z < FallingVel)
@@ -8819,6 +8821,8 @@ function FireWeaponCheck()
 				if(victim.HookAdditiveAttributes("fall damage causes aoe"))
 				{
 					local FallingVel = victim.GetAbsVelocity().z
+					if(!("LastVels" in GetScope(victim)))
+						GetScope(victim).LastVels <- []
 					foreach (vel in GetScope(victim).LastVels)
 					{
 						if(vel.z < FallingVel)

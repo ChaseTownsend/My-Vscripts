@@ -445,7 +445,7 @@ function GameplayThink()
 		}
 	}
 
-	foreach (tank in GetEveryTank())
+	foreach (/**@type {CTFBaseBoss} */tank in GetEveryTank())
 	{
 		EnableStringPurge(tank)
 		if (tank.GetTeam() != TF_TEAM_PVE_DEFENDERS)
