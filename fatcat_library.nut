@@ -31,7 +31,7 @@ if("GetModName" in ROOT)
 	local Mod = GetModName()
 	if(Mod == MOD_TF2C)
 	{
-		IncludeScript("TF2C Fix")
+		// IncludeScript("TF2C Fix")
 	}
 }
 else
@@ -39,6 +39,12 @@ else
 	function ROOT::GetModName()
 		return MOD_TF2
 }
+
+function ROOT::IsTF2()
+	return GetModName() == MOD_TF2
+
+function ROOT::IsTF2C()
+	return GetModName() == MOD_TF2C
 
 /**
  * Sets the library version
@@ -199,7 +205,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format)
-if (!SetLibraryVersion("06.6.2026.20", 1))
+if (!SetLibraryVersion("06.10.2026.20", 0))
 	return
 
 SetLibrarySettings({})
@@ -860,7 +866,7 @@ enum ProjectileType_t
 // Should be 51 for
 // 40 Bots, 8 Players, 2 Spec, 1 SourceTV
 ::MAX_CLIENTS	 		<- MaxClients().tointeger() 
-::TF_CLASS_MAXNORMAL 	<- 9
+::TF_CLASS_MAXNORMAL 	<- IsTF2C() ? TF_CLASS_CIVILIAN : 9
 ::MAX_WEAPONS			<- 8
 ::TICKRATE 				<- 66
 ::TICK_DUR 				<- 1.0/TICKRATE
@@ -1148,6 +1154,7 @@ function CTFPlayer::GetUserID()
 function CTFPlayer::GetHealers()
 	return GetPropInt(this, "m_Shared.m_nNumHealers")
 
+/** @param {integer} index */
 function CTFPlayer::GetAmmoByIndex(index)
 	return GetPropInt(this, PROP_PLAYER_AMMO, index)
 
@@ -1169,12 +1176,15 @@ function CTFPlayer::GetMaxBuffedHealth()
 function CTFPlayer::EyeVector()
 	return EyeAngles().Forward()
 
+/** @param {float} offset */
 function CTFPlayer::GetFrontOffset(offset)
 	return GetOrigin() + (EyeVector() * offset)
 
+/** @param {float} offset */
 function CTFPlayer::GetEyeOffset(offset)
 	return EyePosition() + (EyeVector() * offset)
 
+/** @param {integer} button */
 function CTFPlayer::IsPressingButton(button)
 	return ( GetPropInt(this, "m_nButtons") & button ) ? true : false
 
@@ -1184,15 +1194,20 @@ function CTFPlayer::IsPressingButton(button)
 function CTFPlayer::GetWeaponInSlot(slot = 0)
 	return EnableStringPurge(GetPropEntityArray(this, "m_hMyWeapons", slot))
 
+/** 
+ * @param {integer} index 
+ * @param {integer} ammo 
+*/
 function CTFPlayer::SetAmmoByIndex(index, ammo)
 	SetPropInt(this, PROP_PLAYER_AMMO, ammo, index)
 
+/** @param {integer} ammo */
 function CTFPlayer::SetPrimaryAmmo(ammo)
 	SetPropInt(this, PROP_PLAYER_AMMO, ammo, 1)
-
+/** @param {integer} ammo */
 function CTFPlayer::SetSecondaryAmmo(ammo)
 	SetPropInt(this, PROP_PLAYER_AMMO, ammo, 2)
-
+/** @param {integer} metal */
 function CTFPlayer::SetMetal(metal)
 	SetPropInt(this, PROP_PLAYER_AMMO, metal, 3)
 
@@ -1210,10 +1225,10 @@ function CTFPlayer::SetScale(scale = 1.0)
 
 function CTFPlayer::GetHeads()
 	return GetPropInt(this, "m_Shared.m_iDecapitations")
-
+/** @param {integer} num */
 function CTFPlayer::SetHeads( num )
 	return SetPropInt(this, "m_Shared.m_iDecapitations", num)
-
+/** @param {integer} num */
 function CTFPlayer::AddHeads( num )
 	return SetPropInt(this, "m_Shared.m_iDecapitations", GetHeads() + num)
 
@@ -1225,7 +1240,11 @@ function CTFPlayer::MultiplyGravity(mult)
 
 function CTFPlayer::PlayerFire(action = "", input = "", delay = -1, activator = this, caller = this)
 	EntFireNew(this, action, input, delay, activator, caller)
-	
+
+/** 
+ * @param {string} input 
+ * @param {float} delay 
+*/
 function CTFPlayer::RunScriptCode(input, delay = -1)
 	RunWithDelay(this.compilestring(input), delay)
 
@@ -1236,7 +1255,7 @@ function CTFPlayer::GetFallingVelocity()
 	return GetAbsVelocity().z
 
 function CTFPlayer::IsDucking()
-	return (GetFlags() & FL_DUCKING) == FL_DUCKING
+	return (GetFlags() & FL_DUCKING) != 0
 
 function CTFPlayer::IsCrouching()
 	return IsPressingButton(IN_DUCK)
@@ -2998,9 +3017,9 @@ function CTFPlayer::HealPlayer(amount, overheal = false, display = true, type = 
 function CTFPlayer::HookMultAttributes(attribute, Mode = 3, def_plr = 1.0, def_wep = 1.0)
 {
 	local amount = 1.0
-	if(MATH.BitWise(Mode, 1))
+	if(MATH.HasBitFlag(Mode, 1))
 		amount *= GetCustomAttribute(attribute, def_plr)
-	if(MATH.BitWise(Mode, 2))
+	if(MATH.HasBitFlag(Mode, 2))
 	{
 		foreach (weapon in GetAllWeapons())
 		{
@@ -3019,9 +3038,9 @@ function CTFPlayer::HookMultAttributes(attribute, Mode = 3, def_plr = 1.0, def_w
 function CTFPlayer::HookAdditiveAttributes(attribute, Mode = 3, def_plr = 0, def_wep = 0)
 {
 	local amount = 0.0
-	if(MATH.BitWise(Mode, 1))
+	if(MATH.HasBitFlag(Mode, 1))
 		amount += GetCustomAttribute(attribute, def_plr)
-	if(MATH.BitWise(Mode, 2))
+	if(MATH.HasBitFlag(Mode, 2))
 	{
 		foreach (weapon in GetAllWeapons())
 		{
@@ -3237,7 +3256,7 @@ function CTFPlayer::StripItemSlot(slot)
 	if(slot == 0)
 		return
 	slot = slot.tointeger()
-	local bit = @(a, b) MATH.BitWise(a,b)
+	local bit = @(a, b) MATH.HasBitFlag(a,b)
 	local wep = null
 	if(bit(slot, STRIPSLOT_PRIMARY))
 	{
@@ -4328,6 +4347,10 @@ function CTFWeaponBase::ShootPosition()
  */
 function CTFWeaponBase::IsWearable()
 	return IsInArray(GetIDX(), WearableIDXs.Primarys) || IsInArray(GetIDX(), WearableIDXs.Secondarys)
+
+// Better and because TF2C does not have this
+function CTFWeaponBase::IsMeleeWeapon()
+	return GetSlot() == SLOT_MELEE
 
 function CTFWeaponBase::GetWeaponClass()
 	return GetClassname().slice(10)
@@ -5533,9 +5556,12 @@ function CTFNavArea::GetArea()
 function CTFNavArea::GetLargestSide()
 	return GetSizeX() > GetSizeY() ? GetSizeX() : GetSizeY()
 
-function CTFNavArea::IsTFInSpawnroom()
+function CTFNavArea::IsInTFSpawnroom()
 	return HasAttributeTF(TF_NAV_SPAWN_ROOM_BLUE) || HasAttributeTF(TF_NAV_SPAWN_ROOM_RED)
 
+// typo moment
+function CTFNavArea::IsTFInSpawnroom()
+	return IsInTFSpawnroom()
 /*
   ==============================
   === END OF NAVAREA METHODS ===
@@ -5975,7 +6001,7 @@ if (!("_AddThinkToEnt" in ROOT))
 		}
 		else if(type(think_func) == "function")
 		{
-			local function __InternalThinkFunc() {think_func()}
+			local function __InternalThinkFunc() {return think_func()}
 			GetScope(entity).__InternalThinkFunc <- __InternalThinkFunc
 			_AddThinkToEnt(entity, "__InternalThinkFunc")
 		}
@@ -6114,6 +6140,11 @@ function ROOT::IsValidEnemy(entity)
 			return true
 	}
 	return false
+}
+
+function ROOT::IsValidPlayer(entity)
+{
+	return entity && entity.IsValid() && entity.IsPlayer()
 }
 
 /**
@@ -6370,14 +6401,16 @@ function ROOT::CreateThinker(name, think_func, type = THINKER_NO_PERSIST)
 	local Thinker = FindByName(null, name)
 	if (Thinker == null) Thinker = SpawnEntityFromTable( type == THINKER_PERSIST ? "info_target" : "info_teleport_destination", { targetname = name })
 	 
-	if(typeof think_func == "string")
+	AddThinkToEnt(Thinker, think_func)
+
+	/* if(typeof think_func == "string")
 		AddThinkToEnt(Thinker, think_func)
 	else if (typeof think_func == "function")
 	{
 		local function ThinkerThink() {think_func()}
  		GetScope(Thinker).ThinkerThink <- ThinkerThink
 		AddThinkToEnt(Thinker, "ThinkerThink")
-	}
+	} */
 	return Thinker
 }
 
@@ -7216,6 +7249,76 @@ function ROOT::ProccessItemSets(client)
 // 	}
 // })
 
+::PipeBombClassnames <- [
+	"tf_projectile_pipe",
+	"tf_projectile_pipe_remote",
+	"tf_projectile_jar", 
+	"tf_projectile_jar_gas", 
+	"tf_projectile_jar_milk",
+	"tf_projectile_stun_ball",
+	"tf_projectile_ball_ornament",
+	"tf_projectile_cleaver",
+
+	"tf_projectile_spellbats",
+	"tf_projectile_spellmirv",
+	"tf_projectile_spelltransposeteleport",
+	"tf_projectile_spellspawnzombie",
+	"tf_projectile_spellspawnhorde",
+	"tf_projectile_spellspawnboss",
+	"tf_projectile_spellkartorb",
+	"tf_projectile_spellmeteorshower",
+
+	"tf_projectile_throwable",
+	"tf_projectile_throwable_repel",
+	"tf_projectile_throwable_brick",
+	"tf_projectile_throwable_breadmonster",
+]
+::RocketClassnames <- [
+	"tf_projectile_rocket",
+	"tf_projectile_sentryrocket",
+	"tf_projectile_arrow",
+	"tf_projectile_healing_bolt",
+	"tf_projectile_grapplinghook",
+	"tf_projectile_energy_ball",
+	"tf_projectile_flare",
+	"tf_projectile_balloffire",
+	"tf_projectile_mechanicalarmorb",
+
+	"tf_projectile_spellfireball",
+	"tf_projectile_lightningorb",
+]
+
+/**
+ * reutrns if an entity is a projectile
+ * @param {CBaseEntity|null} ent
+ * @returns {bool}
+ */
+function ROOT::IsProjectile(ent)
+{
+	if(!ent || !ent.IsValid() || !startswith(ent.GetClassname(), "tf_proj"))
+		return false
+	return true
+}
+/** 
+ * @param {CBaseEntity|null} ent
+ * @returns {bool}
+ */
+function ROOT::IsBaseGrenade(ent)
+{
+	if(!IsProjectile(ent) || !IsInArray(ent.GetClassname(), PipeBombClassnames))
+		return false
+	return true
+}
+/** 
+ * @param {CBaseEntity|null} ent
+ * @returns {bool}
+ */
+function ROOT::IsBaseRocket(ent)
+{
+	if(!IsProjectile(ent) || !IsInArray(ent.GetClassname(), RocketClassnames))
+		return false
+	return true
+}
 /*
   =============================
   === END OF MISC FUNCTIONS ===
@@ -7406,22 +7509,52 @@ function ROOT::PrecacheObject(thing)
 
 ::MATH <- {
 	/**
+	 * @param {integer} a
 	 * @param {integer} b
+	 * @deprecated for singular flags use HasBitFlag, for multiple flags use HasBitMask.
 	 */
 	function BitWise(a, b)
 	{
-		return (a.tointeger() & b.tointeger()) == b.tointeger()
+		return (a & b) == b
 	}
 	/**
+	 * returns if `bits` has any of the bits of `flag`.
+	 * 
+	 * `Note:` for multiple flags use HasBitMask instead.
+	 * @param {integer} bits
+	 * @param {integer} flag
+	 */
+	function HasBitFlag(bits, flag)
+	{
+		return ( bits & flag ) != 0
+	}
+	/**
+	 * returns if `bits` has all of the bits of `mask`.
+	 * 
+	 * `Note:` for singular flags use HasBitFlag instead.
+	 * @param {integer} bits
+	 * @param {integer} mask
+	 */
+	function HasBitMask(bits, mask)
+	{
+		return ( bits & mask ) == mask
+	}
+
+	/**
 	 * Returns the Smaller Value
+	 * 
+	 * `Example:` if a < b, then return a, else return b
+	 * @param {integer|float} a
 	 * @param {integer|float} b
 	 */
 	function Min(a, b)
 	{
-		return (b < a) ? b : a
+		return (a < b) ? a : b
 	}
 	/**
 	 * Returns the Larger Value
+	 * 
+	 * `Example:` if a < b, then return b, else return a
 	 * @param {integer|float} a
 	 * @param {integer|float} b
 	 */
@@ -7430,23 +7563,28 @@ function ROOT::PrecacheObject(thing)
 		return (a < b) ? b : a
 	}
 	/**
+	 * Clamps `val` between `min` and `max`
 	 * @param {integer|float} val
-	 * @param {integer|float} maxVal
+	 * @param {integer|float} min
+	 * @param {integer|float} max
 	 */
-	function Clamp( val, minVal, maxVal )
+	function Clamp( val, min, max )
 	{
-		if ( maxVal < minVal )
-			return maxVal;
-		else if( val < minVal )
-			return minVal;
-		else if( val > maxVal )
-			return maxVal;
+		if ( max < min )
+			return max
+		else if( val < min )
+			return min
+		else if( val > max )
+			return max
 		else
-			return val;
+			return val
 	}
 	/**
-	 * @param {float} val
-	 * @param {float} D
+	 * @param {integer|float} val
+	 * @param {integer|float} A
+	 * @param {integer|float} B
+	 * @param {integer|float} C
+	 * @param {integer|float} D
 	 */
 	function RemapVal(val, A, B, C, D)
 	{
@@ -7455,11 +7593,11 @@ function ROOT::PrecacheObject(thing)
 		return C + (D - C) * (val - A) * 1.0 / (B - A);
 	}
 	/**
-	 * @param {float} val
-	 * @param {float} A
-	 * @param {float} B
-	 * @param {float} C
-	 * @param {float} D
+	 * @param {integer|float} val
+	 * @param {integer|float} A
+	 * @param {integer|float} B
+	 * @param {integer|float} C
+	 * @param {integer|float} D
 	 */
 	function RemapValClamped(val, A, B, C, D)
 	{
@@ -7475,8 +7613,8 @@ function ROOT::PrecacheObject(thing)
 		return (40 + (20 * log10(radius / 36.0))).tointeger()
 	}
 	/**
-	 * @param {float} min
-	 * @param {float} max
+	 * @param {integer|float} min
+	 * @param {integer|float} max
 	 */
 	function RandomVec(min, max)
 	{
@@ -7511,13 +7649,14 @@ function ROOT::PrecacheObject(thing)
 		LocalTime(cur_time)
 
 		local ActualTime = 0
-		ActualTime += cur_time.hour * SECPERHOUR
-		ActualTime += cur_time.minute * SECPERMIN
+		ActualTime += cur_time.hour * 60 //MINPERHOUR
+		ActualTime += cur_time.minute * 60 //SECPERMIN
 		ActualTime += cur_time.second
 
 		return ActualTime
 	}
 	/**
+	 * Used on Normalized vectors to turn that vector into an angle
 	 * @param {Vector} Vec
 	 * @return Returns the Angle Pointing Towards Vector
 	 */
@@ -7547,11 +7686,9 @@ function ROOT::PrecacheObject(thing)
 	/** 
 	 * 	hermite basis function for smooth interpolation
 	 * 
-	 * 	Similar to Gain() above, but very cheap to call
-	 * 
-	 * 	value should be between 0 & 1 inclusive
-	 * @param {float} value
-	 * @returns {float}
+	 * 	`value` should be between 0 & 1 inclusive
+	 * @param {integer|float} value
+	 * @returns {integer|float}
 	 */
 	function SimpleSpline( value )
 	{
@@ -7562,12 +7699,12 @@ function ROOT::PrecacheObject(thing)
 	/** 
 	 * remaps a value in [startInterval, startInterval+rangeInterval] from linear to
 	 * spline using SimpleSpline
-	 * @param {float} val
-	 * @param {float} A
-	 * @param {float} B
-	 * @param {float} C
-	 * @param {float} D
-	 * @returns {float}
+	 * @param {integer|float} val
+	 * @param {integer|float} A
+	 * @param {integer|float} B
+	 * @param {integer|float} C
+	 * @param {integer|float} D
+	 * @returns {integer|float}
 	 */
 	function SimpleSplineRemapVal( val, A, B, C, D )
 	{
@@ -7579,12 +7716,12 @@ function ROOT::PrecacheObject(thing)
 	/** 
 	 * remaps a value in [startInterval, startInterval+rangeInterval] from linear to
 	 * spline using SimpleSpline
-	 * @param {float} val
-	 * @param {float} A
-	 * @param {float} B
-	 * @param {float} C
-	 * @param {float} D
-	 * @returns {float}
+	 * @param {integer|float} val
+	 * @param {integer|float} A
+	 * @param {integer|float} B
+	 * @param {integer|float} C
+	 * @param {integer|float} D
+	 * @returns {integer|float}
 	 */
 	function SimpleSplineRemapValClamped( val, A, B, C, D )
 	{
@@ -7609,6 +7746,7 @@ function ROOT::PrecacheObject(thing)
 */
 
 /**
+ * Returns a new Normalized vector
  * @returns {Vector}
  */
 function Vector::Normalize()
@@ -7618,14 +7756,15 @@ function Vector::Normalize()
 	return new
 }
 /**
+ * Sets `x`, `y`, and `z` to a Randomized value between `min`, and `max`
  * @param {float} min
  * @param {float} max
  */
 function Vector::Random(min, max)
 {	//VALVE_RAND_MAX == 0x7FFF
-	this.x = min + (::RandomInt(0, 0x7FFF).tofloat() / 0x7FFF) * (max - min);
-	this.y = min + (::RandomInt(0, 0x7FFF).tofloat() / 0x7FFF) * (max - min);
-	this.z = min + (::RandomInt(0, 0x7FFF).tofloat() / 0x7FFF) * (max - min);
+	this.x = min + (::RandomInt(0, 0x7FFF).tofloat() / 0x7FFF) * (max - min)
+	this.y = min + (::RandomInt(0, 0x7FFF).tofloat() / 0x7FFF) * (max - min)
+	this.z = min + (::RandomInt(0, 0x7FFF).tofloat() / 0x7FFF) * (max - min)
 }
 /**
  * @param {Vector} point2
@@ -7636,7 +7775,7 @@ function Vector::DistanceTo(point2)
 	try {
 	return (this-point2).Length()
 	}
-	catch (e)
+	catch (e) // da-fuck
 	{
 		::printl(this)
 		::printl(point2)
@@ -7785,8 +7924,8 @@ if(!("GetTimeOfDay" in ROOT))
 		LocalTime(cur_time)
 
 		local ActualTime = 0
-		ActualTime += cur_time.hour * SECPERHOUR
-		ActualTime += cur_time.minute * SECPERMIN
+		ActualTime += cur_time.hour * 60 //MINPERHOUR
+		ActualTime += cur_time.minute * 60 //SECPERMIN
 		ActualTime += cur_time.second
 
 		return ActualTime
@@ -7904,7 +8043,7 @@ function ROOT::CreateBaseExplosion(table)
 		}
 
 		local currentDamage = damage
-		if(!MATH.BitWise(DmgType, DMG_RADIUS_MAX))
+		if(!MATH.HasBitFlag(DmgType, DMG_RADIUS_MAX))
 		{
 			if (distance <= DamageDeadzone)
 				currentDamage = damage
@@ -8632,9 +8771,9 @@ function FireWeaponCheck()
 		if(HasCustomFlag(params.damage_custom, TF_DMG_CUSTOM_IGNORE_INTERNAL))
 			return
 
-		local IsCrit = MATH.BitWise(params.damage_type, DMG_CRITICAL) 
-		local IsFall = MATH.BitWise(params.damage_type, DMG_FALL)
-		local IsCrush = MATH.BitWise(params.damage_type, DMG_CRUSH)
+		local IsCrit = MATH.HasBitFlag(params.damage_type, DMG_CRITICAL) 
+		local IsFall = MATH.HasBitFlag(params.damage_type, DMG_FALL)
+		local IsCrush = MATH.HasBitFlag(params.damage_type, DMG_CRUSH)
 		
 		local victim = params.const_entity
 		local attacker = params.attacker
@@ -8869,7 +9008,7 @@ function FireWeaponCheck()
 			{
 				if(weapon.GetAdditiveAttribute("corrosion on hit") != 0)
 					victim.MakeCorrosion(attacker, weapon)
-				else if(weapon.GetAdditiveAttribute("corrosion on crit") != 0 && MATH.BitWise(params.damage_type, DMG_CRITICAL))
+				else if(weapon.GetAdditiveAttribute("corrosion on crit") != 0 && MATH.HasBitFlag(params.damage_type, DMG_CRITICAL))
 					victim.MakeCorrosion(attacker, weapon)
 				// attacker.PrintToHud("Made Corrosion on " + victim)
 			}
@@ -9390,6 +9529,54 @@ function FireWeaponCheck()
 		ValidatePlayers()
 	}
 	/**
+	 * @param {table} params
+	 */
+	function OnGameEvent_object_deflected(params)
+	{
+		local object = EntIndexToHScript(params.object_entindex)
+		local deflector = GetPlayerFromUserID(params.userid)
+		local old_owner = GetPlayerFromUserID(params.ownerid)
+		local event_name = "PlayerDeflected"
+
+		if(params.weaponid != 0)
+		{
+			if(IsBaseRocket(object))
+				event_name = "RocketDeflected"
+			else if (IsBaseGrenade(object))
+				event_name = "GrenadeDeflected"
+			else
+				event_name = "ObjectDeflected"
+		}
+
+		// fix rafmod homing sentry rockets
+		if(object.GetClassname() == "tf_projectile_sentryrocket" && IsValidPlayer(old_owner) && IsValidPlayer(deflector))
+		{
+			if(old_owner.GetPlayerClass() == TF_CLASS_ENGINEER && old_owner.GetWeaponIDXInSlotNew(SLOT_PRIMARY) == TF_WEAPON_POMSON)
+			{
+				AddThinkToEnt(object, function() {
+					local pos = self.GetOrigin()
+					local forward = self.GetAbsAngles().Forward()
+					local speed = 1100 //self.GetAbsVelocity().Length()
+					local new_pos = pos + (forward * (speed / 66))
+					self.SetAbsVelocity(forward * speed)
+					// DebugDrawText(self, format("Vel: %s", self.GetAbsVeliocty().ToKVString()), false, TICK_DUR)
+					DebugDrawLine_vCol(pos, new_pos, Vector(255, 0, 0), false, TICK_DUR)
+					// self.Teleport(true, new_pos, false, QAngle(), false, Vector())
+					return -1
+				})
+				RunWithDelay(@() object.SetMoveType(MOVETYPE_FLY, GetPropInt(object, "m_MoveCollide")), TICK_DUR*3)
+			}
+		}
+
+		FireScriptEvent(event_name, {
+			deflector = deflector
+			object = object
+			old_owner = old_owner
+		})
+	}
+
+	
+	/**
 	 * @param {table} _
 	 */
 	function OnGameEvent_mvm_wave_complete(_)
@@ -9416,24 +9603,44 @@ function FireWeaponCheck()
 	function OnGameEvent_mvm_begin_wave(_)
 		GetScope(Gamerules).IsWaveStarted <- true
 
-
 	// Initalize Listensers so game wont discard the events
+
 	/**
-	 * Fired when a player touches a resupply cabinet or respawns.
-	 * When upgrading it fires PlayerUpgraded, then PlayerResupply
+	 * Fired when a Human touches a resupply cabinet or respawns.
 	 * 
-	 * @param {CTFPlayer|CTFBot}	player				The player who resupplied.
+	 * `Note:` Fired after HumanUpgraded
+	 * 
+	 * @param {CTFPlayer}	player				The player who resupplied.
 	 */
 	function OnScriptEvent_HumanResupply(_params) 				{}
+	/**
+	 * Fired when a Human Upgrades and Before `HumanResupply`
+	 * 
+	 * @param {CTFPlayer}	player				The player who Upgraded.
+	 */
 	function OnScriptEvent_HumanUpgraded(_params) 				{}
 
+	/**
+	 * Fired when a Bot touches a resupply cabinet or respawns.
+	 * 
+	 * `Note:` Fired after BotUpgraded
+	 * 
+	 * @param {CTFBot}		player				The bot who resupplied.
+	 */
 	function OnScriptEvent_BotResupply(_params) 				{}
+	/**
+	 * Fired when a Bot Upgrades and Before `BotResupply`
+	 * 
+	 * `Note:` i dont think this can actually "fire"
+	 * 
+	 * @param {CTFBot}		player				The bot who Upgraded.
+	 */
 	function OnScriptEvent_BotUpgraded(_params) 				{}
 
 	/**
-	 * Fired when a bot/player dies. 
+	 * Fired when a bot dies. 
 	 *
-	 * @param {CTFPlayer|CTFBot}	victim				The player entity that died.
+	 * @param {CTFBot}				victim				The bot that died.
 	 * @param {CBaseEntity|null}	attacker			The player entity that killed the victim.
 	 * @param {CBaseEntity|null}	assister			The player entity that assisted the kill.
 	 * @param {CBaseEntity|null}	weapon				The weapon used to kill.
@@ -9447,12 +9654,28 @@ function FireWeaponCheck()
 	 * @param {bool}				rocket_jump			True if the attacker was rocket jumping.
 	 */
 	function OnScriptEvent_BotDeath(_params) 					{}
+	/**
+	 * Fired when a human dies. 
+	 *
+	 * @param {CTFPlayer}			victim				The human that died.
+	 * @param {CBaseEntity|null}	attacker			The player entity that killed the victim.
+	 * @param {CBaseEntity|null}	assister			The player entity that assisted the kill.
+	 * @param {CBaseEntity|null}	weapon				The weapon used to kill.
+	 * @param {CBaseEntity|null}	inflictor			The entity that dealt the damage (e.g. rocket/sentry).
+	 * @param {string}				logname				The weapon name that should be printed in console.
+	 * @param {integer}				damagebits			Damage type bits.
+	 * @param {integer}				weaponIDX			The definition index of the weapon.
+	 * @param {integer}				death_flags			See TF_DEATH (ln~ 340).
+	 * @param {integer}				custom				Custom kill type (e.g. headshot).
+	 * @param {integer}				stun_flags			The victim's stun flags at the moment of death
+	 * @param {bool}				rocket_jump			True if the attacker was rocket jumping.
+	 */
 	function OnScriptEvent_HumanDeath(_params) 					{}
 
 	/**
-	 * Fired when a bot/player is about to take damage (Script Hook).
+	 * Fired when a bot is about to take damage (Script Hook).
 	 * 
-	 * @param {CTFPlayer|CTFBot}	victim				The player taking damage.
+	 * @param {CTFBot}				victim				The bot taking damage.
 	 * @param {CBaseEntity|null}	attacker			The entity dealing damage.
 	 * @param {CBaseEntity|null}	inflictor			The entity inflicting damage (weapon/projectile).
 	 * @param {CBaseEntity|null}	weapon				The weapon used.
@@ -9467,10 +9690,44 @@ function FireWeaponCheck()
 	 * @param {integer}				others_damaged		How many players other than the attacker has the damage been applied to.
 	 */
 	function OnScriptEvent_PostTakeDamageBot(_params) 			{}
+	/**
+	 * Fired when a human is about to take damage (Script Hook).
+	 * 
+	 * @param {CTFPlayer}			victim				The human taking damage.
+	 * @param {CBaseEntity|null}	attacker			The entity dealing damage.
+	 * @param {CBaseEntity|null}	inflictor			The entity inflicting damage (weapon/projectile).
+	 * @param {CBaseEntity|null}	weapon				The weapon used.
+	 * @param {Vector}				damage_position		World position of where the damage came from. E.g. end position of a bullet or a rocket.
+	 * @param {float}				damage				The actual damage amount ( Does not count number of bullets or falloff or rampup )
+	 * @param {float}				base_damage			The base damage before modifiers.
+	 * @param {integer}				damage_type			Damage type bits (e.g. DMG_GENERIC).
+	 * @param {integer}				hit_group			Hitgroup index (e.g. HITGROUP_HEAD).
+	 * @param {integer}				damage_custom		Custom damage type stats.
+	 * @param {integer}				crit_type			Crit type (0=None, 1=Mini, 2=Full).
+	 * @param {integer}				penetration_count	How many players the damage has penetrated so far.
+	 * @param {integer}				others_damaged		How many players other than the attacker has the damage been applied to.
+	 */
 	function OnScriptEvent_PostTakeDamageHuman(_params) 		{}
 
 	/**
-	 * Fired when the world (or any other entity) is about to take damage (Script Hook).
+	 * Fired when the world is about to take damage (Script Hook).
+	 * 
+	 * @param {CBaseEntity}			victim				The world taking damage.
+	 * @param {CBaseEntity|null}	attacker			The entity dealing damage.
+	 * @param {CBaseEntity|null}	inflictor			The entity inflicting damage (weapon/projectile).
+	 * @param {CBaseEntity|null}	weapon				The weapon used.
+	 * @param {Vector}				damage_position		World position of where the damage came from. E.g. end position of a bullet or a rocket.
+	 * @param {float}				damage				The actual damage amount ( Does not count number of bullets or falloff or rampup )
+	 * @param {float}				base_damage			The base damage before modifiers.
+	 * @param {integer}				damage_type			Damage type bits (e.g. DMG_GENERIC).
+	 * @param {integer}				damage_custom		Custom damage type stats.
+	 * @param {integer}				crit_type			Crit type (0=None, 1=Mini, 2=Full).
+	 * @param {integer}				penetration_count	How many players the damage has penetrated so far.
+	 * @param {integer}				others_damaged		How many players other than the attacker has the damage been applied to.
+	 */
+	function OnScriptEvent_PostTakeDamageWorld(_params) 		{}
+	/**
+	 * Fired when any other entity is about to take damage (Script Hook).
 	 * 
 	 * @param {CBaseEntity}			victim				The entity taking damage.
 	 * @param {CBaseEntity|null}	attacker			The entity dealing damage.
@@ -9485,14 +9742,13 @@ function FireWeaponCheck()
 	 * @param {integer}				penetration_count	How many players the damage has penetrated so far.
 	 * @param {integer}				others_damaged		How many players other than the attacker has the damage been applied to.
 	 */
-	function OnScriptEvent_PostTakeDamageWorld(_params) 		{}
 	function OnScriptEvent_PostTakeDamage(_params) 				{}
 
 	/**
-	 * Fired when a bot/player is hurt (after damage calculation).
+	 * Fired when a bot is hurt (after damage calculation).
 	 * 
-	 * @param {CBaseEntity}			victim				The player who was hurt.
-	 * @param {CBaseEntity|null}	attacker			The player who attacked.
+	 * @param {CTFBot}				victim				The bot who was hurt.
+	 * @param {CBaseEntity|null}	attacker			The entity who attacked.
 	 * @param {integer}				damage				Final damage amount applied.
 	 * @param {integer}				health				Remaining health of the victim.
 	 * @param {integer}				over_damage			Overkill damage (if dead).
@@ -9503,32 +9759,60 @@ function FireWeaponCheck()
 	 * @param {bool}				allseecrit			True if everyone sees the crit.
 	 */
 	function OnScriptEvent_PostBotHurt(_params) 				{}
+	/**
+	 * Fired when a human is hurt (after damage calculation).
+	 * 
+	 * @param {CTFPlayer}			victim				The human who was hurt.
+	 * @param {CBaseEntity|null}	attacker			The entity who attacked.
+	 * @param {integer}				damage				Final damage amount applied.
+	 * @param {integer}				health				Remaining health of the victim.
+	 * @param {integer}				over_damage			Overkill damage (if dead).
+	 * @param {integer}				damage_custom		Custom damage type.
+	 * @param {integer}				bonuseffect			Bonus effect (e.g. BONUS_EFFECT_CRIT).
+	 * @param {bool}				killed				True if this damage killed the victim.
+	 * @param {bool}				showdisguisedcrit 	True if crit should be shown freely.
+	 * @param {bool}				allseecrit			True if everyone sees the crit.
+	 */
 	function OnScriptEvent_PostHumanHurt(_params) 				{}
 
 	/**
-	 * Fired when a bot/player spawns.
+	 * Fired when a bot spawns for the first time.
 	 * 
-	 * @param {CTFBot}				player				The player who spawned.
+	 * @param {CTFBot}				player				The bot who spawned.
 	 * @param {integer}				class				The class index of the player.
 	 * @param {integer}				team				The team index.
 	 */
 	function OnScriptEvent_BotInitialSpawn(_params) 			{}
+	/**
+	 * Fired when a bot spawns.
+	 * 
+	 * @param {CTFBot}				player				The bot who spawned.
+	 * @param {integer}				class				The class index of the player.
+	 * @param {integer}				team				The team index.
+	 */
 	function OnScriptEvent_BotSpawn(_params) 					{}
 
 	/**
-	 * Fired when a bot/player spawns.
+	 * Fired when a human spawns for the first time.
 	 * 
-	 * @param {CTFPlayer}			player				The player who spawned.
+	 * @param {CTFPlayer}			player				The human who spawned.
 	 * @param {integer}				class				The class index of the player.
 	 * @param {integer}				team				The team index.
 	 */
 	function OnScriptEvent_HumanInitialSpawn(_params) 			{}
+		/**
+	 * Fired when a human spawns.
+	 * 
+	 * @param {CTFPlayer}			player				The human who spawned.
+	 * @param {integer}				class				The class index of the player.
+	 * @param {integer}				team				The team index.
+	 */
 	function OnScriptEvent_HumanSpawn(_params) 					{}
 
 	/**
-	 * Fired when a bot/player changes team.
+	 * Fired when a bot changes team.
 	 * 
-	 * @param {CTFPlayer|CTFBot}	player				The player who changed team.
+	 * @param {CTFBot}				player				The bot who changed team.
 	 * @param {integer}				team				The new team index.
 	 * @param {integer}				oldteam				The old team index.
 	 * @param {bool}				disconnect			True if player is disconnecting.
@@ -9537,23 +9821,48 @@ function FireWeaponCheck()
 	 * @param {string}				username			Username of the client.
 	 */
 	function OnScriptEvent_BotTeam(_params) 					{}
+	/**
+	 * Fired when a human changes team.
+	 * 
+	 * @param {CTFPlayer}			player				The human who changed team.
+	 * @param {integer}				team				The new team index.
+	 * @param {integer}				oldteam				The old team index.
+	 * @param {bool}				disconnect			True if player is disconnecting.
+	 * @param {bool}				autoteam			True if auto-assigned.
+	 * @param {bool}				silent				True if silent change.
+	 * @param {string}				username			Username of the client.
+	 */
 	function OnScriptEvent_HumanTeam(_params) 					{}
 
 	/**
-	 * Fired when a bot/player/console speaks.
+	 * Fired when a bot speaks.
 	 * 
-	 * @param {CTFPlayer|CTFBot|null}	player			The player who spoke (null if Console).
+	 * @param {CTFBot}					player			The bot who spoke.
 	 * @param {string}					message			The text message.
 	 * @param {bool}					teamonly		True if team-only chat.
 	 */
 	function OnScriptEvent_BotSay(_params) 						{}
+	/**
+	 * Fired when a player speaks.
+	 * 
+	 * @param {CTFPlayer}				player			The human who spoke.
+	 * @param {string}					message			The text message.
+	 * @param {bool}					teamonly		True if team-only chat.
+	 */
 	function OnScriptEvent_HumanSay(_params) 					{}
+	/**
+	 * Fired when the console speaks.
+	 * 
+	 * @param {null}					player			The entity who spoke (always null, leftover from above).
+	 * @param {string}					message			The text message.
+	 * @param {bool}					teamonly		True if team-only chat.
+	 */
 	function OnScriptEvent_ConsoleSay(_params) 					{}
 
 	/**
-	 * Fired when a Non-Player Entity is hurt.
+	 * Fired when a building is hurt.
 	 * 
-	 * @param {CBaseEntity}				object			The entity being hurt.
+	 * @param {CBaseEntity}				object			The building being hurt.
 	 * @param {CBaseEntity|null}		attacker		The attacker entity.
 	 * @param {integer}					damage			Damage amount.
 	 * @param {integer}					health			How much health the object is currently at.
@@ -9561,52 +9870,205 @@ function FireWeaponCheck()
 	 */	
 	function OnScriptEvent_BuildingHurt(_params) 				{}
 
+	/**
+	 * Fired when a tank is hurt.
+	 * 
+	 * @param {CTFBaseBoss}				object			The tank being hurt.
+	 * @param {CBaseEntity|null}		attacker		The attacker entity.
+	 * @param {integer}					damage			Damage amount.
+	 * @param {integer}					health			How much health the object is currently at.
+	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
+	 */	
 	function OnScriptEvent_TankHurt(_params) 					{}
+	/**
+	 * Fired when a tank is hurt.
+	 * 
+	 * @param {CTFBaseBoss}				object			The tank being hurt.
+	 * @param {CBaseEntity|null}		attacker		The attacker entity.
+	 * @param {integer}					damage			Damage amount.
+	 * @param {integer}					health			How much health the object is currently at.
+	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
+	 */	
 	function OnScriptEvent_BaseBossHurt(_params) 				{}
 
+	/**
+	 * Fired when a boss is hurt.
+	 * 
+	 * @param {CBaseEntity}				object			The boss being hurt.
+	 * @param {CBaseEntity|null}		attacker		The attacker entity.
+	 * @param {integer}					damage			Damage amount.
+	 * @param {integer}					health			How much health the object is currently at.
+	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
+	 */	
 	function OnScriptEvent_HHHHurt(_params) 					{}
+	/**
+	 * Fired when a boss is hurt.
+	 * 
+	 * @param {CBaseEntity}				object			The boss being hurt.
+	 * @param {CBaseEntity|null}		attacker		The attacker entity.
+	 * @param {integer}					damage			Damage amount.
+	 * @param {integer}					health			How much health the object is currently at.
+	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
+	 */	
 	function OnScriptEvent_MonoculusHurt(_params) 				{}
+	/**
+	 * Fired when a boss is hurt.
+	 * 
+	 * @param {CBaseEntity}				object			The boss being hurt.
+	 * @param {CBaseEntity|null}		attacker		The attacker entity.
+	 * @param {integer}					damage			Damage amount.
+	 * @param {integer}					health			How much health the object is currently at.
+	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
+	 */	
 	function OnScriptEvent_MerasmusHurt(_params) 				{}
 
 	/**
-	 * Fired when a Non-Player Entity is killed.
+	 * Fired when a building is killed.
 	 * 
-	 * @param {CBaseEntity}				object			The entity being killed.
+	 * @param {CBaseEntity}				object			The building being killed.
 	 * @param {CBaseEntity|null}		attacker		The attacker entity.
 	 * @param {integer}					damage			Damage amount.
 	 * @param {integer}					health			How much health the object is currently at (always <= 0).
-	 * @param {integer}					over_damage		Amount of damage that exceeded the target's remaining health.
+	 * @param {integer}					over_damage		Amount of damage that exceeded the building's remaining health.
 	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
 	 */
 	function OnScriptEvent_BuildingKilled(_params) 				{}
 	
+	/**
+	 * Fired when a tank is killed.
+	 * 
+	 * @param {CTFBaseBoss}				object			The tank being killed.
+	 * @param {CBaseEntity|null}		attacker		The attacker entity.
+	 * @param {integer}					damage			Damage amount.
+	 * @param {integer}					health			How much health the object is currently at (always <= 0).
+	 * @param {integer}					over_damage		Amount of damage that exceeded the tank's remaining health.
+	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
+	 */
 	function OnScriptEvent_TankKilled(_params) 					{}
+	/**
+	 * Fired when a tank is killed.
+	 * 
+	 * @param {CTFBaseBoss}				object			The tank being killed.
+	 * @param {CBaseEntity|null}		attacker		The attacker entity.
+	 * @param {integer}					damage			Damage amount.
+	 * @param {integer}					health			How much health the object is currently at (always <= 0).
+	 * @param {integer}					over_damage		Amount of damage that exceeded the tank's remaining health.
+	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
+	 */
 	function OnScriptEvent_BaseBossKilled(_params) 				{}
 	
+	/**
+	 * Fired when HHH is killed.
+	 * 
+	 * @param {CBaseEntity}				object			The boss being killed.
+	 * @param {CBaseEntity|null}		attacker		The attacker entity.
+	 * @param {integer}					damage			Damage amount.
+	 * @param {integer}					health			How much health the object is currently at (always <= 0).
+	 * @param {integer}					over_damage		Amount of damage that exceeded the bosses remaining health.
+	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
+	 */
 	function OnScriptEvent_HHHKilled(_params) 					{}
+	/**
+	 * Fired when Monoculus is killed.
+	 * 
+	 * @param {CBaseEntity}				object			The boss being killed.
+	 * @param {CBaseEntity|null}		attacker		The attacker entity.
+	 * @param {integer}					damage			Damage amount.
+	 * @param {integer}					health			How much health the object is currently at (always <= 0).
+	 * @param {integer}					over_damage		Amount of damage that exceeded the bosses remaining health.
+	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
+	 */
 	function OnScriptEvent_MonoculusKilled(_params) 			{}
+	/**
+	 * Fired when Merasmus is killed.
+	 * 
+	 * @param {CBaseEntity}				object			The boss being killed.
+	 * @param {CBaseEntity|null}		attacker		The attacker entity.
+	 * @param {integer}					damage			Damage amount.
+	 * @param {integer}					health			How much health the object is currently at (always <= 0).
+	 * @param {integer}					over_damage		Amount of damage that exceeded the bosses remaining health.
+	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
+	 */
 	function OnScriptEvent_MerasmusKilled(_params) 				{}
 
 	/**
 	 * Fired when a bot/player is healed.
 	 * 
-	 * @param {CBaseEntity}				patient			The player being healed.
-	 * @param {CBaseEntity|null}		healer			The healer entity (e.g. Medic/Dispenser).
-	 * @param {integer}					amount			Heal amount.
+	 * @param {CTFBot}						patient			The bot being healed.
+	 * @param {CTFPlayer|CBaseEntity|null}	healer			The healer entity (e.g. Medic/Dispenser).
+	 * @param {integer}						amount			Heal amount.
 	 */
 	function OnScriptEvent_BotHealed(_params) 					{}
+	/**
+	 * Fired when a human is healed.
+	 * 
+	 * @param {CTFPlayer}					patient			The human being healed.
+	 * @param {CTFPlayer|CBaseEntity|null}	healer			The healer entity (e.g. Medic/Dispenser).
+	 * @param {integer}						amount			Heal amount.
+	 */
 	function OnScriptEvent_HumanHealed(_params) 				{}
 
 	/**
-	 * Fired when a Building is Created
+	 * Fired when a Dispenser is Created
 	 *
-	 * @param {CBaseEntity} 			player	 		The player that created the Building.
-	 * @param {CBaseEntity|null} 		object	 		The Building entity that was Created.
+	 * @param {CTFPlayer} 				player	 		The player that created the Dispencer.
+	 * @param {CBaseEntity|null} 		object	 		The Dispencer that was Created.
 	 */
 	function OnScriptEvent_DispenserBuilt(_params)				{}
+	/**
+	 * Fired when a Teleporter is Created
+	 *
+	 * @param {CTFPlayer} 				player	 		The player that created the Teleporter.
+	 * @param {CBaseEntity|null} 		object	 		The Teleporter that was Created.
+	 */
 	function OnScriptEvent_TeleporterBuilt(_params)				{}
+	/**
+	 * Fired when a Sentry is Created
+	 *
+	 * @param {CTFPlayer} 				player	 		The player that created the Sentry.
+	 * @param {CBaseEntity|null} 		object	 		The Sentry that was Created.
+	 */
 	function OnScriptEvent_SentryBuilt(_params)					{}
+	/**
+	 * Fired when a Sapper is Created
+	 *
+	 * @param {CTFPlayer} 				player	 		The player that created the Sapper.
+	 * @param {CBaseEntity|null} 		object	 		The Sapper that was Created.
+	 */
 	function OnScriptEvent_SapperBuilt(_params)					{}
+
+	/** 
+	 * Fired when a Player is deflected
+	 * 
+	 * @param {CBaseEntity|null} 		deflector		The entity that deflected object.
+	 * @param {CBaseEntity|null} 		object			The player that was deflected.
+	 * @param {CBaseEntity|null} 		old_owner		The owner of object before deflection.
+	 */
+	function OnScriptEvent_PlayerDeflected(_params) 			{}
+	/** 
+	 * Fired when a Rocket is deflected
+	 * 
+	 * @param {CBaseEntity|null} 		deflector		The entity that deflected object.
+	 * @param {CBaseEntity|null} 		object			The rocket that was deflected.
+	 * @param {CBaseEntity|null} 		old_owner		The owner of object before deflection.
+	 */		
+	function OnScriptEvent_RocketDeflected(_params) 			{}
+	/** 
+	 * Fired when a Grenade is deflected
+	 * 
+	 * @param {CBaseEntity|null} 		deflector		The entity that deflected object.
+	 * @param {CBaseEntity|null} 		object			The grenade that was deflected.
+	 * @param {CBaseEntity|null} 		old_owner		The owner of object before deflection.
+	 */
+	function OnScriptEvent_GrenadeDeflected(_params) 			{}
+	/** 
+	 * Fired when a different Object is deflected
+	 * 
+	 * @param {CBaseEntity|null} 		deflector		The entity that deflected object.
+	 * @param {CBaseEntity|null} 		object			The entity that was deflected.
+	 * @param {CBaseEntity|null} 		old_owner		The owner of object before deflection.
+	 */
+	function OnScriptEvent_ObjectDeflected(_params) 			{}
 
 	/**
 	 * Fired when a player is Stunned
@@ -10014,6 +10476,8 @@ PrintToConsoleAll("Included Library Successfully")
 
 function ROOT::FixShittyPlayersBug()
 {
+	if(IsTF2C()) // prevent for now
+		return
 	if(GetCurrentWaveNumber() > 1)
 		return
 
