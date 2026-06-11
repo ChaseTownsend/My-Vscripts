@@ -205,7 +205,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format)
-if (!SetLibraryVersion("06.10.2026.20", 0))
+if (!SetLibraryVersion("06.10.2026.23", 0))
 	return
 
 SetLibrarySettings({})
@@ -1905,7 +1905,8 @@ function CTFPlayer::GetMaximumPrimaryAmmo()
 	if(name == "crossbow")
 		round = true
 
-	foreach (weapon in GetAllWeapons())
+	local weapons = GetAllWeapons()
+	foreach (weapon in weapons)
 	{
 		if(weapon.GetAttribute("provide on active", 0) == 1)
 		{
@@ -1952,10 +1953,11 @@ function CTFPlayer::GetMaximumSecondaryAmmo()
 			return 0
 	}
 
-	if(name == "builder")
+	if(name == "builder") // sapper
 		ammo = GetMaximumPrimaryAmmo()
 
-	foreach (weapon in GetAllWeapons())
+	local weapons = GetAllWeapons()
+	foreach (weapon in weapons)
 	{
 		if(weapon.GetAttribute("provide on active", 0) == 1)
 		{
@@ -1984,7 +1986,8 @@ function CTFPlayer::GetMaximumMetal()
 		return 0
 	local metal = 200
 	local metal_mult = 1
-	foreach (weapon in GetAllWeapons())
+	local weapons = GetAllWeapons()
+	foreach (weapon in weapons)
 	{
 		if(weapon.HasAdditiveAttribute("provide on active"))
 		{
