@@ -7946,6 +7946,9 @@ if(!("GetTimeOfDay" in ROOT))
 if(!("CORROSION_ICON" in ROOT))
 	::CORROSION_ICON <- CreateKillIcon("infection_acid_puddle")
 
+if(!("SLAM_ICON" in ROOT))
+	::SLAM_ICON <- CreateKillIcon("hale_slam_collateral")
+
 /*
   ==================================
   === CUSTOM EXPLOSION FUNCTIONS ===
@@ -7977,6 +7980,7 @@ if(!("CORROSION_ICON" in ROOT))
  * @param {bool}				FuncOnIgnore		If true, call ExplodeFunc on ignored targets. (Default: false)
  * @param {bool}				OnlyPlayers			If true, only collect players to attack. (Default: false)
  * @param {bool}				FuncIgnoreObjects	If true, ignore non-players when calling ExplodeFunc. (Default: false)
+ * @param {string}				kill_icon			Override the kill icon in killfeed, forces DmgCustom to 0 (Default: "")
  */
 function ROOT::CreateBaseExplosion(table)
 {
@@ -8001,6 +8005,7 @@ function ROOT::CreateBaseExplosion(table)
 	local OnlyPlayers		= "OnlyPlayers"			in table ? table.OnlyPlayers		: false
 	local FuncOnIgnore		= "FuncOnIgnore"		in table ? table.FuncOnIgnore 		: false
 	local FuncIgnoreObjects	= "FuncIgnoreObjects"	in table ? table.FuncIgnoreObjects 	: false
+	local kill_icon 		= "kill_icon"			in table ? table.kill_icon			: ""
 
 	local SoundRadius 		= "SoundRadius" 		in table ? table.SoundRadius 		: radius
 	local SoundDelay 		= "SoundDelay" 			in table ? table.SoundDelay 		: 0.5
@@ -8058,7 +8063,10 @@ function ROOT::CreateBaseExplosion(table)
 
 		if(FuncBeforeDmg && (!FuncIgnoreObjects || entity.IsPlayer())) 
 			ExplodeFunc(entity)
-		entity.TakeDamageCustom(inflictor, owner, weapon, Vector(), Vector(), currentDamage, DmgType, DmgCustom)
+		if(kill_icon != "")
+			entity.TakeDamageCustom(kill_icon, owner, weapon, Vector(), Vector(), currentDamage, DmgType, 0)
+		else
+			entity.TakeDamageCustom(inflictor, owner, weapon, Vector(), Vector(), currentDamage, DmgType, DmgCustom)
 		if(!FuncBeforeDmg && (!FuncIgnoreObjects || entity.IsPlayer())) 
 			ExplodeFunc(entity)
 	}
@@ -8155,6 +8163,7 @@ function ROOT::CreateSlamAoE(table)
 		particle_offset = Vector(0, 0, 16)
 		DmgType = DMG_RADIUS_MAX|DMG_ALWAYSGIB|DMG_MELEE,
 		particle = "chaos_stomp_parent" // PARTICLE MAY NOT BE PACKED
+		kill_icon = SLAM_ICON
 	})
 	PrecacheSound("ambient/explosions/explode_1.wav")
 	EmitSoundEx({
