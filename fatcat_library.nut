@@ -6666,6 +6666,60 @@ function ROOT::RemoveCommandTrigger(string, triggers = ["/", "!"])
 	return ArrayToString(StringToArray(string).slice(1))
 }
 /**
+ * @param {string} string
+ * @returns {[string]}
+ */
+function ROOT::SplitStringBetter(string)
+{
+	local string_debug = false
+
+	local escape = '`'
+	local s_escape = ' '
+	local output = []
+	local found_prev_escape = false
+	local temp_output = ""
+
+	local added_final = false
+	foreach (byte in string)
+	{
+		added_final = false
+		if(byte == escape)
+		{
+			if(string_debug) ("found special escape char, setting val to "+!found_prev_escape)
+			found_prev_escape = !found_prev_escape
+
+			if(temp_output.len() != 0 && temp_output != " ")
+			{
+				if(string_debug) printf("Added buffer \"%s\" with length %d to the output\n", temp_output, temp_output.len())
+				output.append(temp_output)
+				temp_output = ""
+				added_final = true
+			}
+		}
+		else if (byte == s_escape && found_prev_escape == false)
+		{
+			if(string_debug) printf("Added buffer \"%s\" to the output\n", temp_output)
+			output.append(temp_output)
+			temp_output = ""
+			added_final = true
+		}
+		else
+		{
+			temp_output += byte.tochar()
+			if(string_debug) printf("Added char \"%s\" to the buffer \"%s\"\n", byte.tochar(), temp_output)
+		}
+	}
+
+	if(added_final == false)
+	{
+		output.append(temp_output)
+		if(string_debug) printf("Added final buffer \"%s\" to the output\n", temp_output)
+	}
+
+	return output
+}
+
+/**
  * @param {string|[string]} trigger
  */
 function ROOT::RemoveChatTrigger(trigger)
@@ -9319,13 +9373,15 @@ function FireWeaponCheck()
 		// useless
 		if("priority" in eventdata) delete eventdata.priority
 
-		local text = eventdata.message.tolower()
+		local text = eventdata.message.tolower() // could be a problem but, ehh, who cares
 
 		FireScriptEvent(player ? ( player.IsBot() ? "BotSay" : "HumanSay") : "ConsoleSay", eventdata)
 
 		if(!IsStringATrigger(text))
 			return
-		local data = split(RemoveCommandTrigger(text), " ")
+			
+		local data = SplitStringBetter(RemoveCommandTrigger(text))
+		// local data = split(RemoveCommandTrigger(text), " ") // if shit breaks un-comment
 
 		if(data.len() == 0)
 			return
@@ -9360,7 +9416,14 @@ function FireWeaponCheck()
 			}
 
 			if(PassedFilters)
+			{
 				CallbackInfo[0].acall([ROOT].extend(temp))
+				FireScriptEvent("ChatCommand", {
+					command = Trigger
+					player = player
+					data = data
+				})
+			}
 		}
 	}
 	/**
@@ -10082,6 +10145,14 @@ function FireWeaponCheck()
 	 */
 	function OnScriptEvent_ObjectDeflected(_params) 			{}
 
+
+	/**
+	 * @param {string}					command			The chat commmand that was triggered.
+	 * @param {CTFPlayer|null}			player			The player that triggered this chat command (null for console).
+	 * @param {table}					data			Any other data the chat command was passed.
+	 */
+	function OnScriptEvent_ChatCommand(_params)					{}
+
 	/**
 	 * Fired when a player is Stunned
 	 *  
@@ -10125,6 +10196,10 @@ AddChatTrigger(["lib_version", "lib_versions"], function(_player, ...) {
 
 AddChatTrigger("lib_info", function(_player, ...) {
 	PrintToChatAllF("\x07D000D0► FatCatLib ◄\x03 Version\x01: \x04%s\x01 - \x03sub_version\x01: \x04%s\x01", FatCatLibVersion.version, FatCatLibVersion.sub_version.tostring())
+})
+
+AddChatTrigger("Test", function(player, ...) {
+	player.PrintToChat("hi")
 })
 
 /*
