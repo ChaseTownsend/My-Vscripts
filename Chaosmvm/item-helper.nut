@@ -8,7 +8,7 @@ const item_help_color_header = "\x0826c2ffDD"
 const text_color_header = "\x0826beffBB"
 const error_color = "\x07D43F3F"
 
-SetScriptVersion("item_helper", "3.4.0")
+SetScriptVersion("item_helper", "3.4.1")
 ::helper <- {}
 
 ::ItemTranslateTable <- {
@@ -237,9 +237,10 @@ SetScriptVersion("item_helper", "3.4.0")
 	"SHARPDRESSER"		: [638]
 	"SPYCICLE"			: [649]
 	/// Watch
-	"INVISWATCH"		: [30, 297, 947, 1205]
+	"INVISWATCH"		: [30, 297, 1205]
 	"DEADRINGER"		: [59]
 	"CLOAKANDDAGGER"	: [60]
+	"QUACKENBIRDT"		: [947]
 
 	///// Multiclass Melee
 	"FRYINGPAN"			: [264, 1071]
@@ -263,6 +264,7 @@ AddChatTrigger("itemhelp", function(player, ...) {
 		player.TranslateToChat("IH_HELP_MSG")
 		return
 	}
+
 	local setting = -1
 	try {
 		setting = vargv[0].tointeger()

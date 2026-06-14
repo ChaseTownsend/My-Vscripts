@@ -205,7 +205,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format)
-if (!SetLibraryVersion("06.12.2026.00", 0))
+if (!SetLibraryVersion("06.13.2026.19", 0))
 	return
 
 SetLibrarySettings({})
@@ -384,6 +384,17 @@ function ROOT::GetPropVector(entity, prop, index = 0)
 {
 	EnableStringPurge(entity)
 	return NetProps.GetPropVectorArray(entity, prop, index)
+}
+
+/** 
+ * @param {CBaseEntity|null} entity
+ * @param {string} prop
+ * @returns {bool}
+ */
+function ROOT::HasProp(entity, prop)
+{
+	EnableStringPurge(entity)
+	return NetProps.HasProp(entity, prop)
 }
 
 if(!("SetPropIntArray" in ROOT))
@@ -1688,6 +1699,11 @@ function CTFPlayer::InRespawnRoom(any = false)
  */
 function CTFPlayer::InAnyRespawnRoom()
 	return InRespawnRoom(true)
+
+/* function CTFPlayer::InEnemyRespawnRoom()
+{
+
+} */
 /**
  * @param {float} range
  * @returns {[CTFPlayer]}
@@ -3216,7 +3232,12 @@ function CTFPlayer::AttachParticle(particle, duration = -1, attachment_point = P
 	if(duration > 0)
 		PlayerFire("DispatchEffect", "ParticleEffectStop", duration)
 }
-
+/** 
+ * Emit a sound to this client only
+ * 
+ * @param {string} sound
+ * @param {table} data
+ */
 function CTFPlayer::EmitSoundTo(sound, data = {})
 {
 	PrecacheSound(sound)
@@ -3342,6 +3363,7 @@ function CTFPlayer::GetWearables()
 	}
 	return wearables
 }
+
 /**
  * @return {CTFWeaponBase|CEconEntity|null}
  */
@@ -5071,7 +5093,6 @@ function CTFWeaponBase::ApplyOnHitAttributes( pVictimBaseEntity, pAttacker, info
 		if ( bIsSpyRevealed )
 		{
 			UTIL_ScreenFade( pVictim, Vector4D(255, 255, 255, 255), 0.25, 0.1, FFADE_IN );
-			// pVictim->EmitSound( "Weapon_DRG_Wrench.RevealSpy" );
 		}
 
 		// On hit attributes don't work when you shoot disguised spies
@@ -5101,9 +5122,7 @@ function CTFWeaponBase::ApplyOnHitAttributes( pVictimBaseEntity, pAttacker, info
 	if ( flChargeRefill > 0 )
 	{
 		if ( pAttacker.GetCurrentRune() != RUNE_NONE )
-		{
 			flChargeRefill *= 0.2
-		}
 
 		pAttacker.SetDemomanChargeMeter( pAttacker.GetDemomanChargeMeter() + flChargeRefill * 100.0 );
 	}
@@ -5120,8 +5139,6 @@ function CTFWeaponBase::ApplyOnHitAttributes( pVictimBaseEntity, pAttacker, info
 			local nAmount = info.GetDamage() * 0.6
 			iModHealthOnHit += nAmount;
 
-			// TODO:
-			// CTFPlayer *pProvider = ToTFPlayer( pVictim->m_Shared.GetConditionProvider( TF_COND_MAD_MILK ) );
 			/** @type {CTFPlayer|null} */
 			local pProvider = null
 			if ( pProvider )
@@ -5131,7 +5148,6 @@ function CTFWeaponBase::ApplyOnHitAttributes( pVictimBaseEntity, pAttacker, info
 					patient = pAttacker.GetUserID()
 					healer = pProvider.GetUserID()
 					amount = iModHealthOnHit
-					// priority = 1
 				})
 
 				// Give them a little bit of Uber
@@ -5151,29 +5167,15 @@ function CTFWeaponBase::ApplyOnHitAttributes( pVictimBaseEntity, pAttacker, info
 	if ( pAttacker.InCond( TF_COND_REGENONDAMAGEBUFF ) )
 	{
 		local nAmount = info.GetDamage() * (IsCvarAllowed("tf_dev_health_on_damage_recover_percentage") ? GetCvarFloat("tf_dev_health_on_damage_recover_percentage") : 0.35)
-		iModHealthOnHit += nAmount;
-
-		// Increment provider's healing assist stat
-		local pProvider = null
-		// CTFPlayer *pProvider = ToTFPlayer( pAttacker->m_Shared.GetConditionProvider( TF_COND_REGENONDAMAGEBUFF ) ); // TODO:
-		if ( pProvider && pProvider != pAttacker )
-		{
-			// Only give points for the portion they're responsible for
-			// CTF_GameStats.Event_PlayerHealedOtherAssist( pProvider, nAmount );
-			// no stats
-		}
+		iModHealthOnHit += nAmount
 	}
 
 	if ( iModHealthOnHit != 0)
 	{
 		if ( iModHealthOnHit > 0 )
-		{
 			pAttacker.HealPlayer(iModHealthOnHit, false, false, false)
-		}
 		else 
-		{
 			pAttacker.TakeDamageEx( pAttacker, pAttacker, this, Vector(), Vector(), abs(iModHealthOnHit), DMG_GENERIC)
-		}
 
 		SendGlobalGameEvent("player_healonhit", {
 			entindex = pAttacker.entindex()
@@ -5203,15 +5205,6 @@ function CTFWeaponBase::ApplyOnHitAttributes( pVictimBaseEntity, pAttacker, info
 		}
 	}
 	
-	// Lower rage on hit.
-	if ( pAttacker.IsPlayerClass( TF_CLASS_SOLDIER ) || pAttacker.IsPlayerClass( TF_CLASS_PYRO ) )
-	{
-		local iRageOnHit = 0
-		iRageOnHit += GetAttribute("mod rage on hit bonus", 0)
-		iRageOnHit -= GetAttribute("mod rage on hit penalty", 0)
-		// pAttacker.ModifyRage( iRageOnHit ); // TODO:
-	}
-
 	// rune charge on hit
 	if ( pAttacker.InCond( TF_COND_RUNE_SUPERNOVA ) )
 	{
@@ -5306,10 +5299,6 @@ function CTFWeaponBase::ApplyOnHitAttributes( pVictimBaseEntity, pAttacker, info
 
 	}
 
-	// Damage bonus on hit
-	// Disabled because we have no attributes that use it
-
-	
 	local flAddDamageDoneBonusOnHit = GetAttribute("on hit add percent dmg bonus", 0.0)
 	if ( flAddDamageDoneBonusOnHit )
 		pAttacker.AddTmpDamageBonus( flAddDamageDoneBonusOnHit, 10.0 )
@@ -8710,7 +8699,7 @@ function FireWeaponCheck()
 		}
 		else if(wep.IsMeleeWeapon())
 		{
-			if(GetPropInt(self, "m_Shared.m_iNextMeleeCrit") == 0)
+			if(GetPropInt(self, "m_Shared.m_iNextMeleeCrit") > 0)
 			{
 				FireScriptEvent("PlayerFireWeapon", {player = self, weapon = wep})
 				SetPropInt(self, "m_Shared.m_iNextMeleeCrit", -2)
@@ -8733,6 +8722,49 @@ function FireWeaponCheck()
 			scope.LastFireTime = FireTime
 		}
 	}
+	return -1
+}
+
+function SwapWeaponThink()
+{
+	/** @type {CTFPlayer} */
+	local self = self
+	if(self.IsDead())
+		return 0.1
+	local current = self.GetActiveWeapon()
+	/** @type {CTFWeaponBase|null} */
+	local old = "ActiveWeapon" in this ? ActiveWeapon : null
+
+	if(!("ActiveWeapon" in this))
+		this.ActiveWeapon <- null
+
+	if(current == null || !current.IsValid())
+		return -1
+
+	if(old == null || !old.IsValid())
+	{
+		ActiveWeapon = current
+		return -1
+	}
+
+	// Swapped Weapons
+	if(old != current)
+	{
+		local cannot_deploy = old.GetAttribute("cannot deploy slot # when active", -1)
+
+		if(current.GetSlot() == cannot_deploy)
+		{
+			self.Weapon_Switch(old)
+			self.PrintToHud("Switching to that weapon is Blocked!")
+			return -1 // blocked
+		}
+
+		FireScriptEvent("PlayerSwapWeapon", {
+			old_slot = old.GetSlot()
+			new_slot = current.GetSlot()
+		})
+	}
+	
 	return -1
 }
 
@@ -8841,8 +8873,12 @@ function FireWeaponCheck()
 		local IsFall = MATH.HasBitFlag(params.damage_type, DMG_FALL)
 		local IsCrush = MATH.HasBitFlag(params.damage_type, DMG_CRUSH)
 		
+		/** @type {CBaseEntity} */
 		local victim = params.const_entity
+		/** @type {CBaseEntity|null} */
 		local attacker = params.attacker
+		/** @type {CBaseEntity|null} */
+		local inflictor = params.inflictor
 
 		if(victim == null || !victim.IsValid())
 			return
@@ -8852,6 +8888,41 @@ function FireWeaponCheck()
 
 		if(params.damage_custom == TF_DMG_CUSTOM_SUICIDE && victim.IsPlayer() && victim.HookAdditiveAttributes("prevent suicide"))
 			params.early_out <- true
+		
+		/** 
+		 * @type {function}
+		 * @param {CBaseEntity|null} ent
+		 * @returns {string}
+		 */
+		// local function str(ent) { return ent && ent.IsValid() ? ent.tostring() : "null"	}
+
+		// local builder = inflictor ? GetBuilder(inflictor.GetOwner()) : null
+		local thrower = HasProp(inflictor, "m_hThrower") ? GetPropEntity(inflictor, "m_hThrower") : null
+		if(thrower == null)
+			thrower = GetLauncher(inflictor)
+		/* PrintToHudAllF("Inflictor: %s\nWeapon_Owner: %s\nInflictor_Owner: %s\nThrower/Launcher: %s", 
+		str(inflictor), 
+		params.weapon && params.weapon.IsValid() ? str(params.weapon.GetOwner()) : "null"
+		inflictor && inflictor.IsValid() ? str(inflictor.GetOwner()) : "null"
+		thrower && thrower.IsValid() ? str(thrower) : "null"
+		) */
+
+		// if inflictors owner is sentry and is not a sentry rocket
+		if(inflictor && inflictor.GetClassname() != "tf_projectile_sentryrocket" && inflictor.GetOwner() && inflictor.GetOwner().GetClassname() == "obj_sentrygun")
+		{
+			local builder = GetBuilder(inflictor.GetOwner())
+			if(builder && builder.IsValid() && builder.IsPlayer())
+			{
+				inflictor.SetOwner(builder)
+				params.damage *= builder.HookMultAttributes("engy sentry damage bonus")
+				if(attacker != builder)
+				{
+					attacker = builder
+					params.attacker = builder
+				}
+				// builder.PrintToHudF("Inflictor: %s  Inflictor_Owner: %s", inflictor.tostring(), inflictor.GetOwner().tostring())
+			}
+		}
 
 		if(attacker && attacker.IsPlayer())
 		{
@@ -8861,6 +8932,7 @@ function FireWeaponCheck()
 				if(spell_book)
 					params.weapon = spell_book
 			}
+			
 			switch(params.damage_custom)
 			{
 			case TF_DMG_CUSTOM_SPELL_SKELETON:
@@ -8967,10 +9039,10 @@ function FireWeaponCheck()
 					params.damage *= attacker.GetActiveWeapon().GetMultAttribute("taunt dmg mult active")
 			}
 
-			if(attacker.InAirDueToExplosion() && attacker.GetActiveWeapon())
+			if(attacker.InAirDueToExplosion() && attacker.GetActiveWeapon() && attacker.GetActiveWeapon() == params.weapon)
 				params.damage *= attacker.GetActiveWeapon().GetMultAttribute("mult dmg while blast jumping")
 
-			if(!attacker.IsOnGround() && attacker.GetActiveWeapon())
+			if(!attacker.IsOnGround() && attacker.GetActiveWeapon() && attacker.GetActiveWeapon() == params.weapon)
 				params.damage *= attacker.GetActiveWeapon().GetMultAttribute("mult dmg while airborne")
 		}
 
@@ -9078,6 +9150,22 @@ function FireWeaponCheck()
 					victim.MakeCorrosion(attacker, weapon)
 				// attacker.PrintToHud("Made Corrosion on " + victim)
 			}
+
+			/* if("MakeBleedInternal" in CTFPlayer)
+			{
+				if(IsWeaponClass(weapon, "tf_weapon", true))
+				{
+					if(weapon.GetAttribute("stackable bleed", 0))
+					{
+						local duration = weapon.GetAttribute("stackable bleed duration", 5)
+						local infinite = false
+						if(duration == -1)
+							infinite = true
+
+						victim.MakeBleedInternal(attacker, null, duration, weapon.GetAttribute("stackable bleed", 4), infinite ,TF_DMG_CUSTOM_BLEED)
+					}
+				}
+			} */
 
 			switch(params.damage_custom)
 			{
@@ -9261,8 +9349,9 @@ function FireWeaponCheck()
 
 			SetPropInt(player, "m_Shared.m_iNextMeleeCrit", -2)
 			player.AddThink(FireWeaponCheck, "FireWeaponCheck")
+			player.AddThink(SwapWeaponThink, "SwapWeaponThink")
 
-			RunWithDelay(@() ProccessItemSets(player), TICK_DUR * 1)
+			// RunWithDelay(@() ProccessItemSets(player), TICK_DUR * 1)
 		}
 
 		if(player.IsAdmin())
@@ -9323,8 +9412,10 @@ function FireWeaponCheck()
 	{
 		local eventdata = clone params
 
-		eventdata.player <- GetPlayerFromUserID(params.userid)
-		Assert(eventdata.player && eventdata.player.IsPlayer(), "player_team Received a NULL/Non player")
+		local player = GetPlayerFromUserID(params.userid)
+
+		eventdata.player <- player
+		Assert(player && player.IsPlayer(), "player_team Received a NULL/Non player")
 
 		if(!("m_iDamage" in GetScope(PlayerManager)))
 			GetScope(PlayerManager).m_iDamage <- array(MAX_CLIENTS+1, 0)
@@ -9339,9 +9430,13 @@ function FireWeaponCheck()
 
 		if(FatCatLibSettings["BetterStatTracking"] == true)
 		{
-			eventdata.player.SetTrackedDamage( ) 		// reset to 0
-			eventdata.player.SetTrackedTankDamage( ) 	// reset to 0
-			eventdata.player.SetTrackedHealing( ) 		// reset to 0
+			// idk
+			if(player.IsBot())
+			{
+				player.SetTrackedDamage( ) 		// reset to 0
+				player.SetTrackedTankDamage( ) 	// reset to 0
+				player.SetTrackedHealing( ) 	// reset to 0
+			}
 		}
 		eventdata.username <- eventdata.name
 
@@ -9349,7 +9444,7 @@ function FireWeaponCheck()
 		delete eventdata.userid
 		delete eventdata.name
 
-		FireScriptEvent(eventdata.player.IsBot() ? "BotTeam" : "HumanTeam", eventdata)
+		FireScriptEvent(player.IsBot() ? "BotTeam" : "HumanTeam", eventdata)
 
 		ReCalculatePlayers()
 		RunWithDelay(@() (ReCalculatePlayers()), 0.1)
@@ -10326,7 +10421,9 @@ RegisterAdminTrigger("test_tank", function(player, ...) {
 	interface.SetDesiredSpeed(0)
 	interface.Stop()
 
-	tank.AcceptInput("SetSpeed", "0", player, player)
+	EntFireNew(tank, "SetSpeed", "0", TICK_DUR * 1)
+	EntFireNew(tank, "SetSpeed", "0", TICK_DUR * 5)
+	EntFireNew(tank, "SetSpeed", "0", TICK_DUR * 10)
 	return player.PrintToChat("Created A "+tank_name+" with the name "+targetname.tolower())
 })
 

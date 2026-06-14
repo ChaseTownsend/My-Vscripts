@@ -175,7 +175,7 @@ AddChatTrigger("equip" function(player, ...) {
 	}
 } )
 
-AddChatTrigger("scoreboard", function(player) {
+AddChatTrigger("scoreboard", function(_player) {
 
 } )
 
@@ -841,20 +841,21 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 				}, "BlutsaugerDisrupt", 0.15)
 			}
 
-			if(weapon.GetIDX() == 933) // TODO: add constant for [Weatly sapper]
+			if(weapon.GetIDX() == 947) // TODO: add constant for [Quackenbirdt]
 			{
 				player.AddThink(function() {
 					/** @type {CTFPlayer} */
 					local self = self
 
-					if(self.GetTeam() != TF_TEAM_BLUE || !self.IsStealthed())
+					if(self.GetTeam() != TF_TEAM_BLUE || !self.InCond(43))
 						return -1
 
 					if(self.InRespawnRoom())
 					{
 						self.RemoveAllCond()
 						self.ForceRegenerateAndRespawn()
-						self.PrintToHud("You were Respawned due to trying to enter a robots spawnroom.")
+						self.PrintToHud("ERROR - Cannot enter enemy spawn zones.")
+						self.EmitSoundTo("vo/halloween_merasmus/sf14_merasmus_necrosmasher_08.mp3")
 					}
 
 					return -1

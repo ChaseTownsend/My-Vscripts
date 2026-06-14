@@ -243,22 +243,24 @@ function ROOT::ProccessEntitySpawnHooks(entity_index, classname)
 	local ReturnData = {
 		prevent_spawn = false
 	}
-	// local entity = EntIndexToHScript(entity_index)
-	foreach (_, hook in EntitySpawnHooks[classname])
+	if((classname in EntitySpawnHooks))
 	{
-		/**
-		 * @type {function}
-		 * @param {table} data
-		 */
-		local hook = hook
-		local func_data = {
-			entindex = entity_index
-			classname = classname
-		}
-		hook(func_data)
+		foreach (_, hook in EntitySpawnHooks[classname])
+		{
+			/**
+			 * @type {function}
+			 * @param {table} data
+			 */
+			local hook = hook
+			local func_data = {
+				entindex = entity_index
+				classname = classname
+			}
+			hook(func_data)
 
-		if(func_data.entindex == -1 || func_data.classname == "")
-			ReturnData.prevent_spawn = true
+			if(func_data.entindex == -1 || func_data.classname == "")
+				ReturnData.prevent_spawn = true
+		}
 	}
 	FireScriptEvent("PostOnEntitySpawn", {
 		entindex = entity_index

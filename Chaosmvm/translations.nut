@@ -21,7 +21,7 @@ if(!("CHECKPOINT_ERROR" in getroottable()))
 	::CHECKPOINT_ERROR <- "\x07bf4137"
 
 if("SetScriptVersion" in getroottable())
-	SetScriptVersion("Translations", "1.6.2")
+	SetScriptVersion("Translations", "1.6.3")
 
 ::TRANSLATION_TABLE <- {
 	english = {
@@ -174,7 +174,7 @@ if("SetScriptVersion" in getroottable())
 		BUFFBANNER_DESC 		= " Unlimited range and significantly increased duration." 
 		//
 		GUNBOATS_NAME 			= "GUNBOATS" 
-		GUNBOATS_DESC 			= " Enables bunnyhopping by holding 'jump' key. Grants immunity to fall damage." 
+		GUNBOATS_DESC 			= " Enables bunnyhopping by holding 'jump' key. Grants immunity to fall damage. Hold Crouch key while airborne to reduce gravity." 
 		//
 		BATTALIONS_NAME 		= "BATTALION'S BACKUP" 
 		BATTALIONS_DESC 		= " Unlimited range and significantly increased duration." 
@@ -189,7 +189,7 @@ if("SetScriptVersion" in getroottable())
 		BISON_DESC 				= " Fires a continuous beam of penetrating damage with full auto-aim." 
 		//
 		MANTREADS_NAME 			= "MANTREADS" 
-		MANTREADS_DESC 			= " Major reduction in knockback taken from damage. Air strafing now has massively increased acceleration. Stomp damage buffed and velocity-based." 
+		MANTREADS_DESC 			= " Major reduction in knockback taken from damage. Stomp damage buffed and velocity-based. Gain a short critboost on kill." 
 		//
 		BASEJUMPER_NAME 		= "B.A.S.E. JUMPER" 
 		BASEJUMPER_DESC 		= " Able to toggle parachute. Increases resistance to knockback and bullet damage, reducing your vulnerability in the air." 
@@ -201,7 +201,7 @@ if("SetScriptVersion" in getroottable())
 		SHOVEL_DESC 			= " Standard option for defense and mobility."
 		//
 		EQUALIZER_NAME 			= "EQUALIZER"
-		EQUALIZER_DESC 			= " Taunt attack deals massive damage and knocks enemies into the air."
+		EQUALIZER_DESC 			= " Damage massively increases as you become injured."
 		//
 		PAINTRAIN_NAME 			= "PAIN TRAIN"
 		PAINTRAIN_DESC 			= " Inflict bleed and slowdown on hit. Grants immunity to fall damage."
@@ -210,13 +210,13 @@ if("SetScriptVersion" in getroottable())
 		HALFZATOICHI_DESC 		= " Average damage with high health mobility, and increased range."
 		//
 		MARKETGARDENER_NAME 	= "MARKET GARDENER"
-		MARKETGARDENER_DESC 	= " Deals massively increased crit damage. After getting a kill, enter an enraged state and gain extra health, resistance and increased damage on all attacks. However any miss is instant death."
+		MARKETGARDENER_DESC 	= " Massive damage bonus while rocket jumping. After getting a kill, enter an enraged state and gain extra health, resistance and increased damage on all attacks."
 		//
 		DISCIPLINARYACTION_NAME = "DISCIPLINARY ACTION"
 		DISCIPLINARYACTION_DESC	= " Standard option for defense and mobility. Instantly gain 1/3 Rage meter on hit."
 		//
 		ESCAPEPLAN_NAME			= "ESCAPE PLAN"
-		ESCAPEPLAN_DESC			= " Standard option for defense and mobility."
+		ESCAPEPLAN_DESC			= " Deal guaranteed crits when below 50% health."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -417,7 +417,7 @@ if("SetScriptVersion" in getroottable())
 		BREADBITE_DESC 			= " Critical hits infect your victim with Corrosion, a permanent debuff that deals damage based on max health and causes the victim to explode into a small corrosive cloud on death, spreading the effect to other enemies."
 		//
 		WARRIRORSSPIRIT_NAME 	= "WARRIOR'S SPIRIT"
-		WARRIRORSSPIRIT_DESC 	= " Left-click to leap high into the air. Land on enemies to deal massive stomp damage. Removes all primary and secondary ammo."
+		WARRIRORSSPIRIT_DESC 	= " Left-click to leap high into the air. Land on enemies to deal massive stomp damage. On Kill: Able to Quick-Slam by crouching in air for a short time.  Removes all primary and secondary ammo."
 		//
 		FISTSOFSTEEL_NAME 		= "FISTS OF STEEL"
 		FISTSOFSTEEL_DESC 		= " Become a giant Heavy gauntlet with 250,000 health. You are immune to push forces and can deal heavy damage. Removes all primary and secondary ammo. You can only heal from lunchbox items."
@@ -484,16 +484,16 @@ if("SetScriptVersion" in getroottable())
 		OVERDOSE_DESC 			= " Requires and consumes 50% Ubercharge to launch an EMP mortar, causing nearby enemies to be unable to move or attack for a short time."
 		///
 		MEDIGUN_NAME			= "MEDI GUN"
-		MEDIGUN_DESC			= " Overheal cap raised to x10 the patient's max health. Deploy a long-lasting level 1 Projectile Shield."
+		MEDIGUN_DESC			= " Overheal cap raised to x10 the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
 		//
 		KRITZKRIEG_NAME			= "KRITZKRIEG"
-		KRITZKRIEG_DESC			= " Able to drain health from enemies, granting self-healing and building Uber."
+		KRITZKRIEG_DESC			= " Able to drain health from enemies, granting self-healing and building Uber. Ubercharge grants a boost to all damage output."
 		//
 		QUICKFIX_NAME			= "QUICK-FIX"
-		QUICKFIX_DESC			= " Very fast healing with a level 2 Projectile Shield. Able to build Uber from shield contact damage."
+		QUICKFIX_DESC			= " Very fast healing with a level 2 Projectile Shield. Able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
 		//
 		VACCINATOR_NAME			= "VACCINATOR"
-		VACCINATOR_DESC			= " Active healing grants you and the patient 100% resistance to base damage of the selected damage type. Ubercharge grants full immunity to the selected damage type for 30 seconds."
+		VACCINATOR_DESC			= " Active healing grants you and the patient increased mobility and 100% resistance to base damage of the selected damage type. Ubercharge grants full immunity to the selected damage type for 30 seconds."
 		///
 		BONESAW_NAME 			= "BONESAW"
 		BONESAW_DESC			= " Standard option for defense and mobility. Gain 10% Uber on hit."
@@ -516,7 +516,7 @@ if("SetScriptVersion" in getroottable())
 		SNIPERRIFLE_DESC 		= " Fully charged headshot deals 450,000 damage."
 		//
 		MACHINA_NAME 			= "MACHINA"
-		MACHINA_DESC 			= " Very slow to charge, but can shred Tanks at full charge. Killing enemies fills a rage meter that grants a 1-second critboost. Pair the critboost with a full charge to instantly destroy most Tanks you'll encounter."
+		MACHINA_DESC 			= " Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Gaints and Tanks."
 		//
 		HITMANSHEATMAKER_NAME 	= "HITMAN'S HEATMAKER"
 		HITMANSHEATMAKER_DESC 	= " Rapidfire without unscoping. No damage on bodyshot."
@@ -605,7 +605,7 @@ if("SetScriptVersion" in getroottable())
 		KUNAI_DESC 				= " Infinite melee range. Backstabs trigger an explosion, dealing extra damage to nearby targets."
 		//
 		BIGEARNER_NAME 			= "BIG EARNER"
-		BIGEARNER_DESC 			= " You have a massive amount of health and 'missed' swings cause you to heal rapidly, however you receive friendly fire from your teammates."
+		BIGEARNER_DESC 			= " You have a massive amount of health and 'missed' swings cause you to heal. Gain a short burst of massively increased heal rate on kill (which can also build overheal). Cannot heal from any other sources."
 		//
 		WANGAPRICK_NAME 		= "WANGA PRICK"
 		WANGAPRICK_DESC 		= " Killing an enemy causes you to immediately enter cloak for a few seconds. You can attack enemies while in this cloak state and chain kills to remain invisible. No disguise."
@@ -620,10 +620,13 @@ if("SetScriptVersion" in getroottable())
 		INVISWATCH_DESC 		= " Infinite cloak, +10% faster move speed."
 		//
 		DEADRINGER_NAME 		= "DEAD RINGER"
-		DEADRINGER_DESC 		= " Triggers a short burst of move speed when activated, allowing you to dash in any direction. Incoming damage reduced by 80% while dashing."
+		DEADRINGER_DESC 		= " Activate to gain super-speed for several seconds. Invulnerable while active."
 		//
 		CLOAKANDDAGGER_NAME		= "CLOAK AND DAGGER"
 		CLOAKANDDAGGER_DESC		= " Instant cloak and decloaking."
+		//
+		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
+		QUACKENBIRDT_DESC 		= " Reveals the location of all enemies while cloaked."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -810,6 +813,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		GUNBOATS_NAME 			= "炮艇" 
 		GUNBOATS_DESC 			= "按住 '跳跃' 键可自动连跳. 免疫摔落伤害." 
+		// TODO: Update! " Enables bunnyhopping by holding 'jump' key. Grants immunity to fall damage. Hold Crouch key while airborne to reduce gravity." 
 		//
 		BATTALIONS_NAME 		= "军队的支援" 
 		BATTALIONS_DESC 		= "极大幅度提升增益范围与持续时间." 
@@ -825,6 +829,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MANTREADS_NAME 			= "踏步靴" 
 		MANTREADS_DESC 			= "极大幅降低伤害导致的击退效果. 大幅提升空中转向能力. 提升踩踏造成的伤害并能根据自身速度进一步提升." 
+		// TODO: Update! " Major reduction in knockback taken from damage. Stomp damage buffed and velocity-based. Gain a short critboost on kill."
 		//
 		BASEJUMPER_NAME 		= "极限降落伞" 
 		BASEJUMPER_DESC 		= "能够多次打开降落伞. 提升击退抗性与子弹伤害抗性, 在空中会受到额外的伤害." 
@@ -837,6 +842,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		EQUALIZER_NAME 			= "十字镐"
 		EQUALIZER_DESC 			= "嘲讽攻击会造成极大伤害并将敌人击飞至空中."
+		// TODO: Update! " Damage massively increases as you become injured."
 		//
 		PAINTRAIN_NAME 			= "钉棍"
 		PAINTRAIN_DESC 			= "攻击可以减速敌人并施加流血效果. 免疫摔落伤害."
@@ -846,6 +852,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MARKETGARDENER_NAME 	= "市场花园铁锹"
 		MARKETGARDENER_DESC 	= "大幅提升暴击伤害. 造成击杀后, 提升生命值, 伤害抗性以及所有武器的伤害. 挥空后会杀死自己."
+		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, enter an enraged state and gain extra health, resistance and increased damage on all attacks."
 		//
 		DISCIPLINARYACTION_NAME = "指挥官的军鞭"
 		DISCIPLINARYACTION_DESC	= "标准选择, 提升移动速度与防御."
@@ -853,6 +860,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		ESCAPEPLAN_NAME			= "逃生计划镐"
 		ESCAPEPLAN_DESC			= "标准选择, 提升移动速度与防御."
+		// TODO: Update! " Deal guaranteed crits when below 50% health."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -1060,6 +1068,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		WARRIRORSSPIRIT_NAME 	= "勇士之魂"
 		WARRIRORSSPIRIT_DESC 	= "按下左键可以向上推动自己. 攻击能够踩踏敌人造成高额伤害. 无法使用机枪与霰弹枪."
+		// TODO: Update! " Left-click to leap high into the air. Land on enemies to deal massive stomp damage. On Kill: Able to Quick-Slam by crouching in air for a short time.  Removes all primary and secondary ammo."
 		//
 		FISTSOFSTEEL_NAME 		= "钢铁手套"
 		FISTSOFSTEEL_DESC 		= "变成拥有 250,000 点生命值的巨型机器人. 免疫击退并能造成较高的近战伤害. 无法使用机枪与霰弹枪. 只能使用副武器的食物恢复生命值."
@@ -1128,15 +1137,19 @@ if("SetScriptVersion" in getroottable())
 		///
 		MEDIGUN_NAME			= "医疗枪"
 		MEDIGUN_DESC			= "能够为治疗对象提供其 10 倍最大生命值的超量治疗. 获得持续时间较长的 1 级能量护盾."
+		// TODO: Update! " Overheal cap raised to x10 the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
 		//
 		KRITZKRIEG_NAME			= "闪电战医疗枪"
 		KRITZKRIEG_DESC			= "可以吸取敌人的生命值, 恢复自身生命值与Ubercharge充能."
+		// TODO: Update! " Able to drain health from enemies, granting self-healing and building Uber. Ubercharge grants a boost to all damage output."
 		//
 		QUICKFIX_NAME			= "快速医疗枪"
 		QUICKFIX_DESC			= "提供较快的治疗速度并获得 2 级能量护盾. 能量护盾造成伤害会提供Ubercharge充能."
+		// TODO: Update! " Very fast healing with a level 2 Projectile Shield. Able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
 		//
 		VACCINATOR_NAME			= "疫苗注射枪"
 		VACCINATOR_DESC			= "治疗时会为你与治疗对象提供 100% 所选伤害类型的抗性. Ubercharge能够完全免疫所选伤害类型的伤害, 持续 30 秒."
+		// TODO: Update! " Active healing grants you and the patient increased mobility and 100% resistance to base damage of the selected damage type. Ubercharge grants full immunity to the selected damage type for 30 seconds."
 		///
 		BONESAW_NAME 			= "骨锯"
 		BONESAW_DESC			= "标准选择, 提升移动速度与防御. 攻击命中会获得 10% Ubercharge充能."
@@ -1160,6 +1173,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MACHINA_NAME 			= "鬼械神狙"
 		MACHINA_DESC 			= "充能速度极慢, 满充能时大幅提升对坦克的伤害. 消灭敌人会获得持续 1 秒的暴击充能. 在满充能时激活暴击充能能够重创坦克."
+		// TODO: Update! " Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Gaints and Tanks."
 		//
 		HITMANSHEATMAKER_NAME 	= "职业杀手的手感"
 		HITMANSHEATMAKER_DESC 	= "连射不受开镜与否的限制. 射击身体时无法造成伤害."
@@ -1249,6 +1263,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		BIGEARNER_NAME 			= "暴利杀手"
 		BIGEARNER_DESC 			= "大幅提升生命上限且在挥空后持续恢复生命值. 会受到友方火力的伤害."
+		// TODO: Update! " You have a massive amount of health and 'missed' swings cause you to heal. Gain a short burst of massively increased heal rate on kill (which can also build overheal). Cannot heal from any other sources."
 		//
 		WANGAPRICK_NAME 		= "巫毒刺钉"
 		WANGAPRICK_DESC 		= "击杀敌人会使你立刻隐形. 可以在隐身时攻击. 无法伪装."
@@ -1264,9 +1279,13 @@ if("SetScriptVersion" in getroottable())
 		//
 		DEADRINGER_NAME 		= "死亡之铃"
 		DEADRINGER_DESC 		= "免疫摔落伤害, +20%伤害抗性, +100%隐身恢复速度."
+		// TODO: Update! " Activate to gain super-speed for several seconds. Invulnerable while active."
 		//
 		CLOAKANDDAGGER_NAME		= "隐形刺客"
 		CLOAKANDDAGGER_DESC		= "能够立刻进入隐形与解除隐形."
+		// TODO: TRANSLATE THE BELOW
+		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
+		QUACKENBIRDT_DESC 		= " Reveals the location of all enemies while cloaked."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -1453,6 +1472,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		GUNBOATS_NAME 			= "KANONBÅTARNA" 
 		GUNBOATS_DESC 			= " Aktiverar kaninhopp genom att hålla ner 'hopp' tangenten. Ger immunitet mot fallskada." 
+		// TODO: Update! " Enables bunnyhopping by holding 'jump' key. Grants immunity to fall damage. Hold Crouch key while airborne to reduce gravity." 
 		//
 		BATTALIONS_NAME 		= "BATALJONENS FÖRSTÄRKNING" 
 		BATTALIONS_DESC 		= " Oändligt avstånd och har mycket ökad varaktighet." 
@@ -1468,6 +1488,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MANTREADS_NAME 			= "MANSTÖVLARNA" 
 		MANTREADS_DESC 			= " Stor minskning i knuff tagen från skada. Luftrörelser har nu en massivt ökad acceleration. Stampskada förstärkt och velocitet-baserad." 
+		// TODO: Update! " Major reduction in knockback taken from damage. Stomp damage buffed and velocity-based. Gain a short critboost on kill."
 		//
 		BASEJUMPER_NAME 		= "B.A.S.E-HOPPAREN" 
 		BASEJUMPER_DESC 		= " Kan växla fallskärmen. Ökad motstånd mot knuff och skada mot kulor, som minskar din sårbarhet i luften." 
@@ -1480,6 +1501,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		EQUALIZER_NAME 			= "UTJÄMNAREN"
 		EQUALIZER_DESC 			= " Hånattacker utdelar massiv skada och knuffar fiender upp i luften."
+		// TODO: Update! " Damage massively increases as you become injured."
 		//
 		PAINTRAIN_NAME 			= "PLÅGTÅGET"
 		PAINTRAIN_DESC 			= " Utdelar blöd och saktar ner vid träff. Ger immunitet mot fallskada."
@@ -1489,6 +1511,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MARKETGARDENER_NAME 	= "TRÄGÅRDSMÄSTAREN"
 		MARKETGARDENER_DESC 	= " Utdelar massivt ökad kritisk skada. Efter man får en döende träff, ge dig in i ett argt tillstånd och få extra hälsa, motstånd och ökad skada på alla attacker. Dock alla missar är en omedelbar död."
+		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, enter an enraged state and gain extra health, resistance and increased damage on all attacks."
 		//
 		DISCIPLINARYACTION_NAME = "DISCIPLINSÅTGÄRDEN"
 		DISCIPLINARYACTION_DESC	= " Standardval för försvar och rörelse."
@@ -1496,6 +1519,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		ESCAPEPLAN_NAME			= "FLYKTPLANEN"
 		ESCAPEPLAN_DESC			= " Standardval för försvar och rörelse."
+		// TODO: Update! " Deal guaranteed crits when below 50% health."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -1697,6 +1721,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		WARRIRORSSPIRIT_NAME 	= "KRIGARENS ANDA"
 		WARRIRORSSPIRIT_DESC 	= " Vänsterklicka för att hoppa högt upp i luften. Landar man på fiender så utdelas massiv stampskada. Tar bort all primär och sekundär ammunition."
+		// TODO: Update! " Left-click to leap high into the air. Land on enemies to deal massive stomp damage. On Kill: Able to Quick-Slam by crouching in air for a short time.  Removes all primary and secondary ammo."
 		//
 		FISTSOFSTEEL_NAME 		= "STÅLNÄVARNA"
 		FISTSOFSTEEL_DESC 		= " Bli en stor Tung Artillerist järnhandske med 250,000 hälsa. Du är immun mot knuff och kan utdela stor skada. Tar bort all primär och sekundär ammunition. Du kan bära läkas från lunchlådor."
@@ -1765,15 +1790,19 @@ if("SetScriptVersion" in getroottable())
 		///
 		MEDIGUN_NAME			= "HÄLSOVAPEN"
 		MEDIGUN_DESC			= " Överhälsa ökad till x10 av patientens max hälsa. Lägg ut en långvarande nivå 1 Projektilsköld."
+		// TODO: Update! " Overheal cap raised to x10 the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
 		//
 		KRITZKRIEG_NAME			= "KRITZKRIEG"
 		KRITZKRIEG_DESC			= " Kan tömma hälsa från fiender, och ger själv-läkande och bygger Uber."
+		// TODO: Update! " Able to drain health from enemies, granting self-healing and building Uber. Ubercharge grants a boost to all damage output."
 		//
 		QUICKFIX_NAME			= "SNABBFIXAREN"
 		QUICKFIX_DESC			= " Väldigt snabbt läkande med nivå 2 Projektilsköld. Kan bygga Uber från sköld kontaktskada."
+		// TODO: Update! " Very fast healing with a level 2 Projectile Shield. Able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
 		//
 		VACCINATOR_NAME			= "VACCINATÖREN"
 		VACCINATOR_DESC			= " Aktiva läkningar ger dig och patienten 100% motstånd mot grundskadan av den valda typen. Uberladdning ger full immunitet mot den valda skadetypen i 30 sekunder."
+		// TODO: Update! " Active healing grants you and the patient increased mobility and 100% resistance to base damage of the selected damage type. Ubercharge grants full immunity to the selected damage type for 30 seconds."
 		///
 		BONESAW_NAME 			= "BENSÅG"
 		BONESAW_DESC			= " Standardval för försvar och rörelse. Ger 10% Uber vid träff."
@@ -1797,6 +1826,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MACHINA_NAME 			= "MACHINA"
 		MACHINA_DESC 			= " Tar lång tid att ladda, men kan riva Pansarvagnar vid full laddning. Dödar man fiender så laddas en vrede mätare som ger en 1-sekund kritisk laddning. Para ihop den kritiska laddningen med en full laddning för att omedelbart förstöra de flesta Pansarvagnar som du kommer möta."
+		// TODO: Update! " Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Gaints and Tanks."
 		//
 		HITMANSHEATMAKER_NAME 	= "TORPEDENS TRONGA"
 		HITMANSHEATMAKER_DESC 	= " Snabb eldgivning utan att sikta ut. Ingen skada på kroppskott."
@@ -1886,6 +1916,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		BIGEARNER_NAME 			= "STÖRA LÖNTAGAREN"
 		BIGEARNER_DESC 			= " Du har en massiv mängd hälsa och 'missade' svingar gör att du läks snabbt, dock du tar skada från dina lagkamrater."
+		// TODO: Update! " You have a massive amount of health and 'missed' swings cause you to heal. Gain a short burst of massively increased heal rate on kill (which can also build overheal). Cannot heal from any other sources."
 		//
 		WANGAPRICK_NAME 		= "WANGASTICKET"
 		WANGAPRICK_DESC 		= " Dödar man en fiende så gör den att du döljs omedelbart i några sekunder. Du kan attackera fiender medans du är dold och döende träffar i rad kommer hålla dig osynlig. Inga förklädnad."
@@ -1901,9 +1932,13 @@ if("SetScriptVersion" in getroottable())
 		//
 		DEADRINGER_NAME 		= "DÖDSRINGAREN"
 		DEADRINGER_DESC 		= " Ger en kort rörelsehastighet när den aktiveras, som tillåter dig att rusa i vilket riktning som helst. Inkommande skada minskad med 80% medans man rusar."
+		// TODO: Update! " Activate to gain super-speed for several seconds. Invulnerable while active."
 		//
 		CLOAKANDDAGGER_NAME		= "STOPPURET"
 		CLOAKANDDAGGER_DESC		= " Omedelbar döljning och avslöjning."
+		// TODO: TRANSLATE THE BELOW
+		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
+		QUACKENBIRDT_DESC 		= " Reveals the location of all enemies while cloaked."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -2090,6 +2125,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		GUNBOATS_NAME 			= "ШТУРМБОТИНКИ" 
 		GUNBOATS_DESC 			= " Позволяют совершать bunnyhop, удерживая клавишу прыжка. Дарует иммунитет к урону от падения." 
+		// TODO: Update! " Enables bunnyhopping by holding 'jump' key. Grants immunity to fall damage. Hold Crouch key while airborne to reduce gravity." 
 		//
 		BATTALIONS_NAME 		= "ПОДДЕРЖКА БАТАЛЬОНА" 
 		BATTALIONS_DESC 		= " Бесконечная дальность и значительно увеличенная продолжительность действия."
@@ -2105,6 +2141,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MANTREADS_NAME 			= "ЛЮДОДАВЫ" 
 		MANTREADS_DESC 			= " Значительное снижение отбрасывания от получаемого урона. Воздушное маневрирование теперь имеет значительно увеличенное ускорение. Урон от приземления усилен и зависит от скорости." 
+		// TODO: Update! " Major reduction in knockback taken from damage. Stomp damage buffed and velocity-based. Gain a short critboost on kill."
 		//
 		BASEJUMPER_NAME 		= "ПАРАШЮТИСТ" 
 		BASEJUMPER_DESC 		= " Позволяет раскрыть парашют. Увеличивает сопротивление к отбрасыванию и имеет сопротивляемость пулям, снижая уязвимость в воздухе." 
@@ -2117,6 +2154,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		EQUALIZER_NAME 			= "УРАВНИТЕЛЬ"
 		EQUALIZER_DESC 			= " Насмешка с атакой наносит огромный урон и подбрасывает роботов в воздух."
+		// TODO: Update! " Damage massively increases as you become injured."
 		//
 		PAINTRAIN_NAME 			= "КОСТЫЛЬ"
 		PAINTRAIN_DESC 			= " Наносит кровотечение и замедление при попадании. Дарует иммунитет к урону от падения"
@@ -2126,6 +2164,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MARKETGARDENER_NAME 	= "ЗЕМЛЕКОП"
 		MARKETGARDENER_DESC 	= " Наносит значительно увеличенный критический урон. После убийства Вы впадаете в состояние ярости и получаете дополнительные ОЗ, сопротивляемость и увеличенный урон от всех атак. Однако любой промах — мгновенная смерть."
+		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, enter an enraged state and gain extra health, resistance and increased damage on all attacks."
 		//
 		DISCIPLINARYACTION_NAME = "ДИСЦИПЛИНАРНОЕ ВЗЫСКАНИЕ"
 		DISCIPLINARYACTION_DESC	= " Стандартный вариант для защиты и мобильности."
@@ -2133,6 +2172,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		ESCAPEPLAN_NAME			= "ПЛАН ЭВАКУАЦИИ"
 		ESCAPEPLAN_DESC			= " Стандартный вариант для защиты и мобильности."
+		// TODO: Update! " Deal guaranteed crits when below 50% health."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -2340,6 +2380,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		WARRIRORSSPIRIT_NAME 	= "ВОИНСКИЙ ДУХ"
 		WARRIRORSSPIRIT_DESC 	= " Альтернативная атака подбрасывает вас в воздух. При приземлении на роботов наносит огромный урон. Убирает все боеприпасы для основного и дополнительного оружия."
+		// TODO: Update! " Left-click to leap high into the air. Land on enemies to deal massive stomp damage. On Kill: Able to Quick-Slam by crouching in air for a short time.  Removes all primary and secondary ammo."
 		//
 		FISTSOFSTEEL_NAME 		= "СТАЛЬНЫЕ КУЛАКИ"
 		FISTSOFSTEEL_DESC 		= " Превращает вас в гигантского робота-пулемётчика с 250 000 здоровья. Иммунитет к отталкиванию и способность наносить огромный урон. Удаляет все боеприпасы для основного и дополнительного оружия. Лечиться можно только при помощи лакомства."
@@ -2408,15 +2449,19 @@ if("SetScriptVersion" in getroottable())
 		///
 		MEDIGUN_NAME			= "ЛЕЧЕБНАЯ ПУШКА"
 		MEDIGUN_DESC			= " Максимальный избыточный запас здоровья увеличен до 10-тикратного от максимального здоровья пациента. Разворачивает долгодействующий щит от снарядов 1-го уровня."
+		// TODO: Update! " Overheal cap raised to x10 the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
 		//
 		KRITZKRIEG_NAME			= "КРИЦКРИГ"
 		KRITZKRIEG_DESC			= " Позволяет высасывать здоровье из роботов, обеспечивая самолечение и накопление убер-заряда."
+		// TODO: Update! " Able to drain health from enemies, granting self-healing and building Uber. Ubercharge grants a boost to all damage output."
 		//
 		QUICKFIX_NAME			= "БЫСТРОПРАВ"
 		QUICKFIX_DESC			= " Очень быстрое лечение и щит от снарядов 2-го уровня. Позволяет накапливать убер-заряд за счёт урона от соприкосновения роботов со щитом."
+		// TODO: Update! " Very fast healing with a level 2 Projectile Shield. Able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
 		//
 		VACCINATOR_NAME			= "ВАКЦИНАТОР"
 		VACCINATOR_DESC			= " Активное лечение дарует вам и пациенту 100 % сопротивляемость базовому урону выбранного типа. Убер-заряд дарует полную невосприимчивость к выбранному типу урона на 30 секунд."
+		// TODO: Update! " Active healing grants you and the patient increased mobility and 100% resistance to base damage of the selected damage type. Ubercharge grants full immunity to the selected damage type for 30 seconds."
 		///
 		BONESAW_NAME 			= "ПИЛА"
 		BONESAW_DESC			= " Стандартный вариант для защиты и мобильности. Даёт 10 % убер-заряда за попадание."
@@ -2440,6 +2485,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MACHINA_NAME 			= "МАХИНА"
 		MACHINA_DESC 			= " Очень медленная зарядка, но на полном заряде может уничтожать Танки. Убийства роботов заполняют шкалу ярости, которая даёт 1-секундное усиление критами. Совместите усиление критов с полным зарядом, чтобы мгновенно уничтожать большинство Танков."
+		// TODO: Update! " Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Gaints and Tanks."
 		//
 		HITMANSHEATMAKER_NAME 	= "РАЗЖИГАТЕЛЬ РАЗБОЙНИКА"
 		HITMANSHEATMAKER_DESC 	= " Быстрая стрельба без выхода из прицеливания. Отсутствие урона при попадании в тело."
@@ -2529,6 +2575,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		BIGEARNER_NAME 			= "ГЛАВНЫЙ ДЕЛЕЦ"
 		BIGEARNER_DESC 			= " У вас огромный запас здоровья, а промахи вызывают быстрое исцеление, однако вы получаете урон от своих же союзников."
+		// TODO: Update! " You have a massive amount of health and 'missed' swings cause you to heal. Gain a short burst of massively increased heal rate on kill (which can also build overheal). Cannot heal from any other sources."
 		//
 		WANGAPRICK_NAME 		= "ИГОЛКА ВУДУ"
 		WANGAPRICK_DESC 		= " Убийство робота заставляет вас немедленно войти в режим невидимости на несколько секунд. Вы можете атаковать роботов и продлевать невидимость уничтожением роботов. Не позволяет использовать маскировку."
@@ -2544,9 +2591,13 @@ if("SetScriptVersion" in getroottable())
 		//
 		DEADRINGER_NAME 		= "ЗВОН СМЕРТИ"
 		DEADRINGER_DESC 		= " При активации даёт коротковременную большую прибавку к скорости передвижения. Получаемый урон во время прибавки снижен на 80 %."
+		// TODO: Update! " Activate to gain super-speed for several seconds. Invulnerable while active."
 		//
 		CLOAKANDDAGGER_NAME		= "ПЛАЩ И КИНЖАЛ"
 		CLOAKANDDAGGER_DESC		= " Мгновенная невидимость и выход из невидимости."
+		// TODO: TRANSLATE THE BELOW
+		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
+		QUACKENBIRDT_DESC 		= " Reveals the location of all enemies while cloaked."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -2733,6 +2784,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		GUNBOATS_NAME 			= "KANONIERKI" 
 		GUNBOATS_DESC 			= " Umożliwia wykonywanie „bunnyhopów” poprzez przytrzymanie klawisza skoku. Zapewnia odporność na obrażenia od upadku." 
+		// TODO: Update! " Enables bunnyhopping by holding 'jump' key. Grants immunity to fall damage. Hold Crouch key while airborne to reduce gravity." 
 		//
 		BATTALIONS_NAME 		= "WSPARCIE BATALIONU" 
 		BATTALIONS_DESC 		= " Nieograniczony zasięg i znacznie wydłużony czas trwania efektu." 
@@ -2748,6 +2800,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MANTREADS_NAME 			= "MIAŻDŻYCIELE" 
 		MANTREADS_DESC 			= " Znacznie redukuje odrzut przy otrzymywaniu obrażeń. Skręcanie w powietrzu ma teraz znacznie większe przyspieszenie. Obrażenia od upadku na wroga są zwiększone i zależą od szybkości spadania noszącego." 
+		// TODO: Update! " Major reduction in knockback taken from damage. Stomp damage buffed and velocity-based. Gain a short critboost on kill."
 		//
 		BASEJUMPER_NAME 		= "SPADOCHRONOWY SKOCZEK" 
 		BASEJUMPER_DESC 		= " Umożliwia wielokrotne otwieranie i zamykanie spadochronu w powietrzu. Zwiększa odporność na odrzut i naboje, zmniejszając podatność na ataki będąc w powietrzu." 
@@ -2760,6 +2813,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		EQUALIZER_NAME 			= "WYRÓWNYWACZ"
 		EQUALIZER_DESC 			= " Zabójcza drwina zadaje ogromne obrażenia i wyrzuca wrogów w powietrze."
+		// TODO: Update! " Damage massively increases as you become injured."
 		//
 		PAINTRAIN_NAME 			= "PAŁKA SOKISTY"
 		PAINTRAIN_DESC 			= " Wywołuje krwawienie i spowalnia wrogów przy trafieniu. Zapewnia odporność na obrażenia od upadku."
@@ -2769,6 +2823,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MARKETGARDENER_NAME 	= "OGRODNIK Z ARNHEM"
 		MARKETGARDENER_DESC 	= " Znacznie zwiększone obrażenia krytyczne. Po zabiciu wroga wchodzisz w stan furii, otrzymując dodatkowe zdrowie, odporność i zwiększone obrażenia do wszystkich ataków. Chybienie kończy się natychmiastową śmiercią."
+		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, enter an enraged state and gain extra health, resistance and increased damage on all attacks."
 		//
 		DISCIPLINARYACTION_NAME = "POSTĘPOWANIE DYSCYPLINARNE"
 		DISCIPLINARYACTION_DESC	= " Standardowa opcja zapewniająca ochronę i mobilność."
@@ -2776,6 +2831,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		ESCAPEPLAN_NAME			= "PLAN UCIECZKI"
 		ESCAPEPLAN_DESC			= " Standardowa opcja zapewniająca ochronę i mobilność."
+		// TODO: Update! " Deal guaranteed crits when below 50% health."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -2977,6 +3033,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		WARRIRORSSPIRIT_NAME 	= "DUSZA WOJOWNIKA"
 		WARRIRORSSPIRIT_DESC 	= " Naciśnij lewy przycisk myszy, by wykonać wysoki skok. Wylądowanie na wrogach zadaje im ogromne obrażenia. Usuwa całą amunicję broni podstawowej i pomocniczej."
+		// TODO: Update! " Left-click to leap high into the air. Land on enemies to deal massive stomp damage. On Kill: Able to Quick-Slam by crouching in air for a short time.  Removes all primary and secondary ammo."
 		//
 		FISTSOFSTEEL_NAME 		= "PIĘŚCI ZE STALI"
 		FISTSOFSTEEL_DESC 		= " Przekształca cię w gigantycznego pięściarza z 250 000 pkt. zdrowia. Jesteś odporny na odrzut i możesz zadawać duże obrażenia. Usuwa całą amunicję broni podstawowej i pomocniczej. Możesz leczyć się wyłącznie za pomocą własnych artykułów spożywczych."
@@ -3045,15 +3102,19 @@ if("SetScriptVersion" in getroottable())
 		///
 		MEDIGUN_NAME			= "MEDIGUN"
 		MEDIGUN_DESC			= " Limit nadleczenia zwiększony do 10x maksymalnego zdrowia pacjenta. Aktywuje długotrwałą tarczę przeciw pociskom poziomu 1."
+		// TODO: Update! " Overheal cap raised to x10 the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
 		//
 		KRITZKRIEG_NAME			= "KRITZKRIEG"
 		KRITZKRIEG_DESC			= " Może wysysać zdrowie z wrogów, przyznając samoleczenie i budując ładunek ÜberCharge."
+		// TODO: Update! " Able to drain health from enemies, granting self-healing and building Uber. Ubercharge grants a boost to all damage output."
 		//
 		QUICKFIX_NAME			= "QUICK-FIX"
 		QUICKFIX_DESC			= " Bardzo szybkie leczenie oraz tarcza przeciw pociskom poziomu 2. Może budować ładunek ÜberCharge poprzez zadawanie obrażeń za pomocą tarczy."
+		// TODO: Update! " Very fast healing with a level 2 Projectile Shield. Able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
 		//
 		VACCINATOR_NAME			= "ZASZCZEPIACZ"
 		VACCINATOR_DESC			= " Podczas leczenia ty i twój pacjent zyskujecie 100% odporności na podstawowe obrażenia wybranego rodzaju. ÜberCharge zapewnia pełną odporność na obrażenia wybranego rodzaju na 30 sekund."
+		// TODO: Update! " Active healing grants you and the patient increased mobility and 100% resistance to base damage of the selected damage type. Ubercharge grants full immunity to the selected damage type for 30 seconds."
 		///
 		BONESAW_NAME 			= "PIŁA DO KOŚCI"
 		BONESAW_DESC			= " Standardowa opcja zapewniająca ochronę i mobilność. Każde trafienie we wroga przyznaje 10% ładunku ÜberCharge."
@@ -3077,6 +3138,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MACHINA_NAME 			= "MACHINA"
 		MACHINA_DESC 			= " Bardzo wolne tempo ładowania strzału, ale przy pełnym naładowaniu zadaje duże obrażenia czołgom. Zabijanie wrogów wypełnia pasek furii, który przyznaje 1 sekundę trafień krytycznych. Połączenie trafień krytycznych z pełnym naładowaniem strzału pozwala natychmiast niszczyć większość napotkanych czołgów."
+		// TODO: Update! " Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Gaints and Tanks."
 		//
 		HITMANSHEATMAKER_NAME 	= "ZABAWKA ZAWODOWCA"
 		HITMANSHEATMAKER_DESC 	= " Duża szybkostrzelność bez oddalenia widoku przy celowaniu przez lunetę. Nie zadaje obrażeń przy trafieniu w ciało."
@@ -3166,6 +3228,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		BIGEARNER_NAME 			= "GRUBA RYBA"
 		BIGEARNER_DESC 			= " Masz ogromną ilość zdrowia, a „chybione” zamachy powodują szybkie leczenie, jednak otrzymujesz obrażenia od ognia sojuszniczego."
+		// TODO: Update! " You have a massive amount of health and 'missed' swings cause you to heal. Gain a short burst of massively increased heal rate on kill (which can also build overheal). Cannot heal from any other sources."
 		//
 		WANGAPRICK_NAME 		= "KŁUJKA VOODOO"
 		WANGAPRICK_DESC 		= " Zabicie wroga natychmiast aktywuje niewidzialność na kilka sekund. Możesz atakować przeciwników będąc niewidzialnym, by wydłużyć czas trwania niewidzialność. Nie możesz używać przebrań."
@@ -3181,9 +3244,13 @@ if("SetScriptVersion" in getroottable())
 		//
 		DEADRINGER_NAME 		= "DZWON ZMARŁEGO"
 		DEADRINGER_DESC 		= " Aktywacja wywołuje krótki zryw, pozwalający na odskok w dowolnym kierunku. Podczas odskoku otrzymywane obrażenia są zmniejszone o 80%."
+		// TODO: Update! " Activate to gain super-speed for several seconds. Invulnerable while active."
 		//
 		CLOAKANDDAGGER_NAME		= "PELERYNA NOŻOWNIKA"
 		CLOAKANDDAGGER_DESC		= " Natychmiastowa aktywacja i dezaktywacja niewidzialności."
+		// TODO: TRANSLATE THE BELOW
+		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
+		QUACKENBIRDT_DESC 		= " Reveals the location of all enemies while cloaked."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -3370,6 +3437,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		GUNBOATS_NAME 			= "GUNBOATS" 
 		GUNBOATS_DESC 			= " ジャンプキーを押し続ける事でバニーホップが可能にする　落下ダメージを無効化する" 
+		// TODO: Update! " Enables bunnyhopping by holding 'jump' key. Grants immunity to fall damage. Hold Crouch key while airborne to reduce gravity." 
 		//
 		BATTALIONS_NAME 		= "BATTALION'S BACKUP" 
 		BATTALIONS_DESC 		= " バフの射程が無制限になり、持続時間が大幅に延長された" 
@@ -3385,6 +3453,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MANTREADS_NAME 			= "マントレッズ" 
 		MANTREADS_DESC 			= " ダメージによるノックバックが大幅に軽減され、空中ストレイフの加速力が大幅にアップした　踏みつけ攻撃のダメージが強化され、移動速度に比例するようになった" 
+		// TODO: Update! " Major reduction in knockback taken from damage. Stomp damage buffed and velocity-based. Gain a short critboost on kill."
 		//
 		BASEJUMPER_NAME 		= "B.A.S.E. ジャンパー" 
 		BASEJUMPER_DESC 		= " パラシュートの開閉が可能　ノックバックや銃弾によるダメージへの耐性が上がり、空中の無防備な状態を軽減" 
@@ -3397,6 +3466,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		EQUALIZER_NAME 			= "イコライザー"
 		EQUALIZER_DESC 			= " タウント攻撃は、大ダメージを与え、敵を空中に吹き飛ばす"
+		// TODO: Update! " Damage massively increases as you become injured."
 		//
 		PAINTRAIN_NAME 			= "ペイントレイン"
 		PAINTRAIN_DESC 			= " 命中すると出血と移動速度低下を付与する　落下ダメージを無効化する"
@@ -3406,6 +3476,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MARKETGARDENER_NAME 	= "マーケットガーデナー"
 		MARKETGARDENER_DESC 	= " クリティカルダメージが大幅に上昇する　敵を倒すとレイジ状態となり、HPと耐性が上昇し、すべての攻撃のダメージが増加する　ただし、攻撃が外れると即死する"
+		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, enter an enraged state and gain extra health, resistance and increased damage on all attacks."
 		//
 		DISCIPLINARYACTION_NAME = "懲戒ムチ"
 		DISCIPLINARYACTION_DESC	= " 防御と機動性のための標準的な選択肢"
@@ -3413,6 +3484,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		ESCAPEPLAN_NAME			= "ESCAPE PLAN"
 		ESCAPEPLAN_DESC			= " 防御と機動性のための標準的な選択肢"
+		// TODO: Update! " Deal guaranteed crits when below 50% health."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -3614,6 +3686,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		WARRIRORSSPIRIT_NAME 	= "ウォリアーズスピリット"
 		WARRIRORSSPIRIT_DESC 	= " 左クリックで高く跳び上がり、敵の上に着地すると、強力な踏みつけダメージを与えます　メインとサブの弾薬をすべて消費します"
+		// TODO: Update! " Left-click to leap high into the air. Land on enemies to deal massive stomp damage. On Kill: Able to Quick-Slam by crouching in air for a short time.  Removes all primary and secondary ammo."
 		//
 		FISTSOFSTEEL_NAME 		= "フィスト・オブ・スティール"
 		FISTSOFSTEEL_DESC 		= " HP25万の巨大なヘビーガントレットに変身する　ノックバック効果を受けなくなり、大ダメージを与えることができる　すべてのメインおよびサブの弾薬が消費される　回復はランチボックスのアイテムからのみ可能となる"
@@ -3682,15 +3755,19 @@ if("SetScriptVersion" in getroottable())
 		///
 		MEDIGUN_NAME			= "メディガン"
 		MEDIGUN_DESC			= " オーバーヒールの上限が、対象の最大HPの10倍まで引き上げられる　持続時間の長いレベル1の「投射物シールド」を展開する"
+		// TODO: Update! " Overheal cap raised to x10 the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
 		//
 		KRITZKRIEG_NAME			= "クリッツクリーク"
 		KRITZKRIEG_DESC			= " 敵から体力を奪い、自己回復効果を得て、ユーバーチャージを蓄積できる"
+		// TODO: Update! " Able to drain health from enemies, granting self-healing and building Uber. Ubercharge grants a boost to all damage output."
 		//
 		QUICKFIX_NAME			= "クイックフィックス"
 		QUICKFIX_DESC			= " 非常に回復速度が速く、レベル2の「投射物シールド」を備えている　シールドへの接触ダメージからユーバーチャージを蓄積できる"
+		// TODO: Update! " Very fast healing with a level 2 Projectile Shield. Able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
 		//
 		VACCINATOR_NAME			= "ワクチネーター"
 		VACCINATOR_DESC			= " 「アクティブヒーリング」を発動すると、あなたと回復対象は、選択したダメージタイプの基本ダメージに対して100%の耐性を得る　ユーバーチャージを発動すると、30秒間、選択したダメージタイプに対して完全な免疫を得る"
+		// TODO: Update! " Active healing grants you and the patient increased mobility and 100% resistance to base damage of the selected damage type. Ubercharge grants full immunity to the selected damage type for 30 seconds."
 		///
 		BONESAW_NAME 			= "骨用電ノコ"
 		BONESAW_DESC			= " 防御と機動性のための標準的な選択肢　攻撃が命中すると、ユーバーが10%上昇する"
@@ -3714,6 +3791,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MACHINA_NAME 			= "マキナ"
 		MACHINA_DESC 			= " チャージにかかる時間は非常に長いが、フルチャージ状態ならタンクを瞬殺できる　敵を倒すとレイジメーターが溜まり、1秒間のクリティカルブーストが発動する　このクリティカルブーストとフルチャージを組み合わせれば、遭遇するほとんどのタンクを瞬時に倒すことができる"
+		// TODO: Update! " Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Gaints and Tanks."
 		//
 		HITMANSHEATMAKER_NAME 	= "ヒットマンズ・ヒートメーカー"
 		HITMANSHEATMAKER_DESC 	= " スコープを解除せずに連射出来る　体への攻撃はダメージを与えない"
@@ -3803,6 +3881,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		BIGEARNER_NAME 			= "ビッグアーナー"
 		BIGEARNER_DESC 			= " HPが非常に高く、攻撃が外れるたびに急速に回復するが、味方からの誤射を受けることになる"
+		// TODO: Update! " You have a massive amount of health and 'missed' swings cause you to heal. Gain a short burst of massively increased heal rate on kill (which can also build overheal). Cannot heal from any other sources."
 		//
 		WANGAPRICK_NAME 		= "ワンガプリック"
 		WANGAPRICK_DESC 		= " 敵を倒すと、数秒間即座に透明状態になる　この透明状態では敵を攻撃でき、連続キルを達成することで不可視状態を維持できるが変装はできない"
@@ -3818,9 +3897,13 @@ if("SetScriptVersion" in getroottable())
 		//
 		DEADRINGER_NAME 		= "デッドリンガー"
 		DEADRINGER_DESC 		= " 発動すると、短時間移動速度が上昇し、任意の方向へダッシュできるようになる　ダッシュ中は受けるダメージが80%軽減される"
+		// TODO: Update! " Activate to gain super-speed for several seconds. Invulnerable while active."
 		//
 		CLOAKANDDAGGER_NAME		= "クローク&ダガー"
 		CLOAKANDDAGGER_DESC		= " 瞬時の透明化と透明解除。"
+		// TODO: TRANSLATE THE BELOW
+		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
+		QUACKENBIRDT_DESC 		= " Reveals the location of all enemies while cloaked."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -4007,6 +4090,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		GUNBOATS_NAME 			= "BLYSÅLERNE" 
 		GUNBOATS_DESC 			= " Aktiverer bunnyhopping ved at holde 'hop' tasten nede. Giver immunitet over for faldskade." 
+		// TODO: Update! " Enables bunnyhopping by holding 'jump' key. Grants immunity to fall damage. Hold Crouch key while airborne to reduce gravity." 
 		//
 		BATTALIONS_NAME 		= "FORSVARSFANEN" 
 		BATTALIONS_DESC 		= " Ubegrænset rækkevidde og markant længere varighed." 
@@ -4022,6 +4106,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MANTREADS_NAME 			= "MANDETRÆDERNE" 
 		MANTREADS_DESC 			= " Skaden, der forårsager tilbageslag, er blevet væsentligt reduceret. Luftangreb har nu fået en markant øget acceleration. Stomp-skaden er blevet forbedret og er nu baseret på hastighed." 
+		// TODO: Update! " Major reduction in knockback taken from damage. Stomp damage buffed and velocity-based. Gain a short critboost on kill."
 		//
 		BASEJUMPER_NAME 		= "B.A.S.E.-HOPPEREN" 
 		BASEJUMPER_DESC 		= " Mulighed for at aktivere faldskærm. Øger modstandsdygtigheden over for tilbageslag og skudskader, hvilket mindsker din sårbarhed i luften." 
@@ -4034,6 +4119,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		EQUALIZER_NAME 			= "UDLIGNEREN"
 		EQUALIZER_DESC 			= " Hån angrebet forårsager enorm skade og slår fjenderne op i luften."
+		// TODO: Update! " Damage massively increases as you become injured."
 		//
 		PAINTRAIN_NAME 			= "TORTURTOGET"
 		PAINTRAIN_DESC 			= " Forårsager blødning og nedsat bevægelse ved træf. Giver immunitet over for faldskade."
@@ -4043,6 +4129,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MARKETGARDENER_NAME 	= "KRIGERENS KAMPSKOVL"
 		MARKETGARDENER_DESC 	= " Markant øget kritisk skade. Efter at have dræbt en fjende går du ind i en rasende tilstand og får ekstra liv, modstand og øget skade på alle angreb. Men hvis du rammer forbi, dør du med det samme."
+		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, enter an enraged state and gain extra health, resistance and increased damage on all attacks."
 		//
 		DISCIPLINARYACTION_NAME = "DISCIPLINÆRSAGEN"
 		DISCIPLINARYACTION_DESC	= " Standardvalg til forsvar og mobilitet."
@@ -4050,6 +4137,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		ESCAPEPLAN_NAME			= "REDNINGSPLANEN"
 		ESCAPEPLAN_DESC			= " Standardvalg til forsvar og mobilitet."
+		// TODO: Update! " Deal guaranteed crits when below 50% health."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -4251,6 +4339,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		WARRIRORSSPIRIT_NAME 	= "KRIGERENS ÅND"
 		WARRIRORSSPIRIT_DESC 	= " Venstreklik for at springe højt op i luften. Land på fjender for at give massiv stomp skade. Fjerner al primær og sekundær ammunition."
+		// TODO: Update! " Left-click to leap high into the air. Land on enemies to deal massive stomp damage. On Kill: Able to Quick-Slam by crouching in air for a short time.  Removes all primary and secondary ammo."
 		//
 		FISTSOFSTEEL_NAME 		= "STÅLNÆVERNE"
 		FISTSOFSTEEL_DESC 		= " Bliv til en gigantisk Heavy-handske med 250.000 helbred. Du er immun over for skubbekræfter og kan gøre massiv skade. Fjerner al primær og sekundær ammunition. Du kan kun modtage helbredelse fra madkasse genstande."
@@ -4319,15 +4408,19 @@ if("SetScriptVersion" in getroottable())
 		///
 		MEDIGUN_NAME			= "MEDI-GEVÆR"
 		MEDIGUN_DESC			= " Maksimumgrænsen for Overheal er øget til x10 af patientens maksimale helbred. Brug et langvarigt niveau 1 Projektilskjold."
+		// TODO: Update! " Overheal cap raised to x10 the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
 		//
 		KRITZKRIEG_NAME			= "KRITZKRIEG"
 		KRITZKRIEG_DESC			= " I stand til at dræne helbred fra fjender, hvilket giver selv-heling og opbygger Uber."
+		// TODO: Update! " Able to drain health from enemies, granting self-healing and building Uber. Ubercharge grants a boost to all damage output."
 		//
 		QUICKFIX_NAME			= "HURTIGE FIKS"
 		QUICKFIX_DESC			= " Meget hurtig helbredelse med et niveau 2 Projektilskjold. I stand til at opbygge Uber fra skjoldets kontaktskade."
+		// TODO: Update! " Very fast healing with a level 2 Projectile Shield. Able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
 		//
 		VACCINATOR_NAME			= "VACCINATOR"
 		VACCINATOR_DESC			= " Aktiv helbredelse giver dig og patienten 100 % modstand mod basisskade fra den valgte skadetype. UberLadning giver fuld immunitet over for den valgte skadetype i 30 sekunder."
+		// TODO: Update! " Active healing grants you and the patient increased mobility and 100% resistance to base damage of the selected damage type. Ubercharge grants full immunity to the selected damage type for 30 seconds."
 		///
 		BONESAW_NAME 			= "KNOGLESAV"
 		BONESAW_DESC			= " Standard valgmulighed for forsvar og mobilitet. Modtag 10 % Uber ved hit."
@@ -4351,6 +4444,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MACHINA_NAME 			= "MACHINA"
 		MACHINA_DESC 			= " Meget langsom at lade op, men kan flænse Tanks ved fuld opladning. Drab på fjender fylder en raserimåler, der giver et 1-sekunds kritisk boost. Kombiner det kritiske boost med en fuld opladning for øjeblikkeligt at destruere de fleste Tanks, du møder."
+		// TODO: Update! " Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Gaints and Tanks."
 		//
 		HITMANSHEATMAKER_NAME 	= "SNIGMORDERENS SAGSLUTTER"
 		HITMANSHEATMAKER_DESC 	= " Hurtigskydende uden at gå ud af sigtet. Ingen skade ved kropsskud."
@@ -4440,6 +4534,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		BIGEARNER_NAME 			= "STORE INDTJENER"
 		BIGEARNER_DESC 			= " Du har en enorm mængde helbred, og sving, der 'misser', får dig til at hele hurtigt, men du modtager friendly fire fra dine holdkammerater."
+		// TODO: Update! " You have a massive amount of health and 'missed' swings cause you to heal. Gain a short burst of massively increased heal rate on kill (which can also build overheal). Cannot heal from any other sources."
 		//
 		WANGAPRICK_NAME 		= "VOODOO-PRIKKET"
 		WANGAPRICK_DESC 		= " Drab på en fjende får dig til øjeblikkeligt at blive usynlig i et par sekunder. Du kan angribe fjender, mens du er i denne usynlige tilstand, og lænke drab sammen for at forblive usynlig. Ingen forklædning."
@@ -4455,9 +4550,13 @@ if("SetScriptVersion" in getroottable())
 		//
 		DEADRINGER_NAME 		= "GENGANGEREN"
 		DEADRINGER_DESC 		= " Udløser et kort boost i bevægelseshastighed ved aktivering, som lader dig dashe i alle retninger. Indkommende skade reduceres med 80%, mens du dasher."
+		// TODO: Update! " Activate to gain super-speed for several seconds. Invulnerable while active."
 		//
 		CLOAKANDDAGGER_NAME		= "STIKKERENS LOMMEUR"
 		CLOAKANDDAGGER_DESC		= " Øjeblikkelig syn- og usynlighed."
+		// TODO: TRANSLATE THE BELOW
+		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
+		QUACKENBIRDT_DESC 		= " Reveals the location of all enemies while cloaked."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -4644,6 +4743,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		GUNBOATS_NAME 			= "BOTAS BLINDADAS" 
 		GUNBOATS_DESC 			= " Permiten hacer el salto del conejo, conocido como «bunnyhop» con la tecla de saltar. Otorga inmunidad al daño por caída." 
+		// TODO: Update! " Enables bunnyhopping by holding 'jump' key. Grants immunity to fall damage. Hold Crouch key while airborne to reduce gravity." 
 		//
 		BATTALIONS_NAME 		= "REFUERZO DEL BATALLÓN" 
 		BATTALIONS_DESC 		= " Alcance ilimitado y gran aumento de duración." 
@@ -4659,6 +4759,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MANTREADS_NAME 			= "APLASTACABEZAS" 
 		MANTREADS_DESC 			= " Reduce mucho el retroceso recibido. Aumenta la velocidad de giro al estrafear por el aire. Aumenta el daño al caer sobre otro jugador." 
+		// TODO: Update! " Major reduction in knockback taken from damage. Stomp damage buffed and velocity-based. Gain a short critboost on kill."
 		//
 		BASEJUMPER_NAME 		= "SALTADOR B.A.S.E." 
 		BASEJUMPER_DESC 		= " Permite abrir y cerrar el paracaídas. Aumenta la resistencia al retroceso y daño de balas, reduciendo la vulnerabilidad en el aire." 
@@ -4671,6 +4772,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		EQUALIZER_NAME 			= "ECUALIZADOR"
 		EQUALIZER_DESC 			= " La burla de ataque causa daño masivo y empuja a los jugadores en el aire."
+		// TODO: Update! " Damage massively increases as you become injured."
 		//
 		PAINTRAIN_NAME 			= "TREN DEL DOLOR"
 		PAINTRAIN_DESC 			= " Causa hemorragia y ralentiza al impactar. Otorga inmunidad al daño por caída."
@@ -4680,6 +4782,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MARKETGARDENER_NAME 	= "HORTELANO"
 		MARKETGARDENER_DESC 	= " Causa daño crítico muy elevado. Al matar, otorga un estado de ira, dando salud adicional, resistencia y aumento de todo tipo de daño. Si el portador falla un golpe, muere."
+		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, enter an enraged state and gain extra health, resistance and increased damage on all attacks."
 		//
 		DISCIPLINARYACTION_NAME = "ACCIÓN DISCIPLINARIA"
 		DISCIPLINARYACTION_DESC	= " Una opción estándar para defensa y movilidad."
@@ -4687,6 +4790,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		ESCAPEPLAN_NAME			= "PLAN DE HUIDA"
 		ESCAPEPLAN_DESC			= " Una opción estándar para defensa y movilidad."
+		// TODO: Update! " Deal guaranteed crits when below 50% health."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -4888,6 +4992,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		WARRIRORSSPIRIT_NAME 	= "ZARPAS DEL GUERRERO"
 		WARRIRORSSPIRIT_DESC 	= " Usa el ataque principal para dar un gran salto. Cae sobre enemigos para causar gran cantidad de daño. Elimina toda la munición principal y secundaria."
+		// TODO: Update! " Left-click to leap high into the air. Land on enemies to deal massive stomp damage. On Kill: Able to Quick-Slam by crouching in air for a short time.  Removes all primary and secondary ammo."
 		//
 		FISTSOFSTEEL_NAME 		= "PUÑOS DE ACERO"
 		FISTSOFSTEEL_DESC 		= " Conviértete en un Heavy gigante con 250 000 PS. Eres inmune a empujones y causas gran cantidad de daño. Elimina toda la munición principal y secundaria. Solo te puedes curar de artículos de tipo fiambrera."
@@ -4956,15 +5061,19 @@ if("SetScriptVersion" in getroottable())
 		///
 		MEDIGUN_NAME			= "PISTOLA MÉDICA"
 		MEDIGUN_DESC			= " Se aumenta el límite de exceso de curación hasta x10 la salud máxima del paciente. Despliega un duradero escudo de proyectiles de nivel 1."
+		// TODO: Update! " Overheal cap raised to x10 the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
 		//
 		KRITZKRIEG_NAME			= "KRITZKRIEG"
 		KRITZKRIEG_DESC			= " Permite consumir los PS de los enemigos, curándote y generando Supercarga."
+		// TODO: Update! " Able to drain health from enemies, granting self-healing and building Uber. Ubercharge grants a boost to all damage output."
 		//
 		QUICKFIX_NAME			= "APAÑADOR"
 		QUICKFIX_DESC			= " Cura a gran velocidad y despliega un duradero escudo para proyectiles de nivel 2. Permite aumentar la Supercarga al parar daño con el escudo."
+		// TODO: Update! " Very fast healing with a level 2 Projectile Shield. Able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
 		//
 		VACCINATOR_NAME			= "VACUNADOR"
 		VACCINATOR_DESC			= " Al curar otorga a ambos una resistencia del 100 % al daño base seleccionado. La Supercarga otorga inmunidad total al daño seleccinoado durante 30 segundos."
+		// TODO: Update! " Active healing grants you and the patient increased mobility and 100% resistance to base damage of the selected damage type. Ubercharge grants full immunity to the selected damage type for 30 seconds."
 		///
 		BONESAW_NAME 			= "SERRUCHO"
 		BONESAW_DESC			= " Una opción estándar para defensa y movilidad. Al impactar: Aumenta un 10 % de Supercarga."
@@ -4988,6 +5097,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MACHINA_NAME 			= "MACHINA"
 		MACHINA_DESC 			= " Carga muy lentamente, pero puede destruir tanques con un disparo cargado. Al matar enemigos se llena el medidor que otorga 1 segundo de críticos. El crítico con una carga completa permite destruir tanques de un disparo."
+		// TODO: Update! " Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Gaints and Tanks."
 		//
 		HITMANSHEATMAKER_NAME 	= "ASESINO A SUELDO"
 		HITMANSHEATMAKER_DESC 	= " Dispara rápidamente sin apuntar. Solo hace daño a la cabeza."
@@ -5077,6 +5187,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		BIGEARNER_NAME 			= "CABEZA DE FAMILIA"
 		BIGEARNER_DESC 			= " Tienes gran cantidad de salud y cada ataque al aire te cura rápidamente, aunque recibes daño de tus aliados."
+		// TODO: Update! " You have a massive amount of health and 'missed' swings cause you to heal. Gain a short burst of massively increased heal rate on kill (which can also build overheal). Cannot heal from any other sources."
 		//
 		WANGAPRICK_NAME 		= "AGUIJÓN WANGA"
 		WANGAPRICK_DESC 		= " Al matar a un enemigo te haces invisible durante unos segundos. Puedes atacar mientras estás invisible y encadenar muertes te mantiene así. No tienes disfraces."
@@ -5092,9 +5203,13 @@ if("SetScriptVersion" in getroottable())
 		//
 		DEADRINGER_NAME 		= "DUPLICANTE"
 		DEADRINGER_DESC 		= " Registra un breve aumento de velocidad al activarse, permitiendo correr en cualquier dirección. El daño recibido se reduce un 80 % al correr."
+		// TODO: Update! " Activate to gain super-speed for several seconds. Invulnerable while active."
 		//
 		CLOAKANDDAGGER_NAME		= "EMBOZADOR"
 		CLOAKANDDAGGER_DESC		= " Te hace invisible y quita la invisibilidad al instante."
+		// TODO: TRANSLATE THE BELOW
+		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
+		QUACKENBIRDT_DESC 		= " Reveals the location of all enemies while cloaked."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -5278,6 +5393,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		GUNBOATS_NAME 			= "鐵砲護靴" 
 		GUNBOATS_DESC 			= "允許按住跳躍鍵以進行兔子跳，大幅提升台階高度，免疫跌倒傷害." 
+		// TODO: Update! " Enables bunnyhopping by holding 'jump' key. Grants immunity to fall damage. Hold Crouch key while airborne to reduce gravity." 
 		//
 		BATTALIONS_NAME 		= "營隊後援" 
 		BATTALIONS_DESC 		= "無限範圍和大幅增加持續時間." 
@@ -5293,6 +5409,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MANTREADS_NAME 			= "踏板戰靴" 
 		MANTREADS_DESC 			= "大幅減少受傷帶來的擊退，空中轉向能大幅提升加速度，踐踏傷害提升且能按速度額外提升." 
+		// TODO: Update! " Major reduction in knockback taken from damage. Stomp damage buffed and velocity-based. Gain a short critboost on kill."
 		//
 		BASEJUMPER_NAME 		= "低空跳傘員" 
 		BASEJUMPER_DESC 		= "可以打開降落傘，獲得擊退和子彈抗性，使你在空中更堅固." 
@@ -5305,6 +5422,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		EQUALIZER_NAME 			= "傷害均衡十字鎬"
 		EQUALIZER_DESC 			= "嘲諷攻擊造成巨額傷害且能把敵人擊飛到空中."
+		// TODO: Update! " Damage massively increases as you become injured."
 		//
 		PAINTRAIN_NAME 			= "天堂路"
 		PAINTRAIN_DESC 			= "擊中造成減速和流血. 免疫跌倒傷害."
@@ -5314,12 +5432,14 @@ if("SetScriptVersion" in getroottable())
 		//
 		MARKETGARDENER_NAME 	= "市場花園園丁"
 		MARKETGARDENER_DESC 	= "造成高額加成的暴擊傷害，殺死敵人可進入狂暴，獲得額外生命，抗性和傷害加成，但揮空會殺死你."
+		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, enter an enraged state and gain extra health, resistance and increased damage on all attacks."
 		//
 		DISCIPLINARYACTION_NAME = "紀律行動"
 		DISCIPLINARYACTION_DESC	= "防禦和機動性的標準選擇."
 		//
 		ESCAPEPLAN_NAME			= "速度均衡十字鎬"
 		ESCAPEPLAN_DESC			= "防禦和機動性的標準選擇."
+		// TODO: Update! " Deal guaranteed crits when below 50% health."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -5521,6 +5641,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		WARRIRORSSPIRIT_NAME 	= "戰士之魂"
 		WARRIRORSSPIRIT_DESC 	= "左鍵可以躍至高空，落到目標時造成巨額摔傷. 移除所有主武器和副武器的彈藥."
+		// TODO: Update! " Left-click to leap high into the air. Land on enemies to deal massive stomp damage. On Kill: Able to Quick-Slam by crouching in air for a short time.  Removes all primary and secondary ammo."
 		//
 		FISTSOFSTEEL_NAME 		= "鐵拳"
 		FISTSOFSTEEL_DESC 		= "變成一個擁有250000生命的巨型重裝拳擊手，獲得免疫擊退且能造成高額傷害，移除所有主武器和副武器彈藥，只能從午餐盒類物品來回血."
@@ -5588,15 +5709,19 @@ if("SetScriptVersion" in getroottable())
 		///
 		MEDIGUN_NAME			= "醫療槍"
 		MEDIGUN_DESC			= "超量治療上限改為10倍，可部署長時間持續的等級1能量護盾."
+		// TODO: Update! " Overheal cap raised to x10 the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
 		//
 		KRITZKRIEG_NAME			= "爆擊製造者"
 		KRITZKRIEG_DESC			= "允許吸取敵人的生命值，為自己治療和獲得Uber."
+		// TODO: Update! " Able to drain health from enemies, granting self-healing and building Uber. Ubercharge grants a boost to all damage output."
 		//
 		QUICKFIX_NAME			= "快速治療者"
 		QUICKFIX_DESC			= "治療速度極快且有等級2的能量護盾，能從護盾接觸傷害獲得Uber."
+		// TODO: Update! " Very fast healing with a level 2 Projectile Shield. Able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
 		//
 		VACCINATOR_NAME			= "疫苗接種者"
 		VACCINATOR_DESC			= "治療給你和目標獲得100%所選種類的傷害抗性，Ubercharge則能在30秒內完全免疫該種傷害."
+		// TODO: Update! " Active healing grants you and the patient increased mobility and 100% resistance to base damage of the selected damage type. Ubercharge grants full immunity to the selected damage type for 30 seconds."
 		///
 		BONESAW_NAME 			= "骨鋸"
 		BONESAW_DESC			= "防禦和機動性的標準選擇. 擊中獲得10% Uber."
@@ -5620,6 +5745,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MACHINA_NAME 			= "神授貫殺獵槍"
 		MACHINA_DESC 			= "充能速度很慢，但滿充能可對坦克造成高額傷害，擊殺獲得1秒暴擊加成，在暴擊加成下滿充能射擊能重創坦克."
+		// TODO: Update! " Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Gaints and Tanks."
 		//
 		HITMANSHEATMAKER_NAME 	= "全面狙殺令"
 		HITMANSHEATMAKER_DESC 	= "高速連射且不用開鏡，命中身體沒有傷害."
@@ -5709,6 +5835,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		BIGEARNER_NAME 			= "暴利之刃"
 		BIGEARNER_DESC 			= "獲得巨額生命上限且空揮時大幅治療自身，但你會受到友方的誤傷."
+		// TODO: Update! " You have a massive amount of health and 'missed' swings cause you to heal. Gain a short burst of massively increased heal rate on kill (which can also build overheal). Cannot heal from any other sources."
 		//
 		WANGAPRICK_NAME 		= "巫毒咒錐"
 		WANGAPRICK_DESC 		= "擊殺敵人時能使你立即持續幾秒的隱形，隱形期間可以攻擊敵人且連殺可以維持隱形，無法使用偽裝."
@@ -5724,9 +5851,13 @@ if("SetScriptVersion" in getroottable())
 		//
 		DEADRINGER_NAME 		= "死亡送終者"
 		DEADRINGER_DESC 		= "啟動時短暫獲得高額移動速度，允許你往任何方向衝刺，衝刺時受到的傷害減少80%."
+		// TODO: Update! " Activate to gain super-speed for several seconds. Invulnerable while active."
 		//
 		CLOAKANDDAGGER_NAME		= "隱身匕首"
 		CLOAKANDDAGGER_DESC		= "能立即進入並解除隱形."
+		// TODO: TRANSLATE THE BELOW
+		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
+		QUACKENBIRDT_DESC 		= " Reveals the location of all enemies while cloaked."
 		//----------------------------
 		//----------------------------
 		//----------------------------
