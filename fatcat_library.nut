@@ -1313,7 +1313,7 @@ function CTFPlayer::GetPercentHealth(percent)
  * @param {float|integer} percent
  */
 function CTFPlayer::GetPercentMaxHealth(percent)
-	return GetMaxBuffedHealth() * (percent / 100)
+	return GetMaxBuffedHealth().tofloat() * (percent.tofloat() / 100)
 
 /**
  * @param {integer} rune
@@ -2054,6 +2054,43 @@ function CTFPlayer::GetMaximumGrenades3()
 		grenades *= 2
 	return grenades
 }
+
+function CTFPlayer::GivePercentAmmo(index, percent)
+{
+	local maximum = 0
+	local current = GetAmmoByIndex(index)
+	if(index == TF_AMMO_PRIMARY)
+		maximum = GetMaximumPrimaryAmmo()
+	else if (index == TF_AMMO_SECONDARY)
+		maximum = GetMaximumSecondaryAmmo()
+	else if (index == TF_AMMO_METAL)
+		maximum = GetMaximumMetal()
+	else if (index == TF_AMMO_GRENADES1)
+		maximum = GetMaximumGrenades1()
+	else if (index == TF_AMMO_GRENADES3)
+		maximum = GetMaximumGrenades3()
+	else
+		throw "Unknown Ammo Type "+index
+
+	local to_give = maximum * (percent.tofloat() / 100)
+	
+	if(current + to_give > maximum)
+		SetAmmoByIndex(index, maximum)
+	else 
+		SetAmmoByIndex(index, current + to_give)
+}
+
+function CTFPlayer::GivePercentPrimaryAmmo(percent)
+	GivePercentAmmo(TF_AMMO_PRIMARY, percent)
+
+function CTFPlayer::GivePercentSecondaryAmmo(percent)
+	GivePercentAmmo(TF_AMMO_SECONDARY, percent)
+
+function CTFPlayer::GivePercentMetal(percent)
+	GivePercentAmmo(TF_AMMO_METAL, percent)
+
+function CTFPlayer::GivePercentGrenadesAmmo(percent)
+	GivePercentAmmo(TF_AMMO_GRENADES1, percent)
 
 function CTFPlayer::ResetAmmo()
 {
@@ -3015,9 +3052,15 @@ function CTFPlayer::HealPlayer(amount, overheal = false, display = true, type = 
 		}
 	}
 	else if(GetHealth() >= GetMaxHealth())
-		{}
+	{
+		amount = 0
+	}
 	else if(GetHealth()+amount >= GetMaxHealth())
-		SetHealth(GetMaxHealth())
+	{
+		AddHealth(amount)
+		amount -= (GetHealth() - GetMaxHealth())
+		SetHealth(GetMaxHealth()) // this nukes overheal tbh
+	}
 	else 
 		AddHealth(amount)
 
@@ -3579,13 +3622,13 @@ function CTFPlayer::SetInternalVar(var_name, value)
 function CTFPlayer::UseGiantModel(buster = false)
 {
 	if(buster)
-		PlayerFire("SetCustomModelWithClassAnimations", "models/bots/demo/bot_sentry_buster.mdl", TICK_DUR * 2)
+		PlayerFire("SetCustomModelWithClassAnimations", "models/bots/demo/bot_sentry_buster.mdl", TICK_DUR * 10)
 	else
-		PlayerFire("SetCustomModelWithClassAnimations", format("models/bots/%s_boss/bot_%s_boss.mdl", GetPlayerClassName().tolower(), GetPlayerClassName().tolower()), TICK_DUR * 2)
+		PlayerFire("SetCustomModelWithClassAnimations", format("models/bots/%s_boss/bot_%s_boss.mdl", GetPlayerClassName().tolower(), GetPlayerClassName().tolower()), TICK_DUR * 10)
 }
 
 function CTFPlayer::UseRobotModel()
-	PlayerFire("SetCustomModelWithClassAnimations", format("models/bots/%s/bot_%s.mdl", GetPlayerClassName().tolower(), GetPlayerClassName().tolower()), TICK_DUR * 2)
+	PlayerFire("SetCustomModelWithClassAnimations", format("models/bots/%s/bot_%s.mdl", GetPlayerClassName().tolower(), GetPlayerClassName().tolower()), TICK_DUR * 10)
 
 
 /* function CTFPlayer::CreateWearable( idx, model )
@@ -7626,6 +7669,9 @@ function ROOT::PrecacheObject(thing)
 			return val
 	}
 	/**
+	 * maps `val` onto `A` - `B`, and then remaps onto
+	 * `C` - `D`
+	 * 
 	 * @param {integer|float} val
 	 * @param {integer|float} A
 	 * @param {integer|float} B
@@ -9117,9 +9163,7 @@ function SwapWeaponThink()
 					if(AOE_Radius == 0)
 						AOE_Radius = 300
 
-					local AOE_damage = weapon.GetAttribute("fall damage causes aoe dmg mult", 0)
-					if(AOE_damage == 0)
-						AOE_damage = 10
+					local AOE_damage = weapon.GetAttribute("fall damage causes aoe dmg mult", 1)
 
 					// victim.PrintToHud("Falling at: "+FallingVel+"\nWe need less than this: "+MIN_FallingVel)
 
@@ -9359,11 +9403,11 @@ function SwapWeaponThink()
 
 		player.StripItemSlot(player.HookAdditiveAttributes("strip item slot"))
 
-		if(player.HookAdditiveAttributes("use sentrybuster model"))
+		if(player.HookAdditiveAttributes("use sentrybuster model") != 0)
 			player.UseGiantModel(true)
-		else if(player.HookAdditiveAttributes("use giant robot model"))
+		else if(player.HookAdditiveAttributes("use giant model") != 0)
 			player.UseGiantModel()
-		else if(player.HookAdditiveAttributes("use robot model"))
+		else if(player.HookAdditiveAttributes("use robot model") != 0)
 			player.UseRobotModel()
 
 		local slot = -1
@@ -9649,9 +9693,11 @@ function SwapWeaponThink()
 	function OnGameEvent_player_builtobject(params)
 	{
 		local eventdata = clone params
-		eventdata.player <- GetPlayerFromUserID(params.userid)
+		
+		local player = GetPlayerFromUserID(params.userid)
+		eventdata.player <- player
 
-		Assert(eventdata.player && eventdata.player.IsPlayer(), "player_builtobject Received a NULL/Non player")
+		Assert(player && player.IsPlayer(), "player_builtobject Received a NULL/Non player")
 
 		local typetable = array(4, "")
 		typetable[OBJ_DISPENSER] = "Dispenser"
@@ -9661,13 +9707,133 @@ function SwapWeaponThink()
 		local event_name = typetable[params.object]
 		event_name += "Built"
 
+		local object = EntIndexToHScript(params.index)
+		eventdata.object <- object
+
+		// GetScope(object).m_hBuilder <- player
+		// GetScope(object).m_iObjectType <- GetPropInt(object, "m_iObjectType")
+
 		// overridden
 		delete eventdata.userid
 		delete eventdata.object
 		delete eventdata.index
 
-		eventdata.object <- EntIndexToHScript(params.index)
+		local scope = GetScope(player)
+		if(!("BuildingsArray" in scope))
+			scope.BuildingsArray <- [ {}, {}, {}, {} ]
+		scope.BuildingsArray[params.object][object.entindex()] <- object
+		printf("Added %s to players object array\n", object.tostring())
+
+		/* GetScope(object).DestroyCallbacks <- [] 
+		local function AddDestroyCallback(func) { DestroyCallbacks.append(func) }
+		GetScope(object).AddDestroyCallback <- AddDestroyCallback
+
+		SetDestroyCallback(object, function() {
+			local self = self
+			foreach(callback in DestroyCallbacks)
+			{
+				callback(self)
+			}
+
+			local owner = m_hBuilder
+
+			if(owner && owner.IsValid() && owner.IsPlayer())
+			{
+				local o_scope = GetScope(owner)
+				if(!("BuildingsArray" in o_scope))
+					return // fucked up somewhere
+				local owner_buildings = o_scope.BuildingsArray
+				local type = m_iObjectType
+
+				PrintArray(owner_buildings[type])
+
+				local i = 0
+				for (i = 0; i <= owner_buildings[type].len() -1; i++)
+				{
+					local obj = owner_buildings[type][i]
+					printf("Object %s [%d]\n", obj.tostring(), i)
+					printl(obj == self)
+					printl(obj.weakref())
+					if(obj == self)
+					{
+						printf("Removed %s from object array\n", obj.tostring())
+						owner_buildings[type].remove(i)
+					}
+				}
+				// local aself = owner_buildings[type].find(self)
+
+				// Assert(aself != null, "more fucked up shit?")
+				
+				// printf("Removed %s from object array\n", owner_buildings[type][aself].tostring())
+				// owner_buildings[type].remove(aself)
+			}
+		}) */
+
 		FireScriptEvent(event_name, eventdata)
+	}
+	function OnGameEvent_object_destroyed(params)
+	{
+		local owner = GetPlayerFromUserID(params.userid)
+		local attacker = GetPlayerFromUserID(params.attacker)
+		local assister = GetPlayerFromUserID(params.assister)
+		local object = EntIndexToHScript(params.index)
+
+		local typetable = array(4, "")
+		typetable[OBJ_DISPENSER] = "Dispenser"
+		typetable[OBJ_TELEPORTER] = "Teleporter"
+		typetable[OBJ_SENTRY] = "Sentry"
+		typetable[OBJ_SAPPER] = "Sapper"
+		local event_name = typetable[params.objecttype]
+
+		FireScriptEvent(event_name + "Destroyed", {
+			owner = owner
+			attacker = attacker
+			assister = assister
+			object = object
+
+			weapon_name = params.weapon
+			building = params.was_building
+		})
+
+		if(owner && owner.IsPlayer())
+		{
+			local scope = GetScope(owner)
+			if(!("BuildingsArray" in scope))
+				scope.BuildingsArray <- [ {}, {}, {}, {} ]
+			local buildings = scope.BuildingsArray
+
+			PrintTable(buildings[params.objecttype])
+
+			printl(object.entindex() in buildings[params.objecttype])
+			if(object.entindex() in buildings[params.objecttype])
+			{
+				delete buildings[params.objecttype][object.entindex()]
+			}
+		}
+
+		// FireScriptEvent(event_name + "")
+	}
+	function OnGameEvent_object_detonated(params)
+	{
+		local eventdata = {}
+		PrintTable(params)
+		local owner = GetPlayerFromUserID(params.userid)
+		local type = params.objecttype
+		local object = EntIndexToHScript(params.index)
+
+		local typetable = array(4, "")
+		typetable[OBJ_DISPENSER] = "Dispenser"
+		typetable[OBJ_TELEPORTER] = "Teleporter"
+		typetable[OBJ_SENTRY] = "Sentry"
+		typetable[OBJ_SAPPER] = "Sapper"
+		local event_name = typetable[params.objecttype]
+
+		FireScriptEvent(event_name + "Detonated", {
+			owner = owner
+			type = type
+			object = object
+			detonated = false
+		})
 	}
 	/**
 	 * @param {table} params

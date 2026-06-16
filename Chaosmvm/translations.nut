@@ -5244,6 +5244,7 @@ if("SetScriptVersion" in getroottable())
 		PRINNYMACHETE_DESC 			= " Artículo de utilidad: Ataca con el arma para avanzar con gran velocidad. Otorga inmunidad al daño por caída."
 		//------------------------------------
 	}
+	// tchinese is lacking and maybe needs to be redone
 	/*tchinese = {
 		IH_TRANSLATE_ITEM		= IH_color + "[%s]" + IH_text_color + "%s"
 		IH_INCLUDES				= IH_color_header + "[►]\x0826beffBB 你的裝備配置包含了..."

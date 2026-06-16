@@ -112,8 +112,11 @@ function ReadCheckpoint(player)
 	if(GetPopfileName() != mission)
 		return player.GetTranslatedAndFormattedString("CHECKPOINT_WRONG_MISS")
 
-	local saved_wave = waves.slice(0, 1).tointeger()
-	local max_wave = waves.slice(2).tointeger()
+	// fix multiple digits
+	local index = waves.find("/")
+
+	local saved_wave = waves.slice(0, index).tointeger()
+	local max_wave = waves.slice(index+1).tointeger()
 	
 	// printl("Current Wave Num "+GetCurrentWaveNumber())
 	// printl("Saved Wave Num "+saved_wave)
