@@ -1,7 +1,7 @@
 Replace the "english" with whatever language you are translating for
 ignore any color information, such as "\x01", "/x07######", or "/x08########"
 also ignore modifying the subsitute strings, such as "%s" and "%%", or the "\n" (newline) characters
-dotn change any strings that specify commands, such as "/itemhelp #" (i might get to making this work)
+dont change any strings that specify commands, such as "/itemhelp #" (i might get to making this work)
 
 an example one would look like this
 
