@@ -332,14 +332,14 @@ function GameplayThink()
 
 		local Corrosion = bot.GetCorrosion()
 
-		if(bot.HasCorrosion() && bot.CanRemoveCorrosion() || Corrosion == null)
+		if(bot.HasCorrosion() && bot.CanRemoveCorrosion())
 		{
 			bot.RemoveCorrosion()
 			continue
 		}
 		if(Time() >= Corrosion.flNextTick)
 		{
-			bot.CorrosionTick()
+			Corrosion.Tick()
 			continue
 		}
 	}

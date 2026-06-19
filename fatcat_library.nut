@@ -1361,6 +1361,134 @@ function CTFPlayer::IsPlayerClass(playerclass)
 function CTFPlayer::GetDisguiseClass() 
 	return InCond( TF_COND_DISGUISED_AS_DISPENSER ) ? TF_CLASS_ENGINEER : GetPropInt(this, "m_Shared.m_nDisguiseClass")
 
+/**
+ * @param {integer} amount
+ */
+function CTFPlayer::AddHealth(amount)
+	SetHealth(GetHealth()+amount)
+/**
+ * @param {integer} amount
+ */
+function CTFPlayer::RemoveHealth(amount)
+	SetHealth(GetHealth()-amount)
+	
+function CTFPlayer::IsMedicButtonDown()
+	return GetPropFloat(this, "m_flHelpmeButtonPressTime") != 0
+	
+function CTFPlayer::GetChatColor()
+	return GetTeam() == TF_TEAM_RED ? TF_TEAM_COLOR_RED : TF_TEAM_COLOR_BLUE
+
+function CTFPlayer::SetThrowableAmmo(ammo)
+	SetPropInt(this, PROP_PLAYER_AMMO, ammo, TF_AMMO_GRENADES2)
+
+/**
+ * @returns {bool}
+ * @deprecated Use InRespawnRoom(true) instead
+ */
+function CTFPlayer::InAnyRespawnRoom()
+	return InRespawnRoom(true)
+
+/**
+ * @param {float} range
+ * @returns {[CTFPlayer]}
+ * 
+ * @deprecated Loop over the `m_aHumans` array and filter by range
+ */
+function CTFPlayer::GetEveryHumanWithin(range, include_me = false)
+	return include_me ? GetAllPlayers(TF_TEAM_PVE_DEFENDERS, range ? [GetOrigin(), range] : range, false) : GetAllPlayers(TF_TEAM_PVE_DEFENDERS, [GetOrigin(), range], false).filter(@(_, value) value != this)
+/**
+ * @param {float} range
+ * @returns {[CTFPlayer|CTFBot]}
+ * 
+ * @deprecated Loop over the `Players` array and filter by range
+ */
+function CTFPlayer::GetEveryPlayerWithin(range, include_me = false)
+	return include_me ? GetAllPlayers(false, range ? [GetOrigin(), range] : range, false) : GetAllPlayers(false, range ? [GetOrigin(), range] : range, false).filter(@(_, value) value != this)
+
+/**
+ * @param {float} range
+ * @returns {[CTFBot]}
+ * 
+ * @deprecated Loop over the `m_aBots` array and filter by range
+ */
+function CTFPlayer::GetEveryBotWithin(range)
+	return GetAllPlayers(TF_TEAM_PVE_INVADERS, [GetOrigin(), range], false).extend(GetAllPlayers(TF_TEAM_PVE_INVADERS_GIANTS, [GetOrigin(), range], false))
+
+/**
+ * @returns {bool}
+ */
+function CTFPlayer::IsMissionMaker()
+	return IsInArray(GetPropString(this, PROP_PLAYER_STEAMID), MissionMakers)
+
+function CTFPlayer::ResetPrimaryAmmo()
+	SetPrimaryAmmo(GetMaximumPrimaryAmmo())
+
+function CTFPlayer::ResetSecondaryAmmo()
+	SetSecondaryAmmo(GetMaximumSecondaryAmmo())
+
+function CTFPlayer::ResetMetal()
+	SetMetal(GetMaximumMetal())
+
+function CTFPlayer::GivePercentPrimaryAmmo(percent)
+	GivePercentAmmo(TF_AMMO_PRIMARY, percent)
+
+function CTFPlayer::GivePercentSecondaryAmmo(percent)
+	GivePercentAmmo(TF_AMMO_SECONDARY, percent)
+
+function CTFPlayer::GivePercentMetal(percent)
+	GivePercentAmmo(TF_AMMO_METAL, percent)
+
+function CTFPlayer::GivePercentGrenadesAmmo(percent)
+	GivePercentAmmo(TF_AMMO_GRENADES1, percent)
+/**
+ * @param {bool} bool
+ */
+function CTFPlayer::ToggleGlow(bool)
+	SetPropBool(this, "m_bGlowEnabled", bool)
+/**
+ * @returns {string}
+ */
+function CTFPlayer::GetLanguage()
+	return GetClientConVar("cl_language", entindex())
+	
+/**
+ * @param {string} name
+ * @param {string} description
+ */
+function CTFPlayer::IHTranslateToChat(name, description)
+	TranslateToChat("IH_TRANSLATE_ITEM", "%T" + name, "%T" + description)
+/**
+ * @param {string} item
+ */
+function CTFPlayer::IHTranslateToChat2(item)
+	TranslateToChat("IH_TRANSLATE_ITEM", "%T" + item+"_NAME", "%T" + item+"_DESC")
+
+function CTFPlayer::TranslateToHud(...)
+	PrintToHud(GetTranslatedAndFormattedString.acall([this].extend(vargv)))
+
+function CTFPlayer::TranslateToChat(...)
+	PrintToChat(GetTranslatedAndFormattedString.acall([this].extend(vargv)))
+
+/**
+ * Switches to the weapon in this slot (MAY BE NULL)
+ * @param {integer} slot
+ */
+function CTFPlayer::SwitchWeaponSlot( slot )
+	Weapon_Switch(this.GetWeaponInSlot(slot))
+
+/**
+ * Returns is this player is Minicrit debuffed
+ * @returns {bool}
+ */
+function CTFPlayer::IsMinicritDebuffed()
+	return !InCond(TF_COND_DEFENSEBUFF) && InMultiCond([TF_COND_URINE, TF_COND_MARKEDFORDEATH, TF_COND_MARKEDFORDEATH_SILENT, TF_COND_PASSTIME_PENALTY_DEBUFF])
+/**
+ * Returns if this player is Minicrit Buffed
+ * @returns {bool}
+ */
+function CTFPlayer::IsMinicritBuffed()
+	return InMultiCond([TF_COND_OFFENSEBUFF, TF_COND_ENERGY_BUFF, TF_COND_NOHEALINGDAMAGEBUFF, TF_COND_MINICRITBOOSTED_ON_KILL])
+
 /*
 	Some Funcs can use a different name
  */
@@ -1411,6 +1539,7 @@ function CTFPlayer::GetAbilityWeaponIDXs()
 	
 	return idxs.len() == 0 ? null : idxs
 }
+
 if(!("__ORIGINAL_RemoveCondEx" in CTFPlayer))
 {
 	CTFPlayer.__ORIGINAL_RemoveCondEx <- CTFPlayer.RemoveCondEx
@@ -1532,9 +1661,6 @@ function CTFPlayer::SetThrowableCharge(charge)
 
 	secondary.SetChargeTime(Time() + percent_time)
 }
-
-function CTFPlayer::SetThrowableAmmo(ammo)
-	SetPropInt(this, PROP_PLAYER_AMMO, ammo, TF_AMMO_GRENADES2)
 
 function CTFPlayer::IsUberDraining() 
 {
@@ -1692,30 +1818,12 @@ function CTFPlayer::InRespawnRoom(any = false)
 	}
 	return false
 }
-/**
- * @returns {bool}
- * 
- * @deprecated Use InRespawnRoom(true) instead
- */
-function CTFPlayer::InAnyRespawnRoom()
-	return InRespawnRoom(true)
 
 /* function CTFPlayer::InEnemyRespawnRoom()
 {
 
 } */
-/**
- * @param {float} range
- * @returns {[CTFPlayer]}
- */
-function CTFPlayer::GetEveryHumanWithin(range, include_me = false)
-	return include_me ? GetAllPlayers(TF_TEAM_PVE_DEFENDERS, range ? [GetOrigin(), range] : range, false) : GetAllPlayers(TF_TEAM_PVE_DEFENDERS, [GetOrigin(), range], false).filter(@(_, value) value != this)
-/**
- * @param {float} range
- * @returns {[CTFPlayer|CTFBot]}
- */
-function CTFPlayer::GetEveryPlayerWithin(range, include_me = false)
-	return include_me ? GetAllPlayers(false, range ? [GetOrigin(), range] : range, false) : GetAllPlayers(false, range ? [GetOrigin(), range] : range, false).filter(@(_, value) value != this)
+
 /**
  * @param {float} range
  * @returns {[CTFBaseBoss]}
@@ -1729,16 +1837,12 @@ function CTFPlayer::GetEveryTankWithin(range)
 	}
 	return list
 }
-/**
- * @param {float} range
- * @returns {[CTFBot]}
- */
-function CTFPlayer::GetEveryBotWithin(range)
-	return GetAllPlayers(TF_TEAM_PVE_INVADERS, [GetOrigin(), range], false).extend(GetAllPlayers(TF_TEAM_PVE_INVADERS_GIANTS, [GetOrigin(), range], false))
 
 /**
  * @param {float} range
  * @param {float} damage
+ * 
+ * @deprecated Use CreateBaseExplosion and filter
  */
 function CTFPlayer::DamageEveryTankWithin(range, damage)
 {
@@ -1750,6 +1854,8 @@ function CTFPlayer::DamageEveryTankWithin(range, damage)
 /**
  * @param {float} range
  * @param {float} damage
+ * 
+ * @deprecated Use CreateBaseExplosion and filter
  */
 function CTFPlayer::DamageEveryBotWithin(range, damage)
 {
@@ -1812,11 +1918,6 @@ function CTFPlayer::IsEventJudge()
 		"[U:1:1104797071]"	// Katsu
 	])
 }
-/**
- * @returns {bool}
- */
-function CTFPlayer::IsMissionMaker()
-	return IsInArray(GetPropString(this, PROP_PLAYER_STEAMID), MissionMakers)
 
 function CTFPlayer::IsAdmin()
 {
@@ -1866,14 +1967,6 @@ function CTFPlayer::GetWeaponClassname(classname)
 		if(weapon.GetClassname() == classname) return weapon
 	return null
 }
-function CTFPlayer::ResetPrimaryAmmo()
-	SetPrimaryAmmo(GetMaximumPrimaryAmmo())
-
-function CTFPlayer::ResetSecondaryAmmo()
-	SetSecondaryAmmo(GetMaximumSecondaryAmmo())
-
-function CTFPlayer::ResetMetal()
-	SetMetal(GetMaximumMetal())
 
 function CTFPlayer::RegenerateNoHP(ammo)
 {
@@ -2080,18 +2173,6 @@ function CTFPlayer::GivePercentAmmo(index, percent)
 		SetAmmoByIndex(index, current + to_give)
 }
 
-function CTFPlayer::GivePercentPrimaryAmmo(percent)
-	GivePercentAmmo(TF_AMMO_PRIMARY, percent)
-
-function CTFPlayer::GivePercentSecondaryAmmo(percent)
-	GivePercentAmmo(TF_AMMO_SECONDARY, percent)
-
-function CTFPlayer::GivePercentMetal(percent)
-	GivePercentAmmo(TF_AMMO_METAL, percent)
-
-function CTFPlayer::GivePercentGrenadesAmmo(percent)
-	GivePercentAmmo(TF_AMMO_GRENADES1, percent)
-
 function CTFPlayer::ResetAmmo()
 {
 	ResetPrimaryAmmo()
@@ -2138,16 +2219,7 @@ function CTFPlayer::GetPlayerClassName()
 	default:						return "Unknown!"
 	}
 }
-/**
- * @param {bool} bool
- */
-function CTFPlayer::ToggleGlow(bool)
-	SetPropBool(this, "m_bGlowEnabled", bool)
-/**
- * @returns {string}
- */
-function CTFPlayer::GetLanguage()
-	return GetClientConVar("cl_language", entindex())
+
 /**
  * @param {string} string
  */
@@ -2174,18 +2246,6 @@ function CTFPlayer::GetTranslatedString(string)
 	
 	return translation_table[string]
 }
-
-/**
- * @param {string} name
- * @param {string} description
- */
-function CTFPlayer::IHTranslateToChat(name, description)
-	TranslateToChat("IH_TRANSLATE_ITEM", "%T" + name, "%T" + description)
-/**
- * @param {string} item
- */
-function CTFPlayer::IHTranslateToChat2(item)
-	TranslateToChat("IH_TRANSLATE_ITEM", "%T" + item+"_NAME", "%T" + item+"_DESC")
 
 // only half stolen from Potato's MGE vscript
 /**
@@ -2218,26 +2278,24 @@ function CTFPlayer::GetTranslatedAndFormattedString(...)
 	return str
 }
 
-function CTFPlayer::TranslateToChat(...)
-{
-	if(!this||!IsValid())
-		return
-	local msg = GetTranslatedAndFormattedString.acall([this].extend(vargv))
-	PrintToChat(msg)
-}
-
-function CTFPlayer::TranslateToHud(...)
-	PrintToHud(GetTranslatedAndFormattedString.acall([this].extend(vargv)))
 /**
  * @param {float} time
  */
 function CTFPlayer::SetAbilityTime(time)
-	{local weapon = GetAbilityWeapon() ; if(weapon) {weapon.SetAbilityTime(time)}}
+{
+	local weapon = GetAbilityWeapon()
+	if(weapon)
+		weapon.SetAbilityTime(time)
+}
 /**
  * @param {float} time
  */
 function CTFPlayer::AddAbilityTime(time)
-	{local weapon = GetAbilityWeapon() ; if(weapon) {weapon.AddAbilityTime(time)}}
+{
+	local weapon = GetAbilityWeapon()
+	if(weapon)
+		weapon.AddAbilityTime(time)
+}
 
 function CTFPlayer::TeamFortress_SetSpeed()
 {
@@ -2392,11 +2450,19 @@ function CTFPlayer::CalculateEHP()
 	// formatstring 		+= "\x03Melee: \x04%s \x01" //| \x03Ranged: \x04%s\n"
 	PrintToChatF(formatstring, BulletHP, BlastHP, FireHP, MeleeHP/* , RangedHP */)
 
-	if(AllMult <= 0)
+	local Printed = false
+
+	if(AllMult <= 0) {
 		PrintToChat("\x07FFFF00* \x01You are currently \x07FFFF00unkillable \x01due to a \x0700bbffUniversal Damage Resistance\x01 of \x04100%")
-	else if (MeleeMult <= 0 && RangedMult <= 0)
+		Printed = true
+	}
+		
+	else if (MeleeMult <= 0 && RangedMult <= 0) {
 		PrintToChat("\x07FFFF00* \x01You are currently \x07FFFF00unkillable \x01due to having \x04100%\x01 of both \x0700bbffRanged & Melee Resistance\x01")
-	if(AllMult >= 0 && AllMult != 1)
+		Printed = true
+	}
+		
+	if(AllMult >= 0 && AllMult != 1 && Printed == false)
 	{
 		local message = ""
 		if(AllMult <= 1.00) message = "\x0700bbffUniversal Damage Resistance"
@@ -2404,19 +2470,6 @@ function CTFPlayer::CalculateEHP()
 		PrintToChatF("\x07FFFF00* \x01Your current base health \x04%i\x01 is effectively \x04%s\x01 due to a %s\x01 of \x04%.2f%%.", HP, _AllHP, message, fabs(100-(AllMult*100.0)))
 	}
 }
-/**
- * @param {integer} slot
- */
-function CTFPlayer::SwitchWeaponSlot( slot )
-	Weapon_Switch(this.GetWeaponInSlot(slot))
-
-function CTFPlayer::IsMinicritDebuffed()
-	return !InCond(TF_COND_DEFENSEBUFF) && InMultiCond([TF_COND_URINE, TF_COND_MARKEDFORDEATH, TF_COND_MARKEDFORDEATH_SILENT, TF_COND_PASSTIME_PENALTY_DEBUFF])
-/**
- * @returns {bool}
- */
-function CTFPlayer::IsMinicritBuffed()
-	return InMultiCond([TF_COND_OFFENSEBUFF, TF_COND_ENERGY_BUFF, TF_COND_NOHEALINGDAMAGEBUFF, TF_COND_MINICRITBOOSTED_ON_KILL])
 
 function CTFPlayer::KillUnknownWeapons()
 {
@@ -2434,24 +2487,172 @@ function CTFPlayer::KillUnknownWeapons()
 	}
 }
 
-function CTFPlayer::HasCorrosion()
-	return "Corrosion" in GetScope(this)
-/**
- * @returns {table|null}
+class Corrosion {
+	/** @type {CTFPlayer|null} */
+	m_hOuter 		= null
+	bActive 		= false
+
+	/** @type {CTFPlayer|null} */
+	hAttacker 		= null
+	/** @type {CTFWeaponBase|null} */
+	hWeapon 		= null
+	flNextTick 		= 0.0
+	flTickDur 		= 0.0
+	flDmgPerc 		= 0.0
+	iDmgAdd 		= 0
+	bMakesPuddle 	= false
+
+	/** 
+	 * @param {CTFPlayer} outer
+	 */
+	constructor(outer)
+	{
+		if(!IsValidPlayer(m_hOuter))
+			m_hOuter = outer
+	}	
+
+	function CreateCorrosion(attacker, weapon, exdata = false)
+	{
+		this.hAttacker 		= attacker
+		this.hWeapon 		= weapon
+
+		InitVars()
+
+		if(weapon)
+		{
+			this.flNextTick 	= Time() + weapon.GetAttribute("corrosion tick duration", 1.0)
+			this.flTickDur 		= weapon.GetAttribute("corrosion tick duration", 1.0)
+			this.flDmgPerc 		= weapon.GetAttribute("corrosion damage percent", 0.25) / 100.0
+			this.iDmgAdd 		= weapon.GetAttribute("corrosion damage add", 250)
+			this.bMakesPuddle 	= weapon.GetAttribute("corrosion drop puddle", 0) != 0
+
+			if(IsWeaponClass(weapon, "tf_weap") && IsValidPlayer(weapon.GetOwner()))
+				this.hAttacker = weapon.GetOwner()
+
+			Enable()
+		}
+		else if(exdata)
+		{
+			this.flNextTick		= Time() + ("tick duration" in exdata ? exdata["tick duration"] : 1.0)
+			this.flTickDur		= ("tick duration" in exdata ? exdata["tick duration"] : 1.0)
+			this.flDmgPerc		= ("damage percent" in exdata ? exdata["damage percent"] : 0.25) / 100
+			this.iDmgAdd		= ("damage add" in exdata ? exdata["damage add"] : 0.25)
+			this.bMakesPuddle	= ("drop puddle" in exdata ? true : false)
+
+			Enable()
+		}
+
+		// both a valid attacker && weapon
+		// if(IsValidPlayer(attacker) && IsWeaponClass(weapon, "tf_weap"))
+			// Enable()
+	}
+
+	function Enable()
+		bActive = true
+
+	function Disable()
+		bActive = false
+
+	function InitVars()
+	{
+		flNextTick 		= 0.0
+		flTickDur 		= 0.0
+		flDmgPerc 		= 0.0
+		iDmgAdd 		= 0
+		bMakesPuddle 	= false
+	}
+
+	function InitAllVars()
+	{
+		/** @type {CTFPlayer|null} */
+		hAttacker 		= null
+		/** @type {CTFWeaponBase|null} */
+		hWeapon 		= null
+		flNextTick 		= 0.0
+		flTickDur 		= 0.0
+		flDmgPerc 		= 0.0
+		iDmgAdd 		= 0
+		bMakesPuddle 	= false
+	}
+
+	/** 
+	 * Is this Corrosion Active
+	 * @returns {bool}
+	 */
+	function HasCorrosion()
+		return bActive
+
+	/** 
+	 * Should we remove our corrosion
+	 * @returns {bool}
+	 */
+	function ShouldRemoveCorrosion()
+		return m_hOuter.ShouldRemoveCorrosion()
+	
+	/** 
+	 * Disable and Clear our vars
+	 */
+	function RemoveCorrosion()
+	{
+		bActive = false
+		InitVars() // forget about old if we remove
+	}
+
+	/** 
+	 * Process a Damage Tick
+	 */
+	function Tick()
+	{
+		if(!HasCorrosion())
+			return
+		if(ShouldRemoveCorrosion())
+			return RemoveCorrosion()
+		
+		flNextTick = Time() + flTickDur
+		
+		local damage = (iDmgAdd + (m_hOuter.GetMaxHealth() * flDmgPerc)) * m_hOuter.HookMultAttributes("corrosion dmg taken mult")
+
+		// so if we suspect the defaults of 250 add and 0.25 percent, than
+		// if we have 20000 hp, we are doing ( 250 + (20000 * (0.25/100)))
+		// or ( dmg_add + ( max_hp * ( percent/100 ) ) )
+		// but no / 100 since that was handled in MakeCorrosion
+		// so the final amount would be (250 + 50) or 300
+
+		if(__CORROSION_DEBUG) printf("%s took Corrosion Damage! Attacker : %s, Weapon : %s, Damage : %f\n", 
+			tostring(), hAttacker.tostring(), hWeapon.tostring(), damage)
+		m_hOuter.TakeDamageCustom(CORROSION_ICON, hAttacker, hWeapon, Vector(), Vector(), damage, DMG_GENERIC|DMG_PREVENT_PHYSICS_FORCE, 0)
+	}
+}
+
+/** 
+ * @returns {Corrosion}
  */
 function CTFPlayer::GetCorrosion()
-	return HasCorrosion() ? GetScope(this).Corrosion : null
+{
+	if(!("Corrosion" in GetScope(this)))
+		GetScope(this).Corrosion <- Corrosion(this)
+
+	return GetScope(this).Corrosion
+}
+
+/** 
+ * @returns {bool}
+ */
+function CTFPlayer::HasCorrosion()
+	return GetCorrosion().HasCorrosion()
+
 /**
  * @returns {bool}
  */
-function CTFPlayer::CanRemoveCorrosion()
+function CTFPlayer::ShouldRemoveCorrosion()
 	return IsInvincible() || InRespawnRoom() || IsDead()
 
+/**
+ * Remove our Corrosion 
+ */
 function CTFPlayer::RemoveCorrosion()
-{
-	if(HasCorrosion())
-		delete GetScope(this).Corrosion
-}
+	GetCorrosion().RemoveCorrosion()
+
 if(!("__CORROSION_DEBUG" in ROOT))
 	::__CORROSION_DEBUG <- false
 /**
@@ -2466,11 +2667,8 @@ function CTFPlayer::MakeCorrosion(attacker, weapon)
 		return;
 	}
 
-	if(!weapon || !weapon.IsValid())
+	if(HasCorrosion())
 		return
-
-	if(weapon.getclass() != CTFWeaponBase)
-		return;
 
 	if(__CORROSION_DEBUG) PrintToChatAll(format("Made Corrosion on %s", tostring()))
 
@@ -2479,59 +2677,19 @@ function CTFPlayer::MakeCorrosion(attacker, weapon)
 	// if DmgPerc == 1.0 then it does 100% dmg
 	// the default value is normally 0.25%
 
-	GetScope(this).Corrosion <- {
-		hAttacker 		= attacker
-		hWeapon 		= weapon
-		flNextTick 		= Time() + weapon.GetAdditiveAttribute("corrosion tick duration", 1.0)
-		flTickDur 		= weapon.GetAdditiveAttribute("corrosion tick duration", 1.0)
-		flDmgPerc 		= weapon.GetAdditiveAttribute("corrosion damage percent", 0.25) / 100.0
-		iDmgAdd 		= weapon.GetAdditiveAttribute("corrosion damage add", 250)
-		bMakesPuddle 	= weapon.GetAdditiveAttribute("corrosion drop puddle") != 0
-	}
-}
+	/** @type {Corrosion} */
+	local corrosion = GetCorrosion()
 
-function CTFPlayer::CorrosionTick()
-{
-	if(HasCorrosion() && CanRemoveCorrosion())
-	{
-		RemoveCorrosion()
-		return
-	}
-	else if(!HasCorrosion())
-		return
-	
-	/* 
-	Corrosion.hAttacker
-	Corrosion.hWeapon
-	Corrosion.flNextTick
-	Corrosion.flTickDur
-	Corrosion.flDmgPerc
-	Corrosion.iDmgAdd
-	 */
+	corrosion.Enable()
+	corrosion.CreateCorrosion(attacker, weapon)
 
-	local Corrosion = GetCorrosion()
-	Corrosion.flNextTick <- Time() + Corrosion.flTickDur
-	
-	local damage = Corrosion.iDmgAdd + (GetMaxHealth() * Corrosion.flDmgPerc)
-
-	damage *= HookMultAttributes("corrosion dmg taken mult")
-
-	// so if we suspect the defaults of 250 add and 0.25 percent, than
-	// if we have 20000 hp, we are doing ( 250 + (20000 * (0.25/100)))
-	// or ( dmg_add + ( max_hp * ( percent/100 ) ) )
-	// but no / 100 since that was handled in MakeCorrosion
-	// so the final amount would be (250 + 50) or 300
-
-	if(__CORROSION_DEBUG) printf("%s took Corrosion Damage! Attacker : %s, Weapon : %s, Damage : %f\n", 
-		tostring(), Corrosion.hAttacker.tostring(), Corrosion.hWeapon.tostring(), damage)
-	TakeDamageEx(CORROSION_ICON, Corrosion.hAttacker, Corrosion.hWeapon, Vector(), Vector(), damage, DMG_GENERIC|DMG_PREVENT_PHYSICS_FORCE)
 }
 
 function CTFPlayer::CanHaveCorrosion()
 {
 	if(HasCorrosion())
 		return false
-	if(CanRemoveCorrosion())
+	if(ShouldRemoveCorrosion())
 		return false
 	if(IsBot() && HasBotTag("NoCorrode"))
 		return false
@@ -2623,12 +2781,8 @@ function CTFPlayer::MakeCorrosionPuddle()
 			return 500
 		}
 		foreach(bot in GetAllPlayers(TF_TEAM_PVE_INVADERS, [self.GetOrigin(), 75], true))
-		{
-			if(bot.HasCorrosion())
-				continue
 			bot.MakeCorrosion(Attacker, Weapon)
-		}
-		// DebugDrawCircle(self.GetOrigin(), Vector(0, 0, 255), 5, 75, false, 0.15)
+		DebugDrawCircle(self.GetOrigin(), Vector(0, 0, 255), 5, 75, false, 0.15)
 		return 0.1
 	}
 
@@ -2663,9 +2817,6 @@ function CTFPlayer::RollSpell()
 	spellbook.SetSpellIndex(TF_SPELL_UNKNOWN)
 	RunWithDelay(@() spellbook.SetRandomSpell(), 2.1)
 }
-
-function CTFPlayer::GetChatColor()
-	return GetTeam() == TF_TEAM_RED ? TF_TEAM_COLOR_RED : TF_TEAM_COLOR_BLUE
 
 /*	PrintTime = {
 		owner = player
@@ -2814,13 +2965,9 @@ function CTFPlayer::RemoveWearables()
 
 function CTFPlayer::TransformGHeavy()
 {
+	if(!this||!IsValid())
+		return
 	GetScope(this).HeavyTransform <- true
-	PrecacheObject("models/bots/heavy_boss/bot_heavy_boss.mdl")
-	SetForcedTauntCam(1)
-	SetCustomModelWithClassAnimations("models/bots/heavy_boss/bot_heavy_boss.mdl")
-
-	RemoveWearables()
-	// Kill all the Children
 }
 
 function CTFPlayer::UndoGHeavy()
@@ -2828,8 +2975,6 @@ function CTFPlayer::UndoGHeavy()
 	if(!this||!IsValid())
 		return
 	GetScope(this).HeavyTransform <- false
-	SetForcedTauntCam(0)
-	SetCustomModelWithClassAnimations("")
 }
 
 function CTFPlayer::IsGHeavy()
@@ -2971,9 +3116,6 @@ function CTFPlayer::EquipItemBAD(ItemName)
 	return NewWeapons[0]
 }
 
-function CTFPlayer::IsMedicButtonDown()
-	return GetPropFloat(this, "m_flHelpmeButtonPressTime") != 0
-
 function CTFPlayer::GetActiveHealers()
 {
 	local healers = []
@@ -2988,17 +3130,6 @@ function CTFPlayer::GetActiveHealers()
 	}
 	return healers
 }
-//TODO: move to single line
-/**
- * @param {integer} amount
- */
-function CTFPlayer::AddHealth(amount)
-	SetHealth(GetHealth()+amount)
-/**
- * @param {integer} amount
- */
-function CTFPlayer::RemoveHealth(amount)
-	SetHealth(GetHealth()-amount)
 /**
  * @param {float} start
  * @returns {float}
@@ -3621,14 +3752,31 @@ function CTFPlayer::SetInternalVar(var_name, value)
 
 function CTFPlayer::UseGiantModel(buster = false)
 {
+	StripItemSlot(STRIPSLOT_COSMETICS)
 	if(buster)
 		PlayerFire("SetCustomModelWithClassAnimations", "models/bots/demo/bot_sentry_buster.mdl", TICK_DUR * 10)
 	else
-		PlayerFire("SetCustomModelWithClassAnimations", format("models/bots/%s_boss/bot_%s_boss.mdl", GetPlayerClassName().tolower(), GetPlayerClassName().tolower()), TICK_DUR * 10)
+	{
+		local pClass = GetPlayerClass()
+		if(pClass == TF_CLASS_SNIPER || pClass == TF_CLASS_ENGINEER || pClass == TF_CLASS_MEDIC || pClass == TF_CLASS_SPY)
+			return UseRobotModel()
+
+		local name = GetPlayerClassName().tolower()
+		if(pClass == TF_CLASS_DEMOMAN)
+			name = "demo"
+
+		local model_name = format("models/bots/%s_boss/bot_%s_boss.mdl", name, name)
+		// printf("Trying to apply Model \"%s\" to player\n", model_name)
+
+		PlayerFire("SetCustomModelWithClassAnimations", model_name, TICK_DUR * 10)
+	}
 }
 
 function CTFPlayer::UseRobotModel()
+{
+	StripItemSlot(STRIPSLOT_COSMETICS)
 	PlayerFire("SetCustomModelWithClassAnimations", format("models/bots/%s/bot_%s.mdl", GetPlayerClassName().tolower(), GetPlayerClassName().tolower()), TICK_DUR * 10)
+}
 
 
 /* function CTFPlayer::CreateWearable( idx, model )
@@ -7408,6 +7556,21 @@ function ROOT::IsBaseRocket(ent)
 		return false
 	return true
 }
+
+// fix tf2c
+if(!("Assert" in ROOT))
+{
+	function ROOT::Assert(bool, msg = null)
+	{
+		if(bool)
+			return
+
+		if(msg)
+			throw "[Assertion Failed]: "+msg
+		else
+			throw "[Assertion Failed]"
+	}
+}
 /*
   =============================
   === END OF MISC FUNCTIONS ===
@@ -9182,8 +9345,6 @@ function SwapWeaponThink()
 			}
 		}
 
-		// PrintTable(params)
-
 		if(victim.IsPlayer() && attacker && attacker.IsPlayer())
 		{
 			if(victim.CanHaveCorrosion() && IsWeaponClass(weapon, "tf_weapon", true))
@@ -9403,12 +9564,15 @@ function SwapWeaponThink()
 
 		player.StripItemSlot(player.HookAdditiveAttributes("strip item slot"))
 
-		if(player.HookAdditiveAttributes("use sentrybuster model") != 0)
+		if(player.HookAdditiveAttributes("use sentrybuster model") > 0)
 			player.UseGiantModel(true)
-		else if(player.HookAdditiveAttributes("use giant model") != 0)
+		else if(player.HookAdditiveAttributes("use giant robot model") > 0)
 			player.UseGiantModel()
-		else if(player.HookAdditiveAttributes("use robot model") != 0)
+		else if(player.HookAdditiveAttributes("use robot model") > 0)
 			player.UseRobotModel()
+
+		if(player.HookAdditiveAttributes("use third person") > 0)
+			player.SetForcedTauntCam(player.HookAdditiveAttributes("prevent third person") > 0 ? 0 : 1)
 
 		local slot = -1
 		foreach (wep in player.GetAllWeapons())
@@ -9718,11 +9882,11 @@ function SwapWeaponThink()
 		delete eventdata.object
 		delete eventdata.index
 
-		local scope = GetScope(player)
-		if(!("BuildingsArray" in scope))
-			scope.BuildingsArray <- [ {}, {}, {}, {} ]
-		scope.BuildingsArray[params.object][object.entindex()] <- object
-		printf("Added %s to players object array\n", object.tostring())
+		// local scope = GetScope(player)
+		// if(!("BuildingsArray" in scope))
+			// scope.BuildingsArray <- [ {}, {}, {}, {} ]
+		// scope.BuildingsArray[params.object][object.entindex()] <- object
+		// printf("Added %s to players object array\n", object.tostring())
 
 		/* GetScope(object).DestroyCallbacks <- [] 
 		local function AddDestroyCallback(func) { DestroyCallbacks.append(func) }
@@ -9795,7 +9959,7 @@ function SwapWeaponThink()
 			building = params.was_building
 		})
 
-		if(owner && owner.IsPlayer())
+		/* if(owner && owner.IsPlayer())
 		{
 			local scope = GetScope(owner)
 			if(!("BuildingsArray" in scope))
@@ -9809,7 +9973,7 @@ function SwapWeaponThink()
 			{
 				delete buildings[params.objecttype][object.entindex()]
 			}
-		}
+		} */
 
 		// FireScriptEvent(event_name + "")
 	}
