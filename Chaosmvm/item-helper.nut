@@ -8,7 +8,7 @@ const item_help_color_header = "\x0826c2ffDD"
 const text_color_header = "\x0826beffBB"
 const error_color = "\x07D43F3F"
 
-SetScriptVersion("item_helper", "3.4.1")
+SetScriptVersion("item_helper", "3.4.2")
 ::helper <- {}
 
 ::ItemTranslateTable <- {
@@ -343,23 +343,28 @@ AddChatTrigger("itemhelp", function(player, ...) {
 
 		if(scope.SpawnHelper == 2 || (scope.SpawnHelper == 1 && GetRoundState() != GR_STATE_RND_RUNNING))
 		{
-			player.TranslateToChat("IH_INCLUDES")
-
-			local weapons = player.GetAllWeapons()
-			foreach (weapon in weapons)
-			{
-				foreach (item, indexs in ItemTranslateTable)
-				{
-					Assert(typeof indexs == "array", format("%s has a idx not in an array", item))
-					if(IsInArray(weapon.GetIDX(), indexs))
-						player.IHTranslateToChat2(item)
-				}
-			}
-			if(scope.SpawnHelper == 2)
-				player.TranslateToChat("IH_DIS_MSG_2")
-			else
-				player.TranslateToChat("IH_DIS_MSG")
+			RunWithDelay(@() DisplayItemHelps(player, scope), TICK_DUR * 5)
 		}
 	}
 }
 __CollectGameEventCallbacks(helper)
+
+function DisplayItemHelps(player, scope)
+{
+	player.TranslateToChat("IH_INCLUDES")
+
+	local weapons = player.GetAllWeapons()
+	foreach (weapon in weapons)
+	{
+		foreach (item, indexs in ItemTranslateTable)
+		{
+			Assert(typeof indexs == "array", format("%s has a idx not in an array", item))
+			if(IsInArray(weapon.GetIDX(), indexs))
+				player.IHTranslateToChat2(item)
+		}
+	}
+	if(scope.SpawnHelper == 2)
+		player.TranslateToChat("IH_DIS_MSG_2")
+	else
+		player.TranslateToChat("IH_DIS_MSG")
+}

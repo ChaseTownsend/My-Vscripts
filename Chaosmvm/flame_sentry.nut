@@ -15,7 +15,7 @@ IncludeScript("fatcat_library")
 
 local isDebug = false
 
-SetScriptVersion("flame_sentry", "2.1.1")
+SetScriptVersion("flame_sentry", "2.1.2")
 
 local DMG_SENTRY_BURN = DMG_PLASMA|DMG_PREVENT_PHYSICS_FORCE
 

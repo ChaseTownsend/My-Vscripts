@@ -1,7 +1,7 @@
 if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
-SetScriptVersion("GameplayApplications", "5.0.6")
+SetScriptVersion("GameplayApplications", "5.0.7")
 
 local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", THINKER_PERSIST)
 
@@ -20,10 +20,10 @@ local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", 
 	]
 }
 ::KART_DMG <- 40000
-::AddCondIDS <- [
-	[ TF_WEAPON_CANDY_CANE, 		TF_COND_SWIMMING_NO_EFFECTS	],
-	[ TF_WEAPON_TRIBALMANS_SHIV, 	TF_COND_SWIMMING_NO_EFFECTS	],
-]
+// ::AddCondIDS <- [
+// 	[ TF_WEAPON_CANDY_CANE, 		TF_COND_SWIMMING_NO_EFFECTS	],
+// 	[ TF_WEAPON_TRIBALMANS_SHIV, 	TF_COND_SWIMMING_NO_EFFECTS	],
+// ]
 ::SpellWeapons <- [
 	TF_WEAPON_LOLLICHOP, 
 	TF_WEAPON_SHORT_CIRCUT, 
@@ -79,12 +79,43 @@ AddChatTrigger("ehp", function(player, ...) {
 AddChatTrigger(["shape", "class", "change", "changeclass", "switch", "shapeshift"], function(player, ...) {
 	if(!player)
 		return
-	if(vargv.len() != 1)
+	if(vargv.len() == 0)
 		return player.PrintToChat("\x07FF0000[►] No class specified. Try again.")
+	else if (vargv.len() > 1)
+		return player.PrintToChat("\x07FF0000[►] Invalid arguments given. Try again.")
 
 	local name = vargv[0].tolower()
+	local given_id = TF_CLASS_UNDEFINED
+	try {given_id = name.tointeger()}
+	catch(e) {}
+
+
 	local class_index = TF_CLASS_UNDEFINED
-	if(		startswith(name, "sc"))
+	if(given_id != TF_CLASS_UNDEFINED)
+	{
+		switch (given_id)
+		{
+		case 1: class_index = TF_CLASS_SCOUT
+		break
+		case 2: class_index = TF_CLASS_SOLDIER
+		break
+		case 3: class_index = TF_CLASS_PYRO
+		break
+		case 4: class_index = TF_CLASS_DEMOMAN
+		break
+		case 5: class_index = TF_CLASS_HEAVYWEAPONS
+		break
+		case 6: class_index = TF_CLASS_ENGINEER
+		break
+		case 7: class_index = TF_CLASS_MEDIC
+		break
+		case 8: class_index = TF_CLASS_SNIPER
+		break
+		case 9: class_index = TF_CLASS_SPY
+		break
+		} //
+	}
+	else if(		startswith(name, "sc"))
 		class_index = TF_CLASS_SCOUT
 	else if(startswith(name, "so"))
 		class_index = TF_CLASS_SOLDIER
@@ -103,9 +134,15 @@ AddChatTrigger(["shape", "class", "change", "changeclass", "switch", "shapeshift
 	else if(startswith(name, "sp"))
 		class_index = TF_CLASS_SPY
 	else if(startswith(name, "civ"))
-		return player.PrintToChat("\x07FF0000[►] This aint TF2Classified, And it Wont be Supported.")
+		return player.PrintToChat("\x07FF0000[►] This is not TF2Classified.") // [►] Did you forget what game you're playing...?
 	else
 		return player.PrintToChat("\x07FF0000[►] Failed to determine desired class. Try again.")
+
+	if(class_index == TF_CLASS_UNDEFINED)
+		return player.PrintToChat("\x07FF0000[►] Failed to determine desired class. Try again.")
+
+	if(player.IsDead()/*  && player.GetWeaponIDXInSlotNew(SLOT_MELEE) ==  */)
+		return player.PrintToChat("\x07FF4040[►] Can only change class while alive.")
 
 	if(player.InRespawnRoom())
 		player.ForceChangeClass(class_index, true)
@@ -113,6 +150,7 @@ AddChatTrigger(["shape", "class", "change", "changeclass", "switch", "shapeshift
 	{
 		player.ForceChangeClass(class_index)
 		player.Suicide()
+		player.PrintToChatF("*You will respawn as %s", player.GetPlayerClassName())
 	}
 } )
 
@@ -330,17 +368,19 @@ function GameplayThink()
 				ReprogrammedBots.append(bot)
 		}
 
-		local Corrosion = bot.GetCorrosion()
-
-		if(bot.HasCorrosion() && bot.CanRemoveCorrosion())
+		if(bot.HasCorrosion())
 		{
-			bot.RemoveCorrosion()
-			continue
-		}
-		if(Time() >= Corrosion.flNextTick)
-		{
-			Corrosion.Tick()
-			continue
+			if(bot.ShouldRemoveCorrosion())
+			{
+				bot.RemoveCorrosion()
+				continue
+			}
+			local Corrosion = bot.GetCorrosion()
+			if(Corrosion.ShouldUpdate())
+			{
+				Corrosion.Tick()
+				continue
+			}
 		}
 	}
 
@@ -388,7 +428,7 @@ function GameplayThink()
 		local primaryIDX 	= Human.GetWeaponIDXInSlotNew(SLOT_PRIMARY)
 		local active 		= Human.GetActiveWeapon()
 		local activeIDX 	= Human.GetActiveWeaponIDX()
-		local meleeIDX 		= Human.GetWeaponIDXInSlotNew(SLOT_MELEE)
+		// local meleeIDX 		= Human.GetWeaponIDXInSlotNew(SLOT_MELEE)
 		
 		Human.MultiplyGravity(Human.HookMultAttributes("mult gravity"))
 
@@ -402,11 +442,11 @@ function GameplayThink()
 				Human.MultiplyGravity(active.GetMultAttribute("mult gravity crouching active"))
 		}
 			
-		foreach (item in AddCondIDS)
-		{
-			if(meleeIDX == item[0])
-				Human.SetCond(item[1], -1)
-		}
+		// foreach (item in AddCondIDS)
+		// {
+		// 	if(meleeIDX == item[0])
+		// 		Human.SetCond(item[1], -1)
+		// }
 
 		if(activeIDX == TF_WEAPON_TOMISLAV)
 			Human.TranslateToHud("TOMISLAV_HEAT", ("Hits" in GetScope(active) ? GetScope(active).Hits/10 : -1))
@@ -415,11 +455,11 @@ function GameplayThink()
 		{
 			local WeaponScope = GetScope(primary)
 
-			if(IsNotInScope("Hits", WeaponScope))
+			if(!("Hits" in WeaponScope))
 				WeaponScope.Hits <- 0
-			if(IsNotInScope("m_flLastHeatHit", WeaponScope))
+			if(!("m_flLastHeatHit" in WeaponScope))
 				WeaponScope.m_flLastHeatHit <- Time()
-			if(IsNotInScope("m_flLastHeatLoseTime", WeaponScope))
+			if(!("m_flLastHeatLoseTime" in WeaponScope))
 				WeaponScope.m_flLastHeatLoseTime <- Time()
 
 			local HeatLoss = GetRoundState() != GR_STATE_RND_RUNNING ? TOMISLAV_SETTINGS.HeatLostPerSecond * 0.1 : TOMISLAV_SETTINGS.HeatLostPerSecond
@@ -428,7 +468,7 @@ function GameplayThink()
 				WeaponScope.m_flLastHeatHit + TOMISLAV_SETTINGS.TimeBeforeHeatLost.tofloat() <= Time() &&
 				WeaponScope.m_flLastHeatLoseTime + (1.0/HeatLoss.tofloat()) <= Time())
 			{
-				WeaponScope.m_flLastHeatLoseTime <- Time()
+				WeaponScope.m_flLastHeatLoseTime = Time()
 				WeaponScope.Hits -= 1
 				foreach (attribs in TOMISLAV_SETTINGS.Attributes)
 					primary.CalculateAttributeChange(WeaponScope.Hits, attribs[0], attribs[1], attribs[2], attribs[3], attribs[4])
@@ -461,21 +501,6 @@ function GameplayThink()
 		foreach (bot in ReprogrammedBots)
 			bot.UndoReprogram()
 	}
-
-	if(!("NextCommentaryTime" in GetScope(self)))
-		GetScope(self).NextCommentaryTime <- Time()
-
-	if(NextCommentaryTime <= Time())
-	{
-		local nodes = GetAllEntitiesByClassname("point_commentary_node")
-
-		foreach (node in nodes)
-			node.Kill()
-
-		NextCommentaryTime <- Time() + 0.25
-	}
-
-
 	return -1
 }
 /**
@@ -554,11 +579,13 @@ function ROOT::ProcessChaosWeaponHit(params, victim, attacker, weapon, _inflicto
 			addHits = 2
 
 		local scope = GetScope(weapon)
-		if ( IsNotInScope("Hits", scope) )
+		if(!("Hits" in scope))
 			scope.Hits <- 0
+		if(!("m_flLastHeatHit" in scope))
+			scope.m_flLastHeatHit <- 0.0
 
 		scope.Hits += addHits
-		scope.m_flLastHeatHit <- Time()
+		scope.m_flLastHeatHit = Time()
 		foreach (attribs in TOMISLAV_SETTINGS.Attributes)
 			weapon.CalculateAttributeChange(scope.Hits, attribs[0], attribs[1], attribs[2], attribs[3], attribs[4])
 			
@@ -761,8 +788,14 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 		{
 			if(weapon.IsWearable())
 				continue
+			local wep_scope = GetScope(weapon)
 			if(weapon == spellbook)
-				GetScope(weapon).m_iKills <- 0
+			{
+				if(!("m_iKills" in wep_scope))
+					wep_scope.m_iKills <- 0
+				else
+					wep_scope.m_iKills = 0
+			}
 			
 			if(weapon.GetIDX() == TF_WEAPON_TOMISLAV)
 			{
@@ -778,7 +811,12 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 				weapon.RemoveAttribute("turn to gold")
 				weapon.ReapplyProvision()
 
-				GetScope(weapon).Hits <- 0
+				local wep_scope = GetScope(weapon)
+				if(!("Hits" in wep_scope))
+					wep_scope.Hits <- 0
+				else
+					wep_scope.Hits = 0
+
 				player.ResetHealth()
 			}
 
@@ -832,10 +870,7 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 					foreach (robot in m_aRobots)
 					{
 						if("ReProgrammer" in GetScope(robot) && GetScope(robot).ReProgrammer == self)
-						{
-							// robot.RemoveCondEx(TF_COND_REPROGRAMMED, true)
 							robot.UndoReprogram()
-						}
 					}
 					return -1
 				}, "BlutsaugerDisrupt", 0.15)
@@ -852,7 +887,6 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 
 					if(self.InRespawnRoom())
 					{
-						self.RemoveAllCond()
 						self.ForceRegenerateAndRespawn()
 						self.PrintToHud("ERROR - Cannot enter enemy spawn zones.")
 						self.EmitSoundTo("vo/halloween_merasmus/sf14_merasmus_necrosmasher_08.mp3")
@@ -871,10 +905,17 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 		player.RemoveCorrosion()
 
 		local scope = GetScope(player)
-		scope.ReProgrammer <- null
-		scope.DelayGameplayThink <- GetFrameCount()+1
 
+		if(!("ReProgrammer" in scope))
+			scope.ReProgrammer <- null
+		else
+			scope.ReProgrammer = null
+		if(!("DelayGameplayThink" in scope))
+			scope.DelayGameplayThink <- GetFrameCount()+1
+		else
+			scope.DelayGameplayThink = GetFrameCount()+1
 
+		
 		if (FatCatLibSettings.KillWatchViewmodels)
 		{
 			local viewmodel_watch = GetPropEntityArray(player, "m_hViewModel", 1)
@@ -892,10 +933,14 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 		local player = params.player
 		local scope = GetScope(player)
 
-		if("ReProgrammer" in scope && scope.ReProgrammer != null && !scope.ReProgrammer.IsBot() && scope.ReProgrammer.IsValid())
+		if(!("ReProgrammer" in scope))
+			scope.ReProgrammer <- null
+
+		if(IsValidPlayer(scope.ReProgrammer) && !scope.ReProgrammer.IsBot())
+		{
 			scope.ReProgrammer.TranslateToChat("REPROG_BOT_LEAVE", player.GetUserName())
-			
-		scope.ReProgrammer <- null
+			scope.ReProgrammer = null
+		}
 	}
 	function OnGameEvent_mvm_begin_wave(_)
 	{

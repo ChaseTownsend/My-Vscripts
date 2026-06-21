@@ -25,6 +25,18 @@
 	}
 } */
 
+function ROOT::PrintGarbage()
+{
+	local garbage = resurrectunreachable()
+	if(!garbage)
+		return printl("Garbage Returned Nothing!")
+	printf("Found %d garbage. Printing Garbage!\n", garbage.len())
+	foreach (object in garbage)
+	{
+		printl(object)
+	}
+}
+
 
 if("GetModName" in ROOT)
 {
@@ -205,7 +217,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format)
-if (!SetLibraryVersion("06.19.2026.00", 0))
+if (!SetLibraryVersion("06.20.2026.23", 0))
 	return
 
 SetLibrarySettings({})
@@ -1786,6 +1798,7 @@ function CTFPlayer::GetSpellBook()
 	return null
 }
 
+//TODO: update using OnStartTouch && OnEndTouch outputs of respawn rooms
 function CTFPlayer::InRespawnRoom(any = false)
 {
 	foreach (respawnroom in GetAllEntitiesByClassname("func_respawnroom"))
@@ -2195,6 +2208,9 @@ function CTFPlayer::InMultiCond(conds)
  */
 function CTFPlayer::ForceChangeClass(index, respawn = false)
 {
+	local old_class = GetPlayerClass()
+	if(old_class != TF_CLASS_ENGINEER && index == TF_CLASS_ENGINEER)
+		RemoveAllObjects(false)
 	SetPlayerClass(index)
 	SetPropInt(this, "m_Shared.m_iDesiredPlayerClass", index)
 	if(respawn)
@@ -2598,6 +2614,11 @@ class Corrosion {
 		InitVars() // forget about old if we remove
 	}
 
+	function ShouldUpdate()
+	{
+		return Time() >= flNextTick
+	}
+
 	/** 
 	 * Process a Damage Tick
 	 */
@@ -2645,7 +2666,7 @@ function CTFPlayer::HasCorrosion()
  * @returns {bool}
  */
 function CTFPlayer::ShouldRemoveCorrosion()
-	return IsInvincible() || InRespawnRoom() || IsDead()
+	return IsInvincible() /* || InRespawnRoom() */ || IsDead()
 
 /**
  * Remove our Corrosion 
@@ -2682,7 +2703,6 @@ function CTFPlayer::MakeCorrosion(attacker, weapon)
 
 	corrosion.Enable()
 	corrosion.CreateCorrosion(attacker, weapon)
-
 }
 
 function CTFPlayer::CanHaveCorrosion()
@@ -2691,7 +2711,9 @@ function CTFPlayer::CanHaveCorrosion()
 		return false
 	if(ShouldRemoveCorrosion())
 		return false
-	if(IsBot() && HasBotTag("NoCorrode"))
+	if(!IsBot()) // maybe work for non bots?
+		return false
+	if(HasBotTag("NoCorrode"))
 		return false
 	return true
 }
@@ -2737,7 +2759,7 @@ function CTFPlayer::MakeCorrosionPuddle()
 		{
 			local bomb = GasBombs[lowest_bomb_idx]
 			if(bomb)
-				GetScope(bomb).GasDestroy()
+				GetScope(bomb).DestroyGasBomb()
 			GasBombs.remove(lowest_bomb_idx)
 		}
 	}
@@ -2839,6 +2861,9 @@ function CTFPlayer::RollSpell()
 function CTFPlayer::SetUpThinkTable()
 {
 	local scope = GetScope(this)
+	if("ThinkTable" in scope)
+		scope.ThinkTable.clear()
+		
 	scope.ThinkTable <- {}
 	local function PlayerThinkTableThink() {
 		foreach (_, func_table in ThinkTable)
@@ -2856,7 +2881,7 @@ function CTFPlayer::SetUpThinkTable()
 	scope.PlayerThinkTableThink <- PlayerThinkTableThink
 
 	AddThinkToEnt(this, "PlayerThinkTableThink")
-	if(IsNotInScope("PreservedThinks", GetScope(this)))
+	if(!("PreservedThinks" in scope))
 		GetScope(this).PreservedThinks <- {}
 }
 /**
@@ -3494,6 +3519,9 @@ function CTFPlayer::StripItemSlot(slot)
 	}
 	if(bit(slot, STRIPSLOT_COSMETICS))
 		RemoveWearables()
+
+	// update speed from removed items
+	RunWithDelay(@() TeamFortress_SetSpeed(), TICK_DUR * 10)
 }
 
 function CTFPlayer::CanStomp()
@@ -3754,7 +3782,12 @@ function CTFPlayer::UseGiantModel(buster = false)
 {
 	StripItemSlot(STRIPSLOT_COSMETICS)
 	if(buster)
-		PlayerFire("SetCustomModelWithClassAnimations", "models/bots/demo/bot_sentry_buster.mdl", TICK_DUR * 10)
+	{
+		if(GetTeam() == TF_TEAM_RED)
+			PlayerFire("SetCustomModelWithClassAnimations", "models/bots/demo/red_sentry_buster_v2.mdl", TICK_DUR * 10)
+		else
+			PlayerFire("SetCustomModelWithClassAnimations", "models/bots/demo/bot_sentry_buster.mdl", TICK_DUR * 10)
+	}
 	else
 	{
 		local pClass = GetPlayerClass()
@@ -3777,6 +3810,48 @@ function CTFPlayer::UseRobotModel()
 	StripItemSlot(STRIPSLOT_COSMETICS)
 	PlayerFire("SetCustomModelWithClassAnimations", format("models/bots/%s/bot_%s.mdl", GetPlayerClassName().tolower(), GetPlayerClassName().tolower()), TICK_DUR * 10)
 }
+
+function CTFPlayer::ShouldDetonate()
+{
+	if(!this || !IsValid())
+		return
+	if(swap2(GetPropInt(this, "m_Shared.m_unTauntSourceItemID_Low")) != 65535)
+		return
+	RunWithDelay(@() SentryBusterExplode(), 2.0)
+}
+
+function CTFPlayer::SentryBusterExplode()
+{
+	if(!this || !IsValid())
+		return
+	CreateSentryBusterExplosion({
+		owner = this
+		center = GetCenter()
+	})
+
+	Suicide()
+}
+
+function CTFPlayer::MakeBleed(attacker, weapon, duration = -1.0, damage = 4, permanent = false, dmg_type = 34)
+{
+	if(!("MakeBleedInternal" in CTFPlayer))
+		throw "Cant use CTFPlayer::MakeBleed without CTFPlayer::MakeBleedInternal"
+	if(duration == -1.0 && permanent == false)
+		permanent = true
+	MakeBleedInternal(attacker, weapon, duration, damage, permanent, dmg_type)
+}
+
+// function CTFPlayer::GetTauntIndex()
+// {
+// 	local low_index = GetPropInt(this, "m_Shared.m_unTauntSourceItemID_Low")
+// 	local high_index = GetPropInt(this, "m_Shared.m_unTauntSourceItemID_High")
+// 	local swaped = swap2(index) // somehow turns into 0 -> 65535
+// 	//somehow 28324 == 31413
+// 	//53307 == 31348
+// 	// if(swapped )
+// }
+
+// printl((GetPropInt(Host, "m_Shared.m_unTauntSourceItemID_High") << 32) | GetPropInt(Host, "m_Shared.m_unTauntSourceItemID_Low"))
 
 
 /* function CTFPlayer::CreateWearable( idx, model )
@@ -8201,6 +8276,9 @@ if(!("CORROSION_ICON" in ROOT))
 if(!("SLAM_ICON" in ROOT))
 	::SLAM_ICON <- CreateKillIcon("hale_slam_collateral")
 
+if(!("BUSTER_ICON" in ROOT))
+	::BUSTER_ICON <- CreateKillIcon("megaton")
+
 /*
   ==================================
   === CUSTOM EXPLOSION FUNCTIONS ===
@@ -8430,6 +8508,14 @@ function ROOT::CreateSlamAoE(table)
 	})
 }
 
+/** 
+ * @param {CTFPlayer} 			owner			The owner of the damage to report it back to.
+ * @param {CBaseEntity|null} 	inflictor		The Inflictor to use.
+ * @param {Vector} 				center			The position to create the explosion at.
+ * @param {float} 				damage			The Damage of the explosion.
+ * @param {float} 				radius			The Radius of the explosion (Default: 200)
+ * @param {function}			func			the fireball function
+ */
 function ROOT::CreateFireballExplosion(table)
 {
 	CreateBaseExplosion({
@@ -8445,6 +8531,25 @@ function ROOT::CreateFireballExplosion(table)
 		FuncBeforeDmg = true
 		ExplodeFunc = table.func
 		FuncIgnoreObjects = true
+	})
+}
+
+/** 
+ * @param {CTFPlayer} 	owner			The owner of the damage to report it back to.
+ * @param {Vector} 		center			The position to create the explosion at.
+ */
+function ROOT::CreateSentryBusterExplosion(table)
+{
+	CreateBaseExplosion({
+		owner = table.owner,
+		weapon = table.owner,
+		origin = table.center,
+		radius = 350,
+		damage = 300000,
+		ignores = [],
+		DmgType = DMG_RADIUS_MAX|DMG_BLAST,
+		particle = "fluidSmokeExpl_ring_mvm"
+		kill_icon = BUSTER_ICON
 	})
 }
 
@@ -9106,9 +9211,9 @@ function SwapWeaponThink()
 		// local function str(ent) { return ent && ent.IsValid() ? ent.tostring() : "null"	}
 
 		// local builder = inflictor ? GetBuilder(inflictor.GetOwner()) : null
-		local thrower = HasProp(inflictor, "m_hThrower") ? GetPropEntity(inflictor, "m_hThrower") : null
-		if(thrower == null)
-			thrower = GetLauncher(inflictor)
+		// local thrower = HasProp(inflictor, "m_hThrower") ? GetPropEntity(inflictor, "m_hThrower") : null
+		// if(thrower == null)
+		// 	thrower = GetLauncher(inflictor)
 		/* PrintToHudAllF("Inflictor: %s\nWeapon_Owner: %s\nInflictor_Owner: %s\nThrower/Launcher: %s", 
 		str(inflictor), 
 		params.weapon && params.weapon.IsValid() ? str(params.weapon.GetOwner()) : "null"
@@ -9356,21 +9461,20 @@ function SwapWeaponThink()
 				// attacker.PrintToHud("Made Corrosion on " + victim)
 			}
 
-			/* if("MakeBleedInternal" in CTFPlayer)
+			// only available with Sourcemod
+			if("MakeBleedInternal" in CTFPlayer)
 			{
 				if(IsWeaponClass(weapon, "tf_weapon", true))
 				{
-					if(weapon.GetAttribute("stackable bleed", 0))
+					if(weapon.GetAttribute("stackable bleed", 0) != 0)
 					{
 						local duration = weapon.GetAttribute("stackable bleed duration", 5)
-						local infinite = false
-						if(duration == -1)
-							infinite = true
 
-						victim.MakeBleedInternal(attacker, null, duration, weapon.GetAttribute("stackable bleed", 4), infinite ,TF_DMG_CUSTOM_BLEED)
+						victim.MakeBleed(attacker, null, duration, weapon.GetAttribute("stackable bleed", 4))
+						// victim.MakeBleedInternal(attacker, null, duration, weapon.GetAttribute("stackable bleed", 4), infinite ,TF_DMG_CUSTOM_BLEED)
 					}
 				}
-			} */
+			}
 
 			switch(params.damage_custom)
 			{
@@ -9565,14 +9669,32 @@ function SwapWeaponThink()
 		player.StripItemSlot(player.HookAdditiveAttributes("strip item slot"))
 
 		if(player.HookAdditiveAttributes("use sentrybuster model") > 0)
+		{
 			player.UseGiantModel(true)
+			EmitSoundOn("MVM.SentryBusterIntro", player)
+		}
 		else if(player.HookAdditiveAttributes("use giant robot model") > 0)
 			player.UseGiantModel()
 		else if(player.HookAdditiveAttributes("use robot model") > 0)
 			player.UseRobotModel()
+		else
+			player.SetCustomModelWithClassAnimations("")
 
-		if(player.HookAdditiveAttributes("use third person") > 0)
-			player.SetForcedTauntCam(player.HookAdditiveAttributes("prevent third person") > 0 ? 0 : 1)
+		//"raise health to"
+		if(player.HookAdditiveAttributes("raise health to") > 0)
+		{
+			local to_hp = player.HookAdditiveAttributes("raise health to")
+			if(player.GetMaxHealth() < to_hp)
+			{
+				local added = to_hp - player.GetMaxHealth()
+				player.AddCustomAttribute("max health additive bonus", added, -1)
+			}
+		}
+
+		player.SetForcedTauntCam(0)
+
+		if(player.HookAdditiveAttributes("prevent third person") == 0 && player.HookAdditiveAttributes("use third person") > 0)
+			RunWithDelay(@() player.SetForcedTauntCam(1), TICK_DUR * 3)
 
 		local slot = -1
 		foreach (wep in player.GetAllWeapons())
@@ -9879,7 +10001,6 @@ function SwapWeaponThink()
 
 		// overridden
 		delete eventdata.userid
-		delete eventdata.object
 		delete eventdata.index
 
 		// local scope = GetScope(player)
@@ -9939,7 +10060,7 @@ function SwapWeaponThink()
 	{
 		local owner = GetPlayerFromUserID(params.userid)
 		local attacker = GetPlayerFromUserID(params.attacker)
-		local assister = GetPlayerFromUserID(params.assister)
+		local assister = "assister" in params ? GetPlayerFromUserID(params.assister) : null
 		local object = EntIndexToHScript(params.index)
 
 		local typetable = array(4, "")
@@ -9980,7 +10101,7 @@ function SwapWeaponThink()
 	function OnGameEvent_object_detonated(params)
 	{
 		local eventdata = {}
-		PrintTable(params)
+		// PrintTable(params)
 		local owner = GetPlayerFromUserID(params.userid)
 		local type = params.objecttype
 		local object = EntIndexToHScript(params.index)
@@ -10051,7 +10172,8 @@ function SwapWeaponThink()
 		// fix rafmod homing sentry rockets
 		if(object.GetClassname() == "tf_projectile_sentryrocket" && IsValidPlayer(old_owner) && IsValidPlayer(deflector))
 		{
-			if(old_owner.GetPlayerClass() == TF_CLASS_ENGINEER && old_owner.GetWeaponIDXInSlotNew(SLOT_PRIMARY) == TF_WEAPON_POMSON)
+			// local weapon = old_owner.GetWeaponInSlowNew(SLOT_PRIMARY)
+			if(old_owner.GetPlayerClass() == TF_CLASS_ENGINEER && /* weapon && weapon.GetAttribute */ old_owner.HookAdditiveAttributes("mod projectile heat seek power") != 0)
 			{
 				AddThinkToEnt(object, function() {
 					local pos = self.GetOrigin()
@@ -10059,7 +10181,7 @@ function SwapWeaponThink()
 					local speed = 1100 //self.GetAbsVelocity().Length()
 					local new_pos = pos + (forward * (speed / 66))
 					self.SetAbsVelocity(forward * speed)
-					// DebugDrawText(self, format("Vel: %s", self.GetAbsVeliocty().ToKVString()), false, TICK_DUR)
+					DebugDrawText(self, format("Vel: %s", self.GetAbsVeliocty().ToKVString()), false, TICK_DUR)
 					DebugDrawLine_vCol(pos, new_pos, Vector(255, 0, 0), false, TICK_DUR)
 					// self.Teleport(true, new_pos, false, QAngle(), false, Vector())
 					return -1
@@ -10091,6 +10213,7 @@ function SwapWeaponThink()
 	{
 		FireScriptEvent("WaveFailed", {})
 		GetScope(Gamerules).IsWaveStarted <- false
+		ToggleSlowDown()
 	}
 	/**
 	 * @param {table} _
@@ -10863,7 +10986,6 @@ RegisterAdminTrigger("bot", function(player, ...) {
 
 	local bot = rand
 
-	SetFakeClientConVarValue(bot, "name", "Johnny Silverhand")
 	bot.ForceChangeClass(TF_CLASS_HEAVYWEAPONS, true)
 	bot.SetTeam(TF_TEAM_BLUE)
 	RunWithDelay(@() SpawnJohhny(bot, trace.pos + Vector(0, 0, 16)), TICK_DUR)
@@ -10878,16 +11000,18 @@ function SpawnJohhny(bot, pos)
 	bot.AddCustomAttribute("cannot taunt", 1, -1)
 	bot.AddCustomAttribute("use robot voice", 1, -1)
 	bot.AddCustomAttribute("no_attack", 1, -1)
+	bot.AddCustomAttribute("no_jump", 1, -1)
 	bot.AddCustomAttribute("move speed penalty", 0.01, -1)
 	bot.AddCustomAttribute("cannot be backstabbed", 1, -1)
-	bot.AddCustomAttribute("max health additive bonus", 499700, -1)
+	bot.AddCustomAttribute("max health additive bonus", 999700, -1)
 	bot.AddCustomAttribute("health regen", 50000, -1)
 	bot.AddCustomAttribute("cancel falling damage", 1, -1)
 	bot.AddCustomAttribute("airblast vulnerability multiplier", 0.001, -1)
 	bot.AddCustomAttribute("airblast vertical vulnerability multiplier", 0.001, -1)
 	bot.AddCustomAttribute("cannot pick up intelligence", 1, -1)
-	bot.SetCustomModelWithClassAnimations("models/bots/heavy/bot_heavy.mdl")
-	bot.SetHealth(500000)
+	bot.UseRobotModel()
+	bot.StripItemSlot(STRIPSLOT_SECONDARY|STRIPSLOT_MELEE)
+	bot.SetHealth(1000000)
 	bot.SetCond(TF_COND_HALLOWEEN_THRILLER)
 
 	bot.GenerateAndWearItem("Upgradeable TF_WEAPON_MINIGUN")
@@ -10895,6 +11019,8 @@ function SpawnJohhny(bot, pos)
 	bot.GenerateAndWearItem("Security Shades")
 	bot.GenerateAndWearItem("The Purity Fist")
 	bot.GenerateAndWearItem("Unusual Cap")
+
+	RunWithDelay(@() bot.Weapon_Switch(bot.GetWeaponInSlotNew(SLOT_PRIMARY)), TICK_DUR * 5)
 
 	SetFakeClientConVarValue(bot, "name", "Johnny Silverhand")
 
