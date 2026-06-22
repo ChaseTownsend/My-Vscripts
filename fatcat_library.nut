@@ -217,7 +217,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format)
-if (!SetLibraryVersion("06.20.2026.23", 0))
+if (!SetLibraryVersion("06.22.2026.00", 0))
 	return
 
 SetLibrarySettings({})
@@ -2334,13 +2334,13 @@ function ROOT::GetGameText()
 function CTFPlayer::DisplayHudText(msg = "", clr = false, pos = false, holdtime = false, channel = false)
 {
 	local text = GetGameText()
-	local GT_Scope = GetScope(text)
+	local text_scope = GetScope(text)
 
-	if(!("Last_Message" in GT_Scope))
-		GT_Scope.Last_Message <- ""
+	if(!("Last_Message" in text_scope))
+		text_scope.Last_Message <- ""
 
 
-	if(GT_Scope.Last_Message != msg) text.KeyValueFromString("message", msg)
+	if(text_scope.Last_Message != msg) text.KeyValueFromString("message", msg)
 	if(clr) text.KeyValueFromString("color", clr)
 	if(pos)
 	{
@@ -2350,7 +2350,7 @@ function CTFPlayer::DisplayHudText(msg = "", clr = false, pos = false, holdtime 
 	if(holdtime) text.KeyValueFromFloat("holdtime", holdtime)
 	if(channel)	 text.KeyValueFromInt("channel", channel)
 	
-	GT_Scope.Last_Message <- msg
+	text_scope.Last_Message <- msg
 
 	text.AcceptInput("Display", "", this, this)
 
@@ -2614,6 +2614,10 @@ class Corrosion {
 		InitVars() // forget about old if we remove
 	}
 
+	/** 
+	 * Return if we should process a corrosion tick
+	 * @returns {bool}
+	 */
 	function ShouldUpdate()
 	{
 		return Time() >= flNextTick
@@ -2641,6 +2645,8 @@ class Corrosion {
 
 		if(__CORROSION_DEBUG) printf("%s took Corrosion Damage! Attacker : %s, Weapon : %s, Damage : %f\n", 
 			tostring(), hAttacker.tostring(), hWeapon.tostring(), damage)
+		if(!CORROSION_ICON || !CORROSION_ICON.IsValid())
+			CORROSION_ICON = CreateKillIcon("infection_acid_puddle")
 		m_hOuter.TakeDamageCustom(CORROSION_ICON, hAttacker, hWeapon, Vector(), Vector(), damage, DMG_GENERIC|DMG_PREVENT_PHYSICS_FORCE, 0)
 	}
 }
@@ -2887,6 +2893,9 @@ function CTFPlayer::SetUpThinkTable()
 /**
  * Adds a Preserved think to the think table that stays after spawning / resupplying
  * 
+ * In the think `self` is the player
+ * and `this` is the players scope.
+ * 
  * @param {function} 	func 		The Think Function.
  * @param {string|null} name 		The Think function name in the ThinkTable (used for removing a think). (Default: null)
  * @param {float} 		offset 		Time offset of the first Think. (Default: 0.0)
@@ -2905,6 +2914,9 @@ function CTFPlayer::AddPreservedThink(func, name = null, offset = 0.0)
 /**
  * Adds a think to the think table
  * 
+ * In the think `self` is the player
+ * and `this` is the players scope.
+ * 
  * @param {function} 	func 		The Think Function.
  * @param {string|null} name 		The Think function name in the ThinkTable (used for removing a think). (Default: null)
  * @param {float} 		offset 		Time offset of the first Think. (Default: 0.0)
@@ -2912,7 +2924,7 @@ function CTFPlayer::AddPreservedThink(func, name = null, offset = 0.0)
  */
 function CTFPlayer::AddThink(func, name = null, offset = 0.0)
 {
-	if(IsNotInScope("ThinkTable", GetScope(this)))
+	if(!("ThinkTable" in GetScope(this)))
 		SetUpThinkTable()
 		
 	name = name||UniqueString()
@@ -2988,6 +3000,29 @@ function CTFPlayer::RemoveWearables()
 	}
 }
 
+function CTFPlayer::GetMoveChildren()
+{
+	local children = []
+	for (local child = FirstMoveChild(); child; child = child.NextMovePeer())
+	{
+		EnableStringPurge(child)
+		children.append(child)
+	}
+	return children
+}
+
+function CTFPlayer::GetMoveChildrenWeapons()
+{
+	local children = []
+	for (local child = FirstMoveChild(); child; child = child.NextMovePeer())
+	{
+		EnableStringPurge(child)
+		if(IsWeaponClass(child, "tf_weap", true))
+			children.append(child)
+	}
+	return children
+}
+
 function CTFPlayer::TransformGHeavy()
 {
 	if(!this||!IsValid())
@@ -3005,17 +3040,40 @@ function CTFPlayer::UndoGHeavy()
 function CTFPlayer::IsGHeavy()
 	return "HeavyTransform" in GetScope(this) && GetScope(this).HeavyTransform
 /**
- * @param {string} classname
  * @param {integer} idx
  * @param {bool} swit
  * @param {table} attrib_overrides
  */
-function CTFPlayer::EquipItem(classname, idx, swit = true, attrib_overrides = {})
+function CTFPlayer::EquipItem(ItemName, swit = true, attrib_overrides = {})
 {
-	PrintToChat("Sorry EquipItem is causing issue, please try again tomorrow.")
+	local old_weapons = GetMoveChildrenWeapons()
+	local new_item = EquipItemBAD(ItemName)
+	local old_item = null
+	foreach (wep in old_weapons)
+	{
+		if(IsWeaponClass(wep, "tf_weap", true) && wep.GetSlot() == new_item.GetSlot())
+		{
+			old_item = wep
+			break
+		}
+	}
+
+	if(new_item != old_item && old_item)
+		old_item.Destroy()
+
+	foreach(attrib, value in attrib_overrides)
+		new_item.AddAttribute(attrib, value, 0)
+
+	local type = GetPropInt(new_item, "m_iPrimaryAmmoType")
+	if(type != -1)
+		GivePercentAmmo(type, 100)
+
+	if(swit)
+		Weapon_Switch(new_item)
+
 	return
 
-	local weapon = SpawnEntityFromTable(classname, {})
+/* 	local weapon = SpawnEntityFromTable(classname, {})
 
 	if(!weapon)
 		return
@@ -3035,12 +3093,9 @@ function CTFPlayer::EquipItem(classname, idx, swit = true, attrib_overrides = {}
 
 
 	local old_wep = GetWeaponInSlotNew(weapon.GetSlot())
-
-	if(old_wep && old_wep.IsWearable())
-	{
-		old_wep.Destroy()
-	}
-	else if(old_wep && !old_wep.IsWearable())
+	if(old_wep)
+		old_wep.Destroy() */
+	/* else if(old_wep && !old_wep.IsWearable())
 	{
 		local myweaps_idx = GetMyWeaponsArray().find(old_wep)
 
@@ -3048,7 +3103,7 @@ function CTFPlayer::EquipItem(classname, idx, swit = true, attrib_overrides = {}
 
 		if(myweaps_idx != null)
 			SetPropEntity(this, "m_hMyWeapons", null, myweaps_idx)
-	}
+	} */
 
 	/* if(myweaps_idx == null)
 	{
@@ -3119,26 +3174,25 @@ function CTFPlayer::EquipItem(classname, idx, swit = true, attrib_overrides = {}
 
 /**
  * @param {string} ItemName
- * @returns {CTFWeaponBase|null}
+ * @returns {CTFWeaponBase|[CTFWeaponBase]|null}
  */
 function CTFPlayer::EquipItemBAD(ItemName)
 {
-	local OldWeapons = GetAllWeapons()
+	local OldWeapons = GetMoveChildrenWeapons()
 	AddEFlags(EFL_NO_MEGAPHYSCANNON_RAGDOLL)  // prevent inf resupply loop
 	GenerateAndWearItem(ItemName)
 	RemoveEFlags(EFL_NO_MEGAPHYSCANNON_RAGDOLL)
-	local NewWeapons = GetAllWeapons()
+	local NewWeapons = GetMoveChildrenWeapons()
 
-	foreach (wep in OldWeapons)
+	local differ = []
+
+	foreach (wep in NewWeapons)
 	{
-		if(NewWeapons.find(wep) != null)
-			NewWeapons.remove(NewWeapons.find(wep))
+		if(OldWeapons.find(wep) == null)
+			differ.append(wep)
 	}
 
-	if(NewWeapons.len() > 1)
-		return null
-
-	return NewWeapons[0]
+	return differ.len() == 1 ? differ[0] : differ
 }
 
 function CTFPlayer::GetActiveHealers()
@@ -3817,12 +3871,12 @@ function CTFPlayer::ShouldDetonate()
 		return
 	if(swap2(GetPropInt(this, "m_Shared.m_unTauntSourceItemID_Low")) != 65535)
 		return
-	RunWithDelay(@() SentryBusterExplode(), 2.0)
+	RunWithDelay(@() SentryBusterExplode(), 1.9)
 }
 
 function CTFPlayer::SentryBusterExplode()
 {
-	if(!this || !IsValid())
+	if(!this || !IsValid() || IsDead())
 		return
 	CreateSentryBusterExplosion({
 		owner = this
@@ -3840,6 +3894,64 @@ function CTFPlayer::MakeBleed(attacker, weapon, duration = -1.0, damage = 4, per
 		permanent = true
 	MakeBleedInternal(attacker, weapon, duration, damage, permanent, dmg_type)
 }
+
+/** 
+ * @returns {CBaseEntity|null}
+ */
+function ROOT::GetHudHint()
+	return FindByName(null, "GlobalHudHint") ? FindByName(null, "GlobalHudHint") : SpawnEntityFromTable("env_hudhint", {targetname = "GlobalHudHint", spawnflags = 0})
+
+//TODO: Use a THINK to handle re sending and ending
+function CTFPlayer::DisplayHudHint(text, duration = 10.0, flash = true, Hide = true)
+{
+	local hint_ent = GetHudHint()
+	local hint_scope = GetScope(hint_ent)
+
+	if(!("message" in hint_scope))
+		hint_scope.message <- ""
+
+	if(hint_scope.message != text) 
+		hint_ent.KeyValueFromString("message", text)
+	hint_scope.message = text
+
+
+	hint_ent.AcceptInput("ShowHudHint", "", this, this)
+	if(Hide)
+		EntFireNew(hint_ent, "HideHudHint", "", duration, this, this)
+
+	if(flash == true && duration > 2)
+		RunWithDelay(@() DisplayHudHint(text, duration-2, flash, false), 2)
+	else if(duration > 10 && flash == false)
+		RunWithDelay(@() DisplayHudHint(text, duration-10, flash, false), 10)
+}
+
+// function CTFPlayer::DisplayHudHint(text, duration = 10.0, flash = true, Hide = true)
+// {
+// 	local hint_ent = GetHudHint()
+// 	local hint_scope = GetScope(hint_ent)
+
+// 	if(!("message" in hint_scope))
+// 		hint_scope.message <- ""
+
+// 	if(hint_scope.message != text) 
+// 		hint_ent.KeyValueFromString("message", text)
+// 	hint_scope.message = text
+
+// 	hint_ent.AcceptInput("ShowHudHint", "", this, this)
+
+// 	AddThink(function() {
+		
+// 	})
+
+
+// 	if(Hide)
+// 		EntFireNew(hint_ent, "HideHudHint", "", duration, this, this)
+
+// 	if(flash == true && duration > 2)
+// 		RunWithDelay(@() DisplayHudHint(text, duration-2, flash, false), 2)
+// 	else if(duration > 10 && flash == false)
+// 		RunWithDelay(@() DisplayHudHint(text, duration-10, flash, false), 10)
+// }
 
 // function CTFPlayer::GetTauntIndex()
 // {
@@ -4893,7 +5005,6 @@ if(!("FileWeaponInfo_t" in ROOT))
 		constructor() {}
 		// Each game can override this to get whatever values it wants from the script.
 		/** 
-		 * @type {function}
 		 * @param {KeyValues} pKeyValuesData
 		 * @param {string} szWeaponName
 		 */
@@ -5067,8 +5178,7 @@ if(!("CTFWeaponInfo" in ROOT))
 
 		}
 		/** 
-		 * @type {function}
-		 * @param {KeyValues} pKeyValuesData
+			 * @param {KeyValues} pKeyValuesData
 		 * @param {string} szWeaponName
 		 */
 		function Parse( pKeyValuesData, szWeaponName ) 
@@ -5223,8 +5333,7 @@ if(!("CTFWeaponInfo" in ROOT))
 		}
 
 		/** 
-		 * @type {function}
-		 * @param {integer} iWeapon
+			 * @param {integer} iWeapon
 		 * @returns {WeaponData_t}
 		 */
 		function GetWeaponData( iWeapon ) { return m_WeaponData[iWeapon] }
@@ -6722,61 +6831,53 @@ if(!("Vector4D" in ROOT))
 
 		/**
 		 * Returns the sum of both classes's members.
-		 * @type {function}
-		 * @param {Vector4D} other
+			 * @param {Vector4D} other
 		 * @returns {Vector4D}
 		 */
 		function _add(other);
 
 		/**
 		 * Returns the subtraction of both classes's members.
-		 * @type {function}
-		 * @param {Vector4D} other
+			 * @param {Vector4D} other
 		 * @returns {Vector4D}
 		 */
 		function _sub(other);
 
 		/**
 		 * Returns the multiplication of a Vector against a scalar.
-		 * @type {function}
-		 * @param {float} other
+			 * @param {float} other
 		 * @returns {Vector4D}
 		 */
 		function _mul(other);
 
 		/**
 		 * The scalar product of two vectors.
-		 * @type {function}
-		 * @param {Vector4D} factor
+			 * @param {Vector4D} factor
 		 * @returns {float}
 		 */
 		function Dot(factor);
 
 		/**
 		 * Magnitude of the vector.
-		 * @type {function}
-		 * @returns {float}
+			 * @returns {float}
 		 */
 		function Length();
 
 		/**
 		 * The magnitude of the vector squared.
-		 * @type {function}
-		 * @returns {float}
+			 * @returns {float}
 		 */
 		function LengthSqr();
 
 		/**
 		 * Normalizes the vector in place and returns its length.
-		 * @type {function}
-		 * @returns {float}
+			 * @returns {float}
 		 */
 		function Norm();
 
 		/**
 		 * Returns a string without separating commas.
-		 * @type {function}
-		 * @returns {string}
+			 * @returns {string}
 		 */
 		function ToKVString();
 	}
@@ -6796,8 +6897,7 @@ if(!("Vector2D" in ROOT))
 
 		/**
 		 * Creates a new 2-dimensional vector with the specified Cartesian coordinates.
-		 * @type {function}
-		 * @param {float} _x Defaults to `0.0`
+			 * @param {float} _x Defaults to `0.0`
 		 * @param {float} _y Defaults to `0.0`
 		 */
 		constructor(_x = 0.0, _y = 0.0)
@@ -6808,61 +6908,53 @@ if(!("Vector2D" in ROOT))
 
 		/**
 		 * Returns the sum of both classes's members.
-		 * @type {function}
-		 * @param {Vector2D} other
+			 * @param {Vector2D} other
 		 * @returns {Vector2D}
 		 */
 		function _add(other);
 
 		/**
 		 * Returns the subtraction of both classes's members.
-		 * @type {function}
-		 * @param {Vector2D} other
+			 * @param {Vector2D} other
 		 * @returns {Vector2D}
 		 */
 		function _sub(other);
 
 		/**
 		 * Returns the multiplication of a Vector against a scalar.
-		 * @type {function}
-		 * @param {float} other
+			 * @param {float} other
 		 * @returns {Vector2D}
 		 */
 		function _mul(other);
 
 		/**
 		 * The scalar product of two vectors.
-		 * @type {function}
-		 * @param {Vector2D} factor
+			 * @param {Vector2D} factor
 		 * @returns {float}
 		 */
 		function Dot(factor);
 
 		/**
 		 * Magnitude of the vector.
-		 * @type {function}
-		 * @returns {float}
+			 * @returns {float}
 		 */
 		function Length();
 
 		/**
 		 * The magnitude of the vector squared.
-		 * @type {function}
-		 * @returns {float}
+			 * @returns {float}
 		 */
 		function LengthSqr();
 
 		/**
 		 * Normalizes the vector in place and returns its length.
-		 * @type {function}
-		 * @returns {float}
+			 * @returns {float}
 		 */
 		function Norm();
 
 		/**
 		 * Returns a string without separating commas.
-		 * @type {function}
-		 * @returns {string}
+			 * @returns {string}
 		 */
 		function ToKVString();
 	}
@@ -6878,6 +6970,146 @@ if(!("Vector2D" in ROOT))
  */
 function ROOT::UTIL_ScreenFade( pVictim, color, fade_time, fade_hold, flags )
 	ScreenFade( pVictim, color.x, color.y, color.z, color.w, fade_time, fade_hold, flags )
+
+/** 
+ * @param {Vector} center
+ * @param {float} radius
+ * @param {integer} r
+ * @param {integer} g
+ * @param {integer} b
+ * @param {bool} noDepthTest
+ * @param {float} flDuration
+ */
+function DebugDrawSphere( center, radius, r, g, b, noDepthTest, flDuration )
+{
+	/** @type {Vector} */
+	local edge = Vector()
+	/** @type {Vector} */
+	local lastEdge = Vector()
+
+	/** @type {float} */
+	local axisSize = radius;
+	local Line = DebugDrawLine
+	Line( center + Vector( 0, 0, -axisSize ), center + Vector( 0, 0, axisSize ), r, g, b, noDepthTest, flDuration )
+	Line( center + Vector( 0, -axisSize, 0 ), center + Vector( 0, axisSize, 0 ), r, g, b, noDepthTest, flDuration )
+	Line( center + Vector( -axisSize, 0, 0 ), center + Vector( axisSize, 0, 0 ), r, g, b, noDepthTest, flDuration )
+
+	lastEdge = Vector( radius + center.x, center.y, center.z )
+
+	/** @type {float} */
+	for( local i = 0; i <= 16; i++)
+	{
+		local angle = 22.5 * i
+		edge.x = radius * cos( angle / 180.0 * PI ) + center.x
+		edge.y = center.y
+		edge.z = radius * sin( angle / 180.0 * PI ) + center.z
+
+		Line( edge, lastEdge, r, g, b, noDepthTest, flDuration )
+
+		lastEdge = edge
+	}
+	local angle = 0.0
+
+	lastEdge = Vector( center.x, radius + center.y, center.z )
+	for( angle = 0.0; angle <= 360.0; angle += 22.5 )
+	{
+		edge.x = center.x
+		edge.y = radius * cos( angle / 180.0 * PI ) + center.y
+		edge.z = radius * sin( angle / 180.0 * PI ) + center.z
+
+		Line( edge, lastEdge, r, g, b, noDepthTest, flDuration )
+
+		lastEdge = edge
+	}
+
+	lastEdge = Vector( center.x, radius + center.y, center.z )
+	for( angle = 0.0; angle <= 360.0; angle += 22.5 )
+	{
+		edge.x = radius * cos( angle / 180.0 * PI ) + center.x
+		edge.y = radius * sin( angle / 180.0 * PI ) + center.y
+		edge.z = center.z
+
+		Line( edge, lastEdge, r, g, b, noDepthTest, flDuration )
+
+		lastEdge = edge
+	}
+}
+/** 
+ * @param {Vector} p1
+ * @param {Vector} p2
+ * @param {Vector} p3
+ * @param {integer} r
+ * @param {integer} g
+ * @param {integer} b
+ * @param {bool} noDepthTest
+ * @param {float} duration
+ */
+function DebugDrawTriangle( p1, p2, p3, r, g, b, noDepthTest, duration )
+{
+	DebugDrawLine(p1, p2, r, g, b, noDepthTest, duration)
+	DebugDrawLine(p2, p3, r, g, b, noDepthTest, duration)
+	DebugDrawLine(p3, p1, r, g, b, noDepthTest, duration)
+}
+
+// /** 
+//  * @type {function}
+//  * @param {Vector} position
+//  * @param {Vector} xAxis
+//  * @param {Vector} yAxis
+//  * @param {integer} r
+//  * @param {integer} g
+//  * @param {integer} b
+//  * @param {bool} bNoDepthTest
+//  * @param {float} flDuration
+//  */
+// function DebugDrawCircle2( position, xAxis, yAxis, radius, r, g, b, bNoDepthTest, flDuration )
+// {
+// 	local nSegments = 16
+// 	local flRadStep = (PI*2.0) / nSegments.tofloat()
+
+// 	local vecLastPosition = Vector()
+	
+// 	// Find our first position
+// 	// Retained for triangle fanning
+// 	local vecStart = position + xAxis * radius
+// 	local vecPosition = vecStart;
+
+// 	local function Line(start, end, r, g, b, depth, dur) {DebugDrawLine(start, end, r, g, b, depth, dur)}
+
+// 	// Draw out each segment (fanning triangles if we have an alpha amount)
+// 	for ( local i = 1; i <= nSegments; i++ )
+// 	{
+// 		// Store off our last position
+// 		vecLastPosition = vecPosition
+
+// 		// Calculate the new one
+// 		local flSin = sin( flRadStep*i )
+// 		local flCos = cos( flRadStep*i )
+// 		vecPosition = position + (xAxis * flCos * radius) + (yAxis * flSin * radius)
+
+// 		// Draw the line
+// 		Line( vecLastPosition, vecPosition, r, g, b, bNoDepthTest, flDuration );
+
+// 		// If we have an alpha value, then draw the fan
+// 		if ( i > 1 )
+// 			DebugDrawTriangle( vecStart, vecLastPosition, vecPosition, r, g, b, bNoDepthTest, flDuration )
+// 	}
+// }
+
+// function DebugDrawSphere( position, const QAngle &angles, float radius, int r, int g, int b, int a, bool bNoDepthTest, float flDuration )
+// {
+// 	// Setup our transform matrix
+// 	matrix3x4_t xform;
+// 	AngleMatrix( angles, position, xform );
+// 	Vector xAxis, yAxis, zAxis;
+// 	// default draws circle in the y/z plane
+// 	MatrixGetColumn( xform, 0, xAxis );
+// 	MatrixGetColumn( xform, 1, yAxis );
+// 	MatrixGetColumn( xform, 2, zAxis );
+// 	Circle( position, xAxis, yAxis, radius, r, g, b, a, bNoDepthTest, flDuration );	// xy plane
+// 	Circle( position, yAxis, zAxis, radius, r, g, b, a, bNoDepthTest, flDuration );	// yz plane
+// 	Circle( position, xAxis, zAxis, radius, r, g, b, a, bNoDepthTest, flDuration );	// xz plane
+// }
 
 /*
   ================================ 
@@ -7451,12 +7683,12 @@ function ROOT::IsDamageTaunt(damagecustom)
 
 function ROOT::ToggleSlowDown(amount = 1.0, sound = "", revert_sound = "", revert = 0.0)
 {
-	Assert(amount > 0.1, "Cannot set Timescale below 0.1")
+	Assert(amount > 0.01, "Cannot set Timescale below 0.01")
 
 	PrecacheSound(sound)
 	PrecacheSound(revert_sound)
 	local overlay = amount == 1.0 ? "" : "debug/yuv"
-	foreach (player in Players)
+	foreach (player in GetAllPlayers(false, false, false))
 	{
 		player.SetScriptOverlayMaterial(overlay)
 		if(sound != "")
@@ -7466,6 +7698,11 @@ function ROOT::ToggleSlowDown(amount = 1.0, sound = "", revert_sound = "", rever
 	}
 
 	SetCvar("host_timescale", amount)
+
+	if(!("Timescale" in ROOT))
+		::Timescale <- amount
+	else
+		Timescale = amount
 
 	if(amount != 1.0 && revert != 0.0)
 	{
@@ -8401,8 +8638,11 @@ function ROOT::CreateBaseExplosion(table)
 			ExplodeFunc(entity)
 	}
 
-	DebugDrawCircle(origin, Vector(255, 0, 0), 50, radius, false, 15)
-	DebugDrawCircle(origin+Vector(0,0,1), Vector(0, 0, 255), 50, DamageDeadzone, false, 15)
+	// DebugDrawCircle(origin, Vector(255, 0, 0), 50, radius, false, 15)
+	// DebugDrawCircle(origin+Vector(0,0,1), Vector(0, 0, 255), 50, DamageDeadzone, false, 15)
+	DebugDrawSphere(origin, radius, 255, 0, 0, false, 15)
+	DebugDrawSphere(origin+Vector(0,0,1), DamageDeadzone, 0, 0, 255, false, 15)
+	
 
 	if(particle != "")
 		CreateParticle(particle, origin+particle_offset, particle_ang)
@@ -8483,6 +8723,8 @@ function ROOT::CreateKnifeAoE(table)
  */
 function ROOT::CreateSlamAoE(table)
 {
+	if(!SLAM_ICON || !SLAM_ICON.IsValid())
+		SLAM_ICON = CreateKillIcon("hale_slam_collateral")
 	CreateBaseExplosion({
 		owner = table.owner,
 		weapon = table.weapon,
@@ -8540,11 +8782,14 @@ function ROOT::CreateFireballExplosion(table)
  */
 function ROOT::CreateSentryBusterExplosion(table)
 {
+	CreateKillIcon("megaton")
+	if(!BUSTER_ICON || !BUSTER_ICON.IsValid())
+		BUSTER_ICON = CreateKillIcon("megaton")
 	CreateBaseExplosion({
 		owner = table.owner,
 		weapon = table.owner,
 		origin = table.center,
-		radius = 350,
+		radius = 300,
 		damage = 300000,
 		ignores = [],
 		DmgType = DMG_RADIUS_MAX|DMG_BLAST,
@@ -9144,6 +9389,15 @@ function SwapWeaponThink()
 			victim.RemoveCorrosion()
 		}
 
+		if(IsWeaponClass(eventdata.weapon, "tf_weapon", true))
+		{
+			local weapon = eventdata.weapon
+			if(weapon.GetAttribute("draw temp hud alert on kill", 0) && IsValidPlayer(weapon.GetOwner()))
+			{
+				weapon.GetOwner().DisplayHudHint("██░░█░░██\n█░░░█░░░█\n█░░░█░░░█\n█░░░█░░░█\n█░░░░░░░█\n██░░█░░██", weapon.GetAttribute("draw temp hud alert on kill", 0))
+			}
+		}
+
 		// overridden
 		delete eventdata.userid
 		delete eventdata.weapon_logclassname
@@ -9204,7 +9458,6 @@ function SwapWeaponThink()
 			params.early_out <- true
 		
 		/** 
-		 * @type {function}
 		 * @param {CBaseEntity|null} ent
 		 * @returns {string}
 		 */
@@ -9706,7 +9959,7 @@ function SwapWeaponThink()
 		{
 			local wep = player.GetWeaponInSlotNew(slot)
 			if(wep && !wep.IsWearable())
-				player.Weapon_Switch(wep)
+				RunWithDelay(@() player.Weapon_Switch(wep), 0.1)
 		}
 		
 		foreach (wep in player.GetAllWeapons())
@@ -10058,8 +10311,8 @@ function SwapWeaponThink()
 	}
 	function OnGameEvent_object_destroyed(params)
 	{
-		local owner = GetPlayerFromUserID(params.userid)
-		local attacker = GetPlayerFromUserID(params.attacker)
+		local owner = "userid" in params ? GetPlayerFromUserID(params.userid) : null
+		local attacker = "attacker" in params ? GetPlayerFromUserID(params.attacker) : null
 		local assister = "assister" in params ? GetPlayerFromUserID(params.assister) : null
 		local object = EntIndexToHScript(params.index)
 
@@ -10102,7 +10355,7 @@ function SwapWeaponThink()
 	{
 		local eventdata = {}
 		// PrintTable(params)
-		local owner = GetPlayerFromUserID(params.userid)
+		local owner = "userid" in params ? GetPlayerFromUserID(params.userid) : null
 		local type = params.objecttype
 		local object = EntIndexToHScript(params.index)
 
@@ -10855,15 +11108,13 @@ RegisterAdminTrigger("test_tank", function(player, ...) {
 
 	local SpawnPosition = trace.pos+offset
 
-	local tank_data = {
-		targetname = targetname
-		health = (1<<31) - 1
-	}
-
 	local path = SpawnEntityFromTable("path_track", {})
 	path.SetAbsOrigin(SpawnPosition)
 
-	local tank = SpawnEntityFromTable("tank_boss", tank_data)
+	local tank = SpawnEntityFromTable("tank_boss", {
+		targetname = targetname
+		health = (1<<31) - 1
+	})
 	tank.SetAbsOrigin(SpawnPosition)
 	tank.SetAbsAngles(QAngle(0, player.EyeAngles().Yaw(), 0))
 
@@ -10961,6 +11212,11 @@ RegisterAdminTrigger("bot", function(player, ...) {
 			return player.PrintToChat("Johnny Silverhand is already Alive!")
 	}
 
+	local Giant = false
+
+	if(vargv.len() != 0 && vargv[0] == "giant")
+		Giant = true
+
 	local trace = {
 		start = player.EyePosition()
 		end = player.GetEyeOffset(16000)
@@ -10988,10 +11244,10 @@ RegisterAdminTrigger("bot", function(player, ...) {
 
 	bot.ForceChangeClass(TF_CLASS_HEAVYWEAPONS, true)
 	bot.SetTeam(TF_TEAM_BLUE)
-	RunWithDelay(@() SpawnJohhny(bot, trace.pos + Vector(0, 0, 16)), TICK_DUR)
+	RunWithDelay(@() SpawnJohhny(bot, trace.pos + Vector(0, 0, 16), Giant), TICK_DUR * 2)
 })
 
-function SpawnJohhny(bot, pos)
+function SpawnJohhny(bot, pos, Giant = false)
 {
 	bot.SetTeam(TF_TEAM_BLUE)
 	bot.SetAbsOrigin(pos)
@@ -11002,7 +11258,8 @@ function SpawnJohhny(bot, pos)
 	bot.AddCustomAttribute("no_attack", 1, -1)
 	bot.AddCustomAttribute("no_jump", 1, -1)
 	bot.AddCustomAttribute("move speed penalty", 0.01, -1)
-	bot.AddCustomAttribute("cannot be backstabbed", 1, -1)
+	if(!Giant) bot.AddCustomAttribute("cannot be backstabbed", 1, -1)
+	if(Giant) bot.AddCustomAttribute("is miniboss", 1, -1)
 	bot.AddCustomAttribute("max health additive bonus", 999700, -1)
 	bot.AddCustomAttribute("health regen", 50000, -1)
 	bot.AddCustomAttribute("cancel falling damage", 1, -1)

@@ -1,7 +1,7 @@
 if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
-SetScriptVersion("GameplayApplications", "5.0.7")
+SetScriptVersion("GameplayApplications", "5.1.1")
 
 local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", THINKER_PERSIST)
 
@@ -154,63 +154,205 @@ AddChatTrigger(["shape", "class", "change", "changeclass", "switch", "shapeshift
 	}
 } )
 
+::RegisteredItems <- {
+}
+//[unique id] : {data}
+
+/** 
+ * @param {integer} idx				Unique ID for Itemhelper.
+ * @param {string} internal_name	Internal item name in the Item Schema.
+ * @param {string} name_make		Name that players can use to create the item.
+ * @param {bool} swit				Weather to Automatically switch to this weapon, Use for Wearables. (Default: true).
+ * @param {table} overrides			Any Attribute overrides, Useful for creating Custom Weapons using a Base (Default: {}).
+ * @param {function} override_func	Function that is input the player making this item, Return true to allow the creation.
+ */
+function ROOT::RegisterEquipItem(idx, internal_name, name_make, swit = true, overrides = {}, override_func = function(...) {return true})
+{
+	if(startswith(name_make, "page"))
+		throw "Cannot make items with make names that start with page!"
+	if(name_make == "help")
+		throw "Cannot make items with make names of \"help\""
+	RegisteredItems[idx] <- {
+		InternalName = internal_name
+		MakingName = name_make.tolower()
+		DoSwitch = swit
+		AttribOverrides = overrides
+		OverrideFunc = override_func
+	}
+}
+
+function ROOT::DoesItemExist(finder)
+{
+	foreach (idx, data in RegisteredItems)
+		if(idx == finder.tostring() || data.MakingName == finder)
+			return true
+	return false
+}
+
+function ROOT::FindItemBy(name)
+{
+	foreach (idx, data in RegisteredItems)
+		if(data.MakingName == name)
+			return true
+	return false
+}
+
+RegisterEquipItem(1100, "The Bread Bite", "bread", true, {}, function(player) {return player.GetPlayerClass() == TF_CLASS_HEAVYWEAPONS})
+RegisterEquipItem(1105, "The Self-Aware Beauty Mark", "mark", true, {}, function(player) {return player.GetPlayerClass() == TF_CLASS_SNIPER})
+RegisterEquipItem(1121, "Mutated Milk", "mutated", true, {}, function(player) {return player.GetPlayerClass() == TF_CLASS_SCOUT})
+// RegisterEquipItem(30666, "The C.A.P.P.E.R", "capper", true, {}, function(player) {return player.GetPlayerClass() == TF_CLASS_SCOUT})
+// RegisterEquipItem(1, "test item", "Test1", true, {}, function(player) {return false})
+// RegisterEquipItem(2, "test item", "Test2", true, {}, function(player) {return false})
+// RegisterEquipItem(3, "test item", "Test3", true, {}, function(player) {return false})
+// RegisterEquipItem(4, "test item", "Test4", true, {}, function(player) {return false})
+// RegisterEquipItem(5, "test item", "Test5", true, {}, function(player) {return false})
+// RegisterEquipItem(6, "test item", "Test6", true, {}, function(player) {return false})
+// RegisterEquipItem(7, "test item", "Test7", true, {}, function(player) {return false})
+// RegisterEquipItem(8, "test item", "Test8", true, {}, function(player) {return false})
+// RegisterEquipItem(9, "test item", "Test9", true, {}, function(player) {return false})
+// RegisterEquipItem(0, "test item", "Test0", true, {}, function(player) {return false})
+
+/* RegisterEquipItem(100000, "Upgradeable TF_WEAPON_ROCKETLAUNCHER", "ValveRocket", true, {
+	"damage bonus hidden" 			: 10.0
+	"clip size bonus" 				: 39.5
+	"heal on hit for rapidfire" 	: 250
+	"critboost on kill" 			: 10
+	"Projectile speed increased" 	: 1.5
+	"move speed bonus" 				: 2
+	"maxammo primary reduced" 		: 5
+	"attach particle effect" 		: 2
+	"fire rate penalty" 			: 0.01
+	"reload time increased" 		: 5
+	"projectile no deflect" 		: 1
+	"projectile spread angle mult" 	: 0
+}, function(player) {return player.GetSteamID() == "[U:1:969530867]"}) */
+
 AddChatTrigger("equip" function(player, ...) {
 	if(!player)
 		return
 
+	local items_per_page = 5
+
 	if(!player.InRespawnRoom())
 	{
-		player.PrintToChat("Can't Change loadout outside of Spawn Room.")
+		player.PrintToChat("\x0730C429[►] Can't Change loadout outside of Spawn Room.")
 		return
 	}
-	if(vargv.len() != 1)
+
+	if(vargv.len() != 1 || (vargv.len() != 0 && vargv[0] == "help"))
 	{
-		player.PrintToChat("Incorrect Arguments, Allowed arguments are . . .")
-		player.PrintToChat("\"bread\" or \"1\": Gives Bread Bite")
-		player.PrintToChat("\"mark\" or \"2\": Gives Self-Aware Beauty Mark")
-		player.PrintToChat("\"mutated\" or \"3\": Gives Mutated Milk\n")
+		if(vargv.len() != 0 && vargv[0] == "help")
+		{
+			player.PrintToChat("\x0730C429[►] \"/equip\" is a chat command that can give you temporary items you dont own.")
+			player.PrintToChat("\x0730C429[►] Such as using \"/equip bread\" to equip \"The Bread Bite\"")
+			if(RegisteredItems.len() > items_per_page)
+			{
+				player.PrintToChat("\x0730C429[►] ")
+				player.PrintToChat("\x0730C429[►] When using \"/equip page #\" it allows you to cycle through all the items")
+			}
+			return
+		}
+		local max_pages = ceil(RegisteredItems.len() / items_per_page.tofloat()).tointeger()
+		if(vargv.len() == 0 && RegisteredItems.len() > items_per_page)
+		{
+			player.PrintToChat("\x0730C429[►] Incorrect Arguments")
+			player.PrintToChatF("\x0730C429[►] Total Pages: %d", max_pages)
+			player.PrintToChat("\x0730C429[►] Use \"!equip page #\" to navigate the pages")
+			return
+		}
+		else if (vargv.len() == 2 && vargv[0] == "page" && RegisteredItems.len() > items_per_page)
+		{
+			local page_num = 1
+			try {page_num = vargv[1].tointeger()}
+			catch(e) {}
+			if(page_num < 1)
+			{
+				page_num = 1
+				player.PrintToChat("\x0730C429[►] Page index out of bounds, Fixing")
+			}
+			if(page_num > max_pages)
+			{
+				page_num = max_pages
+				player.PrintToChat("\x0730C429[►] Page index out of bounds, Fixing")
+			}
+
+			player.PrintToChatF("\x0730C429[►] Displaying Page %d of %d", page_num, max_pages)
+
+			local items_skip = (page_num-1) * items_per_page
+			local skipped = 0
+			local showed_items = 0 
+
+			// printf("Need to skip %d Items\n", items_skip)
+
+			foreach (index, data in RegisteredItems)
+			{
+				if(skipped < items_skip)
+				{
+					skipped++
+					// printf("Skipping Item %s, need to skip %d more\n", data.MakingName, items_skip-skipped)
+					continue
+				}
+				if(showed_items >= items_per_page) // use const
+				{
+					// printf("Skipping Item %s, Already displayed 5\n", data.MakingName)
+					continue
+				}
+
+				showed_items++
+				player.PrintToChatF("\x0730C429[►] \x01\"\x03%s\x01\" or \"\x03%d\x01\": Gives \x04%s", data.MakingName, index, data.InternalName)
+			}
+
+			return
+		}
+		else
+		{
+			player.PrintToChat("\x0730C429[►] Incorrect Arguments")
+			foreach (idx, data in RegisteredItems)
+			{
+				player.PrintToChatF("\x0730C429[►] \x01\"\x03%s\x01\" or \"\x03%d\x01\": Gives \x04%s", data.MakingName, idx, data.InternalName)
+			}
+		}
 		return
 	}
 
 	local item = vargv[0].tolower()
-	local ret_item = null
-	local player_class = player.GetPlayerClass()
+	local item_data = []
 
 	if(player.IsGHeavy())
 	{
-		player.PrintToChat("This item is too dangerous to equip right now...")
+		player.PrintToChat("\x0730C429[►] Fist of Steel Blocks Item Creation!")
 		return
 	}
 
-	if((startswith(item, "brea") || item == "1") && player_class == TF_CLASS_HEAVYWEAPONS)
-		ret_item = ["tf_weapon_fists", 1100]
-	else if((item == "mark" || item == "jarate" || item == "2") && player_class == TF_CLASS_SNIPER)
-		ret_item = ["tf_weapon_jar", 1105]
-	else if((item == "mutated" || item == "milk" || item == "3") && player_class == TF_CLASS_SCOUT)
-		ret_item = ["tf_weapon_jar_milk", 1121]
-	else 
+	foreach (idx, data in RegisteredItems)
 	{
-		player.PrintToChat("Incorrect Arguments, Allowed arguments are . . .")
-		player.PrintToChat("\"bread\" or \"1\": Gives Bread Bite")
-		player.PrintToChat("\"mark\" or \"2\": Gives Self-Aware Beauty Mark")
-		player.PrintToChat("\"mutated\" or \"3\": Gives Mutated Milk\n")
-		return
+		printf("Processing Item %s, IDX match? %s, Name match? %s.\n", data.InternalName, (item == idx.tostring()).tostring(), (item == data.MakingName).tostring())
+		if(item == idx.tostring() || item == data.MakingName)
+		{
+			if(data.OverrideFunc(player) == false)
+				return player.PrintToChatF("\x0730C429[►] Failed to Meet Requirements for %s", data.InternalName)
+			item_data = [idx, data.InternalName, data.DoSwitch, data.AttribOverrides]
+			break
+		}
 	}
 
-	if(ret_item)
+	if(item_data.len() == 0)
+		return player.PrintToChatF("\x0730C429[►] Failed to find any items using Input \"%s\", Try Again", item)
+
+	local HasItemHelper = "ItemTranslateTable" in ROOT
+
+	if(HasItemHelper)
 	{
-		if(!("ItemTranslateTable" in ROOT))
-			throw "Warning! Missing ItemTranslateTable!"
-		local idx = ret_item[1]
 		foreach (item, indexs in ItemTranslateTable)
 		{
-			if(!IsInArray(idx, indexs))
+			if(!IsInArray(item_data[0], indexs))
 				continue
 			player.IHTranslateToChat2(item)
 			break
 		}
-		player.EquipItem(ret_item[0], ret_item[1])
 	}
+	
+	player.EquipItem(item_data[1], item_data[2], item_data[3])
 } )
 
 AddChatTrigger("scoreboard", function(_player) {
@@ -334,7 +476,24 @@ function GameplayThink()
 	if ( Players.len() < 1 || !ValidatePlayerArray() || (m_aHumans.len() + m_aRobots.len()) != Players.len())
 		ReCalculatePlayers()
 
-	foreach (/** @type {CTFPlayer}*/ bot in m_aRobots)
+	foreach (plr in Players)
+	{
+		if("Timescale" in ROOT)
+		{
+			if(Timescale == 1.0)
+			{
+				plr.SetScriptOverlayMaterial("")
+				plr.RemoveCustomAttribute("voice pitch scale")
+			}
+			else
+			{
+				plr.SetScriptOverlayMaterial("debug/yuv")
+				plr.AddCustomAttribute("voice pitch scale", Timescale, -1)
+			}
+		}
+	}
+
+	foreach (/** @type {CTFBot}*/ bot in m_aRobots)
 	{
 		local scope = GetScope(bot)
 
@@ -356,9 +515,11 @@ function GameplayThink()
 		if(bot.IsAlive() && !bot.IsReprogrammed())
 			AliveBots += 1
 
-
 		if("EndReprogramTime" in scope && scope.EndReprogramTime <= Time())
 			bot.UndoReprogram()
+
+		if("Timescale" in ROOT)
+			bot.AddCustomAttribute("voice pitch scale", Timescale, -1)
 
 		if(bot.IsReprogrammed() && !bot.HasBotTag("RedSupport"))
 		{
@@ -375,6 +536,7 @@ function GameplayThink()
 				bot.RemoveCorrosion()
 				continue
 			}
+			/** @type {Corrosion} */
 			local Corrosion = bot.GetCorrosion()
 			if(Corrosion.ShouldUpdate())
 			{
@@ -418,6 +580,12 @@ function GameplayThink()
 				Human.DisplayHudText("If you are actually stuck, then you should", "255 255 255", [-1, 0.35], 5, 2)
 				Human.DisplayHudText("KILLBIND NOW!", "255 255 255", [-1, 0.385], 5, 3)
 			}
+		}
+
+		if("Timescale" in ROOT)
+		{
+			Human.SetScriptOverlayMaterial(Timescale == 1.0 ? "" : "debug/yuv")
+			Human.AddCustomAttribute("voice pitch scale", Timescale, -1)
 		}
 
 		// 
