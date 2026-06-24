@@ -217,7 +217,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format)
-if (!SetLibraryVersion("06.24.2026.00", 0))
+if (!SetLibraryVersion("06.24.2026.01", 0))
 	return
 
 SetLibrarySettings({})
@@ -9535,8 +9535,8 @@ function FireWeaponCheck()
 	foreach(/**@type {CTFWeaponBase} */wep in self.GetAllWeapons())
 	{
 		if(wep.GetClassname() == "tf_weapon_flamethrower")
-		{
-			if(GetPropBool(GetPropEntity(wep, "LocalFlameThrowerData.m_hFlameManager"), "m_bIsFiring"))
+		{	// TF2Classified turns it into a int with -1, 0, and 1
+			if(GetPropInt(GetPropEntity(wep, "LocalFlameThrowerData.m_hFlameManager"), "m_bIsFiring") == 1)
 			{
 				FireScriptEvent("PlayerFireWeapon", {player = self, weapon = wep})
 				self.AddCondEx(wep.GetAttribute("add cond on attack", -1), wep.GetAttribute("add cond on attack duration", 1), self)
