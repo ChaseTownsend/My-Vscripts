@@ -217,7 +217,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format)
-if (!SetLibraryVersion("06.23.2026.20", 0))
+if (!SetLibraryVersion("06.24.2026.00", 0))
 	return
 
 SetLibrarySettings({})
@@ -1801,7 +1801,7 @@ function CTFPlayer::GetSpellBook()
 	return null
 }
 
-//TODO: update using OnStartTouch && OnEndTouch outputs of respawn rooms
+// TODO: update using OnStartTouch && OnEndTouch outputs of respawn rooms
 function CTFPlayer::InRespawnRoom(any = false)
 {
 	foreach (respawnroom in GetAllEntitiesByClassname("func_respawnroom"))
@@ -3928,6 +3928,53 @@ function CTFPlayer::DisplayHudHint(text, duration = 10.0, flash = true, Hide = t
 		RunWithDelay(10, @() DisplayHudHint(text, duration-10, flash, false))
 }
 
+if(!("_GetCustomAttribute" in CTFPlayer))
+{
+	CTFPlayer._GetCustomAttribute <- CTFPlayer.GetCustomAttribute
+	CTFBot.GetCustomAttribute <- CTFBot.GetCustomAttribute
+	/**
+	 * Modified version that can hook our custom attributes
+	 * @param {string} attrib
+	 * @param {float} def
+	 * @returns {float}
+	 */
+	function CTFPlayer::GetCustomAttribute(attrib, def)
+	{
+		if(!this || !this.IsValid())
+			return 0
+		if(GET_CUSTOM_ATTRIBUTE(attrib))
+		{
+			local ret_value = _GetCustomAttribute(attrib, def)
+			local attrib_exist = ret_value == _GetCustomAttribute(attrib, RandomInt(0-0x7FFF, 0x7FFF))
+			if(attrib_exist)
+				return ret_value
+			return GET_CUSTOM_PLAYER_ATTRIBUTE_VALUE(this, attrib, def)
+		}
+		
+		return _GetCustomAttribute(attrib, def)
+	}
+	/**
+	 * 
+	 * @param {string} attrib
+	 * @param {float} def
+	 * @returns {float}
+	 */
+	function CTFBot::GetCustomAttribute(attrib, def)
+	{
+		if(!this || !this.IsValid())
+			return 0
+		if(GET_CUSTOM_ATTRIBUTE(attrib))
+		{
+			local ret_value = _GetCustomAttribute(attrib, def)
+			local attrib_exist = ret_value == _GetCustomAttribute(attrib, RandomInt(def.tointeger()+1, def.tointeger()+0x7FFF))
+			if(attrib_exist)
+				return ret_value
+			return GET_CUSTOM_PLAYER_ATTRIBUTE_VALUE(this, attrib, def)
+		}
+
+		return _GetCustomAttribute(attrib, def)
+	}
+}
 // function CTFPlayer::DisplayHudHint(text, duration = 10.0, flash = true, Hide = true)
 // {
 // 	local hint_ent = GetHudHint()
@@ -4252,6 +4299,178 @@ function ROOT::GET_CUSTOM_ATTRIBUTE_VALUE(idx, attrib, def = 0)
 	
 	return CUSTOM_ATTRIBUTE_WEAPONS[idx][attrib]
 }
+/**
+ * @param {integer} idx
+ * @param {string} attrib
+ */
+// function ROOT::SET_CUSTOM_ATTRIBUTE_VALUE(idx, attrib, def = 0)
+// {
+// 	if(GET_CUSTOM_ATTRIBUTE(attrib) == null)
+// 		return def
+
+// 	if(!GET_CUSTOM_WEAPON_ATTRIBUTE(idx, attrib))
+// 		return def
+	
+// 	return CUSTOM_ATTRIBUTE_WEAPONS[idx][attrib]
+// }
+/**
+ * @param {CTFPlayer|CTFBot} player
+ * @param {string} attrib
+ * 
+ * @returns {integer|float} Will return def if not found
+ */
+function ROOT::GET_CUSTOM_PLAYER_ATTRIBUTE_VALUE(player, attrib, def = 0)
+{
+	if(GET_CUSTOM_ATTRIBUTE(attrib) == null)
+		return def
+
+	if(!("CUSTOM_ATTRIBUTES" in GetScope(player)))
+	{
+		GetScope(player).CUSTOM_ATTRIBUTES <- {}
+		return def
+	}
+
+	if(!(attrib in GetScope(player).CUSTOM_ATTRIBUTES))
+		return def
+
+	return GetScope(player).CUSTOM_ATTRIBUTES[attrib]
+}
+/**
+ * @param {CTFPlayer|CTFBot} player
+ * @param {string} attrib
+ * @param {float|integer} value
+ */
+function ROOT::SET_CUSTOM_PLAYER_ATTRIBUTE_VALUE(player, attrib, value)
+{
+	if(GET_CUSTOM_ATTRIBUTE(attrib) == null)
+		return
+
+	if(!("CUSTOM_ATTRIBUTES" in GetScope(player)))
+		GetScope(player).CUSTOM_ATTRIBUTES <- {}
+
+	GetScope(player).CUSTOM_ATTRIBUTES[attrib] <- value
+}
+
+// To Use these custom attributes Un-Comment the below function calls
+
+/* 
+ * Corrosion
+ *
+ * Inflicts a Infinite duration Damaging effect
+ * Can also drop a puddle when killed
+ * 
+ * Note: Cannot apply Corrosion to Players
+ * 
+ * **Note: Requires Gameplay-Applications**
+ */
+//
+
+// DEFINE_CUSTOM_ATTRIBUTE("corrosion on hit")
+// DEFINE_CUSTOM_ATTRIBUTE("corrosion on crit")
+// DEFINE_CUSTOM_ATTRIBUTE("corrosion tick duration")
+// DEFINE_CUSTOM_ATTRIBUTE("corrosion damage percent")
+// DEFINE_CUSTOM_ATTRIBUTE("corrosion damage add")
+// DEFINE_CUSTOM_ATTRIBUTE("corrosion drop puddle")
+
+/**
+ * Throwable stuff
+ * 
+ * Used to modify the values of throwables when spawning
+ */
+// DEFINE_CUSTOM_ATTRIBUTE("throwable starts empty")
+// DEFINE_CUSTOM_ATTRIBUTE("throwable start charge")
+
+/**
+ * Bleed
+ * 
+ * Allows Bleed to Crit if the user is Crit-boosted
+ */
+// DEFINE_CUSTOM_ATTRIBUTE("allow crit bleed")
+
+/**
+ * Condition on stomped enemy
+ * 
+ * Applies this Condition number to the enemy you stomped on, 
+ * for a duration
+ */
+// DEFINE_CUSTOM_ATTRIBUTE("cond on stomped")
+// DEFINE_CUSTOM_ATTRIBUTE("cond on stomped duration")
+
+/**
+ * Condition on stomp
+ * 
+ * Applies this Condition number to yourself for this duration on stomp
+ */
+// DEFINE_CUSTOM_ATTRIBUTE("cond on stomp")
+// DEFINE_CUSTOM_ATTRIBUTE("cond on stomp duration")
+
+/**
+ * Random Damage Mults
+ * 
+ * Multiple Damage Multiplier Attributes
+ */
+// DEFINE_CUSTOM_ATTRIBUTE("stomp dmg mult")
+// DEFINE_CUSTOM_ATTRIBUTE("spellskeletons dmg mult")
+// DEFINE_CUSTOM_ATTRIBUTE("spellmirv dmg mult")
+// DEFINE_CUSTOM_ATTRIBUTE("spellmeteor dmg mult")
+// DEFINE_CUSTOM_ATTRIBUTE("spelllightningorb dmg mul")
+// DEFINE_CUSTOM_ATTRIBUTE("spellfireball dmg mult")
+// DEFINE_CUSTOM_ATTRIBUTE("spelleyeball dmg mult")
+// DEFINE_CUSTOM_ATTRIBUTE("spelljump dmg mult")
+// DEFINE_CUSTOM_ATTRIBUTE("spellbats dmg mult")
+// DEFINE_CUSTOM_ATTRIBUTE("halloween kart dmg mult")
+// DEFINE_CUSTOM_ATTRIBUTE("taunt dmg mult")
+// DEFINE_CUSTOM_ATTRIBUTE("taunt dmg mult active")
+// DEFINE_CUSTOM_ATTRIBUTE("mult dmg while blast jumping")
+// DEFINE_CUSTOM_ATTRIBUTE("mult dmg while airborne")
+
+/**
+ * Random Damage taken mults
+ * 
+ * Multiple Damage Taken Multiplier Attributes
+ */
+// DEFINE_CUSTOM_ATTRIBUTE("stomp dmg taken mult")
+// DEFINE_CUSTOM_ATTRIBUTE("spellskeletons dmg taken mult")
+// DEFINE_CUSTOM_ATTRIBUTE("spellmirv dmg taken mult")
+// DEFINE_CUSTOM_ATTRIBUTE("spellmeteor dmg taken mult")
+// DEFINE_CUSTOM_ATTRIBUTE("spelllightningorb dmg taken mult")
+// DEFINE_CUSTOM_ATTRIBUTE("spellfireball dmg taken mult")
+// DEFINE_CUSTOM_ATTRIBUTE("spelleyeball dmg taken mult")
+// DEFINE_CUSTOM_ATTRIBUTE("spelljump dmg taken mult")
+// DEFINE_CUSTOM_ATTRIBUTE("spellbats dmg taken mult")
+// DEFINE_CUSTOM_ATTRIBUTE("halloween kart dmg taken mult")
+// DEFINE_CUSTOM_ATTRIBUTE("bleeding dmg taken mult")
+// DEFINE_CUSTOM_ATTRIBUTE("plague dmg taken mult")
+// DEFINE_CUSTOM_ATTRIBUTE("fall dmg taken mult")
+// DEFINE_CUSTOM_ATTRIBUTE("corrosion dmg taken mult")
+
+/**
+ * Stomp
+ * 
+ * Stomping will now use your falling velocity instead 
+ * of the fall damage you would have taken
+ */
+// DEFINE_CUSTOM_ATTRIBUTE("stomp uses velocity")
+
+/**
+ * Explosive Backstab
+ * 
+ * Create an explosion on Backstab
+ */
+// DEFINE_CUSTOM_ATTRIBUTE("explosive backstab")
+// DEFINE_CUSTOM_ATTRIBUTE("explosive backstab base radius")
+// DEFINE_CUSTOM_ATTRIBUTE("explosive backstab radius add")
+// DEFINE_CUSTOM_ATTRIBUTE("explosive backstab base damage")
+// DEFINE_CUSTOM_ATTRIBUTE("explosive backstab damage add")
+
+/**
+ * AddCond on attack
+ * 
+ * Apply a condition for a duration on attack
+ */
+// DEFINE_CUSTOM_ATTRIBUTE("add cond on attack")
+// DEFINE_CUSTOM_ATTRIBUTE("add cond on attack duration")
+
 
 /*
   =====================================
@@ -4270,7 +4489,9 @@ function ROOT::GET_CUSTOM_ATTRIBUTE_VALUE(idx, attrib, def = 0)
 if(!("_GetAttribute" in CTFWeaponBase))
 {
 	CTFWeaponBase._GetAttribute <- CTFWeaponBase.GetAttribute
+	CTFWeaponBase._AddAttribute <- CTFWeaponBase.AddAttribute
 	CEconEntity._GetAttribute <- CEconEntity.GetAttribute
+	CEconEntity._AddAttribute <- CEconEntity.AddAttribute
 	/**
 	 * Modified version that can hook our custom attributes
 	 * @param {string} attrib
@@ -4300,6 +4521,38 @@ if(!("_GetAttribute" in CTFWeaponBase))
 			return GET_CUSTOM_ATTRIBUTE_VALUE(GetIDX(), attrib, def)
 
 		return _GetAttribute(attrib, def)
+	}
+	/**
+	 * Modified version that can hook our custom attributes
+	 * @param {string} attrib
+	 * @param {float} value
+	 * @param {float} _duration
+	 */
+	function CTFWeaponBase::AddAttribute(attrib, value, _duration)
+	{
+		if(!this || !this.IsValid())
+			return
+		return _AddAttribute(attrib, value _duration)
+		// if(GET_CUSTOM_ATTRIBUTE(attrib))
+		// 	return GET_CUSTOM_ATTRIBUTE_VALUE(GetIDX(), attrib, def)
+		
+		// return _GetAttribute(attrib, def)
+	}
+	/**
+	 * Modified version that can hook our custom attributes
+	 * @param {string} attrib
+	 * @param {float} value
+	 * @param {float} _duration
+	 */
+	function CEconEntity::AddAttribute(attrib, value, _duration)
+	{
+		if(!this || !this.IsValid())
+			return 
+		return _AddAttribute(attrib, value _duration)
+		// if(GET_CUSTOM_ATTRIBUTE(attrib))
+		// 	return GET_CUSTOM_ATTRIBUTE_VALUE(GetIDX(), attrib, def)
+
+		// return _GetAttribute(attrib, def)
 	}
 }
 
@@ -7422,6 +7675,9 @@ function ROOT::IsInArray(item, array)
 function ROOT::IsPotato()
 	return "__potato" in ROOT
 
+function ROOT::IsChaosMvM()
+	return "__chaosmvm" in ROOT
+
 /**
  * @param {Vector} point
  */
@@ -9268,31 +9524,33 @@ else if(FindByName(null, "OnCondition"))
   === END OF ONCOND HOOK FUNCTIONS ===
   ====================================
 */
-
+/** 
+ * @var {CTFPlayer} self
+ */
 function FireWeaponCheck()
 {
 	if(self.IsDead())
 		return 0.1
 
-	foreach(wep in self.GetAllWeapons())
+	foreach(/**@type {CTFWeaponBase} */wep in self.GetAllWeapons())
 	{
 		if(wep.GetClassname() == "tf_weapon_flamethrower")
 		{
 			if(GetPropBool(GetPropEntity(wep, "LocalFlameThrowerData.m_hFlameManager"), "m_bIsFiring"))
 			{
 				FireScriptEvent("PlayerFireWeapon", {player = self, weapon = wep})
-				self.AddCondEx(wep.GetAttribute("add cond on attack", -1), wep.GetAttribute("add cond on attack duration", -1), self)
+				self.AddCondEx(wep.GetAttribute("add cond on attack", -1), wep.GetAttribute("add cond on attack duration", 1), self)
 			}
 			continue
 		}
-		else if(wep.IsMeleeWeapon())
+		else if("IsMeleeWeapon" in wep && wep.IsMeleeWeapon())
 		{
 			if(GetPropInt(self, "m_Shared.m_iNextMeleeCrit") > 0)
 			{
 				FireScriptEvent("PlayerFireWeapon", {player = self, weapon = wep})
 				SetPropInt(self, "m_Shared.m_iNextMeleeCrit", -2)
 
-				self.AddCondEx(wep.GetAttribute("add cond on attack", -1), wep.GetAttribute("add cond on attack duration", -1), self)
+				self.AddCondEx(wep.GetAttribute("add cond on attack", -1), wep.GetAttribute("add cond on attack duration", 1), self)
 			}
 			continue
 		}
@@ -9306,17 +9564,17 @@ function FireWeaponCheck()
 		if(FireTime > scope.LastFireTime)
 		{
 			FireScriptEvent("PlayerFireWeapon", {player = self, weapon = wep})
-			self.AddCondEx(wep.GetAttribute("add cond on attack", -1), wep.GetAttribute("add cond on attack duration", -1), self)
+			self.AddCondEx(wep.GetAttribute("add cond on attack", -1), wep.GetAttribute("add cond on attack duration", 1), self)
 			scope.LastFireTime = FireTime
 		}
 	}
 	return -1
 }
-
+/** 
+ * @var {CTFPlayer} self
+ */
 function SwapWeaponThink()
 {
-	/** @type {CTFPlayer} */
-	local self = self
 	if(self.IsDead())
 		return 0.1
 	local current = self.GetActiveWeapon()
@@ -11363,20 +11621,35 @@ seterrorhandler(function(e)
 	local console = FatCatLibSettings.ConsoleErrors
 	local public = FatCatLibSettings.PublicErrors
 
+	ReCalculatePlayers()
+
 	if(public == true)
 	{
-		local message = "\x07FF0000A VSCRIPT ERROR HAS OCCURRED [%s]. Please report to @The Fatcat in "+(IsPotato() ? "Titan's Submission Post" : "#bug-reports")+" with a screenshot."
-		PrintToChatAllF(message, e)
+		// Possible Locations
+		//	Potato:
+		//	ChaosMvM:
+		//	Github Repository:
+		local WhereReport = IsPotato() ? "@The Fatcat in #scripting" : (IsChaosMvM() ? "@The Fatcat in #bug-reports" : "The Fatcat's Github Repository")
+
+		PrintToChatAllF("\x07FF0000A VSCRIPT ERROR HAS OCCURRED [%s].", e)
+		PrintToChatAllF("\x07FF0000Report to Any Higher Ups or %s with a screenshot of the console.", WhereReport)
+		foreach (/**@type {CTFPlayer} */plr in Players) {
+			plr.DisplayHudText("A VSCRIPT ERROR HAS OCCURRED\nCHECK CONSOLE", "255 0 0", [-1, 0.3], 10, 0)
+			plr.DisplayHudText("A VSCRIPT ERROR HAS OCCURRED\nCHECK CONSOLE", "255 0 0", [-1, 0.3], 10, 1)
+			plr.DisplayHudText("A VSCRIPT ERROR HAS OCCURRED\nCHECK CONSOLE", "255 0 0", [-1, 0.3], 10, 2)
+			plr.DisplayHudText("A VSCRIPT ERROR HAS OCCURRED\nCHECK CONSOLE", "255 0 0", [-1, 0.3], 10, 3)
+		}
 
 		foreach (stackinfo in STACK)
 		{
-			if(stackinfo.len() > 200)
+			PrintToChatAll(stackinfo)
+			/* if(stackinfo.len() > 200)
 			{
 				PrintToChatAll(stackinfo.slice(0, 200))
 				PrintToChatAll(stackinfo.slice(200))
 			}
 			else 
-				PrintToChatAll(stackinfo)
+				PrintToChatAll(stackinfo) */
 		}
 	}
 	if(console == true)
@@ -11384,6 +11657,7 @@ seterrorhandler(function(e)
 		PrintToAdmins(3, format("\x07FF0000AN ERROR HAS OCCURRED [%s].\nCheck console for details", e))
 	}
 
+	Chat("\nCurrent Library Version: "+FatCatLibVersion.version+"\n")
 	Chat(format("\n====== TIMESTAMP: %g ======\nAN ERROR HAS OCCURRED [%s]", Time(), e))
 	Chat("CALLSTACK")
 	local s, l = 2
