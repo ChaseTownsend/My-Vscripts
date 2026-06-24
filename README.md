@@ -2,6 +2,9 @@
 This is my library of all things vscript that i use. <br>
 It contains a bunch of helper functions and new functions that Make vscript just a bit better.
 
+The Library currently Supports TF2 and TF2Classified
+Any bugs should be reported as using Githubs Issue's
+
 
 <h1>Credits:</h1>
 - Me <br>
