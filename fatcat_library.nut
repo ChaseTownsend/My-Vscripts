@@ -11630,7 +11630,7 @@ seterrorhandler(function(e)
 		//	ChaosMvM:
 		//	Github Repository:
 		local WhereReport = IsPotato() ? "@The Fatcat in #scripting" : (IsChaosMvM() ? "@The Fatcat in #bug-reports" : "The Fatcat's Github Repository")
-
+		
 		PrintToChatAllF("\x07FF0000A VSCRIPT ERROR HAS OCCURRED [%s].", e)
 		PrintToChatAllF("\x07FF0000Report to Any Higher Ups or %s with a screenshot of the console.", WhereReport)
 		foreach (/**@type {CTFPlayer} */plr in Players) {
