@@ -2,7 +2,7 @@
 name: Suggestion
 about: Suggest something that can / should be changed
 title: 'Suggestion: template'
-labels: enhancment
+labels: enhancement
 assignees: ChaseTownsend
 
 ---

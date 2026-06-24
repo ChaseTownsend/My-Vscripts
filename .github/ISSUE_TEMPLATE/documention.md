@@ -2,7 +2,7 @@
 name: Documention
 about: Documention is Needed for this
 title: 'Documention: template'
-labels: documention
+labels: documentation
 assignees: ChaseTownsend
 
 ---
