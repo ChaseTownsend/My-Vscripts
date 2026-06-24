@@ -1,6 +1,6 @@
 if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
-SetScriptVersion("Abilities", "2.7.1")
+SetScriptVersion("Abilities", "2.7.2")
 
 ::Debug_Abilities <- false
 
@@ -163,7 +163,7 @@ function CreateAbility(weapon, spawncooldown, name, player_class, idx, text_parm
 					player.SetCond(TF_COND_IMMUNE_TO_PUSHBACK, 2.75)
 					player.SetCond(TF_COND_STUNNED, 2.55)
 
-					RunWithDelay(@() HeavyGoKaboom(player), 2.55)
+					RunWithDelay(2.55, @() HeavyGoKaboom(player))
 				})
 				break
 			}
@@ -173,7 +173,7 @@ function CreateAbility(weapon, spawncooldown, name, player_class, idx, text_parm
 					local player = self.GetOwner()
 					player.ForceTaunt(TF_TAUNT_CHEERS)
 
-					RunWithDelay(@() GiveMeThyHealth(player), CheersSettings.UseTimes[player.GetPlayerClass()])
+					RunWithDelay(CheersSettings.UseTimes[player.GetPlayerClass()], @() GiveMeThyHealth(player))
 				})
 				break
 			}
@@ -183,7 +183,7 @@ function CreateAbility(weapon, spawncooldown, name, player_class, idx, text_parm
 					local player = self.GetOwner()
 					player.ForceTaunt(TF_TAUNT_SECOND_RATE_SORCERY)
 
-					RunWithDelay(@() SummonLasKart(player), KartSettings.UseTimes[player.GetPlayerClass()])
+					RunWithDelay(KartSettings.UseTimes[player.GetPlayerClass()], @() SummonLasKart(player))
 				})
 				break
 			}

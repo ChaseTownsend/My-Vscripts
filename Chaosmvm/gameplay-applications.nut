@@ -1,7 +1,7 @@
 if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
-SetScriptVersion("GameplayApplications", "5.1.1")
+SetScriptVersion("GameplayApplications", "5.1.2")
 
 local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", THINKER_PERSIST)
 
@@ -221,7 +221,7 @@ RegisterEquipItem(1121, "Mutated Milk", "mutated", true, {}, function(player) {r
 	"move speed bonus" 				: 2
 	"maxammo primary reduced" 		: 5
 	"attach particle effect" 		: 2
-	"fire rate penalty" 			: 0.01
+	"fire rate penalty" 			: 2.5
 	"reload time increased" 		: 5
 	"projectile no deflect" 		: 1
 	"projectile spread angle mult" 	: 0
@@ -661,7 +661,7 @@ function GameplayThink()
 		if (GetPropBool(tank, "m_bGlowEnabled") == true)
 			continue
 
-		RunWithDelay(@() SetPropBool(tank, "m_bGlowEnabled", true), 0.1)
+		RunWithDelay(0.1, @() SetPropBool(tank, "m_bGlowEnabled", true))
 	}
 
 	if(AliveBots == 0)
@@ -939,9 +939,9 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 
 		local meleeIDX = player.GetWeaponIDXInSlotNew(SLOT_MELEE)
 		if(meleeIDX == TF_WEAPON_FIST_OF_STEEL)
-			RunWithDelay(@() player.TransformGHeavy(), 0.1)
+			RunWithDelay(0.1, @() player.TransformGHeavy())
 		else
-			RunWithDelay(@() player.UndoGHeavy(), 0.1)
+			RunWithDelay(0.1, @() player.UndoGHeavy())
 	}
 	function OnScriptEvent_HumanSpawn(params)
 	{
@@ -949,7 +949,7 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 			return
 		/** @type {CTFPlayer} */
 		local player = params.player
-		RunWithDelay(@() player.FixAmmo(), 0.1)
+		RunWithDelay(0.1, @() player.FixAmmo())
 		local spellbook = player.GetSpellBook()
 		
 		foreach (/**@type {CTFWeaponBase} */weapon in player.GetAllWeapons())

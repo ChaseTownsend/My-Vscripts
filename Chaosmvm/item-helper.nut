@@ -8,7 +8,7 @@ const item_help_color_header = "\x0826c2ffDD"
 const text_color_header = "\x0826beffBB"
 const error_color = "\x07D43F3F"
 
-SetScriptVersion("item_helper", "3.4.2")
+SetScriptVersion("item_helper", "3.4.3")
 ::helper <- {}
 
 ::ItemTranslateTable <- {
@@ -343,7 +343,7 @@ AddChatTrigger("itemhelp", function(player, ...) {
 
 		if(scope.SpawnHelper == 2 || (scope.SpawnHelper == 1 && GetRoundState() != GR_STATE_RND_RUNNING))
 		{
-			RunWithDelay(@() DisplayItemHelps(player, scope), TICK_DUR * 5)
+			RunWithDelay(FIVE_TICKS, @() DisplayItemHelps(player, scope))
 		}
 	}
 }

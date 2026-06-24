@@ -1,7 +1,7 @@
 if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
-SetScriptVersion("WaveSave", "1.0.2")
+SetScriptVersion("WaveSave", "1.0.3")
 
 ::CHECKPOINT_ERROR <- "\x07bf4137"
 ::WAVE_SAVE_FILE 	<- "checkpoint.txt"
@@ -177,7 +177,7 @@ if("WaveSaving" in ROOT) ::WaveSaving.clear()
 ::WaveSaving <- {
 	function OnScriptEvent_WaveComplete(_)
 	{
-		RunWithDelay(@() WaveEndLogic(), 0.1)
+		RunWithDelay(0.1, @() WaveEndLogic())
 	}
 }
 __CollectGameEventCallbacks(WaveSaving)

@@ -217,7 +217,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format)
-if (!SetLibraryVersion("06.22.2026.00", 0))
+if (!SetLibraryVersion("06.23.2026.20", 0))
 	return
 
 SetLibrarySettings({})
@@ -893,6 +893,9 @@ enum ProjectileType_t
 ::MAX_WEAPONS			<- 8
 ::TICKRATE 				<- 66
 ::TICK_DUR 				<- 1.0/TICKRATE
+::THREE_TICKS 			<- TICK_DUR * 3.0
+::FIVE_TICKS 			<- TICK_DUR * 5.0
+::TEN_TICKS 			<- TICK_DUR * 10.0
 ::MAX_DECAPITATIONS 	<- 4
 ::MAX_USER_MSG_DATA 	<- 255
 ::MAX_CLIENT_PRINT_DATA <- MAX_USER_MSG_DATA-6
@@ -1269,7 +1272,7 @@ function CTFPlayer::PlayerFire(action = "", input = "", delay = -1, activator = 
  * @param {float} delay 
 */
 function CTFPlayer::RunScriptCode(input, delay = -1)
-	RunWithDelay(this.compilestring(input), delay)
+	RunWithDelay(delay, this.compilestring(input, "Input__runscriptcode"))
 
 function CTFPlayer::GetGroundEntity()
 	return GetPropEntity(this, "m_hGroundEntity")
@@ -2843,7 +2846,7 @@ function CTFPlayer::RollSpell()
 	if(spellbook.GetSpellCharges() != 0)
 		return
 	spellbook.SetSpellIndex(TF_SPELL_UNKNOWN)
-	RunWithDelay(@() spellbook.SetRandomSpell(), 2.1)
+	RunWithDelay(2.1, @() spellbook.SetRandomSpell())
 }
 
 /*	PrintTime = {
@@ -3575,7 +3578,7 @@ function CTFPlayer::StripItemSlot(slot)
 		RemoveWearables()
 
 	// update speed from removed items
-	RunWithDelay(@() TeamFortress_SetSpeed(), TICK_DUR * 10)
+	RunWithDelay(TEN_TICKS, @() TeamFortress_SetSpeed())
 }
 
 function CTFPlayer::CanStomp()
@@ -3838,9 +3841,9 @@ function CTFPlayer::UseGiantModel(buster = false)
 	if(buster)
 	{
 		if(GetTeam() == TF_TEAM_RED)
-			PlayerFire("SetCustomModelWithClassAnimations", "models/bots/demo/red_sentry_buster_v2.mdl", TICK_DUR * 10)
+			PlayerFire("SetCustomModelWithClassAnimations", "models/bots/demo/red_sentry_buster_v2.mdl", FIVE_TICKS)
 		else
-			PlayerFire("SetCustomModelWithClassAnimations", "models/bots/demo/bot_sentry_buster.mdl", TICK_DUR * 10)
+			PlayerFire("SetCustomModelWithClassAnimations", "models/bots/demo/bot_sentry_buster.mdl", FIVE_TICKS)
 	}
 	else
 	{
@@ -3855,14 +3858,14 @@ function CTFPlayer::UseGiantModel(buster = false)
 		local model_name = format("models/bots/%s_boss/bot_%s_boss.mdl", name, name)
 		// printf("Trying to apply Model \"%s\" to player\n", model_name)
 
-		PlayerFire("SetCustomModelWithClassAnimations", model_name, TICK_DUR * 10)
+		PlayerFire("SetCustomModelWithClassAnimations", model_name, FIVE_TICKS)
 	}
 }
 
 function CTFPlayer::UseRobotModel()
 {
 	StripItemSlot(STRIPSLOT_COSMETICS)
-	PlayerFire("SetCustomModelWithClassAnimations", format("models/bots/%s/bot_%s.mdl", GetPlayerClassName().tolower(), GetPlayerClassName().tolower()), TICK_DUR * 10)
+	PlayerFire("SetCustomModelWithClassAnimations", format("models/bots/%s/bot_%s.mdl", GetPlayerClassName().tolower(), GetPlayerClassName().tolower()), FIVE_TICKS)
 }
 
 function CTFPlayer::ShouldDetonate()
@@ -3871,7 +3874,7 @@ function CTFPlayer::ShouldDetonate()
 		return
 	if(swap2(GetPropInt(this, "m_Shared.m_unTauntSourceItemID_Low")) != 65535)
 		return
-	RunWithDelay(@() SentryBusterExplode(), 1.9)
+	RunWithDelay(1.9, @() SentryBusterExplode())
 }
 
 function CTFPlayer::SentryBusterExplode()
@@ -3920,9 +3923,9 @@ function CTFPlayer::DisplayHudHint(text, duration = 10.0, flash = true, Hide = t
 		EntFireNew(hint_ent, "HideHudHint", "", duration, this, this)
 
 	if(flash == true && duration > 2)
-		RunWithDelay(@() DisplayHudHint(text, duration-2, flash, false), 2)
+		RunWithDelay(2, @() DisplayHudHint(text, duration-2, flash, false))
 	else if(duration > 10 && flash == false)
-		RunWithDelay(@() DisplayHudHint(text, duration-10, flash, false), 10)
+		RunWithDelay(10, @() DisplayHudHint(text, duration-10, flash, false))
 }
 
 // function CTFPlayer::DisplayHudHint(text, duration = 10.0, flash = true, Hide = true)
@@ -7253,7 +7256,7 @@ function ROOT::dummy_ent() {
 	relay.ValidateScriptScope()
 	return relay
 }
-
+/* 
 function ROOT::RunWithDelay(func, delay = 0.0)
 {
 	if(type(delay) == "function" && type(func) != "function")
@@ -7261,6 +7264,32 @@ function ROOT::RunWithDelay(func, delay = 0.0)
 		local temp = func
 		func = delay
 		delay = temp
+	}
+	local dummy = dummy_ent()
+	GetScope(dummy)["Run"] <- function()
+	{
+		dummy.Kill()
+		func()
+	}.bindenv(this)
+
+	EntFireByHandle(dummy, "CallScriptFunction", "Run", delay, null, null)
+	return dummy
+} */
+/** 
+ * @param {float|integer} 	delay
+ * @param {function} 		func
+ * @returns {CBaseEntity|null}
+ */
+function ROOT::RunWithDelay(delay, func)
+{
+	// using `function() {}, delay` is now deprecated, looks bad with long funcs
+	if(type(delay) == "function" && type(func) != "function")
+	{
+		DeprecatedWarning(getstackinfos(1), getstackinfos(2))
+		/** @type {function} */
+		local actual_func = delay
+		delay = func
+		func = actual_func
 	}
 	local dummy = dummy_ent()
 	GetScope(dummy)["Run"] <- function()
@@ -7486,8 +7515,8 @@ function ROOT::CreateParticle(particle, origin, angle = QAngle(-90, 0, 0))
 	temp.SetAbsOrigin(origin)
 	temp.SetAbsAngles(angle)
 	temp.AcceptInput("Start", "", null, null)
-	EntFireNew(temp, "Stop", "", TICK_DUR*3)
-	EntFireNew(temp, "Kill", "", TICK_DUR*5)
+	EntFireNew(temp, "Stop", "", THREE_TICKS)
+	EntFireNew(temp, "Kill", "", FIVE_TICKS)
 	return temp
 }
 
@@ -7706,7 +7735,7 @@ function ROOT::ToggleSlowDown(amount = 1.0, sound = "", revert_sound = "", rever
 
 	if(amount != 1.0 && revert != 0.0)
 	{
-		RunWithDelay(@() ToggleSlowDown(1.0, revert_sound), revert*amount)
+		RunWithDelay(revert*amount, @() ToggleSlowDown(1.0, revert_sound))
 	}
 }
 
@@ -9332,6 +9361,60 @@ function SwapWeaponThink()
   === CUSTOM EVENT HANDLING ===
   =============================
 */
+/** 
+ * @type {function}
+ * @param {CTFPlayer|CTFBot} player
+ */
+function ROOT::PostPlayerSpawn(player)
+{
+	player.StripItemSlot(player.HookAdditiveAttributes("strip item slot"))
+
+	if(player.HookAdditiveAttributes("use sentrybuster model") > 0)
+	{
+		player.UseGiantModel(true)
+		EmitSoundOn("MVM.SentryBusterIntro", player)
+	}
+	else if(player.HookAdditiveAttributes("use giant robot model") > 0)
+		player.UseGiantModel()
+	else if(player.HookAdditiveAttributes("use robot model") > 0)
+		player.UseRobotModel()
+	else
+		player.SetCustomModelWithClassAnimations("")
+
+	//"raise health to"
+	if(player.HookAdditiveAttributes("raise health to") > 0)
+	{
+		local to_hp = player.HookAdditiveAttributes("raise health to")
+		if(player.GetMaxHealth() < to_hp)
+		{
+			local added = to_hp - player.GetMaxHealth()
+			player.AddCustomAttribute("max health additive bonus", added, -1)
+		}
+	}
+
+	player.SetForcedTauntCam(0)
+
+	if(player.HookAdditiveAttributes("prevent third person") == 0 && player.HookAdditiveAttributes("use third person") > 0)
+		player.SetForcedTauntCam(1)
+
+	local slot = -1
+	foreach (wep in player.GetAllWeapons())
+	{
+		if(wep.GetAttribute("force slot on spawn", -1) != -1)
+			slot = wep.GetAttribute("force slot on spawn", -1)
+	}
+	if(slot > -1)
+	{
+		local wep = player.GetWeaponInSlotNew(slot)
+		if(wep && !wep.IsWearable())
+			RunWithDelay(0.1, @() player.Weapon_Switch(wep))
+	}
+	
+	foreach (wep in player.GetAllWeapons())
+		player.SetCond(wep.GetAttribute("cond on spawn", -1), wep.GetAttribute("cond on spawn duration", -1))
+
+	player.SetCond(player.GetCustomAttribute("cond on spawn", -1), player.GetCustomAttribute("cond on spawn duration", -1))
+}
 
 // Makes Custom Events to listen to
 ::ChaosCustomEvents <- {
@@ -9912,64 +9995,18 @@ function SwapWeaponThink()
 			SetPropInt(player, "m_Shared.m_iNextMeleeCrit", -2)
 			player.AddThink(FireWeaponCheck, "FireWeaponCheck")
 			player.AddThink(SwapWeaponThink, "SwapWeaponThink")
-
-			// RunWithDelay(@() ProccessItemSets(player), TICK_DUR * 1)
 		}
+
+		// Better func
+		RunWithDelay(THREE_TICKS, @() PostPlayerSpawn(player))
 
 		if(player.IsAdmin())
 			SetPropInt(player, "m_autoKickDisabled", 1)
 
-		player.StripItemSlot(player.HookAdditiveAttributes("strip item slot"))
-
-		if(player.HookAdditiveAttributes("use sentrybuster model") > 0)
-		{
-			player.UseGiantModel(true)
-			EmitSoundOn("MVM.SentryBusterIntro", player)
-		}
-		else if(player.HookAdditiveAttributes("use giant robot model") > 0)
-			player.UseGiantModel()
-		else if(player.HookAdditiveAttributes("use robot model") > 0)
-			player.UseRobotModel()
-		else
-			player.SetCustomModelWithClassAnimations("")
-
-		//"raise health to"
-		if(player.HookAdditiveAttributes("raise health to") > 0)
-		{
-			local to_hp = player.HookAdditiveAttributes("raise health to")
-			if(player.GetMaxHealth() < to_hp)
-			{
-				local added = to_hp - player.GetMaxHealth()
-				player.AddCustomAttribute("max health additive bonus", added, -1)
-			}
-		}
-
-		player.SetForcedTauntCam(0)
-
-		if(player.HookAdditiveAttributes("prevent third person") == 0 && player.HookAdditiveAttributes("use third person") > 0)
-			RunWithDelay(@() player.SetForcedTauntCam(1), TICK_DUR * 3)
-
-		local slot = -1
-		foreach (wep in player.GetAllWeapons())
-		{
-			if(wep.GetAttribute("force slot on spawn", -1) != -1)
-				slot = wep.GetAttribute("force slot on spawn", -1)
-		}
-		if(slot > -1)
-		{
-			local wep = player.GetWeaponInSlotNew(slot)
-			if(wep && !wep.IsWearable())
-				RunWithDelay(@() player.Weapon_Switch(wep), 0.1)
-		}
-		
-		foreach (wep in player.GetAllWeapons())
-			player.SetCond(wep.GetAttribute("cond on spawn", -1), wep.GetAttribute("cond on spawn duration", -1))
-
-		player.SetCond(player.GetCustomAttribute("cond on spawn", -1), player.GetCustomAttribute("cond on spawn duration", -1))
-
 		local scope = GetScope(player)
 		if(!("HasSpawned" in scope) && !player.IsBot())
 		{
+			RunWithDelay(3.0, @() player.PrintToChat("\x01\x07E000E0► FatCatLib ◄   \x03Happy Pride Month!"))
 			player.PrintToChat("\x01\x07E000E0► FatCatLib ◄   \x03Happy Pride Month!")
 			scope.HasSpawned <- true
 		}
@@ -9980,9 +10017,9 @@ function SwapWeaponThink()
 		if(eventdata.team == TF_TEAM_UNASSIGNED)
 		{
 			ReCalculatePlayers()
-			RunWithDelay(@() (ReCalculatePlayers()), 0.1)
-			RunWithDelay(@() (ReCalculatePlayers()), 1.0)
-			RunWithDelay(@() (ReCalculatePlayers()), 5.0)
+			RunWithDelay(0.1, @() (ReCalculatePlayers()))
+			RunWithDelay(1.0, @() (ReCalculatePlayers()))
+			RunWithDelay(5.0, @() (ReCalculatePlayers()))
 			FireScriptEvent( player.IsBot() ? "BotInitialSpawn" : "HumanInitialSpawn", eventdata)
 		}
 		else 
@@ -10030,9 +10067,9 @@ function SwapWeaponThink()
 		FireScriptEvent(player.IsBot() ? "BotTeam" : "HumanTeam", eventdata)
 
 		ReCalculatePlayers()
-		RunWithDelay(@() (ReCalculatePlayers()), 0.1)
-		RunWithDelay(@() (ReCalculatePlayers()), 1.0)
-		RunWithDelay(@() (ReCalculatePlayers()), 5.0)
+		RunWithDelay(0.1, @() (ReCalculatePlayers()))
+		RunWithDelay(1.0, @() (ReCalculatePlayers()))
+		RunWithDelay(5.0, @() (ReCalculatePlayers()))
 	}
 	/**
 	 * @param {table} params
@@ -10201,9 +10238,9 @@ function SwapWeaponThink()
 	function OnGameEvent_player_disconnect(params) 
 	{
 		ReCalculatePlayers()
-		RunWithDelay(@() (ReCalculatePlayers()), 0.1)
-		RunWithDelay(@() (ReCalculatePlayers()), 1.0)
-		RunWithDelay(@() (ReCalculatePlayers()), 5.0)
+		RunWithDelay(0.1, @() (ReCalculatePlayers()))
+		RunWithDelay(1.0, @() (ReCalculatePlayers()))
+		RunWithDelay(5.0, @() (ReCalculatePlayers()))
 
 		ValidatePlayers()
 
@@ -10353,7 +10390,7 @@ function SwapWeaponThink()
 	}
 	function OnGameEvent_object_detonated(params)
 	{
-		local eventdata = {}
+		// local eventdata = {}
 		// PrintTable(params)
 		local owner = "userid" in params ? GetPlayerFromUserID(params.userid) : null
 		local type = params.objecttype
@@ -10426,7 +10463,7 @@ function SwapWeaponThink()
 		if(object.GetClassname() == "tf_projectile_sentryrocket" && IsValidPlayer(old_owner) && IsValidPlayer(deflector))
 		{
 			// local weapon = old_owner.GetWeaponInSlowNew(SLOT_PRIMARY)
-			if(old_owner.GetPlayerClass() == TF_CLASS_ENGINEER && /* weapon && weapon.GetAttribute */ old_owner.HookAdditiveAttributes("mod projectile heat seek power") != 0)
+			if(old_owner.GetPlayerClass() == TF_CLASS_ENGINEER && /* weapon && weapon.GetAttribute && */ old_owner.HookAdditiveAttributes("mod projectile heat seek power") != 0)
 			{
 				AddThinkToEnt(object, function() {
 					local pos = self.GetOrigin()
@@ -10439,7 +10476,7 @@ function SwapWeaponThink()
 					// self.Teleport(true, new_pos, false, QAngle(), false, Vector())
 					return -1
 				})
-				RunWithDelay(@() object.SetMoveType(MOVETYPE_FLY, GetPropInt(object, "m_MoveCollide")), TICK_DUR*3)
+				RunWithDelay(THREE_TICKS, @() object.SetMoveType(MOVETYPE_FLY, GetPropInt(object, "m_MoveCollide")))
 			}
 		}
 
@@ -11118,16 +11155,16 @@ RegisterAdminTrigger("test_tank", function(player, ...) {
 	tank.SetAbsOrigin(SpawnPosition)
 	tank.SetAbsAngles(QAngle(0, player.EyeAngles().Yaw(), 0))
 
-	EntFireNew(path, "Kill", "", TICK_DUR * 5)
+	EntFireNew(path, "Kill", "", FIVE_TICKS)
 
 	local interface = tank.GetLocomotionInterface()
 	interface.SetSpeedLimit(0)
 	interface.SetDesiredSpeed(0)
 	interface.Stop()
 
-	EntFireNew(tank, "SetSpeed", "0", TICK_DUR * 1)
-	EntFireNew(tank, "SetSpeed", "0", TICK_DUR * 5)
-	EntFireNew(tank, "SetSpeed", "0", TICK_DUR * 10)
+	EntFireNew(tank, "SetSpeed", "0", TICK_DUR)
+	EntFireNew(tank, "SetSpeed", "0", FIVE_TICKS)
+	EntFireNew(tank, "SetSpeed", "0", TEN_TICKS)
 	return player.PrintToChat("Created A "+tank_name+" with the name "+targetname.tolower())
 })
 
@@ -11244,7 +11281,7 @@ RegisterAdminTrigger("bot", function(player, ...) {
 
 	bot.ForceChangeClass(TF_CLASS_HEAVYWEAPONS, true)
 	bot.SetTeam(TF_TEAM_BLUE)
-	RunWithDelay(@() SpawnJohhny(bot, trace.pos + Vector(0, 0, 16), Giant), TICK_DUR * 2)
+	RunWithDelay(THREE_TICKS, @() SpawnJohhny(bot, trace.pos + Vector(0, 0, 16), Giant))
 })
 
 function SpawnJohhny(bot, pos, Giant = false)
@@ -11277,7 +11314,7 @@ function SpawnJohhny(bot, pos, Giant = false)
 	bot.GenerateAndWearItem("The Purity Fist")
 	bot.GenerateAndWearItem("Unusual Cap")
 
-	RunWithDelay(@() bot.Weapon_Switch(bot.GetWeaponInSlotNew(SLOT_PRIMARY)), TICK_DUR * 5)
+	RunWithDelay(FIVE_TICKS, @() bot.Weapon_Switch(bot.GetWeaponInSlotNew(SLOT_PRIMARY)))
 
 	SetFakeClientConVarValue(bot, "name", "Johnny Silverhand")
 
@@ -11387,4 +11424,4 @@ function ROOT::FixShittyPlayersBug()
 	}
 }
 
-RunWithDelay(@() FixShittyPlayersBug(), 0.25)
+RunWithDelay(0.25, @() FixShittyPlayersBug())

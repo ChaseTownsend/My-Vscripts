@@ -2,38 +2,66 @@ IncludeScript("fatcat_library")
 PrecacheSound("weapons/teleporter_send.wav")
 PrecacheSound("weapons/teleporter_receive.wav")
 
-SetScriptVersion("longbow_sentry", "1.0.7")
+SetScriptVersion("longbow_sentry", "2.0.0")
 
 ///// Events! /////
 ::longbow_events <- {
 	function OnScriptEvent_HumanSpawn(params)
 	{
 		local player = params.player
-		if(player.GetWeaponIDXInSlot(SLOT_MELEE) != TF_WEAPON_EUREKA_EFFECT) return
+		if(player.HookAdditiveAttributes("longbow buildings") == 0)
+			return
+		// if(player.GetWeaponIDXInSlot(SLOT_MELEE) != TF_WEAPON_EUREKA_EFFECT) return
 
-		player.AddThink(LongBowSentry, "LongbowSentry")
+		player.AddThink(LongbowBuildings, "LongbowBuildings")
 	}
 }
 __CollectGameEventCallbacks(longbow_events)
 
+::FLongbowAllowSentry 		<- 0x1
+::FLongbowAllowDispencer 	<- 0x2
+::FLongbowAllowTeleporter 	<- 0x4
+
 //// Player Think ////
-function LongBowSentry()
+/** 
+ * @var {CTFPlayer} self
+ */
+function LongbowBuildings()
 {
-	if(self.GetWeaponIDXInSlot(SLOT_MELEE) != TF_WEAPON_EUREKA_EFFECT)
+	// if(self.GetWeaponIDXInSlot(SLOT_MELEE) != TF_WEAPON_EUREKA_EFFECT)
+	if(player.HookAdditiveAttributes("longbow buildings") == 0)
 	{
-		self.RemoveThink("LongbowSentry")
+		self.RemoveThink("LongbowBuildings")
 		return 500
 	}
+
 	local m_iMetal = self.GetMetal()
 	local building_blueprint = GetPropEntity(self.GetWeaponInSlotNew(SLOT_PDA), "m_hObjectBeingBuilt")
 	if(!IsBuildingValid(building_blueprint)) // checks for null building, and "m_bServerOverridePlacement"
 		return -1
-	
-	if(GetPropInt(building_blueprint, "m_iObjectType") != OBJ_SENTRY)
+
+	local AllowedTypes = player.HookAdditiveAttributes("longbow buildings allowed")
+	local AllowFlags = [false, false, false]
+	if(MATH.HasBitFlag(AllowedTypes, FLongbowAllowDispencer))
+		AllowFlags[OBJ_DISPENSER] = true
+	if(MATH.HasBitFlag(AllowedTypes, FLongbowAllowTeleporter))
+		AllowFlags[OBJ_TELEPORTER] = true
+	if(MATH.HasBitFlag(AllowedTypes, FLongbowAllowSentry))
+		AllowFlags[OBJ_SENTRY] = true
+
+	// if(GetPropInt(building_blueprint, "m_iObjectType") != OBJ_SENTRY)
+	if(AllowFlags[GetPropInt(building_blueprint, "m_iObjectType")] == false)
 		return -1
 
 	local mins = GetPropVector(building_blueprint, "m_Collision.m_vecMins")
 	local maxs = GetPropVector(building_blueprint, "m_Collision.m_vecMaxs") + Vector(0, 0, 10)
+
+	// override it for teleporters
+	if(GetPropInt(building_blueprint, "m_iObjectType") == OBJ_TELEPORTER)
+	{
+		mins = Vector(-16.0, -16.0, 0)
+		maxs = Vector(16.0, 16.0, 120) // bloat height
+	}
 
 	if(!self.IsPressingButton(IN_RELOAD) || !self.IsOnGround())
 		return -1
@@ -47,18 +75,20 @@ function LongBowSentry()
 	local trace =
 	{
 		start = 	self.EyePosition()
-		end = 		self.EyePosition() + self.EyeAngles().Forward() * 1190
+		end = 		self.GetEyeOffset(1190)
 		mask =		MASK_CUSTOM_PLAYERSOLID
 		hullmin =	mins
 		hullmax = 	maxs
 		ignore = 	self
 	}
 	TraceHull(trace)
-	if(!trace.hit) return -1
-		// if(IsListenServer()) DebugDrawLine_vCol(trace.startpos, trace.endpos, Vector(255, 0, 0), false, 10)
 
-	if(IsPointInRespawnRoom(trace.endpos))  return -1
+	if(IsListenServer()) 
+		DebugDrawLine_vCol(trace.startpos, trace.endpos, Vector(255, 0, 0), false, 30)
 
+	if(!trace.hit || IsPointInRespawnRoom(trace.endpos)) 
+		return -1
+	
 	local hulltrace =
 	{
 		start = 	trace.endpos
@@ -68,15 +98,15 @@ function LongBowSentry()
 		hullmax =	maxs
 	}
 	TraceHull(hulltrace)
+
 	if(hulltrace.hit)
 	{
-		// if(IsListenServer()) DebugDrawBox(hulltrace.start, mins, maxs, 255, 0, 255, 0, 60)
+		if(IsListenServer()) 
+			DebugDrawBox(hulltrace.start, mins, maxs, 255, 0, 255, 0, 60)
 		return -1
 	}
 
 	self.GetActiveWeapon().PrimaryAttack()
-
-	// local particle = CreateParticle("dxhr_sniper_rail_red", building_blueprint.GetCenter())
 
 	local particle = SpawnEntityFromTable("info_particle_system", {
 		effect_name = "dxhr_sniper_rail_red",
@@ -87,37 +117,38 @@ function LongBowSentry()
 	SetPropEntityArray(particle, "m_hControlPointEnts", building_blueprint, 1)
 	building_blueprint.Teleport(true, trace.endpos, false, QAngle(), false, Vector())
 
-	EntFireNew(particle, "Kill", "", TICK_DUR*5)
+	EntFireNew(particle, "Kill", "", FIVE_TICKS)
 
 	CreateParticle("teleported_red", building_blueprint.GetOrigin())
 
-	// local particle2 = SpawnEntityFromTable("info_particle_system", {
-	// 	effect_name = "teleported_red",
-	// 	origin = building_blueprint.GetOrigin(),
-	// 	angles = Vector(0, -90, 0)
-	// 	start_active = 1
-	// })
+	if (IsListenServer()) 
+		ShowAABB(building_blueprint, Vector4D(255, 125, 0, 0), 10)
 
-	// if (IsListenServer()) ShowAABB(building_blueprint, Vector4D(255, 125, 0, 0), 10)
+	//TEST
+	building_blueprint.SetCollisionGroup(TFCOLLISION_GROUP_OBJECT)
 
-	GetScope(building_blueprint).think <- function() {
-		if(GetBuilder(self).GetWeaponIDXInSlotNew(SLOT_MELEE) != TF_WEAPON_EUREKA_EFFECT)
-		{
-			ClearThinks(self)
-			return
-		}
-		foreach (bot in GetAllPlayers(TF_TEAM_PVE_INVADERS, [self.GetOrigin() + Vector(0, 0, 24), 100], true))
-		{
-			if(bot.InCond(TF_COND_INVULNERABLE_HIDE_UNLESS_DAMAGED))
-			{
-				self.TakeDamage(self.GetMaxHealth() * 10, 0, bot)
-				ClearThinks(self)
-				return
-			}
-		}
-		return -1
-	}
-	AddThinkToEnt(building_blueprint, "think")
+	/** 
+	 * @var {CTFPlayer} self
+	 */
+	// local function EurekaThink() {
+	// 	if(GetBuilder(self).GetWeaponIDXInSlotNew(SLOT_MELEE) != TF_WEAPON_EUREKA_EFFECT)
+	// 	{
+	// 		ClearThinks(self)
+	// 		return
+	// 	}
+	// 	foreach (bot in GetAllPlayers(TF_TEAM_PVE_INVADERS, [self.GetCenter(), 100], true))
+	// 	{
+	// 		if(bot.InCond(TF_COND_INVULNERABLE_HIDE_UNLESS_DAMAGED))
+	// 		{
+	// 			self.TakeDamage(self.GetMaxHealth() * 10, 0, bot)
+	// 			ClearThinks(self)
+	// 			return
+	// 		}
+	// 	}
+	// 	return -1
+	// }
+	// GetScope(building_blueprint).EurekaThink <- EurekaThink
+	// AddThinkToEnt(building_blueprint, "EurekaThink")
 
 	EmitSoundEx({
 		sound_name = "weapons/teleporter_send.wav"
