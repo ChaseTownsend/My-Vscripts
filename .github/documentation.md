@@ -53,7 +53,7 @@ player.PrintToHud("Your Shield is on Cooldown!")
 
 ---
 
-### CTFPlayer.PrintToChat
+### <a name="CTFPlayer.PrintToChat">CTFPlayer.PrintToChat</a>
 Prints a Message to the players Chat
 
 **Function Signature**<br>
@@ -66,7 +66,7 @@ player.PrintToChat("Your Shield is on Cooldown!")
 
 ---
 
-### CTFPlayer.PrintToConsole
+### <a name="CTFPlayer.PrintToConsole">CTFPlayer.PrintToConsole</a>
 Prints a Message to the players Console
 
 **Function Signature**<br>
@@ -79,7 +79,7 @@ player.PrintToConsole("Debug: 15% charged")
 
 ---
 
-### CTFPlayer.PrintToHudF
+### <a name="CTFPlayer.PrintToHudF">CTFPlayer.PrintToHudF</a>
 Prints a Message to the players Hud with 
 
 **Function Signature**<br>
@@ -90,7 +90,7 @@ Prints a Message to the players Hud with
 player.PrintToHudF("Your %s is on Cooldown!", "Medication")
 ```
 
-### CTFPlayer.PrintToChatF
+### <a name="CTFPlayer.PrintToChatF">CTFPlayer.PrintToChatF</a>
 Prints a Message to the players Chat with formating
 
 **Function Signature**<br>
@@ -101,7 +101,7 @@ Prints a Message to the players Chat with formating
 player.PrintToChatF("Your %s is on Cooldown!", "Medication")
 ```
 
-### CTFPlayer.PrintToConsoleF
+### <a name="CTFPlayer.PrintToConsoleF">CTFPlayer.PrintToConsoleF</a>
 Prints a Message to the players Console with formating
 
 **Function Signature**<br>
@@ -112,7 +112,7 @@ Prints a Message to the players Console with formating
 player.PrintToConsoleF("Debug: Wave is %f%% done", 37.21)
 ```
 
-### CTFPlayer.IsOnGround
+### <a name="CTFPlayer.IsOnGround">CTFPlayer.IsOnGround</a>
 Returns if the player is on the ground.
 
 **Function Signature**<br>
@@ -126,7 +126,7 @@ if(player.IsOnGround())
 }
 ```
 
-### CTFPlayer.GetUserName
+### <a name="CTFPlayer.GetUserName">CTFPlayer.GetUserName</a>
 Returns the players Username
 
 **Function Signature**<br>
