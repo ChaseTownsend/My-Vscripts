@@ -65,14 +65,13 @@ Progressivly trying to actually document the functions and stuff i make
 - [`RunScriptCode`](#CTFPlayer.RunScriptCode)
 - [`GetGroundEntity`](#CTFPlayer.GetGroundEntity)
 - [`GetFallingVelocity`](#CTFPlayer.GetFallingVelocity)
-
 - [`IsDucking`](#CTFPlayer.IsDucking)
 - [`IsCrouching`](#CTFPlayer.IsCrouching)
 - [`IsReprogrammed`](#CTFPlayer.IsReprogrammed) <!-- Different for bots -->
 - [`IsBot`](#CTFPlayer.IsBot)	<!-- Different for bots -->
 - [`SetFoodItemCharge`](#CTFPlayer.SetFoodItemCharge)
 - [`TakeUnblockableDamage`](#CTFPlayer.TakeUnblockableDamage)
-- [`SetCond`](#CTFPlayer.SetCond)
+- [`SetCond`](###CTFPlayer.SetCond)
 
 - [``](#CTFPlayer.)
 
