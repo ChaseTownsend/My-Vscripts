@@ -217,7 +217,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format)
-if (!SetLibraryVersion("06.24.2026.01", 0))
+if (!SetLibraryVersion("06.24.2026.19", 0))
 	return
 
 SetLibrarySettings({})
@@ -3931,7 +3931,7 @@ function CTFPlayer::DisplayHudHint(text, duration = 10.0, flash = true, Hide = t
 if(!("_GetCustomAttribute" in CTFPlayer))
 {
 	CTFPlayer._GetCustomAttribute <- CTFPlayer.GetCustomAttribute
-	CTFBot.GetCustomAttribute <- CTFBot.GetCustomAttribute
+	CTFBot._GetCustomAttribute <- CTFBot.GetCustomAttribute
 	/**
 	 * Modified version that can hook our custom attributes
 	 * @param {string} attrib
@@ -8168,6 +8168,28 @@ if(!("Assert" in ROOT))
 			throw "[Assertion Failed]"
 	}
 }
+// fake parity with TF2C
+if(!("ListenToEvent" in ROOT))
+{
+	function ROOT::ListenToEvent(event, callback, context, prefix = "OnGameEvent")
+	{
+		ROOT[context] <- {}
+		local function CallFunc(params) {callback(params)}
+		ROOT[context][prefix+"_"+event] <- CallFunc
+
+		__CollectGameEventCallbacks(ROOT[context])
+	}
+}
+if(!("ListenToGameEvent" in ROOT))
+{
+	function ROOT::ListenToGameEvent(event, callback, context)
+		ListenToEvent(event, callback, context)
+}
+if(!("ListenToScriptEvent" in ROOT))
+{
+	function ROOT::ListenToScriptEvent(event, callback, context)
+		ListenToEvent(event, callback, context, "OnScriptEvent")
+}
 /*
   =============================
   === END OF MISC FUNCTIONS ===
@@ -9636,7 +9658,7 @@ function ROOT::PostPlayerSpawn(player)
 		player.UseGiantModel()
 	else if(player.HookAdditiveAttributes("use robot model") > 0)
 		player.UseRobotModel()
-	else
+	else if((IsMannVsMachineMode() && !player.IsBot()) || !IsMannVsMachineMode())
 		player.SetCustomModelWithClassAnimations("")
 
 	//"raise health to"
@@ -11182,8 +11204,8 @@ function ROOT::PostPlayerSpawn(player)
 	/**
 	 * Fired when a Dispenser is Created
 	 *
-	 * @param {CTFPlayer} 				player	 		The player that created the Dispencer.
-	 * @param {CBaseEntity|null} 		object	 		The Dispencer that was Created.
+	 * @param {CTFPlayer} 				player	 		The player that created the Dispenser.
+	 * @param {CBaseEntity|null} 		object	 		The Dispenser that was Created.
 	 */
 	function OnScriptEvent_DispenserBuilt(_params)				{}
 	/**
