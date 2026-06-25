@@ -5392,8 +5392,6 @@ if(!("FileWeaponInfo_t" in ROOT))
 	}
 }
 
-
-
 if(!("CTFWeaponInfo" in ROOT))
 {
 	class CTFWeaponInfo extends FileWeaponInfo_t
@@ -6526,7 +6524,6 @@ function ROOT::EnableStringPurge(entity)
 	NetProps.SetPropBool(entity, "m_bForcePurgeFixedupStrings", true)
 	return entity
 }
-
 
 function ROOT::CreateByClassname(classname)
 	return EnableStringPurge(Entities.CreateByClassname(classname))
