@@ -73,6 +73,42 @@ Progressivly trying to actually document the functions and stuff i make
 - [`TakeUnblockableDamage`](#CTFPlayerTakeUnblockableDamage)
 - [`SetCond`](#CTFPlayerSetCond)
 
+- [`GetTrackedDamage`](#CTFPlayerGetTrackedDamage)
+- [`SetTrackedDamage`](#CTFPlayerSetTrackedDamage)
+- [`GetTrackedHealing`](#CTFPlayerGetTrackedHealing)
+- [`SetTrackedHealing`](#CTFPlayerSetTrackedHealing)
+- [`GetTrackedTankDamage`](#CTFPlayerGetTrackedTankDamage)
+
+- [`SetTrackedTankDamage`](#CTFPlayerSetTrackedTankDamage)
+- [`GetPercentHealth`](#CTFPlayerGetPercentHealth)
+- [`GetPercentMaxHealth`](#CTFPlayerGetPercentMaxHealth)
+- [`HasRune`](#CTFPlayerHasRune)
+- [`AreViewModelsFlipped`](#CTFPlayerAreViewModelsFlipped)
+- [`GetDemomanChargeMeter`](#CTFPlayerGetDemomanChargeMeter)
+- [`SetDemomanChargeMeter`](#CTFPlayerSetDemomanChargeMeter)
+- [`GetRuneCharge`](#CTFPlayerGetRuneCharge)
+- [`SetRuneCharge`](#CTFPlayerSetRuneCharge)
+- [`IsPlayerClass`](#CTFPlayerIsPlayerClass)
+- [`GetDisguiseClass`](#CTFPlayerGetDisguiseClass)
+- [`AddHealth`](#CTFPlayerAddHealth)
+- [`RemoveHealth`](#CTFPlayerRemoveHealth)
+- [`IsMedicButtonDown`](#CTFPlayerIsMedicButtonDown)
+- [`GetChatColor`](#CTFPlayerGetChatColor)
+- [`InAnyRespawnRoom`](#CTFPlayerInAnyRespawnRoom)
+- [`GetEveryHumanWithin`](#CTFPlayerGetEveryHumanWithin)
+- [`GetEveryPlayerWithin`](#CTFPlayerGetEveryPlayerWithin)
+- [`GetEveryBotWithin`](#CTFPlayerGetEveryBotWithin)
+- [`IsMissionMaker`](#CTFPlayerIsMissionMaker)
+- [`ResetPrimaryAmmo`](#CTFPlayerResetPrimaryAmmo)
+- [`ResetSecondaryAmmo`](#CTFPlayerResetSecondaryAmmo)
+- [`ResetMetal`](#CTFPlayerResetMetal)
+- [`GivePercentPrimaryAmmo`](#CTFPlayerGivePercentPrimaryAmmo)
+- [`GivePercentSecondaryAmmo`](#CTFPlayerGivePercentSecondaryAmmo)
+- [`GivePercentMetal`](#CTFPlayerGivePercentMetal)
+- [`GivePercentGrenadesAmmo`](#CTFPlayerGivePercentGrenadesAmmo)
+- [`ToggleGlow`](#CTFPlayerToggleGlow)
+- [`GetLanguage`](#CTFPlayerGetLanguage)
+
 <!-- - [``](#CTFPlayer) -->
 
 
@@ -715,6 +751,79 @@ Take Damage that cannot be blocked
 **Example Usage**
 ```js
 player.TakeUnblockableDamage(1000)
+```
+
+---
+
+### <a name="CTFPlayer.SetCond">CTFPlayer.SetCond</a>
+Sets this condition with `duration` duration
+
+**Function Signature**<br>
+`void CTFPlayer::SetCond(integer cond, float duration = -1)`
+
+**Example Usage**
+```js
+player.SetCond(TF_COND_CRITBOOSTED_USER_BUFF, 10)
+```
+
+---
+
+- [`SetTrackedDamage`](#CTFPlayerSetTrackedDamage)
+- [`GetTrackedHealing`](#CTFPlayerGetTrackedHealing)
+- [`SetTrackedHealing`](#CTFPlayerSetTrackedHealing)
+- [`GetTrackedTankDamage`](#CTFPlayerGetTrackedTankDamage)
+
+### <a name="CTFPlayer.GetTrackedDamage">CTFPlayer.GetTrackedDamage</a>
+Returns our internal Tracked damage
+
+**Function Signature**<br>
+`integer CTFPlayer::GetTrackedDamage()`
+
+**Example Usage**
+```js
+if(player.GetTrackedDamage() > 1000)
+{
+	// ...
+}
+```
+
+---
+
+### <a name="CTFPlayer.SetTrackedDamage">CTFPlayer.SetTrackedDamage</a>
+Sets our internal tracked damage
+
+**Function Signature**<br>
+`void CTFPlayer::SetTrackedDamage(integer damage)`
+
+**Example Usage**
+```js
+player.SetTrackedDamage(player.GetTrackedDamage() + 10)
+```
+
+---
+
+### <a name="CTFPlayer.SetCond">CTFPlayer.SetCond</a>
+Sets this condition with `duration` duration
+
+**Function Signature**<br>
+`void CTFPlayer::SetCond(integer cond, float duration = -1)`
+
+**Example Usage**
+```js
+player.SetCond(TF_COND_CRITBOOSTED_USER_BUFF, 10)
+```
+
+---
+
+### <a name="CTFPlayer.SetCond">CTFPlayer.SetCond</a>
+Sets this condition with `duration` duration
+
+**Function Signature**<br>
+`void CTFPlayer::SetCond(integer cond, float duration = -1)`
+
+**Example Usage**
+```js
+player.SetCond(TF_COND_CRITBOOSTED_USER_BUFF, 10)
 ```
 
 ---

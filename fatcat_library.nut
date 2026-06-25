@@ -1339,8 +1339,8 @@ function CTFPlayer::HasRune(rune)
 /**
  * @param {CTFWeaponBase|null} weapon
  */
-function CTFPlayer::SetActiveWeapon( weapon )
-	SetPropEntity(this, "m_hActiveWeapon", weapon)
+// function CTFPlayer::SetActiveWeapon( weapon )
+	// SetPropEntity(this, "m_hActiveWeapon", weapon)
 
 function CTFPlayer::AreViewModelsFlipped()
 	return GetClientConVar("cl_flipviewmodels", entindex()).tointeger() == 1
@@ -1391,7 +1391,7 @@ function CTFPlayer::IsMedicButtonDown()
 	return GetPropFloat(this, "m_flHelpmeButtonPressTime") != 0
 	
 function CTFPlayer::GetChatColor()
-	return GetTeam() == TF_TEAM_RED ? TF_TEAM_COLOR_RED : TF_TEAM_COLOR_BLUE
+	return (GetTeam() == TF_TEAM_RED) ? TF_TEAM_COLOR_RED : (GetTeam() == TF_TEAM_BLUE ? TF_TEAM_COLOR_BLUE : "")
 
 function CTFPlayer::SetThrowableAmmo(ammo)
 	SetPropInt(this, PROP_PLAYER_AMMO, ammo, TF_AMMO_GRENADES2)
@@ -1444,15 +1444,24 @@ function CTFPlayer::ResetSecondaryAmmo()
 function CTFPlayer::ResetMetal()
 	SetMetal(GetMaximumMetal())
 
+/** 
+ * @param {float|integer} percent
+ */
 function CTFPlayer::GivePercentPrimaryAmmo(percent)
 	GivePercentAmmo(TF_AMMO_PRIMARY, percent)
-
+/** 
+ * @param {float|integer} percent
+ */
 function CTFPlayer::GivePercentSecondaryAmmo(percent)
 	GivePercentAmmo(TF_AMMO_SECONDARY, percent)
-
+/** 
+ * @param {float|integer} percent
+ */
 function CTFPlayer::GivePercentMetal(percent)
 	GivePercentAmmo(TF_AMMO_METAL, percent)
-
+/** 
+ * @param {float|integer} percent
+ */
 function CTFPlayer::GivePercentGrenadesAmmo(percent)
 	GivePercentAmmo(TF_AMMO_GRENADES1, percent)
 /**
@@ -2813,7 +2822,7 @@ function CTFPlayer::MakeCorrosionPuddle()
 		}
 		foreach(bot in GetAllPlayers(TF_TEAM_PVE_INVADERS, [self.GetOrigin(), 75], true))
 			bot.MakeCorrosion(Attacker, Weapon)
-		DebugDrawCircle(self.GetOrigin(), Vector(0, 0, 255), 5, 75, false, 0.15)
+		DebugDrawSphere(self.GetOrigin(), Vector(0, 0, 255), 75, false, 0.15)
 		return 0.1
 	}
 
@@ -7226,45 +7235,65 @@ function ROOT::UTIL_ScreenFade( pVictim, color, fade_time, fade_hold, flags )
 
 /** 
  * @param {Vector} center
- * @param {float} radius
+ * @param {float} length
  * @param {integer} r
  * @param {integer} g
  * @param {integer} b
  * @param {bool} noDepthTest
  * @param {float} flDuration
  */
-function DebugDrawSphere( center, radius, r, g, b, noDepthTest, flDuration )
+function DebugDrawAxis( center, length, r, g, b, noDepthTest, flDuration)
+{
+	DebugDrawLine( center + Vector( 0, 0, -length ), center + Vector( 0, 0, length ), r, g, b, noDepthTest, flDuration )
+	DebugDrawLine( center + Vector( 0, -length, 0 ), center + Vector( 0, length, 0 ), r, g, b, noDepthTest, flDuration )
+	DebugDrawLine( center + Vector( -length, 0, 0 ), center + Vector( length, 0, 0 ), r, g, b, noDepthTest, flDuration )
+}
+
+::NDebugOverlay_CircleSegments <- 16
+
+/** 
+ * @param {Vector} center
+ * @param {float} radius
+ * @param {integer} r
+ * @param {integer} g
+ * @param {integer} b
+ * @param {bool} noDepthTest
+ * @param {float} flDuration
+ * @param {bool} bDrawAxis
+ */
+function ROOT::DebugDrawSphereInternal( center, radius, r, g, b, noDepthTest, flDuration, bDrawAxis = true, segments = 16)
 {
 	/** @type {Vector} */
-	local edge = Vector()
+	local edge = Vector(1, 1, 1)
 	/** @type {Vector} */
 	local lastEdge = Vector()
 
-	/** @type {float} */
-	local axisSize = radius;
 	local Line = DebugDrawLine
-	Line( center + Vector( 0, 0, -axisSize ), center + Vector( 0, 0, axisSize ), r, g, b, noDepthTest, flDuration )
-	Line( center + Vector( 0, -axisSize, 0 ), center + Vector( 0, axisSize, 0 ), r, g, b, noDepthTest, flDuration )
-	Line( center + Vector( -axisSize, 0, 0 ), center + Vector( axisSize, 0, 0 ), r, g, b, noDepthTest, flDuration )
+	if(bDrawAxis)
+		DebugDrawAxis( center, radius, r, g, b, noDepthTest, flDuration )
 
 	lastEdge = Vector( radius + center.x, center.y, center.z )
 
+	local CircleAngle = 360.0 / NDebugOverlay_CircleSegments.tofloat()
+
+	if(segments != 16)
+		CircleAngle = 360.0 / segments.tofloat()
+
 	/** @type {float} */
-	for( local i = 0; i <= 16; i++)
+	local angle = 0.0
+	for( angle = 0.0; angle <= 360.0; angle += CircleAngle )
 	{
-		local angle = 22.5 * i
 		edge.x = radius * cos( angle / 180.0 * PI ) + center.x
 		edge.y = center.y
 		edge.z = radius * sin( angle / 180.0 * PI ) + center.z
 
 		Line( edge, lastEdge, r, g, b, noDepthTest, flDuration )
 
-		lastEdge = edge
+		lastEdge = edge + Vector()
 	}
-	local angle = 0.0
 
 	lastEdge = Vector( center.x, radius + center.y, center.z )
-	for( angle = 0.0; angle <= 360.0; angle += 22.5 )
+	for( angle = 0.0; angle <= 360.0; angle += CircleAngle )
 	{
 		edge.x = center.x
 		edge.y = radius * cos( angle / 180.0 * PI ) + center.y
@@ -7272,11 +7301,11 @@ function DebugDrawSphere( center, radius, r, g, b, noDepthTest, flDuration )
 
 		Line( edge, lastEdge, r, g, b, noDepthTest, flDuration )
 
-		lastEdge = edge
+		lastEdge = edge + Vector()
 	}
 
 	lastEdge = Vector( center.x, radius + center.y, center.z )
-	for( angle = 0.0; angle <= 360.0; angle += 22.5 )
+	for( angle = 90.0; angle <= 450.0; angle += CircleAngle ) // da fuk
 	{
 		edge.x = radius * cos( angle / 180.0 * PI ) + center.x
 		edge.y = radius * sin( angle / 180.0 * PI ) + center.y
@@ -7284,7 +7313,7 @@ function DebugDrawSphere( center, radius, r, g, b, noDepthTest, flDuration )
 
 		Line( edge, lastEdge, r, g, b, noDepthTest, flDuration )
 
-		lastEdge = edge
+		lastEdge = edge + Vector()
 	}
 }
 /** 
@@ -7303,6 +7332,50 @@ function DebugDrawTriangle( p1, p2, p3, r, g, b, noDepthTest, duration )
 	DebugDrawLine(p2, p3, r, g, b, noDepthTest, duration)
 	DebugDrawLine(p3, p1, r, g, b, noDepthTest, duration)
 }
+
+/**
+ * From Mr. Burguers on TF2Maps Discord "username : (cb8493076c75466b9bfca4caaacc22a8)"
+ * @param {Vector} center
+ * @param {Vector} color
+ * @param {float} radius
+ * @param {bool} ztest
+ * @param {float} duration
+ */
+function ROOT::DebugDrawSphere( center, color, radius, ztest, duration, rings = 8, segments = 16) 
+{
+    // local rings = 8
+    // local segments = 32
+    local v = []
+    for (local ring = 0; ring <= rings; ring++) 
+	{
+        local theta = PI * ring / rings
+        for (local segment = 0; segment <= segments; segment++) 
+		{
+            local phi = 2 * PI * segment / segments
+            local offset = Vector(
+                sin(theta) * cos(phi),
+                sin(theta) * sin(phi),
+                cos(theta)
+            )
+            v.push(center + offset * radius)
+        }
+    }
+    local stride = segments + 1
+    for (local ring = 0; ring < rings; ring++) 
+	{
+        for (local segment = 0; segment < segments; segment++) 
+		{
+            local i = ring * stride + segment
+            local v1 = v[i]
+            local v2 = v[i + 1]
+            local v3 = v[i + stride]
+            DebugDrawLine_vCol( v1, v2, color, ztest, duration )
+            DebugDrawLine_vCol( v1, v3, color, ztest, duration )
+        }
+    }
+}
+
+
 
 // /** 
 //  * @type {function}
@@ -8884,7 +8957,7 @@ function ROOT::CreateBaseExplosion(table)
 	Assert(owner && owner.IsPlayer(), "CreateBaseExplosion currently need a owner")
 
 	local scope = GetScope(owner)
-	if(IsNotInScope("LastExplosionTime", scope))
+	if(!("LastExplosionTime" in scope))
 		scope.LastExplosionTime <- 0
 
 	if(sound != "")
@@ -8944,8 +9017,8 @@ function ROOT::CreateBaseExplosion(table)
 
 	// DebugDrawCircle(origin, Vector(255, 0, 0), 50, radius, false, 15)
 	// DebugDrawCircle(origin+Vector(0,0,1), Vector(0, 0, 255), 50, DamageDeadzone, false, 15)
-	DebugDrawSphere(origin, radius, 255, 0, 0, false, 15)
-	DebugDrawSphere(origin+Vector(0,0,1), DamageDeadzone, 0, 0, 255, false, 15)
+	DebugDrawSphere(origin, Vector(255, 0, 0), radius, false, 15)
+	DebugDrawSphereInternal(origin, DamageDeadzone, 0, 0, 255, false, 15)
 	
 
 	if(particle != "")
@@ -8959,7 +9032,8 @@ function ROOT::CreateBaseExplosion(table)
 			origin = origin
 			sound_level = MATH.ConvertRadiusToSndLvl(SoundRadius)
 		})
-		scope.LastExplosionTime <- Time() + SoundDelay
+		DebugDrawSphere(origin, Vector(255, 255, 255), SoundRadius, false, 30, 10)
+		scope.LastExplosionTime = Time() + SoundDelay
 	}
 }
 /**
@@ -9558,7 +9632,7 @@ function FireWeaponCheck()
 			if(GetPropInt(GetPropEntity(wep, "LocalFlameThrowerData.m_hFlameManager"), "m_bIsFiring") == 1)
 			{
 				FireScriptEvent("PlayerFireWeapon", {player = self, weapon = wep})
-				self.AddCondEx(wep.GetAttribute("add cond on attack", -1), wep.GetAttribute("add cond on attack duration", 1), self)
+				self.AddCondEx(wep.GetAttribute("add cond on attack", -1).tointeger(), wep.GetAttribute("add cond on attack duration", 1), self)
 			}
 			continue
 		}
@@ -9569,7 +9643,7 @@ function FireWeaponCheck()
 				FireScriptEvent("PlayerFireWeapon", {player = self, weapon = wep})
 				SetPropInt(self, "m_Shared.m_iNextMeleeCrit", -2)
 
-				self.AddCondEx(wep.GetAttribute("add cond on attack", -1), wep.GetAttribute("add cond on attack duration", 1), self)
+				self.AddCondEx(wep.GetAttribute("add cond on attack", -1).tointeger(), wep.GetAttribute("add cond on attack duration", 1), self)
 			}
 			continue
 		}
@@ -9583,7 +9657,7 @@ function FireWeaponCheck()
 		if(FireTime > scope.LastFireTime)
 		{
 			FireScriptEvent("PlayerFireWeapon", {player = self, weapon = wep})
-			self.AddCondEx(wep.GetAttribute("add cond on attack", -1), wep.GetAttribute("add cond on attack duration", 1), self)
+			self.AddCondEx(wep.GetAttribute("add cond on attack", -1).tointeger(), wep.GetAttribute("add cond on attack duration", 1), self)
 			scope.LastFireTime = FireTime
 		}
 	}
@@ -10750,7 +10824,7 @@ function ROOT::PostPlayerSpawn(player)
 					local speed = 1100 //self.GetAbsVelocity().Length()
 					local new_pos = pos + (forward * (speed / 66))
 					self.SetAbsVelocity(forward * speed)
-					DebugDrawText(self, format("Vel: %s", self.GetAbsVeliocty().ToKVString()), false, TICK_DUR)
+					DebugDrawText(self.GetCenter(), format("Vel: %s", self.GetAbsVeliocty().ToKVString()), false, TICK_DUR)
 					DebugDrawLine_vCol(pos, new_pos, Vector(255, 0, 0), false, TICK_DUR)
 					// self.Teleport(true, new_pos, false, QAngle(), false, Vector())
 					return -1
