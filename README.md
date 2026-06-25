@@ -6,7 +6,7 @@ The Library currently Supports <br>
 <p><img src="Assets/tf2icon.png" width = 48 height = 48 title="Team Fortress 2"> , <img src="Assets/tf2cicon.png" width = 48 height = 48 title="Team Fortress 2 Classified"> </p>
 Any bugs should be reported as using Githubs Issue's<br>
 <br>
-An Documentation page is in the works and is [Here](Assets/documentation.md)
+A Documentation page is in the works. You can find it [Here](Assets/documentation.md)
 
 <h1>Credits:</h1>
 - Me <br>
