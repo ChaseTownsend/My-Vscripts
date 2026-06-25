@@ -217,7 +217,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format)
-if (!SetLibraryVersion("06.24.2026.19", 0))
+if (!SetLibraryVersion("06.24.2026.23", 0))
 	return
 
 SetLibrarySettings({})
@@ -9694,6 +9694,8 @@ function ROOT::PostPlayerSpawn(player)
 		player.SetCond(wep.GetAttribute("cond on spawn", -1), wep.GetAttribute("cond on spawn duration", -1))
 
 	player.SetCond(player.GetCustomAttribute("cond on spawn", -1), player.GetCustomAttribute("cond on spawn duration", -1))
+
+	FireScriptEvent("player_postspawn", {player = player})
 }
 
 // Makes Custom Events to listen to
@@ -10767,6 +10769,11 @@ function ROOT::PostPlayerSpawn(player)
 		})
 	}
 
+	function OnScriptHook_player_postspawn(params)
+	{
+		FireScriptEvent(params.player.IsBot() ? "PostBotSpawn" : "PostHumanSpawn", params)
+	}
+
 	
 	/**
 	 * @param {table} _
@@ -11273,8 +11280,11 @@ function ROOT::PostPlayerSpawn(player)
 
 	/**
 	 * Fired when a player is Stunned
-	 *  
 	 * 
+	 * @param {CTFPlayer|null} 			stunner 		The Player who stunned the victim.
+	 * @param {CTFPlayer|null} 			victim 			The Player who got stunned.
+	 * @param {bool} 					big_stun 		Wether the stun was a Big Stun.
+	 * @param {bool} 					victim_capping 	If the victim was attempting to cap before getting stunned.
 	 */
 	function OnScriptEvent_PlayerStunned(_params)				{}
 
@@ -11286,10 +11296,26 @@ function ROOT::PostPlayerSpawn(player)
 	function OnScriptEvent_WaveComplete(_)						{}
 
 	/**
+	 * Fired whenever a primary or secondary weapon fires
+	 * 
+	 * **Note:** Melee attacks need to be fixed
 	 * @param {CTFPlayer}				player			The Player who shot this weapon.
 	 * @param {CTFWeaponBase}			weapon			The Weapon the player fired.
 	 */
 	function OnScriptEvent_PlayerFireWeapon(_params)			{}
+
+	/**
+	 * Fired After we Handle our Custom Attributes
+	 * 
+	 * @param {CTFBot}					player			The bot who spawned.
+	 */
+	function OnScriptEvent_PostBotSpawn(_params)				{}
+	/**
+	 * Fired After we Handle our Custom Attributes
+	 * 
+	 * @param {CTFPlayer}				player			The player who spawned.
+	 */
+	function OnScriptEvent_PostHumanSpawn(_params)				{}
 }
 __CollectGameEventCallbacks(ChaosCustomEvents)
 
