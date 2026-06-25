@@ -191,7 +191,7 @@ function ROOT::DoesItemExist(finder)
 
 function ROOT::FindItemBy(name)
 {
-	foreach (idx, data in RegisteredItems)
+	foreach (_idx, data in RegisteredItems)
 		if(data.MakingName == name)
 			return true
 	return false
