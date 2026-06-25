@@ -90,6 +90,8 @@ Prints a Message to the players Hud with
 player.PrintToHudF("Your %s is on Cooldown!", "Medication")
 ```
 
+---
+
 ### <a name="CTFPlayer.PrintToChatF">CTFPlayer.PrintToChatF</a>
 Prints a Message to the players Chat with formating
 
@@ -101,6 +103,8 @@ Prints a Message to the players Chat with formating
 player.PrintToChatF("Your %s is on Cooldown!", "Medication")
 ```
 
+---
+
 ### <a name="CTFPlayer.PrintToConsoleF">CTFPlayer.PrintToConsoleF</a>
 Prints a Message to the players Console with formating
 
@@ -111,6 +115,8 @@ Prints a Message to the players Console with formating
 ```js
 player.PrintToConsoleF("Debug: Wave is %f%% done", 37.21)
 ```
+
+---
 
 ### <a name="CTFPlayer.IsOnGround">CTFPlayer.IsOnGround</a>
 Returns if the player is on the ground.
@@ -126,6 +132,8 @@ if(player.IsOnGround())
 }
 ```
 
+---
+
 ### <a name="CTFPlayer.GetUserName">CTFPlayer.GetUserName</a>
 Returns the players Username
 
@@ -137,5 +145,50 @@ Returns the players Username
 if(player.GetUserName() == "BigBob")
 {
   // ...
+}
+```
+
+---
+
+### <a name="CTFPlayer.GetSteamID">CTFPlayer.GetSteamID</a>
+Returns the players SteamID
+
+**Function Signature**<br>
+`string CTFPlayer::GetSteamID()`
+
+**Example Usage**
+```js
+if(player.GetSteamID() == "[U:1:969530867]")
+{
+  // ...
+}
+```
+
+---
+
+### <a name="CTFPlayer.GetUserID">CTFPlayer.GetUserID</a>
+Returns the players UserID to be used with `GetPlayerFromUserID()`
+
+**Function Signature**<br>
+`string CTFPlayer::GetUserID()`
+
+**Example Usage**
+```js
+Players.append(player.GetUserID())
+```
+
+---
+
+### <a name="CTFPlayer.GetHealers">CTFPlayer.GetHealers</a>
+Returns the players healing us
+
+**Function Signature**<br>
+`[CTFPlayer] CTFPlayer::GetHealers()`
+
+**Example Usage**
+```js
+foreach(plr in player.GetHealers())
+{
+	plr.AddCustomAttribute("dmg taken increased", 0.75, 5)
 }
 ```
