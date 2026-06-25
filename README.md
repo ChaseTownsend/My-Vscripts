@@ -7,8 +7,10 @@ The Library currently Supports
 
 <img src="Assets/tf2icon.png" width = 48 height = 48 title="Team Fortress 2"> , <img src="Assets/tf2cicon.png" width = 48 height = 48 title="Team Fortress 2 Classified">
 
+## Bug Reports
 Any bugs should be reported as using Githubs Issue's
 
+## Documentation
 A Documentation page is in the works. You can find it [Here](Assets/documentation.md)
 
 # Credits:
