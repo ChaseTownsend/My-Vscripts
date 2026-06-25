@@ -72,13 +72,11 @@ Progressivly trying to actually document the functions and stuff i make
 - [`SetFoodItemCharge`](#CTFPlayerSetFoodItemCharge)
 - [`TakeUnblockableDamage`](#CTFPlayerTakeUnblockableDamage)
 - [`SetCond`](#CTFPlayerSetCond)
-
 - [`GetTrackedDamage`](#CTFPlayerGetTrackedDamage)
 - [`SetTrackedDamage`](#CTFPlayerSetTrackedDamage)
 - [`GetTrackedHealing`](#CTFPlayerGetTrackedHealing)
 - [`SetTrackedHealing`](#CTFPlayerSetTrackedHealing)
 - [`GetTrackedTankDamage`](#CTFPlayerGetTrackedTankDamage)
-
 - [`SetTrackedTankDamage`](#CTFPlayerSetTrackedTankDamage)
 - [`GetPercentHealth`](#CTFPlayerGetPercentHealth)
 - [`GetPercentMaxHealth`](#CTFPlayerGetPercentMaxHealth)
@@ -88,6 +86,9 @@ Progressivly trying to actually document the functions and stuff i make
 - [`SetDemomanChargeMeter`](#CTFPlayerSetDemomanChargeMeter)
 - [`GetRuneCharge`](#CTFPlayerGetRuneCharge)
 - [`SetRuneCharge`](#CTFPlayerSetRuneCharge)
+
+- TODO: Below are ones not done
+
 - [`IsPlayerClass`](#CTFPlayerIsPlayerClass)
 - [`GetDisguiseClass`](#CTFPlayerGetDisguiseClass)
 - [`AddHealth`](#CTFPlayerAddHealth)
@@ -768,11 +769,6 @@ player.SetCond(TF_COND_CRITBOOSTED_USER_BUFF, 10)
 
 ---
 
-- [`SetTrackedDamage`](#CTFPlayerSetTrackedDamage)
-- [`GetTrackedHealing`](#CTFPlayerGetTrackedHealing)
-- [`SetTrackedHealing`](#CTFPlayerSetTrackedHealing)
-- [`GetTrackedTankDamage`](#CTFPlayerGetTrackedTankDamage)
-
 ### <a name="CTFPlayer.GetTrackedDamage">CTFPlayer.GetTrackedDamage</a>
 Returns our internal Tracked damage
 
@@ -790,7 +786,7 @@ if(player.GetTrackedDamage() > 1000)
 ---
 
 ### <a name="CTFPlayer.SetTrackedDamage">CTFPlayer.SetTrackedDamage</a>
-Sets our internal tracked damage
+Sets our internal Tracked Damage
 
 **Function Signature**<br>
 `void CTFPlayer::SetTrackedDamage(integer damage)`
@@ -802,39 +798,180 @@ player.SetTrackedDamage(player.GetTrackedDamage() + 10)
 
 ---
 
-### <a name="CTFPlayer.SetCond">CTFPlayer.SetCond</a>
-Sets this condition with `duration` duration
+### <a name="CTFPlayer.GetTrackedHealing">CTFPlayer.GetTrackedHealing</a>
+Returns our internal Tracked Healing
 
 **Function Signature**<br>
-`void CTFPlayer::SetCond(integer cond, float duration = -1)`
+`integer CTFPlayer::GetTrackedHealing()`
 
 **Example Usage**
 ```js
-player.SetCond(TF_COND_CRITBOOSTED_USER_BUFF, 10)
+if(player.GetTrackedHealing() > 1000)
+{
+	// ...
+}
 ```
 
 ---
 
-### <a name="CTFPlayer.SetCond">CTFPlayer.SetCond</a>
-Sets this condition with `duration` duration
+### <a name="CTFPlayer.SetTrackedHealing">CTFPlayer.SetTrackedHealing</a>
+Sets our internal Tracked Healing 
 
 **Function Signature**<br>
-`void CTFPlayer::SetCond(integer cond, float duration = -1)`
+`void CTFPlayer::SetTrackedHealing(integer healing)`
 
 **Example Usage**
 ```js
-player.SetCond(TF_COND_CRITBOOSTED_USER_BUFF, 10)
+player.SetTrackedHealing(player.GetTrackedHealing() + 24)
 ```
 
 ---
 
-### <a name="CTFPlayer.SetCond">CTFPlayer.SetCond</a>
-Sets this condition with `duration` duration
+### <a name="CTFPlayer.GetTrackedTankDamage">CTFPlayer.GetTrackedTankDamage</a>
+Returns our internal Tracked tank Damage
 
 **Function Signature**<br>
-`void CTFPlayer::SetCond(integer cond, float duration = -1)`
+`integer CTFPlayer::GetTrackedTankDamage()`
 
 **Example Usage**
 ```js
-player.SetCond(TF_COND_CRITBOOSTED_USER_BUFF, 10)
+if(player.GetTrackedTankDamage() > 1000)
+{
+	// ...
+}
+```
+
+---
+
+### <a name="CTFPlayer.SetTrackedTankDamage">CTFPlayer.SetTrackedTankDamage</a>
+Sets our internal Tracked tank Damage 
+
+**Function Signature**<br>
+`void CTFPlayer::SetTrackedTankDamage(integer damage)`
+
+**Example Usage**
+```js
+player.SetTrackedTankDamage(player.GetTrackedTankDamage() + 25)
+```
+
+---
+
+### <a name="CTFPlayer.GetPercentHealth">CTFPlayer.GetPercentHealth</a>
+Returns `percent` percent of our current health
+
+**Function Signature**<br>
+`float CTFPlayer::GetPercentHealth(float percent)`
+
+**Example Usage**
+```js
+if(player.GetPercentHealth(50) < 100)
+{
+	// ...
+}
+```
+
+---
+
+### <a name="CTFPlayer.GetPercentMaxHealth">CTFPlayer.GetPercentMaxHealth</a>
+Returns `percent` percent of our maximum health
+
+**Function Signature**<br>
+`integer CTFPlayer::GetPercentMaxHealth()`
+
+**Example Usage**
+```js
+if(player.GetPercentMaxHealth(50) < 100)
+{
+	// ...
+}
+```
+
+---
+
+### <a name="CTFPlayer.HasRune">CTFPlayer.HasRune</a>
+Returns if we have this Rune.
+
+**Function Signature**<br>
+`bool CTFPlayer::HasRune(integer rune)`
+
+**Example Usage**
+```js
+if(player.HasRune(RUNE_STRENGTH))
+{
+	// ...
+}
+```
+
+---
+
+### <a name="CTFPlayer.AreViewModelsFlipped">CTFPlayer.AreViewModelsFlipped</a>
+Returns if our viewmodels are flipped
+
+**Function Signature**<br>
+`bool CTFPlayer::AreViewModelsFlipped()`
+
+**Example Usage**
+```js
+if(player.AreViewModelsFlipped())
+{
+	// ...
+}
+```
+
+---
+
+### <a name="CTFPlayer.GetDemomanChargeMeter">CTFPlayer.GetDemomanChargeMeter</a>
+Returns our shield charge meter
+
+**Function Signature**<br>
+`float CTFPlayer::GetDemomanChargeMeter()`
+
+**Example Usage**
+```js
+if(player.GetDemomanChargeMeter() > 50.0)
+{
+	// ...
+}
+```
+
+---
+
+### <a name="CTFPlayer.SetDemomanChargeMeter">CTFPlayer.SetDemomanChargeMeter</a>
+Sets our shield charge meter
+
+**Function Signature**<br>
+`void CTFPlayer::SetDemomanChargeMeter(float percent)`
+
+**Example Usage**
+```js
+player.SetDemomanChargeMeter(player.GetDemomanChargeMeter() - 25.0)
+```
+
+---
+
+### <a name="CTFPlayer.GetRuneCharge">CTFPlayer.GetRuneCharge</a>
+Returns our Supernova rune percent
+
+**Function Signature**<br>
+`float CTFPlayer::GetRuneCharge()`
+
+**Example Usage**
+```js
+if(player.GetRuneCharge() > 50.0)
+{
+	// ...
+}
+```
+
+---
+
+### <a name="CTFPlayer.SetRuneCharge">CTFPlayer.SetRuneCharge</a>
+Set the percent of our Supernova rune percent
+
+**Function Signature**<br>
+`void CTFPlayer::SetRuneCharge(float percent)`
+
+**Example Usage**
+```js
+player.SetRuneCharge(player.GetRuneCharge() - 25.0)
 ```
