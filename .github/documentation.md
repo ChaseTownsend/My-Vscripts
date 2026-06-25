@@ -43,7 +43,7 @@ Progressivly trying to actually document the functions and stuff i make
 ### CTFPlayer.PrintToHud
 Prints a Message to the players Hud
 
-**Function Signature**
+**Function Signature**<br>
 `void CTFPlayer::PrintToHud(string message = "")`
 
 **Example Usage**
@@ -56,7 +56,7 @@ player.PrintToHud("Your Shield is on Cooldown!")
 ### CTFPlayer.PrintToChat
 Prints a Message to the players Chat
 
-**Function Signature**
+**Function Signature**<br>
 `void CTFPlayer::PrintToChat(string message = "")`
 
 **Example Usage**
@@ -69,7 +69,7 @@ player.PrintToChat("Your Shield is on Cooldown!")
 ### CTFPlayer.PrintToConsole
 Prints a Message to the players Console
 
-**Function Signature**
+**Function Signature**<br>
 `void CTFPlayer::PrintToConsole(string message = "")`
 
 **Example Usage**
@@ -82,7 +82,7 @@ player.PrintToConsole("Debug: 15% charged")
 ### CTFPlayer.PrintToHudF
 Prints a Message to the players Hud with 
 
-**Function Signature**
+**Function Signature**<br>
 `void CTFPlayer::PrintToHudF(string format, any ...)`
 
 **Example Usage**
@@ -93,7 +93,7 @@ player.PrintToHudF("Your %s is on Cooldown!", "Medication")
 ### CTFPlayer.PrintToChatF
 Prints a Message to the players Chat with formating
 
-**Function Signature**
+**Function Signature**<br>
 `void CTFPlayer::PrintToChatF(string format, any ...)`
 
 **Example Usage**
@@ -104,7 +104,7 @@ player.PrintToChatF("Your %s is on Cooldown!", "Medication")
 ### CTFPlayer.PrintToConsoleF
 Prints a Message to the players Console with formating
 
-**Function Signature**
+**Function Signature**<br>
 `void CTFPlayer::PrintToConsoleF(string format, any ...)`
 
 **Example Usage**
@@ -115,7 +115,7 @@ player.PrintToConsoleF("Debug: Wave is %f%% done", 37.21)
 ### CTFPlayer.IsOnGround
 Returns if the player is on the ground.
 
-**Function Signature**
+**Function Signature**<br>
 `bool CTFPlayer::IsOnGround()`
 
 **Example Usage**
@@ -130,7 +130,7 @@ if(player.IsOnGround())
 ### CTFPlayer.GetUserName
 Returns the players Username
 
-**Function Signature**
+**Function Signature**<br>
 `string CTFPlayer::GetUserName()`
 
 **Example Usage**
