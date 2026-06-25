@@ -40,7 +40,7 @@ Progressivly trying to actually document the functions and stuff i make
 - [``](#CTFPlayer.)
 
 
-### CTFPlayer.PrintToHud
+### <a name="CTFPlayer.PrintToHud">CTFPlayer.PrintToHud</a>
 Prints a Message to the players Hud
 
 **Function Signature**<br>
@@ -120,7 +120,6 @@ Returns if the player is on the ground.
 
 **Example Usage**
 ```js
-// Example Usage
 if(player.IsOnGround())
 {
   // ...
