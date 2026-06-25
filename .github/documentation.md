@@ -71,7 +71,7 @@ Progressivly trying to actually document the functions and stuff i make
 - [`IsBot`](#CTFPlayer.IsBot)	<!-- Different for bots -->
 - [`SetFoodItemCharge`](#CTFPlayer.SetFoodItemCharge)
 - [`TakeUnblockableDamage`](#CTFPlayer.TakeUnblockableDamage)
-- [`SetCond`](###CTFPlayer.SetCond)
+- [`SetCond`](#CTFPlayer.SetCond)
 
 - [``](#CTFPlayer.)
 
@@ -620,8 +620,6 @@ if(player.GetFallingVelocity() < -600)
 }
 ```
 
-- [`SetCond`](#CTFPlayer.SetCond)
-
 ---
 
 ### <a name="CTFPlayer.IsDucking">CTFPlayer.IsDucking</a>
@@ -721,7 +719,9 @@ player.TakeUnblockableDamage(1000)
 
 ---
 
-### <a name="CTFPlayer.SetCond">CTFPlayer.SetCond</a>
+### CTFPlayer.SetCond
+
+<!-- ### <a name="CTFPlayer.SetCond">CTFPlayer.SetCond</a> -->
 Sets this condition with `duration` duration
 
 **Function Signature**<br>
