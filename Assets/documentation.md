@@ -112,6 +112,8 @@ Progressivly trying to actually document the functions and stuff i make
 
 <!-- - [``](#CTFPlayer) -->
 
+---
+
 
 ### <a name="CTFPlayer.PrintToHud">CTFPlayer.PrintToHud</a>
 Prints a Message to the players Hud
