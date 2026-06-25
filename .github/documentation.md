@@ -26,57 +26,57 @@ Progressivly trying to actually document the functions and stuff i make
 
 ## CTFPlayer-Methods
  Custom Methods added to `CTFPlayer`
-- [`PrintToHud`](#CTFPlayer-PrintToHud)
-- [`PrintToChat`](#CTFPlayer-PrintToChat)
-- [`PrintToConsole`](#CTFPlayer-PrintToConsole)
-- [`PrintToHudF`](#CTFPlayer-PrintToHudF)
-- [`PrintToChatF`](#CTFPlayer-PrintToChatF)
-- [`PrintToConsoleF`](#CTFPlayer-PrintToConsoleF)
-- [`IsOnGround`](#CTFPlayer-IsOnGround)
-- [`GetUserName`](#CTFPlayer-GetUserName)
-- [`GetSteamID`](#CTFPlayer-GetSteamID)
-- [`GetUserID`](#CTFPlayer-GetUserID)
-- [`GetHealers`](#CTFPlayer-GetHealers)
-- [`GetAmmoByIndex`](#CTFPlayer-GetAmmoByIndex)
-- [`GetPrimaryAmmo`](#CTFPlayer-GetPrimaryAmmo)
-- [`GetSecondaryAmmo`](#CTFPlayer-GetSecondaryAmmo)
-- [`GetMetal`](#CTFPlayer-GetMetal)
-- [`IsOverhealed`](#CTFPlayer-IsOverhealed)
-- [`GetMaxBuffedHealth`](#CTFPlayer-GetMaxBuffedHealth)
-- [`EyeVector`](#CTFPlayer-EyeVector)
-- [`GetFrontOffset`](#CTFPlayer-GetFrontOffset)
-- [`GetEyeOffset`](#CTFPlayer-GetEyeOffset)
-- [`IsPressingButton`](#CTFPlayer-IsPressingButton)
-- [`GetWeaponInSlot`](#CTFPlayer-GetWeaponInSlot)
-- [`SetAmmoByIndex`](#CTFPlayer-SetAmmoByIndex)
-- [`SetPrimaryAmmo`](#CTFPlayer-SetPrimaryAmmo)
-- [`SetSecondaryAmmo`](#CTFPlayer-SetSecondaryAmmo)
-- [`SetMetal`](#CTFPlayer-SetMetal)
-- [`ResetHealth`](#CTFPlayer-ResetHealth)
-- [`ResetColor`](#CTFPlayer-ResetColor)
-- [`SetColor`](#CTFPlayer-SetColor)
-- [`SetScale`](#CTFPlayer-SetScale)
-- [`GetHeads`](#CTFPlayer-GetHeads)
-- [`SetHeads`](#CTFPlayer-SetHeads)
-- [`AddHeads`](#CTFPlayer-AddHeads)
-- [`IsDead`](#CTFPlayer-IsDead)
-- [`MultiplyGravity`](#CTFPlayer-MultiplyGravity)
-- [`PlayerFire`](#CTFPlayer-PlayerFire)
-- [`RunScriptCode`](#CTFPlayer-RunScriptCode)
-- [`GetGroundEntity`](#CTFPlayer-GetGroundEntity)
-- [`GetFallingVelocity`](#CTFPlayer-GetFallingVelocity)
-- [`IsDucking`](#CTFPlayer-IsDucking)
-- [`IsCrouching`](#CTFPlayer-IsCrouching)
-- [`IsReprogrammed`](#CTFPlayer-IsReprogrammed) <!-- Different for bots -->
-- [`IsBot`](#CTFPlayer-IsBot)	<!-- Different for bots -->
-- [`SetFoodItemCharge`](#CTFPlayer-SetFoodItemCharge)
-- [`TakeUnblockableDamage`](#CTFPlayer-TakeUnblockableDamage)
-- [`SetCond`](#CTFPlayer-SetCond)
+- [`PrintToHud`](#CTFPlayerPrintToHud)
+- [`PrintToChat`](#CTFPlayerPrintToChat)
+- [`PrintToConsole`](#CTFPlayerPrintToConsole)
+- [`PrintToHudF`](#CTFPlayerPrintToHudF)
+- [`PrintToChatF`](#CTFPlayerPrintToChatF)
+- [`PrintToConsoleF`](#CTFPlayerPrintToConsoleF)
+- [`IsOnGround`](#CTFPlayerIsOnGround)
+- [`GetUserName`](#CTFPlayerGetUserName)
+- [`GetSteamID`](#CTFPlayerGetSteamID)
+- [`GetUserID`](#CTFPlayerGetUserID)
+- [`GetHealers`](#CTFPlayerGetHealers)
+- [`GetAmmoByIndex`](#CTFPlayerGetAmmoByIndex)
+- [`GetPrimaryAmmo`](#CTFPlayerGetPrimaryAmmo)
+- [`GetSecondaryAmmo`](#CTFPlayerGetSecondaryAmmo)
+- [`GetMetal`](#CTFPlayerGetMetal)
+- [`IsOverhealed`](#CTFPlayerIsOverhealed)
+- [`GetMaxBuffedHealth`](#CTFPlayerGetMaxBuffedHealth)
+- [`EyeVector`](#CTFPlayerEyeVector)
+- [`GetFrontOffset`](#CTFPlayerGetFrontOffset)
+- [`GetEyeOffset`](#CTFPlayerGetEyeOffset)
+- [`IsPressingButton`](#CTFPlayerIsPressingButton)
+- [`GetWeaponInSlot`](#CTFPlayerGetWeaponInSlot)
+- [`SetAmmoByIndex`](#CTFPlayerSetAmmoByIndex)
+- [`SetPrimaryAmmo`](#CTFPlayerSetPrimaryAmmo)
+- [`SetSecondaryAmmo`](#CTFPlayerSetSecondaryAmmo)
+- [`SetMetal`](#CTFPlayerSetMetal)
+- [`ResetHealth`](#CTFPlayerResetHealth)
+- [`ResetColor`](#CTFPlayerResetColor)
+- [`SetColor`](#CTFPlayerSetColor)
+- [`SetScale`](#CTFPlayerSetScale)
+- [`GetHeads`](#CTFPlayerGetHeads)
+- [`SetHeads`](#CTFPlayerSetHeads)
+- [`AddHeads`](#CTFPlayerAddHeads)
+- [`IsDead`](#CTFPlayerIsDead)
+- [`MultiplyGravity`](#CTFPlayerMultiplyGravity)
+- [`PlayerFire`](#CTFPlayerPlayerFire)
+- [`RunScriptCode`](#CTFPlayerRunScriptCode)
+- [`GetGroundEntity`](#CTFPlayerGetGroundEntity)
+- [`GetFallingVelocity`](#CTFPlayerGetFallingVelocity)
+- [`IsDucking`](#CTFPlayerIsDucking)
+- [`IsCrouching`](#CTFPlayerIsCrouching)
+- [`IsReprogrammed`](#CTFPlayerIsReprogrammed) <!-- Different for bots -->
+- [`IsBot`](#CTFPlayerIsBot)	<!-- Different for bots -->
+- [`SetFoodItemCharge`](#CTFPlayerSetFoodItemCharge)
+- [`TakeUnblockableDamage`](#CTFPlayerTakeUnblockableDamage)
+- [`SetCond`](#CTFPlayerSetCond)
 
-- [``](#CTFPlayer-)
+- [``](#CTFPlayer)
 
 
-### <a name="CTFPlayer-PrintToHud">CTFPlayer-PrintToHud</a>
+### <a name="CTFPlayer.PrintToHud">CTFPlayer.PrintToHud</a>
 Prints a Message to the players Hud
 
 **Function Signature**<br>
@@ -89,7 +89,7 @@ player.PrintToHud("Your Shield is on Cooldown!")
 
 ---
 
-### <a name="CTFPlayer-PrintToChat">CTFPlayer-PrintToChat</a>
+### <a name="CTFPlayer.PrintToChat">CTFPlayer.PrintToChat</a>
 Prints a Message to the players Chat
 
 **Function Signature**<br>
@@ -102,7 +102,7 @@ player.PrintToChat("Your Shield is on Cooldown!")
 
 ---
 
-### <a name="CTFPlayer-PrintToConsole">CTFPlayer-PrintToConsole</a>
+### <a name="CTFPlayer.PrintToConsole">CTFPlayer.PrintToConsole</a>
 Prints a Message to the players Console
 
 **Function Signature**<br>
@@ -115,7 +115,7 @@ player.PrintToConsole("Debug: 15% charged")
 
 ---
 
-### <a name="CTFPlayer-PrintToHudF">CTFPlayer-PrintToHudF</a>
+### <a name="CTFPlayer.PrintToHudF">CTFPlayer.PrintToHudF</a>
 Prints a Message to the players Hud with 
 
 **Function Signature**<br>
@@ -128,7 +128,7 @@ player.PrintToHudF("Your %s is on Cooldown!", "Medication")
 
 ---
 
-### <a name="CTFPlayer-PrintToChatF">CTFPlayer-PrintToChatF</a>
+### <a name="CTFPlayer.PrintToChatF">CTFPlayer.PrintToChatF</a>
 Prints a Message to the players Chat with formating
 
 **Function Signature**<br>
@@ -141,7 +141,7 @@ player.PrintToChatF("Your %s is on Cooldown!", "Medication")
 
 ---
 
-### <a name="CTFPlayer-PrintToConsoleF">CTFPlayer-PrintToConsoleF</a>
+### <a name="CTFPlayer.PrintToConsoleF">CTFPlayer.PrintToConsoleF</a>
 Prints a Message to the players Console with formating
 
 **Function Signature**<br>
@@ -154,7 +154,7 @@ player.PrintToConsoleF("Debug: Wave is %f%% done", 37.21)
 
 ---
 
-### <a name="CTFPlayer-IsOnGround">CTFPlayer-IsOnGround</a>
+### <a name="CTFPlayer.IsOnGround">CTFPlayer.IsOnGround</a>
 Returns if the player is on the ground.
 
 **Function Signature**<br>
@@ -170,7 +170,7 @@ if(player.IsOnGround())
 
 ---
 
-### <a name="CTFPlayer-GetUserName">CTFPlayer-GetUserName</a>
+### <a name="CTFPlayer.GetUserName">CTFPlayer.GetUserName</a>
 Returns the players Username
 
 **Function Signature**<br>
@@ -186,7 +186,7 @@ if(player.GetUserName() == "BigBob")
 
 ---
 
-### <a name="CTFPlayer-GetSteamID">CTFPlayer-GetSteamID</a>
+### <a name="CTFPlayer.GetSteamID">CTFPlayer.GetSteamID</a>
 Returns the players SteamID
 
 **Function Signature**<br>
@@ -202,7 +202,7 @@ if(player.GetSteamID() == "[U:1:969530867]")
 
 ---
 
-### <a name="CTFPlayer-GetUserID">CTFPlayer-GetUserID</a>
+### <a name="CTFPlayer.GetUserID">CTFPlayer.GetUserID</a>
 Returns the players UserID to be used with `GetPlayerFromUserID()`
 
 **Function Signature**<br>
@@ -215,7 +215,7 @@ Players.append(player.GetUserID())
 
 ---
 
-### <a name="CTFPlayer-GetHealers">CTFPlayer-GetHealers</a>
+### <a name="CTFPlayer.GetHealers">CTFPlayer.GetHealers</a>
 Returns the players healing us
 
 **Function Signature**<br>
@@ -231,7 +231,7 @@ foreach(plr in player.GetHealers())
 
 ---
 
-### <a name="CTFPlayer-GetAmmoByIndex">CTFPlayer-GetAmmoByIndex</a>
+### <a name="CTFPlayer.GetAmmoByIndex">CTFPlayer.GetAmmoByIndex</a>
 Returns the amount of ammo we have for this ammo type.
 
 **Function Signature**<br>
@@ -244,7 +244,7 @@ printl("player: "+player+" Has "+player.GetAmmoByIndex(1)+" Primary ammo") // Pr
 
 ---
 
-### <a name="CTFPlayer-GetPrimaryAmmo">CTFPlayer-GetPrimaryAmmo</a>
+### <a name="CTFPlayer.GetPrimaryAmmo">CTFPlayer.GetPrimaryAmmo</a>
 Returns the amount of Primary ammo we have.
 
 **Function Signature**<br>
@@ -257,7 +257,7 @@ printl("player: "+player+" Has "+player.GetPrimaryAmmo()+" Primary ammo")
 
 ---
 
-### <a name="CTFPlayer-GetSecondaryAmmo">CTFPlayer-GetSecondaryAmmo</a>
+### <a name="CTFPlayer.GetSecondaryAmmo">CTFPlayer.GetSecondaryAmmo</a>
 Returns the amount of Secondary ammo we have.
 
 **Function Signature**<br>
@@ -270,7 +270,7 @@ printl("player: "+player+" Has "+player.GetSecondaryAmmo()+" Secondary ammo")
 
 ---
 
-### <a name="CTFPlayer-GetMetal">CTFPlayer-GetMetal</a>
+### <a name="CTFPlayer.GetMetal">CTFPlayer.GetMetal</a>
 Returns the amount of Metal we have.
 
 **Function Signature**<br>
@@ -283,7 +283,7 @@ printl("player: "+player+" Has "+player.GetMetal()+" Metal")
 
 ---
 
-### <a name="CTFPlayer-IsOverhealed">CTFPlayer-IsOverhealed</a>
+### <a name="CTFPlayer.IsOverhealed">CTFPlayer.IsOverhealed</a>
 Returns if we are Overhealed (hp > max_hp)
 
 **Function Signature**<br>
@@ -299,7 +299,7 @@ if(player.IsOverhealed())
 
 ---
 
-### <a name="CTFPlayer-GetMaxBuffedHealth">CTFPlayer-GetMaxBuffedHealth</a>
+### <a name="CTFPlayer.GetMaxBuffedHealth">CTFPlayer.GetMaxBuffedHealth</a>
 Returns the Maximum health we use for Buffing
 
 **Function Signature**<br>
@@ -315,7 +315,7 @@ if(player.GetMaxBuffedHealth() > 300)
 
 ---
 
-### <a name="CTFPlayer-EyeVector">CTFPlayer-EyeVector</a>
+### <a name="CTFPlayer.EyeVector">CTFPlayer.EyeVector</a>
 Returns the Forward EyeAngles
 
 **Function Signature**<br>
@@ -328,8 +328,8 @@ travel_distance = player.EyeVector() * 16.0
 
 ---
 
-### <a name="CTFPlayer-GetFrontOffset">CTFPlayer-GetFrontOffset</a>
-Returns the position `offset` units in front of our origin using [`EyeVector`](#CTFPlayer-EyeVector)
+### <a name="CTFPlayer.GetFrontOffset">CTFPlayer.GetFrontOffset</a>
+Returns the position `offset` units in front of our origin using [`EyeVector`](#CTFPlayerEyeVector)
 
 **Function Signature**<br>
 `Vector CTFPlayer::GetFrontOffset(float offset)`
@@ -341,8 +341,8 @@ new_position = player.GetFrontOffset(16)
 
 ---
 
-### <a name="CTFPlayer-GetEyeOffset">CTFPlayer-GetEyeOffset</a>
-Returns the position `offset` units in front of our `EyePosition` using [`EyeVector`](#CTFPlayer-EyeVector)
+### <a name="CTFPlayer.GetEyeOffset">CTFPlayer.GetEyeOffset</a>
+Returns the position `offset` units in front of our `EyePosition` using [`EyeVector`](#CTFPlayerEyeVector)
 
 **Function Signature**<br>
 `Vector CTFPlayer::GetEyeOffset(float offset)`
@@ -354,7 +354,7 @@ new_position = player.GetEyeOffset(16)
 
 ---
 
-### <a name="CTFPlayer-IsPressingButton">CTFPlayer-IsPressingButton</a>
+### <a name="CTFPlayer.IsPressingButton">CTFPlayer.IsPressingButton</a>
 Returns if we are pressing this button
 
 **Function Signature**<br>
@@ -370,7 +370,7 @@ if(player.IsPressingButton(IN_ATTACK2))
 
 ---
 
-### <a name="CTFPlayer-GetWeaponInSlot">CTFPlayer-GetWeaponInSlot</a>
+### <a name="CTFPlayer.GetWeaponInSlot">CTFPlayer.GetWeaponInSlot</a>
 Returns the weapon at `slot` index of our `m_hMyWeapons` NetProp
 
 **Function Signature**<br>
@@ -387,7 +387,7 @@ weapon = player.GetWeaponInSlot(SLOT_PRIMARY) // : 0
 
 ---
 
-### <a name="CTFPlayer-SetAmmoByIndex">CTFPlayer-SetAmmoByIndex</a>
+### <a name="CTFPlayer.SetAmmoByIndex">CTFPlayer.SetAmmoByIndex</a>
 Sets this Ammo types ammo amount
 
 **Function Signature**<br>
@@ -400,7 +400,7 @@ player.SetAmmoByIndex(1, 32) // Primary ammo : 32
 
 ---
 
-### <a name="CTFPlayer-SetPrimaryAmmo">CTFPlayer-SetPrimaryAmmo</a>
+### <a name="CTFPlayer.SetPrimaryAmmo">CTFPlayer.SetPrimaryAmmo</a>
 Set our Primary ammo amount
 
 **Function Signature**<br>
@@ -413,7 +413,7 @@ player.SetPrimaryAmmo(32)
 
 ---
 
-### <a name="CTFPlayer-SetSecondaryAmmo">CTFPlayer-SetSecondaryAmmo</a>
+### <a name="CTFPlayer.SetSecondaryAmmo">CTFPlayer.SetSecondaryAmmo</a>
 Set our Secondary ammo amount
 
 **Function Signature**<br>
@@ -426,7 +426,7 @@ player.SetSecondaryAmmo(32)
 
 ---
 
-### <a name="CTFPlayer-SetMetal">CTFPlayer-SetMetal</a>
+### <a name="CTFPlayer.SetMetal">CTFPlayer.SetMetal</a>
 Set our Metal amount
 
 **Function Signature**<br>
@@ -439,7 +439,7 @@ player.SetMetal(200)
 
 ---
 
-### <a name="CTFPlayer-ResetHealth">CTFPlayer-ResetHealth</a>
+### <a name="CTFPlayer.ResetHealth">CTFPlayer.ResetHealth</a>
 Reset our Health to the Maximum
 
 **Function Signature**<br>
@@ -452,7 +452,7 @@ player.ResetHealth()
 
 ---
 
-### <a name="CTFPlayer-ResetColor">CTFPlayer-ResetColor</a>
+### <a name="CTFPlayer.ResetColor">CTFPlayer.ResetColor</a>
 Reset our Render color
 
 **Function Signature**<br>
@@ -465,7 +465,7 @@ player.ResetColor()
 
 ---
 
-### <a name="CTFPlayer-SetColor">CTFPlayer-SetColor</a>
+### <a name="CTFPlayer.SetColor">CTFPlayer.SetColor</a>
 Set Render color
 
 **Function Signature**<br>
@@ -477,10 +477,10 @@ player.SetColor("0 0 255") // Joke: [why are you blue]
 ```
 
 ---
-- [`IsDead`](#CTFPlayer-IsDead)
+- [`IsDead`](#CTFPlayerIsDead)
 
 
-### <a name="CTFPlayer-SetScale">CTFPlayer-SetScale</a>
+### <a name="CTFPlayer.SetScale">CTFPlayer.SetScale</a>
 Set our Model Scale instantly
 
 **Function Signature**<br>
@@ -493,7 +493,7 @@ player.SetScale(1.35)
 
 ---
 
-### <a name="CTFPlayer-GetHeads">CTFPlayer-GetHeads</a>
+### <a name="CTFPlayer.GetHeads">CTFPlayer.GetHeads</a>
 Returns the amount of `Heads` we have taken
 
 **Function Signature**<br>
@@ -509,7 +509,7 @@ if(player.GetHeads() > 3)
 
 ---
 
-### <a name="CTFPlayer-SetHeads">CTFPlayer-SetHeads</a>
+### <a name="CTFPlayer.SetHeads">CTFPlayer.SetHeads</a>
 Set the amount of `Heads` we have taken
 
 **Function Signature**<br>
@@ -522,7 +522,7 @@ player.SetHeads(2)
 
 ---
 
-### <a name="CTFPlayer-AddHeads">CTFPlayer-AddHeads</a>
+### <a name="CTFPlayer.AddHeads">CTFPlayer.AddHeads</a>
 Adds heads to the amount of `Heads` we have taken
 
 **Function Signature**<br>
@@ -535,7 +535,7 @@ player.AddHeads(-1)
 
 ---
 
-### <a name="CTFPlayer-IsDead">CTFPlayer-IsDead</a>
+### <a name="CTFPlayer.IsDead">CTFPlayer.IsDead</a>
 Returns if we are actually dead
 
 **Function Signature**<br>
@@ -551,7 +551,7 @@ if(player.IsDead())
 
 ---
 
-### <a name="CTFPlayer-MultiplyGravity">CTFPlayer-MultiplyGravity</a>
+### <a name="CTFPlayer.MultiplyGravity">CTFPlayer.MultiplyGravity</a>
 Multiply our current gravity by this value
 
 **Function Signature**<br>
@@ -564,7 +564,7 @@ player.MultiplyGravity(0.25)
 
 ---
 
-### <a name="CTFPlayer-PlayerFire">CTFPlayer-PlayerFire</a>
+### <a name="CTFPlayer.PlayerFire">CTFPlayer.PlayerFire</a>
 Calls [`EntFireNew`](#GlobalFuncs.EntFireNew) with `this` (the player) as the target
 
 **Function Signature**<br>
@@ -577,7 +577,7 @@ player.PlayerFire("SetHealth", "100", 0.1)
 
 ---
 
-### <a name="CTFPlayer-RunScriptCode">CTFPlayer-RunScriptCode</a>
+### <a name="CTFPlayer.RunScriptCode">CTFPlayer.RunScriptCode</a>
 Runs `compilestring` with the input and makes the player `Run` the code as itself with a delay
 
 **Function Signature**<br>
@@ -590,7 +590,7 @@ player.RunScriptCode("SetHealth(GetHealth() + 100)", 0.1)
 
 ---
 
-### <a name="CTFPlayer-GetGroundEntity">CTFPlayer-GetGroundEntity</a>
+### <a name="CTFPlayer.GetGroundEntity">CTFPlayer.GetGroundEntity</a>
 Return our Ground entity (`m_hGroundEntity`)
 
 **Function Signature**<br>
@@ -606,7 +606,7 @@ if(player.GetGroundEntity() == null) // not on ground
 
 ---
 
-### <a name="CTFPlayer-GetFallingVelocity">CTFPlayer-GetFallingVelocity</a>
+### <a name="CTFPlayer.GetFallingVelocity">CTFPlayer.GetFallingVelocity</a>
 Returns our `z` velocity
 
 **Function Signature**<br>
@@ -622,7 +622,7 @@ if(player.GetFallingVelocity() < -600)
 
 ---
 
-### <a name="CTFPlayer-IsDucking">CTFPlayer-IsDucking</a>
+### <a name="CTFPlayer.IsDucking">CTFPlayer.IsDucking</a>
 Return if we are in the ducking state
 
 **Function Signature**<br>
@@ -638,9 +638,9 @@ if(player.IsDucking())
 
 ---
 
-### <a name="CTFPlayer-IsCrouching">CTFPlayer-IsCrouching</a>
+### <a name="CTFPlayer.IsCrouching">CTFPlayer.IsCrouching</a>
 Return is we are holding our crouch button<br>
-Usually better than [`IsDucking`](#CTFPlayer-IsDucking)
+Usually better than [`IsDucking`](#CTFPlayerIsDucking)
 
 **Function Signature**<br>
 `bool CTFPlayer::IsCrouching()`
@@ -655,7 +655,7 @@ if(player.IsCrouching())
 
 ---
 
-### <a name="CTFPlayer-IsReprogrammed">CTFPlayer-IsReprogrammed</a>
+### <a name="CTFPlayer.IsReprogrammed">CTFPlayer.IsReprogrammed</a>
 Returns if we are Reprogrammed
 
 >[!NOTE]
@@ -674,7 +674,7 @@ if(player.IsReprogrammed())
 
 ---
 
-### <a name="CTFPlayer-IsBot">CTFPlayer-IsBot</a>
+### <a name="CTFPlayer.IsBot">CTFPlayer.IsBot</a>
 Return if we are a bot
 
 >[!NOTE]
@@ -693,7 +693,7 @@ if(player.IsBot())
 
 ---
 
-### <a name="CTFPlayer-SetFoodItemCharge">CTFPlayer-SetFoodItemCharge</a>
+### <a name="CTFPlayer.SetFoodItemCharge">CTFPlayer.SetFoodItemCharge</a>
 Sets our Food items Charge
 
 **Function Signature**<br>
@@ -706,7 +706,7 @@ player.SetFoodItemCharge(50)
 
 ---
 
-### <a name="CTFPlayer-TakeUnblockableDamage">CTFPlayer-TakeUnblockableDamage</a>
+### <a name="CTFPlayer.TakeUnblockableDamage">CTFPlayer.TakeUnblockableDamage</a>
 Take Damage that cannot be blocked
 
 **Function Signature**<br>
@@ -719,7 +719,7 @@ player.TakeUnblockableDamage(1000)
 
 ---
 
-### <a name="CTFPlayer-SetCond">CTFPlayer-SetCond</a>
+### <a name="CTFPlayer.SetCond">CTFPlayer.SetCond</a>
 Sets this condition with `duration` duration
 
 **Function Signature**<br>
