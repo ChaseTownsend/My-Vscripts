@@ -217,7 +217,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format)
-if (!SetLibraryVersion("06.25.2026.17", 0))
+if (!SetLibraryVersion("06.25.2026.21", 0))
 	return
 
 SetLibrarySettings({})
@@ -2185,6 +2185,12 @@ function CTFPlayer::GivePercentAmmo(index, percent)
 		maximum = GetMaximumMetal()
 	else if (index == TF_AMMO_GRENADES1)
 		maximum = GetMaximumGrenades1()
+	else if (index == TF_AMMO_GRENADES2)
+	{
+		maximum = 1
+		if(InCond(TF_COND_RUNE_HASTE))
+			maximum = 2
+	}
 	else if (index == TF_AMMO_GRENADES3)
 		maximum = GetMaximumGrenades3()
 	else

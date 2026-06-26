@@ -1,23 +1,30 @@
 if(!IsMannVsMachineMode())
 	return
 
-PrecacheSound("mvm/giant_soldier/giant_soldier_loop.wav")
-PrecacheSound("mvm/sentrybuster/mvm_sentrybuster_explode.wav")
-PrecacheSound("mvm/giant_heavy/giant_heavy_loop.wav")
-PrecacheSound(")mvm/giant_heavy/giant_heavy_loop.wav")
-PrecacheSound("mvm/giant_scout/giant_scout_loop.wav")
-PrecacheSound("mvm/giant_demoman/giant_demoman_loop.wav")
-PrecacheSound("mvm/giant_pyro/giant_pyro_loop.wav")
+PrecacheScriptSound("MVM.GiantHeavyLoop")
+PrecacheScriptSound("MVM.GiantSoldierLoop")
+PrecacheScriptSound("MVM.SentryBusterLoop")
+PrecacheScriptSound("MVM.GiantDemomanLoop")
+PrecacheScriptSound("MVM.GiantScoutLoop")
+PrecacheScriptSound("MVM.GiantPyroLoop")
+
+PrecacheScriptSound("MVM.BotStep")
+PrecacheScriptSound("MVM.GiantHeavyStep")
+PrecacheScriptSound("MVM.GiantSoldierStep")
+PrecacheScriptSound("MVM.GiantDemomanStep")
+PrecacheScriptSound("MVM.GiantScoutStep")
+PrecacheScriptSound("MVM.GiantPyroStep")
+PrecacheScriptSound("MVM.SentryBusterStep")
 
 PrecacheModel("models/props_mvm/mvm_revive_tombstone.mdl")
 PrecacheModel("models/weapons/w_models/w_rocketbeta.mdl")
 
-for (local i = 1; i < 19; i++) {
-	PrecacheSound(format("mvm/player/footsteps/robostep_%s.wav", i < 10 ? "0"+i : i.tostring()))
-}
-for (local i = 1; i < 9; i++) {
-	PrecacheSound(format("^mvm/giant_common/giant_common_step_0%s.wav", i.tostring()))
-}
+// for (local i = 1; i < 19; i++) {
+	// PrecacheSound(format("mvm/player/footsteps/robostep_%s.wav", i < 10 ? "0"+i : i.tostring()))
+// }
+// for (local i = 1; i < 9; i++) {
+	// PrecacheSound(format("^mvm/giant_common/giant_common_step_0%s.wav", i.tostring()))
+// }
 
 // EntFire("tf_gamerules", "SetCustomUpgradesFile", "scripts/items/mvm_upgrades-test.txt")
 
