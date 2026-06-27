@@ -7605,8 +7605,8 @@ function ROOT::RunWithDelay(func, delay = 0.0)
 	return dummy
 } */
 /** 
- * @param {float|integer} 	delay
- * @param {function} 		func
+ * @param {float|integer|function} 	delay
+ * @param {float|integer|function} 	func
  * @returns {CBaseEntity|null}
  */
 function ROOT::RunWithDelay(delay, func)
