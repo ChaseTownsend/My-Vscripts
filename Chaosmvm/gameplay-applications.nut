@@ -1,7 +1,7 @@
 if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
-SetScriptVersion("GameplayApplications", "5.1.2")
+SetScriptVersion("GameplayApplications", "5.1.3")
 
 local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", THINKER_PERSIST)
 
@@ -355,8 +355,22 @@ AddChatTrigger("equip" function(player, ...) {
 	player.EquipItem(item_data[1], item_data[2], item_data[3])
 } )
 
-AddChatTrigger("scoreboard", function(_player) {
-
+AddChatTrigger("scoreboard", function(player) {
+	player.PrintToChat("[►] Scores printed to Console.")
+	local function GetKills(plrr) {return GetPropInt(plrr, "m_Shared.tfsharedlocaldata.m_ScoreData.m_iKills")}
+	local function GetDeaths(plrr) {return GetPropInt(plrr, "m_Shared.tfsharedlocaldata.m_ScoreData.m_iDeaths")-GetPropInt(plrr, "m_Shared.tfsharedlocaldata.m_ScoreData.m_iSuicides")}
+	foreach (plr in m_aHumans)
+	{
+		player.PrintToConsole("")
+		player.PrintToConsoleF("%s", plr.GetUserName())
+		player.PrintToConsole("-----------")
+		player.PrintToConsoleF("Score: %d", GetPropInt(PlayerManager, "m_iTotalScore", plr.entindex()))
+		player.PrintToConsoleF("Healing: %d", plr.GetTrackedHealing())
+		player.PrintToConsoleF("Damage: %d", plr.GetTrackedDamage())
+		player.PrintToConsoleF("Tank Damage: %d", plr.GetTrackedTankDamage())
+		player.PrintToConsoleF("Kills: %d", GetKills(plr))
+		player.PrintToConsoleF("Deaths: %d", GetDeaths(plr))
+	}
 } )
 
 // if other scripts use SpawnCallbacks then Remove this!!
