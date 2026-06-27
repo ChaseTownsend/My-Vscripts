@@ -61,34 +61,27 @@ function ROOT::IsTF2C()
 /**
  * Sets the library version
  * @param 	{string} 	lib_version 	The Library version to set to.
- * @param 	{integer} 		subversion 		The Library subversion to set to.
- * @param 	{bool} 		fail_msg 		If we want to include a fail message
+ * @param 	{integer} 	subversion 		The Library subversion to set to.
+ * @param 	{bool} 		fail_msg 		If we want to include a fail message.
  * @param 	{bool} 		force_include 	If we Force include this library version.
- * @param 	{bool} 		developer 		Developer ... idk
  * 
  * @return 	{bool} 		If the library version was modified
  */
 
 // lib_version is the current installment of this version
-function ROOT::SetLibraryVersion(lib_version, subversion = 0, fail_msg = true, force_include = false, developer = false)
+function ROOT::SetLibraryVersion(lib_version, subversion = 0, fail_msg = true, force_include = false)
 {
 	local force = false
 	if("FatCatLibForce" in ROOT)
 		force = FatCatLibForce
 
-	if((force_include || force) || developer)
+	if(force_include || force)
 	{
 		printl("Force Included Library")
 		::FatCatLibVersion <- {
 			version = lib_version
 			sub_version = subversion
 			forced = "true"
-		}
-		if(developer == true)
-		{
-			FatCatLibVersion.developer <- "true"
-			local chat = @(m) ("PrintToChatAll" in ROOT ? PrintToChatAll(m) : ClientPrint(null, 3, m))
-			chat(FATCATLIB_PREFIX+"\x04DONT FORGET TO DISABLE DEVELOPER MODE!!!\x01")
 		}
 		return true
 	}
@@ -216,7 +209,7 @@ function ROOT::SetLibrarySettings(settings_table = {})
 function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
-// month.day.year.hour(24format)
+// month.day.year.hour(24format) (GMT-5)
 if (!SetLibraryVersion("06.27.2026.15", 0))
 	return
 
