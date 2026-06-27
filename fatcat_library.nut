@@ -217,7 +217,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format)
-if (!SetLibraryVersion("06.25.2026.21", 0))
+if (!SetLibraryVersion("06.25.2026.22", 0))
 	return
 
 SetLibrarySettings({})
@@ -7625,7 +7625,7 @@ function ROOT::RunWithDelay(delay, func)
 	{
 		dummy.Kill()
 		func()
-	}.bindenv(this)
+	}.bindenv(this == null ? ROOT : this)
 
 	EntFireByHandle(dummy, "CallScriptFunction", "Run", delay, null, null)
 	return dummy
