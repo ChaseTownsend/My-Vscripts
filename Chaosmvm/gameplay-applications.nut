@@ -361,7 +361,7 @@ AddChatTrigger("scoreboard", function(player) {
 	local function GetDeaths(plrr) {return GetPropInt(plrr, "m_Shared.tfsharedlocaldata.m_ScoreData.m_iDeaths")-GetPropInt(plrr, "m_Shared.tfsharedlocaldata.m_ScoreData.m_iSuicides")}
 	foreach (plr in m_aHumans)
 	{
-		player.PrintToConsole("")
+		player.PrintToConsole(" ")
 		player.PrintToConsoleF("%s", plr.GetUserName())
 		player.PrintToConsole("-----------")
 		player.PrintToConsoleF("Score: %d", GetPropInt(PlayerManager, "m_iTotalScore", plr.entindex()))

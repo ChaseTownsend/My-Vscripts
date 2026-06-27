@@ -1163,7 +1163,7 @@ function CTFPlayer::PrintToChatF(message, ...)
 	PrintBetter(this, CleanUpAndFormatString.acall([this, message ? message : "null"].extend(vargv)), HUD_PRINTTALK)
 
 function CTFPlayer::PrintToConsoleF(message, ...)
-	PrintBetter(this, CleanUpAndFormatString.acall([this, message ? message : "null"].extend(vargv)), HUD_PRINTTALK)
+	PrintBetter(this, CleanUpAndFormatString.acall([this, message ? message : "null"].extend(vargv)), HUD_PRINTCONSOLE)
 
 function CTFPlayer::IsOnGround()
 	return GetPropEntity(this, "m_hGroundEntity") != null
