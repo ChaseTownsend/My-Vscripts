@@ -89,7 +89,6 @@ AddChatTrigger(["shape", "class", "change", "changeclass", "switch", "shapeshift
 	try {given_id = name.tointeger()}
 	catch(e) {}
 
-
 	local class_index = TF_CLASS_UNDEFINED
 	if(given_id != TF_CLASS_UNDEFINED)
 	{
@@ -115,7 +114,7 @@ AddChatTrigger(["shape", "class", "change", "changeclass", "switch", "shapeshift
 		break
 		} //
 	}
-	else if(		startswith(name, "sc"))
+	else if(startswith(name, "sc"))
 		class_index = TF_CLASS_SCOUT
 	else if(startswith(name, "so"))
 		class_index = TF_CLASS_SOLDIER
@@ -359,6 +358,7 @@ AddChatTrigger("scoreboard", function(player) {
 	player.PrintToChat("[►] Scores printed to Console.")
 	local function GetKills(plrr) {return GetPropInt(plrr, "m_Shared.tfsharedlocaldata.m_ScoreData.m_iKills")}
 	local function GetDeaths(plrr) {return GetPropInt(plrr, "m_Shared.tfsharedlocaldata.m_ScoreData.m_iDeaths")-GetPropInt(plrr, "m_Shared.tfsharedlocaldata.m_ScoreData.m_iSuicides")}
+	ReCalculatePlayers() //
 	foreach (plr in m_aHumans)
 	{
 		player.PrintToConsole(" ")

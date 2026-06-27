@@ -217,7 +217,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format)
-if (!SetLibraryVersion("06.25.2026.22", 0))
+if (!SetLibraryVersion("06.27.2026.15", 0))
 	return
 
 SetLibrarySettings({})
@@ -893,6 +893,7 @@ enum ProjectileType_t
 ::MAX_WEAPONS			<- 8
 ::TICKRATE 				<- 66
 ::TICK_DUR 				<- 1.0/TICKRATE
+::TWO_TICKS 			<- TICK_DUR * 2.0
 ::THREE_TICKS 			<- TICK_DUR * 3.0
 ::FIVE_TICKS 			<- TICK_DUR * 5.0
 ::TEN_TICKS 			<- TICK_DUR * 10.0
@@ -905,6 +906,7 @@ enum ProjectileType_t
 ::TF_WEAPON_SNIPERRIFLE_DAMAGE_MIN 	<- 50 
 ::TF_WEAPON_SNIPERRIFLE_DAMAGE_MAX 	<- 150
 ::WEAPON_NOCLIP <- 1
+::TRACE_MAX <- 65536
 
 ::ITEM_FLAG_SELECTONEMPTY		<- (1<<0)
 ::ITEM_FLAG_NOAUTORELOAD		<- (1<<1)
@@ -2375,6 +2377,7 @@ function CTFPlayer::DisplayHudText(msg = "", clr = false, pos = false, holdtime 
 	PurgeString(msg)
 }
 
+// TODO: Print Crit resistance with
 function CTFPlayer::CalculateEHP()
 {
 	local HP = GetHealth()
@@ -3491,7 +3494,7 @@ function CTFPlayer::GetClosestPlayer(team = null, offset = Vector())
 		team = GetTeam()
 	return GetClosestPlayer(this, team, offset)
 }
-
+// TODO: move to redefined
 CTFPlayer.GenerateAndWearItem <- CTFBot.GenerateAndWearItem
 // TODO: Add to Snippets
 /**
@@ -3990,6 +3993,60 @@ if(!("_GetCustomAttribute" in CTFPlayer))
 		return _GetCustomAttribute(attrib, def)
 	}
 }
+/** 
+ * Cache's the Eyetrace if called multiple times per frame
+ * 
+ * The Trace is called with the mask `MASK_SHOT` to override this
+ * the input table should contain `mask = #` with # being the mask
+ * 
+ * @param {table} overrides
+ * 
+ * @returns {table}
+ */
+function CTFPlayer::GetEyeTrace(overrides = {})
+{
+	local scope = GetScope(this)
+	if(!("EyeTraceDataCache" in scope))
+		scope.EyeTraceDataCache <- {
+			data = {},
+			tick = 0,
+		}
+
+	local should_override = overrides.len() != 0 && "mask" in overrides
+
+	local is_filter = overrides.len() != 0 && "filter" in overrides
+
+	if(should_override == false && is_filter == false)
+	{
+		if(GetFrameCount() == scope.EyeTraceDataCache.tick)
+			return scope.EyeTraceDataCache.data
+	}
+
+	local trace = {
+		start = EyePosition()
+		end = EyePosition() + (EyeAngles().Forward() * TRACE_MAX)
+		mask = "mask" in overrides ? overrides["mask"] : MASK_SHOT
+		ignore = this
+	}
+	if(is_filter)
+		trace.filter <- overrides["filter"]
+
+	if(is_filter == true)
+		TraceLineFilter(trace)
+	else
+		TraceLineEx(trace)
+
+	if(should_override == false)
+	{
+		scope.EyeTraceDataCache.data.clear() // less garbage?
+		scope.EyeTraceDataCache.data = clone trace // using clone so that people can use the raw table without overriding the original
+
+		scope.EyeTraceDataCache.tick = GetFrameCount()
+	}
+	
+	return trace
+}
+
 // function CTFPlayer::DisplayHudHint(text, duration = 10.0, flash = true, Hide = true)
 // {
 // 	local hint_ent = GetHudHint()
@@ -10818,24 +10875,21 @@ function ROOT::PostPlayerSpawn(player)
 				event_name = "ObjectDeflected"
 		}
 
+		local function str(obj) {return obj?obj.tostring():"null"}
+
+		printf("%s Deflected %s that was shot from %s\n", str(deflector), str(object), str(old_owner))
+
+		printl("Old Owner: "+old_owner)
+		printl("Object Owner: "+object?object.GetOwner():null)
+		printl("Object launcher: "+GetPropEntity(object, "m_hLauncher"))
+
 		// fix rafmod homing sentry rockets
-		if(object.GetClassname() == "tf_projectile_sentryrocket" && IsValidPlayer(old_owner) && IsValidPlayer(deflector))
+		if(object.GetClassname() == "tf_projectile_sentryrocket" && IsValidPlayer(old_owner))
 		{
-			// local weapon = old_owner.GetWeaponInSlowNew(SLOT_PRIMARY)
-			if(old_owner.GetPlayerClass() == TF_CLASS_ENGINEER && /* weapon && weapon.GetAttribute && */ old_owner.HookAdditiveAttributes("mod projectile heat seek power") != 0)
+			if(old_owner.GetPlayerClass() == TF_CLASS_ENGINEER && old_owner.HookAdditiveAttributes("mod projectile heat seek power") != 0)
 			{
-				AddThinkToEnt(object, function() {
-					local pos = self.GetOrigin()
-					local forward = self.GetAbsAngles().Forward()
-					local speed = 1100 //self.GetAbsVelocity().Length()
-					local new_pos = pos + (forward * (speed / 66))
-					self.SetAbsVelocity(forward * speed)
-					DebugDrawText(self.GetCenter(), format("Vel: %s", self.GetAbsVeliocty().ToKVString()), false, TICK_DUR)
-					DebugDrawLine_vCol(pos, new_pos, Vector(255, 0, 0), false, TICK_DUR)
-					// self.Teleport(true, new_pos, false, QAngle(), false, Vector())
-					return -1
-				})
-				RunWithDelay(THREE_TICKS, @() object.SetMoveType(MOVETYPE_FLY, GetPropInt(object, "m_MoveCollide")))
+				RunWithDelay(TWO_TICKS, @() object.SetAbsVelocity(object.GetAbsAngles().Forward() * object.GetAbsVelocity().Length()))
+				RunWithDelay(TWO_TICKS, @() object.SetMoveType(MOVETYPE_FLY, GetPropInt(object, "m_MoveCollide")))
 			}
 		}
 
@@ -11437,15 +11491,13 @@ AddChatTrigger("Test", function(player, ...) {
 
 RegisterAdminTrigger("lib_force", function(_, ...) {
 	if("FatCatLibForce" in ROOT)
-		::FatCatLibForce <- !FatCatLibForce
+		::FatCatLibForce = !FatCatLibForce
 	else
 		::FatCatLibForce <- true
 	PrintToChatAll("\x07D000D0► FatCatLib ◄\x03 Setting Force include flag to \"\x04"+FatCatLibForce.tostring()+"\x03\"\x01.")
 })
 
 RegisterAdminTrigger("noclip", function(player, ...) {
-	if(!player)
-		return
 	if(player.GetMoveType() == MOVETYPE_NOCLIP)
 		player.SetMoveType(MOVETYPE_WALK, MOVECOLLIDE_DEFAULT)
 	else 
@@ -11466,13 +11518,14 @@ RegisterAdminTrigger("enable_errors", function(_, ...) {
 	})
 })
 
-RegisterAdminTrigger(["lib_reload", "reload_library"], function(_, ...) {
+RegisterAdminTrigger(["lib_reload", "reload_library"], function(player, ...) {
 	ReloadLibrary()
+	player.PrintToChat("Force Reloaded Library")
 })
 
 RegisterAdminTrigger("vcvar", function(player, ...) {
 	if(vargv.len() < 1)
-		return
+		return player.PrintToChat("Incorrect Arguments (cvar_name, [value]). Only cvar_name is needed to Query.")
 	local cvar = vargv[0]
 
 	if(!IsConvarAllowed(cvar))
@@ -11518,15 +11571,7 @@ RegisterAdminTrigger("test_tank", function(player, ...) {
 				offset = Vector(0, 0, 128)
 		}
 	}
-	local trace = {
-		start = player.EyePosition()
-		end = player.GetEyeOffset(16000)
-		mask = MASK_WORLD
-		ignore = player
-	}
-	TraceLineEx(trace)
-
-	local SpawnPosition = trace.pos+offset
+	local SpawnPosition = player.GetEyeTrace().pos+offset
 
 	local path = SpawnEntityFromTable("path_track", {})
 	path.SetAbsOrigin(SpawnPosition)
@@ -11548,6 +11593,8 @@ RegisterAdminTrigger("test_tank", function(player, ...) {
 	EntFireNew(tank, "SetSpeed", "0", TICK_DUR)
 	EntFireNew(tank, "SetSpeed", "0", FIVE_TICKS)
 	EntFireNew(tank, "SetSpeed", "0", TEN_TICKS)
+	EntFireNew(tank, "SetSpeed", "0", 0.5)
+	EntFireNew(tank, "SetSpeed", "0", 1.0)
 	return player.PrintToChat("Created A "+tank_name+" with the name "+targetname.tolower())
 })
 
@@ -11573,12 +11620,21 @@ RegisterAdminTrigger("kill_tank", function(player, ...) {
 				return player.PrintToChat("Failed to find a tank with that name!")
 		}
 	}
-
-	local trace = {
+	local trace = player.GetEyeTrace({
+		mask = MASK_OPAQUE_AND_NPCS,
+		function filter(entity)
+		{
+			if(entity.GetClassname() == "tank_boss")
+				return TRACE_STOP
+			else
+				return TRACE_CONTINUE
+		}
+	})
+	/* local trace = {
 		start = player.EyePosition(),
 		end = player.GetEyeOffset(16000)
 		mask = MASK_OPAQUE_AND_NPCS,
-		filter = function(entity)
+		function filter(entity)
 		{
 			if(entity.GetClassname() == "tank_boss")
 				return TRACE_STOP
@@ -11586,7 +11642,7 @@ RegisterAdminTrigger("kill_tank", function(player, ...) {
 				return TRACE_CONTINUE
 		}
 	}
-	TraceLineFilter(trace)
+	TraceLineFilter(trace) */
 	DebugDrawLine_vCol(trace.start, trace.pos, Vector(255, 0, 0), false, 100)
 
 	if(trace.hit && trace.enthit && trace.enthit.GetClassname() == "tank_boss")
@@ -11632,19 +11688,17 @@ RegisterAdminTrigger("bot", function(player, ...) {
 			return player.PrintToChat("Johnny Silverhand is already Alive!")
 	}
 
-	local Giant = false
+	local Giant = (vargv.len() != 0 && vargv[0] == "giant")
+	local trace = player.GetEyeTrace()
 
-	if(vargv.len() != 0 && vargv[0] == "giant")
-		Giant = true
+	// local trace = {
+	// 	start = player.EyePosition()
+	// 	end = player.GetEyeOffset(16000)
+	// 	mask = MASK_WORLD
+	// 	ignore = player
+	// }
 
-	local trace = {
-		start = player.EyePosition()
-		end = player.GetEyeOffset(16000)
-		mask = MASK_WORLD
-		ignore = player
-	}
-
-	TraceLineEx(trace)
+	// TraceLineEx(trace)
 
 	local bots = GetAllPlayers(TF_TEAM_SPECTATOR, false, false)
 	local rand = bots[RandomInt(0, bots.len()-1)]
