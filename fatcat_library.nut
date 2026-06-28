@@ -210,7 +210,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format) (GMT-5)
-if (!SetLibraryVersion("06.27.2026.15", 0))
+if (!SetLibraryVersion("06.27.2026.20", 0))
 	return
 
 SetLibrarySettings({})
@@ -1017,6 +1017,15 @@ enum ProjectileType_t
 	"jar" : -1
 }
 
+::SpellWeapons <- {
+	"lollichop" 						: TF_WEAPON_LOLLICHOP
+	"short_circuit" 					: TF_WEAPON_SHORT_CIRCUT
+	"tf_projectile_mechanicalarmorb" 	: TF_WEAPON_SHORT_CIRCUT
+	"claidheamohmor" 					: TF_WEAPON_CLAIDHEAMH_MOR
+	"unarmed_combat" 					: TF_WEAPON_UNARMED_COMBAT
+	"nonnonviolent_protest" 			: TF_WEAPON_CONSCIENTIOUS_OBJECTOR
+}
+
 /*
   ========================
   === END OF CONSTANTS ===
@@ -1481,16 +1490,22 @@ function CTFPlayer::IHTranslateToChat(name, description)
  */
 function CTFPlayer::IHTranslateToChat2(item)
 	TranslateToChat("IH_TRANSLATE_ITEM", "%T" + item+"_NAME", "%T" + item+"_DESC")
-
+/** 
+ * Translates a message to the players hud
+ */
 function CTFPlayer::TranslateToHud(...)
 	PrintToHud(GetTranslatedAndFormattedString.acall([this].extend(vargv)))
-
+/** 
+ * Translates a message to the players chat
+ */
 function CTFPlayer::TranslateToChat(...)
 	PrintToChat(GetTranslatedAndFormattedString.acall([this].extend(vargv)))
 
 /**
  * Switches to the weapon in this slot (MAY BE NULL)
  * @param {integer} slot
+ * 
+ * @deprecated just use `Weapon_Switch` with a weapon
  */
 function CTFPlayer::SwitchWeaponSlot( slot )
 	Weapon_Switch(this.GetWeaponInSlot(slot))
@@ -1508,6 +1523,33 @@ function CTFPlayer::IsMinicritDebuffed()
 function CTFPlayer::IsMinicritBuffed()
 	return InMultiCond([TF_COND_OFFENSEBUFF, TF_COND_ENERGY_BUFF, TF_COND_NOHEALINGDAMAGEBUFF, TF_COND_MINICRITBOOSTED_ON_KILL])
 
+function CTFPlayer::HasCritImmunity()
+	return InCond(TF_COND_DEFENSEBUFF)
+/** 
+ * Returns if the player has the passtime ball
+ * @returns {bool}
+ */
+function CTFPlayer::HasPasstimeBall()
+	return GetPropBool(this, "m_Shared.m_bHasPasstimeBall")
+/** 
+ * @returns {float}
+ */
+function CTFPlayer::GetStealthNoAttackExpireTime()
+	return GetPropFloat(this, "m_Shared.tfsharedlocaldata.m_flStealthNoAttackExpire")
+/**
+ * Returns if our Dead Ringer is ready
+ * @returns {bool}
+ */
+function CTFPlayer::IsFeignDeathReady()
+	return GetPropBool(this, "m_Shared.m_bFeignDeathReady")
+
+/** 
+ * Returns if we are an Enemy
+ * @returns {bool}
+ */
+function CTFPlayer::IsEnemy()
+	return GetTeam() == TF_TEAM_PVE_INVADERS
+
 /*
 	Some Funcs can use a different name
  */
@@ -1519,6 +1561,8 @@ CTFPlayer.WorldSpaceCenter <- CTFPlayer.GetCenter
 CTFBot.SetJetpackCharge <- CTFPlayer.SetFoodItemCharge
 CTFBot.SetRazorbackCharge <- CTFPlayer.SetFoodItemCharge
 CTFBot.WorldSpaceCenter <- CTFPlayer.GetCenter
+
+CTFPlayer.GenerateAndWearItem <- CTFBot.GenerateAndWearItem
 
 /*
 	Multiline Functions
@@ -1805,9 +1849,10 @@ function CTFPlayer::GetSpellBook()
 	return null
 }
 
-// TODO: update using OnStartTouch && OnEndTouch outputs of respawn rooms
 function CTFPlayer::InRespawnRoom(any = false)
-{
+{	
+	// does not solve if touching any though ....
+	return GetPropInt(this, "m_Shared.m_iSpawnRoomTouchCount")
 	foreach (respawnroom in GetAllEntitiesByClassname("func_respawnroom"))
 	{
 		if(!any) { if(respawnroom.GetTeam() != GetTeam()) continue }
@@ -2370,7 +2415,6 @@ function CTFPlayer::DisplayHudText(msg = "", clr = false, pos = false, holdtime 
 	PurgeString(msg)
 }
 
-// TODO: Print Crit resistance with
 function CTFPlayer::CalculateEHP()
 {
 	local HP = GetHealth()
@@ -2414,13 +2458,18 @@ function CTFPlayer::CalculateEHP()
 		AllMult *= weapon.GetMultAttribute("mult_dmgtaken_active")
 	}
 	
+	// would love condition providers
 	if(InMultiCond([TF_COND_MEDIGUN_UBER_FIRE_RESIST, TF_COND_MEDIGUN_SMALL_FIRE_RESIST]))
-		FireMult = 0
+		FireMult = 0.0
 	if(InMultiCond([TF_COND_MEDIGUN_UBER_BULLET_RESIST, TF_COND_MEDIGUN_SMALL_BULLET_RESIST]))
-		BulletMult = 0
+		BulletMult = 0.0
 	if(InMultiCond([TF_COND_MEDIGUN_UBER_BLAST_RESIST, TF_COND_MEDIGUN_SMALL_BLAST_RESIST]))
-		BlastMult = 0
+		BlastMult = 0.0
+		
+	if(HasCritImmunity())
+		CritMult = 0.0
 
+	// Condition Mults
 	CondMult *= GetRuneResistance()
 
 	if(InCond(TF_COND_DEFENSEBUFF_HIGH))	//likely unused now
@@ -2429,18 +2478,18 @@ function CTFPlayer::CalculateEHP()
 		CondMult *= 0.65
 	
 	if(InCond(TF_COND_STEALTHED))
-		CondMult *= IsCvarAllowed("tf_stealth_damage_reduction") ? GetCvarFloat("tf_stealth_damage_reduction") : 1.0 // TODO: get
+		CondMult *= IsCvarAllowed("tf_stealth_damage_reduction") ? GetCvarFloat("tf_stealth_damage_reduction") : 0.8
 
 	if(IsMinicritDebuffed())
-		CondMult *= (1.0 + (0.35 * CritMult))
+		CondMult *= MATH.Max(0, 1.0 + (0.35 * CritMult))
 
 	if(IsInvincible())
-		CondMult = -1 // dont want to use 0 as we are dividing
+		CondMult = -1.0 // dont want to use 0 as we are dividing
 
 	AllMult = AllMult * CondMult
 
 	if(AllMult == 0) 
-		AllMult = -1 // dont want to use 0 as we are dividing
+		AllMult = -1.0 // dont want to use 0 as we are dividing
 
 	local InfHP = "\x0700bbffInfinite"
 
@@ -2454,7 +2503,7 @@ function CTFPlayer::CalculateEHP()
 	local FireHP 	= FireMult 		<= 0 ? 0 : ceil(HP/FireMult/AllMult).tointeger()
 	local MeleeHP 	= MeleeMult 	<= 0 ? 0 : ceil(HP/MeleeMult/AllMult).tointeger()
 	// local RangedHP 	= RangedMult 	<= 0 ? 0 : ceil(HP/RangedMult/AllMult).tointeger()
-	local _AllHP 	= AllMult 		<= 0 ? 0 : ceil(HP/AllMult).tointeger()
+	local AllHP 	= AllMult 		<= 0 ? 0 : ceil(HP/AllMult).tointeger()
 
 	if(BulletHP <= 0) BulletHP = InfHP
 	else BulletHP = BulletHP.tostring()
@@ -2471,14 +2520,15 @@ function CTFPlayer::CalculateEHP()
 	// if(RangedHP == 0) RangedHP = InfHP
 	// else RangedHP = RangedHP.tostring()
 
-	if(_AllHP == 0) _AllHP = InfHP
-	else _AllHP = _AllHP.tostring()
+	if(AllHP == 0) AllHP = InfHP
+	else AllHP = AllHP.tostring()
 	
 	local formatstring 	=  "\x0800FF00B0 ** ( Counts Most Active Conditions ) **\n"
-	formatstring 		+= "\x07FFFF00[Effective HP]: \x01\n"
-	formatstring 		+= "\x03Bullet: \x04%s \x01| \x03Blast: \x04%s \x01| \x03Fire: \x04%s \x01| \x03Melee: \x04%s \x01"
+	
+	formatstring 		+= "\x03Bullet: \x04%s \x01| \x03Blast: \x04%s \x01| \x03Fire: \x04%s \x01| \x03Melee: \x04%s \x01\n"
+	formatstring 		+= "\x03Crit Resistance: \x04%s%%\x01\n"
 	// formatstring 		+= "\x03Melee: \x04%s \x01" //| \x03Ranged: \x04%s\n"
-	PrintToChatF(formatstring, BulletHP, BlastHP, FireHP, MeleeHP/* , RangedHP */)
+	PrintToChatF(formatstring, BulletHP, BlastHP, FireHP, MeleeHP, ((1.0-CritMult) * 100).tostring()) /* , RangedHP */
 
 	local Printed = false
 
@@ -2497,7 +2547,7 @@ function CTFPlayer::CalculateEHP()
 		local message = ""
 		if(AllMult <= 1.00) message = "\x0700bbffUniversal Damage Resistance"
 		else 				message = "\x07ff4545Universal Damage Vulnerability"
-		PrintToChatF("\x07FFFF00* \x01Your current base health \x04%i\x01 is effectively \x04%s\x01 due to a %s\x01 of \x04%.2f%%.", HP, _AllHP, message, fabs(100-(AllMult*100.0)))
+		PrintToChatF("\x07FFFF00* \x01Your current base health \x04%i\x01 is effectively \x04%s\x01 due to a %s\x01 of \x04%.2f%%.", HP, AllHP, message, fabs(100-(AllMult*100.0)))
 	}
 }
 
@@ -3054,7 +3104,7 @@ function CTFPlayer::UndoGHeavy()
 function CTFPlayer::IsGHeavy()
 	return "HeavyTransform" in GetScope(this) && GetScope(this).HeavyTransform
 /**
- * @param {integer} idx
+ * @param {string} ItemName			Internal Item name in items_game.txt
  * @param {bool} swit
  * @param {table} attrib_overrides
  */
@@ -3487,8 +3537,6 @@ function CTFPlayer::GetClosestPlayer(team = null, offset = Vector())
 		team = GetTeam()
 	return GetClosestPlayer(this, team, offset)
 }
-// TODO: move to redefined
-CTFPlayer.GenerateAndWearItem <- CTFBot.GenerateAndWearItem
 // TODO: Add to Snippets
 /**
  * @param {string} particle
@@ -3530,9 +3578,6 @@ function CTFPlayer::EmitSoundTo(sound, data = {})
 	if("sound_time" in data) 	sound_data.sound_time <- data.sound_time
 	EmitSoundEx(sound_data)
 }
-// TODO: move to single line
-function CTFPlayer::IsEnemy()
-	return GetTeam() == TF_TEAM_BLUE
 
 function CTFPlayer::PrintConds()
 {
@@ -3647,16 +3692,6 @@ function CTFPlayer::GetWearableByIDX(idx)
 	}
 	return null
 }
-
-// TODO: Move to single line
-function CTFPlayer::HasPasstimeBall()
-	return GetPropBool(this, "m_Shared.m_bHasPasstimeBall")
-
-function CTFPlayer::GetStealthNoAttackExpireTime()
-	return GetPropFloat(this, "m_Shared.tfsharedlocaldata.m_flStealthNoAttackExpire")
-
-function CTFPlayer::IsFeignDeathReady()
-	return GetPropBool(this, "m_Shared.m_bFeignDeathReady")
 
 ::TF_CAN_ATTACK_FLAG_GRAPPLINGHOOK <- 0x01
 
@@ -4132,6 +4167,7 @@ function CTFPlayer::GetEyeTrace(overrides = {})
 	"IsBot"
 	"CalculateEHP"
 	"GenerateAndWearItem"
+	"DisplayHudHint"
 ]
 
 /*
@@ -4143,7 +4179,7 @@ function CTFPlayer::GetEyeTrace(overrides = {})
 // somewhat stolen from ZI
 foreach ( key, value in CTFPlayer )
 {
-	if ( typeof( value ) == "function" )
+	if ( typeof( value ) == "function" && !(key in CTFBot) )
 	{
 		if(NoFormatToBot.find(key) != null)
 			continue
@@ -4535,6 +4571,18 @@ function ROOT::SET_CUSTOM_PLAYER_ATTRIBUTE_VALUE(player, attrib, value)
  */
 // DEFINE_CUSTOM_ATTRIBUTE("add cond on attack")
 // DEFINE_CUSTOM_ATTRIBUTE("add cond on attack duration")
+
+
+/**
+ * Spells
+ * 
+ * Allows getting spells for hitting or kill an enemy
+ */
+// DEFINE_CUSTOM_ATTRIBUTE("give spell on kill")
+// DEFINE_CUSTOM_ATTRIBUTE("give spell on kill max")
+// DEFINE_CUSTOM_ATTRIBUTE("give spell on kills needed")
+// DEFINE_CUSTOM_ATTRIBUTE("give spell on hit")
+// DEFINE_CUSTOM_ATTRIBUTE("give spell on hit max")
 
 
 /*
@@ -9860,18 +9908,27 @@ function ROOT::PostPlayerSpawn(player)
 		eventdata.victim 	<- victim
 		eventdata.attacker 	<- attacker
 		eventdata.assister 	<- assister
+		/** @type {string} */
 		eventdata.logname 	<- params.weapon_logclassname
+		/** @type {integer} */
 		eventdata.weaponIDX <- params.weapon_def_index
 		eventdata.inflictor <- EntIndexToHScript(params.inflictor_entindex)
 		if(attacker && attacker.IsPlayer() && attacker.HasWeapon(eventdata.weaponIDX))
+			/** @type {CTFWeaponBase} */
 			eventdata.weapon <- attacker.GetWeapon(eventdata.weaponIDX)
-		else eventdata.weapon <- null
+		else 
+			eventdata.weapon <- null
 
-		if(eventdata.rocket_jump != 0) 	eventdata.rocket_jump <- true
-		else							eventdata.rocket_jump <- false
-
-		if("customkill" in eventdata)	eventdata.custom <- eventdata.customkill
-		else 							eventdata.custom <- 0
+		if(eventdata.rocket_jump != 0)
+			eventdata.rocket_jump <- true
+		else
+			eventdata.rocket_jump <- false
+		
+		if("customkill" in eventdata)
+			/** @type {integer} */
+			eventdata.custom <- eventdata.customkill
+		else
+			eventdata.custom <- 0
 
 		if(victim.HasCorrosion())
 		{
@@ -9884,9 +9941,52 @@ function ROOT::PostPlayerSpawn(player)
 		if(IsWeaponClass(eventdata.weapon, "tf_weapon", true))
 		{
 			local weapon = eventdata.weapon
-			if(weapon.GetAttribute("draw temp hud alert on kill", 0) && IsValidPlayer(weapon.GetOwner()))
+			local owner = weapon.GetOwner()
+			local spellbook = owner.GetSpellBook()
+			local spellscope = GetScope(spellbook)
+
+			if(weapon.GetAttribute("draw temp hud alert on kill", 0) && IsValidPlayer(owner))
+			{	// fucking 2 line tall chars
+				owner.DisplayHudHint("██░░█░░██\n█░░░█░░░█\n█░░░█░░░█\n█░░░█░░░█\n█░░░░░░░█\n██░░█░░██", weapon.GetAttribute("draw temp hud alert on kill", 0))
+			}
+
+			local weaponIDX = params.weapon_def_index
+			local logname = params.logname
+
+			local allowed = false
+			foreach (name, idx in SpellWeapons)
 			{
-				weapon.GetOwner().DisplayHudHint("██░░█░░██\n█░░░█░░░█\n█░░░█░░░█\n█░░░█░░░█\n█░░░░░░░█\n██░░█░░██", weapon.GetAttribute("draw temp hud alert on kill", 0))
+				if(name == logname || idx == weaponIDX)
+				{
+					allowed = true
+					break
+				}
+			}
+
+			if("IsMeleeWeapon" in weapon && weapon.IsMeleeWeapon())
+			{	// only allow melee weapons that are melee attacks to give spells
+				if(MATH.HasBigFlag(params.damagebits, DMG_CLUB) == false)
+					allowed = false
+			}
+
+			local grant_spells = weapon.GetAttribute("give spell on kill", -1)
+			local grant_spells_max = weapon.GetAttribute("give spell on kill max", 1)
+			local grant_spells_kills = weapon.GetAttribute("give spell on kills needed", 0)
+			
+			if(grant_spells != -1 && allowed)
+			{
+				if(IsValidPlayer(owner) && spellbook)
+				{
+					if(!("m_iKills" in spellscope))
+						spellscope.m_iKills <- 0
+
+					spellscope.m_iKills++
+
+					if(grant_spells != -1 && grant_spells_kills == 0)
+						spellbook.ModifySpells(grant_spells, grant_spells_max)
+					else
+						spellbook.ModifySpells(grant_spells, grant_spells_max, spellscope.m_iKills, grant_spells_kills)
+				}
 			}
 		}
 
@@ -9932,6 +10032,7 @@ function ROOT::PostPlayerSpawn(player)
 		local IsCrit = MATH.HasBitFlag(params.damage_type, DMG_CRITICAL) 
 		local IsFall = MATH.HasBitFlag(params.damage_type, DMG_FALL)
 		local IsCrush = MATH.HasBitFlag(params.damage_type, DMG_CRUSH)
+		local IsMelee = MATH.HasBitFlag(params.damage_type, DMG_CLUB)
 		
 		/** @type {CBaseEntity} */
 		local victim = params.const_entity
@@ -10096,6 +10197,35 @@ function ROOT::PostPlayerSpawn(player)
 				params.damage *= attacker.HookMultAttributes("taunt dmg mult")
 				if(attacker.GetActiveWeapon())
 					params.damage *= attacker.GetActiveWeapon().GetMultAttribute("taunt dmg mult active")
+			}
+
+			if(IsWeaponClass(params.weapon, "tf_weapon", true))
+			{
+				/** @type {CTFWeaponBase} */
+				local weapon = params.weapon
+				local owner = weapon.GetOwner()
+				local spellbook = owner.GetSpellBook()
+
+				if(IsMelee && ("IsMeleeWeapon" in weapon && weapon.IsMeleeWeapon()))
+				{
+					if(IsValidPlayer(owner) && spellbook)
+					{
+						local grant_spells = weapon.GetAttribute("give spell on hit", -1)
+
+						if(grant_spells != -1)
+							spellbook.ModifySpells(grant_spells, weapon.GetAttribute("give spell on hit max", 2))
+					}
+				}
+				else if ( !IsMelee && ("IsMeleeWeapon" in weapon && weapon.IsMeleeWeapon()) == false )
+				{
+					if(IsValidPlayer(owner) && spellbook)
+					{
+						local grant_spells = weapon.GetAttribute("give spell on hit", -1)
+
+						if(grant_spells != -1)
+							spellbook.ModifySpells(grant_spells, weapon.GetAttribute("give spell on hit max", 2))
+					}
+				}
 			}
 
 			if(attacker.InAirDueToExplosion() && attacker.GetActiveWeapon() && attacker.GetActiveWeapon() == params.weapon)
@@ -11801,7 +11931,7 @@ seterrorhandler(function(e)
 		//	Potato:
 		//	ChaosMvM:
 		//	Github Repository:
-		local WhereReport = IsPotato() ? "@The Fatcat in #scripting" : (IsChaosMvM() ? "@The Fatcat in #bug-reports" : "The Fatcat's Github Repository")
+		local WhereReport = IsPotato() ? "@The Fatcat in #scripting" : (IsChaosMvM() ? "@The Fatcat in #bug-crash-reports" : "The Fatcat's Github Repository")
 		
 		PrintToChatAllF("\x07FF0000A VSCRIPT ERROR HAS OCCURRED [%s].", e)
 		PrintToChatAllF("\x07FF0000Report to Any Higher Ups or %s with a screenshot of the console.", WhereReport)
@@ -11859,6 +11989,8 @@ function ROOT::FixShittyPlayersBug()
 	if(IsTF2C()) // prevent for now
 		return
 	if(GetCurrentWaveNumber() > 1)
+		return
+	if(!IsMannVsMachineMode())
 		return
 
 	if(m_aHumans.len() != 1)

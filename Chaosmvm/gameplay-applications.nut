@@ -1,7 +1,7 @@
 if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
-SetScriptVersion("GameplayApplications", "5.1.3")
+SetScriptVersion("GameplayApplications", "5.2.0")
 
 local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", THINKER_PERSIST)
 
@@ -24,20 +24,22 @@ local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", 
 // 	[ TF_WEAPON_CANDY_CANE, 		TF_COND_SWIMMING_NO_EFFECTS	],
 // 	[ TF_WEAPON_TRIBALMANS_SHIV, 	TF_COND_SWIMMING_NO_EFFECTS	],
 // ]
-::SpellWeapons <- [
-	TF_WEAPON_LOLLICHOP, 
-	TF_WEAPON_SHORT_CIRCUT, 
-	TF_WEAPON_CLAIDHEAMH_MOR, 
-	TF_WEAPON_UNARMED_COMBAT,
-	TF_WEAPON_CONSCIENTIOUS_OBJECTOR,
-	///
-	"lollichop",
-	"short_circuit",
-	"tf_projectile_mechanicalarmorb",
-	"claidheamohmor",
-	"unarmed_combat",
-	"nonnonviolent_protest",
-]
+// ::SpellWeapons <- [
+// 	TF_WEAPON_LOLLICHOP, 
+// 	TF_WEAPON_SHORT_CIRCUT, 
+// 	TF_WEAPON_CLAIDHEAMH_MOR, 
+// 	TF_WEAPON_UNARMED_COMBAT,
+// 	TF_WEAPON_CONSCIENTIOUS_OBJECTOR,
+// 	///
+// 	"lollichop",
+// 	"short_circuit",
+// 	"tf_projectile_mechanicalarmorb",
+// 	"claidheamohmor",
+// 	"unarmed_combat",
+// 	"nonnonviolent_protest",
+// ]
+
+
 ::BlutsaugerAttributes <- {
 	"damage bonus" : 10
 	"dmg taken increased" : 0.1
@@ -49,11 +51,11 @@ local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", 
 	refund = 100.0							// % of uber to restore on invalid target
 	duration = 60.0							// Time to explode bot after death
 }
-::EBSettings <- {
-	base_range = 250
-	additive_range = 50
-	base_damage = 3125
-}
+// ::EBSettings <- {
+// 	base_range = 250
+// 	additive_range = 50
+// 	base_damage = 3125
+// }
 
 
 if(!("OnCondPostHooks" in FatCatLibSettings))
@@ -700,7 +702,8 @@ function ROOT::ModifyCallbackDamage(params, victim, attacker, weapon, inflictor)
 		return
 	switch (custom)
 	{
-	case TF_DMG_CUSTOM_BACKSTAB: {
+		//Deprecated, use `explosive backstab custom attribute`
+	/* case TF_DMG_CUSTOM_BACKSTAB: {
 		local iExplosiveBackstab = weapon.GetAttribute("explosive sniper shot", 0)
 		if ( iExplosiveBackstab == 0 )
 			break;
@@ -719,7 +722,7 @@ function ROOT::ModifyCallbackDamage(params, victim, attacker, weapon, inflictor)
 			}
 		})
 	}
-	break;
+	break; */
 	case TF_DMG_CUSTOM_KART: {	// [11/12/25] Please, dear god, why do i have to do this stupid hack
 		params.early_out <- true
 		victim.TakeDamageCustom(inflictor, attacker, attacker.GetSpellBook(), Vector(), victim.GetOrigin(), KART_DMG, params.damage_type, TF_DMG_CUSTOM_TRIGGER_HURT)
@@ -916,7 +919,7 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 			attacker.SayChatterMessage(victim)
 			return
 		}
-		local weaponIDX = params.weaponIDX
+		/* local weaponIDX = params.weaponIDX
 		local logname = params.logname
 
 		if(!IsInArray(weaponIDX, SpellWeapons) || !IsInArray(logname, SpellWeapons))
@@ -939,7 +942,7 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 			case TF_WEAPON_CLAIDHEAMH_MOR: { spell_book.ModifySpells(TF_SPELL_MONOCULUS, 2, scope.m_iKills, 10) ; return }
 			case TF_WEAPON_UNARMED_COMBAT: { spell_book.ModifySpells(TF_SPELL_SKELETON, 2, scope.m_iKills, 10) ; return }
 			case TF_WEAPON_CONSCIENTIOUS_OBJECTOR: { if(scope.m_iKills % 10 == 0 && spell_book.GetSpellCharges().tointeger() != SpellDefaults[spell_book.GetSpellIndex()+2].tointeger()) { attacker.RollSpell() } ; return }
-		}
+		} */
 	}
 	function OnScriptEvent_HumanResupply(params)
 	{
