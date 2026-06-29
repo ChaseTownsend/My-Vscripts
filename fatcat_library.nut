@@ -210,7 +210,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format) (GMT-5)
-if (!SetLibraryVersion("06.27.2026.20", 0))
+if (!SetLibraryVersion("06.29.2026.01", 0))
 	return
 
 SetLibrarySettings({})
@@ -506,6 +506,8 @@ if(!("GetPropVectorArray" in ROOT))
 ::TFCOLLISION_GROUP_ROCKET_BUT_NOT_WITH_OTHER_ROCKETS	<- 27
 
 ///////// Spell Index's
+::TF_SPELL_NONE					<- -2
+::TF_SPELL_ROLL					<- -2
 ::TF_SPELL_UNKNOWN				<- -2
 ::TF_SPELL_EMPTY				<- -1
 ::TF_SPELL_FIREBALL 			<- 0
@@ -1024,7 +1026,10 @@ enum ProjectileType_t
 	"claidheamohmor" 					: TF_WEAPON_CLAIDHEAMH_MOR
 	"unarmed_combat" 					: TF_WEAPON_UNARMED_COMBAT
 	"nonnonviolent_protest" 			: TF_WEAPON_CONSCIENTIOUS_OBJECTOR
+	"sharp_dresser" 					: 638
 }
+
+SpellWeapons["sharp_dresser"] <- 638
 
 /*
   ========================
@@ -2408,7 +2413,7 @@ function CTFPlayer::DisplayHudText(msg = "", clr = false, pos = false, holdtime 
 	if(holdtime) text.KeyValueFromFloat("holdtime", holdtime)
 	if(channel)	 text.KeyValueFromInt("channel", channel)
 	
-	text_scope.Last_Message <- msg
+	text_scope.Last_Message = msg
 
 	text.AcceptInput("Display", "", this, this)
 
@@ -2933,8 +2938,9 @@ function CTFPlayer::SetUpThinkTable()
 	local scope = GetScope(this)
 	if("ThinkTable" in scope)
 		scope.ThinkTable.clear()
+	else
+		scope.ThinkTable <- {}
 		
-	scope.ThinkTable <- {}
 	local function PlayerThinkTableThink() {
 		foreach (_, func_table in ThinkTable)
 		{
@@ -3091,14 +3097,22 @@ function CTFPlayer::TransformGHeavy()
 {
 	if(!this||!IsValid())
 		return
-	GetScope(this).HeavyTransform <- true
+	local scope = GetScope(this)
+	if("HeavyTransform" in scope)
+		scope.HeavyTransform = true
+	else
+		scope.HeavyTransform <- true
 }
 
 function CTFPlayer::UndoGHeavy()
 {
 	if(!this||!IsValid())
 		return
-	GetScope(this).HeavyTransform <- false
+	local scope = GetScope(this)
+	if("HeavyTransform" in scope)
+		scope.HeavyTransform = false
+	else
+		scope.HeavyTransform <- false
 }
 
 function CTFPlayer::IsGHeavy()
@@ -3112,6 +3126,11 @@ function CTFPlayer::EquipItem(ItemName, swit = true, attrib_overrides = {})
 {
 	local old_weapons = GetMoveChildrenWeapons()
 	local new_item = EquipItemBAD(ItemName)
+	if(type(new_item) == "array")
+	{
+		PrintArray(new_item)
+		new_item = new_item[0]
+	}
 	local old_item = null
 	foreach (wep in old_weapons)
 	{
@@ -3247,6 +3266,9 @@ function CTFPlayer::EquipItemBAD(ItemName)
 	GenerateAndWearItem(ItemName)
 	RemoveEFlags(EFL_NO_MEGAPHYSCANNON_RAGDOLL)
 	local NewWeapons = GetMoveChildrenWeapons()
+
+	// PrintArray(OldWeapons)
+	// PrintArray(NewWeapons)
 
 	local differ = []
 
@@ -3878,7 +3900,7 @@ function CTFPlayer::GetInternalVar(var_name, def = 0)
 function CTFPlayer::SetInternalVar(var_name, value)
 {
 	GetInternalVar(var_name) // cheeky to fix it up so its not missing
-	GetScope(this).Internal_Vars[var_name] <- value
+	GetScope(this).Internal_Vars[var_name] = value
 }
 
 function CTFPlayer::UseGiantModel(buster = false)
@@ -4887,7 +4909,15 @@ function CTFWeaponBase::DecreaseUberChargePercent(level)
  */
 function CTFWeaponBase::ModifySpells(index, max, compared = 1, mod_compare = 1)
 {
-	if ((compared % mod_compare) != 0) return
+	if ((compared % mod_compare) != 0) 
+		return
+
+	if(index == TF_SPELL_NONE)
+	{
+		SetSpellIndex(index)
+		RunWithDelay(2.1, @() SetRandomSpell())
+		return
+	}
 
 	if (GetSpellCharges() == 0)
 	{
@@ -9837,14 +9867,11 @@ function ROOT::PostPlayerSpawn(player)
 		player.SetCustomModelWithClassAnimations("")
 
 	//"raise health to"
-	if(player.HookAdditiveAttributes("raise health to") > 0)
+	if(player.HookAdditiveAttributes("set max health") != 0)
 	{
-		local to_hp = player.HookAdditiveAttributes("raise health to")
-		if(player.GetMaxHealth() < to_hp)
-		{
-			local added = to_hp - player.GetMaxHealth()
-			player.AddCustomAttribute("max health additive bonus", added, -1)
-		}
+		local to_hp = player.HookAdditiveAttributes("set max health")
+		player.AddCustomAttribute(to_hp >= player.GetMaxHealth() ? "max health additive bonus" : "max health additive penalty", to_hp - player.GetMaxHealth(), -1)
+		player.SetHealth(to_hp)
 	}
 
 	player.SetForcedTauntCam(0)
@@ -9950,22 +9977,22 @@ function ROOT::PostPlayerSpawn(player)
 				owner.DisplayHudHint("██░░█░░██\n█░░░█░░░█\n█░░░█░░░█\n█░░░█░░░█\n█░░░░░░░█\n██░░█░░██", weapon.GetAttribute("draw temp hud alert on kill", 0))
 			}
 
-			local weaponIDX = params.weapon_def_index
-			local logname = params.logname
+			// local weaponIDX = params.weapon_def_index
+			// local logname = params.weapon_logclassname
 
-			local allowed = false
-			foreach (name, idx in SpellWeapons)
-			{
-				if(name == logname || idx == weaponIDX)
-				{
-					allowed = true
-					break
-				}
-			}
+			local allowed = true
+			// foreach (name, idx in SpellWeapons)
+			// {
+			// 	if(name == logname || idx == weaponIDX)
+			// 	{
+			// 		allowed = true
+			// 		break
+			// 	}
+			// }
 
 			if("IsMeleeWeapon" in weapon && weapon.IsMeleeWeapon())
 			{	// only allow melee weapons that are melee attacks to give spells
-				if(MATH.HasBigFlag(params.damagebits, DMG_CLUB) == false)
+				if(MATH.HasBitFlag(params.damagebits, DMG_CLUB) == false)
 					allowed = false
 			}
 
@@ -10082,6 +10109,13 @@ function ROOT::PostPlayerSpawn(player)
 				}
 				// builder.PrintToHudF("Inflictor: %s  Inflictor_Owner: %s", inflictor.tostring(), inflictor.GetOwner().tostring())
 			}
+		}
+
+		// is_suicide_counter
+		if(params.damage_custom == TF_DMG_CUSTOM_TELEFRAG && attacker == inflictor && attacker == victim)
+		{
+			params.early_out <- true
+			victim.TakeDamageCustom(null, Worldspawn, null, Vector(), Vector(), victim.HookAdditiveAttributes("is suicide counter"), DMG_PREVENT_PHYSICS_FORCE, TF_DMG_CUSTOM_SUICIDE)
 		}
 
 		if(attacker && attacker.IsPlayer())
@@ -10224,6 +10258,16 @@ function ROOT::PostPlayerSpawn(player)
 
 						if(grant_spells != -1)
 							spellbook.ModifySpells(grant_spells, weapon.GetAttribute("give spell on hit max", 2))
+					}
+				}
+
+				if(weapon.GetAttribute("chance to miss", 0) != 0)
+				{
+					local chance = weapon.GetAttribute("chance to miss", 0)
+					if(MATH.RandomChance() <= chance) // missed
+					{
+						params.early_out <- true
+						CreateParticle("miss_text", victim.GetCenter() + Vector(0,0,32))
 					}
 				}
 			}
@@ -11713,13 +11757,19 @@ RegisterAdminTrigger("test_tank", function(player, ...) {
 	interface.SetDesiredSpeed(0)
 	interface.Stop()
 
-	EntFireNew(tank, "SetSpeed", "0", TICK_DUR)
-	EntFireNew(tank, "SetSpeed", "0", FIVE_TICKS)
-	EntFireNew(tank, "SetSpeed", "0", TEN_TICKS)
-	EntFireNew(tank, "SetSpeed", "0", 0.5)
-	EntFireNew(tank, "SetSpeed", "0", 1.0)
+	RunWithDelay(4.5, @() tank.SetAbsOrigin(SpawnPosition))
+	if(tank_name != "Tank") RunWithDelay(0.1, @() PostHelicopterSpawn(tank))
+	EntFireNew(tank, "SetSpeed", "0", 4.5)
+	EntFireNew(tank, "SetSpeed", "0", 0.1)
 	return player.PrintToChat("Created A "+tank_name+" with the name "+targetname.tolower())
 })
+
+function PostHelicopterSpawn(self)
+{
+	local scope = GetScope(self)
+	scope.flGravity <- 0
+	SetPropFloat(self, "m_speed", 0.0)
+}
 
 RegisterAdminTrigger("kill_tank", function(player, ...) {
 	if(vargv.len() != 0)
@@ -11896,6 +11946,7 @@ function SpawnJohhny(bot, pos, Giant = false)
 	bot.AddBotAttribute(IGNORE_FLAG)
 }
 
+RegisterAdminTrigger("respawn", function(player, ...) { player.ForceRegenerateAndRespawn() })
 /*
   =====================================
   === END OF LIBRARY ADMIN COMMANDS ===

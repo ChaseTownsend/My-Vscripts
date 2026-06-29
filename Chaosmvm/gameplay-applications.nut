@@ -201,6 +201,8 @@ function ROOT::FindItemBy(name)
 RegisterEquipItem(1100, "The Bread Bite", "bread", true, {}, function(player) {return player.GetPlayerClass() == TF_CLASS_HEAVYWEAPONS})
 RegisterEquipItem(1105, "The Self-Aware Beauty Mark", "mark", true, {}, function(player) {return player.GetPlayerClass() == TF_CLASS_SNIPER})
 RegisterEquipItem(1121, "Mutated Milk", "mutated", true, {}, function(player) {return player.GetPlayerClass() == TF_CLASS_SCOUT})
+RegisterEquipItem(199, "tf_weapon_shotgun", "test", false, {})
+// RegisterEquipItem(30666, "The C.A.P.P.E.R", "capper")
 // RegisterEquipItem(30666, "The C.A.P.P.E.R", "capper", true, {}, function(player) {return player.GetPlayerClass() == TF_CLASS_SCOUT})
 // RegisterEquipItem(1, "test item", "Test1", true, {}, function(player) {return false})
 // RegisterEquipItem(2, "test item", "Test2", true, {}, function(player) {return false})
@@ -525,6 +527,22 @@ function GameplayThink()
 		if(scope.LastVels.len() > 6)
 			scope.LastVels.remove(0)
 
+		bot.SetGravity(1.0)
+
+		local active = bot.GetActiveWeapon()
+		
+		bot.MultiplyGravity(bot.HookMultAttributes("mult gravity"))
+
+		if(active)
+			bot.MultiplyGravity(active.GetMultAttribute("mult gravity active"))
+
+		if(bot.IsCrouching())
+		{
+			bot.MultiplyGravity(bot.HookMultAttributes("mult gravity crouching"))
+			if(active)
+				bot.MultiplyGravity(active.GetMultAttribute("mult gravity crouching active"))
+		}
+
 		if(bot.IsDead())
 			continue
 
@@ -606,13 +624,11 @@ function GameplayThink()
 
 		// 
 		Human.SetGravity(1.0)
-		// Human.RemoveCondEx(TF_COND_SWIMMING_NO_EFFECTS, true)
 
 		local primary 		= Human.GetWeaponInSlotNew(SLOT_PRIMARY)
 		local primaryIDX 	= Human.GetWeaponIDXInSlotNew(SLOT_PRIMARY)
 		local active 		= Human.GetActiveWeapon()
 		local activeIDX 	= Human.GetActiveWeaponIDX()
-		// local meleeIDX 		= Human.GetWeaponIDXInSlotNew(SLOT_MELEE)
 		
 		Human.MultiplyGravity(Human.HookMultAttributes("mult gravity"))
 
@@ -626,12 +642,6 @@ function GameplayThink()
 				Human.MultiplyGravity(active.GetMultAttribute("mult gravity crouching active"))
 		}
 			
-		// foreach (item in AddCondIDS)
-		// {
-		// 	if(meleeIDX == item[0])
-		// 		Human.SetCond(item[1], -1)
-		// }
-
 		if(activeIDX == TF_WEAPON_TOMISLAV)
 			Human.TranslateToHud("TOMISLAV_HEAT", ("Hits" in GetScope(active) ? GetScope(active).Hits/10 : -1))
 
@@ -785,20 +795,19 @@ function ROOT::ProcessChaosWeaponHit(params, victim, attacker, weapon, _inflicto
 		weapon.ReapplyProvision()
 	}
 	break;
-	case TF_WEAPON_VITA_SAW:
-	{
-		if (attacker.GetWeaponIDXInSlotNew(SLOT_MELEE) != TF_WEAPON_VITA_SAW) 
-			return
-		if (!(params.damage_type & DMG_CLUB))
-			return
+	// case TF_WEAPON_VITA_SAW:
+	// {
+	// 	if (attacker.GetWeaponIDXInSlotNew(SLOT_MELEE) != TF_WEAPON_VITA_SAW) 
+	// 		return
+	// 	if (!(params.damage_type & DMG_CLUB))
+	// 		return
 
-		local spell_book = attacker.GetSpellBook()
-		if (!spell_book) 
-			return
-		// TODO: Rework with Attributes!
-		spell_book.ModifySpells(TF_SPELL_HEAL, 5)
-	}
-	break;
+	// 	local spell_book = attacker.GetSpellBook()
+	// 	if (!spell_book) 
+	// 		return
+	// 	spell_book.ModifySpells(TF_SPELL_HEAL, 5)
+	// }
+	// break;
 	}
 }
 
