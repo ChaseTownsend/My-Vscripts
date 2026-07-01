@@ -1,7 +1,7 @@
 if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
-SetScriptVersion("GameplayApplications", "5.2.0")
+SetScriptVersion("GameplayApplications", "5.2.1")
 
 local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", THINKER_PERSIST)
 
@@ -201,7 +201,6 @@ function ROOT::FindItemBy(name)
 RegisterEquipItem(1100, "The Bread Bite", "bread", true, {}, function(player) {return player.GetPlayerClass() == TF_CLASS_HEAVYWEAPONS})
 RegisterEquipItem(1105, "The Self-Aware Beauty Mark", "mark", true, {}, function(player) {return player.GetPlayerClass() == TF_CLASS_SNIPER})
 RegisterEquipItem(1121, "Mutated Milk", "mutated", true, {}, function(player) {return player.GetPlayerClass() == TF_CLASS_SCOUT})
-// RegisterEquipItem(199, "tf_weapon_shotgun", "test", false, {})
 // RegisterEquipItem(30666, "The C.A.P.P.E.R", "capper")
 // RegisterEquipItem(30666, "The C.A.P.P.E.R", "capper", true, {}, function(player) {return player.GetPlayerClass() == TF_CLASS_SCOUT})
 // RegisterEquipItem(1, "test item", "Test1", true, {}, function(player) {return false})
@@ -329,7 +328,7 @@ AddChatTrigger("equip" function(player, ...) {
 
 	foreach (idx, data in RegisteredItems)
 	{
-		printf("Processing Item %s, IDX match? %s, Name match? %s.\n", data.InternalName, (item == idx.tostring()).tostring(), (item == data.MakingName).tostring())
+		// printf("Processing Item %s, IDX match? %s, Name match? %s.\n", data.InternalName, (item == idx.tostring()).tostring(), (item == data.MakingName).tostring())
 		if(item == idx.tostring() || item == data.MakingName)
 		{
 			if(data.OverrideFunc(player) == false)
@@ -676,6 +675,16 @@ function GameplayThink()
 			if(WeaponScope.Hits >= 1000)
 				WeaponScope.Hits = 1000
 			primary.ReapplyProvision()
+		}
+
+		if(Human.HookAdditiveAttributes("infinite ammo"))
+		{
+			Human.ResetAmmo()
+			foreach (wep in Human.GetAllWeapons())
+			{
+				if(wep.GetAttribute("infinite ammo", 0) && "GetMaxClip1" in wep)
+					wep.SetClip1(wep.GetMaxClip1())
+			}
 		}
 	}
 

@@ -210,7 +210,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format) (GMT-5)
-if (!SetLibraryVersion("06.29.2026.01", 0))
+if (!SetLibraryVersion("07.01.2026.13", 0))
 	return
 
 SetLibrarySettings({})
@@ -3128,7 +3128,8 @@ function CTFPlayer::EquipItem(ItemName, swit = true, attrib_overrides = {})
 	local new_item = EquipItemBAD(ItemName)
 	if(type(new_item) == "array")
 	{
-		PrintArray(new_item)
+		if(new_item.len() == 0)
+			return PrintToChat("\x07FF0000Uh Oh something fucked up")
 		new_item = new_item[0]
 	}
 	local old_item = null
@@ -3145,7 +3146,14 @@ function CTFPlayer::EquipItem(ItemName, swit = true, attrib_overrides = {})
 		old_item.Destroy()
 
 	foreach(attrib, value in attrib_overrides)
+	{
+		if(type(value) == "string")
+		{
+			printf("Warning: Cannot apply attribute \"%s\" with value \"%s\"!", attrib, value)
+			continue
+		}
 		new_item.AddAttribute(attrib, value, 0)
+	}
 
 	local type = GetPropInt(new_item, "m_iPrimaryAmmoType")
 	if(type != -1)
@@ -10589,8 +10597,47 @@ function ROOT::PostPlayerSpawn(player)
 		local scope = GetScope(player)
 		if(!("HasSpawned" in scope) && !player.IsBot())
 		{
-			RunWithDelay(3.0, @() player.PrintToChat("\x01\x07E000E0► FatCatLib ◄   \x03Happy Pride Month!"))
-			player.PrintToChat("\x01\x07E000E0► FatCatLib ◄   \x03Happy Pride Month!")
+			local TimeTable = {}
+			LocalTime(TimeTable)
+
+			// local motd = "Happy Pride Month!"
+			local motd = "Have a Good Day"
+			switch(TimeTable.month)
+			{
+			case 1: // January
+				motd = "Happy Mental Wellness Month!"
+			break
+			case 2: // February
+			break
+			case 3: // March
+			break
+			case 4: // April
+				if(TimeTable.day == 1)
+					motd = "Happy April Fools"
+			break
+			case 5: // May
+			break
+			case 6: // June
+				motd = "Happy Pride Month!"
+			break
+			case 7: // July
+				motd = "Happy Disability Pride Month!"
+			break
+			case 8: // August
+			break
+			case 9: // September
+			break
+			case 10: // October
+				motd = "Happy Halloween!"
+			break
+			case 11: // November
+			break
+			case 12: // December
+				motd = "Merry Christmas!"
+			break
+			}
+			RunWithDelay(3.0, @() player.PrintToChatF("\x01\x07E000E0► FatCatLib ◄   \x03%s", motd))
+			// player.PrintToChatF("\x01\x07E000E0► FatCatLib ◄   \x03%s", motd)
 			scope.HasSpawned <- true
 		}
 
@@ -11047,7 +11094,7 @@ function ROOT::PostPlayerSpawn(player)
 		printf("%s Deflected %s that was shot from %s\n", str(deflector), str(object), str(old_owner))
 
 		printl("Old Owner: "+old_owner)
-		printl("Object Owner: "+object?object.GetOwner():null)
+		printl("Object Owner: "+object?object.GetOwner():"null")
 		printl("Object launcher: "+GetPropEntity(object, "m_hLauncher"))
 
 		// fix rafmod homing sentry rockets
