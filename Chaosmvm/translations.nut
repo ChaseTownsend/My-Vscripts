@@ -10,25 +10,26 @@ if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatC
 // Danish  				--		Thyme			(thyme1 on Discord)
 // Spanish  			--		Ryo				(steamcommunity.com/id/ryo567)
 
-::IH_color <- "\x08FFFF00DD"
-::IH_text_color <- "\x08FFFFFFBB"
+::IH_color <- "\x08FFD700DD"
+::IH_text_color <- "\x01"
 ::IH_color_header <- "\x0826c2ffDD"
 ::IH_text_color_header <- "\x0826beffBB"
 ::IH_disable_color <- "\x0826beff66"
 ::IH_error_color <- "\x07D43F3F"
+::IH_highlight_color <- "\x07FF3D24"
 
 if(!("CHECKPOINT_ERROR" in getroottable()))
 	::CHECKPOINT_ERROR <- "\x07bf4137"
 
 if("SetScriptVersion" in getroottable())
-	SetScriptVersion("Translations", "1.6.3")
+	SetScriptVersion("Translations", "1.7.0")
 
 ::TRANSLATION_TABLE <- {
 	english = {
 		IH_TRANSLATE_ITEM		= IH_color + "[%s]" + IH_text_color + "%s"
-		IH_INCLUDES				= IH_color_header + "[►]\x0826beffBB Your loadout includes..."
-		IH_DIS_MSG_2			= IH_disable_color + "Type '/itemhelp 1' to disable these messages during a wave. \nType '/itemhelp 0' to disable these messages entirely."
-		IH_DIS_MSG				= IH_disable_color + "Type '/itemhelp 0' to disable these messages. \nType '/itemhelp 2' to Always display this message."
+		IH_INCLUDES				= IH_color_header + "[►]\x0826beffAA Your loadout includes..."
+		IH_DIS_MSG_2			= IH_disable_color + "Type '/itemhelp 1' to disable item descriptions during a wave. \nType '/itemhelp 0' to disable them entirely."
+		IH_DIS_MSG				= IH_disable_color + "Type '/itemhelp 0' to disable item descriptions. \nType '/itemhelp 2' to always display them."
 		IH_BAD_ARGS				= IH_color_header + "[Item Helper]" + IH_error_color + " {Error}\x01 Incorrect arguments!\n/itemhelp 2 - Enable\n/itemhelp 1 - Enable during Wave Setup only\n/itemhelp 0 - Disable"
 		IH_OOB_ARG				= IH_color_header + "[Item Helper]" + IH_error_color + " {Error}\x01 Out Of Bounds Value Set! : %s"
 		IH_HELP_MSG				= IH_color_header + "[Item Helper]\x01 Item helper provides simple descriptions for each \x03Chaos\x01 Item!" 
@@ -127,7 +128,7 @@ if("SetScriptVersion" in getroottable())
 		ATOMIZER_DESC 			= " Cannot deal damage with normal attacks, but a successful taunt kill will grant a critboost lasting 3 minutes."
 		//
 		THREERUNEBLADE_NAME 	= "THREE-RUNE BLADE"
-		THREERUNEBLADE_DESC 	= " While active, gain MASSIVE boost to move speed and ability to triple jump. Grants immunity to fall damage."
+		THREERUNEBLADE_DESC 	= " While active, gain MASSIVE boost to move speed and ability to triple jump. Deals increased damage while airborne. Grants immunity to fall damage."
 		//
 		UNARMEDCOMBAT_NAME 		= "UNARMED COMBAT"
 		UNARMEDCOMBAT_DESC 		= " Every 10 kills, gain a Skeleton minion spell charge (Requires Spellbook)."
@@ -210,7 +211,7 @@ if("SetScriptVersion" in getroottable())
 		HALFZATOICHI_DESC 		= " Average damage with high health mobility, and increased range."
 		//
 		MARKETGARDENER_NAME 	= "MARKET GARDENER"
-		MARKETGARDENER_DESC 	= " Massive damage bonus while rocket jumping. After getting a kill, enter an enraged state and gain extra health, resistance and increased damage on all attacks."
+		MARKETGARDENER_DESC 	= " Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		DISCIPLINARYACTION_NAME = "DISCIPLINARY ACTION"
 		DISCIPLINARYACTION_DESC	= " Standard option for defense and mobility. Instantly gain 1/3 Rage meter on hit."
@@ -275,7 +276,7 @@ if("SetScriptVersion" in getroottable())
 		POWERJACK_DESC 			= " Fast attacks and move speed. Inflict bleed & ignite enemies on hit and gain mini-crits on kill."
 		//
 		BACKSCRATCHER_NAME 		= "BACK SCRATCHER"
-		BACKSCRATCHER_DESC 		= " Deals lethal damage from behind. After getting a kill, enter an enraged state and gain extra move speed, resistance and increased damage on all attacks."
+		BACKSCRATCHER_DESC 		= " Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		VOLCANOFRAGMENT_NAME 	= "SHARPENED VOLCANO FRAGMENT"
 		VOLCANOFRAGMENT_DESC 	= " Chance to stun enemies on hit. Also able to burn enemy Pyros"
@@ -284,7 +285,7 @@ if("SetScriptVersion" in getroottable())
 		POSTALPUMMELER_DESC 	= " On hit: Inflict Confusion, causing enemies to walk backward along the bomb path for a short time. Hold Alt-Fire when attacking to teleport back to spawn."
 		//
 		MAUL_NAME 				= "MAUL"
-		MAUL_DESC 				= " On hit: Launch enemies into the air with reduced gravity."
+		MAUL_DESC 				= " On hit: Cause an explosion, launching enemies into the air and igniting them."
 		//
 		THIRDDEGREE_NAME 		= "THIRD DEGREE"
 		THIRDDEGREE_DESC 		= " Become nearly immune to fire damage while equipped, and gain and additional heavy resistance to all ranged attacks while active."
@@ -349,7 +350,7 @@ if("SetScriptVersion" in getroottable())
 		SKULLCUTTER_DESC 		= " Able to cut through enemy Ubercharge and disrupt Medi-Gun functions. Also able to deal increased damage to enemies of the same class as you."
 		//
 		CABER_NAME 				= "ULLAPOOL CABER"
-		CABER_DESC 				= " Damage increases as you become injured. Guaranteed crits if your health is below 2%. The explosion from this attack will kill you."
+		CABER_DESC 				= " You are a Sentry Buster - Taunt to detonate!"
 		//
 		CLAIDHEAMHMOR_NAME 		= "CLAIDHEAMH MOR"
 		CLAIDHEAMHMOR_DESC 		= " Every 10 kills, gain a Monoculus spell charge (Requires Spellbook)."
@@ -387,22 +388,22 @@ if("SetScriptVersion" in getroottable())
 		SHOTGUN_HVY_DESC 		= " Single shot with high damage, granting 8 seconds of crits on kill."
 		//
 		SANDVICH_NAME 			= "SANDVICH"
-		SANDVICH_DESC 			= " Restore up to 150,000 health. Any damage taken while holding this item active is fatal."
+		SANDVICH_DESC 			= " Consume to gain Concheror buff for 30 seconds."
 		//
 		DALOKOHSBAR_NAME 		= "DALOKOHS BAR"
-		DALOKOHSBAR_DESC 		= " Restore up to 20,000 health. If used while below 350 health you'll gain a large overheal. Passively increases damage taken but gives a chance to self-uber on taking damage."
+		DALOKOHSBAR_DESC 		= " Consume to gain increased move speed, weapon switch speed and faster minigun spinup time for 30 seconds."
 		//
 		BUFFALOSTEAK_NAME 		= "BUFFALO STEAK SANDVICH"
-		BUFFALOSTEAK_DESC 		= " Passively grants immunity to critical hits."
+		BUFFALOSTEAK_DESC 		= " Consume to gain Battalion's Backup buff and backstab immunity for 30 seconds."
 		//
 		FAMILYBUSINESS_NAME 	= "FAMILY BUSINESS"
 		FAMILYBUSINESS_DESC 	= " Unlimited ammo. Attack rate is doubled while receiving a healing effect. Grants a brief critboost and mini-crit boost on kill."
 		//
 		FISHCAKE_NAME 			= "FISHCAKE"
-		FISHCAKE_DESC 			= " Heavy resistance to BULLET damage, but more vulnerable to FIRE and BLAST damage."
+		FISHCAKE_DESC 			= " Consume to gain gravity reversal power for 30 seconds (Crouch to reverse gravity)."
 		//
 		SECONDBANANA_NAME 		= "SECOND BANANA"
-		SECONDBANANA_DESC 		= " Heavy resistance to BLAST damage, but more vulnerable to FIRE and BULLET damage."
+		SECONDBANANA_DESC 		= " Consume to gain explosive melee power for 30 seconds (You are restricted to melee for the duration)."
 		///
 		FISTS_NAME 				= "FISTS"
 		FISTS_DESC 				= " Standard option for defense and mobility. Effective in combat."
@@ -417,10 +418,10 @@ if("SetScriptVersion" in getroottable())
 		BREADBITE_DESC 			= " Critical hits infect your victim with Corrosion, a permanent debuff that deals damage based on max health and causes the victim to explode into a small corrosive cloud on death, spreading the effect to other enemies."
 		//
 		WARRIRORSSPIRIT_NAME 	= "WARRIOR'S SPIRIT"
-		WARRIRORSSPIRIT_DESC 	= " Left-click to leap high into the air. Land on enemies to deal massive stomp damage. On Kill: Able to Quick-Slam by crouching in air for a short time.  Removes all primary and secondary ammo."
+		WARRIRORSSPIRIT_DESC 	= " Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air. Active buff indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		FISTSOFSTEEL_NAME 		= "FISTS OF STEEL"
-		FISTSOFSTEEL_DESC 		= " Become a giant Heavy gauntlet with 250,000 health. You are immune to push forces and can deal heavy damage. Removes all primary and secondary ammo. You can only heal from lunchbox items."
+		FISTSOFSTEEL_DESC 		= " You are a Giant Heavy Gauntlet - Immune to push forces and able to hit multiple enemies at once for massive damage."
 		//
 		EVICTIONNOTICE_NAME 	= "EVICTION NOTICE"
 		EVICTIONNOTICE_DESC 	= " Gain a rapid healing effect on kill."
@@ -581,7 +582,7 @@ if("SetScriptVersion" in getroottable())
 		AMBASSADOR_DESC 		= " Deal massive headshot damage. Damage is doubled if you are not disguised."
 		//
 		LETRANGER_NAME 			= "L'ETRANGER"
-		LETRANGER_DESC 			= " Able to execute any non-giant in a single shot. Zero damage to Giants or Tanks however."
+		LETRANGER_DESC 			= " Able to execute any non-giant in a single shot. Deals 2% damage to Giants, zero damage to Tanks."
 		//
 		ENFORCER_NAME 			= "ENFORCER"
 		ENFORCER_DESC 			= " Ignores damage resistances and stores a crit for every backstab or building destroyed with a Sapper."
@@ -599,7 +600,7 @@ if("SetScriptVersion" in getroottable())
 		KNIFE_DESC 				= " While active, the Knife drains your health but grants immunity to ALL damage. Kills restore health."
 		//
 		YOURETERNALREWARD_NAME 	= "YOUR ETERNAL REWARD"
-		YOURETERNALREWARD_DESC 	= " Damage increases as you become injured and crits while your health is below 10%, but only for front stabs. Resist 90% damage."
+		YOURETERNALREWARD_DESC 	= " Deal massive Giant backstab damage and explosive backstab damage, however each attack has a high chance to miss. Direct kills grant a Teleport spell charge (Requires Spellbook)."
 		//
 		KUNAI_NAME 				= "CONNIVER'S KUNAI"
 		KUNAI_DESC 				= " Infinite melee range. Backstabs trigger an explosion, dealing extra damage to nearby targets."
@@ -608,7 +609,7 @@ if("SetScriptVersion" in getroottable())
 		BIGEARNER_DESC 			= " You have a massive amount of health and 'missed' swings cause you to heal. Gain a short burst of massively increased heal rate on kill (which can also build overheal). Cannot heal from any other sources."
 		//
 		WANGAPRICK_NAME 		= "WANGA PRICK"
-		WANGAPRICK_DESC 		= " Killing an enemy causes you to immediately enter cloak for a few seconds. You can attack enemies while in this cloak state and chain kills to remain invisible. No disguise."
+		WANGAPRICK_DESC 		= " Killing an enemy causes you to immediately enter stealth for a few seconds, however you cannot disguise. Grants a Cloak spell charge on kill (Requires Spellbook)."
 		//
 		SHARPDRESSER_NAME 		= "SHARP DRESSER"
 		SHARPDRESSER_DESC 		= " Backstabs trigger an explosion, dealing extra damage to nearby targets."
@@ -620,13 +621,13 @@ if("SetScriptVersion" in getroottable())
 		INVISWATCH_DESC 		= " Infinite cloak, +10% faster move speed."
 		//
 		DEADRINGER_NAME 		= "DEAD RINGER"
-		DEADRINGER_DESC 		= " Activate to gain super-speed for several seconds. Invulnerable while active."
+		DEADRINGER_DESC 		= " Activate to gain super speed for several seconds. Invulnerable while active."
 		//
 		CLOAKANDDAGGER_NAME		= "CLOAK AND DAGGER"
-		CLOAKANDDAGGER_DESC		= " Instant cloak and decloaking."
+		CLOAKANDDAGGER_DESC		= " Activate to transform into a ghost. Able to fly a short distance, or remain stationary to stay intangible indefinitely."
 		//
 		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
-		QUACKENBIRDT_DESC 		= " Reveals the location of all enemies while cloaked."
+		QUACKENBIRDT_DESC 		= " Activate to reveal the location of all enemies. Alternatively, activating this while holding a Sapper shows your teammates instead."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -666,6 +667,12 @@ if("SetScriptVersion" in getroottable())
 		IH_INCLUDES				= IH_color_header + "[►]\x0826beffBB 你的武器配置包括了..."
 		IH_DIS_MSG_2			= IH_disable_color + "输入 '/itemhelp 1' 可在回合中隐藏武器配置信息. \n输入 '/itemhelp 0' 可隐藏武器配置信息."
 		IH_DIS_MSG				= IH_disable_color + "输入 '/itemhelp 0' 可隐藏武器配置信息. \n输入 '/itemhelp 2' 可持续显示武器配置信息."
+		// TODO: Update!
+		/* 
+		IH_INCLUDES				= IH_color_header + "[►]\x0826beffAA Your loadout includes..."
+		IH_DIS_MSG_2			= IH_disable_color + "Type '/itemhelp 1' to disable item descriptions during a wave. \nType '/itemhelp 0' to disable them entirely."
+		IH_DIS_MSG				= IH_disable_color + "Type '/itemhelp 0' to disable item descriptions. \nType '/itemhelp 2' to always display them."
+		 */
 		IH_BAD_ARGS				= IH_color_header + "[武器配置]" + IH_error_color + " {错误}\x01 参数错误!\n/itemhelp 2 - 显示\n/itemhelp 1 - 仅在准备阶段显示\n/itemhelp 0 - 隐藏e"
 		IH_OOB_ARG				= IH_color_header + "[武器配置]" + IH_error_color + " {错误}\x01 设置超出范围值! : %s"
 		IH_HELP_MSG				= IH_color_header + "[武器配置]\x01 武器配置信息会显示 \x03每一把 \x01 武器的特殊改动!" 
@@ -765,6 +772,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		THREERUNEBLADE_NAME 	= "符文剑"
 		THREERUNEBLADE_DESC 	= "手持时, 大幅提升移动速度并获得三段跳. 免疫摔落伤害."
+		// TODO: Update! " While active, gain MASSIVE boost to move speed and ability to triple jump. Deals increased damage while airborne. Grants immunity to fall damage."
 		//
 		UNARMEDCOMBAT_NAME 		= "一臂之力"
 		UNARMEDCOMBAT_DESC 		= "每 10 次击杀会为你生成骷髅魔法书(需要装备法术书)."
@@ -852,7 +860,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MARKETGARDENER_NAME 	= "市场花园铁锹"
 		MARKETGARDENER_DESC 	= "大幅提升暴击伤害. 造成击杀后, 提升生命值, 伤害抗性以及所有武器的伤害. 挥空后会杀死自己."
-		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, enter an enraged state and gain extra health, resistance and increased damage on all attacks."
+		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		DISCIPLINARYACTION_NAME = "指挥官的军鞭"
 		DISCIPLINARYACTION_DESC	= "标准选择, 提升移动速度与防御."
@@ -920,6 +928,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		BACKSCRATCHER_NAME 		= "不求人"
 		BACKSCRATCHER_DESC 		= "攻击敌人后背时大幅提升伤害. 杀敌后提升移动速度, 伤害抗性以及所有武器的伤害."
+		// TODO: Update! " Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		VOLCANOFRAGMENT_NAME 	= "熔岩战斧"
 		VOLCANOFRAGMENT_DESC 	= "攻击有几率击晕敌人."
@@ -929,6 +938,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MAUL_NAME 				= "破坏锤"
 		MAUL_DESC 				= "命中后: 使敌人击飞至空中."
+		// TODO: Update! " On hit: Cause an explosion, launching enemies into the air and igniting them."
 		//
 		THIRDDEGREE_NAME 		= "三度烧伤"
 		THIRDDEGREE_DESC 		= "大幅提升自身火焰伤害抗性, 手持时提升非近战伤害抗性."
@@ -1000,6 +1010,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		CABER_NAME 				= "木柄手榴弹"
 		CABER_DESC 				= "生命值越低此武器伤害越高. 生命值低于 2% 时必定暴击. 手榴弹的爆炸会杀死你."
+		// TODO: Update! " You are a Sentry Buster - Taunt to detonate!"
 		//
 		CLAIDHEAMHMOR_NAME 		= "摩尔巨剑"
 		CLAIDHEAMHMOR_DESC 		= "每 10 次击杀会为你生成魔眼魔法书(需要装备法术书)."
@@ -1038,21 +1049,26 @@ if("SetScriptVersion" in getroottable())
 		//
 		SANDVICH_NAME 			= "三明治"
 		SANDVICH_DESC 			= "恢复 150,000 点生命值. 手持此物品时受到伤害会立刻死亡."
+		// TODO: Update! " Consume to gain Concheror buff for 30 seconds."
 		//
 		DALOKOHSBAR_NAME 		= "达勒克斯巧克力块"
 		DALOKOHSBAR_DESC 		= "恢复 20,000 点生命值. 当生命值低于 350 点时会获得大量超量生命值. 携带时增加受到的伤害但受到伤害时会有几率获得无敌."
+		// TODO: Update! " Consume to gain increased move speed, weapon switch speed and faster minigun spinup time for 30 seconds."
 		//
 		BUFFALOSTEAK_NAME 		= "水牛排三明治"
 		BUFFALOSTEAK_DESC 		= "携带时免疫暴击伤害."
+		// TODO: Update! " Consume to gain Battalion's Backup buff and backstab immunity for 30 seconds."
 		//
 		FAMILYBUSINESS_NAME 	= "家族运营枪"
 		FAMILYBUSINESS_DESC 	= "不需要弹药. 在受到治疗时获得 2 倍的开火速度. 击杀时获得一段时间的暴击."
 		//
 		FISHCAKE_NAME 			= "炸鱼饼"
 		FISHCAKE_DESC 			= "大幅提升子弹伤害抗性, 但会受到额外的爆炸伤害和火焰伤害."
+		// TODO: Update! " Consume to gain gravity reversal power for 30 seconds (Crouch to reverse gravity)."
 		//
 		SECONDBANANA_NAME 		= "第二名的香蕉"
 		SECONDBANANA_DESC 		= "大幅提升爆炸伤害抗性, 但会受到额外的火焰伤害和子弹伤害."
+		// TODO: Update! " Consume to gain explosive melee power for 30 seconds (You are restricted to melee for the duration)."
 		///
 		FISTS_NAME 				= "拳头"
 		FISTS_DESC 				= "标准选择, 提升移动速度与防御."
@@ -1068,10 +1084,11 @@ if("SetScriptVersion" in getroottable())
 		//
 		WARRIRORSSPIRIT_NAME 	= "勇士之魂"
 		WARRIRORSSPIRIT_DESC 	= "按下左键可以向上推动自己. 攻击能够踩踏敌人造成高额伤害. 无法使用机枪与霰弹枪."
-		// TODO: Update! " Left-click to leap high into the air. Land on enemies to deal massive stomp damage. On Kill: Able to Quick-Slam by crouching in air for a short time.  Removes all primary and secondary ammo."
+		// TODO: Update! " Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air. Active buff indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		FISTSOFSTEEL_NAME 		= "钢铁手套"
 		FISTSOFSTEEL_DESC 		= "变成拥有 250,000 点生命值的巨型机器人. 免疫击退并能造成较高的近战伤害. 无法使用机枪与霰弹枪. 只能使用副武器的食物恢复生命值."
+		// TODO: Update! " You are a Giant Heavy Gauntlet - Immune to push forces and able to hit multiple enemies at once for massive damage."
 		//
 		EVICTIONNOTICE_NAME 	= "驱逐警告"
 		EVICTIONNOTICE_DESC 	= "击杀时会获得持续的生命恢复."
@@ -1239,6 +1256,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		LETRANGER_NAME 			= "陌生人"
 		LETRANGER_DESC 			= "单次攻击可以秒杀普通机器人. 无法对坦克或巨型机器人造成伤害.次要开火键: 发射一枚钩爪."
+		// TODO: Update! " Able to execute any non-giant in a single shot. Deals 2% damage to Giants, zero damage to Tanks."
 		//
 		ENFORCER_NAME 			= "执法者"
 		ENFORCER_DESC 			= "攻击无视敌人的伤害抗性并在背刺或使用电子工兵摧毁建筑时储存暴击."
@@ -1257,6 +1275,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		YOURETERNALREWARD_NAME 	= "永生的回报"
 		YOURETERNALREWARD_DESC 	= "生命值越低此武器伤害越高并在生命值低于 10% 时必定暴击, 只能攻击敌人的正前方. 获得 90% 全伤害抗性."
+		// TODO: Update! " Deal massive Giant backstab damage and explosive backstab damage, however each attack has a high chance to miss. Direct kills grant a Teleport spell charge (Requires Spellbook)."
 		//
 		KUNAI_NAME 				= "密谋者的苦无"
 		KUNAI_DESC 				= "极大幅度提升近战距离. 背刺会造成爆炸, 伤害附近的敌人."
@@ -1267,6 +1286,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		WANGAPRICK_NAME 		= "巫毒刺钉"
 		WANGAPRICK_DESC 		= "击杀敌人会使你立刻隐形. 可以在隐身时攻击. 无法伪装."
+		// TODO: Update! " Killing an enemy causes you to immediately enter stealth for a few seconds, however you cannot disguise. Grants a Cloak spell charge on kill (Requires Spellbook)."
 		//
 		SHARPDRESSER_NAME 		= "袖藏剑"
 		SHARPDRESSER_DESC 		= "背刺会造成爆炸, 伤害附近的敌人."
@@ -1279,13 +1299,14 @@ if("SetScriptVersion" in getroottable())
 		//
 		DEADRINGER_NAME 		= "死亡之铃"
 		DEADRINGER_DESC 		= "免疫摔落伤害, +20%伤害抗性, +100%隐身恢复速度."
-		// TODO: Update! " Activate to gain super-speed for several seconds. Invulnerable while active."
+		// TODO: Update! " Activate to gain super speed for several seconds. Invulnerable while active."
 		//
 		CLOAKANDDAGGER_NAME		= "隐形刺客"
 		CLOAKANDDAGGER_DESC		= "能够立刻进入隐形与解除隐形."
+		// TODO: Update! " Activate to transform into a ghost. Able to fly a short distance, or remain stationary to stay intangible indefinitely."
 		// TODO: TRANSLATE THE BELOW
 		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
-		QUACKENBIRDT_DESC 		= " Reveals the location of all enemies while cloaked."
+		QUACKENBIRDT_DESC 		= " Activate to reveal the location of all enemies. Alternatively, activating this while holding a Sapper shows your teammates instead."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -1325,6 +1346,12 @@ if("SetScriptVersion" in getroottable())
 		IH_INCLUDES				= IH_color_header + "[►]\x0826beffBB Din utrustning inkluderar..."
 		IH_DIS_MSG_2			= IH_disable_color + "Skriv '/itemhelp 1' för att avaktivera dessa meddelanden under en våg. \nSkriv '/itemhelp 0' för att avaktivera dessa meddelanden helt."
 		IH_DIS_MSG				= IH_disable_color + "Skriv '/itemhelp 0' för att avaktivera dessa meddelanden. \nSkriv '/itemhelp 2' för att Alltid visa detta meddelande."
+		// TODO: Update!
+		/* 
+		IH_INCLUDES				= IH_color_header + "[►]\x0826beffAA Your loadout includes..."
+		IH_DIS_MSG_2			= IH_disable_color + "Type '/itemhelp 1' to disable item descriptions during a wave. \nType '/itemhelp 0' to disable them entirely."
+		IH_DIS_MSG				= IH_disable_color + "Type '/itemhelp 0' to disable item descriptions. \nType '/itemhelp 2' to always display them."
+		 */
 		IH_BAD_ARGS				= IH_color_header + "[Föremålshjälpare]" + IH_error_color + " {Fel}\x01 Fel argument!\n/itemhelp 2 - Aktivera\n/föremålshjälp 1 - Sätt på under Våg Förberedelse endast\n/itemhelp 0 - Avaktivera"
 		IH_OOB_ARG				= IH_color_header + "[Föremålshjälpare]" + IH_error_color + " {Fel}\x01 Värde Utanför Gränsen Inställd! : %s"
 		IH_HELP_MSG				= IH_color_header + "[Föremålshjälpare]\x01 Föremålshjälpare ger en enkel beskrivning för vajre \x03Chaos\x01 Föremål!" 
@@ -1424,6 +1451,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		THREERUNEBLADE_NAME 	= "TRERUNS-SVÄRD"
 		THREERUNEBLADE_DESC 	= " Medans den är aktiv, gå en MASSIV ökning till rörelsehastighet och förmågan att trippelhoppa. Get immunitet mot fallskada."
+		// TODO: Update! " While active, gain MASSIVE boost to move speed and ability to triple jump. Deals increased damage while airborne. Grants immunity to fall damage."
 		//
 		UNARMEDCOMBAT_NAME 		= "OBEVÄPNAD STRID"
 		UNARMEDCOMBAT_DESC 		= " Varje 10 döende träffar, få en Skelett hejduk förtrollningsladdning (Kräver Trolleribok)."
@@ -1511,7 +1539,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MARKETGARDENER_NAME 	= "TRÄGÅRDSMÄSTAREN"
 		MARKETGARDENER_DESC 	= " Utdelar massivt ökad kritisk skada. Efter man får en döende träff, ge dig in i ett argt tillstånd och få extra hälsa, motstånd och ökad skada på alla attacker. Dock alla missar är en omedelbar död."
-		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, enter an enraged state and gain extra health, resistance and increased damage on all attacks."
+		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		DISCIPLINARYACTION_NAME = "DISCIPLINSÅTGÄRDEN"
 		DISCIPLINARYACTION_DESC	= " Standardval för försvar och rörelse."
@@ -1579,6 +1607,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		BACKSCRATCHER_NAME 		= "RYGGKLIAREN"
 		BACKSCRATCHER_DESC 		= " Utdelar dödlig skada bakifrån. Efter man får en döende träff, ge dig in ett argt tillstånd och få extra rörelsehastighet, motstånd och ökad skada på alla attacker."
+		// TODO: Update! " Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		VOLCANOFRAGMENT_NAME 	= "VÄSSAD VULKANBIT"
 		VOLCANOFRAGMENT_DESC 	= " Chans till att bedöva fiender vid träff. Kan också bränna fiende Pyros"
@@ -1588,6 +1617,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MAUL_NAME 				= "SLÄGGAN"
 		MAUL_DESC 				= " Vid träff: Kasta fiender upp i luften med minskad gravitation."
+		// TODO: Update! " On hit: Cause an explosion, launching enemies into the air and igniting them."
 		//
 		THIRDDEGREE_NAME 		= "TREDJA GRADEN"
 		THIRDDEGREE_DESC 		= " Bli nästan immun mot eldskada medans den är utrustad, och få ett extra tungt motstånd mot alla attacker från långt håll medans den är aktiv."
@@ -1653,6 +1683,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		CABER_NAME 				= "ULLAPOOL-CABER"
 		CABER_DESC 				= " Skada ökas ju mer skadad du är. Garanterade kritiska träffar om din hälsa är under 2%. Explosionen från denna attack kommer döda dig."
+		// TODO: Update! " You are a Sentry Buster - Taunt to detonate!"
 		//
 		CLAIDHEAMHMOR_NAME 		= "CLAIDHEAMH MOR"
 		CLAIDHEAMHMOR_DESC 		= " Varje 10 döende träffar, få en Monoculus förtrollningsladdning (Kräver Trolleribok)."
@@ -1691,21 +1722,26 @@ if("SetScriptVersion" in getroottable())
 		//
 		SANDVICH_NAME 			= "SMÖRGÅSEN"
 		SANDVICH_DESC 			= " Återställ upp till 150,000 hälsa. All skada tagen medans man håller detta föremål aktivt är dödligt."
+		// TODO: Update! " Consume to gain Concheror buff for 30 seconds."
 		//
 		DALOKOHSBAR_NAME 		= "DALOKOHSKAKAN"
 		DALOKOHSBAR_DESC 		= " Återställ upp till 20,000 hälsa. Om den används under 350 hälsa så kommer du få en stor överhälsa. Ökar passivt skadan tagen men ger en chans att sig själv själv-uber när man tar skada."
+		// TODO: Update! " Consume to gain increased move speed, weapon switch speed and faster minigun spinup time for 30 seconds."
 		//
 		BUFFALOSTEAK_NAME 		= "BUFFELBIFFSMÖRGÅS"
 		BUFFALOSTEAK_DESC 		= " Passivt ger immunitet mot kritiska träffar."
+		// TODO: Update! " Consume to gain Battalion's Backup buff and backstab immunity for 30 seconds."
 		//
 		FAMILYBUSINESS_NAME 	= "FAMILIJENS ENSAK"
 		FAMILYBUSINESS_DESC 	= " Oändlig ammunition. Attackhastigheten är dubblad medans man får en helande effekt. Ger en kort kritisk laddning och mini-kritisk laddning vid döende träff."
 		//
 		FISHCAKE_NAME 			= "FISKKAKA"
 		FISHCAKE_DESC 			= " Tungt motstånd mot KULOR, men mer sårbar mot ELD och EXPLOSIONER."
+		// TODO: Update! " Consume to gain gravity reversal power for 30 seconds (Crouch to reverse gravity)."
 		//
 		SECONDBANANA_NAME 		= "ANDRA BANANEN"
 		SECONDBANANA_DESC 		= " Tungt motstånd mot EXPLOSIONER, men mer sårbar mot ELD och KULOR."
+		// TODO: Update! " Consume to gain explosive melee power for 30 seconds (You are restricted to melee for the duration)."
 		///
 		FISTS_NAME 				= "KNYTNÄVAR"
 		FISTS_DESC 				= " Standardval för försvar och rörelse. Effektiv i strid."
@@ -1721,10 +1757,11 @@ if("SetScriptVersion" in getroottable())
 		//
 		WARRIRORSSPIRIT_NAME 	= "KRIGARENS ANDA"
 		WARRIRORSSPIRIT_DESC 	= " Vänsterklicka för att hoppa högt upp i luften. Landar man på fiender så utdelas massiv stampskada. Tar bort all primär och sekundär ammunition."
-		// TODO: Update! " Left-click to leap high into the air. Land on enemies to deal massive stomp damage. On Kill: Able to Quick-Slam by crouching in air for a short time.  Removes all primary and secondary ammo."
+		// TODO: Update! " Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air. Active buff indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		FISTSOFSTEEL_NAME 		= "STÅLNÄVARNA"
 		FISTSOFSTEEL_DESC 		= " Bli en stor Tung Artillerist järnhandske med 250,000 hälsa. Du är immun mot knuff och kan utdela stor skada. Tar bort all primär och sekundär ammunition. Du kan bära läkas från lunchlådor."
+		// TODO: Update! " You are a Giant Heavy Gauntlet - Immune to push forces and able to hit multiple enemies at once for massive damage."
 		//
 		EVICTIONNOTICE_NAME 	= "VRÄKNINGSBESKEDET"
 		EVICTIONNOTICE_DESC 	= " Gå en snabb helande effekt vid döende träff."
@@ -1892,6 +1929,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		LETRANGER_NAME 			= "FRÄMLINGEN"
 		LETRANGER_DESC 			= " Kan förgöra alla icke-jättar i ett enda skott. Noll skada mot Jättar eller Pansarvagnar dock."
+		// TODO: Update! " Able to execute any non-giant in a single shot. Deals 2% damage to Giants, zero damage to Tanks."
 		//
 		ENFORCER_NAME 			= "VERKSTÄLLAREN"
 		ENFORCER_DESC 			= " Ignorerar skademotstånd och lagrar en kritisk träff för varje rygghugg eller byggnad förstörd med en Sapper."
@@ -1910,6 +1948,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		YOURETERNALREWARD_NAME 	= "EVIGHETSBELÖNINGEN"
 		YOURETERNALREWARD_DESC 	= " Skadan ökas ju mer skadad du är och utdelar kritiska träffar medans din hälsa är under 10%, men bara för hugg från framsidan. Motstår 90% skada."
+		// TODO: Update! " Deal massive Giant backstab damage and explosive backstab damage, however each attack has a high chance to miss. Direct kills grant a Teleport spell charge (Requires Spellbook)."
 		//
 		KUNAI_NAME 				= "KONSPIRATÖRENS"
 		KUNAI_DESC 				= " Oändlig närstridsräckvidd. Rygghugg orsakar en explosion, som utdelar extra skada mot mål i närheten."
@@ -1920,6 +1959,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		WANGAPRICK_NAME 		= "WANGASTICKET"
 		WANGAPRICK_DESC 		= " Dödar man en fiende så gör den att du döljs omedelbart i några sekunder. Du kan attackera fiender medans du är dold och döende träffar i rad kommer hålla dig osynlig. Inga förklädnad."
+		// TODO: Update! " Killing an enemy causes you to immediately enter stealth for a few seconds, however you cannot disguise. Grants a Cloak spell charge on kill (Requires Spellbook)."
 		//
 		SHARPDRESSER_NAME 		= "PRYDLIGA KLINGAN"
 		SHARPDRESSER_DESC 		= " Rygghugg orsakar en explosion, som gör extra skada mot fiender i närheten."
@@ -1932,13 +1972,14 @@ if("SetScriptVersion" in getroottable())
 		//
 		DEADRINGER_NAME 		= "DÖDSRINGAREN"
 		DEADRINGER_DESC 		= " Ger en kort rörelsehastighet när den aktiveras, som tillåter dig att rusa i vilket riktning som helst. Inkommande skada minskad med 80% medans man rusar."
-		// TODO: Update! " Activate to gain super-speed for several seconds. Invulnerable while active."
+		// TODO: Update! " Activate to gain super speed for several seconds. Invulnerable while active."
 		//
 		CLOAKANDDAGGER_NAME		= "STOPPURET"
 		CLOAKANDDAGGER_DESC		= " Omedelbar döljning och avslöjning."
+		// TODO: Update! " Activate to transform into a ghost. Able to fly a short distance, or remain stationary to stay intangible indefinitely."
 		// TODO: TRANSLATE THE BELOW
 		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
-		QUACKENBIRDT_DESC 		= " Reveals the location of all enemies while cloaked."
+		QUACKENBIRDT_DESC 		= " Activate to reveal the location of all enemies. Alternatively, activating this while holding a Sapper shows your teammates instead."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -1978,6 +2019,12 @@ if("SetScriptVersion" in getroottable())
 		IH_INCLUDES				= IH_color_header + "[►]\x0826beffBB Ваше снаряжение включает в себя..."
 		IH_DIS_MSG_2			= IH_disable_color + "Введите '/itemhelp 1' чтобы отключить данные сообщения во время волны. \nType '/itemhelp 0' чтобы полностью отключить данные сообщения"
 		IH_DIS_MSG				= IH_disable_color + "Введите '/itemhelp 0' чтобы отключить данные сообщения. \nType '/itemhelp 2' чтобы эти сообщения показывались вновь."
+		// TODO: Update!
+		/* 
+		IH_INCLUDES				= IH_color_header + "[►]\x0826beffAA Your loadout includes..."
+		IH_DIS_MSG_2			= IH_disable_color + "Type '/itemhelp 1' to disable item descriptions during a wave. \nType '/itemhelp 0' to disable them entirely."
+		IH_DIS_MSG				= IH_disable_color + "Type '/itemhelp 0' to disable item descriptions. \nType '/itemhelp 2' to always display them."
+		 */
 		IH_BAD_ARGS				= IH_color_header + "[Item Helper]" + IH_error_color + " {Error}\x01 Incorrect arguments!\n/itemhelp 2 - Enable\n/itemhelp 1 - Enable during Wave Setup only\n/itemhelp 0 - Disable"
 		IH_OOB_ARG				= IH_color_header + "[Item Helper]" + IH_error_color + " {Error}\x01 Out Of Bounds Value Set! : %s"
 		IH_HELP_MSG				= IH_color_header + "[Item Helper]\x01 Помощник по предметам показывает краткое описание каждого \x03Chaos\x01 предмета!" 
@@ -2077,6 +2124,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		THREERUNEBLADE_NAME 	= "ТРЕХРУННЫЙ МЕЧ"
 		THREERUNEBLADE_DESC 	= " Пока оружие активно, даёт ОГРОМНЫЙ бонус к скорости передвижения и возможность тройного прыжка. Дарует иммунитет к урону от падения."
+		// TODO: Update! " While active, gain MASSIVE boost to move speed and ability to triple jump. Deals increased damage while airborne. Grants immunity to fall damage."
 		//
 		UNARMEDCOMBAT_NAME 		= "ГОЛАЯ РУКА"
 		UNARMEDCOMBAT_DESC 		= " Каждые 10 убийств дают заклинание призыва скелета (требуется Книга заклинаний)."
@@ -2164,7 +2212,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MARKETGARDENER_NAME 	= "ЗЕМЛЕКОП"
 		MARKETGARDENER_DESC 	= " Наносит значительно увеличенный критический урон. После убийства Вы впадаете в состояние ярости и получаете дополнительные ОЗ, сопротивляемость и увеличенный урон от всех атак. Однако любой промах — мгновенная смерть."
-		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, enter an enraged state and gain extra health, resistance and increased damage on all attacks."
+		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		DISCIPLINARYACTION_NAME = "ДИСЦИПЛИНАРНОЕ ВЗЫСКАНИЕ"
 		DISCIPLINARYACTION_DESC	= " Стандартный вариант для защиты и мобильности."
@@ -2232,6 +2280,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		BACKSCRATCHER_NAME 		= "СПИНОЧЁС"
 		BACKSCRATCHER_DESC 		= " Наносит смертельный урон, атакуя со спины. После убийства Вы впадаете в состояние ярости и получаете дополнительную скорость передвижения, сопротивляемость к урону и увеличенный урон от всех атак."
+		// TODO: Update! " Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		VOLCANOFRAGMENT_NAME 	= "ЗАОСТРЕННЫЙ ОСКОЛОК ВУЛКАНА"
 		VOLCANOFRAGMENT_DESC 	= "Шанс оглушить роботов при попадании. Поджигает роботов-поджигателей."
@@ -2241,6 +2290,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MAUL_NAME 				= "МОЛОТ"
 		MAUL_DESC 				= " При попадании: подбрасывает роботов в воздух с пониженной гравитацией."
+		// TODO: Update! " On hit: Cause an explosion, launching enemies into the air and igniting them."
 		//
 		THIRDDEGREE_NAME 		= "ТРЕТЬЯ СТЕПЕНЬ"
 		THIRDDEGREE_DESC 		= " Вы почти неуязвимы к огню, а также получаете дополнительную высокую сопротивляемость ко всем атакам с дальнего боя, пока оружие находится в руках."
@@ -2312,6 +2362,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		CABER_NAME 				= "АЛЛАПУЛЬСКОЕ БРЕВНО"
 		CABER_DESC 				= " Урон увеличивается по мере получаемого урона. Гарантированные криты, если ваше здоровье ниже 2 %. Взрыв бревна мгновенно убивает."
+		// TODO: Update! " You are a Sentry Buster - Taunt to detonate!"
 		//
 		CLAIDHEAMHMOR_NAME 		= "КЛЕЙМОР"
 		CLAIDHEAMHMOR_DESC 		= " Каждые 10 убийств дают заклинание призыва ГЛАЗАСТУСА (требуется Книга заклинаний)."
@@ -2350,21 +2401,26 @@ if("SetScriptVersion" in getroottable())
 		//
 		SANDVICH_NAME 			= "БУТЕРБРОД"
 		SANDVICH_DESC 			= " Восстанавливает до 150 000 единиц здоровья. Любой урон, полученный с Бутербродом в руках, смертельный."
+		// TODO: Update! " Consume to gain Concheror buff for 30 seconds."
 		//
 		DALOKOHSBAR_NAME 		= "ПЛИТКА «ДАЛОКОШ»"
 		DALOKOHSBAR_DESC 		= " Восстанавливает до 20 000 единиц здоровья. При использовании с уровнем здоровья ниже 350 даёт сверхлечение. Пассивно увеличивает получаемый урон, но даёт шанс на убер-заряд при получении урона."
+		// TODO: Update! " Consume to gain increased move speed, weapon switch speed and faster minigun spinup time for 30 seconds."
 		//
 		BUFFALOSTEAK_NAME 		= "БУТЕРБРОД ИЗ МЯСА БУЙВОЛА"
 		BUFFALOSTEAK_DESC 		= " Пассивно дарует иммунитет к критическим попаданиям."
+		// TODO: Update! " Consume to gain Battalion's Backup buff and backstab immunity for 30 seconds."
 		//
 		FAMILYBUSINESS_NAME 	= "СЕМЕЙНОЕ ДЕЛО"
 		FAMILYBUSINESS_DESC 	= " Бесконечный боезапас. Скорострельность удваивается во время получения лечения. Даёт кратковременное усиление критами и мини-критами за убийство."
 		//
 		FISHCAKE_NAME 			= "РЫБНЫЙ БАТОНЧИК"
 		FISHCAKE_DESC 			= " Высокое сопротивление урону от пуль, но повышенная уязвимость к урону от огня и взрывов."
+		// TODO: Update! " Consume to gain gravity reversal power for 30 seconds (Crouch to reverse gravity)."
 		//
 		SECONDBANANA_NAME 		= "УТЕШИТЕЛЬНЫЙ БАНАН"
 		SECONDBANANA_DESC 		= " Высокое сопротивление к урону от взрывов, но повышенная уязвимость к урону от огня и пуль."
+		// TODO: Update! " Consume to gain explosive melee power for 30 seconds (You are restricted to melee for the duration)."
 		///
 		FISTS_NAME 				= "КУЛАКИ"
 		FISTS_DESC 				= " Стандартный вариант для защиты и мобильности. Эффективны в бою."
@@ -2380,10 +2436,11 @@ if("SetScriptVersion" in getroottable())
 		//
 		WARRIRORSSPIRIT_NAME 	= "ВОИНСКИЙ ДУХ"
 		WARRIRORSSPIRIT_DESC 	= " Альтернативная атака подбрасывает вас в воздух. При приземлении на роботов наносит огромный урон. Убирает все боеприпасы для основного и дополнительного оружия."
-		// TODO: Update! " Left-click to leap high into the air. Land on enemies to deal massive stomp damage. On Kill: Able to Quick-Slam by crouching in air for a short time.  Removes all primary and secondary ammo."
+		// TODO: Update! " Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air. Active buff indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		FISTSOFSTEEL_NAME 		= "СТАЛЬНЫЕ КУЛАКИ"
 		FISTSOFSTEEL_DESC 		= " Превращает вас в гигантского робота-пулемётчика с 250 000 здоровья. Иммунитет к отталкиванию и способность наносить огромный урон. Удаляет все боеприпасы для основного и дополнительного оружия. Лечиться можно только при помощи лакомства."
+		// TODO: Update! " You are a Giant Heavy Gauntlet - Immune to push forces and able to hit multiple enemies at once for massive damage."
 		//
 		EVICTIONNOTICE_NAME 	= "УВЕДОМЛЕНИЕ О ВЫСЕЛЕНИИ"
 		EVICTIONNOTICE_DESC 	= " Даёт быстрое исцеление за убийство."
@@ -2551,6 +2608,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		LETRANGER_NAME 			= "НЕЗНАКОМЕЦ"
 		LETRANGER_DESC 			= " Позволяет убить с одного выстрела любого робота, кроме гигантских роботов. Наносит 0 урона гигантским роботам и Танкам."
+		// TODO: Update! " Able to execute any non-giant in a single shot. Deals 2% damage to Giants, zero damage to Tanks."
 		//
 		ENFORCER_NAME 			= "ПРИНУДИТЕЛЬ"
 		ENFORCER_DESC 			= " Игнорирует сопротивляемость урону и гарантирует крит за каждый удар в спину или уничтоженную Жучком постройку робота-инженера."
@@ -2569,6 +2627,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		YOURETERNALREWARD_NAME 	= "ВЕЧНЫЙ ПОКОЙ"
 		YOURETERNALREWARD_DESC 	= " Урон увеличивается по мере получения вами урона. Когда ваше здоровье ниже 10 %, наносит критические удары, но только при ударах спереди. 90 % сопротивление входящему урону."
+		// TODO: Update! " Deal massive Giant backstab damage and explosive backstab damage, however each attack has a high chance to miss. Direct kills grant a Teleport spell charge (Requires Spellbook)."
 		//
 		KUNAI_NAME 				= "КУНАЙ ЗАГОВОРЩИКА"
 		KUNAI_DESC 				= " Бесконечная дальность радиуса атаки. Удары в спину заставляют роботов взрываться, нанося дополнительный урон ближайшим целям."
@@ -2579,6 +2638,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		WANGAPRICK_NAME 		= "ИГОЛКА ВУДУ"
 		WANGAPRICK_DESC 		= " Убийство робота заставляет вас немедленно войти в режим невидимости на несколько секунд. Вы можете атаковать роботов и продлевать невидимость уничтожением роботов. Не позволяет использовать маскировку."
+		// TODO: Update! " Killing an enemy causes you to immediately enter stealth for a few seconds, however you cannot disguise. Grants a Cloak spell charge on kill (Requires Spellbook)."
 		//
 		SHARPDRESSER_NAME 		= "ОДЕТЫЙ С ИГОЛОЧКИ"
 		SHARPDRESSER_DESC 		= " Удары в спину зставляет роботов взрываться, нанося дополнительный урон ближайшим целям."
@@ -2591,13 +2651,14 @@ if("SetScriptVersion" in getroottable())
 		//
 		DEADRINGER_NAME 		= "ЗВОН СМЕРТИ"
 		DEADRINGER_DESC 		= " При активации даёт коротковременную большую прибавку к скорости передвижения. Получаемый урон во время прибавки снижен на 80 %."
-		// TODO: Update! " Activate to gain super-speed for several seconds. Invulnerable while active."
+		// TODO: Update! " Activate to gain super speed for several seconds. Invulnerable while active."
 		//
 		CLOAKANDDAGGER_NAME		= "ПЛАЩ И КИНЖАЛ"
 		CLOAKANDDAGGER_DESC		= " Мгновенная невидимость и выход из невидимости."
+		// TODO: Update! " Activate to transform into a ghost. Able to fly a short distance, or remain stationary to stay intangible indefinitely."
 		// TODO: TRANSLATE THE BELOW
 		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
-		QUACKENBIRDT_DESC 		= " Reveals the location of all enemies while cloaked."
+		QUACKENBIRDT_DESC 		= " Activate to reveal the location of all enemies. Alternatively, activating this while holding a Sapper shows your teammates instead."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -2637,6 +2698,12 @@ if("SetScriptVersion" in getroottable())
 		IH_INCLUDES				= IH_color_header + "[►]\x0826beffBB Twoje wyposażenie składa się z..."
 		IH_DIS_MSG_2			= IH_disable_color + "Wpisz „/itemhelp 1”, by wyłączyć te wiadomości podczas fali. \nWpisz „/itemhelp 0”, by całkowicie wyłączyć te wiadomości."
 		IH_DIS_MSG				= IH_disable_color + "Wpisz „/itemhelp 0”, by wyłączyć te wiadomości. \nWpisz „/itemhelp 2”, by zawsze wyświetlać tę wiadomość."
+		// TODO: Update!
+		/* 
+		IH_INCLUDES				= IH_color_header + "[►]\x0826beffAA Your loadout includes..."
+		IH_DIS_MSG_2			= IH_disable_color + "Type '/itemhelp 1' to disable item descriptions during a wave. \nType '/itemhelp 0' to disable them entirely."
+		IH_DIS_MSG				= IH_disable_color + "Type '/itemhelp 0' to disable item descriptions. \nType '/itemhelp 2' to always display them."
+		 */
 		IH_BAD_ARGS				= IH_color_header + "[Asystent przedmiotów]" + IH_error_color + " {Error}\x01 Błędne argumenty!\n/itemhelp 2 - włącz\n/itemhelp 1 - włącz tylko podczas przygotowania przed falą\n/itemhelp 0 - wyłącz"
 		IH_OOB_ARG				= IH_color_header + "[Asystent przedmiotów]" + IH_error_color + " {Error}\x01 Wprowadzono wartość poza zakresem! : %s"
 		IH_HELP_MSG				= IH_color_header + "[Asystent przedmiotów]\x01 Asystent przedmiotów zapewnia krótkie opisy dla każdego \x03Chaos\x01 przedmiotu!" 
@@ -2736,6 +2803,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		THREERUNEBLADE_NAME 	= "TRÓJRUNICZNE OSTRZE"
 		THREERUNEBLADE_DESC 	= " Gdy broń jest dobyta, zyskujesz OGROMNE zwiększenie szybkości ruchu i możliwość wykonania potrójnego skoku. Zapewnia odporność na obrażenia od upadku."
+		// TODO: Update! " While active, gain MASSIVE boost to move speed and ability to triple jump. Deals increased damage while airborne. Grants immunity to fall damage."
 		//
 		UNARMEDCOMBAT_NAME 		= "RĘKODZIEŁO"
 		UNARMEDCOMBAT_DESC 		= " Co 10 zabójstw otrzymujesz ładunek zaklęcia przywołania szkieletowego sługi (wymaga założenia księgi zaklęć)."
@@ -2823,7 +2891,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MARKETGARDENER_NAME 	= "OGRODNIK Z ARNHEM"
 		MARKETGARDENER_DESC 	= " Znacznie zwiększone obrażenia krytyczne. Po zabiciu wroga wchodzisz w stan furii, otrzymując dodatkowe zdrowie, odporność i zwiększone obrażenia do wszystkich ataków. Chybienie kończy się natychmiastową śmiercią."
-		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, enter an enraged state and gain extra health, resistance and increased damage on all attacks."
+		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		DISCIPLINARYACTION_NAME = "POSTĘPOWANIE DYSCYPLINARNE"
 		DISCIPLINARYACTION_DESC	= " Standardowa opcja zapewniająca ochronę i mobilność."
@@ -2891,6 +2959,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		BACKSCRATCHER_NAME 		= "DRAPACZKA"
 		BACKSCRATCHER_DESC 		= " Zadaje śmiertelne obrażenia z tyłu. Po zabiciu wroga wchodzisz w stan furii, zyskując dodatkową szybkość ruchu, odporność i zwiększone obrażenia do wszystkich ataków."
+		// TODO: Update! " Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		VOLCANOFRAGMENT_NAME 	= "NAOSTRZONY FRAGMENT WULKANU"
 		VOLCANOFRAGMENT_DESC 	= " Szansa na ogłuszenie wrogów przy trafieniu. Może podpalać wrogich Pyro."
@@ -2900,6 +2969,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MAUL_NAME 				= "MAUL"
 		MAUL_DESC 				= " Przy trafieniu we wroga: wyrzuca go w powietrze ze zmniejszoną siłą grawitacji."
+		// TODO: Update! " On hit: Cause an explosion, launching enemies into the air and igniting them."
 		//
 		THIRDDEGREE_NAME 		= "TRZECI STOPIEŃ"
 		THIRDDEGREE_DESC 		= " Stajesz się niemal całkowicie odporny na obrażenia od ognia, gdy broń jest wyposażona, a także zyskujesz dużą odporność na wszystkie ataki dystansowe, gdy broń jest dobyta."
@@ -2965,6 +3035,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		CABER_NAME 				= "ULLAPOOLSKI PAL"
 		CABER_DESC 				= " Zadawane obrażenia zwiększają się wraz z utratą twojego zdrowia. Poniżej 2% zdrowia zapewnia trafienia krytyczne. Eksplozja z takiego ataku powoduje twoją śmierć."
+		// TODO: Update! " You are a Sentry Buster - Taunt to detonate!"
 		//
 		CLAIDHEAMHMOR_NAME 		= "CLAIDHEAMH MÒR"
 		CLAIDHEAMHMOR_DESC 		= " Co 10 zabójstw otrzymujesz zaklęcia Monoculus (wymaga założenia księgi zaklęć)."
@@ -3003,21 +3074,26 @@ if("SetScriptVersion" in getroottable())
 		//
 		SANDVICH_NAME 			= "KANAPKA"
 		SANDVICH_DESC 			= " Przywraca do 150 000 pkt. zdrowia. Każde otrzymane obrażenia, gdy ten przedmiot jest dobyty, powodują natychmiastową śmiercią."
+		// TODO: Update! " Consume to gain Concheror buff for 30 seconds."
 		//
 		DALOKOHSBAR_NAME 		= "TABLICZKA LADYCZEKO"
 		DALOKOHSBAR_DESC 		= " Przywraca do 20 000 pkt. zdrowia. Użycie poniżej 350 pkt. zdrowia przyzna duże nadleczenie. Pasywnie zwiększa otrzymywane obrażenia, ale ma szansę na aktywowanie krótkiego ładunku ÜberCharge otrzymaniu obrażeń."
+		// TODO: Update! " Consume to gain increased move speed, weapon switch speed and faster minigun spinup time for 30 seconds."
 		//
 		BUFFALOSTEAK_NAME 		= "STEK Z BIZONA"
 		BUFFALOSTEAK_DESC 		= " Pasywnie zapewnia odporność na trafienia krytyczne."
+		// TODO: Update! " Consume to gain Battalion's Backup buff and backstab immunity for 30 seconds."
 		//
 		FAMILYBUSINESS_NAME 	= "RODZINNY INTERES"
 		FAMILYBUSINESS_DESC 	= " Nieskończona amunicja. Szybkostrzelność jest podwojona podczas otrzymywania leczenia. Przyznaje na krótki czas trafienia krytyczne i minikrytyczne po zabiciu wroga."
 		//
 		FISHCAKE_NAME 			= "CIASTKO RYBNE"
 		FISHCAKE_DESC 			= " Duża odporność na obrażenia od NABOJÓW, ale większa podatność na obrażenia od OGNIA i EKSPLOZJI."
+		// TODO: Update! " Consume to gain gravity reversal power for 30 seconds (Crouch to reverse gravity)."
 		//
 		SECONDBANANA_NAME 		= "BANAN POCIESZENIA"
 		SECONDBANANA_DESC 		= " Duża odporność na obrażenia od EKSPLOZJI, ale większa podatność na obrażenia od OGNIA i NABOJÓW."
+		// TODO: Update! " Consume to gain explosive melee power for 30 seconds (You are restricted to melee for the duration)."
 		///
 		FISTS_NAME 				= "PIĘŚCI"
 		FISTS_DESC 				= " Standardowa opcja zapewniająca ochronę i mobilność. Skuteczne w walce."
@@ -3033,10 +3109,11 @@ if("SetScriptVersion" in getroottable())
 		//
 		WARRIRORSSPIRIT_NAME 	= "DUSZA WOJOWNIKA"
 		WARRIRORSSPIRIT_DESC 	= " Naciśnij lewy przycisk myszy, by wykonać wysoki skok. Wylądowanie na wrogach zadaje im ogromne obrażenia. Usuwa całą amunicję broni podstawowej i pomocniczej."
-		// TODO: Update! " Left-click to leap high into the air. Land on enemies to deal massive stomp damage. On Kill: Able to Quick-Slam by crouching in air for a short time.  Removes all primary and secondary ammo."
+		// TODO: Update! " Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air. Active buff indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		FISTSOFSTEEL_NAME 		= "PIĘŚCI ZE STALI"
 		FISTSOFSTEEL_DESC 		= " Przekształca cię w gigantycznego pięściarza z 250 000 pkt. zdrowia. Jesteś odporny na odrzut i możesz zadawać duże obrażenia. Usuwa całą amunicję broni podstawowej i pomocniczej. Możesz leczyć się wyłącznie za pomocą własnych artykułów spożywczych."
+		// TODO: Update! " You are a Giant Heavy Gauntlet - Immune to push forces and able to hit multiple enemies at once for massive damage."
 		//
 		EVICTIONNOTICE_NAME 	= "NAKAZ EKSMISJI"
 		EVICTIONNOTICE_DESC 	= " Otrzymujesz szybkie leczenie po zabiciu wroga."
@@ -3204,6 +3281,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		LETRANGER_NAME 			= "L'ETRANGER"
 		LETRANGER_DESC 			= " Może zabijać każdego słabszego wroga jednym strzałem. Nie zadaje jednak żadnych obrażeń gigantom ani czołgom."
+		// TODO: Update! " Able to execute any non-giant in a single shot. Deals 2% damage to Giants, zero damage to Tanks."
 		//
 		ENFORCER_NAME 			= "EGZEKUTOR"
 		ENFORCER_DESC 			= " Ignoruje odporności na obrażenia i gromadzi jeden strzał krytyczny za każde dźgnięcie w plecy lub zniszczenie konstrukcji przy użyciu sapera."
@@ -3222,6 +3300,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		YOURETERNALREWARD_NAME 	= "OSTATECZNA NAGRODA"
 		YOURETERNALREWARD_DESC 	= " Zadawane obrażenia rosną wraz ze spadkiem twojego poziomu zdrowia. Poniżej 10% zdrowia zadajesz obrażenia krytyczne, ale tylko od ataków z przodu. Zapewnia 90% odporności na obrażenia."
+		// TODO: Update! " Deal massive Giant backstab damage and explosive backstab damage, however each attack has a high chance to miss. Direct kills grant a Teleport spell charge (Requires Spellbook)."
 		//
 		KUNAI_NAME 				= "KUNAI KRĘTACZA"
 		KUNAI_DESC 				= " Nieograniczony zasięg ataku. Dźgnięcia w plecy wywołują eksplozję, zadając dodatkowe obrażenia pobliskim wrogom."
@@ -3232,6 +3311,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		WANGAPRICK_NAME 		= "KŁUJKA VOODOO"
 		WANGAPRICK_DESC 		= " Zabicie wroga natychmiast aktywuje niewidzialność na kilka sekund. Możesz atakować przeciwników będąc niewidzialnym, by wydłużyć czas trwania niewidzialność. Nie możesz używać przebrań."
+		// TODO: Update! " Killing an enemy causes you to immediately enter stealth for a few seconds, however you cannot disguise. Grants a Cloak spell charge on kill (Requires Spellbook)."
 		//
 		SHARPDRESSER_NAME 		= "ZABÓJCZA ELEGANCJA"
 		SHARPDRESSER_DESC 		= " Dźgnięcia w plecy wywołują eksplozję, zadając dodatkowe obrażenia pobliskim wrogom."
@@ -3244,13 +3324,14 @@ if("SetScriptVersion" in getroottable())
 		//
 		DEADRINGER_NAME 		= "DZWON ZMARŁEGO"
 		DEADRINGER_DESC 		= " Aktywacja wywołuje krótki zryw, pozwalający na odskok w dowolnym kierunku. Podczas odskoku otrzymywane obrażenia są zmniejszone o 80%."
-		// TODO: Update! " Activate to gain super-speed for several seconds. Invulnerable while active."
+		// TODO: Update! " Activate to gain super speed for several seconds. Invulnerable while active."
 		//
 		CLOAKANDDAGGER_NAME		= "PELERYNA NOŻOWNIKA"
 		CLOAKANDDAGGER_DESC		= " Natychmiastowa aktywacja i dezaktywacja niewidzialności."
+		// TODO: Update! " Activate to transform into a ghost. Able to fly a short distance, or remain stationary to stay intangible indefinitely."
 		// TODO: TRANSLATE THE BELOW
 		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
-		QUACKENBIRDT_DESC 		= " Reveals the location of all enemies while cloaked."
+		QUACKENBIRDT_DESC 		= " Activate to reveal the location of all enemies. Alternatively, activating this while holding a Sapper shows your teammates instead."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -3290,6 +3371,12 @@ if("SetScriptVersion" in getroottable())
 		IH_INCLUDES				= IH_color_header + "[►]\x0826beffBB 装備内容："
 		IH_DIS_MSG_2			= IH_disable_color + "Type '/itemhelp 1' ウェーブ中にこれらのメッセージを表示しないようにする \nType '/itemhelp 0' これらのメッセージを完全に無効にする"
 		IH_DIS_MSG				= IH_disable_color + "Type '/itemhelp 0' これらのメッセージを非表示にする \nType '/itemhelp 2' このメッセージを常に表示する"
+		// TODO: Update!
+		/* 
+		IH_INCLUDES				= IH_color_header + "[►]\x0826beffAA Your loadout includes..."
+		IH_DIS_MSG_2			= IH_disable_color + "Type '/itemhelp 1' to disable item descriptions during a wave. \nType '/itemhelp 0' to disable them entirely."
+		IH_DIS_MSG				= IH_disable_color + "Type '/itemhelp 0' to disable item descriptions. \nType '/itemhelp 2' to always display them."
+		 */
 		IH_BAD_ARGS				= IH_color_header + "[Item Helper]" + IH_error_color + " {エラー}\x01 引数が正しくありません!\n/itemhelp 2 - Enable\n/itemhelp 1 - セットアップ中のみ有効にする\n/itemhelp 0 - Disable"
 		IH_OOB_ARG				= IH_color_header + "[Item Helper]" + IH_error_color + " {エラー}\x01 範囲外の値が設定されました! : %s"
 		IH_HELP_MSG				= IH_color_header + "[Item Helper]\x01 アイテムヘルパーは、各カオスアイテムについて簡単な説明を提供します \x03Chaos\x01 Item!" 
@@ -3389,6 +3476,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		THREERUNEBLADE_NAME 	= "3つのルーンブレード"
 		THREERUNEBLADE_DESC 	= " 発動中は、移動速度が大幅に上昇し、3段ジャンプが可能になる　落下ダメージを無効化する"
+		// TODO: Update! " While active, gain MASSIVE boost to move speed and ability to triple jump. Deals increased damage while airborne. Grants immunity to fall damage."
 		//
 		UNARMEDCOMBAT_NAME 		= "アンアームドコンバット"
 		UNARMEDCOMBAT_DESC 		= " 10キルごとに、スケルトン召喚の呪文チャージを1つ獲得する（魔術書が必要）"
@@ -3476,7 +3564,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MARKETGARDENER_NAME 	= "マーケットガーデナー"
 		MARKETGARDENER_DESC 	= " クリティカルダメージが大幅に上昇する　敵を倒すとレイジ状態となり、HPと耐性が上昇し、すべての攻撃のダメージが増加する　ただし、攻撃が外れると即死する"
-		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, enter an enraged state and gain extra health, resistance and increased damage on all attacks."
+		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		DISCIPLINARYACTION_NAME = "懲戒ムチ"
 		DISCIPLINARYACTION_DESC	= " 防御と機動性のための標準的な選択肢"
@@ -3544,6 +3632,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		BACKSCRATCHER_NAME 		= "バックスクラッチャー"
 		BACKSCRATCHER_DESC 		= " 背後から致命的なダメージを与える　敵を倒すとレイジ状態となり、移動速度と耐性が上昇し、すべての攻撃のダメージが増加する"
+		// TODO: Update! " Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		VOLCANOFRAGMENT_NAME 	= "研ぎ澄まされた火山の破片"
 		VOLCANOFRAGMENT_DESC 	= " 攻撃が命中した際に敵をスタンさせる可能性がある　また、敵のパイロに炎上効果を与えることもできる"
@@ -3553,6 +3642,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MAUL_NAME 				= "モール"
 		MAUL_DESC 				= " 命中時：敵を空中に吹き飛ばし、重力を低下させる"
+		// TODO: Update! " On hit: Cause an explosion, launching enemies into the air and igniting them."
 		//
 		THIRDDEGREE_NAME 		= "サードディグリー"
 		THIRDDEGREE_DESC 		= " 装備中は火ダメージに対してほぼ無敵となり、発動中はすべての遠距離攻撃に対して追加の重耐性が付与される"
@@ -3618,6 +3708,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		CABER_NAME 				= "ウラプール・ケイバー"
 		CABER_DESC 				= " ダメージは、負傷するにつれて増加し、体力が2%未満の場合、必ずクリティカルヒットとなる　この攻撃による爆発で、お前は死に至る"
+		// TODO: Update! " You are a Sentry Buster - Taunt to detonate!"
 		//
 		CLAIDHEAMHMOR_NAME 		= "クレイドヒーム・モア"
 		CLAIDHEAMHMOR_DESC 		= " 10キルごとに、モノキュラーズ召喚の呪文チャージを1つ獲得する（魔術書が必要）"
@@ -3656,21 +3747,26 @@ if("SetScriptVersion" in getroottable())
 		//
 		SANDVICH_NAME 			= "サンドヴィッチ"
 		SANDVICH_DESC 			= " 最大150,000のHPを回復する。このアイテムの効果発動中に受けたダメージは、すべて致命傷となる"
+		// TODO: Update! " Consume to gain Concheror buff for 30 seconds."
 		//
 		DALOKOHSBAR_NAME 		= "ダロコス・バー"
 		DALOKOHSBAR_DESC 		= " 最大20,000のHPを回復する　HPが350未満の状態で使用すると、大幅なオーバーヒールが発生する　被ダメージ量が増加するが、ダメージを受けた際に自己ウーバー状態になるチャンスが得られる"
+		// TODO: Update! " Consume to gain increased move speed, weapon switch speed and faster minigun spinup time for 30 seconds."
 		//
 		BUFFALOSTEAK_NAME 		= "バッファロー・ステーキ・サンドヴィッチ"
 		BUFFALOSTEAK_DESC 		= " クリティカルヒットに対する耐性を自動的に付与する"
+		// TODO: Update! " Consume to gain Battalion's Backup buff and backstab immunity for 30 seconds."
 		//
 		FAMILYBUSINESS_NAME 	= "ファミリービジネス"
 		FAMILYBUSINESS_DESC 	= " 弾薬無制限。回復を受けている間は攻撃速度が2倍になる　敵を倒すと、一時的にクリティカル率とミニクリティカル率が上昇する"
 		//
 		FISHCAKE_NAME 			= "フィッシュケーキ"
 		FISHCAKE_DESC 			= " 弾丸によるダメージには高い耐性を持つが、炎や爆発によるダメージにはより弱くなる"
+		// TODO: Update! " Consume to gain gravity reversal power for 30 seconds (Crouch to reverse gravity)."
 		//
 		SECONDBANANA_NAME 		= "セカンドバナナ"
 		SECONDBANANA_DESC 		= " 爆発によるダメージには高い耐性を持つが、炎や弾丸ダメージにはより弱く、ダメージを受けやすい"
+		// TODO: Update! " Consume to gain explosive melee power for 30 seconds (You are restricted to melee for the duration)."
 		///
 		FISTS_NAME 				= "拳"
 		FISTS_DESC 				= " 防御と機動性のための標準的な選択肢 戦闘で効果的"
@@ -3686,10 +3782,11 @@ if("SetScriptVersion" in getroottable())
 		//
 		WARRIRORSSPIRIT_NAME 	= "ウォリアーズスピリット"
 		WARRIRORSSPIRIT_DESC 	= " 左クリックで高く跳び上がり、敵の上に着地すると、強力な踏みつけダメージを与えます　メインとサブの弾薬をすべて消費します"
-		// TODO: Update! " Left-click to leap high into the air. Land on enemies to deal massive stomp damage. On Kill: Able to Quick-Slam by crouching in air for a short time.  Removes all primary and secondary ammo."
+		// TODO: Update! " Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air. Active buff indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		FISTSOFSTEEL_NAME 		= "フィスト・オブ・スティール"
 		FISTSOFSTEEL_DESC 		= " HP25万の巨大なヘビーガントレットに変身する　ノックバック効果を受けなくなり、大ダメージを与えることができる　すべてのメインおよびサブの弾薬が消費される　回復はランチボックスのアイテムからのみ可能となる"
+		// TODO: Update! " You are a Giant Heavy Gauntlet - Immune to push forces and able to hit multiple enemies at once for massive damage."
 		//
 		EVICTIONNOTICE_NAME 	= "エビクションノウティス"
 		EVICTIONNOTICE_DESC 	= " 敵を倒すと、急速な回復効果を得る"
@@ -3857,6 +3954,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		LETRANGER_NAME 			= "L'ETRANGER"
 		LETRANGER_DESC 			= " 一撃でジャイアント以外の敵を倒すことができる。ただし、ジャイアントやタンクにはダメージを与えられない"
+		// TODO: Update! " Able to execute any non-giant in a single shot. Deals 2% damage to Giants, zero damage to Tanks."
 		//
 		ENFORCER_NAME 			= "執行者"
 		ENFORCER_DESC 			= " ダメージ耐性を無視し、バックスタブまたはサッパーで建物を破壊するたびにクリティカルを1回蓄積する。"
@@ -3875,6 +3973,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		YOURETERNALREWARD_NAME 	= "YOUR ETERNAL REWARD"
 		YOURETERNALREWARD_DESC 	= " 体力が10%未満の状態でダメージを受けたりクリティカルヒットを受けたりすると、ダメージが増加するが、これは正面からの刺突攻撃にのみ適用される　ダメージの90%を軽減する"
+		// TODO: Update! " Deal massive Giant backstab damage and explosive backstab damage, however each attack has a high chance to miss. Direct kills grant a Teleport spell charge (Requires Spellbook)."
 		//
 		KUNAI_NAME 				= "コニバーズクナイ"
 		KUNAI_DESC 				= " 近接攻撃の射程は無限大に　背後から攻撃すると爆発が発生し、周囲の敵に追加ダメージを与える"
@@ -3885,6 +3984,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		WANGAPRICK_NAME 		= "ワンガプリック"
 		WANGAPRICK_DESC 		= " 敵を倒すと、数秒間即座に透明状態になる　この透明状態では敵を攻撃でき、連続キルを達成することで不可視状態を維持できるが変装はできない"
+		// TODO: Update! " Killing an enemy causes you to immediately enter stealth for a few seconds, however you cannot disguise. Grants a Cloak spell charge on kill (Requires Spellbook)."
 		//
 		SHARPDRESSER_NAME 		= "シャープドレッサー"
 		SHARPDRESSER_DESC 		= " 背後から攻撃すると爆発が発生し、周囲の敵に追加ダメージを与える"
@@ -3897,13 +3997,14 @@ if("SetScriptVersion" in getroottable())
 		//
 		DEADRINGER_NAME 		= "デッドリンガー"
 		DEADRINGER_DESC 		= " 発動すると、短時間移動速度が上昇し、任意の方向へダッシュできるようになる　ダッシュ中は受けるダメージが80%軽減される"
-		// TODO: Update! " Activate to gain super-speed for several seconds. Invulnerable while active."
+		// TODO: Update! " Activate to gain super speed for several seconds. Invulnerable while active."
 		//
 		CLOAKANDDAGGER_NAME		= "クローク&ダガー"
 		CLOAKANDDAGGER_DESC		= " 瞬時の透明化と透明解除。"
+		// TODO: Update! " Activate to transform into a ghost. Able to fly a short distance, or remain stationary to stay intangible indefinitely."
 		// TODO: TRANSLATE THE BELOW
 		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
-		QUACKENBIRDT_DESC 		= " Reveals the location of all enemies while cloaked."
+		QUACKENBIRDT_DESC 		= " Activate to reveal the location of all enemies. Alternatively, activating this while holding a Sapper shows your teammates instead."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -3943,6 +4044,12 @@ if("SetScriptVersion" in getroottable())
 		IH_INCLUDES				= IH_color_header + "[►]\x0826beffBB Your loadout includes..."
 		IH_DIS_MSG_2			= IH_disable_color + "Skriv '/itemhelp 1' for at deaktivere disse beskeder under en bølge. \nSkriv '/itemhelp 0' for at deaktivere disse beskeder helt."
 		IH_DIS_MSG				= IH_disable_color + "Skriv '/itemhelp 0' for at deaktivere disse beskeder. \nSkriv '/itemhelp 2' for altid at vise denne besked."
+		// TODO: Update!
+		/* 
+		IH_INCLUDES				= IH_color_header + "[►]\x0826beffAA Your loadout includes..."
+		IH_DIS_MSG_2			= IH_disable_color + "Type '/itemhelp 1' to disable item descriptions during a wave. \nType '/itemhelp 0' to disable them entirely."
+		IH_DIS_MSG				= IH_disable_color + "Type '/itemhelp 0' to disable item descriptions. \nType '/itemhelp 2' to always display them."
+		 */
 		IH_BAD_ARGS				= IH_color_header + "[Genstandshjælper]" + IH_error_color + " {Fejl}\x01 Forkerte argumenter!\n/itemhelp 2 - Aktiver\n/genstandshjælp 1 - Aktiver kun under bølge-setup\n/itemhelp 0 - Deaktiver"
 		IH_OOB_ARG				= IH_color_header + "[Genstandshjælper]" + IH_error_color + " {Error}\x01 Ugyldig værdi angivet! : %s"
 		IH_HELP_MSG				= IH_color_header + "[Genstandsjælper]\x01 Genstandshjælper giver enkle beskrivelser for hver \x03Chaos\x01 genstand!" 
@@ -4042,6 +4149,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		THREERUNEBLADE_NAME 	= "TRE-RUNE-KLINGEN"
 		THREERUNEBLADE_DESC 	= " Mens den er aktiv, får du et KÆMPESTORT boost til bevægelseshastigheden og muligheden for at udføre et tredobbelt hop. Giver immunitet over for faldskade."
+		// TODO: Update! " While active, gain MASSIVE boost to move speed and ability to triple jump. Deals increased damage while airborne. Grants immunity to fall damage."
 		//
 		UNARMEDCOMBAT_NAME 		= "UHÅNDGRIBELIG ARMERING"
 		UNARMEDCOMBAT_DESC 		= " For hver 10 drab får du en trylleformularladning til en skelet håndlanger (kræver tryllebog)."
@@ -4129,7 +4237,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MARKETGARDENER_NAME 	= "KRIGERENS KAMPSKOVL"
 		MARKETGARDENER_DESC 	= " Markant øget kritisk skade. Efter at have dræbt en fjende går du ind i en rasende tilstand og får ekstra liv, modstand og øget skade på alle angreb. Men hvis du rammer forbi, dør du med det samme."
-		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, enter an enraged state and gain extra health, resistance and increased damage on all attacks."
+		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		DISCIPLINARYACTION_NAME = "DISCIPLINÆRSAGEN"
 		DISCIPLINARYACTION_DESC	= " Standardvalg til forsvar og mobilitet."
@@ -4197,6 +4305,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		BACKSCRATCHER_NAME 		= "RYGKRADSEREN"
 		BACKSCRATCHER_DESC 		= " Gør dødelig skade bagfra. Efter et drab går du i en rasende tilstand og opnår ekstra bevægelseshastighed, modstand og øget skade på alle angreb."
+		// TODO: Update! " Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		VOLCANOFRAGMENT_NAME 	= "SKÆRPET VULKANFRAGMENT"
 		VOLCANOFRAGMENT_DESC 	= " Chance for at lamme fjender ved træf. Er også i stand til at brænde fjendtlige Pyros."
@@ -4206,6 +4315,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MAUL_NAME 				= "MUGGERTEN"
 		MAUL_DESC 				= " Ved træf: Opsend fjender i luften med reduceret tyngdekraft."
+		// TODO: Update! " On hit: Cause an explosion, launching enemies into the air and igniting them."
 		//
 		THIRDDEGREE_NAME 		= "TREDJEGRADSFORBRÆNDINGEN"
 		THIRDDEGREE_DESC 		= " Bliv næsten immun over for ildskade, mens våbnet er udrustet, og opnå yderligere tung modstand mod alle langtrækkende angreb, mens det er aktivt."
@@ -4271,6 +4381,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		CABER_NAME 				= "ULLAPOOL-PÆLEN"
 		CABER_DESC 				= " Skaden øges, i takt med at du bliver såret. Garanteret krits, hvis dit helbred er under 2%. Eksplosionen fra dette angreb vil dræbe dig."
+		// TODO: Update! " You are a Sentry Buster - Taunt to detonate!"
 		//
 		CLAIDHEAMHMOR_NAME 		= "CLAIDHEAMH MOR"
 		CLAIDHEAMHMOR_DESC 		= " For hver 10. drab modtager du en Monoculus-besværgelse (kræver tryllebog)."
@@ -4309,21 +4420,26 @@ if("SetScriptVersion" in getroottable())
 		//
 		SANDVICH_NAME 			= "SANDVICHEN"
 		SANDVICH_DESC 			= " Gendanner op til 150.000 helbred. Enhver skade modtaget, mens denne genstand er aktiv, er dødelig."
+		// TODO: Update! " Consume to gain Concheror buff for 30 seconds."
 		//
 		DALOKOHSBAR_NAME 		= "DALOKOHS BAR"
 		DALOKOHSBAR_DESC 		= " Gendanner op til 20.000 helbred. Hvis den bruges, mens du har under 350 helbred, får du en stor overheal. Øger passivt mængden af skade, du modtager, men giver en chance for selv-ÜberLadning, når du tager skade."
+		// TODO: Update! " Consume to gain increased move speed, weapon switch speed and faster minigun spinup time for 30 seconds."
 		//
 		BUFFALOSTEAK_NAME 		= "BØFFELBØF-SANDVICHEN"
 		BUFFALOSTEAK_DESC 		= " Giver passiv immunitet over for kritiske slag."
+		// TODO: Update! " Consume to gain Battalion's Backup buff and backstab immunity for 30 seconds."
 		//
 		FAMILYBUSINESS_NAME 	= "FAMILIEFORRETNINGEN"
 		FAMILYBUSINESS_DESC 	= " Ubegrænset ammunition. Angrebshastigheden fordobles, mens du modtager en helbredende effekt. Giver et kortvarigt crit-boost og mini-crit-boost ved drab."
 		//
 		FISHCAKE_NAME 			= "FIKEFRIKADELLE"
 		FISHCAKE_DESC 			= " Kraftig modstand mod SKUD-skade, men mere sårbar over for ILD- og SPRÆNG-skade."
+		// TODO: Update! " Consume to gain gravity reversal power for 30 seconds (Crouch to reverse gravity)."
 		//
 		SECONDBANANA_NAME 		= "ANDEN BANAN"
 		SECONDBANANA_DESC 		= " Kraftig modstand mod SPRÆNG-skade, men mere sårbar over for ILD- og SKUD-skade."
+		// TODO: Update! " Consume to gain explosive melee power for 30 seconds (You are restricted to melee for the duration)."
 		///
 		FISTS_NAME 				= "NÆVER"
 		FISTS_DESC 				= " Standardvalg til forsvar og mobilitet. Effektiv i kamp."
@@ -4339,10 +4455,11 @@ if("SetScriptVersion" in getroottable())
 		//
 		WARRIRORSSPIRIT_NAME 	= "KRIGERENS ÅND"
 		WARRIRORSSPIRIT_DESC 	= " Venstreklik for at springe højt op i luften. Land på fjender for at give massiv stomp skade. Fjerner al primær og sekundær ammunition."
-		// TODO: Update! " Left-click to leap high into the air. Land on enemies to deal massive stomp damage. On Kill: Able to Quick-Slam by crouching in air for a short time.  Removes all primary and secondary ammo."
+		// TODO: Update! " Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air. Active buff indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		FISTSOFSTEEL_NAME 		= "STÅLNÆVERNE"
 		FISTSOFSTEEL_DESC 		= " Bliv til en gigantisk Heavy-handske med 250.000 helbred. Du er immun over for skubbekræfter og kan gøre massiv skade. Fjerner al primær og sekundær ammunition. Du kan kun modtage helbredelse fra madkasse genstande."
+		// TODO: Update! " You are a Giant Heavy Gauntlet - Immune to push forces and able to hit multiple enemies at once for massive damage."
 		//
 		EVICTIONNOTICE_NAME 	= "UDSÆTTELSESVARSLET"
 		EVICTIONNOTICE_DESC 	= " Modtag en hurtig helbredende effekt ved drab."
@@ -4510,6 +4627,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		LETRANGER_NAME 			= "L'ETRANGER"
 		LETRANGER_DESC 			= " I stand til at henrette enhver ikke-gigant med et enkelt skud. Gør og ingen skade på giganter eller tanks."
+		// TODO: Update! " Able to execute any non-giant in a single shot. Deals 2% damage to Giants, zero damage to Tanks."
 		//
 		ENFORCER_NAME 			= "HÅNDHÆVEREN"
 		ENFORCER_DESC 			= " Ignorerer skadesmodstand og gemmer et kritisk slag for hvert rygstik eller hver bygning, der ødelægges med en Sapper."
@@ -4528,6 +4646,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		YOURETERNALREWARD_NAME 	= "DIN EVIGE BELØNNING"
 		YOURETERNALREWARD_DESC 	= " Skaden øges, i takt med at du bliver såret, og gør kritiske skade, når dit helbred er under 10%, men kun ved stik forfra. Modstå 90% skade."
+		// TODO: Update! " Deal massive Giant backstab damage and explosive backstab damage, however each attack has a high chance to miss. Direct kills grant a Teleport spell charge (Requires Spellbook)."
 		//
 		KUNAI_NAME 				= "KYNIKERENS KUNAI"
 		KUNAI_DESC 				= " Uendelig rækkevidde med nærkampsvåben. Rygstik udløser en eksplosion, der giver ekstra skade til mål i nærheden."
@@ -4538,6 +4657,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		WANGAPRICK_NAME 		= "VOODOO-PRIKKET"
 		WANGAPRICK_DESC 		= " Drab på en fjende får dig til øjeblikkeligt at blive usynlig i et par sekunder. Du kan angribe fjender, mens du er i denne usynlige tilstand, og lænke drab sammen for at forblive usynlig. Ingen forklædning."
+		// TODO: Update! " Killing an enemy causes you to immediately enter stealth for a few seconds, however you cannot disguise. Grants a Cloak spell charge on kill (Requires Spellbook)."
 		//
 		SHARPDRESSER_NAME 		= "SKARPE PÅKLÆDER"
 		SHARPDRESSER_DESC 		= " Rygstik udløser en eksplosion, der giver ekstra skade til mål i nærheden."
@@ -4550,13 +4670,14 @@ if("SetScriptVersion" in getroottable())
 		//
 		DEADRINGER_NAME 		= "GENGANGEREN"
 		DEADRINGER_DESC 		= " Udløser et kort boost i bevægelseshastighed ved aktivering, som lader dig dashe i alle retninger. Indkommende skade reduceres med 80%, mens du dasher."
-		// TODO: Update! " Activate to gain super-speed for several seconds. Invulnerable while active."
+		// TODO: Update! " Activate to gain super speed for several seconds. Invulnerable while active."
 		//
 		CLOAKANDDAGGER_NAME		= "STIKKERENS LOMMEUR"
 		CLOAKANDDAGGER_DESC		= " Øjeblikkelig syn- og usynlighed."
+		// TODO: Update! " Activate to transform into a ghost. Able to fly a short distance, or remain stationary to stay intangible indefinitely."
 		// TODO: TRANSLATE THE BELOW
 		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
-		QUACKENBIRDT_DESC 		= " Reveals the location of all enemies while cloaked."
+		QUACKENBIRDT_DESC 		= " Activate to reveal the location of all enemies. Alternatively, activating this while holding a Sapper shows your teammates instead."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -4596,6 +4717,12 @@ if("SetScriptVersion" in getroottable())
 		IH_INCLUDES				= IH_color_header + "[►]\x0826beffBB Tu equipamiento incluye..."
 		IH_DIS_MSG_2			= IH_disable_color + "Pon «/itemhelp 1» para desactivar estos mensajes durante una oleada. \nPon «/itemhelp 0» para desactivarlos en todo momento."
 		IH_DIS_MSG				= IH_disable_color + "Por «/itemhelp 0» para desactivar estos mensajes. \nPon «/itemhelp 2» para que se muestren siempre."
+		// TODO: Update!
+		/* 
+		IH_INCLUDES				= IH_color_header + "[►]\x0826beffAA Your loadout includes..."
+		IH_DIS_MSG_2			= IH_disable_color + "Type '/itemhelp 1' to disable item descriptions during a wave. \nType '/itemhelp 0' to disable them entirely."
+		IH_DIS_MSG				= IH_disable_color + "Type '/itemhelp 0' to disable item descriptions. \nType '/itemhelp 2' to always display them."
+		 */
 		IH_BAD_ARGS				= IH_color_header + "[Asistente de artículos]" + IH_error_color + " {Error}\x01 ¡Argumentos incorrectos!\n/itemhelp 2: Activar.\n/itemhelp 1: Activar solo en preparación.\n/itemhelp 0: Desactivar."
 		IH_OOB_ARG				= IH_color_header + "[Asistente de artículos]" + IH_error_color + " {Error}\x01 ¡Valor fuera de límites! : %s"
 		IH_HELP_MSG				= IH_color_header + "[Asistente de artículos]\x01 El asistente de artículos da descripciones para cada artículo de \x03Caos\x01!" 
@@ -4695,6 +4822,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		THREERUNEBLADE_NAME 	= "HOJA TRIRRÚNICA"
 		THREERUNEBLADE_DESC 	= " Al empuñarla, otorga una bonificación MASIVA de velocidad de movimiento y triple salto. Otorga inmunidad al daño por caída."
+		// TODO: Update! " While active, gain MASSIVE boost to move speed and ability to triple jump. Deals increased damage while airborne. Grants immunity to fall damage."
 		//
 		UNARMEDCOMBAT_NAME 		= "ABRAZO DE LA MUERTE"
 		UNARMEDCOMBAT_DESC 		= " Cada 10 muertes, otorga un hechizo para generar esqueletos (requiere Libro de Hechizos)."
@@ -4782,7 +4910,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MARKETGARDENER_NAME 	= "HORTELANO"
 		MARKETGARDENER_DESC 	= " Causa daño crítico muy elevado. Al matar, otorga un estado de ira, dando salud adicional, resistencia y aumento de todo tipo de daño. Si el portador falla un golpe, muere."
-		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, enter an enraged state and gain extra health, resistance and increased damage on all attacks."
+		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		DISCIPLINARYACTION_NAME = "ACCIÓN DISCIPLINARIA"
 		DISCIPLINARYACTION_DESC	= " Una opción estándar para defensa y movilidad."
@@ -4850,6 +4978,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		BACKSCRATCHER_NAME 		= "RASCAESPALDAS"
 		BACKSCRATCHER_DESC 		= " Causa daño letal por la espalda. Al matar, entra en un estado de furia que otorga velocidad de movimiento, resistencia y aumenta el daño de todos los ataques."
+		// TODO: Update! " Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		VOLCANOFRAGMENT_NAME 	= "FRAGMENTO VOLCÁNICO AFILADO"
 		VOLCANOFRAGMENT_DESC 	= " Probabilidad de aturdir enemigos al impactar. También puede quemar a los Pyros."
@@ -4859,6 +4988,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MAUL_NAME 				= "MUTILADOR"
 		MAUL_DESC 				= " Al impactar: Lanza los enemigos al aire con gravedad reducida."
+		// TODO: Update! " On hit: Cause an explosion, launching enemies into the air and igniting them."
 		//
 		THIRDDEGREE_NAME 		= "TERCER GRADO"
 		THIRDDEGREE_DESC 		= " El portador se vuelve casi inmune al fuego y recibe gran resistencia a todos los ataques mientras la empuña."
@@ -4924,6 +5054,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		CABER_NAME 				= "CÁBER DE ULLAPOOL"
 		CABER_DESC 				= " El daño aumenta a medida que sufres daños. Otorga críticos si la salud está por debajo del 2 %. La explosión de este artículo, mata al portador."
+		// TODO: Update! " You are a Sentry Buster - Taunt to detonate!"
 		//
 		CLAIDHEAMHMOR_NAME 		= "CLAIDHEAMH MÒR"
 		CLAIDHEAMHMOR_DESC 		= " Cada 10 víctimas, otorga el hechizo Monóculus (requiere Libro de Hechizos)."
@@ -4962,21 +5093,26 @@ if("SetScriptVersion" in getroottable())
 		//
 		SANDVICH_NAME 			= "FOCATA"
 		SANDVICH_DESC 			= " Restaura hasta 150 000 PS. Cualquier daño recibido con este artículo en la mano, es letal."
+		// TODO: Update! " Consume to gain Concheror buff for 30 seconds."
 		//
 		DALOKOHSBAR_NAME 		= "CHOCOLATINA DALOKOHS"
 		DALOKOHSBAR_DESC 		= " Restaura hasta 20 000 PS. Si se usa por debajo de 350 PS, se obtendrá un exceso de curación. Además aumenta del daño y otorga la posibilidad de hacer invencible al recibir daño."
+		// TODO: Update! " Consume to gain increased move speed, weapon switch speed and faster minigun spinup time for 30 seconds."
 		//
 		BUFFALOSTEAK_NAME 		= "FOCATA DE FILETE DE BÚFALO"
 		BUFFALOSTEAK_DESC 		= " Otorga inmunidad pasiva a impactos críticos."
+		// TODO: Update! " Consume to gain Battalion's Backup buff and backstab immunity for 30 seconds."
 		//
 		FAMILYBUSINESS_NAME 	= "NEGOCIO FAMILIAR"
 		FAMILYBUSINESS_DESC 	= " Munición ilimitada. Doble de velocidad de ataque al recibir curación. Otorga un breve subidón de críticos y minicríticos al matar."
 		//
 		FISHCAKE_NAME 			= "BARRITA DE PESCADO"
 		FISHCAKE_DESC 			= " Otorga al Heavy resistencia a las BALAS, pero mayor vulnerabilidad a FUEGO y EXPLOSIONES."
+		// TODO: Update! " Consume to gain gravity reversal power for 30 seconds (Crouch to reverse gravity)."
 		//
 		SECONDBANANA_NAME 		= "BANANA SEGUNDONA"
 		SECONDBANANA_DESC 		= " Otorga al Heavy resistencia a las EXPLOSIONES, pero mayor vulnerabilidad a FUEGO y BALAS."
+		// TODO: Update! " Consume to gain explosive melee power for 30 seconds (You are restricted to melee for the duration)."
 		///
 		FISTS_NAME 				= "PUÑOS"
 		FISTS_DESC 				= " Una opción estándar para defensa y movilidad. Eficaz en combate."
@@ -4992,10 +5128,11 @@ if("SetScriptVersion" in getroottable())
 		//
 		WARRIRORSSPIRIT_NAME 	= "ZARPAS DEL GUERRERO"
 		WARRIRORSSPIRIT_DESC 	= " Usa el ataque principal para dar un gran salto. Cae sobre enemigos para causar gran cantidad de daño. Elimina toda la munición principal y secundaria."
-		// TODO: Update! " Left-click to leap high into the air. Land on enemies to deal massive stomp damage. On Kill: Able to Quick-Slam by crouching in air for a short time.  Removes all primary and secondary ammo."
+		// TODO: Update! " Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air. Active buff indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		FISTSOFSTEEL_NAME 		= "PUÑOS DE ACERO"
 		FISTSOFSTEEL_DESC 		= " Conviértete en un Heavy gigante con 250 000 PS. Eres inmune a empujones y causas gran cantidad de daño. Elimina toda la munición principal y secundaria. Solo te puedes curar de artículos de tipo fiambrera."
+		// TODO: Update! " You are a Giant Heavy Gauntlet - Immune to push forces and able to hit multiple enemies at once for massive damage."
 		//
 		EVICTIONNOTICE_NAME 	= "ORDEN DE DESHAUCIO"
 		EVICTIONNOTICE_DESC 	= " Otorga un efecto de curación al matar."
@@ -5163,6 +5300,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		LETRANGER_NAME 			= "EXTRANJERO"
 		LETRANGER_DESC 			= " Permite matar a cualquier robot no gigante de un disparo. No hace daño a gigantes ni tanques."
+		// TODO: Update! " Able to execute any non-giant in a single shot. Deals 2% damage to Giants, zero damage to Tanks."
 		//
 		ENFORCER_NAME 			= "EJECUTOR"
 		ENFORCER_DESC 			= " Ignora la resistencia al daño y almacen críticos por cada apuñalamiento o construcción destruida con un Zapador."
@@ -5181,6 +5319,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		YOURETERNALREWARD_NAME 	= "TU ETERNA RECOMPENSA"
 		YOURETERNALREWARD_DESC 	= " El daño aumenta a medida que sufres daños, siendo críticos al bajar del 10 % de salud, pero solo de frente. Resiste un 90 % de daño."
+		// TODO: Update! " Deal massive Giant backstab damage and explosive backstab damage, however each attack has a high chance to miss. Direct kills grant a Teleport spell charge (Requires Spellbook)."
 		//
 		KUNAI_NAME 				= "KUNAI DEL CONSPIRADOR"
 		KUNAI_DESC 				= " Alcance cuerpo a cuerpo infinito. Al apuñalar provoca una explosión, causando daño adicional a los enemigos cercanos."
@@ -5191,6 +5330,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		WANGAPRICK_NAME 		= "AGUIJÓN WANGA"
 		WANGAPRICK_DESC 		= " Al matar a un enemigo te haces invisible durante unos segundos. Puedes atacar mientras estás invisible y encadenar muertes te mantiene así. No tienes disfraces."
+		// TODO: Update! " Killing an enemy causes you to immediately enter stealth for a few seconds, however you cannot disguise. Grants a Cloak spell charge on kill (Requires Spellbook)."
 		//
 		SHARPDRESSER_NAME 		= "MANGA AFILADA"
 		SHARPDRESSER_DESC 		= " Al apuñalar provoca una explosión, causando daño adicional a los enemigos cercanos."
@@ -5203,13 +5343,14 @@ if("SetScriptVersion" in getroottable())
 		//
 		DEADRINGER_NAME 		= "DUPLICANTE"
 		DEADRINGER_DESC 		= " Registra un breve aumento de velocidad al activarse, permitiendo correr en cualquier dirección. El daño recibido se reduce un 80 % al correr."
-		// TODO: Update! " Activate to gain super-speed for several seconds. Invulnerable while active."
+		// TODO: Update! " Activate to gain super speed for several seconds. Invulnerable while active."
 		//
 		CLOAKANDDAGGER_NAME		= "EMBOZADOR"
 		CLOAKANDDAGGER_DESC		= " Te hace invisible y quita la invisibilidad al instante."
+		// TODO: Update! " Activate to transform into a ghost. Able to fly a short distance, or remain stationary to stay intangible indefinitely."
 		// TODO: TRANSLATE THE BELOW
 		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
-		QUACKENBIRDT_DESC 		= " Reveals the location of all enemies while cloaked."
+		QUACKENBIRDT_DESC 		= " Activate to reveal the location of all enemies. Alternatively, activating this while holding a Sapper shows your teammates instead."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -5250,6 +5391,10 @@ if("SetScriptVersion" in getroottable())
 		IH_INCLUDES				= IH_color_header + "[►]\x0826beffBB 你的裝備配置包含了..."
 		IH_DIS_MSG_2			= IH_disable_color + "輸入 '/itemhelp 1' 以在回合中隱藏訊息. \n輸入 '/itemhelp 0' 以完全隱藏此訊息."
 		IH_DIS_MSG				= IH_disable_color + "輸入 '/itemhelp 0' 以隱藏這些訊息. \n輸入 '/itemhelp 2' 以持續顯示此訊息."
+		// TODO: Update!
+		// IH_INCLUDES				= IH_color_header + "[►]\x0826beffAA Your loadout includes..."
+		// IH_DIS_MSG_2			= IH_disable_color + "Type '/itemhelp 1' to disable item descriptions during a wave. \nType '/itemhelp 0' to disable them entirely."
+		// IH_DIS_MSG				= IH_disable_color + "Type '/itemhelp 0' to disable item descriptions. \nType '/itemhelp 2' to always display them."
 		IH_BAD_ARGS				= IH_color_header + "[裝備配置]" + IH_error_color + " {錯誤}\x01 參數出錯！!\n/itemhelp 2 -顯示\n/itemhelp 1 - 僅在回合準備階段中顯示\n/itemhelp 0 - 隱藏"
 		IH_OOB_ARG				= IH_color_header + "[裝備配置]" + IH_error_color + " {錯誤}\x01 超出配置最大範圍！ : %s"
 		IH_HELP_MSG				= IH_color_header + "[裝備配置]\x01 裝備配置會顯示的改動 \x03每個武器\x01 的改動!" 
@@ -5347,6 +5492,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		THREERUNEBLADE_NAME 	= "盧恩古刃"
 		THREERUNEBLADE_DESC 	= "使用時，獲得巨額移動速度加成且能三段跳，免疫摔傷."
+		// TODO: Update! " While active, gain MASSIVE boost to move speed and ability to triple jump. Deals increased damage while airborne. Grants immunity to fall damage."
 		//
 		UNARMEDCOMBAT_NAME 		= "一臂之力"
 		UNARMEDCOMBAT_DESC 		= "每擊殺10個敵人，獲得骷髏召喚術（需裝備魔法書）."
@@ -5433,7 +5579,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MARKETGARDENER_NAME 	= "市場花園園丁"
 		MARKETGARDENER_DESC 	= "造成高額加成的暴擊傷害，殺死敵人可進入狂暴，獲得額外生命，抗性和傷害加成，但揮空會殺死你."
-		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, enter an enraged state and gain extra health, resistance and increased damage on all attacks."
+		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		DISCIPLINARYACTION_NAME = "紀律行動"
 		DISCIPLINARYACTION_DESC	= "防禦和機動性的標準選擇."
@@ -5500,6 +5646,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		BACKSCRATCHER_NAME 		= "不求人"
 		BACKSCRATCHER_DESC 		= "背後攻擊能造成致命傷害，擊殺可進入狂暴，獲得額外速度，抗性和傷害."
+		// TODO: Update! " Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		VOLCANOFRAGMENT_NAME 	= "熔岩巨斧"
 		VOLCANOFRAGMENT_DESC 	= "有機會擊暈敵人."
@@ -5509,6 +5656,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		MAUL_NAME 				= "巨型釘錘"
 		MAUL_DESC 				= "擊中可擊飛敵人，揮空則擊飛自己."
+		// TODO: Update! " On hit: Cause an explosion, launching enemies into the air and igniting them."
 		//
 		THIRDDEGREE_NAME 		= "三度灼傷"
 		THIRDDEGREE_DESC 		= "裝備時讓你近乎免疫火焰傷害，同時啟用時獲得高額遠程傷害抗性."
@@ -5574,6 +5722,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		CABER_NAME 				= "阿勒浦木製手榴彈"
 		CABER_DESC 				= "傷害會隨著你的受傷程度而提升，生命低於2%獲得暴擊加成，此武器的爆炸能殺死你."
+		// TODO: Update! " You are a Sentry Buster - Taunt to detonate!"
 		//
 		CLAIDHEAMHMOR_NAME 		= "蓋爾巨劍"
 		CLAIDHEAMHMOR_DESC 		= "每擊殺10個敵人，獲得魔眼召喚術（需要裝備魔法書）"
@@ -5612,21 +5761,26 @@ if("SetScriptVersion" in getroottable())
 		//
 		SANDVICH_NAME 			= "三明治"
 		SANDVICH_DESC 			= "恢復最多150000點生命值，使用此物品時受到的任何傷害都能殺死你."
+		// TODO: Update! " Consume to gain Concheror buff for 30 seconds."
 		//
 		DALOKOHSBAR_NAME 		= "美味巧克力"
 		DALOKOHSBAR_DESC 		= "恢復最多20000點生命，使用時若生命低於350則獲得高額過量治療。被動：你會受到更多傷害但受傷有機會進入uber."
+		// TODO: Update! " Consume to gain increased move speed, weapon switch speed and faster minigun spinup time for 30 seconds."
 		//
 		BUFFALOSTEAK_NAME 		= "水牛排三明治"
 		BUFFALOSTEAK_DESC 		= "被動：免疫暴擊."
+		// TODO: Update! " Consume to gain Battalion's Backup buff and backstab immunity for 30 seconds."
 		//
 		FAMILYBUSINESS_NAME 	= "家族事業"
 		FAMILYBUSINESS_DESC 	= "無限彈藥。受到治療時開火速度加倍，擊殺獲得暴擊加成."
 		//
 		FISHCAKE_NAME 			= "太空魚酥餅"
 		FISHCAKE_DESC 			= "獲得高額子彈抗性，但受到更多爆炸和火焰傷害."
+		// TODO: Update! " Consume to gain gravity reversal power for 30 seconds (Crouch to reverse gravity)."
 		//
 		SECONDBANANA_NAME 		= "第二蕉"
 		SECONDBANANA_DESC 		= "獲得高額爆炸抗性，但受到更多火焰和子彈傷害."
+		// TODO: Update! " Consume to gain explosive melee power for 30 seconds (You are restricted to melee for the duration)."
 		///
 		FISTS_NAME 				= "拳頭"
 		FISTS_DESC 				= "防禦和機動性的標準選擇."
@@ -5642,10 +5796,11 @@ if("SetScriptVersion" in getroottable())
 		//
 		WARRIRORSSPIRIT_NAME 	= "戰士之魂"
 		WARRIRORSSPIRIT_DESC 	= "左鍵可以躍至高空，落到目標時造成巨額摔傷. 移除所有主武器和副武器的彈藥."
-		// TODO: Update! " Left-click to leap high into the air. Land on enemies to deal massive stomp damage. On Kill: Able to Quick-Slam by crouching in air for a short time.  Removes all primary and secondary ammo."
+		// TODO: Update! " Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air. Active buff indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		FISTSOFSTEEL_NAME 		= "鐵拳"
 		FISTSOFSTEEL_DESC 		= "變成一個擁有250000生命的巨型重裝拳擊手，獲得免疫擊退且能造成高額傷害，移除所有主武器和副武器彈藥，只能從午餐盒類物品來回血."
+		// TODO: Update! " You are a Giant Heavy Gauntlet - Immune to push forces and able to hit multiple enemies at once for massive damage."
 		//
 		EVICTIONNOTICE_NAME 	= "驅逐警告"
 		EVICTIONNOTICE_DESC 	= "擊殺恢復大量生命."
@@ -5812,6 +5967,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		LETRANGER_NAME 			= "局外人左輪"
 		LETRANGER_DESC 			= "允許你一擊處決所有非巨型機器人. 對坦克和巨型機器人無效."
+		// TODO: Update! " Able to execute any non-giant in a single shot. Deals 2% damage to Giants, zero damage to Tanks."
 		//
 		ENFORCER_NAME 			= "脅威使"
 		ENFORCER_DESC 			= "無視任何傷害抗性並且能透過背刺或使用電子破壞器摧毀建築獲得暴擊充能."
@@ -5830,6 +5986,7 @@ if("SetScriptVersion" in getroottable())
 		//
         YOURETERNALREWARD_NAME 	= "您的永恆獎賞"
 		YOURETERNALREWARD_DESC 	= "當你受傷時增加其傷害且生命低於10%獲得暴擊，但此增益只能適用於正面擊中，獲得90%的傷害抗性."
+		// TODO: Update! " Deal massive Giant backstab damage and explosive backstab damage, however each attack has a high chance to miss. Direct kills grant a Teleport spell charge (Requires Spellbook)."
 		//
 		KUNAI_NAME 				= "陰謀苦無"
 		KUNAI_DESC 				= "攻擊範圍變為無限，背刺能造成爆炸，對周圍的敵人造成額外傷害."
@@ -5840,6 +5997,7 @@ if("SetScriptVersion" in getroottable())
 		//
 		WANGAPRICK_NAME 		= "巫毒咒錐"
 		WANGAPRICK_DESC 		= "擊殺敵人時能使你立即持續幾秒的隱形，隱形期間可以攻擊敵人且連殺可以維持隱形，無法使用偽裝."
+		// TODO: Update! " Killing an enemy causes you to immediately enter stealth for a few seconds, however you cannot disguise. Grants a Cloak spell charge on kill (Requires Spellbook)."
 		//
 		SHARPDRESSER_NAME 		= "刺客袖劍"
 		SHARPDRESSER_DESC 		= "背刺能造成爆炸，對周圍的敵人造成額外傷害."
@@ -5852,13 +6010,14 @@ if("SetScriptVersion" in getroottable())
 		//
 		DEADRINGER_NAME 		= "死亡送終者"
 		DEADRINGER_DESC 		= "啟動時短暫獲得高額移動速度，允許你往任何方向衝刺，衝刺時受到的傷害減少80%."
-		// TODO: Update! " Activate to gain super-speed for several seconds. Invulnerable while active."
+		// TODO: Update! " Activate to gain super speed for several seconds. Invulnerable while active."
 		//
 		CLOAKANDDAGGER_NAME		= "隱身匕首"
 		CLOAKANDDAGGER_DESC		= "能立即進入並解除隱形."
+		// TODO: Update! " Activate to transform into a ghost. Able to fly a short distance, or remain stationary to stay intangible indefinitely."
 		// TODO: TRANSLATE THE BELOW
 		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
-		QUACKENBIRDT_DESC 		= " Reveals the location of all enemies while cloaked."
+		QUACKENBIRDT_DESC 		= " Activate to reveal the location of all enemies. Alternatively, activating this while holding a Sapper shows your teammates instead."
 		//----------------------------
 		//----------------------------
 		//----------------------------
