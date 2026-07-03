@@ -210,7 +210,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format) (GMT-5)
-if (!SetLibraryVersion("07.01.2026.13", 0))
+if (!SetLibraryVersion("07.03.2026.16", 0))
 	return
 
 SetLibrarySettings({})
@@ -461,7 +461,6 @@ if(!("GetPropVectorArray" in ROOT))
 ::STRIPSLOT_PDA2		<- (1 << 4)	// 16
 ::STRIPSLOT_ACTION		<- (1 << 5)	// 32
 ::STRIPSLOT_COSMETICS	<- (1 << 6)	// 64
-
 // combine these flags to remove multiple slots
 
 //////// MathLib
@@ -9919,7 +9918,10 @@ function ROOT::PostPlayerSpawn(player)
 
 		eventdata.player <- GetPlayerFromUserID(params.userid)
 
-		Assert(eventdata.player && eventdata.player.IsPlayer(), "post_inventory_application Received a NULL/Non player")
+		if(!IsValidPlayer(eventdata.player))
+			return
+
+		// Assert(eventdata.player && eventdata.player.IsPlayer(), "post_inventory_application Received a NULL/Non player")
 
 		// overridden
 		delete eventdata.userid
@@ -10123,7 +10125,7 @@ function ROOT::PostPlayerSpawn(player)
 		if(params.damage_custom == TF_DMG_CUSTOM_TELEFRAG && attacker == inflictor && attacker == victim)
 		{
 			params.early_out <- true
-			victim.TakeDamageCustom(null, Worldspawn, null, Vector(), Vector(), victim.HookAdditiveAttributes("is suicide counter"), DMG_PREVENT_PHYSICS_FORCE, TF_DMG_CUSTOM_SUICIDE)
+			victim.TakeUnblockableDamage(victim.HookAdditiveAttributes("is suicide counter"), Worldspawn, Worldspawn, Worldspawn)
 		}
 
 		if(attacker && attacker.IsPlayer())
@@ -10241,7 +10243,7 @@ function ROOT::PostPlayerSpawn(player)
 					params.damage *= attacker.GetActiveWeapon().GetMultAttribute("taunt dmg mult active")
 			}
 
-			if(IsWeaponClass(params.weapon, "tf_weapon", true))
+			if(IsWeaponClass(params.weapon, "tf_weapon", true) && IsValidPlayer(params.weapon.GetOwner()))
 			{
 				/** @type {CTFWeaponBase} */
 				local weapon = params.weapon
@@ -10571,7 +10573,10 @@ function ROOT::PostPlayerSpawn(player)
 		local player = GetPlayerFromUserID(params.userid)
 		eventdata.player <- player
 
-		Assert(player && player.IsPlayer(), "player_spawn Received a NULL/Non player")
+		if(!IsValidPlayer(player))
+			return
+
+		// Assert(player && player.IsPlayer(), "player_spawn Received a NULL/Non player")
 
 		ClearThinks(player)
 		if(!player.IsBot())
@@ -10665,7 +10670,9 @@ function ROOT::PostPlayerSpawn(player)
 		local player = GetPlayerFromUserID(params.userid)
 
 		eventdata.player <- player
-		Assert(player && player.IsPlayer(), "player_team Received a NULL/Non player")
+		if(!IsValidPlayer(player))
+			return
+		// Assert(player && player.IsPlayer(), "player_team Received a NULL/Non player")
 
 		if(!("m_iDamage" in GetScope(PlayerManager)))
 			GetScope(PlayerManager).m_iDamage <- array(MAX_CLIENTS+1, 0)
@@ -10857,7 +10864,9 @@ function ROOT::PostPlayerSpawn(player)
 
 		eventdata.patient <- GetPlayerFromUserID(params.patient)
 		eventdata.healer <- "healer" in params ? GetPlayerFromUserID(params.healer) : null
-		Assert(eventdata.patient && eventdata.patient.IsPlayer(), "player_healed Received a NULL/Non player")
+		if(!IsValidPlayer(eventdata.patient))
+			return
+		// Assert(eventdata.patient && eventdata.patient.IsPlayer(), "player_healed Received a NULL/Non player")
 
 		if(eventdata.healer) eventdata.healer.AddTrackedHealing(params.amount)
 		FireScriptEvent(eventdata.patient.IsBot() ? "BotHealed" : "HumanHealed", eventdata)
@@ -10903,7 +10912,9 @@ function ROOT::PostPlayerSpawn(player)
 		local player = GetPlayerFromUserID(params.userid)
 		eventdata.player <- player
 
-		Assert(player && player.IsPlayer(), "player_builtobject Received a NULL/Non player")
+		if(!IsValidPlayer(player))
+			return
+		// Assert(player && player.IsPlayer(), "player_builtobject Received a NULL/Non player")
 
 		local typetable = array(4, "")
 		typetable[OBJ_DISPENSER] = "Dispenser"
@@ -11060,7 +11071,9 @@ function ROOT::PostPlayerSpawn(player)
 	{
 		local player = GetPlayerFromUserID(params.userid)
 
-		Assert(player, "player_activate Received a NULL Player!!!")
+		if(!player)
+			return
+		// Assert(player, "player_activate Received a NULL Player!!!")
 
 		if(!(player in player.IsBot() ? BotArray : HumanArray))
 		{
@@ -11089,23 +11102,27 @@ function ROOT::PostPlayerSpawn(player)
 				event_name = "ObjectDeflected"
 		}
 
-		local function str(obj) {return obj?obj.tostring():"null"}
+		// local function str(obj) {return obj?obj.tostring():"null"}
 
-		printf("%s Deflected %s that was shot from %s\n", str(deflector), str(object), str(old_owner))
+		// printf("%s Deflected %s that was shot from %s\n", str(deflector), str(object), str(old_owner))
 
-		printl("Old Owner: "+old_owner)
-		printl("Object Owner: "+object?object.GetOwner():"null")
-		printl("Object launcher: "+GetPropEntity(object, "m_hLauncher"))
+		// printl("Old Owner: "+old_owner)
+		// printl("Object Owner: "+object?object.GetOwner():"null")
+		// printl("Object launcher: "+GetPropEntity(object, "m_hLauncher"))
 
-		// fix rafmod homing sentry rockets
-		if(object.GetClassname() == "tf_projectile_sentryrocket" && IsValidPlayer(old_owner))
+		// fix rafmod homing sentry rockets?
+		if(IsBaseRocket(object))
 		{
-			if(old_owner.GetPlayerClass() == TF_CLASS_ENGINEER && old_owner.HookAdditiveAttributes("mod projectile heat seek power") != 0)
-			{
-				RunWithDelay(TWO_TICKS, @() object.SetAbsVelocity(object.GetAbsAngles().Forward() * object.GetAbsVelocity().Length()))
-				RunWithDelay(TWO_TICKS, @() object.SetMoveType(MOVETYPE_FLY, GetPropInt(object, "m_MoveCollide")))
-			}
+			RunWithDelay(TWO_TICKS, @() FixTheFuckingRockets(object))
 		}
+		// if(object.GetClassname() == "tf_projectile_sentryrocket" && IsValidPlayer(old_owner))
+		// {
+		// 	if(old_owner.GetPlayerClass() == TF_CLASS_ENGINEER && old_owner.HookAdditiveAttributes("mod projectile heat seek power") != 0)
+		// 	{
+		// 		RunWithDelay(TWO_TICKS, @() object.SetAbsVelocity(object.GetAbsAngles().Forward() * object.GetAbsVelocity().Length()))
+		// 		RunWithDelay(TWO_TICKS, @() object.SetMoveType(MOVETYPE_FLY, GetPropInt(object, "m_MoveCollide")))
+		// 	}
+		// }
 
 		FireScriptEvent(event_name, {
 			deflector = deflector
@@ -11669,6 +11686,16 @@ __CollectGameEventCallbacks(ChaosCustomEvents)
   === END OF CUSTOM EVENT HANDLING ===
   ====================================
 */
+/** 
+ * @param {CBaseEntity|null} rocket
+ */
+function ROOT::FixTheFuckingRockets(rocket)
+{
+	if(rocket && rocket.IsValid())
+	{
+		rocket.SetMoveType(MOVETYPE_FLY, GetPropInt(rocket, "m_MoveCollide"))
+	}
+}
 
 /*
   ========================
@@ -11850,19 +11877,6 @@ RegisterAdminTrigger("kill_tank", function(player, ...) {
 				return TRACE_CONTINUE
 		}
 	})
-	/* local trace = {
-		start = player.EyePosition(),
-		end = player.GetEyeOffset(16000)
-		mask = MASK_OPAQUE_AND_NPCS,
-		function filter(entity)
-		{
-			if(entity.GetClassname() == "tank_boss")
-				return TRACE_STOP
-			else
-				return TRACE_CONTINUE
-		}
-	}
-	TraceLineFilter(trace) */
 	DebugDrawLine_vCol(trace.start, trace.pos, Vector(255, 0, 0), false, 100)
 
 	if(trace.hit && trace.enthit && trace.enthit.GetClassname() == "tank_boss")
@@ -11910,15 +11924,6 @@ RegisterAdminTrigger("bot", function(player, ...) {
 
 	local Giant = (vargv.len() != 0 && vargv[0] == "giant")
 	local trace = player.GetEyeTrace()
-
-	// local trace = {
-	// 	start = player.EyePosition()
-	// 	end = player.GetEyeOffset(16000)
-	// 	mask = MASK_WORLD
-	// 	ignore = player
-	// }
-
-	// TraceLineEx(trace)
 
 	local bots = GetAllPlayers(TF_TEAM_SPECTATOR, false, false)
 	local rand = bots[RandomInt(0, bots.len()-1)]
@@ -12014,7 +12019,17 @@ seterrorhandler(function(e)
 			continue
 		STACK.append(format("%s line [%d]\n", s.src, s.line))
 	}
-	local Chat = @(m) ("PrintToConsoleAll" in ROOT ? PrintToConsoleAll(m) : ClientPrint(null, HUD_PRINTCONSOLE, m))
+	local temp_stack = [e]
+	local function Chat(m) 
+	{
+		if("Discord_SendError" in ROOT)
+			temp_stack.append(m)
+
+		if("PrintToConsoleAll" in ROOT)
+			PrintToConsoleAll(m)
+		else
+			ClientPrint(null, HUD_PRINTCONSOLE, m)
+	}
 	if(!("ConsoleErrors" in FatCatLibSettings) || !("PublicErrors" in FatCatLibSettings))
 		SetLibrarySettings({}) // Init settings to default
 	
@@ -12043,13 +12058,6 @@ seterrorhandler(function(e)
 		foreach (stackinfo in STACK)
 		{
 			PrintToChatAll(stackinfo)
-			/* if(stackinfo.len() > 200)
-			{
-				PrintToChatAll(stackinfo.slice(0, 200))
-				PrintToChatAll(stackinfo.slice(200))
-			}
-			else 
-				PrintToChatAll(stackinfo) */
 		}
 	}
 	if(console == true)
@@ -12077,6 +12085,9 @@ seterrorhandler(function(e)
 							 Chat(format("[%s] %s %s" , n, t, v.tostring()))
 		}
 	}
+
+	if("Discord_SendError" in ROOT)
+		Discord_SendError(temp_stack)
 
 	return
 })
