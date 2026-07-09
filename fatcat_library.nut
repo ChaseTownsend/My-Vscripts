@@ -473,13 +473,13 @@ if(!("GetPropVectorArray" in ROOT))
 ::FLT_MAX	<- 3.402823466e+38
 if(IS_64BIT)
 {
-	::INT_MIN	<- 0x8000000000000000
-	::INT_MAX	<- 0x7FFFFFFFFFFFFFFF
+	::INT_MIN	<- 1 << 63
+	::INT_MAX	<- ~(1 << 63)
 }
 else
 {
-	::INT_MIN	<- 0x80000000
-	::INT_MAX	<- 0x7FFFFFFF
+	::INT_MIN	<- 1 << 31
+	::INT_MAX	<- ~(1 << 31) // magic, turns bits 100000... into 011111...
 }
 
 //////// MASK'S
@@ -6964,6 +6964,11 @@ function ROOT::IsValidEnemy(entity)
 	return false
 }
 
+/** 
+ * @type {function}
+ * @param {CBaseEntity|CTFPlayer|CTFBot|null} entity
+ * @returns {bool}
+ */
 function ROOT::IsValidPlayer(entity)
 {
 	return entity && entity.IsValid() && entity.IsPlayer()
@@ -9757,6 +9762,8 @@ function SwapWeaponThink()
  */
 function ROOT::PostPlayerSpawn(player)
 {
+	if(!IsValidPlayer(player))
+		return
 	player.StripItemSlot(player.HookAdditiveAttributes("strip item slot"))
 
 	if(player.HookAdditiveAttributes("use sentrybuster model") > 0)
