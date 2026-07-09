@@ -210,7 +210,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format) (GMT-5)
-if (!SetLibraryVersion("07.03.2026.16", 0))
+if (!SetLibraryVersion("07.09.2026.17", 0))
 	return
 
 SetLibrarySettings({})
@@ -444,6 +444,9 @@ if(!("GetPropVectorArray" in ROOT))
 */
 
 ////////////// DEFINES ////////////////
+::IS_64BIT 		<- _intsize_ == 8
+::IS_WIN		<- RAND_MAX == 0x7FFF
+
 //////// Slot indexs
 ::SLOT_PRIMARY   <- 0
 ::SLOT_SECONDARY <- 1
@@ -468,11 +471,19 @@ if(!("GetPropVectorArray" in ROOT))
 ::RAD2DEG	<- 57.295779513
 ::FLT_MIN	<- 1.175494e-38
 ::FLT_MAX	<- 3.402823466e+38
-::INT_MIN	<- -2147483648
-::INT_MAX	<- 2147483647
+if(IS_64BIT)
+{
+	::INT_MIN	<- 0x8000000000000000
+	::INT_MAX	<- 0x7FFFFFFFFFFFFFFF
+}
+else
+{
+	::INT_MIN	<- 0x80000000
+	::INT_MAX	<- 0x7FFFFFFF
+}
 
 //////// MASK'S
-::MASK_ALL						<- (0xFFFFFFFF)
+::MASK_ALL						<- (INT_MAX)
 ::MASK_SOLID					<- (CONTENTS_SOLID|CONTENTS_MOVEABLE|CONTENTS_WINDOW|CONTENTS_MONSTER|CONTENTS_GRATE)
 ::MASK_PLAYERSOLID				<- (CONTENTS_SOLID|CONTENTS_MOVEABLE|CONTENTS_PLAYERCLIP|CONTENTS_WINDOW|CONTENTS_MONSTER|CONTENTS_GRATE)
 ::MASK_NPCSOLID					<- (CONTENTS_SOLID|CONTENTS_MOVEABLE|CONTENTS_MONSTERCLIP|CONTENTS_WINDOW|CONTENTS_MONSTER|CONTENTS_GRATE)
@@ -527,16 +538,32 @@ if(!("GetPropVectorArray" in ROOT))
 ::TF_SPELL_BOMB_HEAD_KART		<- 15
 
 ///////// TeamNums
+/* 
+TF2C ETFTeam constants
+(table : 0x0000000111663080) 
+{
+	TEAM_ANY : -2
+	TEAM_INVALID : -1
+	TEAM_UNASSIGNED : null
+	TEAM_SPECTATOR : 1
+	TF_TEAM_RED : 2
+	TF_TEAM_PVE_DEFENDERS : 2
+	TF_TEAM_BLUE : 3
+	TF_TEAM_PVE_INVADERS : 3
+	TF_TEAM_COUNT : 6				// they changed the internal value, but did not add any more constants
+	TF_TEAM_PVE_INVADERS_GIANTS : 6
+}
+ */
 ::TF_TEAM_ANY 					<- -2
 ::TF_TEAM_INVALID 				<- -1
 ::TF_TEAM_UNASSIGNED 			<- 0
 ::TF_TEAM_SPECTATOR 			<- 1
-::TF_TEAM_RED 					<- 2
-::TF_TEAM_PVE_DEFENDERS 		<- TF_TEAM_RED
-::TF_TEAM_BLUE 					<- 3
-::TF_TEAM_PVE_INVADERS 			<- TF_TEAM_BLUE
-::TF_TEAM_PVE_INVADERS_GIANTS 	<- 4
-::TF_TEAM_COUNT 				<- 4
+// ::TF_TEAM_RED 					<- 2
+// ::TF_TEAM_PVE_DEFENDERS 		<- TF_TEAM_RED
+// ::TF_TEAM_BLUE 					<- 3
+// ::TF_TEAM_PVE_INVADERS 			<- TF_TEAM_BLUE
+// ::TF_TEAM_PVE_INVADERS_GIANTS 	<- 4
+// ::TF_TEAM_COUNT 				<- 4
 ::TF_TEAM_HALLOWEEN 			<- 5
 
 ///////// Stun Flags
@@ -1028,7 +1055,32 @@ enum ProjectileType_t
 	"sharp_dresser" 					: 638
 }
 
-SpellWeapons["sharp_dresser"] <- 638
+/** @type {class} */
+class color32 {
+	/** @type {integer} */
+	r = 0
+	/** @type {integer} */
+	g = 0
+	/** @type {integer} */
+	b = 0
+	/** @type {integer} */
+	a = 0
+
+	/** 
+	 * @param {integer} _r
+	 * @param {integer} _g
+	 * @param {integer} _b
+	 * @param {integer} _a
+	 */
+	constructor(_r, _g, _b, _a)
+	{
+		this.r = MATH.Clamp(_r, 0, 0xff).tointeger()
+		this.g = MATH.Clamp(_g, 0, 0xff).tointeger()
+		this.b = MATH.Clamp(_b, 0, 0xff).tointeger()
+		this.a = MATH.Clamp(_a, 0, 0xff).tointeger()
+	}
+}
+
 
 /*
   ========================
@@ -5871,7 +5923,7 @@ function CTFWeaponBase::ApplyOnHitAttributes( pVictimBaseEntity, pAttacker, info
 
 		if ( bIsSpyRevealed )
 		{
-			UTIL_ScreenFade( pVictim, Vector4D(255, 255, 255, 255), 0.25, 0.1, FFADE_IN );
+			UTIL_ScreenFade( pVictim, color32(255, 255, 255, 255), 0.25, 0.1, FFADE_IN );
 		}
 
 		// On hit attributes don't work when you shoot disguised spies
@@ -7209,170 +7261,16 @@ function ROOT::IsWaveStarted()
 	return GetScope(Gamerules).IsWaveStarted
 }
 
-if(!("Vector4D" in ROOT))
-{
-	class Vector4D {
-		/** @type {float|integer} */
-		x = null
-
-		/** @type {float|integer} */
-		y = null
-
-		/** @type {float|integer} */
-		z = null
-
-		/** @type {float|integer} */
-		w = null
-
-		constructor(_x = 0.0, _y = 0.0, _z = 0.0, _w = 0.0)
-		{
-			this.x = _x
-			this.y = _y
-			this.z = _z
-			this.w = _w
-		}
-
-		/**
-		 * Returns the sum of both classes's members.
-			 * @param {Vector4D} other
-		 * @returns {Vector4D}
-		 */
-		function _add(other);
-
-		/**
-		 * Returns the subtraction of both classes's members.
-			 * @param {Vector4D} other
-		 * @returns {Vector4D}
-		 */
-		function _sub(other);
-
-		/**
-		 * Returns the multiplication of a Vector against a scalar.
-			 * @param {float} other
-		 * @returns {Vector4D}
-		 */
-		function _mul(other);
-
-		/**
-		 * The scalar product of two vectors.
-			 * @param {Vector4D} factor
-		 * @returns {float}
-		 */
-		function Dot(factor);
-
-		/**
-		 * Magnitude of the vector.
-			 * @returns {float}
-		 */
-		function Length();
-
-		/**
-		 * The magnitude of the vector squared.
-			 * @returns {float}
-		 */
-		function LengthSqr();
-
-		/**
-		 * Normalizes the vector in place and returns its length.
-			 * @returns {float}
-		 */
-		function Norm();
-
-		/**
-		 * Returns a string without separating commas.
-			 * @returns {string}
-		 */
-		function ToKVString();
-	}
-}
-
-if(!("Vector2D" in ROOT))
-{
-	/**
-	 * @type {class}
-	 */
-	class Vector2D {
-		/** @type {float|integer} */
-		x = null
-
-		/** @type {float|integer} */
-		y = null
-
-		/**
-		 * Creates a new 2-dimensional vector with the specified Cartesian coordinates.
-			 * @param {float} _x Defaults to `0.0`
-		 * @param {float} _y Defaults to `0.0`
-		 */
-		constructor(_x = 0.0, _y = 0.0)
-		{
-			this.x = _x
-			this.y = _y
-		}
-
-		/**
-		 * Returns the sum of both classes's members.
-			 * @param {Vector2D} other
-		 * @returns {Vector2D}
-		 */
-		function _add(other);
-
-		/**
-		 * Returns the subtraction of both classes's members.
-			 * @param {Vector2D} other
-		 * @returns {Vector2D}
-		 */
-		function _sub(other);
-
-		/**
-		 * Returns the multiplication of a Vector against a scalar.
-			 * @param {float} other
-		 * @returns {Vector2D}
-		 */
-		function _mul(other);
-
-		/**
-		 * The scalar product of two vectors.
-			 * @param {Vector2D} factor
-		 * @returns {float}
-		 */
-		function Dot(factor);
-
-		/**
-		 * Magnitude of the vector.
-			 * @returns {float}
-		 */
-		function Length();
-
-		/**
-		 * The magnitude of the vector squared.
-			 * @returns {float}
-		 */
-		function LengthSqr();
-
-		/**
-		 * Normalizes the vector in place and returns its length.
-			 * @returns {float}
-		 */
-		function Norm();
-
-		/**
-		 * Returns a string without separating commas.
-			 * @returns {string}
-		 */
-		function ToKVString();
-	}
-}
-
 /** 
  * @type {function}
  * @param {CTFPlayer|null} pVictim
- * @param {Vector4D} color
+ * @param {color32} color
  * @param {float} fade_time
  * @param {float} fade_hold
  * @param {integer} flags
  */
 function ROOT::UTIL_ScreenFade( pVictim, color, fade_time, fade_hold, flags )
-	ScreenFade( pVictim, color.x, color.y, color.z, color.w, fade_time, fade_hold, flags )
+	ScreenFade( pVictim, color.r, color.g, color.b, color.a, fade_time, fade_hold, flags )
 
 /** 
  * @param {Vector} center
@@ -10125,6 +10023,9 @@ function ROOT::PostPlayerSpawn(player)
 		if(params.damage_custom == TF_DMG_CUSTOM_TELEFRAG && attacker == inflictor && attacker == victim)
 		{
 			params.early_out <- true
+			victim.RemoveCondEx(TF_COND_INVULNERABLE_HIDE_UNLESS_DAMAGED)
+			victim.RemoveCondEx(TF_COND_INVULNERABLE)
+			victim.RemoveCondEx(TF_COND_INVULNERABLE_WEARINGOFF)
 			victim.TakeUnblockableDamage(victim.HookAdditiveAttributes("is suicide counter"), Worldspawn, Worldspawn, Worldspawn)
 		}
 
@@ -12005,12 +11906,24 @@ RegisterAdminTrigger("respawn", function(player, ...) { player.ForceRegenerateAn
   =====================================
 */
 
+::Errors <- {}
+::Error_Cooldown <- 10
 
 // the admins wowow
 ::TheFatCat		<- "[U:1:969530867]"
 ::ShadowBolt 	<- "[U:1:101345257]"
 seterrorhandler(function(e)
 {
+	if(e in Errors)
+	{
+		if(Errors[e] >= Time())
+			return // cooldown
+
+		Errors[e] = Time() + Error_Cooldown
+	}
+	else
+		Errors[e] <- Time() + Error_Cooldown
+
 	local STACK = ["FUNCTION STACK:"]
 	local s, l = 2
 	while (s = getstackinfos (l++))
@@ -12037,6 +11950,16 @@ seterrorhandler(function(e)
 	local public = FatCatLibSettings.PublicErrors
 
 	ReCalculatePlayers()
+
+	if(IsChaosMvM() && "Discord_SendError" in ROOT)
+	{
+		console = false
+		public = false
+		Chat = function(m)
+		{
+			temp_stack.append(m)
+		}
+	}
 
 	if(public == true)
 	{
@@ -12065,7 +11988,8 @@ seterrorhandler(function(e)
 		PrintToAdmins(3, format("\x07FF0000AN ERROR HAS OCCURRED [%s].\nCheck console for details", e))
 	}
 
-	Chat("\nCurrent Library Version: "+FatCatLibVersion.version+"\n")
+	if(!IsChaosMvM())
+		Chat("\nCurrent Library Version: "+FatCatLibVersion.version+"\n")
 	Chat(format("\n====== TIMESTAMP: %g ======\nAN ERROR HAS OCCURRED [%s]", Time(), e))
 	Chat("CALLSTACK")
 	local s, l = 2
