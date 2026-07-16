@@ -640,7 +640,7 @@ local Invincible_Conds = [
 
 ::CTFPlayer.IsInvincible <- function()
 {
-	foreach(Condition in Invincible_Conds)
+	foreach (Condition in Invincible_Conds)
 	{
 		if (this.InCond(Condition)) return true
 	}
@@ -818,7 +818,7 @@ local Invincible_Conds = [
 	foreach (player in GetEveryPlayer())
 	{
 		local filtered = false
-		foreach( plr in filter)
+		foreach ( plr in filter)
 		{
 			if ( plr == player)
 			{
@@ -838,7 +838,7 @@ local Invincible_Conds = [
 	foreach (player in GetEveryPlayer())
 	{
 		local filtered = false
-		foreach( plr in filter)
+		foreach ( plr in filter)
 		{
 			if ( plr == player)
 			{
@@ -1230,7 +1230,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 {
 	if (entity.GetTeam() != TF_TEAM_PVE_INVADERS) return false
 
-	foreach(classname in [ "player", "tank_boss", "obj_dispenser", "obj_sentrygun", "obj_teleporter" ])
+	foreach (classname in [ "player", "tank_boss", "obj_dispenser", "obj_sentrygun", "obj_teleporter" ])
 	{
 		if (entity.GetClassname() == classname)
 		{

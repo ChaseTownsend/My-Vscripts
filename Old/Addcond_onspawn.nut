@@ -6,7 +6,7 @@ AddThinkToEnt(spawnthinker, "SpawnCond")
 
 function SpawnCond()
 {
-	foreach(player in GetEveryHuman())
+	foreach (player in GetEveryHuman())
 	{
 		if (player.InCond(107)) player.RemoveCondEx(107, true)
 

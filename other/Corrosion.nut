@@ -60,7 +60,7 @@ function RadiationThink()
 			return
 
 		// Create the fucking uhhh, acid puddle?
-		for(local i = 0; i < 20; i++)
+		for (local i = 0; i < 20; i++)
 		{
 			local particle = SpawnEntityFromTable("info_particle_system", {
 				targetname = "gas_can"
@@ -83,7 +83,7 @@ function RadiationThink()
 				self.Destroy()
 				return 500
 			}
-			foreach(bot in GetEveryBotWithin(GetPlayerFromUserID(params.userid).GetOrigin(), 150))
+			foreach (bot in GetEveryBotWithin(GetPlayerFromUserID(params.userid).GetOrigin(), 150))
 			{
 				if (!attacker || !attacker.IsValid() || m_flTimeCreated + 5.0 <= Time())
 				{

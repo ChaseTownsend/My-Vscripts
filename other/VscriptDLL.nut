@@ -60,7 +60,7 @@ function FindCircularReference( target )
 		}
 		visits[current] <- true;
 		
-		foreach( key, val in current )
+		foreach ( key, val in current )
 		{
 			if ( val == target && !IsWeakref( target, key ) )
 			{
@@ -98,7 +98,7 @@ function FindCircularReferences( resurrecteds )
 		throw "Bad input to FindCircularReference"
 	}
 
-	foreach( val in resurrecteds )
+	foreach ( val in resurrecteds )
 	{
 		FindCircularReference( val )
 	}
@@ -194,7 +194,7 @@ function ScriptDebugIterateKeysRecursive( matchFunc, path, current, visits, call
 	{
 		visits[current] <- true
 		
-		foreach( key, value in current )
+		foreach ( key, value in current )
 		{
 			if ( typeof(key) == "string" )
 			{
@@ -260,7 +260,7 @@ if ( developer() > 0 )
 	{
 		if ( typeof( symbolOrTable ) == "table" )
 		{
-			foreach( symbol, itemDescription in symbolOrTable )
+			foreach ( symbol, itemDescription in symbolOrTable )
 			{
 				Assert( typeof(symbol) == "string" )
 				
@@ -279,7 +279,7 @@ if ( developer() > 0 )
 		
 		if ( string == "*" || !exact )
 		{
-			foreach( name, documentation in Documentation.functions )
+			foreach ( name, documentation in Documentation.functions )
 			{
 				if ( string != "*" && name.tolower().find( string.tolower() ) == null )
 				{
@@ -303,7 +303,7 @@ if ( developer() > 0 )
 		
 		matches.sort();
 		
-		foreach( name in matches )
+		foreach ( name in matches )
 		{
 			local result = name;
 			local documentation = Documentation.functions[name];
@@ -394,7 +394,7 @@ class CCallChainer
 	
 	function PostScriptExecute() 
 	{
-		foreach( key, value in scope )
+		foreach ( key, value in scope )
 		{
 			if ( typeof( value ) == "function" ) 
 			{
@@ -486,7 +486,7 @@ class CSimpleCallChainer
 	
 	function PostScriptExecute() 
 	{
-		foreach( key, value in scope )
+		foreach ( key, value in scope )
 		{
 			if ( typeof( value ) == "function" ) 
 			{
@@ -612,7 +612,7 @@ class LateBinder
 
 		Log( "End late bind on table " + m_targetTable );
 		
-		foreach( subTablePair in m_fixupSet )
+		foreach ( subTablePair in m_fixupSet )
 		{
 			EstablishDelegation( m_targetTable, subTablePair[1] );
 		}
@@ -624,7 +624,7 @@ class LateBinder
 		
 		while ( found )
 		{
-			foreach( subTablePair in m_fixupSet )
+			foreach ( subTablePair in m_fixupSet )
 			{
 				Log( subTablePair[0] + " = " );
 				Log( "{" );
@@ -638,7 +638,7 @@ class LateBinder
 			
 		m_logIndent--;
 		
-		foreach( subTablePair in m_fixupSet )
+		foreach ( subTablePair in m_fixupSet )
 		{
 			RemoveDelegation( subTablePair[1] );
 		}
@@ -679,7 +679,7 @@ class LateBinder
 	{
 		childTable.setdelegate( parentTable );
 		
-		foreach( key, value in childTable )
+		foreach ( key, value in childTable )
 		{
 			local type = typeof value;
 			if ( type == "table" )
@@ -693,7 +693,7 @@ class LateBinder
 	{
 		childTable.setdelegate( null );
 		
-		foreach( key, value in childTable )
+		foreach ( key, value in childTable )
 		{
 			local type = typeof value;
 			if ( type == "table" )
@@ -708,7 +708,7 @@ class LateBinder
 		m_logIndent++;
 		local found = false;
 	
-		foreach( key, value in subTableOrArray )
+		foreach ( key, value in subTableOrArray )
 		{
 			local type = typeof value;
 			if ( type == "string" )
@@ -748,7 +748,7 @@ class LateBinder
 						
 						local depthSuccess = 0;
 						local result = lookupTable;
-						foreach( identifier in identifiers )
+						foreach ( identifier in identifiers )
 						{
 							if ( identifier in result )
 							{
@@ -792,7 +792,7 @@ class LateBinder
 			}
 		}
 
-		foreach( key, value in subTableOrArray )
+		foreach ( key, value in subTableOrArray )
 		{
 			local type = typeof value;
 			local isTable = ( type == "table" );
@@ -953,13 +953,13 @@ try {
 		local ty = ::type(obj);
 		if (ty == "instance") {
 			try { //TRY TO USE _nexti
-				foreach(idx,val in obj)
+				foreach (idx,val in obj)
 				{
 					func(obj,idx,val);
 				}
 			}
 			catch(e) {
-			foreach(idx,val in obj.getclass())
+			foreach (idx,val in obj.getclass())
 			{
 				func(obj,idx,obj[idx]);
 			}
@@ -969,7 +969,7 @@ try {
 			func(obj,"@ref",obj.ref());
 		}
 		else {
-			foreach(idx,val in obj)
+			foreach (idx,val in obj)
 			{
 				func(obj,idx,val);
 			}
@@ -979,7 +979,7 @@ try {
 
 	function build_tree()
 	{
-		foreach(i,o in objs_reg.refs)
+		foreach (i,o in objs_reg.refs)
 		{
 			beginelement("o");
 				attribute("type",(i==::getroottable()?"r":pack_type(::type(i))));
@@ -1022,7 +1022,7 @@ try {
 		
 		params.append(locals["this"])
 		local first=1;
-		foreach(i,v in locals){
+		foreach (i,v in locals){
 			if (i!="this" && i[0] != '@'){ //foreach iterators start with @
 				if (!first){
 					func_src=func_src+","
@@ -1068,12 +1068,12 @@ try {
 
 	//EVALUATE ALL WATCHES
 	objs_reg.refs[::getroottable()] <- objs_reg.maxid++;
-	foreach(i,val in stack)
+	foreach (i,val in stack)
 	{
 		if (val.src!="NATIVE") {
 			if ("watches" in this) {
 				val.watches <- {}
-				foreach(i,watch in watches)
+				foreach (i,watch in watches)
 				{
 					if (val.src!="NATIVE"){
 						val.watches[i] <- evaluate_watch(val.locals,i,watch);
@@ -1088,7 +1088,7 @@ try {
 				
 			}
 		}
-		foreach(i,l in val.locals)
+		foreach (i,l in val.locals)
 			build_refs(l);
 	}
 
@@ -1099,14 +1099,14 @@ try {
 
 	beginelement("calls");
 
-	foreach(i,val in stack)
+	foreach (i,val in stack)
 	{
 
 		beginelement("call");
 			attribute("fnc",val.func);
 			attribute("src",val.src);
 			attribute("line",val.line.tostring());
-			foreach(i,v in val.locals)
+			foreach (i,v in val.locals)
 			{
 				beginelement("l");
 					attribute("name",getvalue(i).tostring());
@@ -1114,7 +1114,7 @@ try {
 				endelement("l");
 			}
 			if ("watches" in val) {
-				foreach(i,v in val.watches)
+				foreach (i,v in val.watches)
 				{
 					beginelement("w");
 						attribute("id",i.tostring());

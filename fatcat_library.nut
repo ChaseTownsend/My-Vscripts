@@ -1666,7 +1666,7 @@ function CTFPlayer::GetAbilityWeaponIDXs()
 	local idxs = []
 	if (GetAbilityWeapons() == null)
 		return null
-	foreach(weapon in GetAbilityWeapons())
+	foreach (weapon in GetAbilityWeapons())
 		idxs.append(weapon.GetIDX())
 	
 	return idxs.len() == 0 ? null : idxs
@@ -1842,7 +1842,7 @@ function CTFPlayer::ForceTaunt(taunt_id)
 function CTFPlayer::GetMyWeaponsArray()
 {
 	local MyWeapons = array(MAX_WEAPONS)
-	for(local i = 0; i < MAX_WEAPONS; i++) { MyWeapons[i] = GetWeaponInSlotNew(i) }
+	for (local i = 0; i < MAX_WEAPONS; i++) { MyWeapons[i] = GetWeaponInSlotNew(i) }
 	return MyWeapons
 }
 
@@ -1879,7 +1879,7 @@ function CTFPlayer::GetWeaponInSlotNew(slot)
 			return EnableStringPurge(weapon)
 	}
 
-	for(local i = 0; i < MAX_WEAPONS; i++) 
+	for (local i = 0; i < MAX_WEAPONS; i++) 
 	{ 
 		if (i == slot) continue
 		weapon = GetWeaponInSlot(i)
@@ -1993,7 +1993,7 @@ function CTFPlayer::DamageEveryTankWithin(range, damage)
  */
 function CTFPlayer::DamageEveryBotWithin(range, damage)
 {
-	foreach(bot in GetEveryBotWithin(range))
+	foreach (bot in GetEveryBotWithin(range))
 		bot.TakeDamage(damage, 0, this)
 }
 
@@ -2009,7 +2009,7 @@ function CTFPlayer::RemoveStun()
 // Are they [Insert Title card here]
 function CTFPlayer::IsInvincible()
 {
-	foreach(Condition in Invincible_Conds)
+	foreach (Condition in Invincible_Conds)
 		if (InCond(Condition)) return true
 	return false
 }
@@ -2068,7 +2068,7 @@ function CTFPlayer::IsAdmin()
  */
 function CTFPlayer::HasWeapon(index)
 {
-	foreach(weapon in GetAllWeapons())
+	foreach (weapon in GetAllWeapons())
 		if (weapon.GetIDX() == index) return true
 	return false
 }
@@ -2087,7 +2087,7 @@ function CTFPlayer::HasWeaponClassname(classname)
  */
 function CTFPlayer::GetWeapon(index)
 {
-	foreach(weapon in GetAllWeapons())
+	foreach (weapon in GetAllWeapons())
 		if (weapon.GetIDX() == index) return weapon
 	return null
 }
@@ -2324,7 +2324,7 @@ function CTFPlayer::ResetAmmo()
  */
 function CTFPlayer::InMultiCond(conds)
 {
-	foreach(cond in conds)
+	foreach (cond in conds)
 		if (InCond(cond))
 			return true
 	
@@ -2941,7 +2941,7 @@ function CTFPlayer::MakeCorrosionPuddle()
 			DestroyGasBomb()
 			return 500
 		}
-		foreach(bot in GetAllPlayers(TF_TEAM_PVE_INVADERS, [self.GetOrigin(), 75], true))
+		foreach (bot in GetAllPlayers(TF_TEAM_PVE_INVADERS, [self.GetOrigin(), 75], true))
 			bot.MakeCorrosion(Attacker, Weapon)
 		DebugDrawSphere(self.GetOrigin(), Vector(0, 0, 255), 75, false, 0.15)
 		return 0.1
@@ -3215,7 +3215,7 @@ function CTFPlayer::EquipItem(ItemName, swit = true, attrib_overrides = {}, IsCu
 	if (new_item != old_item && old_item)
 		old_item.Destroy()
 
-	foreach(attrib, value in attrib_overrides)
+	foreach (attrib, value in attrib_overrides)
 	{
 		if (type(value) == "string")
 		{
@@ -3268,7 +3268,7 @@ function CTFPlayer::EquipItem(ItemName, swit = true, attrib_overrides = {}, IsCu
 
 	/* if (myweaps_idx == null)
 	{
-		for(local i = 0; i <= MAX_WEAPONS; i++)
+		for (local i = 0; i <= MAX_WEAPONS; i++)
 		{
 			local w = GetPropEntityArray(this, "m_hMyWeapons", i)
 			if (w == null || !w.isvalid())
@@ -3681,7 +3681,7 @@ function CTFPlayer::EmitSoundTo(sound, data = {})
 
 function CTFPlayer::PrintConds()
 {
-	for(local cond = 0; cond <= TF_COND_RANGE; cond++)
+	for (local cond = 0; cond <= TF_COND_RANGE; cond++)
 		printl("In Cond "+cond+"? "+InCond(cond))
 }
 /**
@@ -3785,7 +3785,7 @@ function CTFPlayer::GetWearables()
 function CTFPlayer::GetWearableByIDX(idx)
 {
 	local wearables = GetWearables()
-	foreach(wearable in wearables)
+	foreach (wearable in wearables)
 	{
 		if (wearable.GetIDX() == idx)
 			return wearable
@@ -3929,7 +3929,7 @@ function CTFPlayer::CheckBlockBackstab( pTFAttacker )
 
 	local iBackStabShield = 0
 	local ValidWeapon = null
-	foreach(/**@type {CTFWeaponBase} */weapon in GetAllWeapons())
+	foreach (/**@type {CTFWeaponBase} */weapon in GetAllWeapons())
 	{
 		if (weapon.GetAttribute("backstab shield", 0))
 		{
@@ -6975,7 +6975,7 @@ function ROOT::IsValidEnemy(entity)
 {
 	if (entity.GetTeam() != TF_TEAM_PVE_INVADERS) return false
 
-	foreach(classname in [ "player", "tank_boss", "obj_dispenser", "obj_sentrygun", "obj_teleporter" ])
+	foreach (classname in [ "player", "tank_boss", "obj_dispenser", "obj_sentrygun", "obj_teleporter" ])
 	{
 		if (entity.GetClassname() == classname)
 			return true
@@ -7344,7 +7344,7 @@ function ROOT::DebugDrawSphereInternal( center, radius, r, g, b, noDepthTest, fl
 
 	/** @type {float} */
 	local angle = 0.0
-	for( angle = 0.0; angle <= 360.0; angle += CircleAngle )
+	for ( angle = 0.0; angle <= 360.0; angle += CircleAngle )
 	{
 		edge.x = radius * cos( angle / 180.0 * PI ) + center.x
 		edge.y = center.y
@@ -7356,7 +7356,7 @@ function ROOT::DebugDrawSphereInternal( center, radius, r, g, b, noDepthTest, fl
 	}
 
 	lastEdge = Vector( center.x, radius + center.y, center.z )
-	for( angle = 0.0; angle <= 360.0; angle += CircleAngle )
+	for ( angle = 0.0; angle <= 360.0; angle += CircleAngle )
 	{
 		edge.x = center.x
 		edge.y = radius * cos( angle / 180.0 * PI ) + center.y
@@ -7368,7 +7368,7 @@ function ROOT::DebugDrawSphereInternal( center, radius, r, g, b, noDepthTest, fl
 	}
 
 	lastEdge = Vector( center.x, radius + center.y, center.z )
-	for( angle = 90.0; angle <= 450.0; angle += CircleAngle ) // da fuk
+	for ( angle = 90.0; angle <= 450.0; angle += CircleAngle ) // da fuk
 	{
 		edge.x = radius * cos( angle / 180.0 * PI ) + center.x
 		edge.y = radius * sin( angle / 180.0 * PI ) + center.y
@@ -7523,7 +7523,7 @@ function ROOT::StringToArray(string)
 function ROOT::ArrayToString(array)
 {
 	local str = ""
-	foreach(item in array)
+	foreach (item in array)
 		str += item.tostring()
 	return str
 }
@@ -8027,7 +8027,7 @@ function ROOT::CreateTankPath(data)
 				targetname 	= i == 0 ? PathName : format("%s_%i", PathName, i + 1)
 				target		= target
 			}
-			foreach(k, v in TrackData)
+			foreach (k, v in TrackData)
 			{
 				if (startswith(k, "OnPass"))
 					Paths[i].path_track[k] <- v
@@ -9421,11 +9421,11 @@ function ROOT::ValidatePlayers()
 {
 	local invalid = []
 
-	foreach(player in PlayerArray)
+	foreach (player in PlayerArray)
 		if ( !player || !player.IsValid() )
 			invalid.append( player )
 
-	foreach( player in invalid ) {
+	foreach ( player in invalid ) {
 
 		delete PlayerArray[ player ]
 
@@ -9554,7 +9554,7 @@ function ROOT::RemoveSpawnCallback(entity_name, callback_name)
 
 CreateThinker("OnEntityPostSpawn" , function() {
 	local Ents = []
-	foreach(ent_name, _callbacks in PostSpawnCallbacks)
+	foreach (ent_name, _callbacks in PostSpawnCallbacks)
 		Ents.extend(GetAllEntitiesByClassname(ent_name))
 
 	foreach (entity in Ents)
@@ -9564,7 +9564,7 @@ CreateThinker("OnEntityPostSpawn" , function() {
 			return
 		scope.SpawnCallbacked <- true
 
-		foreach(_callback_name, callback in PostSpawnCallbacks[entity.GetClassname()])
+		foreach (_callback_name, callback in PostSpawnCallbacks[entity.GetClassname()])
 		{
 			callback(entity)
 			// printf("Applied SpawnCallback %s to %s\n", _callback_name.tostring(), entity.tostring())
@@ -9690,7 +9690,7 @@ function FireWeaponCheck()
 	if (self.IsDead())
 		return 0.1
 
-	foreach(/**@type {CTFWeaponBase} */wep in self.GetAllWeapons())
+	foreach (/**@type {CTFWeaponBase} */wep in self.GetAllWeapons())
 	{
 		if (wep.GetClassname() == "tf_weapon_flamethrower")
 		{	// TF2Classified turns it into a int with -1, 0, and 1
@@ -10109,7 +10109,7 @@ function ROOT::PostPlayerSpawn(player)
 				if (secondary && secondary.IsWearable() && secondary.CanStomp())
 					stomping_weapon = secondary
 
-				foreach(weapon in attacker.GetAllWeapons())
+				foreach (weapon in attacker.GetAllWeapons())
 				{
 					if (weapon.GetAttribute("perfer as stomping weapon", 0))
 					{
@@ -10897,7 +10897,7 @@ function ROOT::PostPlayerSpawn(player)
 
 		SetDestroyCallback(object, function() {
 			local self = self
-			foreach(callback in DestroyCallbacks)
+			foreach (callback in DestroyCallbacks)
 			{
 				callback(self)
 			}
@@ -11803,7 +11803,7 @@ RegisterAdminTrigger("kill_tank", function(player, ...) {
 			return player.PrintToChat("Valid Arguments for \"/kill_tank\" : [ *, tank_name, help ], or leave blank to kill targeted Tank")
 		else if (vargv[0] == "*")
 		{
-			foreach(tank in GetAllEntitiesByClassname("tank_boss"))
+			foreach (tank in GetAllEntitiesByClassname("tank_boss"))
 				tank.Kill()
 			return player.PrintToChat("Killed all Tanks")
 		}
@@ -11867,7 +11867,7 @@ RegisterAdminTrigger("uber", function(player, ...) {
 })
 
 RegisterAdminTrigger("bot", function(player, ...) {
-	foreach(bot in GetAllPlayers(TF_TEAM_BLUE, false, false))
+	foreach (bot in GetAllPlayers(TF_TEAM_BLUE, false, false))
 	{
 		if (GetClientConVar("name", bot.entindex()) == "Johnny Silverhand" && bot.IsAlive())
 			return player.PrintToChat("Johnny Silverhand is already Alive!")
@@ -11880,7 +11880,7 @@ RegisterAdminTrigger("bot", function(player, ...) {
 	local rand = bots[RandomInt(0, bots.len()-1)]
 	if (rand.IsAlive())
 	{
-		for(local i = 0; i < 20; i++)
+		for (local i = 0; i < 20; i++)
 		{
 			rand = bots[RandomInt(0, bots.len()-1)]
 			if (rand.IsDead())
@@ -12079,7 +12079,7 @@ function ROOT::FixShittyPlayersBug()
 	if (m_aHumans.len() != 1)
 		return
 
-	foreach(player in m_aHumans)
+	foreach (player in m_aHumans)
 	{
 		player.ForceRegenerateAndRespawn()
 	}

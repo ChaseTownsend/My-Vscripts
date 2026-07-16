@@ -262,7 +262,7 @@ Returns the players healing us
 
 **Example Usage**
 ```js
-foreach(plr in player.GetHealers())
+foreach (plr in player.GetHealers())
 {
 	plr.AddCustomAttribute("dmg taken increased", 0.75, 5)
 }

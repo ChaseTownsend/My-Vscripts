@@ -41,7 +41,7 @@ function __ReplaceClosures( script, scope )
 	temp.setdelegate( tempParent );
 	
 	temp.runscript()
-	foreach( key,val in temp )
+	foreach ( key,val in temp )
 	{
 		if ( typeof(val) == "function" && key != "runscript" )
 		{
@@ -68,13 +68,13 @@ function __DumpScope( depth, table )
 	local indent=function( count )
 	{
 		local i;
-		for( i = 0 ; i < count ; i++ )
+		for ( i = 0 ; i < count ; i++ )
 		{
 			print("   ");
 		}
 	}
 	
-    foreach(key, value in table)
+    foreach (key, value in table)
     {
 		indent(depth);
 		print( key );
@@ -134,7 +134,7 @@ function __CollectEventCallbacks( scope, prefix, globalTableName, regFunc )
 		getroottable()[globalTableName] <- {};
 	}
 	local useTable = getroottable()[globalTableName] 
-	foreach( key,value in scope )
+	foreach ( key,value in scope )
 	{
 		if ( typeof( value ) == "function" )
 		{
@@ -367,7 +367,7 @@ function ScriptDebugAddWatch( watch )
 
 	local function FindExisting( watch )
 	{
-		foreach( key, val in ScriptDebugWatches )
+		foreach ( key, val in ScriptDebugWatches )
 		{
 			if ( val.key == watch.key )
 			{
@@ -540,7 +540,7 @@ function ScriptDebugTextTrace( text, color = [ 255, 255, 255 ] )
 
 function ScriptDebugTextPrint( text, color = [ 255, 255, 255 ], isWatch = false )
 {
-	foreach( key, val in ScriptDebugTextFilters )
+	foreach ( key, val in ScriptDebugTextFilters )
 	{
 		if ( text.find( key ) != null )
 		{
@@ -639,7 +639,7 @@ function ScriptDebugHook( type, file, line, funcname )
 	{
 		local functionString = funcname + "() [ " + file + "(" + line + ") ]"
 
-		foreach( key, val in ScriptDebugTextFilters )
+		foreach ( key, val in ScriptDebugTextFilters )
 		{
 			if ( file.find( key ) != null || functionString.find( key ) != null )
 			{

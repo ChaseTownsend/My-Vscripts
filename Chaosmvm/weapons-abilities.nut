@@ -100,7 +100,7 @@ function CreateAbility(weapon, spawncooldown, name, player_class, idx, text_parm
 		if ( player.IsAdmin() && Debug_Abilities)
 		{
 			local message = "Variable list:\n"
-			foreach(k, v in this)
+			foreach (k, v in this)
 			{
 				if (type(v) == "function")
 					continue

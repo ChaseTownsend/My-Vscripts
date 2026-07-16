@@ -142,7 +142,7 @@ CreateTankPath({
 		origin = data.Starting.origin
 		targetname = data.Starting.name
 	}
-	foreach(k, v in data.Starting)
+	foreach (k, v in data.Starting)
 	{
 		if (startswith(k, "OnPass"))
 			StartingData[k] <- v
@@ -152,7 +152,7 @@ CreateTankPath({
 		origin = data.NextNodes[0].origin
 		targetname = data.Starting.name
 	}
-	foreach(k, v in data.NextNodes[0])
+	foreach (k, v in data.NextNodes[0])
 	{
 		if (startswith(k, "OnPass"))
 			NextData[k] <- v
@@ -180,7 +180,7 @@ CreateTankPath({
 		targetname 	= i == 0 ? PathName : format("%s_%i", PathName, i + 1)
 		target		= target
 	}
-	foreach(k, v in TrackData)
+	foreach (k, v in TrackData)
 	{
 		if (startswith(k, "OnPass"))
 			Paths[i].path_track[k] <- v

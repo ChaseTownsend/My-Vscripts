@@ -228,7 +228,7 @@ function BaseAbility()
 	if ( ( self.GetSteamID() == TheFatCat || self.GetSteamID() == ShadowBolt ) && Debug_Abilities)
 	{
 		local message = "DEBUG LIST:\nCurrent Ability: Base\n"
-		foreach(k, v in this) message += (k + " : " + v + "\n")
+		foreach (k, v in this) message += (k + " : " + v + "\n")
 		ClientPrint(self, 4, message)
 	}
 
@@ -307,7 +307,7 @@ function HeavyRage()
 	if ( ( self.GetSteamID() == "[U:1:969530867]" || self.GetSteamID() == "[U:1:101345257]" ) && Debug_Abilities == true)
 	{
 		local message = "DEBUG LIST:\nCurrent Ability: Rage\n"
-		foreach(k, v in this) message += (k + " : " + v + "\n")
+		foreach (k, v in this) message += (k + " : " + v + "\n")
 		ClientPrint(self, 4, message)
 	}
 
@@ -420,7 +420,7 @@ function CheersAbility()
 	if ( ( self.GetSteamID() == "[U:1:969530867]" || self.GetSteamID() == "[U:1:101345257]" ) && Debug_Abilities == 1)
 	{
 		local message = "DEBUG LIST:\nCurrent Ability: Cheers\n"
-		foreach(k, v in this) message += (k + " : " + v + "\n")
+		foreach (k, v in this) message += (k + " : " + v + "\n")
 		ClientPrint(null, 4, message)
 	}
 
@@ -500,7 +500,7 @@ function KartAbility()
 	if ( ( self.GetSteamID() == TheFatCat || self.GetSteamID() == ShadowBolt ) && Debug_Abilities)
 	{
 		local message = "DEBUG LIST:\nCurrent Ability: Kart\n"
-		foreach(k, v in this) message += (k + " : " + v + "\n")
+		foreach (k, v in this) message += (k + " : " + v + "\n")
 		ClientPrint(self, 4, message)
 	}
 

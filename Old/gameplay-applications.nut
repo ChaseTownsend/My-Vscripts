@@ -192,7 +192,7 @@ function GameplayThink()
 		if (bot.InCond(TF_COND_REPROGRAMMED) && (!bot.IsValidReprogramTarget() || bot.GetPlayerClass() == TF_CLASS_MEDIC))
 		{
 			bot.RemoveCondEx(TF_COND_REPROGRAMMED, true)
-			foreach(attribute in BlutsaugerRemoveAttributes)
+			foreach (attribute in BlutsaugerRemoveAttributes)
 				bot.RemoveCustomAttribute(attribute)
 		}
 

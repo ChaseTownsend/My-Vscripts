@@ -492,7 +492,7 @@ function ROOT::CTFPlayer::ForceTaunt(taunt_id)
 function ROOT::CTFPlayer::GetMyWeaponsArray()
 {
 	local MyWeapons = array(MAX_WEAPONS)
-	for(local i = 0; i < MAX_WEAPONS; i++) { MyWeapons[i] = GetWeaponInSlot(i) }
+	for (local i = 0; i < MAX_WEAPONS; i++) { MyWeapons[i] = GetWeaponInSlot(i) }
 	return MyWeapons
 }
 
@@ -501,7 +501,7 @@ function ROOT::CTFPlayer::GetWeaponInSlotNew(slot = 0)
 	local MyWeapons = array(MAX_WEAPONS)
 
 	// sorts items into their slots
-	foreach(weapon in GetMyWeaponsArray())
+	foreach (weapon in GetMyWeaponsArray())
 	{
 		if ( weapon == null ) continue
 		GetPlayerClass() == TF_CLASS_ENGINEER && weapon.GetClassname() == "tf_weapon_spellbook" ? MyWeapons[SLOT_PDA2] = weapon : MyWeapons[weapon.GetSlot()] = weapon
@@ -552,7 +552,7 @@ function ROOT::CTFPlayer::GetWeaponInSlotNewTEST(slot = 0)
 	}
 
 	// 2. Check Standard Weapons
-	for(local i = 0; i < MAX_WEAPONS; i++) 
+	for (local i = 0; i < MAX_WEAPONS; i++) 
 	{ 
 		local weapon = GetWeaponInSlot(i)
 		if ( weapon == null ) continue
@@ -679,7 +679,7 @@ function ROOT::CTFPlayer::DamageEveryTankWithin(range, damage)
 }
 function ROOT::CTFPlayer::DamageEveryBotWithin(range, damage)
 {
-	foreach(bot in GetEveryBotWithin(range))
+	foreach (bot in GetEveryBotWithin(range))
 	{
 		bot.TakeDamage(damage, 0, this)
 	}
@@ -697,7 +697,7 @@ function ROOT::CTFPlayer::RemoveStun()
 
 function ROOT::CTFPlayer::IsInvincible()
 {
-	foreach(Condition in Invincible_Conds)
+	foreach (Condition in Invincible_Conds)
 	{
 		if (InCond(Condition)) return true
 	}
@@ -719,7 +719,7 @@ function ROOT::CTFPlayer::IsAdmin()
 
 function ROOT::CTFPlayer::HasWeapon(index)
 {
-	foreach(weapon in GetAllWeapons())
+	foreach (weapon in GetAllWeapons())
 		if (weapon.GetIDX() == index) return true
 	return false
 }
@@ -732,7 +732,7 @@ function ROOT::CTFPlayer::HasWeaponClassname(classname)
 // TODO: Add to Snippets
 function ROOT::CTFPlayer::GetWeapon(index)
 {
-	foreach(weapon in GetAllWeapons())
+	foreach (weapon in GetAllWeapons())
 		if (weapon.GetIDX() == index) return weapon
 	return null
 }
@@ -956,7 +956,7 @@ function ROOT::CTFPlayer::ResetAmmo()
 
 function ROOT::CTFPlayer::InMultiCond(conds)
 {
-	foreach(cond in conds)
+	foreach (cond in conds)
 		if (InCond(cond))
 			return true
 	
@@ -1371,7 +1371,7 @@ function ROOT::PrintToChatAllFilter(message, filter = [])
 	foreach (player in GetAllPlayers())
 	{
 		local filtered = false
-		foreach( plr in filter)
+		foreach ( plr in filter)
 		{
 			if ( plr == player)
 			{
@@ -1392,7 +1392,7 @@ function ROOT::PrintToHudAllFilter(message, filter = [])
 	foreach (player in GetAllPlayers())
 	{
 		local filtered = false
-		foreach( plr in filter)
+		foreach ( plr in filter)
 		{
 			if ( plr == player)
 			{
@@ -1808,7 +1808,7 @@ function ROOT::IsValidEnemy(entity)
 {
 	if (entity.GetTeam() != TF_TEAM_PVE_INVADERS) return false
 
-	foreach(classname in [ "player", "tank_boss", "obj_dispenser", "obj_sentrygun", "obj_teleporter" ])
+	foreach (classname in [ "player", "tank_boss", "obj_dispenser", "obj_sentrygun", "obj_teleporter" ])
 	{
 		if (entity.GetClassname() == classname)
 		{

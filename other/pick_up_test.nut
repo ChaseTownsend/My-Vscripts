@@ -252,7 +252,7 @@ function BaseAbility()
 	if ( ( player.GetSteamID() == TheFatCat || player.GetSteamID() == ShadowBolt ) && Debug_Abilities)
 	{
 		local message = "Variable list:\n"
-		foreach(k, v in this)
+		foreach (k, v in this)
 		{
 			if (!startswith(k, "__"))
 				message += (k + " : " + v + "\n")
@@ -327,7 +327,7 @@ function HeavyRage()
 	if ( ( player.GetSteamID() == TheFatCat || player.GetSteamID() == ShadowBolt ) && Debug_Abilities)
 	{
 		local message = "Variable list:\n"
-		foreach(k, v in this)
+		foreach (k, v in this)
 		{
 			if (!startswith(k, "__"))
 				message += (k + " : " + v + "\n")
@@ -441,7 +441,7 @@ function CheersAbility()
 	if ( ( player.GetSteamID() == TheFatCat || player.GetSteamID() == ShadowBolt ) && Debug_Abilities)
 	{
 		local message = "Variable list:\n"
-		foreach(k, v in this)
+		foreach (k, v in this)
 		{
 			if (!startswith(k, "__"))
 				message += (k + " : " + v + "\n")
@@ -558,7 +558,7 @@ function KartAbility()
 	if ( ( player.GetSteamID() == TheFatCat || player.GetSteamID() == ShadowBolt ) && Debug_Abilities)
 	{
 		local message = "Variable list:\n"
-		foreach(k, v in this)
+		foreach (k, v in this)
 		{
 			if (!startswith(k, "__"))
 				message += (k + " : " + v + "\n")
@@ -678,7 +678,7 @@ function TestAbility()
 	if ( ( player.GetSteamID() == TheFatCat || player.GetSteamID() == ShadowBolt ) && Debug_Abilities)
 	{
 		local message = "Variable list:\n"
-		foreach(k, v in this)
+		foreach (k, v in this)
 		{
 			if (!startswith(k, "__"))
 				message += (k + " : " + v + "\n")

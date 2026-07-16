@@ -246,7 +246,7 @@ const UU_AMOUNT = 2
 
 				local display = format("%sYour Active Weapon has\n", uu_header)
 				local defaults = 0
-				foreach(upgrade in WEAPON_UPGRADES)
+				foreach (upgrade in WEAPON_UPGRADES)
 				{
 					if (active.GetAttribute(upgrade.attribute, upgrade.default_value) == upgrade.default_value)
 					{

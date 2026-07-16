@@ -263,7 +263,7 @@ function GameplayThink()
 					self.Destroy()
 					return 500
 				}
-				foreach(bot in GetEveryBotWithin(self.GetOrigin(), BLUTSAUGER_SETTINGS.GasPuddleRadius))
+				foreach (bot in GetEveryBotWithin(self.GetOrigin(), BLUTSAUGER_SETTINGS.GasPuddleRadius))
 				{
 					if (!Attacker || !Attacker.IsValid() || m_flTimeCreated + CorrosivePuddleDefaultDuration <= Time() || IsPointInRespawnRoom(self.GetOrigin()))
 					{

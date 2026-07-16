@@ -208,7 +208,7 @@ function BaseAbility()
 	if ( player.IsAdmin() && Debug_Abilities)
 	{
 		local message = "Variable list:\n"
-		foreach(k, v in this)
+		foreach (k, v in this)
 		{
 			if (!startswith(k, "__"))
 				message += (k + " : " + v + "\n")
@@ -283,7 +283,7 @@ function HeavyRage()
 	if ( player.IsAdmin() && Debug_Abilities)
 	{
 		local message = "Variable list:\n"
-		foreach(k, v in this)
+		foreach (k, v in this)
 		{
 			if (!startswith(k, "__"))
 				message += (k + " : " + v + "\n")
@@ -399,7 +399,7 @@ function CheersAbility()
 	if ( player.IsAdmin() && Debug_Abilities )
 	{
 		local message = "Variable list:\n"
-		foreach(k, v in this)
+		foreach (k, v in this)
 		{
 			if (!startswith(k, "__"))
 				message += (k + " : " + v + "\n")
@@ -518,7 +518,7 @@ function KartAbility()
 	if ( player.IsAdmin() && Debug_Abilities)
 	{
 		local message = "Variable list:\n"
-		foreach(k, v in this)
+		foreach (k, v in this)
 		{
 			if (!startswith(k, "__"))
 				message += (k + " : " + v + "\n")

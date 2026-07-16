@@ -75,7 +75,7 @@ const bhop_version = "1.0.1"
 		local player = params.inflictor
 		if (IsPlayerABot(player)) return
 		local gardener = false
-		for(local i = 0 ; i <= 3 ; i++)
+		for (local i = 0 ; i <= 3 ; i++)
 		{
 			if (GetWeaponIDXInSlot(player, i) == 416)
 			{

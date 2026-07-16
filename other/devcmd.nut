@@ -163,7 +163,7 @@
 						break
 					}
 				}
-				foreach(play in Players)
+				foreach (play in Players)
 				{
 					if (!IsPlayerABot(play))
 						continue
@@ -251,7 +251,7 @@
 						break
 					}
 				}
-				foreach(play in Players)
+				foreach (play in Players)
 				{
 					if (!IsPlayerABot(play))
 						continue
@@ -339,7 +339,7 @@
 						break
 					}
 				}
-				foreach(play in Players)
+				foreach (play in Players)
 				{
 					if (!IsPlayerABot(play))
 						continue

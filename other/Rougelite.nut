@@ -105,7 +105,7 @@ if ("RougeliteEvents" in ROOT) delete ::RougeliteEvents
 
 		if (!IsInArray(sound, ["music.mvm_end_last_wave", "Game.YourTeamWon", "Announcer.MVM_Get_To_Upgrade"]))
 			return
-		foreach(Human in m_aHumans)
+		foreach (Human in m_aHumans)
 			StopSoundOn( sound, Human )
 	}
 }

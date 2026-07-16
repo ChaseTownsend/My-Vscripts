@@ -24,7 +24,7 @@ local full_completed_ids = split(full_completed_file, ">", true)
 local startoffile = "Total People in mission : " + player_ids.len()
 local list = startoffile
 local completed_people = 0
-foreach(id in player_ids)
+foreach (id in player_ids)
 {
 	local incomlist = false
 	foreach (completed_id in full_completed_ids)

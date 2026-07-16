@@ -271,7 +271,7 @@ function MVMThink() {
 		local moneys = CollectNewDroppedCurrency()
 		if (moneys == null)
 			return
-		foreach(money in moneys)
+		foreach (money in moneys)
 		{
 			SetDestroyCallback(money, function() {
 				DebugDrawText(self.GetOrigin(), GetPropBool(self, "m_bDistributed").tostring(), false, 10)

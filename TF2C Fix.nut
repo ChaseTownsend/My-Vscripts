@@ -8007,7 +8007,7 @@ if ( developer() > 0 )
 	{
 		if ( typeof( symbolOrTable ) == "table" )
 		{
-			foreach( symbol, itemDescription in symbolOrTable )
+			foreach ( symbol, itemDescription in symbolOrTable )
 			{
 				Assert( typeof(symbol) == "string" )
 				
@@ -8026,7 +8026,7 @@ if ( developer() > 0 )
 		
 		if ( string == "*" || !exact )
 		{
-			foreach( name, documentation in Documentation.functions )
+			foreach ( name, documentation in Documentation.functions )
 			{
 				if ( string != "*" && name.tolower().find( string.tolower() ) == null )
 				{
@@ -8050,7 +8050,7 @@ if ( developer() > 0 )
 		
 		matches.sort();
 		
-		foreach( name in matches )
+		foreach ( name in matches )
 		{
 			local result = name;
 			local documentation = Documentation.functions[name];
