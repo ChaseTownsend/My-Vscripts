@@ -8,8 +8,8 @@ infection/
 
 # 
 .vscode/analyze_strings.py
-.vscode/Antigravity- ParseTranslations.py
 .vscode/settings.json
+.idea/
 
 # source engine magic
 *.cache

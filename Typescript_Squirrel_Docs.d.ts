@@ -13,14 +13,14 @@ interface Vector {
 	y: number
 	z: number
 	/**
-	 * Returns the sum of both classes's members.
+	 * Returns the sum of both classes' members.
 	 * @param {Vector} other
 	 * @returns {Vector}
 	 */
 	_add( other: Vector ): Vector
 
 	/**
-	 * Returns the subtraction of both classes's members.
+	 * Returns the subtraction of both classes' members.
 	 * @param {Vector} other
 	 * @returns {Vector}
 	 */
@@ -107,14 +107,14 @@ interface QAngle {
 	/** Warning! [x] is private and cannot be accessed */
 	z: number
 	/**
-	 * Returns the sum of both classes's members.
+	 * Returns the sum of both classes' members.
 	 * @param {QAngle|Vector} other
 	 * @returns {QAngle}
 	 */
 	_add(other: QAngle): QAngle
 
 	/**
-	 * Returns the subtraction of both classes's members.
+	 * Returns the subtraction of both classes' members.
 	 * @param {QAngle|Vector} other
 	 * @returns {QAngle}
 	 */
@@ -187,14 +187,14 @@ interface Vector2D {
 	x: number
 	y: number
 	/**
-	 * Returns the sum of both classes's members.
+	 * Returns the sum of both classes' members.
 	 * @param {Vector2D} other
 	 * @returns {Vector2D}
 	 */
 	_add(other: Vector2D): Vector2D
 
 	/**
-	 * Returns the subtraction of both classes's members.
+	 * Returns the subtraction of both classes' members.
 	 * @param {Vector2D} other
 	 * @returns {Vector2D}
 	 */
@@ -248,14 +248,14 @@ interface Vector4D {
 	w: number
 
 	/**
-	 * Returns the sum of both classes's members.
+	 * Returns the sum of both classes' members.
 	 * @param {Vector4D} other
 	 * @returns {Vector4D}
 	 */
 	_add(other: Vector4D): Vector4D
 
 	/**
-	 * Returns the subtraction of both classes's members.
+	 * Returns the subtraction of both classes' members.
 	 * @param {Vector4D} other
 	 * @returns {Vector4D}
 	 */
@@ -1187,7 +1187,7 @@ interface CBaseEntity {
 	 * @param {boolean} use_velocity
 	 * @param {Vector} velocity
 	 */
-	Teleport(use_origin: boolean, origin: Vector, use_angle: boolean, angles: Vector, use_velocity: boolean, velocity: Vector): void
+	Teleport(use_origin: boolean, origin: Vector, use_angles: boolean, angles: Vector, use_velocity: boolean, velocity: Vector): void
 
 	/**
 	 * Clear the current script scope for this entity.
@@ -2847,7 +2847,7 @@ interface CTFBot extends CTFPlayer {
      * @param {number} flags See [Constants.TFBotWeaponRestrictionType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#TFBotWeaponRestrictionType)
      * @returns {boolean}
      */
-    HasWeaponRestriction(flag: number): boolean
+    HasWeaponRestriction(flags: number): boolean
 
     /**
      * @returns {boolean}
@@ -3123,7 +3123,7 @@ interface CTFBot extends CTFPlayer {
     IsFriend(entity: CBaseEntity): boolean
 
     /**
-     * Return `true` if we haven't moved in awhile.
+     * Return `true` if we haven't moved in a while.
      * @returns {boolean}
      */
     IsImmobile(): boolean
@@ -3322,7 +3322,7 @@ interface CTFNavArea {
     ClearAttributeTF(bits: number): void
 
     /**
-     * Compute closest point within the portal between areas.
+     * Compute the closest point within the portal between areas.
      * @param {CTFNavArea} to
      * @param {number} dir See [Constants.ENavDirType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ENavDirType)
      * @param {Vector} close_pos
@@ -3859,7 +3859,7 @@ interface CNetPropManager {
     /**
      * Returns the size of a netprop array, or `-1`.
      * @param {CBaseEntity} entity
-     * @param {property_array} property_name
+     * @param {string} property_name
      * @returns {number}
      */
     GetPropArraySize(entity: CBaseEntity, property_name: string): number
@@ -3867,7 +3867,7 @@ interface CNetPropManager {
     /**
      * Reads an `EHANDLE`-valued netprop.
      * @param {CBaseEntity} entity
-     * @param {entity_property} property_name
+     * @param {string} property_name
      * @returns {CBaseEntity|null} `null` if property is not found.
      */
     GetPropEntity(entity: CBaseEntity, property_name: string): CBaseEntity|null
@@ -3875,7 +3875,7 @@ interface CNetPropManager {
     /**
      * Reads an `EHANDLE`-valued netprop from an array.
      * @param {CBaseEntity} entity
-     * @param {entity_array_property} property_name
+     * @param {string} property_name
      * @param {number} array_element
      * @returns {CBaseEntity|null} `null` if not found.
      */
@@ -3884,7 +3884,7 @@ interface CNetPropManager {
     /**
      * Reads a boolean-valued netprop.
      * @param {CBaseEntity} entity
-     * @param {bool_property} property_name
+     * @param {string} property_name
      * @returns {boolean} `false` if property is not found.
      */
     GetPropBool(entity: CBaseEntity, property_name: string): boolean
@@ -3892,7 +3892,7 @@ interface CNetPropManager {
     /**
      * Reads a boolean-valued netprop from an array.
      * @param {CBaseEntity} entity
-     * @param {bool_array_property} property_name
+     * @param {string} property_name
      * @param {number} array_element
      * @returns {boolean} `false` if not found.
      */
@@ -3901,7 +3901,7 @@ interface CNetPropManager {
     /**
      * Reads a float-valued netprop.
      * @param {CBaseEntity} entity
-     * @param {number_property} property_name
+     * @param {string} property_name
      * @returns {number} `-1.0` if property is not found.
      */
     GetPropFloat(entity: CBaseEntity, property_name: string): number
@@ -3909,7 +3909,7 @@ interface CNetPropManager {
     /**
      * Reads a float-valued netprop from an array.
      * @param {CBaseEntity} entity
-     * @param {number_array_property} property_name
+     * @param {string} property_name
      * @param {number} array_element
      * @returns {number} `-1.0` if not found.
      */
@@ -3928,7 +3928,7 @@ interface CNetPropManager {
     /**
      * Reads an integer-valued netprop.
      * @param {CBaseEntity} entity
-     * @param {number_property} property_name
+     * @param {string} property_name
      * @returns {number} `-1` if property is not found.
      */
     GetPropInt(entity: CBaseEntity, property_name: string): number
@@ -3936,7 +3936,7 @@ interface CNetPropManager {
     /**
      * Reads an integer-valued netprop from an array.
      * @param {CBaseEntity} entity
-     * @param {number_array_property} property_name
+     * @param {string} property_name
      * @param {number} array_element
      * @returns {number} `-1` if not found.
      */
@@ -3945,7 +3945,7 @@ interface CNetPropManager {
     /**
      * Reads a string-valued netprop.
      * @param {CBaseEntity} entity
-     * @param {string_property} property_name
+     * @param {string} property_name
      * @returns {string} Empty string if property is not found.
      */
     GetPropString(entity: CBaseEntity, property_name: string): string
@@ -3953,7 +3953,7 @@ interface CNetPropManager {
     /**
      * Reads a string-valued netprop from an array.
      * @param {CBaseEntity} entity
-     * @param {string_array_property} property_name
+     * @param {string} property_name
      * @param {number} array_element
      * @returns {string} Empty string if not found.
      */
@@ -3970,7 +3970,7 @@ interface CNetPropManager {
     /**
      * Reads a 3D vector-valued netprop.
      * @param {CBaseEntity} entity
-     * @param {vector_property} property_name
+     * @param {string} property_name
      * @returns {Vector} `Vector(0,0,0)` if not found.
      */
     GetPropVector(entity: CBaseEntity, property_name: string): Vector
@@ -3978,7 +3978,7 @@ interface CNetPropManager {
     /**
      * Reads a 3D vector-valued netprop from an array.
      * @param {CBaseEntity} entity
-     * @param {vector_array_property} property_name
+     * @param {string} property_name
      * @param {number} array_element
      * @returns {Vector} `Vector(0,0,0)` if not found.
      */
@@ -4003,7 +4003,7 @@ interface CNetPropManager {
     /**
      * Sets a netprop to the specified boolean.
      * @param {CBaseEntity} entity
-     * @param {bool_property} property_name
+     * @param {string} property_name
      * @param {boolean} value
      */
     SetPropBool(entity: CBaseEntity, property_name: string, value: boolean): void
@@ -4011,7 +4011,7 @@ interface CNetPropManager {
     /**
      * Sets a netprop from an array to the specified boolean.
      * @param {CBaseEntity} entity
-     * @param {bool_array_property} property_name
+     * @param {string} property_name
      * @param {boolean} value
      * @param {number} array_element
      */
@@ -4020,7 +4020,7 @@ interface CNetPropManager {
     /**
      * Sets an `EHANDLE`-valued netprop to reference the specified entity.
      * @param {CBaseEntity} entity
-     * @param {entity_property} property_name
+     * @param {string} property_name
      * @param {CBaseEntity|null} value
      */
     SetPropEntity(entity: CBaseEntity, property_name: string, value: CBaseEntity): void
@@ -4028,7 +4028,7 @@ interface CNetPropManager {
     /**
      * Sets an `EHANDLE`-valued netprop from an array to reference the specified entity.
      * @param {CBaseEntity} entity
-     * @param {entity_array_property} property_name
+     * @param {string} property_name
      * @param {CBaseEntity|null} value
      * @param {number} array_element
      */
@@ -4037,7 +4037,7 @@ interface CNetPropManager {
     /**
      * Sets a netprop to the specified float.
      * @param {CBaseEntity} entity
-     * @param {number_property} property_name
+     * @param {string} property_name
      * @param {number} value
      */
     SetPropFloat(entity: CBaseEntity, property_name: string, value: number): void
@@ -4045,7 +4045,7 @@ interface CNetPropManager {
     /**
      * Sets a netprop from an array to the specified float.
      * @param {CBaseEntity} entity
-     * @param {number_array_property} property_name
+     * @param {string} property_name
      * @param {number} value
      * @param {number} array_element
      */
@@ -4056,7 +4056,7 @@ interface CNetPropManager {
      *
      * **Warning**: Do not override `m_iTeamNum` netprops on players or Engineer buildings permanently.
      * @param {CBaseEntity} entity
-     * @param {number_property} property_name
+     * @param {string} property_name
      * @param {number} value
      */
     SetPropInt(entity: CBaseEntity, property_name: string, value: number): void
@@ -4064,7 +4064,7 @@ interface CNetPropManager {
     /**
      * Sets a netprop from an array to the specified integer.
      * @param {CBaseEntity} entity
-     * @param {number_array_property} property_name
+     * @param {string} property_name
      * @param {number} value
      * @param {number} array_element
      */
@@ -4073,7 +4073,7 @@ interface CNetPropManager {
     /**
      * Sets a netprop to the specified string.
      * @param {CBaseEntity} entity
-     * @param {string_property} property_name
+     * @param {string} property_name
      * @param {string|null} value
      */
     SetPropString(entity: CBaseEntity, property_name: string, value: string): void
@@ -4081,7 +4081,7 @@ interface CNetPropManager {
     /**
      * Sets a netprop from an array to the specified string.
      * @param {CBaseEntity} entity
-     * @param {string_array_property} property_name
+     * @param {string} property_name
      * @param {string|null} value
      * @param {number} array_element
      */
@@ -4090,7 +4090,7 @@ interface CNetPropManager {
     /**
      * Sets a netprop to the specified vector.
      * @param {CBaseEntity} entity
-     * @param {vector_property} property_name
+     * @param {string} property_name
      * @param {Vector} value
      */
     SetPropVector(entity: CBaseEntity, property_name: string, value: Vector): void
@@ -4098,7 +4098,7 @@ interface CNetPropManager {
     /**
      * Sets a netprop from an array to the specified vector.
      * @param {CBaseEntity} entity
-     * @param {vector_array_property} property_name
+     * @param {string} property_name
      * @param {Vector} value
      * @param {number} array_element
      */
@@ -4519,7 +4519,7 @@ interface NextBotCombatCharacter extends CBaseCombatCharacter {
     IsFriend(entity: CBaseEntity): boolean
 
     /**
-     * Return `true` if we haven't moved in awhile.
+     * Return `true` if we haven't moved in a while.
      * @returns {boolean}
      */
     IsImmobile(): boolean
@@ -5082,7 +5082,7 @@ declare global {
 	 * @param {CBaseEntity|null} activator
 	 * @param {CBaseEntity|null} caller
 	 */
-	function EntFireByHandle(entity: CBaseEntity, aaction: string, value: string|null, delay: number, activator: CBaseEntity|null, caller: CBaseEntity|null): void
+	function EntFireByHandle(entity: CBaseEntity, action: string, value: string|null, delay: number, activator: CBaseEntity|null, caller: CBaseEntity|null): void
 
 
 	/**
@@ -5242,7 +5242,7 @@ declare global {
 	 * @param {number} index
 	 * @returns {CTFPlayer|null}
 	 */
-	function PlayerInstanceFromIndex(indexnumber: number): CTFPlayer|null
+	function PlayerInstanceFromIndex(index: number): CTFPlayer|null
 
 	/**
 	 * Precache an entity from KeyValues in a table.
@@ -5378,7 +5378,7 @@ declare global {
 	/**
 	 * Sets a `USERINFO` client ConVar for a fakeclient.
 	 * @param {CTFBot} bot
-	 * @param {client_convar} cvar
+	 * @param {string} cvar
 	 * @param {string} value
 	 */
 	function SetFakeClientConVarValue(bot: CTFBot, cvar: string, value: string): void
@@ -5391,7 +5391,7 @@ declare global {
 
 	/**
 	 * Spawn entity from KeyValues in table.
-	 * @param {classname} name
+	 * @param {string} name
 	 * @param {table} keyvalues
 	 * @returns {CBaseEntity|null}
 	 */

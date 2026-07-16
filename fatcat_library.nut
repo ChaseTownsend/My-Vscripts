@@ -30,13 +30,13 @@
 // Use example below
 // ALWAYS validate the player
 /**@param {CTFPlayer} player */
-// function ROOT::MOTD_FUNC(player)
-// {
-// 	if (!IsValidPlayer(player))
-// 	{
+function ROOT::MOTD_FUNC(player)
+{
+	if (!IsValidPlayer(player))
+		return
 
-// 	}
-// }
+	player.EmitSoundTo("ui/system_message_alert.wav")
+}
 
 function ROOT::PrintGarbage()
 {
@@ -223,7 +223,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format) (GMT-5)
-if (!SetLibraryVersion("07.15.2026.05", 1))
+if (!SetLibraryVersion("07.16.2026.14", 0))
 	return
 
 SetLibrarySettings({})
@@ -2368,6 +2368,8 @@ function CTFPlayer::GetPlayerClassName()
  */
 function CTFPlayer::GetTranslatedString(string)
 {
+	if(!IsValidPlayer(this))
+		return
 	local lang = GetLanguage()
 	//hmm, mising all translations?
 	if (!("TRANSLATION_TABLE" in ROOT))
@@ -2396,6 +2398,8 @@ function CTFPlayer::GetTranslatedString(string)
  */
 function CTFPlayer::GetTranslatedAndFormattedString(...)
 {
+	if(!IsValidPlayer(this))
+		return
 	local args = vargv
 	local localized_string = args[0]
 	local format_args = args.slice(1).apply(@(a) a.tostring())
@@ -10592,7 +10596,7 @@ function ROOT::PostPlayerSpawn(player)
 				
 			if (Override)
 				RunWithDelay(3.0, @() player.PrintToChat(motd))
-			else
+			else if(motd != "")
 				RunWithDelay(3.0, @() player.PrintToChatF("\x01\x07E000E0► FatCatLib ◄   \x03%s", motd))
 			scope.HasSpawned <- true
 		}

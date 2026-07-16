@@ -1,7 +1,7 @@
 if (!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
-SetScriptVersion("GameplayApplications", "5.3.0")
+SetScriptVersion("GameplayApplications", "5.3.1")
 
 local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", THINKER_PERSIST)
 
@@ -205,8 +205,13 @@ class EquipWeaponData {
 	 */
 	override_func = function(...) 
 	{
+		if(func_override_stupid.len() != 0 && type(func_override_stupid[0]) == "function")
+			return func_override_stupid[0].acall([this].extend(vargv))
 		return true
 	}
+
+	// stupid
+	func_override_stupid = []
 
 	/** 
 	 * If this weapon is going to be created from Rafmods `CustomWeapon` block
@@ -225,13 +230,12 @@ class EquipWeaponData {
 		{
 			if (key in this && ["idx", "internal_name", "make_name"].find(key) == null)
 			{
-				this[key] = value
+				if(key == "override_func")
+					func_override_stupid = [value]
+				else
+					this[key] = value
 			}
 		}
-
-		// if ("is_segsegv" in table && table["is_segsegv" == true])
-		// {
-		// }
 	}
 }
 
