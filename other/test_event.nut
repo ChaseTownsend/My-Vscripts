@@ -24,11 +24,11 @@ function CheckWeaponFire()
 {
 	local fire_time = NetProps.GetPropFloat(self, "m_flLastFireTime")
 	local flame_firing = false
-	if(self.GetClassname() == "tf_weapon_flamethrower")
+	if (self.GetClassname() == "tf_weapon_flamethrower")
 	{
 		flame_firing = NetProps.GetPropBool(NetProps.GetPropEntity(self, "LocalFlameThrowerData.m_hFlameManager"), "m_bIsFiring")
 	}
-	if(self == self.GetOwner().GetActiveWeapon())
+	if (self == self.GetOwner().GetActiveWeapon())
 	{
 		ClientPrint(self.GetOwner(), 4, self.GetClassname() + " :\nfire_time : " + 
 		fire_time.tostring() + "\nlast_fire_time : " + last_fire_time.tostring() +

@@ -9,9 +9,9 @@ SetScriptVersion("longbow_sentry", "2.0.2")
 	function OnScriptEvent_HumanSpawn(params)
 	{
 		local player = params.player
-		if(player.HookAdditiveAttributes("longbow buildings") == 0)
+		if (player.HookAdditiveAttributes("longbow buildings") == 0)
 			return
-		// if(player.GetWeaponIDXInSlot(SLOT_MELEE) != TF_WEAPON_EUREKA_EFFECT) return
+		// if (player.GetWeaponIDXInSlot(SLOT_MELEE) != TF_WEAPON_EUREKA_EFFECT) return
 
 		player.AddThink(LongbowBuildings, "LongbowBuildings")
 	}
@@ -30,10 +30,22 @@ function LongbowBuildings()
 {
 	/** @type {CBaseEntity|null} */
 	local PDA = self.GetWeaponInSlotNew(SLOT_PDA)
-	local AllowedTypes = PDA ? PDA.GetAttribute("longbow buildings", 0).tointeger() : self.HookAdditiveAttributes("longbow buildings").tointeger()
+	local Wrench = self.GetWeaponInSlotNew(SLOT_MELEE)
+	local AllowedTypes = 0
+	if (PDA)
+	{
+		if (PDA.GetAttribute("longbow buildings", 0).tointeger() != 0)
+			AllowedTypes = PDA.GetAttribute("longbow buildings", 0).tointeger()
+		else if (Wrench && Wrench.GetAttribute("longbow buildings", 0).tointeger() != 0)
+			AllowedTypes = Wrench.GetAttribute("longbow buildings", 0).tointeger()
+	}
+	else
+	{
+		AllowedTypes = self.HookAdditiveAttributes("longbow buildings").tointeger()
+	}
 
-	// if(self.GetWeaponIDXInSlot(SLOT_MELEE) != TF_WEAPON_EUREKA_EFFECT)
-	if(AllowedTypes == 0)
+	// if (self.GetWeaponIDXInSlot(SLOT_MELEE) != TF_WEAPON_EUREKA_EFFECT)
+	if (AllowedTypes == 0)
 	{
 		self.RemoveThink("LongbowBuildings")
 		return 500
@@ -42,28 +54,28 @@ function LongbowBuildings()
 	local m_iMetal = self.GetMetal()
 	local building_blueprint = GetPropEntity(PDA, "m_hObjectBeingBuilt")
 
-	if(!IsBuildingValid(building_blueprint)) // checks for null building, and "m_bServerOverridePlacement"
+	if (!IsBuildingValid(building_blueprint)) // checks for null building, and "m_bServerOverridePlacement"
 		return -1
 
 	local BuildingType = GetPropInt(building_blueprint, "m_iObjectType")
 
 	local AllowFlags = [false, false, false]
-	if(MATH.HasBitFlag(AllowedTypes, FLongbowAllowDispenser))
+	if (MATH.HasBitFlag(AllowedTypes, FLongbowAllowDispenser))
 		AllowFlags[OBJ_DISPENSER] = true
-	if(MATH.HasBitFlag(AllowedTypes, FLongbowAllowTeleporter))
+	if (MATH.HasBitFlag(AllowedTypes, FLongbowAllowTeleporter))
 		AllowFlags[OBJ_TELEPORTER] = true
-	if(MATH.HasBitFlag(AllowedTypes, FLongbowAllowSentry))
+	if (MATH.HasBitFlag(AllowedTypes, FLongbowAllowSentry))
 		AllowFlags[OBJ_SENTRY] = true
 
-	// if(GetPropInt(building_blueprint, "m_iObjectType") != OBJ_SENTRY)
-	if(AllowFlags[BuildingType] == false)
+	// if (GetPropInt(building_blueprint, "m_iObjectType") != OBJ_SENTRY)
+	if (AllowFlags[BuildingType] == false)
 		return -1
 
 	local mins = GetPropVector(building_blueprint, "m_Collision.m_vecMins")
 	local maxs = GetPropVector(building_blueprint, "m_Collision.m_vecMaxs") + Vector(0, 0, 10)
 
 	// override it for teleporters
-	if(BuildingType == OBJ_TELEPORTER)
+	if (BuildingType == OBJ_TELEPORTER)
 	{
 		mins = Vector(-30, -30, 0)
 		maxs = Vector(30, 30, 120) // bloat height
@@ -71,10 +83,10 @@ function LongbowBuildings()
 	else
 		building_blueprint.SetCollisionGroup(TFCOLLISION_GROUP_COMBATOBJECT)
 
-	if(!self.IsPressingButton(IN_RELOAD) || !self.IsOnGround())
+	if (!self.IsPressingButton(IN_RELOAD) || !self.IsOnGround())
 		return -1
 
-	if(m_iMetal <= 499)
+	if (m_iMetal <= 499)
 	{
 		self.TranslateToHud("LOW_METAL")
 		return -1
@@ -91,10 +103,10 @@ function LongbowBuildings()
 	}
 	TraceHull(trace)
 
-	// if(IsListenServer()) 
+	// if (IsListenServer()) 
 	DebugDrawLine_vCol(trace.startpos, trace.endpos, Vector(255, 0, 0), false, 30)
 
-	if(!trace.hit || IsPointInRespawnRoom(trace.endpos)) 
+	if (!trace.hit || IsPointInRespawnRoom(trace.endpos)) 
 		return -1
 	
 	local hulltrace =
@@ -107,9 +119,9 @@ function LongbowBuildings()
 	}
 	TraceHull(hulltrace)
 
-	if(hulltrace.hit)
+	if (hulltrace.hit)
 	{
-		// if(IsListenServer()) 
+		// if (IsListenServer()) 
 			DebugDrawBox(hulltrace.start, mins, maxs, 255, 0, 255, 0, 30)
 		return -1
 	}

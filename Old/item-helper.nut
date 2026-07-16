@@ -14,15 +14,15 @@ SetScriptVersion("item_helper", "1.0.0")
 	{
 		local player = GetPlayerFromUserID(params.userid)
 
-		if(IsPlayerABot(player)) return
+		if (IsPlayerABot(player)) return
 
-		if(params.team != Constants.ETFTeam.TEAM_UNASSIGNED)
+		if (params.team != Constants.ETFTeam.TEAM_UNASSIGNED)
 		{
 			local scope = GetScope(player)
-			if(IsNotInScope("spawncount", scope))
+			if (IsNotInScope("spawncount", scope))
 				scope.spawncount <- 0
 
-			if(IsNotInScope("SpawnHelper", scope))
+			if (IsNotInScope("SpawnHelper", scope))
 				scope.SpawnHelper <- 2
 
 			scope.spawncount++
@@ -38,16 +38,16 @@ SetScriptVersion("item_helper", "1.0.0")
 	function OnGameEvent_post_inventory_application(params)
 	{
 		local player = GetPlayerFromUserID(params.userid)
-		if(IsPlayerABot(player)) return
+		if (IsPlayerABot(player)) return
 
 		local scope = GetScope(player)
 
-		if(IsNotInScope("spawncount", scope)) 	return
-		if(IsNotInScope("SpawnHelper", scope)) 	return
-		if(scope.SpawnHelper == 0) return
-		if(scope.spawncount <= 0) return
+		if (IsNotInScope("spawncount", scope)) 	return
+		if (IsNotInScope("SpawnHelper", scope)) 	return
+		if (scope.SpawnHelper == 0) return
+		if (scope.spawncount <= 0) return
 
-		if(scope.SpawnHelper == 2 || (scope.SpawnHelper == 1 && GetRoundState() != 4))
+		if (scope.SpawnHelper == 2 || (scope.SpawnHelper == 1 && GetRoundState() != 4))
 		{
 			player.PrintToChat(item_help_color_header + "[►]"  + text_color_header + " Your loadout includes...")
 
@@ -568,7 +568,7 @@ SetScriptVersion("item_helper", "1.0.0")
 					//default: {player.PrintToChat(error_color + " [Error]\x01 No Description For Item ID " + GetWeaponIDX(weapon)); break}
 				}
 			}
-			if(scope.SpawnHelper == 2)
+			if (scope.SpawnHelper == 2)
 				player.PrintToChat("\x0826beff66Type '/itemhelp 1' to disable these messages during a wave. \nType '/itemhelp 0' to disable these messages entirely.")
 			else
 				player.PrintToChat("\x0826beff66Type '/itemhelp 0' to disable these messages. \nType '/itemhelp 2' to Always display this message.")
@@ -581,11 +581,11 @@ SetScriptVersion("item_helper", "1.0.0")
 
 		local split = split(params.text, " ")
 
-		if(split[0] != "/itemhelp")
+		if (split[0] != "/itemhelp")
 		{
-			if(split[0] != "!itemhelp") return
+			if (split[0] != "!itemhelp") return
 		}
-		if(split.len() != 2)
+		if (split.len() != 2)
 		{
 			player.PrintToChat(item_help_color_header + "[Item Helper]" + error_color + " {Error}\x01 Incorrect arguments!\n/itemhelp 2 - Enable\n/itemhelp 1 - Enable during Wave Setup only\n/itemhelp 0 - Disable")
 			return
@@ -595,9 +595,9 @@ SetScriptVersion("item_helper", "1.0.0")
 		if (split[0] == "/itemhelp" || split[0] == "!itemhelp")
 		{
 			GetScope(player).SpawnHelper <- split[1].tointeger()
-			if(split[1].tointeger() == 0) player.PrintToChat(item_help_color_header + "[►]\x01 Item Helper disabled.")
-			if(split[1].tointeger() == 1) player.PrintToChat(item_help_color_header + "[►]\x01 Item Helper enabled on Wave Setup only.")
-			if(split[1].tointeger() == 2) player.PrintToChat(item_help_color_header + "[►]\x01 Item Helper enabled.")
+			if (split[1].tointeger() == 0) player.PrintToChat(item_help_color_header + "[►]\x01 Item Helper disabled.")
+			if (split[1].tointeger() == 1) player.PrintToChat(item_help_color_header + "[►]\x01 Item Helper enabled on Wave Setup only.")
+			if (split[1].tointeger() == 2) player.PrintToChat(item_help_color_header + "[►]\x01 Item Helper enabled.")
 		}
 	}
 }

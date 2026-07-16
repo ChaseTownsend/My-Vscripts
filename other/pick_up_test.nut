@@ -50,7 +50,7 @@ PrecacheSound("items/cart_explode.wav")
 PrecacheSound("weapons/airstrike_small_explosion_02.wav")
 
 local Ability_Thinker = FindByName(null, "_AbilityThink")
-if(Ability_Thinker == null) Ability_Thinker = SpawnEntityFromTable("info_target", { targetname = "_AbilityThink" })
+if (Ability_Thinker == null) Ability_Thinker = SpawnEntityFromTable("info_target", { targetname = "_AbilityThink" })
 AddThinkToEnt(Ability_Thinker, "AbilityThink")
 
 function AbilityThink()
@@ -58,7 +58,7 @@ function AbilityThink()
 	foreach (player in GetEveryHuman())
 	{
 		local weapon = player.GetAbilityWeapon()
-		if(weapon == null)
+		if (weapon == null)
 		{
 			printl("Found No Ability Weapons for " + player)
 			continue
@@ -66,9 +66,9 @@ function AbilityThink()
 		local idx = GetWeaponIDX(weapon)
 		local scope = GetScope(weapon)
 
-		if("Ability" in scope)
+		if ("Ability" in scope)
 		{
-			if(scope.Ability != null)
+			if (scope.Ability != null)
 				continue
 		}
 
@@ -130,7 +130,7 @@ function AbilityThink()
 		if (!ValidatePlayer(player)) return
 
 		local weapon = player.GetAbilityWeapon()
-		if(weapon == null) return
+		if (weapon == null) return
 		local idx = GetWeaponIDX(weapon)
 		local scope = GetScope(weapon)
 
@@ -169,15 +169,15 @@ function AbilityThink()
 	{
 		local player = GetPlayerFromUserID(params.userid)
 
-		if( !ValidatePlayer(player) )
+		if ( !ValidatePlayer(player) )
 			return
 
 		local weapon = player.GetAbilityWeapon()
-		if(weapon == null) 
+		if (weapon == null) 
 			return
 		local idx = GetWeaponIDX(weapon)
 
-		if( idx == TF_ABILITY_TEST )
+		if ( idx == TF_ABILITY_TEST )
 		{
 			SetPropInt( player, "m_ArmorValue", 0x80000000)
 		}
@@ -192,7 +192,7 @@ function AbilityThink()
 		if (!ValidatePlayer(player)) return
 
 		local weapon = player.GetAbilityWeapon()
-		if(weapon == null) return
+		if (weapon == null) return
 		local idx = GetWeaponIDX(weapon)
 
 		switch (idx)
@@ -222,7 +222,7 @@ function AbilityThink()
 	function OnGameEvent_player_disconnect(params)
 	{
 		local text = FindByName(null, "User: " + params.networkid +  " Display")
-		if(!text.IsValid()) return
+		if (!text.IsValid()) return
 
 		text.Kill()
 	}
@@ -231,9 +231,9 @@ __CollectGameEventCallbacks(ability)
 
 function ValidatePlayer(player)
 {
-	if(!player) return false
-	if(IsPlayerABot(player)) return false
-	if(player.GetTeam() == TF_TEAM_PVE_INVADERS) return false
+	if (!player) return false
+	if (IsPlayerABot(player)) return false
+	if (player.GetTeam() == TF_TEAM_PVE_INVADERS) return false
 	return true
 }
 
@@ -254,14 +254,14 @@ function BaseAbility()
 		local message = "Variable list:\n"
 		foreach(k, v in this)
 		{
-			if(!startswith(k, "__"))
+			if (!startswith(k, "__"))
 				message += (k + " : " + v + "\n")
 		}
 		ClientPrint(player, 4, message)
 	}
 
 	// foreach (k, v in getstackinfos(0)) printl(k + ": " + v)
-	if(!player.HasWeapon(TF_ABILITY_BASE) || !player.IsAlive() || player.GetPlayerClass() != player_class)
+	if (!player.HasWeapon(TF_ABILITY_BASE) || !player.IsAlive() || player.GetPlayerClass() != player_class)
 		return 1
 
 	/// All Below is for the text
@@ -272,12 +272,12 @@ function BaseAbility()
 	local text_time = format("Charging: %.0fs", (this.Ability_timestamp-Time()))
 
 
-	if(this.Ability_timestamp-Time() < 0) text_message = ability_name + "\n► Ready ◄"
+	if (this.Ability_timestamp-Time() < 0) text_message = ability_name + "\n► Ready ◄"
 	else text_message = ability_name + "\n" + text_time
 
-	if(player.IsTaunting()) text_message = ""
+	if (player.IsTaunting()) text_message = ""
 
-	if(!text_entity)
+	if (!text_entity)
 	{
 		text_entity = SpawnEntityFromTable("game_text", {
 			targetname = text_name,
@@ -329,13 +329,13 @@ function HeavyRage()
 		local message = "Variable list:\n"
 		foreach(k, v in this)
 		{
-			if(!startswith(k, "__"))
+			if (!startswith(k, "__"))
 				message += (k + " : " + v + "\n")
 		}
 		ClientPrint(player, 4, message)
 	}
 
-	if(!player.HasWeapon(TF_ABILITY_HEAVY_RAGE) || !player.IsAlive() || player.GetPlayerClass() != player_class)
+	if (!player.HasWeapon(TF_ABILITY_HEAVY_RAGE) || !player.IsAlive() || player.GetPlayerClass() != player_class)
 		return 1
 
 	/// All Below is for the text
@@ -346,12 +346,12 @@ function HeavyRage()
 	local text_time = format("Charging: %.0fs", (this.Ability_timestamp-Time()))
 
 
-	if(this.Ability_timestamp-Time() < 0) text_message = ability_name + "\n► Ready ◄"
+	if (this.Ability_timestamp-Time() < 0) text_message = ability_name + "\n► Ready ◄"
 	else text_message = ability_name + "\n" + text_time
 
-	if(player.IsTaunting()) text_message = ""
+	if (player.IsTaunting()) text_message = ""
 
-	if(!text_entity)
+	if (!text_entity)
 	{
 		text_entity = SpawnEntityFromTable("game_text", {
 			targetname = text_name,
@@ -396,7 +396,7 @@ function HeavyRage2()
 	if (!self.IsAlive()) return
 	if (!self.IsTaunting()) return
 
-	if(self.GetAbilityWeapon() == null) return
+	if (self.GetAbilityWeapon() == null) return
 	local scope = GetScope(self.GetAbilityWeapon())
 
 
@@ -408,7 +408,7 @@ function HeavyRage2()
 	EntFireByHandle(self, "RunScriptCode", "self.AddCondEx(TF_COND_REGENONDAMAGEBUFF, 12, self)", 0.1, null, null)
 
 	local bomb = FindByClassnameWithin(null, "item_teamflag", self.GetOrigin(), RAGE_bomb_range)
-	if(GetFlagStatus(bomb) == 2)
+	if (GetFlagStatus(bomb) == 2)
 	{
 		DispatchParticleEffect("hightower_explosion", bomb.GetOrigin(), QAngle(-90, 0, 0).Forward())
 		bomb.EmitSound("items/cart_explode.wav")
@@ -443,13 +443,13 @@ function CheersAbility()
 		local message = "Variable list:\n"
 		foreach(k, v in this)
 		{
-			if(!startswith(k, "__"))
+			if (!startswith(k, "__"))
 				message += (k + " : " + v + "\n")
 		}
 		ClientPrint(player, 4, message)
 	}
 
-	if(!player.HasWeapon(TF_ABILITY_CHEERS) || !player.IsAlive())
+	if (!player.HasWeapon(TF_ABILITY_CHEERS) || !player.IsAlive())
 		return 1
 
 	/// All Below is for the text
@@ -460,12 +460,12 @@ function CheersAbility()
 	local text_time = format("Charging: %.0fs", (this.Ability_timestamp-Time()))
 
 
-	if(this.Ability_timestamp-Time() < 0) text_message = ability_name + "\n► Ready ◄"
+	if (this.Ability_timestamp-Time() < 0) text_message = ability_name + "\n► Ready ◄"
 	else text_message = ability_name + "\n" + text_time
 
-	if(player.IsTaunting()) text_message = ""
+	if (player.IsTaunting()) text_message = ""
 
-	if(!text_entity)
+	if (!text_entity)
 	{
 		text_entity = SpawnEntityFromTable("game_text", {
 			targetname = text_name,
@@ -539,7 +539,7 @@ function CheersHealth()
 	if (!self.IsTaunting()) return
 
 	local weapon = self.GetAbilityWeapon()
-	if(weapon == null) return
+	if (weapon == null) return
 	local scope = GetScope(weapon)
 
 
@@ -560,13 +560,13 @@ function KartAbility()
 		local message = "Variable list:\n"
 		foreach(k, v in this)
 		{
-			if(!startswith(k, "__"))
+			if (!startswith(k, "__"))
 				message += (k + " : " + v + "\n")
 		}
 		ClientPrint(player, 4, message)
 	}
 
-	if(!player.HasWeapon(TF_ABILITY_KART) || !player.IsAlive())
+	if (!player.HasWeapon(TF_ABILITY_KART) || !player.IsAlive())
 		return 1
 
 	/// All Below is for the text
@@ -577,12 +577,12 @@ function KartAbility()
 	local text_time = format("Charging: %.0fs", (this.Ability_timestamp-Time()))
 
 
-	if(this.Ability_timestamp-Time() < 0) text_message = ability_name + "\n► Ready ◄"
+	if (this.Ability_timestamp-Time() < 0) text_message = ability_name + "\n► Ready ◄"
 	else text_message = ability_name + "\n" + text_time
 
-	if(player.IsTaunting()) text_message = ""
+	if (player.IsTaunting()) text_message = ""
 
-	if(!text_entity)
+	if (!text_entity)
 	{
 		text_entity = SpawnEntityFromTable("game_text", {
 			targetname = text_name,
@@ -651,9 +651,9 @@ function KartAbility()
 function kart2()
 {
 	if (!self.IsAlive()) return
-	if(!self.IsTaunting()) return
+	if (!self.IsTaunting()) return
 
-	if(self.GetAbilityWeapon() == null) return
+	if (self.GetAbilityWeapon() == null) return
 	local scope = GetScope(self.GetAbilityWeapon())
 
 	self.AddCondEx(TF_COND_HALLOWEEN_KART, 25, self)
@@ -680,13 +680,13 @@ function TestAbility()
 		local message = "Variable list:\n"
 		foreach(k, v in this)
 		{
-			if(!startswith(k, "__"))
+			if (!startswith(k, "__"))
 				message += (k + " : " + v + "\n")
 		}
 		ClientPrint(player, 4, message)
 	}
 
-	if(!player.HasWeapon(TF_ABILITY_TEST) || !player.IsAlive() || player.GetPlayerClass() != player_class)
+	if (!player.HasWeapon(TF_ABILITY_TEST) || !player.IsAlive() || player.GetPlayerClass() != player_class)
 		return 1
 
 	/// All Below is for the text
@@ -697,12 +697,12 @@ function TestAbility()
 	local text_time = format("Charging: %.0fs", (this.Ability_timestamp-Time()))
 
 
-	if(this.Ability_timestamp-Time() < 0) text_message = ability_name + "\n► Ready ◄"
+	if (this.Ability_timestamp-Time() < 0) text_message = ability_name + "\n► Ready ◄"
 	else text_message = ability_name + "\n" + text_time
 
-	if(player.IsTaunting()) text_message = ""
+	if (player.IsTaunting()) text_message = ""
 
-	if(!text_entity)
+	if (!text_entity)
 	{
 		text_entity = SpawnEntityFromTable("game_text", {
 			targetname = text_name,

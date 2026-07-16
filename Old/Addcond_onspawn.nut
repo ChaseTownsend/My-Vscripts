@@ -8,11 +8,11 @@ function SpawnCond()
 {
 	foreach(player in GetEveryHuman())
 	{
-		if(player.InCond(107)) player.RemoveCondEx(107, true)
+		if (player.InCond(107)) player.RemoveCondEx(107, true)
 
 		for (local i = 0; i <= MAX_WEAPONS; i++)
 		{
-			if( !player.GetWeaponInSlot(i) ) continue
+			if ( !player.GetWeaponInSlot(i) ) continue
 
 			local index = player.GetWeaponIDXInSlot(i)
 

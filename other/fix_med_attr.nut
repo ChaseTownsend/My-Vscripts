@@ -20,7 +20,7 @@ function disp_think() {
 		scope.GetHealers <- function() {
 			foreach (player in Players)
 			{
-				if(player.GetHealTarget() == self)
+				if (player.GetHealTarget() == self)
 					Healers.append(player)
 			}
 		}
@@ -30,15 +30,15 @@ function disp_think() {
 			think =	function() {
 				local DeadHealers = []
 				foreach (Healer in Healers) {
-					if(Healer.IsPlayer() && player.GetHealTarget() != self) {
+					if (Healer.IsPlayer() && player.GetHealTarget() != self) {
 						DeadHealers.append(Healer)
 						continue
 					}
-					// if(Healer.GetClassname() == "obj_dispencer" && GetPropEntityArray(Healer, ""))
+					// if (Healer.GetClassname() == "obj_dispencer" && GetPropEntityArray(Healer, ""))
 					
-					if(Healer.IsDead()) {
+					if (Healer.IsDead()) {
 						local active = self.GetActiveWeapon()
-						if(active.GetAttribute("mod medic killed minicrit boost", 0))
+						if (active.GetAttribute("mod medic killed minicrit boost", 0))
 							self.AddCondEx(TF_COND_MINICRITBOOSTED_ON_KILL, active.GetAttribute("mod medic killed minicrit boost", 0), Healer)
 						
 						DeadHealers.append(Healer)
@@ -52,7 +52,7 @@ function disp_think() {
 		}
 		scope.MultiThink <- function() {
 			foreach (thinktab in ThinkTable) {
-				if(thinktab.LastRun <= Time())
+				if (thinktab.LastRun <= Time())
 				{
 					thinktab.think()
 					thinktab.LastRun <- Time() + thinktab.delay

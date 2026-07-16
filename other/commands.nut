@@ -2,7 +2,7 @@ IncludeScript("fatcat_library")
 local vscript_header ="\x07FFFF00[VS]\x01 "
 
 local config = FileToString("VscriptAdmins.txt")
-if( config == null )
+if ( config == null )
 	error("Warning No file named \"VscriptAdmins.txt\" in \"tf/scriptdata/\"\n")
 
 local admins = split(config, "\n")
@@ -23,17 +23,17 @@ local param = 2
 		local player = GetPlayerFromUserID(params.userid)
 		local text = split(params.text, " ")
 
-		if(text.len() > 3)
+		if (text.len() > 3)
 			return
 
-		if(text[command] == (command_identifier + "noclip"))
+		if (text[command] == (command_identifier + "noclip"))
 		{
-			if( !player.GetSteamID() in admins )
+			if ( !player.GetSteamID() in admins )
 			{
 				ClientPrint(player, 3, "You Do not have @noclip permissions")
 				return
 			}
-			if(text[target] == "@me")
+			if (text[target] == "@me")
 			{
 				switch (player.GetMoveType())
 				{
@@ -53,9 +53,9 @@ local param = 2
 					}
 				}
 			}
-			else if(text[target] == "@red")
+			else if (text[target] == "@red")
 			{
-				if(text[param] == "on")
+				if (text[param] == "on")
 				{
 					PrintToChatAll(vscript_header + "Enabled Noclip for Red")
 					foreach (player2 in GetEveryPlayerOnTeam(TF_TEAM_RED))
@@ -64,7 +64,7 @@ local param = 2
 						player2.PrintToChat(vscript_header + player.GetUserName() + "Enabled Noclip on You")
 					}
 				}
-				if(text[param] == "off")
+				if (text[param] == "off")
 				{
 					PrintToChatAll(vscript_header + "Disabled Noclip for Red")
 					foreach (player2 in GetEveryPlayerOnTeam(TF_TEAM_RED))
@@ -74,9 +74,9 @@ local param = 2
 					}
 				}
 			}
-			else if(text[target] == "@blu")
+			else if (text[target] == "@blu")
 			{
-				if(text[param] == "on")
+				if (text[param] == "on")
 				{
 					PrintToChatAll(vscript_header + "Enabled Noclip for Blu")
 					foreach (player2 in GetEveryPlayerOnTeam(TF_TEAM_BLUE))
@@ -85,7 +85,7 @@ local param = 2
 						player2.PrintToChat(vscript_header + player.GetUserName() + "Enabled Noclip on You")
 					}
 				}
-				if(text[param] == "off")
+				if (text[param] == "off")
 				{
 					PrintToChatAll(vscript_header + "Disabled Noclip for Blu")
 					foreach (player2 in GetEveryPlayerOnTeam(TF_TEAM_BLUE))
@@ -95,9 +95,9 @@ local param = 2
 					}
 				}
 			}
-			else if(text[target] == "@all")
+			else if (text[target] == "@all")
 			{
-				if(text[param] == "on")
+				if (text[param] == "on")
 				{
 					PrintToChatAll(vscript_header + "Enabled Noclip for All")
 					foreach (player2 in GetEveryPlayer())
@@ -106,7 +106,7 @@ local param = 2
 						player2.PrintToChat(vscript_header + player.GetUserName() + "Enabled Noclip on You")
 					}
 				}
-				if(text[param] == "off")
+				if (text[param] == "off")
 				{
 					PrintToChatAll(vscript_header + "Disabled Noclip for All")
 					foreach (player2 in GetEveryPlayer())
@@ -126,7 +126,7 @@ local param = 2
 		{
 			case "@noclip":
 			{
-				if(!player.IsAdmin())
+				if (!player.IsAdmin())
 				{
 					ClientPrint(player, 3, "You Do not have @noclip permissions")
 					return
@@ -154,7 +154,7 @@ local param = 2
 		switch (text) {
 			case "@noclip":
 			{
-				if(!player.IsAdmin())
+				if (!player.IsAdmin())
 				{
 					ClientPrint(player, 3, "You Do not have @noclip permissions")
 					return

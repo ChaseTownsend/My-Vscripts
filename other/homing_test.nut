@@ -1,5 +1,5 @@
 local homing_entity = Entities.FindByName(null, "_HomingThinkEntity")
-if( homing_entity == null ) homing_entity = SpawnEntityFromTable("info_teleport_destination", { targetname = "_HomingThinkEntity" })
+if ( homing_entity == null ) homing_entity = SpawnEntityFromTable("info_teleport_destination", { targetname = "_HomingThinkEntity" })
 AddThinkToEnt(homing_entity, "HomingAdd")
 
 local HOMING_PROJECTILES =
@@ -35,21 +35,21 @@ function HomingAdd()
 		local allow = false
 		foreach (projectile in HOMING_PROJECTILES)
 		{
-			if(ent.GetClassname() == projectile) allow = true
+			if (ent.GetClassname() == projectile) allow = true
 		}
-		if(allow == false) continue
+		if (allow == false) continue
 
 		ent.ValidateScriptScope()
 		local projectile_scope = ent.GetScriptScope()
-		if(!("homing" in projectile_scope))
+		if (!("homing" in projectile_scope))
 		{
 			projectile_scope.homing <- true
 			AddThinkToEnt(ent, "HomingThink")
 			//ClientPrint(null, 4, "Added Think to " + ent.GetClassname())
 		}
-		if(!("projectile_behavior" in projectile_scope))
+		if (!("projectile_behavior" in projectile_scope))
 		{
-			if(ent.GetClassname() == HEADSHOT_PROJECTILE)
+			if (ent.GetClassname() == HEADSHOT_PROJECTILE)
 			{
 				projectile_scope.projectile_behavior <- "HEADSHOT"
 			}
@@ -65,25 +65,25 @@ function HomingAdd()
 function HomingThink()
 {
 	local target = FindClosestTarget()
-	if(target == null) return -1
+	if (target == null) return -1
 
 	local Deflected = 0
 	local CurrentDeflected = NetProps.GetPropInt(self, "m_iDeflected")
-	if(Deflected != CurrentDeflected)
+	if (Deflected != CurrentDeflected)
 	{
 		Deflected = CurrentDeflected
 		target     = null
 		local target = FindClosestTarget()
-		if(target == null) return -1
+		if (target == null) return -1
 	}
 
 
 	local scope = self.GetScriptScope()
 	local player_point = null
 
-	if("projectile_behavior" in scope)
+	if ("projectile_behavior" in scope)
 	{
-		if(scope["projectile_behavior"] == "HEADSHOT")
+		if (scope["projectile_behavior"] == "HEADSHOT")
 		{
 			// make "tf_projectile_arrow"s aim for the head
 			player_point = target.GetCenter() + Vector(0, 0, 32)
@@ -138,11 +138,11 @@ function FindClosestTarget()
 	{
 		for (local entity; entity = Entities.FindByClassnameWithin(entity, Classname, self.GetOrigin(), flDistance);)
 		{
-			if(entity == null) continue
-			if(!entity.IsAlive()) continue
-			if(entity.GetTeam() == self.GetTeam()) continue
+			if (entity == null) continue
+			if (!entity.IsAlive()) continue
+			if (entity.GetTeam() == self.GetTeam()) continue
 			local owner = self.GetOwner()
-			if(owner == null)
+			if (owner == null)
 			{
 				//printl(NetProps.GetPropEntity(self, "m_hLauncher"))
 				// Special stupid case, because some dont have an "m_hOwner" netprop
@@ -150,11 +150,11 @@ function FindClosestTarget()
 			}
 			else
 			{
-				if(owner.GetClassname() == "obj_sentrygun")
+				if (owner.GetClassname() == "obj_sentrygun")
 				{
 					owner = NetProps.GetPropEntity(owner, "m_hBuilder")
 				}
-				if(entity == owner) continue
+				if (entity == owner) continue
 			}
 
 			/* local CenterTrace =
@@ -164,14 +164,14 @@ function FindClosestTarget()
 				ignore = self
 			}
 			TraceLineEx(CenterTrace)
-			if(CenterTrace.hit)
+			if (CenterTrace.hit)
 			{
 				DebugDrawLine(CenterTrace.startpos, CenterTrace.endpos, 255, 0, 0, false, 15)
 			} */
 
-			if(entity.GetClassname() == "player")
+			if (entity.GetClassname() == "player")
 			{
-				if(
+				if (
 					!(entity.GetFlags() & Constants.FPlayer.FL_NOTARGET)
 					&& !(entity.InCond(Constants.ETFCond.TF_COND_STEALTHED))
 					|| !(entity.InCond(Constants.ETFCond.TF_COND_DISGUISED))
@@ -195,14 +195,14 @@ function FindClosestTarget()
 	local lowest_distance = flDistance
 	local lowest_index = 0
 
-	if(entities.len() == 0 || distances.len() == 0) return null
+	if (entities.len() == 0 || distances.len() == 0) return null
 
 	for (local i = 0; i < distances.len(); i = i+1)
 	{
 		//local player = entities[i]
 		local distance = distances[i]
 
-		if(abs(distance) <= abs(lowest_distance))
+		if (abs(distance) <= abs(lowest_distance))
 		{
 			lowest_distance = distance
 			lowest_index = i

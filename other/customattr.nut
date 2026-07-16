@@ -6,20 +6,20 @@ function ROOT::CTFPlayer::HasCAttribute(attribute)
 	return "CustomAttributes" in GetScope(this) ? attribute in GetScope(this).CustomAttributes : false
 function ROOT::CTFPlayer::GetCAttribute(attribute)
 {
-	if(!HasCAttribute(attribute))
+	if (!HasCAttribute(attribute))
 		return null
 	else
 		return attribute in GetScope(this).CustomAttributes ? GetScope(this).CustomAttributes[attribute] : null
 }
 function ROOT::CTFPlayer::AddCAttribute(attribute, values, duration = 0.0)
 {
-	if(duration != 0.0 && !("__duration" in values))
+	if (duration != 0.0 && !("__duration" in values))
 		values.__duration <- duration
 	GetScope(this).CustomAttributes[attribute] <- values
 }
 function ROOT::CTFPlayer::RemoveCAttribute(attribute)
 {
-	if(!HasCAttribute(attribute))
+	if (!HasCAttribute(attribute))
 		return
 	delete GetScope(this).CustomAttributes[attribute]
 }
@@ -46,19 +46,19 @@ function ROOT::CTFPlayer::PrintCAttributes()
 	 */
 	function OnGameEvent_PostTakeDamage(params)
 	{
-		if(params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
+		if (params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
 			return
 
-		if(params.victim.GetClassname() == "tf_generic_bomb")
+		if (params.victim.GetClassname() == "tf_generic_bomb")
 			return
 
-		if(!params.attacker.IsPlayer())
+		if (!params.attacker.IsPlayer())
 			return
 
 		local victim = params.victim
 		local player = params.attacker
 
-		if(!player.HasCAttribute("Explosive Bullets"))
+		if (!player.HasCAttribute("Explosive Bullets"))
 			return
 		local attrib = player.GetCAttribute("Explosive Bullets")
 

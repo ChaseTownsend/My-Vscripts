@@ -3,7 +3,7 @@
 
         if (params.attacker == null) return
         local player = GetPlayerFromUserID(params.attacker)
-        if(!player || IsPlayerABot(player)) return
+        if (!player || IsPlayerABot(player)) return
 
         switch (params.weapon_def_index) {
             case 574:
@@ -18,9 +18,9 @@
 ::cond_on_hit <- {
     function OnScriptHook_OnTakeDamage(params)
     {
-        if(params.attacker == null) return
+        if (params.attacker == null) return
         local player = params.attacker
-        if(!player || IsPlayerABot(player)) return
+        if (!player || IsPlayerABot(player)) return
 
         local Hweapon = params.weapon
         local weapon_idx = NetProps.GetPropInt(Hweapon, "m_AttributeManager.m_Item.m_iItemDefinitionIndex")

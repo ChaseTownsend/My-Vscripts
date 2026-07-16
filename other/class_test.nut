@@ -31,7 +31,7 @@ class TestPlayer {
 
 	function AddPlayer(player)
 	{
-		if(player == null)
+		if (player == null)
 			return
 		this.player = player
 		return this
@@ -39,7 +39,7 @@ class TestPlayer {
 }
 local test = TestPlayer()
 test.AddPlayer(Host)
-if(!(Host in CustomPlayers))
+if (!(Host in CustomPlayers))
 	CustomPlayers[Host] <- []
 CustomPlayers[Host].push(this)
 
@@ -100,9 +100,9 @@ class ChaosPlayer {
 	{
 		// PrintTable(this)
 		this.player = player_ent
-		/* if("ChaosPlayers" in ROOT)
+		/* if ("ChaosPlayers" in ROOT)
 		{
-			if(ChaosPlayers.find(this) != null)
+			if (ChaosPlayers.find(this) != null)
 				ChaosPlayers[ChaosPlayers.find(this)] <- this
 			else 
 				ChaosPlayers.append(this)
@@ -111,10 +111,10 @@ class ChaosPlayer {
 	}
 
 	function _get ( item ) {
-		if(!player || !player.IsValid())
+		if (!player || !player.IsValid())
 			return NAN
 
-		if(HasProp(this.player, item))
+		if (HasProp(this.player, item))
 		{
 			local func = GetPropGetFunction(GetPropType(this.player, item))
 			func(this.player, item)
@@ -149,18 +149,18 @@ class ChaosPlayer {
 			} */
 		}
 
-		if(item in this)
+		if (item in this)
 			return this[item]
 
 		return NAN
 	}
 	function _set ( item , value ) {
-		if(!player || !player.IsValid())
+		if (!player || !player.IsValid())
 			return
 
 		return; 
 
-		if(HasProp(this.player, item))
+		if (HasProp(this.player, item))
 		{
 			switch (GetPropType(this.player, item))
 			{
@@ -174,7 +174,7 @@ class ChaosPlayer {
 			}
 		}
 
-		if(item in this)
+		if (item in this)
 			return this[item]
 
 		return NAN
@@ -192,7 +192,7 @@ class CustomPlayer {
 	}
 
 	function _get ( item ) {
-		if(!player || !player.IsValid())
+		if (!player || !player.IsValid())
 			return NAN
 
 		try {
@@ -205,7 +205,7 @@ class CustomPlayer {
 
 		return 1
 		
-		if(HasProp(this.player, item))
+		if (HasProp(this.player, item))
 		{
 			switch (GetPropType(this.player, item))
 			{
@@ -238,16 +238,16 @@ class CustomPlayer {
 			}
 		}
 
-		if(item in this)
+		if (item in this)
 			return this[item]
 
 		return NAN
 	}
 	/* function _set ( item , value ) {
-		if(!player || !player.IsValid())
+		if (!player || !player.IsValid())
 			return
 
-		if(HasProp(this.player, item))
+		if (HasProp(this.player, item))
 		{
 			switch (GetPropType(this.player, item))
 			{
@@ -261,7 +261,7 @@ class CustomPlayer {
 			}
 		}
 
-		if(item in this)
+		if (item in this)
 			return this[item]
 
 		return NAN

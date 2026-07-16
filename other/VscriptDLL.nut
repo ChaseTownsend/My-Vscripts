@@ -879,12 +879,12 @@ try {
 
 	function build_refs(t)
 	{
-		if(t == ::getroottable())
+		if (t == ::getroottable())
 			return;
 		local otype = ::type(t);
-		if(otype in complex_types)
+		if (otype in complex_types)
 		{
-			if(!(t in objs_reg.refs)) {
+			if (!(t in objs_reg.refs)) {
 				objs_reg.refs[t] <- objs_reg.maxid++;
 			
 				iterateobject(t,function(o,i,val)
@@ -944,14 +944,14 @@ try {
 
 	function pack_type(type)
 	{
-		if(type in packed_types)return packed_types[type]
+		if (type in packed_types)return packed_types[type]
 		return type
 	} 
 
 	function iterateobject(obj,func)
 	{
 		local ty = ::type(obj);
-		if(ty == "instance") {
+		if (ty == "instance") {
 			try { //TRY TO USE _nexti
 				foreach(idx,val in obj)
 				{
@@ -965,7 +965,7 @@ try {
 			}
 			}
 		}
-		else if(ty == "weakref") {
+		else if (ty == "weakref") {
 			func(obj,"@ref",obj.ref());
 		}
 		else {
@@ -984,11 +984,11 @@ try {
 			beginelement("o");
 				attribute("type",(i==::getroottable()?"r":pack_type(::type(i))));
 				local _typeof = typeof i;
-				if(_typeof != ::type(i)) {
+				if (_typeof != ::type(i)) {
 					attribute("typeof",_typeof);
 				}
 				attribute("ref",o.tostring());
-				if(i != ::getroottable()){
+				if (i != ::getroottable()){
 					if ( ::type(i) == "table" && i.getdelegate() && i.getdelegate() != ::getroottable() )
 					{
 						beginelement("e");
@@ -998,7 +998,7 @@ try {
 					}
 				
 					iterateobject(i,function (obj,idx,val) {
-						if(::type(val) == "function")
+						if (::type(val) == "function")
 							return;
 							
 						if ( ::type(idx) == "string" && idx.find( "__" ) == 0 )
@@ -1023,8 +1023,8 @@ try {
 		params.append(locals["this"])
 		local first=1;
 		foreach(i,v in locals){
-			if(i!="this" && i[0] != '@'){ //foreach iterators start with @
-				if(!first){
+			if (i!="this" && i[0] != '@'){ //foreach iterators start with @
+				if (!first){
 					func_src=func_src+","
 					
 				}
@@ -1070,14 +1070,14 @@ try {
 	objs_reg.refs[::getroottable()] <- objs_reg.maxid++;
 	foreach(i,val in stack)
 	{
-		if(val.src!="NATIVE") {
-			if("watches" in this) {
+		if (val.src!="NATIVE") {
+			if ("watches" in this) {
 				val.watches <- {}
 				foreach(i,watch in watches)
 				{
-					if(val.src!="NATIVE"){
+					if (val.src!="NATIVE"){
 						val.watches[i] <- evaluate_watch(val.locals,i,watch);
-						if(val.watches[i].status!="error")
+						if (val.watches[i].status!="error")
 							build_refs(val.watches[i].val);
 					}
 					else{
@@ -1113,14 +1113,14 @@ try {
 					emitvalue("type","val",v);
 				endelement("l");
 			}
-			if("watches" in val) {
+			if ("watches" in val) {
 				foreach(i,v in val.watches)
 				{
 					beginelement("w");
 						attribute("id",i.tostring());
 						attribute("exp",v.exp);
 						attribute("status",v.status);
-						if(v.status!="error") {
+						if (v.status!="error") {
 							emitvalue("type","val",v.val);
 						}
 					endelement("w");
@@ -1135,7 +1135,7 @@ try {
 	objs_reg = null;
 	stack = null;
 	
-	if("collectgarbage" in ::getroottable()) ::collectgarbage();
+	if ("collectgarbage" in ::getroottable()) ::collectgarbage();
 }catch(e)
 {
 	::print("ERROR"+e+"\n");

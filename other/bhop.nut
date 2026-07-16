@@ -4,7 +4,7 @@ const bhop_version = "1.0.1"
 	function OnGameEvent_player_spawn(params)
 	{
 		local player = GetPlayerFromUserID(params.userid)
-		if(IsPlayerABot(player)) return
+		if (IsPlayerABot(player)) return
 		AddThinkToEnt(player, null)
 		AddThinkToEnt(player, "bunny")
 
@@ -17,7 +17,7 @@ const bhop_version = "1.0.1"
 	function OnGameEvent_player_team(params)
 	{
 		local player = GetPlayerFromUserID(params.userid)
-		if(IsPlayerABot(player)) return
+		if (IsPlayerABot(player)) return
 		AddThinkToEnt(player, null)
 		AddThinkToEnt(player, "bunny")
 
@@ -31,10 +31,10 @@ const bhop_version = "1.0.1"
 	function OnGameEvent_player_say(params)
 	{
 		local player = GetPlayerFromUserID(params.userid)
-		if(IsPlayerABot(player)) return
+		if (IsPlayerABot(player)) return
 		player.ValidateScriptScope()
 		local scope = player.GetScriptScope()
-		if(params.text == "!bhop" || params.text == "/bhop")
+		if (params.text == "!bhop" || params.text == "/bhop")
 		{
 			if (!("toggle" in scope)) 
 				scope.toggle <- 0
@@ -51,10 +51,10 @@ const bhop_version = "1.0.1"
 					break;
 			}
 		}
-		if(params.text == "!bhop info" || params.text == "/bhop info")
+		if (params.text == "!bhop info" || params.text == "/bhop info")
 		{
 			local extra = ""
-			if(player.GetPlayerClass() == Constants.ETFClass.TF_CLASS_SCOUT)
+			if (player.GetPlayerClass() == Constants.ETFClass.TF_CLASS_SCOUT)
 			{
 				extra = "\n\x07FF2020[Warning]\x07FF8888 Does break double jumps!"
 			}
@@ -65,7 +65,7 @@ const bhop_version = "1.0.1"
 	function OnGameEvent_rocket_jump(params)
 	{
 		local player = GetPlayerFromUserID(params.userid)
-		if(IsPlayerABot(player)) return
+		if (IsPlayerABot(player)) return
 		player.ValidateScriptScope()
 		local scope = player.GetScriptScope()
 		scope.rocketjumping = 1
@@ -73,21 +73,21 @@ const bhop_version = "1.0.1"
 	function OnScriptHook_OnTakeDamage(params)
 	{
 		local player = params.inflictor
-		if(IsPlayerABot(player)) return
+		if (IsPlayerABot(player)) return
 		local gardener = false
 		for(local i = 0 ; i <= 3 ; i++)
 		{
-			if(GetWeaponIDXInSlot(player, i) == 416)
+			if (GetWeaponIDXInSlot(player, i) == 416)
 			{
 				gardener = true
 				break
 			}
 		}
-		if(!gardener) return
+		if (!gardener) return
 
 		player.ValidateScriptScope()
 		local scope = player.GetScriptScope()
-		if(scope.rocketjumping == 1)
+		if (scope.rocketjumping == 1)
 		{
 			params.damage_type = params.damage_type | Constants.FDmgType.DMG_ACID
 		}
@@ -113,18 +113,18 @@ function GetActiveWeaponIDX(player)
 }
 function bunny()
 {
-	if(IsPlayerABot(self)) return 1000
+	if (IsPlayerABot(self)) return 1000
 	local scope = self.GetScriptScope()
 	if (!("toggle" in scope))
 		scope.toggle <- 0
 
-	if(scope.toggle == 0) return 0
-	if(IsPlayerOnGround(self))
+	if (scope.toggle == 0) return 0
+	if (IsPlayerOnGround(self))
 	{
-		if(IsPlayerJumping(self))
+		if (IsPlayerJumping(self))
 		{
 			local jump_speed = 267
-			if(GetActiveWeaponIDX(self) == 449)
+			if (GetActiveWeaponIDX(self) == 449)
 			{
 				jump_speed = jump_speed * 1.25
 			}
@@ -154,7 +154,7 @@ function bunny()
 			ClientPrint(self, 4, vel.tostring())
 			self.ApplyAbsVelocityImpulse(vel)
 
-			if(scope.rocketjumping == 1)
+			if (scope.rocketjumping == 1)
 			{
 				self.AddCondEx(Constants.ETFCond.TF_COND_BLASTJUMPING, 5, self)
 			}

@@ -9,11 +9,11 @@ const TF_WEAPON_EUREKA_EFFECT = 589
 ::pickup <- {
 	function OnGameEvent_player_spawn(params)
 	{
-		if(params.team != TF_TEAM_PVE_DEFENDERS) return
+		if (params.team != TF_TEAM_PVE_DEFENDERS) return
 
 		local player = GetPlayerFromUserID(params.userid)
-		if(player.GetPlayerClass() != TF_CLASS_ENGINEER) return
-		if(player.GetWeaponIDXInSlot(MELEE_SLOT) != TF_WEAPON_EUREKA_EFFECT) return
+		if (player.GetPlayerClass() != TF_CLASS_ENGINEER) return
+		if (player.GetWeaponIDXInSlot(MELEE_SLOT) != TF_WEAPON_EUREKA_EFFECT) return
 
 		player.ValidateScriptScope()
 		local scope = player.GetScriptScope()
@@ -23,11 +23,11 @@ const TF_WEAPON_EUREKA_EFFECT = 589
 	}
 	function OnGameEvent_player_carryobject(params)
 	{
-		if(params.object != 2) return
+		if (params.object != 2) return
 
 		local player = GetPlayerFromUserID(params.userid)
-		if(player.GetTeam() != TF_TEAM_PVE_DEFENDERS) return
-		if(player.GetWeaponIDXInSlot(MELEE_SLOT) != TF_WEAPON_EUREKA_EFFECT) return
+		if (player.GetTeam() != TF_TEAM_PVE_DEFENDERS) return
+		if (player.GetWeaponIDXInSlot(MELEE_SLOT) != TF_WEAPON_EUREKA_EFFECT) return
 
 		player.ValidateScriptScope()
 		local scope = player.GetScriptScope()
@@ -36,11 +36,11 @@ const TF_WEAPON_EUREKA_EFFECT = 589
 	}
 	function OnGameEvent_player_builtobject(params)
 	{
-		if(params.object != 2) return
+		if (params.object != 2) return
 
 		local player = GetPlayerFromUserID(params.userid)
-		if(player.GetTeam() != TF_TEAM_PVE_DEFENDERS) return
-		if(player.GetWeaponIDXInSlot(MELEE_SLOT) != TF_WEAPON_EUREKA_EFFECT) return
+		if (player.GetTeam() != TF_TEAM_PVE_DEFENDERS) return
+		if (player.GetWeaponIDXInSlot(MELEE_SLOT) != TF_WEAPON_EUREKA_EFFECT) return
 
 		player.ValidateScriptScope()
 		local scope = player.GetScriptScope()
@@ -57,8 +57,8 @@ function LongBowSentry()
 {
 	local m_iMetal = NetProps.GetPropIntArray(self, "m_iAmmo", 3)
 	local scope = self.GetScriptScope()
-	if(scope.sentry == null) return -1
-	if(!scope.sentry.IsValid()) return -1
+	if (scope.sentry == null) return -1
+	if (!scope.sentry.IsValid()) return -1
 
 	local min = NetProps.GetPropVector(scope.sentry, "m_Collision.m_vecMins")
 	local max = NetProps.GetPropVector(scope.sentry, "m_Collision.m_vecMaxs") + Vector(0, 0, 10)
@@ -71,21 +71,21 @@ function LongBowSentry()
 		hullmax = Vector(25, 25, 40)
 	}
 	TraceHull(btrace)
-	if(!IsDedicatedServer())
+	if (!IsDedicatedServer())
 	{
 		DebugDrawClear()
 		DebugDrawBox(btrace.start, btrace.hullmin, btrace.hullmax, 0, 0, 255, 5, 60)
 	}
-	if("startsolid" in btrace)
+	if ("startsolid" in btrace)
 	{
-		if(btrace.startsolid)
+		if (btrace.startsolid)
 		{
 			// self.PrintToHud("Btrace Failed!")
 			return -1
 		}
 	}
 
-	if(self.InRespawnRoom()) return -1
+	if (self.InRespawnRoom()) return -1
 
 	local ptrace =
 	{
@@ -102,7 +102,7 @@ function LongBowSentry()
 		local allow = false
 		foreach (classname in ["worldspawn", "func_detail", "func_brush"])
 		{
-			if(ptrace.enthit.GetClassname() == classname)
+			if (ptrace.enthit.GetClassname() == classname)
 			{
 				allow = true
 				break
@@ -110,7 +110,7 @@ function LongBowSentry()
 		}
 		if (allow == false)
 		{
-			if(!IsDedicatedServer())
+			if (!IsDedicatedServer())
 			{
  				DebugDrawBox(ptrace.start, ptrace.hullmin, ptrace.hullmax, 0, 255, 0, 5, 10)
 				DebugDrawBox(ptrace.end, ptrace.hullmin, ptrace.hullmax, 0, 255, 0, 5, 10)
@@ -120,9 +120,9 @@ function LongBowSentry()
 		}
 	}
 
-	if(self.IsPressingButton(IN_ATTACK3) && (self.GetFlags() & Constants.FPlayer.FL_ONGROUND))
+	if (self.IsPressingButton(IN_ATTACK3) && (self.GetFlags() & Constants.FPlayer.FL_ONGROUND))
 	{
-		if(m_iMetal <= 299) return -1
+		if (m_iMetal <= 299) return -1
 		local trace =
 		{
 			start = 	self.EyePosition()
@@ -133,14 +133,14 @@ function LongBowSentry()
 			ignore = 	self
 		}
 		TraceHull(trace)
-		if(!IsDedicatedServer()) DebugDrawLine_vCol(trace.startpos, trace.endpos, Vector(255, 0, 0), false, 10)
+		if (!IsDedicatedServer()) DebugDrawLine_vCol(trace.startpos, trace.endpos, Vector(255, 0, 0), false, 10)
 
 		if (IsPointInRespawnRoom(trace.endpos))  return -1
-		if(!trace.hit) return -1
+		if (!trace.hit) return -1
 		local allow = false
 		foreach (classname in ["worldspawn", "func_detail", "func_brush"])
 		{
-			if(trace.enthit.GetClassname() == classname)
+			if (trace.enthit.GetClassname() == classname)
 			{
 				allow = true
 				break
@@ -163,9 +163,9 @@ function LongBowSentry()
 			hullmax =	max
 		}
 		TraceHull(htrace)
-		if(htrace.hit)
+		if (htrace.hit)
 		{
-			if(!IsDedicatedServer()) DebugDrawBox(htrace.start, min, max, 255, 0, 255, 0, 60)
+			if (!IsDedicatedServer()) DebugDrawBox(htrace.start, min, max, 255, 0, 255, 0, 60)
 			self.PrintToHud("Htrace Failed!")
 			return -1
 		}
@@ -177,8 +177,8 @@ function LongBowSentry()
 			mask = 		MASK_SHOT_HULL
 		}
 		TraceLineEx(gtrace)
-		if(!IsDedicatedServer()) DebugDrawLine_vCol(gtrace.start, gtrace.end, Vector(255, 255, 0), false, 10)
-		if(!gtrace.hit)
+		if (!IsDedicatedServer()) DebugDrawLine_vCol(gtrace.start, gtrace.end, Vector(255, 255, 0), false, 10)
+		if (!gtrace.hit)
 		{
 			self.PrintToHud("Gtrace Failed!")
 			return -1

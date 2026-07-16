@@ -68,34 +68,34 @@ function GameplayThink()
 		}
 		EnableStringPurge(player)
 
-		if(IsPlayerABot(player))
+		if (IsPlayerABot(player))
 			continue
 
 		player.SetGravity(DEFAULT_GRAVITY)
 		local meleeIDX = player.GetWeaponIDXInSlotNew(SLOT_MELEE)
 
-		if(IsInArray(meleeIDX, SWIMMING_IDS))
+		if (IsInArray(meleeIDX, SWIMMING_IDS))
 			player.AddCondEx(TF_COND_SWIMMING_NO_EFFECTS, -1, null)
 		else
 			player.RemoveCondEx(TF_COND_SWIMMING_NO_EFFECTS, true)
 
-		if(meleeIDX.tostring() in GravityIDS)
+		if (meleeIDX.tostring() in GravityIDS)
 			player.MultiplyGravity(GravityIDS[meleeIDX.tostring()])
 
-		if(player.GetActiveWeaponIDX() == TF_WEAPON_TOMISLAV)
+		if (player.GetActiveWeaponIDX() == TF_WEAPON_TOMISLAV)
 			player.TranslateToHud("TOMISLAV_HEAT", ("Hits" in GetScope(player.GetActiveWeapon()) ? GetScope(player.GetActiveWeapon()).Hits/10 : -1))
 
 
-		if(player.GetWeaponIDXInSlotNew(SLOT_PRIMARY) == TF_WEAPON_TOMISLAV)
+		if (player.GetWeaponIDXInSlotNew(SLOT_PRIMARY) == TF_WEAPON_TOMISLAV)
 		{
 			local weapon = player.GetWeaponInSlotNew(SLOT_PRIMARY)
 			local scope = GetScope(weapon)
 
-			if(IsNotInScope("Hits", scope))
+			if (IsNotInScope("Hits", scope))
 				scope.Hits <- 0
-			if(IsNotInScope("m_flLastHeatHit", scope))
+			if (IsNotInScope("m_flLastHeatHit", scope))
 				scope.m_flLastHeatHit <- Time()
-			if(IsNotInScope("m_flLastHeatLoseTime", scope))
+			if (IsNotInScope("m_flLastHeatLoseTime", scope))
 				scope.m_flLastHeatLoseTime <- Time()
 
 			if (scope.Hits >= 1 && 
@@ -123,10 +123,10 @@ function GameplayThink()
 				weapon.AddAttribute("Set DamageType Ignite", (scope.Hits > 400).tointeger(), 0)
 				weapon.AddAttribute("ragdolls become ash", (scope.Hits > 700).tointeger(), 0)
 				weapon.AddAttribute("turn to gold", (scope.Hits > 1000).tointeger(), 0)
-				if(player.GetPrimaryAmmo() > player.GetMaximumPrimaryAmmo())
+				if (player.GetPrimaryAmmo() > player.GetMaximumPrimaryAmmo())
 					player.ResetPrimaryAmmo()
 			}
-			if( "Hits" in scope && scope.Hits >= 1000)
+			if ( "Hits" in scope && scope.Hits >= 1000)
 				scope.Hits = 1000
 		}
 	}
@@ -187,7 +187,7 @@ function GameplayThink()
 		// if (logname == "infection_acid_puddle") ) or weaponIDX == TF_WEAPON_BLUTSAUGER 
 		// so if i get a kill with corrosion, then logname passes, but if i kill with blutsauger it also passes
 		local bCorrosionKill = false
-		if(!((victim.GetCorrosionWeapon() && victim.GetCorrosionWeapon().IsValid() && victim.GetCorrosionWeapon().GetIDX() == TF_WEAPON_BLUTSAUGER) || weaponIDX == TF_WEAPON_BLUTSAUGER))
+		if (!((victim.GetCorrosionWeapon() && victim.GetCorrosionWeapon().IsValid() && victim.GetCorrosionWeapon().GetIDX() == TF_WEAPON_BLUTSAUGER) || weaponIDX == TF_WEAPON_BLUTSAUGER))
 		{
 			bCorrosionKill = (logname == "infection_acid_puddle" && victim.GetCorrosionWeapon().IsValid())
 		}
@@ -197,7 +197,7 @@ function GameplayThink()
 		}
 		if ( bCorrosionKill )
 		{
-			if(victim.InRespawnRoom())
+			if (victim.InRespawnRoom())
 			{
 				victim.ClearCorrosion()
 				return
@@ -208,7 +208,7 @@ function GameplayThink()
 
 			foreach (bomb in GetAllEntitiesByTargetname("GasBomb"))
 			{
-				if(!bomb || !bomb.IsValid())
+				if (!bomb || !bomb.IsValid())
 					return
 				
 				bomb.ValidateScriptScope() // whaaa, GetScope validates the scope though?
@@ -218,22 +218,22 @@ function GameplayThink()
 			puddle_times.sort(@(a,b) a <=> b)
 			foreach (time in puddle_times)
 			{
-				if(time >= Time() + CorrosivePuddleDefaultDuration)
+				if (time >= Time() + CorrosivePuddleDefaultDuration)
 				{
 					// local time = format("%.02f", puddle_times[0])
 					local bomb = puddles[format("%.02f", time)][0]
 					local particle = puddles[format("%.02f", time)][1]
-					if(bomb && bomb.IsValid()) bomb.Destroy()
-					if(particle && particle.IsValid()) particle.Destroy()
+					if (bomb && bomb.IsValid()) bomb.Destroy()
+					if (particle && particle.IsValid()) particle.Destroy()
 				}
 			}
-			if(puddle_times.len() >= MaxCorrosivePuddles)
+			if (puddle_times.len() >= MaxCorrosivePuddles)
 			{
 				local time = format("%.02f", puddle_times[0])
 				local bomb = puddles[time][0]
 				local particle = puddles[time][1]
-				if(bomb && bomb.IsValid()) bomb.Destroy()
-				if(particle && particle.IsValid()) particle.Destroy()
+				if (bomb && bomb.IsValid()) bomb.Destroy()
+				if (particle && particle.IsValid()) particle.Destroy()
 			}
 
 			// Create the fucking uhhh, acid puddle?
@@ -255,9 +255,9 @@ function GameplayThink()
 			scope.m_flTimeCreated <- Time()
 			scope.particle <- particle
 			scope.think <- function() {
-				if(!self || !self.IsValid())
+				if (!self || !self.IsValid())
 					return 500
-				if(!Attacker || !Attacker.IsValid() || m_flTimeCreated + CorrosivePuddleDefaultDuration <= Time() || IsPointInRespawnRoom(self.GetOrigin()))
+				if (!Attacker || !Attacker.IsValid() || m_flTimeCreated + CorrosivePuddleDefaultDuration <= Time() || IsPointInRespawnRoom(self.GetOrigin()))
 				{
 					particle.Destroy()
 					self.Destroy()
@@ -265,7 +265,7 @@ function GameplayThink()
 				}
 				foreach(bot in GetEveryBotWithin(self.GetOrigin(), BLUTSAUGER_SETTINGS.GasPuddleRadius))
 				{
-					if(!Attacker || !Attacker.IsValid() || m_flTimeCreated + CorrosivePuddleDefaultDuration <= Time() || IsPointInRespawnRoom(self.GetOrigin()))
+					if (!Attacker || !Attacker.IsValid() || m_flTimeCreated + CorrosivePuddleDefaultDuration <= Time() || IsPointInRespawnRoom(self.GetOrigin()))
 					{
 						particle.Destroy()
 						self.Destroy()
@@ -281,7 +281,7 @@ function GameplayThink()
 		/////////////////////////// Spell Book //////////////////////////////
 		victim.ClearCorrosion()
 
-		if(!IsInArray(weaponIDX, SpellWeapons) || !IsInArray(logname, SpellWeapons))
+		if (!IsInArray(weaponIDX, SpellWeapons) || !IsInArray(logname, SpellWeapons))
 			return
 
 		local spell_book = attacker.GetSpellBook()
@@ -311,7 +311,7 @@ function GameplayThink()
 		if (params.damage_stats >= TF_DMG_CUSTOM_SPELL_TELEPORT && params.damage_stats <= TF_DMG_CUSTOM_KART)
 		{
 			local spell_book = hAttacker.GetSpellBook()
-			if(spell_book)
+			if (spell_book)
 				params.weapon = spell_book
 			else
 				params.weapon = hAttacker.GetWeaponInSlotNew(SLOT_MELEE)
@@ -474,10 +474,10 @@ function GameplayThink()
 				hWeapon.AddAttribute("Set DamageType Ignite", (scope.Hits > 400).tointeger(), 0)
 				hWeapon.AddAttribute("ragdolls become ash", (scope.Hits > 700).tointeger(), 0)
 				hWeapon.AddAttribute("turn to gold", (scope.Hits > 1000).tointeger(), 0)
-				if(hAttacker.GetPrimaryAmmo() > hAttacker.GetMaximumPrimaryAmmo())
+				if (hAttacker.GetPrimaryAmmo() > hAttacker.GetMaximumPrimaryAmmo())
 					hAttacker.ResetPrimaryAmmo()
 				
-				if( scope.Hits >= 1000 )
+				if ( scope.Hits >= 1000 )
 					scope.Hits = 1000
 				hWeapon.ReapplyProvision()
 				return
@@ -525,7 +525,7 @@ function GameplayThink()
 			player.RemoveAllObjects(true)
 
 		local meleeIDX = player.GetWeaponIDXInSlotNew(SLOT_MELEE)
-		if(meleeIDX == TF_WEAPON_FIST_OF_STEEL)
+		if (meleeIDX == TF_WEAPON_FIST_OF_STEEL)
 		{
 			PrecacheModel("models/bots/heavy_boss/bot_heavy_boss.mdl")
 			EntFireNew(player, "RunScriptCode", "self.SetForcedTauntCam(1)", 0.1)
@@ -550,7 +550,7 @@ function GameplayThink()
 			EntFireNew(player, "RunScriptCode", "self.SetCustomModelWithClassAnimations(``)", 0.1)
 		}
 		local primary = player.GetWeaponInSlotNew(SLOT_PRIMARY)
-		if( primary && primary.getclass() == CTFWeaponBase && primary.GetIDX() == TF_WEAPON_TOMISLAV )
+		if ( primary && primary.getclass() == CTFWeaponBase && primary.GetIDX() == TF_WEAPON_TOMISLAV )
 			GetScope(primary).Hits <- 0
 	}
 	function OnGameEvent_player_spawn(params)
@@ -562,7 +562,7 @@ function GameplayThink()
 		if (IsPlayerABot(player))
 		{	
 			// dont kno why but the bot check sometimes effects players
-			if(player.GetTeam() == TF_TEAM_PVE_DEFENDERS)
+			if (player.GetTeam() == TF_TEAM_PVE_DEFENDERS)
 				return
 			if (FatCatLibSettings.KillWatchViewmodels)
 			{
@@ -577,7 +577,7 @@ function GameplayThink()
 		}
 
 		local primary = player.GetWeaponInSlotNew(SLOT_PRIMARY)
-		if( primary && primary.getclass() == CTFWeaponBase && primary.GetIDX() == TF_WEAPON_TOMISLAV )
+		if ( primary && primary.getclass() == CTFWeaponBase && primary.GetIDX() == TF_WEAPON_TOMISLAV )
 		{
 			primary.AddAttribute("damage bonus", 1, 0)
 			primary.AddAttribute("fire rate bonus", 1, 0)
@@ -597,10 +597,10 @@ function GameplayThink()
 		}
 
 		local book = player.GetSpellBook()
-		if( book ) GetScope(book).m_iKills <- 0
+		if ( book ) GetScope(book).m_iKills <- 0
 
 		local melee = player.GetWeaponInSlotNew(SLOT_MELEE)
-		if( melee && melee.getclass() == CTFWeaponBase && melee.GetIDX() == TF_WEAPON_FIST_OF_STEEL)
+		if ( melee && melee.getclass() == CTFWeaponBase && melee.GetIDX() == TF_WEAPON_FIST_OF_STEEL)
 		{
 			PrecacheModel("models/bots/heavy_boss/bot_heavy_boss.mdl")
 			EntFireNew(player, "RunScriptCode", "self.SetForcedTauntCam(1)", 0.1)

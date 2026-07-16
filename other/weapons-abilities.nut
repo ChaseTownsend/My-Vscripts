@@ -47,27 +47,27 @@ AddThinkToEnt(Ability_Thinker, "AbilityThink")
 
 function AbilityThink()
 {
-	if( Players.len() < 1 )
+	if ( Players.len() < 1 )
 		ReCalculatePlayers()
 	
 	foreach (player in Players)
 	{
 		// if we find old/removed instances in list, then, recalculate, and return
-		if(!player)
+		if (!player)
 		{
 			ReCalculatePlayers()
 			return -1
 		}
-		if(!player.IsValid())
+		if (!player.IsValid())
 		{
 			ReCalculatePlayers()
 			return -1
 		}
 
-		if(IsPlayerABot(player))
+		if (IsPlayerABot(player))
 			continue
 
-		if(!player.IsAlive())
+		if (!player.IsAlive())
 			continue
 
 		
@@ -172,10 +172,10 @@ function AbilityThink()
 
 		local player = GetPlayerFromUserID(params.userid)
 		local text = null
-		if(!player)
+		if (!player)
 		{
 			text = FindByName(null, "User: " + params.networkid +  " Display")
-			if(!text) return
+			if (!text) return
 			text.Kill()
 			return
 		}
@@ -183,7 +183,7 @@ function AbilityThink()
 		if ( !weapon ) return
 
 		local scope = GetScope(weapon)
-		if(IsNotInScope("m_hText", scope))
+		if (IsNotInScope("m_hText", scope))
 			return
 
 		text = scope.m_hText
@@ -625,7 +625,7 @@ function SummonLasKart()
 		ignore = self
 	}
 	TraceHull(trace)
-	if(trace.allsolid == true)
+	if (trace.allsolid == true)
 	{
 		self.ForceRespawn()
 		self.PrintToHud("You were respawned to avoid getting stuck.")

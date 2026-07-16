@@ -1,5 +1,5 @@
 ///// START MAIN.NUT
-if(true)
+if (true)
 {
 	// Welcome... TO LA ARENA!
 	// Here's the stuff we're gonna load
@@ -35,7 +35,7 @@ if(true)
 ///// END MAIN.NUT
 
 ///// START HOOKS.NUT
-if(true)
+if (true)
 {
 	const RADIUS = 8;
 	const DISP_RADIUS = 410;
@@ -225,7 +225,7 @@ if(true)
 ///// END HOOKS.NUT
 
 ///// START TOOLBOX.NUT
-if(true)
+if (true)
 {
 	::REMOVE_ON_DEATH <- Constants.FTFBotAttributeType.REMOVE_ON_DEATH
 	::DISABLE_DODGE <- Constants.FTFBotAttributeType.DISABLE_DODGE
@@ -1118,7 +1118,7 @@ if(true)
 ///// END TOOLBOX.NUT
 
 ///// START ROUNDLOGIC.NUT
-if(true)
+if (true)
 {
 	player_count <- 0;                        	// how many players we have
 	players_counted <- 0;                        // how many players we counted last time

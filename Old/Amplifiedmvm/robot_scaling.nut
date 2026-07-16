@@ -77,7 +77,7 @@ local ScalingSets = [
 
 function ApplyScaling()
 {
-	if(self.HasBotTag("IgnoreScaling") || self.HasBotTag("Scaled!")) return
+	if (self.HasBotTag("IgnoreScaling") || self.HasBotTag("Scaled!")) return
 	local Max_Wave = GetMaximumWaveNumber()
 	local cur_wave = GetCurrentWaveNumber()
 
@@ -100,7 +100,7 @@ function ApplyScaling()
 	function OnGameEvent_post_inventory_application(params)
 	{
 		local player = GetPlayerFromUserID(params.userid)
-		if(!IsPlayerABot(player)) return
+		if (!IsPlayerABot(player)) return
 
 		EntFireByHandle(player, "RunScriptCode", "ApplyScaling()", -1, null, null)
 	}

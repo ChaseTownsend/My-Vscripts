@@ -11,7 +11,7 @@ function ROOT::CTFPlayer::ResetCorrosion()
 
 function ROOT::CTFPlayer::GetCorrosion()
 {
-	if( GetScope(this) && "Corrosion" in GetScope(this))
+	if ( GetScope(this) && "Corrosion" in GetScope(this))
 		return GetScope(this).Corrosion
 	else
 	{
@@ -41,23 +41,23 @@ function ROOT::CTFPlayer::ClearCorrosion()
 }
 function ROOT::CTFPlayer::MakeCorrosion(Player, Weapon, lifetime, damage = 5, ticktime = 0.5)
 {
-	if(IsInvincible())
+	if (IsInvincible())
 	{
 		ClearCorrosion()
 		return
 	}
 
-	if(Weapon && Weapon.GetIDX() == TF_WEAPON_BLUTSAUGER)
+	if (Weapon && Weapon.GetIDX() == TF_WEAPON_BLUTSAUGER)
 		EntFireNew(this, "Color", BLUTSAUGER_SETTINGS.CorrosionColor)
 
 	local Corrosion = GetCorrosion()
 
 	local flExpireTime = Time() + lifetime.tofloat() + ticktime
 
-	if(	Corrosion.hCorrosionAttacker && Corrosion.hCorrosionAttacker == Player
+	if (	Corrosion.hCorrosionAttacker && Corrosion.hCorrosionAttacker == Player
 		&& Corrosion.hCorrosionWeapon && Corrosion.hCorrosionWeapon == Weapon )
 	{
-		if(flExpireTime > Corrosion.flCorrosionRemoveTime)
+		if (flExpireTime > Corrosion.flCorrosionRemoveTime)
 		{
 			Corrosion.flCorrosionRemoveTime = flExpireTime
 		}

@@ -4,10 +4,10 @@
 		local victim = params.const_entity
 		local attacker = params.inflictor
 
-		if(!victim.IsPlayer())
+		if (!victim.IsPlayer())
 			return
 
-		if(!attacker.IsPlayer())
+		if (!attacker.IsPlayer())
 			return
 
 		if (IsPlayerABot(victim))
@@ -16,7 +16,7 @@
 		if (!IsPlayerABot(attacker))
 			return
 
-		if(params.damage_custom == 86)
+		if (params.damage_custom == 86)
 			return
 
 		local tags = {}

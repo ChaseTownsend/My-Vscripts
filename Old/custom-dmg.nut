@@ -6,12 +6,12 @@ IncludeScript("fatcat_library")
         local attacker = params.attacker
         local victim = params.const_entity
 
-        if(victim.IsBot()) return
+        if (victim.IsBot()) return
         switch (params.damage_stats)
         {
             case TF_DMG_CUSTOM_BOOTS_STOMP: //STOMP
             {
-                if(attacker.GetAbsVelocity().z > 0) break
+                if (attacker.GetAbsVelocity().z > 0) break
                 params.damage = attacker.GetAbsVelocity().z * -100
                 break
             }
@@ -19,7 +19,7 @@ IncludeScript("fatcat_library")
             case TF_DMG_CUSTOM_KART: //BUMPER CAR
             {
                 params.damage = 20000
-                if(victim.IsMiniBoss()) return
+                if (victim.IsMiniBoss()) return
                 victim.AddCondEx(71, 10, attacker)
                 victim.AddCondEx(30, 10, attacker)
                 break
@@ -27,21 +27,21 @@ IncludeScript("fatcat_library")
             case TF_DMG_CUSTOM_SPELL_SKELETON: //SKELETONS
             {
                 params.damage = 8500
-                if(victim.IsMiniBoss()) return
+                if (victim.IsMiniBoss()) return
                 victim.AddCondEx(30, 10, params.attacker)
                 break
             }
             case TF_DMG_CUSTOM_SPELL_MIRV: //MIRV
             {
                 params.damage = 15000
-                if(victim.IsMiniBoss()) return
+                if (victim.IsMiniBoss()) return
                 victim.AddCondEx(30, 10, params.attacker)
                 break
             }
             case TF_DMG_CUSTOM_SPELL_METEOR: //METEOR
             {
                 params.damage = 3000
-                if(victim.IsMiniBoss()) return
+                if (victim.IsMiniBoss()) return
                 victim.AddCondEx(30, 10, params.attacker)
                 break
             }

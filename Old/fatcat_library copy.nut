@@ -9,10 +9,10 @@
 function SetLibraryVersion(lib_version, subversion = 0, force_include = false, developer = false)
 {
 	local force = false
-	if("FatCatLibForce" in ROOT)
+	if ("FatCatLibForce" in ROOT)
 		force = FatCatLibForce
 
-	if((force_include || force) || developer)
+	if ((force_include || force) || developer)
 	{
 		printl("Force Included Library")
 		::FatCatLibVersion <- {
@@ -20,14 +20,14 @@ function SetLibraryVersion(lib_version, subversion = 0, force_include = false, d
 			sub_version = subversion
 			forced = "true"
 		}
-		if(developer == true)
+		if (developer == true)
 		{
 			FatCatLibVersion.developer <- "true"
 			PrintToChatAll(FATCATLIB_PREFIX+"\x04DONT FORGET TO DISABLE DEVELOPER MODE!!!\x01")
 		}
 		return true
 	}
-	if(!("FatCatLibVersion" in ROOT))
+	if (!("FatCatLibVersion" in ROOT))
 	{
 		::FatCatLibVersion <- {
 			version = 0
@@ -35,14 +35,14 @@ function SetLibraryVersion(lib_version, subversion = 0, force_include = false, d
 			forced = "false"
 		}
 	}
-	if(FatCatLibVersion.version == lib_version)
+	if (FatCatLibVersion.version == lib_version)
 	{
-		if(FatCatLibVersion.sub_version == subversion)
+		if (FatCatLibVersion.sub_version == subversion)
 		{
 			printl("Library Version is the same as old version. Not Including")
 			return false
 		}
-		else if( FatCatLibVersion.sub_version > subversion)
+		else if ( FatCatLibVersion.sub_version > subversion)
 		{
 			printl("HMMM, decremeting subversion?????????")
 			return false
@@ -69,7 +69,7 @@ function SetLibraryVersion(lib_version, subversion = 0, force_include = false, d
 	// dont think this can be hit
 	return false
 }
-if(!("FatCatLibScriptsVersion" in ROOT))
+if (!("FatCatLibScriptsVersion" in ROOT))
 	::FatCatLibScriptsVersion <- {}
 
 function ROOT::SetScriptVersion(item, version)
@@ -79,15 +79,15 @@ function ROOT::SetScriptVersion(item, version)
 
 function SetLibrarySettings(settings_table = {})
 {
-	if(!("FatCatLibSettings" in ROOT))
+	if (!("FatCatLibSettings" in ROOT))
 		::FatCatLibSettings <- {KillWatchViewmodels = false, KillSoulPacks = false}
 
-	if(!("KillWatchViewmodels" in FatCatLibSettings))
+	if (!("KillWatchViewmodels" in FatCatLibSettings))
 		FatCatLibSettings.KillWatchViewmodels <- false
 
-	if("KillWatchViewmodels" in settings_table)
+	if ("KillWatchViewmodels" in settings_table)
 	{
-		if(FatCatLibSettings.KillWatchViewmodels != settings_table.KillWatchViewmodels)
+		if (FatCatLibSettings.KillWatchViewmodels != settings_table.KillWatchViewmodels)
 		{
 			FatCatLibSettings.KillWatchViewmodels <- settings_table.KillWatchViewmodels
 			ClientPrint(null, 3, FATCATLIB_PREFIX+"Set \x03KillWatchViewmodels\x01 to \"\x05" + settings_table.KillWatchViewmodels + "\x01\"\n")
@@ -96,9 +96,9 @@ function SetLibrarySettings(settings_table = {})
 	}
 }
 
-if("FatCatLibVersion" in ROOT && "developer" in FatCatLibVersion && FatCatLibVersion.developer == "true")
+if ("FatCatLibVersion" in ROOT && "developer" in FatCatLibVersion && FatCatLibVersion.developer == "true")
 {
-	if("PrintToChatAll" in ROOT)
+	if ("PrintToChatAll" in ROOT)
 		PrintToChatAll(FATCATLIB_PREFIX+"\x04DONT FORGET TO DISABLE DEVELOPER MODE!!!\x01")
 	else 
 		ClientPrint(null, 3, FATCATLIB_PREFIX+"\x04DONT FORGET TO DISABLE DEVELOPER MODE!!!\x01")
@@ -458,7 +458,7 @@ function ROOT::CTFPlayer::SetCond(cond, duration = -1)
 
 function ROOT::CTFPlayer::IsUberDraining() {
 	foreach (weapon in GetAllWeapons()) { 
-		if(HasProp(weapon, "m_bChargeRelease"))
+		if (HasProp(weapon, "m_bChargeRelease"))
 			return GetPropBool(weapon, "m_bChargeRelease")
 	}
 	return false
@@ -503,11 +503,11 @@ function ROOT::CTFPlayer::GetWeaponInSlotNew(slot = 0)
 	// sorts items into their slots
 	foreach(weapon in GetMyWeaponsArray())
 	{
-		if( weapon == null ) continue
+		if ( weapon == null ) continue
 		GetPlayerClass() == TF_CLASS_ENGINEER && weapon.GetClassname() == "tf_weapon_spellbook" ? MyWeapons[SLOT_PDA2] = weapon : MyWeapons[weapon.GetSlot()] = weapon
 	}
 
-	if(!IsValid() || !this)
+	if (!IsValid() || !this)
 		return null
 
 	for (local child = FirstMoveChild(); child; child = child.NextMovePeer())
@@ -517,12 +517,12 @@ function ROOT::CTFPlayer::GetWeaponInSlotNew(slot = 0)
 		if (!startswith(child.GetClassname(), "tf_wearable"))
 			continue
 
-		if(IsInArray(child.GetIDX(), WearableIDXs.Primarys))
+		if (IsInArray(child.GetIDX(), WearableIDXs.Primarys))
 		{
 			MyWeapons[SLOT_PRIMARY] = child
 			continue
 		}
-		if(IsInArray(child.GetIDX(), WearableIDXs.Secondarys))
+		if (IsInArray(child.GetIDX(), WearableIDXs.Secondarys))
 		{
 			MyWeapons[SLOT_SECONDARY] = child
 			continue
@@ -533,7 +533,7 @@ function ROOT::CTFPlayer::GetWeaponInSlotNew(slot = 0)
 
 function ROOT::CTFPlayer::GetWeaponInSlotNewTEST(slot = 0)
 {
-	if(!IsValid() || !this)
+	if (!IsValid() || !this)
 		return null
 
 	// 1. Check Wearables (Prioritized - logic overwrites standard slots)
@@ -555,7 +555,7 @@ function ROOT::CTFPlayer::GetWeaponInSlotNewTEST(slot = 0)
 	for(local i = 0; i < MAX_WEAPONS; i++) 
 	{ 
 		local weapon = GetWeaponInSlot(i)
-		if( weapon == null ) continue
+		if ( weapon == null ) continue
 
 		// Determine the *actual* slot this weapon occupies
 		local weaponSlot = weapon.GetSlot()
@@ -606,7 +606,7 @@ function ROOT::CTFPlayer::InRespawnRoom(any = false)
 {
 	foreach (respawnroom in GetAllEntitiesByClassname("func_respawnroom"))
 	{
-		if(!any) { if(respawnroom.GetTeam() != GetTeam()) continue }
+		if (!any) { if (respawnroom.GetTeam() != GetTeam()) continue }
 
 		respawnroom.RemoveSolidFlags(FSOLID_NOT_SOLID)
 		respawnroom.SetCollisionGroup(0)
@@ -622,7 +622,7 @@ function ROOT::CTFPlayer::InRespawnRoom(any = false)
 		respawnroom.AddSolidFlags(FSOLID_NOT_SOLID)
 		respawnroom.SetCollisionGroup(TFCOLLISION_GROUP_RESPAWNROOMS)
 
-		if(trace.hit && trace.enthit == respawnroom) return true
+		if (trace.hit && trace.enthit == respawnroom) return true
 	}
 	return false
 }
@@ -645,7 +645,7 @@ function ROOT::CTFPlayer::InAnyRespawnRoom()
 		respawnroom.AddSolidFlags(FSOLID_NOT_SOLID)
 		respawnroom.SetCollisionGroup(TFCOLLISION_GROUP_RESPAWNROOMS)
 
-		if(trace.hit && trace.enthit == respawnroom) return true
+		if (trace.hit && trace.enthit == respawnroom) return true
 	}
 	return false
 }
@@ -663,7 +663,7 @@ function ROOT::CTFPlayer::GetEveryTankWithin(range)
 	local list = []
 	for (local tank; tank = FindByClassnameWithin(tank, "tank", GetOrigin(), range); )
 	{
-		if(tank.GetTeam() == TF_TEAM_PVE_INVADERS) list.append(tank)
+		if (tank.GetTeam() == TF_TEAM_PVE_INVADERS) list.append(tank)
 	}
 	return list
 }
@@ -674,7 +674,7 @@ function ROOT::CTFPlayer::DamageEveryTankWithin(range, damage)
 {
 	for (local tank; tank = FindByClassnameWithin(tank, "tank", GetOrigin(), range); )
 	{
-		if(tank.GetTeam() == TF_TEAM_PVE_INVADERS) tank.TakeDamage(damage, 0, this)
+		if (tank.GetTeam() == TF_TEAM_PVE_INVADERS) tank.TakeDamage(damage, 0, this)
 	}
 }
 function ROOT::CTFPlayer::DamageEveryBotWithin(range, damage)
@@ -699,7 +699,7 @@ function ROOT::CTFPlayer::IsInvincible()
 {
 	foreach(Condition in Invincible_Conds)
 	{
-		if(InCond(Condition)) return true
+		if (InCond(Condition)) return true
 	}
 	return false
 }
@@ -720,27 +720,27 @@ function ROOT::CTFPlayer::IsAdmin()
 function ROOT::CTFPlayer::HasWeapon(index)
 {
 	foreach(weapon in GetAllWeapons())
-		if(weapon.GetIDX() == index) return true
+		if (weapon.GetIDX() == index) return true
 	return false
 }
 function ROOT::CTFPlayer::HasWeaponClassname(classname)
 {
 	foreach (weapon in GetAllWeapons())
-		if(weapon.GetClassname() == classname) return true
+		if (weapon.GetClassname() == classname) return true
 	return false
 }
 // TODO: Add to Snippets
 function ROOT::CTFPlayer::GetWeapon(index)
 {
 	foreach(weapon in GetAllWeapons())
-		if(weapon.GetIDX() == index) return weapon
+		if (weapon.GetIDX() == index) return weapon
 	return null
 }
 // TODO: Add to Snippets
 function ROOT::CTFPlayer::GetWeaponClassname(classname)
 {
 	foreach (weapon in GetAllWeapons())
-		if(weapon.GetClassname() == classname) return weapon
+		if (weapon.GetClassname() == classname) return weapon
 	return null
 }
 function ROOT::CTFPlayer::ResetPrimaryAmmo()
@@ -761,7 +761,7 @@ function ROOT::CTFPlayer::GetMaximumPrimaryAmmo()
 	local weapon = GetWeaponInSlotNew(SLOT_PRIMARY)
 	local orig_name = weapon.GetClassname()
 	local name = weapon.GetClassname()
-	if(startswith(orig_name, "tf_weapon_"))
+	if (startswith(orig_name, "tf_weapon_"))
 		name = orig_name.slice(10)
 	
 	switch (name)
@@ -819,9 +819,9 @@ function ROOT::CTFPlayer::GetMaximumPrimaryAmmo()
 	}
 	foreach (weapon in GetAllWeapons())
 	{
-		if(weapon.GetAttribute("provide on active", 0) == 1)
+		if (weapon.GetAttribute("provide on active", 0) == 1)
 		{
-			if(GetActiveWeapon() == weapon)
+			if (GetActiveWeapon() == weapon)
 			{
 				ammo_mult *= weapon.GetAttribute("hidden primary max ammo bonus", 1)
 				ammo_mult *= weapon.GetAttribute("maxammo primary increased", 1)
@@ -835,7 +835,7 @@ function ROOT::CTFPlayer::GetMaximumPrimaryAmmo()
 			ammo_mult *= weapon.GetAttribute("maxammo primary reduced", 1)
 		}
 	}
-	if(IsCarryingRune() && InCond(TF_COND_RUNE_HASTE))	
+	if (IsCarryingRune() && InCond(TF_COND_RUNE_HASTE))	
 		ammo_mult *= 2
 	
 	return (round == true ? ceil(ammo * ammo_mult) : (ammo * ammo_mult))
@@ -850,7 +850,7 @@ function ROOT::CTFPlayer::GetMaximumSecondaryAmmo()
 	local weapon = GetWeaponInSlotNew(SLOT_SECONDARY)
 	local orig_name = weapon.GetClassname()
 	local name = orig_name
-	if(startswith(orig_name, "tf_weapon_"))
+	if (startswith(orig_name, "tf_weapon_"))
 		name = orig_name.slice(10)
 
 	switch (name)
@@ -901,9 +901,9 @@ function ROOT::CTFPlayer::GetMaximumSecondaryAmmo()
 	}
 	foreach (weapon in GetAllWeapons())
 	{
-		if(weapon.GetAttribute("provide on active", 0) == 1)
+		if (weapon.GetAttribute("provide on active", 0) == 1)
 		{
-			if(GetActiveWeapon() == weapon)
+			if (GetActiveWeapon() == weapon)
 			{
 				ammo_mult *= weapon.GetAttribute("hidden secondary max ammo penalty", 1)
 				ammo_mult *= weapon.GetAttribute("maxammo secondary increased", 1)
@@ -917,7 +917,7 @@ function ROOT::CTFPlayer::GetMaximumSecondaryAmmo()
 			ammo_mult *= weapon.GetAttribute("maxammo secondary reduced", 1)
 		}
 	}
-	if(IsCarryingRune() && InCond(TF_COND_RUNE_HASTE))	
+	if (IsCarryingRune() && InCond(TF_COND_RUNE_HASTE))	
 		ammo_mult *= 2
 	return (round ? ceil(ammo * ammo_mult) : (ammo * ammo_mult))
 }
@@ -928,9 +928,9 @@ function ROOT::CTFPlayer::GetMaximumMetal()
 	local metal_mult = 1
 	foreach (weapon in GetAllWeapons())
 	{
-		if(weapon.HasAttribute("provide on active", 0) == 1)
+		if (weapon.HasAttribute("provide on active", 0) == 1)
 		{
-			if(GetActiveWeapon() == weapon)
+			if (GetActiveWeapon() == weapon)
 			{
 				metal_mult *= weapon.GetAttribute("maxammo metal increased", 1)
 				metal_mult *= weapon.GetAttribute("maxammo metal reduced", 1)
@@ -942,7 +942,7 @@ function ROOT::CTFPlayer::GetMaximumMetal()
 			metal_mult *= weapon.GetAttribute("maxammo metal reduced", 1)
 		}
 	}
-	if(IsCarryingRune() && InCond(TF_COND_RUNE_HASTE))	
+	if (IsCarryingRune() && InCond(TF_COND_RUNE_HASTE))	
 		metal_mult *= 2
 	return metal * metal_mult
 }
@@ -957,7 +957,7 @@ function ROOT::CTFPlayer::ResetAmmo()
 function ROOT::CTFPlayer::InMultiCond(conds)
 {
 	foreach(cond in conds)
-		if(InCond(cond))
+		if (InCond(cond))
 			return true
 	
 	return false
@@ -983,12 +983,12 @@ function ROOT::CTFPlayer::GetTranslatedString(string)
 	local lang = GetLanguage()
 	local translated_string = ""
 	//hmm, mising all translations?
-	if(!("TRANSLATION_TABLE" in ROOT))
+	if (!("TRANSLATION_TABLE" in ROOT))
 		return " MISSING TRANSLATION TABLE!!!!!"
 
 	// we dont have this language translated yet, or its missing
 	// default to english
-	if(!(lang in TRANSLATION_TABLE))
+	if (!(lang in TRANSLATION_TABLE))
 	{
 		lang = "english"
 		PrintToHud("Please contact The Fatcat to assist with adding translations. (Use !translate)")
@@ -997,7 +997,7 @@ function ROOT::CTFPlayer::GetTranslatedString(string)
 	local translation_table = TRANSLATION_TABLE[lang]
 
 	// so... we dont have this string yet, or is misspelled, idk
-	if(!(string in translation_table))
+	if (!(string in translation_table))
 		return format(" \x01MISSING TRANSLATION STRING FOR \x01\"\x03%s\x01\"", string.tostring())
 	
 	return translation_table[string]
@@ -1056,7 +1056,7 @@ function ROOT::CTFPlayer::ResetCorrosion()
 
 function ROOT::CTFPlayer::GetCorrosion()
 {
-	if( GetScope(this) && "Corrosion" in GetScope(this))
+	if ( GetScope(this) && "Corrosion" in GetScope(this))
 		return GetScope(this).Corrosion
 	else
 	{
@@ -1086,23 +1086,23 @@ function ROOT::CTFPlayer::ClearCorrosion()
 }
 function ROOT::CTFPlayer::MakeCorrosion(Player, Weapon, lifetime, damage = 5, ticktime = 0.5)
 {
-	if(IsInvincible())
+	if (IsInvincible())
 	{
 		ClearSingleCorrosion()
 		return
 	}
 
-	if(Weapon && Weapon.GetIDX() == TF_WEAPON_BLUTSAUGER)
+	if (Weapon && Weapon.GetIDX() == TF_WEAPON_BLUTSAUGER)
 		EntFireNew(this, "Color", BLUTSAUGER_SETTINGS.CorrosionColor)
 
 	local Corrosion = GetCorrosion()
 
 	local flExpireTime = Time() + lifetime.tofloat() + ticktime
 
-	if(	Corrosion.hCorrosionAttacker && Corrosion.hCorrosionAttacker == Player
+	if (	Corrosion.hCorrosionAttacker && Corrosion.hCorrosionAttacker == Player
 		&& Corrosion.hCorrosionWeapon && Corrosion.hCorrosionWeapon == Weapon )
 	{
-		if(flExpireTime > Corrosion.flCorrosionRemoveTime)
+		if (flExpireTime > Corrosion.flCorrosionRemoveTime)
 		{
 			Corrosion.flCorrosionRemoveTime = flExpireTime
 		}
@@ -1160,7 +1160,7 @@ foreach ( key, value in CTFPlayer )
 {
     if ( typeof( value ) == "function" )
 	{
-		if(NoFormatToBot.find(key) != null)
+		if (NoFormatToBot.find(key) != null)
 			continue
 		CTFBot[ key ] <- value
 		// printf("Formatted Function %s to CTFBot\n", key)
@@ -1224,7 +1224,7 @@ function ROOT::CTFWeaponBase::SetProp(propertyName, value)
 // TODO: Add to Snippets
 function ROOT::CTFWeaponBase::SetPropArray(propertyName, value, index)
 {
-	if(!HasProp(this, propertyName))
+	if (!HasProp(this, propertyName))
 	{
 		printf("%s does not have property %s\n", GetClassname(), propertyName)
 		return
@@ -1249,36 +1249,36 @@ function ROOT::CTFWeaponBase::SetPropArray(propertyName, value, index)
 }
 // TODO: Add to Snippets
 function ROOT::CTFWeaponBase::SetSpellIndex(index)
-	if(HasProp(this, "m_iSelectedSpellIndex")) { SetPropInt(this, "m_iSelectedSpellIndex", index) }
+	if (HasProp(this, "m_iSelectedSpellIndex")) { SetPropInt(this, "m_iSelectedSpellIndex", index) }
 // TODO: Add to Snippets
 function ROOT::CTFWeaponBase::GetSpellIndex()
 	// return HasProp(this, "m_iSelectedSpellIndex") ? GetPropInt(this, "m_iSelectedSpellIndex") : null
-	if(HasProp(this, "m_iSelectedSpellIndex")) { return GetPropInt(this, "m_iSelectedSpellIndex") } else { return null }
+	if (HasProp(this, "m_iSelectedSpellIndex")) { return GetPropInt(this, "m_iSelectedSpellIndex") } else { return null }
 // TODO: Add to Snippets
 function ROOT::CTFWeaponBase::GetSpellCharges()
-	if(HasProp(this, "m_iSpellCharges")) { return GetPropInt(this, "m_iSpellCharges") } else { return null }
+	if (HasProp(this, "m_iSpellCharges")) { return GetPropInt(this, "m_iSpellCharges") } else { return null }
 // TODO: Add to Snippets
 function ROOT::CTFWeaponBase::SetSpellCharges(charge)
-	if(HasProp(this, "m_iSpellCharges")) { SetPropInt(this, "m_iSpellCharges", charge) }
+	if (HasProp(this, "m_iSpellCharges")) { SetPropInt(this, "m_iSpellCharges", charge) }
 // TODO: Add to Snippets
 function ROOT::CTFWeaponBase::IncrementSpellCharge(num)
-	if(HasProp(this, "m_iSpellCharges")) SetPropInt(this, "m_iSpellCharges", GetSpellCharges() + num)
+	if (HasProp(this, "m_iSpellCharges")) SetPropInt(this, "m_iSpellCharges", GetSpellCharges() + num)
 // TODO: Add to Snippets
 function ROOT::CTFWeaponBase::IsHolstered()
-	if(HasProp(this, "m_bHolstered")) { return GetPropInt(this, "m_bHolstered") } else { return null }
+	if (HasProp(this, "m_bHolstered")) { return GetPropInt(this, "m_bHolstered") } else { return null }
 
 // TODO: Add to Snippets
 function ROOT::CTFWeaponBase::SetUberChargePercent(level)
-	if(HasProp(this, "LocalTFWeaponMedigunData.m_flChargeLevel")) SetPropFloat(this, "LocalTFWeaponMedigunData.m_flChargeLevel", level/100)
+	if (HasProp(this, "LocalTFWeaponMedigunData.m_flChargeLevel")) SetPropFloat(this, "LocalTFWeaponMedigunData.m_flChargeLevel", level/100)
 // TODO: Add to Snippets
 function ROOT::CTFWeaponBase::GetUberChargePercent()
-	if(HasProp(this, "LocalTFWeaponMedigunData.m_flChargeLevel")) { return GetPropFloat(this, "LocalTFWeaponMedigunData.m_flChargeLevel") } else {return null}
+	if (HasProp(this, "LocalTFWeaponMedigunData.m_flChargeLevel")) { return GetPropFloat(this, "LocalTFWeaponMedigunData.m_flChargeLevel") } else {return null}
 // TODO: Add to Snippets
 function ROOT::CTFWeaponBase::IncreaseUberChargePercent(level)
-	if(HasProp(this, "LocalTFWeaponMedigunData.m_flChargeLevel")) SetPropFloat(this, "LocalTFWeaponMedigunData.m_flChargeLevel", GetUberChargePercent() + (level/100))
+	if (HasProp(this, "LocalTFWeaponMedigunData.m_flChargeLevel")) SetPropFloat(this, "LocalTFWeaponMedigunData.m_flChargeLevel", GetUberChargePercent() + (level/100))
 // TODO: Add to Snippets
 function ROOT::CTFWeaponBase::DecreaseUberChargePercent(level)
-	if(HasProp(this, "LocalTFWeaponMedigunData.m_flChargeLevel")) SetPropFloat(this, "LocalTFWeaponMedigunData.m_flChargeLevel", GetUberChargePercent() - (level/100))
+	if (HasProp(this, "LocalTFWeaponMedigunData.m_flChargeLevel")) SetPropFloat(this, "LocalTFWeaponMedigunData.m_flChargeLevel", GetUberChargePercent() - (level/100))
 
 // TODO: Add to Snippets
 function ROOT::CTFWeaponBase::ModifySpells(index, max, compared = 1, mod_compare = 1)
@@ -1298,61 +1298,61 @@ function ROOT::CTFWeaponBase::ModifySpells(index, max, compared = 1, mod_compare
 // with old scripts, they use the newer versions
 function ROOT::GetWeaponInSlot(player = null, slot = 0)
 {
-	if( !player ) return null
+	if ( !player ) return null
 	DeprecatedWarning(getstackinfos(1), getstackinfos(2))
 	return player.GetWeaponInSlot(slot)
 }
 function ROOT::GetWeaponIndexInSlot(player = null, slot = 0)
 {
-	if( !player ) return null
+	if ( !player ) return null
 	DeprecatedWarning(getstackinfos(1), getstackinfos(2))
 	return player.GetWeaponIDXInSlot(slot)
 }
 function ROOT::GetActiveWeaponIDX(player)
 {
-	if( !player ) return null
+	if ( !player ) return null
 	DeprecatedWarning(getstackinfos(1), getstackinfos(2))
 	return GetWeaponIDX(player.GetActiveWeapon())
 }
 function ROOT::GetPlayerSpellBook(player)
 {
-	if( !player ) return null
+	if ( !player ) return null
 	DeprecatedWarning(getstackinfos(1), getstackinfos(2))
 	return player.GetSpellBook()
 }
 function ROOT::GetAbilityWeaponIndex(player)
 {
-	if( !player ) return null
+	if ( !player ) return null
 	DeprecatedWarning(getstackinfos(1), getstackinfos(2))
 	return player.GetAbilityWeaponIDX()
 }
 function ROOT::ForceTaunt(player, taunt_id)
 {
-	if( !player ) return null
+	if ( !player ) return null
 	DeprecatedWarning(getstackinfos(1), getstackinfos(2))
 	player.ForceTaunt(taunt_id)
 }
 function ROOT::IsOnGround(player)
 {
-	if( !player ) return null
+	if ( !player ) return null
 	DeprecatedWarning(getstackinfos(1), getstackinfos(2))
 	return player.IsOnGround()
 }
 function ROOT::GetPlayerName(player)
 {
-	if( !player ) return null
+	if ( !player ) return null
 	DeprecatedWarning(getstackinfos(1), getstackinfos(2))
 	return player.GetUserName()
 }
 function ROOT::GetPlayerSteamID(player)
 {
-	if( !player ) return null
+	if ( !player ) return null
 	DeprecatedWarning(getstackinfos(1), getstackinfos(2))
 	return GetPropString(player, "m_szNetworkIDString")
 }
 function ROOT::IsPlayerPressingButton(player = null, button = null)
 {
-	if( !player || !button ) return false
+	if ( !player || !button ) return false
 	DeprecatedWarning(getstackinfos(1), getstackinfos(2))
 	return player.IsPressingButton(button)
 }
@@ -1380,7 +1380,7 @@ function ROOT::PrintToChatAllFilter(message, filter = [])
 			}
 
 		}
-		if(filtered)
+		if (filtered)
 			continue
 		else
 			ClientPrint(player, 3,  message == null ? "null" : message.tostring())
@@ -1401,7 +1401,7 @@ function ROOT::PrintToHudAllFilter(message, filter = [])
 			}
 
 		}
-		if(filtered)
+		if (filtered)
 			continue
 		else
 			ClientPrint(player, 2,  message == null ? "null" : message.tostring())
@@ -1412,7 +1412,7 @@ function ROOT::PrintToAdmins(level, message)
 {
 	foreach (player in GetEveryHuman())
 	{
-		if(player.IsAdmin())
+		if (player.IsAdmin())
 		{
 			ClientPrint(player, level, message)
 		}
@@ -1422,7 +1422,7 @@ function ROOT::PrintToAdmins(level, message)
 // PrintTable will now print nested tables
 function ROOT::PrintTable(table, filter = [], extra_indent = 0)
 {
-	if( type(table) != "table")
+	if ( type(table) != "table")
 	{
 		printl("Trying to PrintTable() a " + type(table))
 		return
@@ -1430,7 +1430,7 @@ function ROOT::PrintTable(table, filter = [], extra_indent = 0)
 
 	foreach (item, value in table)
 	{
-		if(item == "__vname" || item == "__vrefs")
+		if (item == "__vname" || item == "__vrefs")
 			continue
 		
 		if (filter.len() > 0 && filter.find(item) != null)
@@ -1444,11 +1444,11 @@ function ROOT::PrintTable(table, filter = [], extra_indent = 0)
 		}
 		printl(indents + item + " : " + value)
 
-		if(type(value) == "table")
+		if (type(value) == "table")
 		{
 			PrintTable(value, filter, extra_indent + 1)
 		}
-		if(type(value) == "array")
+		if (type(value) == "array")
 		{
 			PrintArray(value, filter, extra_indent + 1)
 		}
@@ -1457,7 +1457,7 @@ function ROOT::PrintTable(table, filter = [], extra_indent = 0)
 
 function ROOT::PrintArray(array, filter = [], extra_indent = 0)
 {
-	if( type(array) != "array")
+	if ( type(array) != "array")
 	{
 		printl("Trying to PrintArray() a " + type(array))
 		return
@@ -1465,7 +1465,7 @@ function ROOT::PrintArray(array, filter = [], extra_indent = 0)
 
 	foreach (item in array)
 	{
-		if(item == "__vname" || item == "__vrefs")
+		if (item == "__vname" || item == "__vrefs")
 			continue
 
 		if (filter.len() > 0 && filter.find(item) != null)
@@ -1479,11 +1479,11 @@ function ROOT::PrintArray(array, filter = [], extra_indent = 0)
 		}
 		printl(indents + item)
 
-		if(type(item) == "table")
+		if (type(item) == "table")
 		{
 			PrintTable(item, filter, extra_indent + 1)
 		}
-		if(type(item) == "array")
+		if (type(item) == "array")
 		{
 			PrintArray(item, filter, extra_indent + 1)
 		}
@@ -1492,7 +1492,7 @@ function ROOT::PrintArray(array, filter = [], extra_indent = 0)
 
 function ROOT::PrintClass(clas, filter = "")
 {
-	if( typeof clas != "class")
+	if ( typeof clas != "class")
 	{
 		printl("Trying to PrintClass() an " + typeof clas)
 		return
@@ -1500,7 +1500,7 @@ function ROOT::PrintClass(clas, filter = "")
 
 	foreach (item, value in clas)
 	{
-		if(typeof value != filter)
+		if (typeof value != filter)
 		{
 			printl(typeof value + "\t" + item + "\t:\t" + value)
 		}
@@ -1510,28 +1510,28 @@ function ROOT::PrintClass(clas, filter = "")
 //// Entity Debug
 function ROOT::ShowBBOX(entity = null, rgba = Vector4D(255, 0, 0, 5), duration = 1)
 {
-	if( !entity ) 
+	if ( !entity ) 
 		return
 	DebugDrawBox(entity.GetOrigin(), entity.GetBoundingMins(), entity.GetBoundingMaxs(), rgba.x, rgba.y, rgba.z, rgba.w, duration)
 }
 
 function ROOT::ShowOBB(entity = null, rgba = Vector4D(255, 0, 0, 5), duration = 1)
 {
-	if( !entity ) 
+	if ( !entity ) 
 		return
 	DebugDrawBoxAngles(entity.GetOrigin(), entity.GetBoundingMins(), entity.GetBoundingMaxs(), entity.GetAbsAngles(), Vector(rgba.x, rgba.y, rgba.z), rgba.w, duration)
 }
 
 function ROOT::ShowAABB(entity = null, rgba = Vector4D(255, 0, 0, 5), duration = 1)
 {
-	if( !entity ) 
+	if ( !entity ) 
 		return
 	DebugDrawBox(entity.GetOrigin(),entity.GetBoundingMins(), entity.GetBoundingMaxs(), rgba.x, rgba.y, rgba.z, rgba.w, duration)
 }
 
 function ROOT::DebugDrawTrigger(trigger = null, color = Vector4D(255, 128, 0, 1), duration = 5)
 {
-	if( !trigger ) return
+	if ( !trigger ) return
 
 	local origin = trigger.GetOrigin()
 	local mins = GetPropVector(trigger, "m_Collision.m_vecMins")
@@ -1555,7 +1555,7 @@ function ROOT::IsListenServer()
 //// Entity Functions
 function ROOT::EnableStringPurge(entity)
 {
-	if( !entity )
+	if ( !entity )
 		return
 	SetPropBool(entity, "m_bForcePurgeFixedupStrings", true)
 	return entity
@@ -1610,7 +1610,7 @@ function ROOT::CountEdicts()
 
 function ROOT::GetScope(entity)
 {
-	if(!entity || !entity.IsValid())
+	if (!entity || !entity.IsValid())
 		return null
 	entity.ValidateScriptScope()
 	return entity.GetScriptScope()
@@ -1622,7 +1622,7 @@ function ROOT::GetAllEntitiesByClassname(classname)
 	local list = []
 	for (local entity; entity = FindByClassname(entity, classname); )
 	{
-		if(entity != null) list.append(entity)
+		if (entity != null) list.append(entity)
 	}
 	return list
 }
@@ -1631,7 +1631,7 @@ function ROOT::GetAllEntitiesByClassnameWithin(classname, center, radius)
 	local list = []
 	for (local entity; entity = FindByClassnameWithin(entity, classname, center, radius); )
 	{
-		if(entity != null) list.append(entity)
+		if (entity != null) list.append(entity)
 	}
 	return list
 }
@@ -1640,7 +1640,7 @@ function ROOT::GetAllEntitiesByTargetname(targtetname)
 	local list = []
 	for (local entity; entity = FindByName(entity, targtetname); )
 	{
-		if(entity != null) list.append(entity)
+		if (entity != null) list.append(entity)
 	}
 	return list
 }
@@ -1649,7 +1649,7 @@ function ROOT::GetAllEntitiesByTargetnameWithin(targtetname, center, radius)
 	local list = []
 	for (local entity; entity = FindByNameWithin(entity, targtetname, center, radius); )
 	{
-		if(entity != null) list.append(entity)
+		if (entity != null) list.append(entity)
 	}
 	return list
 }
@@ -1712,7 +1712,7 @@ function ROOT::GetEveryTank()
 	local list = []
 	foreach	(tank in GetAllEntitiesByClassname("tank_boss"))
 	{
-		if(tank != null) list.append(tank)
+		if (tank != null) list.append(tank)
 	}
 	return list
 }
@@ -1722,7 +1722,7 @@ function ROOT::GetEveryTankWithin(center, radius)
 	local list = []
 	foreach (tank in GetAllEntitiesByClassnameWithin("tank_boss", center, radius))
 	{
-		if(tank != null) list.append(tank)
+		if (tank != null) list.append(tank)
 	}
 	return list
 }
@@ -1775,7 +1775,7 @@ function ROOT::IsPointInRespawnRoom(point)
 		respawnroom.AddSolidFlags(FSOLID_NOT_SOLID)
 		respawnroom.SetCollisionGroup(TFCOLLISION_GROUP_RESPAWNROOMS)
 
-		if(trace.hit && trace.enthit == respawnroom) return true
+		if (trace.hit && trace.enthit == respawnroom) return true
 	}
 	return false
 }
@@ -1783,7 +1783,7 @@ function ROOT::IsHullInRespawnRoom(start, min, max)
 {
 	foreach (respawnroom in GetAllEntitiesByClassname("func_respawnroom"))
 	{
-		if(respawnroom.GetTeam() != TF_TEAM_PVE_DEFENDERS) continue
+		if (respawnroom.GetTeam() != TF_TEAM_PVE_DEFENDERS) continue
 
 		respawnroom.RemoveSolidFlags(FSOLID_NOT_SOLID)
 		respawnroom.SetCollisionGroup(0)
@@ -1799,18 +1799,18 @@ function ROOT::IsHullInRespawnRoom(start, min, max)
 		respawnroom.AddSolidFlags(FSOLID_NOT_SOLID)
 		respawnroom.SetCollisionGroup(TFCOLLISION_GROUP_RESPAWNROOMS)
 
-		if(trace.hit && trace.enthit == respawnroom) return true
+		if (trace.hit && trace.enthit == respawnroom) return true
 	}
 	return false
 }
 // TODO: Add to Snippets
 function ROOT::IsValidEnemy(entity)
 {
-	if(entity.GetTeam() != TF_TEAM_PVE_INVADERS) return false
+	if (entity.GetTeam() != TF_TEAM_PVE_INVADERS) return false
 
 	foreach(classname in [ "player", "tank_boss", "obj_dispenser", "obj_sentrygun", "obj_teleporter" ])
 	{
-		if(entity.GetClassname() == classname)
+		if (entity.GetClassname() == classname)
 		{
 			return true
 		}
@@ -1822,54 +1822,54 @@ function ROOT::IsValidEnemy(entity)
 function ROOT::GetWeaponIDX(weapon = null)
 {
 	DeprecatedWarning(getstackinfos(1), getstackinfos(2))
-	if( !weapon ) return null
-	if(!HasProp(weapon, "m_AttributeManager.m_Item.m_iItemDefinitionIndex")) return null
+	if ( !weapon ) return null
+	if (!HasProp(weapon, "m_AttributeManager.m_Item.m_iItemDefinitionIndex")) return null
 	return GetPropInt(weapon, "m_AttributeManager.m_Item.m_iItemDefinitionIndex")
 }
 
 function ROOT::SetSpellIndex(spell_book, index)
 {
 	DeprecatedWarning(getstackinfos(1), getstackinfos(2))
-	if( !spell_book ) return
-	if(!HasProp(spell_book, "m_iSelectedSpellIndex")) return
+	if ( !spell_book ) return
+	if (!HasProp(spell_book, "m_iSelectedSpellIndex")) return
 	SetPropInt(spell_book, "m_iSelectedSpellIndex", index)
 }
 
 function ROOT::GetSpellIndex(spell_book)
 {
 	DeprecatedWarning(getstackinfos(1), getstackinfos(2))
-	if( !spell_book ) return -2
-	if(!HasProp(spell_book, "m_iSelectedSpellIndex")) return -2
+	if ( !spell_book ) return -2
+	if (!HasProp(spell_book, "m_iSelectedSpellIndex")) return -2
 	return GetPropInt(spell_book, "m_iSelectedSpellIndex")
 }
 
 function ROOT::GetSpellCharges(spell_book)
 {
 	DeprecatedWarning(getstackinfos(1), getstackinfos(2))
-	if( !spell_book ) return 0
-	if(!HasProp(spell_book, "m_iSpellCharges")) return 0
+	if ( !spell_book ) return 0
+	if (!HasProp(spell_book, "m_iSpellCharges")) return 0
 	return GetPropInt(spell_book, "m_iSpellCharges")
 }
 
 function ROOT::IncrementSpellCharge(spell_book, num)
 {
 	DeprecatedWarning(getstackinfos(1), getstackinfos(2))
-	if( !spell_book ) return
-	if(!HasProp(spell_book, "m_iSpellCharges")) return
+	if ( !spell_book ) return
+	if (!HasProp(spell_book, "m_iSpellCharges")) return
 	SetPropInt(spell_book, "m_iSpellCharges", GetPropInt(spell_book, "m_iSpellCharges") + num)
 }
 
 function ROOT::IsHolstered(weapon)
 {
 	DeprecatedWarning(getstackinfos(1), getstackinfos(2))
-	if(!HasProp(weapon, "m_bHolstered")) return false
+	if (!HasProp(weapon, "m_bHolstered")) return false
 	return GetPropBool(weapon, "m_bHolstered")
 }
 // end deprecated
 function ROOT::GetBuilder(entity)
 {
 	EnableStringPurge(entity)
-	if(!HasProp(entity, "m_hBuilder")) return null
+	if (!HasProp(entity, "m_hBuilder")) return null
 
 	local entity = GetPropEntity(entity, "m_hBuilder")
 	return EnableStringPurge(entity)
@@ -1878,7 +1878,7 @@ function ROOT::GetBuilder(entity)
 function ROOT::GetLauncher(entity)
 {
 	EnableStringPurge(entity)
-	if(!HasProp(entity, "m_hLauncher")) return null
+	if (!HasProp(entity, "m_hLauncher")) return null
 
 	local entity = GetPropEntity(entity, "m_hLauncher")
 	return EnableStringPurge(entity)
@@ -1886,16 +1886,16 @@ function ROOT::GetLauncher(entity)
 
 function ROOT::GetFlagStatus(flag)
 {
-	if(!flag) return null
+	if (!flag) return null
 	EnableStringPurge(flag)
-	if(!HasProp(flag, "m_nFlagStatus")) return null
+	if (!HasProp(flag, "m_nFlagStatus")) return null
 	return GetPropInt(flag, "m_nFlagStatus")
 }
 // TODO: Add to Snippets
 function ROOT::GetState(entity)
 {
 	EnableStringPurge(entity)
-	if(!HasProp(entity, "m_iState")) return null
+	if (!HasProp(entity, "m_iState")) return null
 	return GetPropInt(entity, "m_iState")
 }
 // TODO: Add to Snippets
@@ -1907,9 +1907,9 @@ function ROOT::ClearThinks(entity)
 // TODO: Add to Snippets
 function ROOT::IsBuildingValid(building)
 {
-	if(!building) return null
+	if (!building) return null
 	EnableStringPurge(building)
-	if(!HasProp(building, "m_bServerOverridePlacement")) return null
+	if (!HasProp(building, "m_bServerOverridePlacement")) return null
 	return GetPropBool(building, "m_bServerOverridePlacement")
 }
 
@@ -1917,7 +1917,7 @@ function ROOT::IsBuildingValid(building)
 
 function ROOT::SetCvar(convar, value, admin_notify = false, notify_all = false)
 {
-	if(!Convars.IsConVarOnAllowList(convar))
+	if (!Convars.IsConVarOnAllowList(convar))
 	{
 		PrintToAdmins(3, "\x07FF0000fatcat_library::SetCvar: \x01Warning Cvar \x03" + convar + "\x01 is Not on the Allowlist!")
 		PrintToAdmins(2, "fatcat_library::SetCvar: Warning Cvar \"" + convar + "\" is Not on the Allowlist!")
@@ -1925,9 +1925,9 @@ function ROOT::SetCvar(convar, value, admin_notify = false, notify_all = false)
 	}
 
 	Convars.SetValue(convar, value)
-	if( notify_all )
+	if ( notify_all )
 		PrintToChatAll("Server cvar \'" + convar + "\' changed to " + value)
-	else if( admin_notify )
+	else if ( admin_notify )
 		PrintToAdmins(3, "Server cvar \'" + convar + "\' changed to " + value)
 }
 
@@ -1936,9 +1936,9 @@ function ROOT::EntFireNew(target, action, input = "", delay = -1, activator = nu
 {
 	PurgeString(action)
 	PurgeString(input)
-	if(type(target) == "string")
+	if (type(target) == "string")
 		EntFire(target, action, input, delay, activator)
-	else if(type(target) == "instance")
+	else if (type(target) == "instance")
 		EntFireByHandle(target, action, input, delay, activator, caller)
 	PurgeString(action)
 	PurgeString(input)
@@ -1973,7 +1973,7 @@ function ROOT::GetClientConVar(cvar, entindex)
 
 function ROOT::CreateTestTank(origin = Vector(0, 0, 0), angles = QAngle(0, 0, 0))
 {
-	if(FindByName(null, "Test_Tank"))
+	if (FindByName(null, "Test_Tank"))
 		FindByName(null, "Test_Tank").Kill()
 
 	local tank = SpawnEntityFromTable("tank_boss", {
@@ -2011,7 +2011,7 @@ function ROOT::DeprecatedWarning(info1, info2)
 function ROOT::IsEntityAProjectile(entity)
 	return startswith(entity.GetClassname(), "tf_projectile")
 // TODO: Add to Snippets
-if("Assert" in ROOT && !("ASSERT" in ROOT))
+if ("Assert" in ROOT && !("ASSERT" in ROOT))
 	::ASSERT <- Assert
 //// Math
 ::MATH <- {
@@ -2031,9 +2031,9 @@ if("Assert" in ROOT && !("ASSERT" in ROOT))
 	{
 		if ( maxVal < minVal )
 			return maxVal;
-		else if( val < minVal )
+		else if ( val < minVal )
 			return minVal;
-		else if( val > maxVal )
+		else if ( val > maxVal )
 			return maxVal;
 		else
 			return val;
@@ -2059,9 +2059,9 @@ if("Assert" in ROOT && !("ASSERT" in ROOT))
 	}
 	function RandomVec3(min, max, type = "int")
 	{
-		if(type == "int")
+		if (type == "int")
 			return Vector(RandomInt(min, max), RandomInt(min, max), RandomInt(min, max))
-		if(type == "float")
+		if (type == "float")
 			return Vector(RandomFloat(min, max), RandomFloat(min, max), RandomFloat(min, max))
 	}
 }
@@ -2081,9 +2081,9 @@ function ROOT::clamp( val, minVal, maxVal )
 	DeprecatedWarning(getstackinfos(1), getstackinfos(2))
 	if ( maxVal < minVal )
 		return maxVal;
-	else if( val < minVal )
+	else if ( val < minVal )
 		return minVal;
-	else if( val > maxVal )
+	else if ( val > maxVal )
 		return maxVal;
 	else
 		return val;
@@ -2114,20 +2114,20 @@ function ROOT::ConvertRadiusToSndLvl(radius)
 function ROOT::CreateAoE(owner, center, radius, maxDmg, minDmg, ignore = [], dmg_Type = DMG_BLAST, sound = "weapons/explode1.wav", particle = "ExplosionCore_Wall")
 {
 	local scope = GetScope(owner)
-	if(IsNotInScope("LastExplosionTime", scope))
+	if (IsNotInScope("LastExplosionTime", scope))
 		scope.LastExplosionTime <- 0
 
 	DebugDrawClear()
 	PrecacheSound(sound)
 	foreach ( target in GetAllPlayers().filter(@(i, p) table.ignore.find(p) == null ) )
 	{
-		if(target.GetTeam() == table.owner.GetTeam())
+		if (target.GetTeam() == table.owner.GetTeam())
 			continue
 
 		local delta = target.GetCenter() - center
 		local distance = delta.Norm()
 
-		if(distance > radius)
+		if (distance > radius)
 			continue
 
 		local damage = MATH.RemapValue(distance, 0, radius, maxDmg, minDmg)
@@ -2137,7 +2137,7 @@ function ROOT::CreateAoE(owner, center, radius, maxDmg, minDmg, ignore = [], dmg
 	}
 	DebugDrawCircle(ignore[0].GetOrigin() + Vector(0, 0, 16), Vector(255, 0, 0), 50, radius, false, 15)
 	DispatchParticleEffect(particle, center, QAngle(-90, 0, 0).Forward())
-	if(scope.LastExplosionTime <= Time())
+	if (scope.LastExplosionTime <= Time())
 	{
 		EmitSoundEx({
 			sound_name = sound
@@ -2159,20 +2159,20 @@ function ROOT::CreateAoETable(table = {
 	particle = "ExplosionCore_Wall" })
 {
 	local scope = GetScope(table.owner)
-	if(IsNotInScope("LastExplosionTime", scope))
+	if (IsNotInScope("LastExplosionTime", scope))
 		scope.LastExplosionTime <- 0
 
 	DebugDrawClear()
 	PrecacheSound(table.sound)
 	foreach ( target in GetAllPlayers().filter(@(i, p) table.ignore.find(p) == null ) )
 	{
-		if(target.GetTeam() == table.owner.GetTeam())
+		if (target.GetTeam() == table.owner.GetTeam())
 			continue
 
 		local delta = target.GetCenter() - table.center
 		local distance = delta.Norm()
 
-		if(distance > table.radius)
+		if (distance > table.radius)
 			continue
 
 		local damage = MATH.RemapVal(distance, 0, table.radius, table.maxDmg, table.minDmg)
@@ -2182,7 +2182,7 @@ function ROOT::CreateAoETable(table = {
 	}
 	DebugDrawCircle(table.center + Vector(0, 0, 16), Vector(255, 0, 0), 50, table.radius, false, 15)
 	DispatchParticleEffect(table.particle, table.center, QAngle(-90, 0, 0).Forward())
-	if(scope.LastExplosionTime <= Time())
+	if (scope.LastExplosionTime <= Time())
 	{
 		EmitSoundEx({
 			sound_name = table.sound
@@ -2196,7 +2196,7 @@ function ROOT::CreateAoETable(table = {
 function ROOT::CreateKnifeAoE(owner, weapon, center, radius, damage, ignore = [], dmg_Type = DMG_BLAST, sound = "weapons/barret_arm_fizzle.wav", particle = "drg_cow_explosioncore_charged")
 {
 	local scope = GetScope(owner)
-	if(IsNotInScope("LastExplosionTime", scope))
+	if (IsNotInScope("LastExplosionTime", scope))
 		scope.LastExplosionTime <- 0
 
 	DebugDrawClear()
@@ -2206,7 +2206,7 @@ function ROOT::CreateKnifeAoE(owner, weapon, center, radius, damage, ignore = []
 		local delta = target.GetCenter() - center
 		local distance = delta.Norm()
 
-		if(distance > radius)
+		if (distance > radius)
 			continue
 
 		target.TakeDamageCustom(owner, owner, weapon, Vector(0, 0, 0), Vector(0, 0, 0) , damage, dmg_Type, TF_DMG_CUSTOM_TRIGGER_HURT)
@@ -2214,7 +2214,7 @@ function ROOT::CreateKnifeAoE(owner, weapon, center, radius, damage, ignore = []
 	}
 	DebugDrawCircle(ignore[0].GetOrigin() + Vector(0, 0, 16), Vector(255, 0, 0), 50, radius, false, 15)
 	DispatchParticleEffect(particle, center, QAngle(-90, 0, 0).Forward())
-	if(scope.LastExplosionTime <= Time())
+	if (scope.LastExplosionTime <= Time())
 	{
 		EmitSoundEx({
 			sound_name = sound
@@ -2236,7 +2236,7 @@ function ROOT::CreateKnifeAoETable(table = {
 	particle = "drg_cow_explosioncore_charged" })
 {
 	local scope = GetScope(table.owner)
-	if(IsNotInScope("LastEHExplosionTime", scope))
+	if (IsNotInScope("LastEHExplosionTime", scope))
 		scope.LastEHExplosionTime <- 0
 
 	DebugDrawClear()
@@ -2246,7 +2246,7 @@ function ROOT::CreateKnifeAoETable(table = {
 		local delta = target.GetCenter() - table.center
 		local distance = delta.Norm()
 
-		if(distance > table.radius)
+		if (distance > table.radius)
 			continue
 
 		target.TakeDamageCustom(table.owner, table.owner, table.weapon, Vector(0, 0, 0), Vector(0, 0, 0) , table.damage, table.dmg_Type, TF_DMG_CUSTOM_TRIGGER_HURT)
@@ -2254,7 +2254,7 @@ function ROOT::CreateKnifeAoETable(table = {
 	}
 	DebugDrawCircle(table.ignore[0].GetOrigin() + Vector(0, 0, 16), Vector(255, 0, 0), 50, table.radius, false, 15)
 	DispatchParticleEffect(table.particle, table.center, QAngle(-90, 0, 0).Forward())
-	if(scope.LastEHExplosionTime <= Time())
+	if (scope.LastEHExplosionTime <= Time())
 	{
 		EmitSoundEx({
 			sound_name = table.sound
@@ -2295,7 +2295,7 @@ function ROOT::CreatePickup(table = {
 	// EnableStringPurge(pickup)
 
 	GetScope(pickup).life_time <- Time() + table.lifetime
-	GetScope(pickup).LifeTime <- function() { if(Time() >= life_time) {self.Kill()} }
+	GetScope(pickup).LifeTime <- function() { if (Time() >= life_time) {self.Kill()} }
 	AddThinkToEnt(pickup, "LifeTime")
 	GetScope(pickup).OnPlayerTouch <- table.func
 	pickup.ConnectOutput( "OnPlayerTouch", "OnPlayerTouch" )
@@ -2310,11 +2310,11 @@ function ROOT::CreatePickup(table = {
 
 function ROOT::CreateProjectile(proj_info)
 {
-	if(!("thinkfunc" in proj_info) || !proj_info.thinkfunc)
+	if (!("thinkfunc" in proj_info) || !proj_info.thinkfunc)
 		return
-	if(!("owner" in proj_info) || !proj_info.owner)
+	if (!("owner" in proj_info) || !proj_info.owner)
 		return
-	if(!("model" in proj_info) || !proj_info.model || proj_info.model == "")
+	if (!("model" in proj_info) || !proj_info.model || proj_info.model == "")
 		return
 	
 	PrecacheModel(proj_info.model)
@@ -2337,7 +2337,7 @@ function ROOT::CreateProjectile(proj_info)
 	// hProj.SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
 
 	local hParticle = null
-	if("particle" in proj_info)
+	if ("particle" in proj_info)
 	{
 		hParticle = SpawnEntityFromTable("info_particle_system", {
 			effect_name = proj_info.particle
@@ -2364,12 +2364,12 @@ function ROOT::CreateProjectile(proj_info)
 
 	tScope.m_flThinkDelay 	<- (("delay" in proj_info) ? proj_info.delay : 0.1)
 
-	if(type(proj_info.thinkfunc) == "function")
+	if (type(proj_info.thinkfunc) == "function")
 	{
 		tScope.m_fThinkFunc		<- proj_info.thinkfunc
 		AddThinkToEnt(hProj, "m_fThinkFunc")
 	}
-	else if(type(proj_info.thinkfunc) == "string")
+	else if (type(proj_info.thinkfunc) == "string")
 	{
 		// tScope.m_fThinkFunc		<- proj_info.thinkfunc
 		AddThinkToEnt(hProj, proj_info.thinkfunc)
@@ -2384,11 +2384,11 @@ function ROOT::CreateProjectile(proj_info)
 
 function ROOT::TestProjThink()
 {
-	if(Time() >= m_flKillMeTime || m_iState == CPROJ_STATE_KILL)
+	if (Time() >= m_flKillMeTime || m_iState == CPROJ_STATE_KILL)
 	{
 		// printf("Killing %s\n", self.tostring())
 		self.Destroy()
-		if(m_hParticle)
+		if (m_hParticle)
 		{
 			EntFireNew(m_hParticle, "Stop")
 			m_hParticle.Destroy()
@@ -2396,7 +2396,7 @@ function ROOT::TestProjThink()
 		return FLT_MAX;
 	}
 
-	if(m_iState == CPROJ_STATE_MOVE)
+	if (m_iState == CPROJ_STATE_MOVE)
 	{
 /* 		local tTrace = {
 			start = self.GetOrigin()
@@ -2412,10 +2412,10 @@ function ROOT::TestProjThink()
 		TraceHull(tTrace)
 
 
-		if(!tTrace.hit || !("enthit" in tTrace))
+		if (!tTrace.hit || !("enthit" in tTrace))
 			return m_flThinkDelay
 
-		if(tTrace.enthit == m_hOwner)
+		if (tTrace.enthit == m_hOwner)
 			return m_flThinkDelay */
 
 
@@ -2425,13 +2425,13 @@ function ROOT::TestProjThink()
 		local victim = null
 		foreach (player in Players)
 		{
-			if(player.GetTeam() == m_hOwner.GetTeam())
+			if (player.GetTeam() == m_hOwner.GetTeam())
 				continue
-			if(player.IsDead())
+			if (player.IsDead())
 				continue
 			local delta = player.GetCenter() - self.GetOrigin()
 			local dist = delta.Norm()
-			if(dist <= m_flRadius)
+			if (dist <= m_flRadius)
 			{
 				victim = player
 				break
@@ -2440,7 +2440,7 @@ function ROOT::TestProjThink()
 
 		// DebugDrawText(self.GetOrigin(), victim ? victim.tostring() : "([-1]:NULL)", false, 5)
 
-		if(/* tTrace.enthit == Worldspawn ||  */victim)
+		if (/* tTrace.enthit == Worldspawn ||  */victim)
 		{
 			CreateAoETable({
 				owner = m_hOwner,
@@ -2460,7 +2460,7 @@ function ROOT::TestProjThink()
 }
 
 
-if(!("Players" in ROOT))
+if (!("Players" in ROOT))
 	::Players <- []
 
 // TODO: Add to Snippets
@@ -2487,14 +2487,14 @@ __CollectGameEventCallbacks(GrabPlayersEvent)
 ::DevFuncCollect <- {
 	function OnGameEvent_player_say(params) {
 		local player = GetPlayerFromUserID(params.userid)
-		if(player != null)
+		if (player != null)
 		{
-			if(IsPlayerABot(player))
+			if (IsPlayerABot(player))
 				return
-			if(!player.IsAdmin())
+			if (!player.IsAdmin())
 				return
 		}
-		if(params.text == "--PRINT VERSION--" || params.text == "print lib_version" || params.text == "lib_version")
+		if (params.text == "--PRINT VERSION--" || params.text == "print lib_version" || params.text == "lib_version")
 		{
 			PrintToChatAll(format("\x07D000D0► FatCatLib ◄\x03 Version\x01: \x04%s\x01 - \x03sub_version\x01: \x04%i\x01, \x03force_included?\x01 = \x04%s\x01", FatCatLibVersion.version, FatCatLibVersion.sub_version, FatCatLibVersion.forced))
 			foreach (item, value in FatCatLibScriptsVersion)
@@ -2502,12 +2502,12 @@ __CollectGameEventCallbacks(GrabPlayersEvent)
 				PrintToChatAll(format("\x07D000D0► FatCatLib ◄\x03 %s\x01: \x04%s\x01", item, value))
 			}
 		}
-		if(params.text == "lib_force true" || params.text == "lib_force" || params.text == "--FORCE INCLUDE THIS SHIT--")
+		if (params.text == "lib_force true" || params.text == "lib_force" || params.text == "--FORCE INCLUDE THIS SHIT--")
 		{
 			PrintToChatAll("\x07D000D0► FatCatLib ◄\x03 Setting Force include flag to \"\x04true\x03\"\x01.")
 			::FatCatLibForce <- true
 		}
-		if(params.text == "lib_force false" || params.text == "!lib_force" || params.text == "--DONT FORCE THIS SHIT--")
+		if (params.text == "lib_force false" || params.text == "!lib_force" || params.text == "--DONT FORCE THIS SHIT--")
 		{
 			PrintToChatAll("\x07D000D0► FatCatLib ◄\x03 Setting Force include flag to \"\x04false\x03\"\x01.")
 			::FatCatLibForce <- false

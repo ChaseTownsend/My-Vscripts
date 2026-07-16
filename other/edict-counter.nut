@@ -1,6 +1,6 @@
 IncludeScript("fatcat_library")
 local edict_counter = Entities.FindByName(null, "_EdictWarning")
-if(edict_counter == null) edict_counter = SpawnEntityFromTable("info_teleport_destination", { targetname = "_EdictWarning" })
+if (edict_counter == null) edict_counter = SpawnEntityFromTable("info_teleport_destination", { targetname = "_EdictWarning" })
 AddThinkToEnt(edict_counter, "EdictWarn")
 edict_counter.ValidateScriptScope()
 local scope = edict_counter.GetScriptScope()
@@ -42,7 +42,7 @@ function EdictWarn()
 	local edicts = CountEdicts()
 	local scope = self.GetScriptScope()
 
-	if(edicts >= PrintEdictWarningLimit && Time() >= scope.NextWarnTime)
+	if (edicts >= PrintEdictWarningLimit && Time() >= scope.NextWarnTime)
 	{
 		SendToServerConsole("sm_play @all ui/system_message_alert.wav")
 		//SendToConsole("play ui/system_message_alert.wav")
@@ -50,7 +50,7 @@ function EdictWarn()
 		scope.NextWarnTime <- Time() + 15
 	}
 
-	if(edicts >= NukeEdictLimit)
+	if (edicts >= NukeEdictLimit)
 	{
         SendToServerConsole("sm_play @all ui/rd_2base_alarm.wav")
 		ClientPrint(null, 3, "\x07ffff55[EDICT WARNING]\x07ff5555 Tolerance Limit Exceeded!\nNon-essential entities have been purged.")
@@ -61,12 +61,12 @@ function EdictWarn()
 		}
 	}
 
-	if(edicts >= PrintEdictWarningLimit)
+	if (edicts >= PrintEdictWarningLimit)
 	{
 		local players = GetEveryPlayer()
 		foreach (player in players)
 		{
-			/* if(GetPlayerSteamID(player) == TheFatCat || GetPlayerSteamID(player) == ShadowBolt)
+			/* if (GetPlayerSteamID(player) == TheFatCat || GetPlayerSteamID(player) == ShadowBolt)
 			{
 				ClientPrint(player, 4, "Server approaching Edict Tolerance Limit : " + edicts + "/" + NukeEdictLimit)
 			} */

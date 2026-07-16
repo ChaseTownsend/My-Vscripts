@@ -1,4 +1,4 @@
-if(!IsMannVsMachineMode())
+if (!IsMannVsMachineMode())
 	return
 
 PrecacheScriptSound("MVM.GiantHeavyLoop")
@@ -28,7 +28,7 @@ PrecacheModel("models/weapons/w_models/w_rocketbeta.mdl")
 
 // EntFire("tf_gamerules", "SetCustomUpgradesFile", "scripts/items/mvm_upgrades-test.txt")
 
-if(!("FatCatLibVersion" in getroottable()))
+if (!("FatCatLibVersion" in getroottable()))
 {
 	::ROOT <- getroottable()
 	::CONST <- getconsttable()
@@ -78,7 +78,7 @@ if(!("FatCatLibVersion" in getroottable()))
 		local list = []
 		for (local entity; entity = FindByClassname(entity, classname); )
 		{
-			if(entity != null) list.append(entity)
+			if (entity != null) list.append(entity)
 		}
 		return list
 	}
@@ -86,7 +86,7 @@ if(!("FatCatLibVersion" in getroottable()))
 	function CTFBot::GetWeaponInSlot(slot = 0)
 	{
 		local ent = GetPropEntityArray(this, "m_hMyWeapons", slot)
-		if(ent) SetPropBool(ent, "m_bForcePurgeFixedupStrings", true)
+		if (ent) SetPropBool(ent, "m_bForcePurgeFixedupStrings", true)
 		return ent
 	}
 
@@ -108,7 +108,7 @@ if(!("FatCatLibVersion" in getroottable()))
 			respawnroom.AddSolidFlags(FSOLID_NOT_SOLID)
 			respawnroom.SetCollisionGroup(TFCOLLISION_GROUP_RESPAWNROOMS)
 
-			if(trace.hit && trace.enthit == respawnroom) return true
+			if (trace.hit && trace.enthit == respawnroom) return true
 		}
 		return false
 	}
@@ -118,9 +118,9 @@ if(!("FatCatLibVersion" in getroottable()))
 		local healers = []
 		foreach (player in GetAllEntitiesByClassname("player"))
 		{
-			if(player.GetTeam() != TF_TEAM_PVE_INVADERS || player.GetPlayerClass() != TF_CLASS_MEDIC)
+			if (player.GetTeam() != TF_TEAM_PVE_INVADERS || player.GetPlayerClass() != TF_CLASS_MEDIC)
 				continue
-			if(player.GetHealTarget() == null || player.GetHealTarget() != this)
+			if (player.GetHealTarget() == null || player.GetHealTarget() != this)
 				continue
 			healers.append(player)
 		}
@@ -134,9 +134,9 @@ function CollectNewDroppedCurrency()
 	return
 	local total_moneys = Currencys.len()
 
-	if(total_moneys != 0)
+	if (total_moneys != 0)
 		for (local i = total_moneys-1; i != 0; i--) {
-			if(!Currencys[i] || !Currencys[i].IsValid())
+			if (!Currencys[i] || !Currencys[i].IsValid())
 				Currencys.remove(i)
 		}
 	
@@ -150,7 +150,7 @@ function CollectNewDroppedCurrency()
 
 	foreach (money in moneys)
 	{
-		if(Currencys.find(money))
+		if (Currencys.find(money))
 			continue
 		else 
 		{
@@ -164,7 +164,7 @@ function CollectNewDroppedCurrency()
 
 function IncrementCurrency(amount = 0)
 {
-	if(!MvMStats)
+	if (!MvMStats)
 		throw "MISSING \"tf_mann_vs_machine_stats\""
 	SetPropInt(MvMStats, "m_currentWaveStats.nCreditsAcquired", GetPropInt(MvMStats, "m_currentWaveStats.nCreditsAcquired")+amount)
 }
@@ -178,11 +178,11 @@ function IncrementWaveCounter()
 
 
 local Thinker = FindByName(null, "Thinker")
-if(!Thinker) Thinker = SpawnEntityFromTable("info_target", { targetname = "Thinker" })
+if (!Thinker) Thinker = SpawnEntityFromTable("info_target", { targetname = "Thinker" })
 AddThinkToEnt(Thinker, "MVMThink")
 
 function MVMThink() {
-	/* if(GetListenServerHost())
+	/* if (GetListenServerHost())
 	{
 		local R_Acquired = GetPropInt(MvMStats, "m_runningTotalWaveStats.nCreditsAcquired")
 		local R_Dropped = GetPropInt(MvMStats, "m_runningTotalWaveStats.nCreditsDropped")
@@ -200,20 +200,20 @@ function MVMThink() {
 		message += "Running: ( "+R_Acquired+" / " +(R_Dropped+R_Acquired)+" ) (+"+R_Bonus+")\n"
 		message += "Previous: ( "+P_Acquired+" / " +(P_Dropped+P_Acquired)+" ) (+"+P_Bonus+")\n"
 		message += "Current: ( "+C_Acquired+" / " +(C_Dropped+C_Acquired)+" ) (+"+C_Bonus+")\n"
-		if("Host" in ROOT)
+		if ("Host" in ROOT)
 			Host.PrintToHud(message)
 	} */
 
 
 	for (local player = FindByClassname(null, "player"); player; player = FindByClassname(player, "player"))
 	{
-		if(player.GetTeam() != TF_TEAM_PVE_INVADERS)
+		if (player.GetTeam() != TF_TEAM_PVE_INVADERS)
 			continue
 
-		if(player.InRespawnRoom())
+		if (player.InRespawnRoom())
 			continue
 		
-		if(GetPropInt(player, "m_Shared.m_nNumHealers") != 0)
+		if (GetPropInt(player, "m_Shared.m_nNumHealers") != 0)
 		{
 			//TODO
 		}
@@ -233,15 +233,15 @@ function MVMThink() {
 		local victim = params.const_entity
 		local attacker = params.attacker
 
-		if(params.damage_custom == -1)
+		if (params.damage_custom == -1)
 			return
 
-		if(!attacker || !attacker.IsPlayer() || !victim.IsPlayer())
+		if (!attacker || !attacker.IsPlayer() || !victim.IsPlayer())
 			return
-		if(!victim.IsBotOfType(1337) || victim.InRespawnRoom())
+		if (!victim.IsBotOfType(1337) || victim.InRespawnRoom())
 			return
 
-		if(GetPropInt(victim, "m_Shared.m_nNumHealers") == 0)
+		if (GetPropInt(victim, "m_Shared.m_nNumHealers") == 0)
 		{
 			victim.RemoveCondEx(TF_COND_INVULNERABLE, true)
 			victim.RemoveCondEx(TF_COND_INVULNERABLE_HIDE_UNLESS_DAMAGED, true)
@@ -249,16 +249,16 @@ function MVMThink() {
 		else
 		{
 			local healers = victim.GetActiveHealers()
-			if(healers == null || healers.len() == 0)
+			if (healers == null || healers.len() == 0)
 				return
 			foreach (healer in healers)
 			{
 				local weapon = GetPropEntityArray(healer, "m_hMyWeapons", 1)
-				if(!HasProp(weapon, "m_bChargeRelease"))
+				if (!HasProp(weapon, "m_bChargeRelease"))
 					continue
-				// if(weapon.GetAttribute("medigun charge is crit boost", 0) != 0)
+				// if (weapon.GetAttribute("medigun charge is crit boost", 0) != 0)
 					// continue
-				// if(NetProps.GetPropBool(weapon, "m_bChargeRelease"))
+				// if (NetProps.GetPropBool(weapon, "m_bChargeRelease"))
 					// continue
 				
 				victim.RemoveCondEx(TF_COND_INVULNERABLE, true)
@@ -269,13 +269,13 @@ function MVMThink() {
 	function OnGameEvent_player_death(params)
 	{
 		local moneys = CollectNewDroppedCurrency()
-		if(moneys == null)
+		if (moneys == null)
 			return
 		foreach(money in moneys)
 		{
 			SetDestroyCallback(money, function() {
 				DebugDrawText(self.GetOrigin(), GetPropBool(self, "m_bDistributed").tostring(), false, 10)
-				if(GetPropBool(self, "m_bDistributed"))
+				if (GetPropBool(self, "m_bDistributed"))
 					return
 				IncrementCurrency() // GET OUR AMOUNT????>????>???>"????"?>?>?:
 			})
@@ -284,7 +284,7 @@ function MVMThink() {
 	function OnGameEvent_mvm_pickup_currency(params)
 	{
 		local MvMStats = FindByClassname(null, "tf_mann_vs_machine_stats")
-		if(!MvMStats)
+		if (!MvMStats)
 			throw "MISSING \"tf_mann_vs_machine_stats\""
 		IncrementCurrency(params.currency)
 	}

@@ -56,17 +56,17 @@ function RemoveBot(miniboss = false)
 	SetPropInt(ObjResource, "m_nMannVsMachineWaveClassCounts", botcount)
 }
 
-if("RougeliteEvents" in ROOT) delete ::RougeliteEvents
+if ("RougeliteEvents" in ROOT) delete ::RougeliteEvents
 ::RougeliteEvents <- {
 	function OnScriptEvent_HumanResupply(params)
 	{
 		local player = params.player
 		SpawnPlayer(player)
-		if(player.GetPlayerClass() == TF_CLASS_ENGINEER)
+		if (player.GetPlayerClass() == TF_CLASS_ENGINEER)
 			player.AddCustomAttribute("metal regen", 50, -1)
 
 		local Melee = player.GetWeaponInSlotNew(SLOT_MELEE)
-		if(Melee.GetIDX() == 589)
+		if (Melee.GetIDX() == 589)
 		{
 			Melee.AddAttribute("alt fire teleport to spawn", 0, 0)
 		} 
@@ -80,7 +80,7 @@ if("RougeliteEvents" in ROOT) delete ::RougeliteEvents
 	{
 		local player = GetPlayerFromUserID(params.userid)
 
-		if(params.bot)
+		if (params.bot)
 			return
 	}
 	function OnGameEvent_mvm_begin_wave(params)
@@ -96,14 +96,14 @@ if("RougeliteEvents" in ROOT) delete ::RougeliteEvents
 	{
 		local player = params.victim
 
-		if(player.IsBot())
+		if (player.IsBot())
 			RemoveBot(player.IsMiniBoss())
 	}
 	function OnGameEvent_teamplay_broadcast_audio(params)
 	{
 		local sound = params.sound
 
-		if(!IsInArray(sound, ["music.mvm_end_last_wave", "Game.YourTeamWon", "Announcer.MVM_Get_To_Upgrade"]))
+		if (!IsInArray(sound, ["music.mvm_end_last_wave", "Game.YourTeamWon", "Announcer.MVM_Get_To_Upgrade"]))
 			return
 		foreach(Human in m_aHumans)
 			StopSoundOn( sound, Human )
@@ -184,11 +184,11 @@ function TeleportToArena(player)
 
 function SpawnBot(player)
 {
-	if(!player.IsAlive() || !player.IsValid())
+	if (!player.IsAlive() || !player.IsValid())
 		return
-	if(player.HasBotTag("BombHolder"))
+	if (player.HasBotTag("BombHolder"))
 		return
-	if(!player.HasBotAttribute(REMOVE_ON_DEATH))
+	if (!player.HasBotAttribute(REMOVE_ON_DEATH))
 		return
 
 	player.AddBotAttribute(REMOVE_ON_DEATH)
@@ -234,7 +234,7 @@ function GetBotLoadout(player)
 	local botclass = player.GetPlayerClass()
 	local randomizer = RandomInt(1,11)
 
-	if(false)
+	if (false)
 	{
 		// Giant Logic
 	}

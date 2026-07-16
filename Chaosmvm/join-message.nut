@@ -1,4 +1,4 @@
-if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
+if (!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
 SetScriptVersion("join_message", "1.0.1")
@@ -12,8 +12,8 @@ SetScriptVersion("join_message", "1.0.1")
         local player = params.player
         local scope = GetScope(player)
 
-        if(!("joined" in scope)) return
-        if(scope.joined != true)
+        if (!("joined" in scope)) return
+        if (scope.joined != true)
         {
             player.PrintToChat(" ")
             player.PrintToChat(" ")

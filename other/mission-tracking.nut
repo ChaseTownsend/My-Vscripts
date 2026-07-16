@@ -5,21 +5,21 @@ local full_completed_ids = split(full_completed_file, ">", true)
 ::tracking <- {
 	function OnGameEvent_player_team(params)
 	{
-		if(params.team != Constants.ETFTeam.TF_TEAM_PVE_DEFENDERS) return
+		if (params.team != Constants.ETFTeam.TF_TEAM_PVE_DEFENDERS) return
 		local player = GetPlayerFromUserID(params.userid)
 		local player_id = GetPlayerSteamID(player)
 
-		if(!(player_id in player_ids))
+		if (!(player_id in player_ids))
 		{
 			player_ids.push(player_id)
 		}
 	}
 	function OnGameEvent_player_disconnect(params)
 	{
-		if(params.bot) return
+		if (params.bot) return
 		local player = GetPlayerFromUserID(params.userid)
 		local player_id = GetPlayerSteamID(player)
-		if(player_id in player_ids)
+		if (player_id in player_ids)
 		{
 			local index = player_ids.find(player_id)
 			player_ids.remove(index)

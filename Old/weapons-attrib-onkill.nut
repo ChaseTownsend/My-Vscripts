@@ -3,7 +3,7 @@ local TF_WEAPON_TOMISLAV = 424
 
     function OnGameEvent_player_death(params)
     {
-        if(params.attacker == null) return
+        if (params.attacker == null) return
         local player = GetPlayerFromUserID(params.attacker)
         if (!player || player == null || IsPlayerABot(player)) return
         if (GetPlayerFromUserID(params.userid) == player) return // stop if the player who died is the same as the killer
@@ -45,13 +45,13 @@ local TF_WEAPON_TOMISLAV = 424
                     {
                         player_weps[i].AddAttribute(attribute_name, end_val, 0)
                     }
-                    if(end_val > Max_value)
+                    if (end_val > Max_value)
                     {
                         local val = end_val
                         player_weps[i].RemoveAttribute(attribute_name)
                         player_weps[i].AddAttribute(attribute_name, Max_value, 0)
                     }
-                    if(end_val < Min_value)
+                    if (end_val < Min_value)
                     {
                         local val = end_val
                         player_weps[i].RemoveAttribute(attribute_name)
@@ -83,13 +83,13 @@ local TF_WEAPON_TOMISLAV = 424
                     {
                         player_weps[i].AddAttribute(attribute_name, end_val, 0)
                     }
-                    if(end_val > Max_value)
+                    if (end_val > Max_value)
                     {
                         local val = end_val
                         player_weps[i].RemoveAttribute(attribute_name)
                         player_weps[i].AddAttribute(attribute_name, Max_value, 0)
                     }
-                    if(end_val < Min_value)
+                    if (end_val < Min_value)
                     {
                         local val = end_val
                         player_weps[i].RemoveAttribute(attribute_name)
@@ -121,13 +121,13 @@ local TF_WEAPON_TOMISLAV = 424
                     {
                         player_weps[i].AddAttribute(attribute_name, end_val, 0)
                     }
-                    if(end_val > Max_value)
+                    if (end_val > Max_value)
                     {
                         local val = end_val
                         player_weps[i].RemoveAttribute(attribute_name)
                         player_weps[i].AddAttribute(attribute_name, Max_value, 0)
                     }
-                    if(end_val < Min_value)
+                    if (end_val < Min_value)
                     {
                         local val = end_val
                         player_weps[i].RemoveAttribute(attribute_name)
@@ -159,13 +159,13 @@ local TF_WEAPON_TOMISLAV = 424
                     {
                         player_weps[i].AddAttribute(attribute_name, end_val, 0)
                     }
-                    if(end_val > Max_value)
+                    if (end_val > Max_value)
                     {
                         local val = end_val
                         player_weps[i].RemoveAttribute(attribute_name)
                         player_weps[i].AddAttribute(attribute_name, Max_value, 0)
                     }
-                    if(end_val < Min_value)
+                    if (end_val < Min_value)
                     {
                         local val = end_val
                         player_weps[i].RemoveAttribute(attribute_name)
@@ -196,13 +196,13 @@ local TF_WEAPON_TOMISLAV = 424
                     {
                         player_weps[i].AddAttribute(attribute_name, end_val, 0)
                     }
-                    if(end_val > Max_value)
+                    if (end_val > Max_value)
                     {
                         local val = end_val
                         player_weps[i].RemoveAttribute(attribute_name)
                         player_weps[i].AddAttribute(attribute_name, Max_value, 0)
                     }
-                    if(end_val < Min_value)
+                    if (end_val < Min_value)
                     {
                         local val = end_val
                         player_weps[i].RemoveAttribute(attribute_name)
@@ -234,13 +234,13 @@ local TF_WEAPON_TOMISLAV = 424
                     {
                         player_weps[i].AddAttribute(attribute_name, end_val, 0)
                     }
-                    if(end_val > Max_value)
+                    if (end_val > Max_value)
                     {
                         local val = end_val
                         player_weps[i].RemoveAttribute(attribute_name)
                         player_weps[i].AddAttribute(attribute_name, Max_value, 0)
                     }
-                    if(end_val < Min_value)
+                    if (end_val < Min_value)
                     {
                         local val = end_val
                         player_weps[i].RemoveAttribute(attribute_name)
@@ -272,13 +272,13 @@ local TF_WEAPON_TOMISLAV = 424
                     {
                         player_weps[i].AddAttribute(attribute_name, end_val, 0)
                     }
-                    if(end_val > Max_value)
+                    if (end_val > Max_value)
                     {
                         local val = end_val
                         player_weps[i].RemoveAttribute(attribute_name)
                         player_weps[i].AddAttribute(attribute_name, Max_value, 0)
                     }
-                    if(end_val < Min_value)
+                    if (end_val < Min_value)
                     {
                         local val = end_val
                         player_weps[i].RemoveAttribute(attribute_name)
@@ -310,13 +310,13 @@ local TF_WEAPON_TOMISLAV = 424
                     {
                         player_weps[i].AddAttribute(attribute_name, end_val, 0)
                     }
-                    if(end_val > Max_value)
+                    if (end_val > Max_value)
                     {
                         local val = end_val
                         player_weps[i].RemoveAttribute(attribute_name)
                         player_weps[i].AddAttribute(attribute_name, Max_value, 0)
                     }
-                    if(end_val < Min_value)
+                    if (end_val < Min_value)
                     {
                         local val = end_val
                         player_weps[i].RemoveAttribute(attribute_name)
@@ -348,13 +348,13 @@ local TF_WEAPON_TOMISLAV = 424
                     {
                         player_weps[i].AddAttribute(attribute_name, end_val, 0)
                     }
-                    if(end_val > Max_value)
+                    if (end_val > Max_value)
                     {
                         local val = end_val
                         player_weps[i].RemoveAttribute(attribute_name)
                         player_weps[i].AddAttribute(attribute_name, Max_value, 0)
                     }
-                    if(end_val < Min_value)
+                    if (end_val < Min_value)
                     {
                         local val = end_val
                         player_weps[i].RemoveAttribute(attribute_name)
@@ -363,8 +363,8 @@ local TF_WEAPON_TOMISLAV = 424
                     case TF_WEAPON_TOMISLAV:
                     if (kill_weapon_idx != TF_WEAPON_TOMISLAV) continue
 
-                    if(kill_streak == 50) player_weps[i].AddAttribute("attach particle effect", 3149, 0)
-                    if(kill_streak == 100)
+                    if (kill_streak == 50) player_weps[i].AddAttribute("attach particle effect", 3149, 0)
+                    if (kill_streak == 100)
                     {
                         player_weps[i].RemoveAttribute("attach particle effect")
                         player_weps[i].AddAttribute("attach particle effect static", 3044, 0)

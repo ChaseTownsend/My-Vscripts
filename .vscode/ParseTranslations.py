@@ -17,7 +17,7 @@ def RemoveSubStringsFromString(string: str, substrings: [str]) -> str:
 
 # Removes letters after a substring, mostly to remove comments such as "//"
 def RemoveAllLettersAfterSubString(string: str, sub_string: str) -> str:
-	if(sub_string not in string):
+	if (sub_string not in string):
 		return string
 	return string[0:string.find(sub_string)]
 
@@ -28,18 +28,18 @@ last_item = ""
 # lines = []
 for line in file:
 	line_num += 1
-	if(line_num <= 11):
+	if (line_num <= 11):
 		continue
-	if(line == "\n"):
+	if (line == "\n"):
 		continue
 	parsed_line = RemoveSubStringsFromString(RemoveAllLettersAfterSubString(line, "//"), ["\t", "\n", " "])
 	# Ignore lines that start with single lines comments, and brackets
-	if(len(parsed_line) == 0 or parsed_line[0] == "{" or parsed_line[0] == "}"):
+	if (len(parsed_line) == 0 or parsed_line[0] == "{" or parsed_line[0] == "}"):
 		continue
 
 	item = parsed_line.split("=")[0]
 	# value = parsed_line.split("=")[1]
-	if(item == last_item):
+	if (item == last_item):
 		print(f"WARNING: LINE {line_num} AND {line_num-1} ARE DUPLICATE ITEMS!")
 		print(f"{line_num-1} \t\t {last_item} = . . .")
 		print(f"{line_num} \t\t {item} = . . .")
@@ -50,7 +50,7 @@ file.close()
 
 import sys
 
-if(errors == 0):
+if (errors == 0):
 	print("No Errors found!")
 else:
 	print(f"Found {errors} errors!")

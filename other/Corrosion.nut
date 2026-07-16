@@ -3,7 +3,7 @@ IncludeScript("fatcat_library")
 ::CORROSION_ICON <- CreateKillIcon("infection_acid_puddle")
 
 local RadiationThinker = FindByName(null, "__Radiation_Thinker")
-if(RadiationThinker == null)
+if (RadiationThinker == null)
 {
 	RadiationThinker = CreateByClassname("info_target")
 	RadiationThinker.KeyValueFromString("targetname", "__Radiation_Thinker")
@@ -15,13 +15,13 @@ function RadiationThink()
 {
 	foreach (player in Players)
 	{
-		if(!player || !player.IsValid())
+		if (!player || !player.IsValid())
 		{
 			ReCalculatePlayers()
 			return
 		}
 
-		if(player.IsInvincible())
+		if (player.IsInvincible())
 		{
 			player.ClearCorrosion()
 			continue
@@ -29,24 +29,24 @@ function RadiationThink()
 		local CorrosionsList = player.GetCorrosionList()
 		foreach (Corrosion in CorrosionsList)
 		{
-			if(!player.IsAlive())
+			if (!player.IsAlive())
 					break
 			// -0.030 per frame? i think
 			Corrosion.flCorrosionRemoveTime -= 2 * FrameTime()
 
-			if(Time() >= Corrosion.flCorrosionRemoveTime && !Corrosion.bPermanentCorrosion)
+			if (Time() >= Corrosion.flCorrosionRemoveTime && !Corrosion.bPermanentCorrosion)
 			{
 				player.RemoveCorrosion(CorrosionsList.find(Corrosion))
-				if(!player.HasCorrosion())
+				if (!player.HasCorrosion())
 					EntFireNew(player, "Color", "255 255 255")
 				continue
 			}
-			else if(Time() >= Corrosion.flCorrosionTime)
+			else if (Time() >= Corrosion.flCorrosionTime)
 			{
 				Corrosion.flCorrosionTime = Time() + 0.5
 				player.TakeDamageEx(CORROSION_ICON, Corrosion.hCorrosionAttacker, Corrosion.hCorrosionWeapon, 
 					Vector(), Vector(), Corrosion.flCorrosionDmg, DMG_GENERIC | DMG_PREVENT_PHYSICS_FORCE)
-				if(!player.IsAlive())
+				if (!player.IsAlive())
 					break
 			}
 		}
@@ -56,7 +56,7 @@ function RadiationThink()
 ::CorrosionEvents <- {
 	function OnGameEvent_player_death(params)
 	{
-		if(params.weapon_logclassname != "infection_acid_puddle")
+		if (params.weapon_logclassname != "infection_acid_puddle")
 			return
 
 		// Create the fucking uhhh, acid puddle?
@@ -77,7 +77,7 @@ function RadiationThink()
 		scope.attacker <- GetPlayerFromUserID(params.attacker)
 		scope.m_flTimeCreated <- Time()
 		scope.think <- function() {
-			if(!attacker || !attacker.IsValid() || m_flTimeCreated + 5.0 <= Time())
+			if (!attacker || !attacker.IsValid() || m_flTimeCreated + 5.0 <= Time())
 			{
 				ClearThinks(self)
 				self.Destroy()
@@ -85,7 +85,7 @@ function RadiationThink()
 			}
 			foreach(bot in GetEveryBotWithin(GetPlayerFromUserID(params.userid).GetOrigin(), 150))
 			{
-				if(!attacker || !attacker.IsValid() || m_flTimeCreated + 5.0 <= Time())
+				if (!attacker || !attacker.IsValid() || m_flTimeCreated + 5.0 <= Time())
 				{
 					ClearThinks(self)
 					self.Destroy()

@@ -1,4 +1,4 @@
-if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
+if (!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
 // CREDITS
@@ -18,10 +18,10 @@ if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatC
 ::IH_error_color <- "\x07D43F3F"
 ::IH_highlight_color <- "\x07FF3D24"
 
-if(!("CHECKPOINT_ERROR" in getroottable()))
+if (!("CHECKPOINT_ERROR" in getroottable()))
 	::CHECKPOINT_ERROR <- "\x07bf4137"
 
-if("SetScriptVersion" in getroottable())
+if ("SetScriptVersion" in getroottable())
 	SetScriptVersion("Translations", "1.7.0")
 
 ::TRANSLATION_TABLE <- {
@@ -6064,6 +6064,6 @@ foreach (language, table in TRANSLATION_TABLE)
 }
 foreach (lang, length in TranslationCounts)
 {
-	if(length != TRANSLATION_TABLE.english.len())
+	if (length != TRANSLATION_TABLE.english.len())
 		printf("Warning, the language \"%s\" has a different amount of translation strings! %+i\n", lang, length - TRANSLATION_TABLE.english.len())
 }

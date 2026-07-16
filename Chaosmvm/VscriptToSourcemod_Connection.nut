@@ -9,11 +9,11 @@ class ETFCond {}
  * @typedef {(integer)} ETFCond
  */
 
-if(!("PrintToServer" in ROOT))
+if (!("PrintToServer" in ROOT))
 	function ROOT::PrintToServer(m) {PrintToConsoleAll(m)}
 
 ::SOURCEMOD_EVENT <- ""
-if(!("OnCondHooks" in ROOT))
+if (!("OnCondHooks" in ROOT))
 {
 	::OnCondHooks <- array(TF_COND_RANGE, null)
 	for (local i = 0; i < TF_COND_RANGE; i++)
@@ -24,7 +24,7 @@ if(!("OnCondHooks" in ROOT))
 		OnRemoveCondHooks[i] = {}
 }
 
-if(!("EntitySpawnHooks" in ROOT))
+if (!("EntitySpawnHooks" in ROOT))
 	::EntitySpawnHooks <- {}
 
 /**
@@ -56,7 +56,7 @@ function ROOT::HookEntitySpawn(classname, func, Eventname = null)
  */
 function RemoveEntitySpawnHook(classname, name)
 {
-	if(name in EntitySpawnHooks[classname])
+	if (name in EntitySpawnHooks[classname])
 		delete EntitySpawnHooks[classname][name]
 }
 
@@ -74,7 +74,7 @@ function ClearCondHooks()
  */
 function RemoveCondHook(cond, name)
 {
-	if(name in OnCondHooks[cond])
+	if (name in OnCondHooks[cond])
 		delete OnCondHooks[cond][name]
 }
 
@@ -86,7 +86,7 @@ function RemoveCondHook(cond, name)
  */
 function AddCondHook(cond, name, func)
 {
-	if(name in OnCondHooks[cond])
+	if (name in OnCondHooks[cond])
 		PrintToServer("Already a Cond Hook with that name!")
 	OnCondHooks[cond][name] <- func
 }
@@ -105,7 +105,7 @@ function ClearRemoveCondHooks()
  */
 function RemoveRemoveCondHook(cond, name)
 {
-	if(name in OnRemoveCondHooks[cond])
+	if (name in OnRemoveCondHooks[cond])
 		delete OnRemoveCondHooks[cond][name]
 }
 
@@ -117,7 +117,7 @@ function RemoveRemoveCondHook(cond, name)
  */
 function AddRemoveCondHook(cond, name, func)
 {
-	if(name in OnRemoveCondHooks[cond])
+	if (name in OnRemoveCondHooks[cond])
 		PrintToServer("Already a Cond Hook with that name!")
 	OnRemoveCondHooks[cond][name] <- func
 }
@@ -166,7 +166,7 @@ function ROOT::ProccessOnCondHooks(client, cond, duration, provider)
 		PluginReturn.provider = data.provider
 	}
 
-	if(PluginReturn.provider != null && type(PluginReturn.provider) != "integer")
+	if (PluginReturn.provider != null && type(PluginReturn.provider) != "integer")
 	{
 		try{
 			PluginReturn.provider = PluginReturn.provider.entindex()
@@ -177,7 +177,7 @@ function ROOT::ProccessOnCondHooks(client, cond, duration, provider)
 		}
 	}
 
-	if(PluginReturn.provider == null)
+	if (PluginReturn.provider == null)
 		PluginReturn.provider = 0
 
 	FireScriptEvent("PostOnPlayerCond", {
@@ -243,7 +243,7 @@ function ROOT::ProccessEntitySpawnHooks(entity_index, classname)
 	local ReturnData = {
 		prevent_spawn = false
 	}
-	if((classname in EntitySpawnHooks))
+	if ((classname in EntitySpawnHooks))
 	{
 		foreach (_, hook in EntitySpawnHooks[classname])
 		{
@@ -258,7 +258,7 @@ function ROOT::ProccessEntitySpawnHooks(entity_index, classname)
 			}
 			hook(func_data)
 
-			if(func_data.entindex == -1 || func_data.classname == "")
+			if (func_data.entindex == -1 || func_data.classname == "")
 				ReturnData.prevent_spawn = true
 		}
 	}

@@ -19,10 +19,10 @@ AddThinkToEnt(tank, "FlameTankThink")
 
 function FlameTankThink()
 {
-	if(Entities.FindByName(null, "Flame_Filter_Team")) Entities.FindByName(null, "Flame_Filter_Team").Kill()
+	if (Entities.FindByName(null, "Flame_Filter_Team")) Entities.FindByName(null, "Flame_Filter_Team").Kill()
 	local Filter_Team = SpawnEntityFromTable("filter_activator_tfteam", { targetname = "Flame_Filter_Team", teamnum = self.GetTeam(), negated = 1 })
 
-	if(Entities.FindByName(null, "Flame_hurt")) Entities.FindByName(null, "Flame_hurt").Kill()
+	if (Entities.FindByName(null, "Flame_hurt")) Entities.FindByName(null, "Flame_hurt").Kill()
 	local Igniter = SpawnEntityFromTable("trigger_ignite", { targetname = "Flame_hurt", spawnflags = 1, startdisabled = 1, damage_percent_per_second = 72, burn_duration = 8 })
 	Igniter.SetSize(Vector(-160, -160, -32), Vector(160, 160, 48))
 	Igniter.SetSolid(3)

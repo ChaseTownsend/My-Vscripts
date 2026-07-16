@@ -186,10 +186,10 @@ function setup_levels()
 	scope.Level <- 1
 	scope.NextLevelTime <- Time() + LEVEL_UP_TIME
 	scope.think <- function() {
-		if(GetRoundState() != 4)
+		if (GetRoundState() != 4)
 			return 0.25
 
-		if(this.NextLevelTime >= Time())
+		if (this.NextLevelTime >= Time())
 			return 0.25
 
 		this.NextLevelTime = Time() + LEVEL_UP_TIME
@@ -232,13 +232,13 @@ function setup_levels()
 	function OnGameEvent_post_inventory_application(params)
 	{
 		local player = GetPlayerFromUserID(params.userid)
-		if(!IsPlayerABot(player))
+		if (!IsPlayerABot(player))
 			return
 
-		if(!player.IsAlive())
+		if (!player.IsAlive())
 			return
 
-		if(player.HasBotTag("Upgraded"))
+		if (player.HasBotTag("Upgraded"))
 			return
 
 		player.ValidateScriptScope()
@@ -253,21 +253,21 @@ function setup_levels()
 		{
 			foreach (upgrade in BOT_BODY_UPGRADES)
 			{
-				if(scope.currency <= 100)
+				if (scope.currency <= 100)
 				{
 					BROKE_AS_FUCK = true
 					break
 				}
 
-				if(upgrade.cost >= scope.currency)
+				if (upgrade.cost >= scope.currency)
 					continue
 
-				if(player.GetCustomAttribute(upgrade.attribute, upgrade.default_value) == upgrade.cap)
+				if (player.GetCustomAttribute(upgrade.attribute, upgrade.default_value) == upgrade.cap)
 					continue
 
-				if(upgrade.increment < 0)
+				if (upgrade.increment < 0)
 				{
-					if((player.GetCustomAttribute(upgrade.attribute, upgrade.default_value) + upgrade.increment) < upgrade.cap)
+					if ((player.GetCustomAttribute(upgrade.attribute, upgrade.default_value) + upgrade.increment) < upgrade.cap)
 					{
 						player.AddCustomAttribute(upgrade.attribute, upgrade.cap, 0)
 						scope.currency = scope.currency - upgrade.cost
@@ -280,7 +280,7 @@ function setup_levels()
 				}
 				else
 				{
-					if((player.GetCustomAttribute(upgrade.attribute, upgrade.default_value) + upgrade.increment) > upgrade.cap)
+					if ((player.GetCustomAttribute(upgrade.attribute, upgrade.default_value) + upgrade.increment) > upgrade.cap)
 					{
 						player.AddCustomAttribute(upgrade.attribute, upgrade.cap, 0)
 						scope.currency = scope.currency - upgrade.cost
@@ -300,35 +300,35 @@ function setup_levels()
 				scope.currency
 				))
 
-				if(scope.currency <= 100)
+				if (scope.currency <= 100)
 				{
 					BROKE_AS_FUCK = true
 					break
 				}
 
 			}
-			if(scope.currency <= 100)
+			if (scope.currency <= 100)
 			{
 				BROKE_AS_FUCK = true
 				break
 			}
 			/* foreach (upgrade in BOT_WEAPON_UPGRADES)
 			{
-				if(upgrade.cost >= scope.currency)
+				if (upgrade.cost >= scope.currency)
 					continue
 
 
 				foreach (weapon in player.GetAllValidWeapons())
 				{
-					if(weapon.GetAttribute(upgrade.attribute, upgrade.default_value) == upgrade.cap)
+					if (weapon.GetAttribute(upgrade.attribute, upgrade.default_value) == upgrade.cap)
 						continue
 
-					if(!CanWeaponBuyThisUpgrade(weapon, upgrade))
+					if (!CanWeaponBuyThisUpgrade(weapon, upgrade))
 						continue
 
-					if(upgrade.increment < 0)
+					if (upgrade.increment < 0)
 					{
-						if((weapon.GetAttribute(upgrade.attribute, upgrade.default_value) + upgrade.increment) < upgrade.cap)
+						if ((weapon.GetAttribute(upgrade.attribute, upgrade.default_value) + upgrade.increment) < upgrade.cap)
 						{
 							weapon.AddAttribute(upgrade.attribute, upgrade.cap, 0)
 							scope.currency = scope.currency - upgrade.cost
@@ -341,7 +341,7 @@ function setup_levels()
 					}
 					else
 					{
-						if((weapon.GetAttribute(upgrade.attribute, upgrade.default_value) + upgrade.increment) > upgrade.cap)
+						if ((weapon.GetAttribute(upgrade.attribute, upgrade.default_value) + upgrade.increment) > upgrade.cap)
 						{
 							weapon.AddAttribute(upgrade.attribute, upgrade.cap, 0)
 							scope.currency = scope.currency - upgrade.cost
@@ -368,7 +368,7 @@ function setup_levels()
 	function OnGameEvent_player_death(params)
 	{
 		local victim = GetPlayerFromUserID(params.userid)
-		if(!IsPlayerABot(victim))
+		if (!IsPlayerABot(victim))
 			return
 
 		foreach (human in GetEveryHuman())
@@ -381,24 +381,24 @@ __CollectGameEventCallbacks(upgrades)
 
 function CanWeaponBuyThisUpgrade(weapon, upgrade)
 {
-	if(weapon == null)
+	if (weapon == null)
 		return false
 
-	if(upgrade.only_allow_weapons.len() == 0)
+	if (upgrade.only_allow_weapons.len() == 0)
 	{
 		foreach (name in upgrade.disallowed_weapons)
 		{
-			if(startswith(name, "slot"))
+			if (startswith(name, "slot"))
 			{
 				local split = split(name, "t")
 				printl(split[0])
 				printl(split[1])
-				if(weapon.GetSlot() == split[1])
+				if (weapon.GetSlot() == split[1])
 				{
 					return false
 				}
 			}
-			else if(weapon.GetClassname() == name)
+			else if (weapon.GetClassname() == name)
 			{
 				return false
 			}
@@ -409,17 +409,17 @@ function CanWeaponBuyThisUpgrade(weapon, upgrade)
 	{
 		foreach (name in upgrade.only_allow_weapons)
 		{
-			if(startswith(name, "slot"))
+			if (startswith(name, "slot"))
 			{
 				local split = split(name, "t")
 				printl(split[0])
 				printl(split[1])
-				if(weapon.GetSlot() != split[1])
+				if (weapon.GetSlot() != split[1])
 				{
 					return false
 				}
 			}
-			else if(weapon.GetClassname() == name)
+			else if (weapon.GetClassname() == name)
 			{
 				return false
 			}

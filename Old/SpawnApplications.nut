@@ -1,7 +1,7 @@
 IncludeScript("fatcat_library")
 
 local Thinker = FindByName(null, "Thinker_SpawnApplications")
-if(Thinker == null) Thinker = SpawnEntityFromTable("info_target", { targetname = "Thinker_SpawnApplications" })
+if (Thinker == null) Thinker = SpawnEntityFromTable("info_target", { targetname = "Thinker_SpawnApplications" })
 AddThinkToEnt(Thinker, "SpawnApplications")
 
 function SpawnApplications()
@@ -12,7 +12,7 @@ function SpawnApplications()
 		/* player.SetScale(DEFAULT_SIZE)
 
 		// Since we Reset scale above we gotta fake it
-		if(player.InCond(TF_COND_HALLOWEEN_TINY))
+		if (player.InCond(TF_COND_HALLOWEEN_TINY))
 		{
 			player.SetScale(player.GetModelScale() * 0.5)
 		} */

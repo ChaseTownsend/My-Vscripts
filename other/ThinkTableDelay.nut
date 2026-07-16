@@ -19,7 +19,7 @@ IncludeScript("fatcat_library")
 				delay = 1
 				func = function(self) {
 					self.SetHealth(self.GetHealth() + (self.GetMaxHealth() /10))
-					if(self.GetHealth() > self.GetMaxHealth() * 1.5)
+					if (self.GetHealth() > self.GetMaxHealth() * 1.5)
 						self.SetHealth(self.GetMaxHealth()*1.5)
 				}
 			}
@@ -34,17 +34,17 @@ IncludeScript("fatcat_library")
 		}
 		foreach (key, func_table in scope.ThinkTable)
 		{
-			if(IsNotInTable("LastThinkTime", func_table))
+			if (IsNotInTable("LastThinkTime", func_table))
 			{
 				func_table.LastThinkTime <- Time()
 				// PrintToChatAll("\x07FF9090Warning\x01, "+key+" had no \"LastThinkTime\" input, Creating Value. . .")
 			}
-			if(IsNotInTable("delay", func_table))
+			if (IsNotInTable("delay", func_table))
 			{
 				func_table.delay <- -1
 				PrintToChatAll("\x07FF9090Warning\x01, "+key+" had no \"delay\" input, defaulting to \"-1\"")
 			}
-			if(IsNotInTable("func", func_table) )
+			if (IsNotInTable("func", func_table) )
 			{
 				PrintToChatAll("\x07FF9090Warning\x01, "+key+" is Missing it's \"func\" input, deleting table!")
 				delete scope.ThinkTable[key]
@@ -55,7 +55,7 @@ IncludeScript("fatcat_library")
 		scope.ThinkTableThink <- function() {
 			foreach (key, func_table in ThinkTable)
 			{
-				if(func_table.LastThinkTime + func_table.delay <= Time())
+				if (func_table.LastThinkTime + func_table.delay <= Time())
 				{
 					func_table.func.call(func_table, player)
 					func_table.LastThinkTime = Time()

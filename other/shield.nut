@@ -10,14 +10,14 @@ IncludeScript("fatcat_library")
 	}
 	function OnGameEvent_ammo_pickup(params)
 	{
-		if((params.total / params.amount).tointeger() == 1.0)
+		if ((params.total / params.amount).tointeger() == 1.0)
 			return
 		PrintTable(params)
 		printl("")
 	}
 	function OnScriptHook_OnTakeDamage(params)
 	{
-		if(!params.const_entity.IsPlayer())
+		if (!params.const_entity.IsPlayer())
 			return
 
 		// PrintTable(params)

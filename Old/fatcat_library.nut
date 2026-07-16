@@ -3,7 +3,7 @@
 
 function SetLibraryVersion(lib_version, subversion = 0, force_include = false)
 {
-	if(force_include || ("FatCatLibForce" in ROOT))
+	if (force_include || ("FatCatLibForce" in ROOT))
 	{
 		printl("Force Included Library")
 		::FatCatLibVersion <- {
@@ -15,7 +15,7 @@ function SetLibraryVersion(lib_version, subversion = 0, force_include = false)
 	}
 	else
 	{
-		if(!("FatCatLibVersion" in ROOT))
+		if (!("FatCatLibVersion" in ROOT))
 		{
 			::FatCatLibVersion <- {
 				version = 0
@@ -24,14 +24,14 @@ function SetLibraryVersion(lib_version, subversion = 0, force_include = false)
 			}
 		}
 
-		if(FatCatLibVersion.version == lib_version)
+		if (FatCatLibVersion.version == lib_version)
 		{
-			if(FatCatLibVersion.sub_version == subversion)
+			if (FatCatLibVersion.sub_version == subversion)
 			{
 				printl("Library Version is the same as old version. Not Including")
 				return false
 			}
-			else if( FatCatLibVersion.sub_version > subversion)
+			else if ( FatCatLibVersion.sub_version > subversion)
 			{
 				printl("HMMM, decremeting subversion?????????")
 				return false
@@ -273,7 +273,7 @@ local Invincible_Conds = [
 ///////////////////////////////////////
 ::CTFPlayer.PrintToHud <- function(message)
 {
-	if(message != null)
+	if (message != null)
 	{
 		ClientPrint(this, 4, message.tostring())
 	}
@@ -285,7 +285,7 @@ local Invincible_Conds = [
 
 ::CTFPlayer.PrintToChat <- function(message)
 {
-	if(message != null)
+	if (message != null)
 	{
 		ClientPrint(this, 3, message.tostring())
 	}
@@ -348,11 +348,11 @@ local Invincible_Conds = [
 
 ::CTFPlayer.GetWeaponInSlot <- function(slot = 0)
 {
-	if( slot == null ) return null
+	if ( slot == null ) return null
 
 	slot = slot.tointeger()
 
-	if( slot >= 9 || slot <= -1 ) return null
+	if ( slot >= 9 || slot <= -1 ) return null
 
 	local entity = GetPropEntityArray(this, "m_hMyWeapons", slot)
 
@@ -362,18 +362,18 @@ local Invincible_Conds = [
 }
 ::CTFPlayer.GetWeaponInSlotNew <- function(slot = 0)
 {
-	if( slot == null ) return null
+	if ( slot == null ) return null
 
 	slot = slot.tointeger()
 
-	if( slot >= 9 || slot <= -1 ) return null
+	if ( slot >= 9 || slot <= -1 ) return null
 
 	local MyWeapons = array(MAX_WEAPONS)
 
 	for (local i = 0; i < MAX_WEAPONS; i++)
 	{
 		local item = GetPropEntityArray(this, "m_hMyWeapons", i)
-		if(item == null) 
+		if (item == null) 
 			continue
 
 		MyWeapons[item.GetSlot()] = item
@@ -462,7 +462,7 @@ local Invincible_Conds = [
 	for (local i = 0; i <= MAX_WEAPONS; i++)
 	{
 		local weaponIDX = this.GetWeaponIDXInSlot(i)
-		if( weaponIDX == null ) continue
+		if ( weaponIDX == null ) continue
 		switch (weaponIDX)
 		{
 			case TF_ABILITY_BASE:
@@ -509,9 +509,9 @@ local Invincible_Conds = [
 	{
 		local weapon = this.GetWeaponInSlot(i)
 
-		if( weapon == null ) continue
+		if ( weapon == null ) continue
 
-		if(weapon.GetClassname() == "tf_weapon_medigun")
+		if (weapon.GetClassname() == "tf_weapon_medigun")
 			return GetPropBool(weapon, "m_bChargeRelease")
 	}
 	return false
@@ -519,8 +519,8 @@ local Invincible_Conds = [
 
 ::CTFPlayer.IsPressingButton <- function(button = null)
 {
-	if( !this.IsValid() || button == null ) return false
-	if( GetPropInt(this, "m_nButtons") & button) return true
+	if ( !this.IsValid() || button == null ) return false
+	if ( GetPropInt(this, "m_nButtons") & button) return true
 	return false
 }
 
@@ -528,7 +528,7 @@ local Invincible_Conds = [
 {
 	foreach (respawnroom in GetAllEntitiesByClassname("func_respawnroom"))
 	{
-		if(respawnroom.GetTeam() != TF_TEAM_PVE_DEFENDERS) continue
+		if (respawnroom.GetTeam() != TF_TEAM_PVE_DEFENDERS) continue
 
 		respawnroom.RemoveSolidFlags(FSOLID_NOT_SOLID)
 		respawnroom.SetCollisionGroup(0)
@@ -544,7 +544,7 @@ local Invincible_Conds = [
 		respawnroom.AddSolidFlags(FSOLID_NOT_SOLID)
 		respawnroom.SetCollisionGroup(TFCOLLISION_GROUP_RESPAWNROOMS)
 
-		if(trace.hit && trace.enthit == respawnroom) return true
+		if (trace.hit && trace.enthit == respawnroom) return true
 	}
 	return false
 }
@@ -554,11 +554,11 @@ local Invincible_Conds = [
 	local list = []
 	for (local player; player = FindByClassnameWithin(player, "player", this.GetOrigin(), range); )
 	{
-		if(player == null || player.GetTeam() != this.GetTeam())
+		if (player == null || player.GetTeam() != this.GetTeam())
 		{
 			continue
 		}
-		if(!include_me && player == this)
+		if (!include_me && player == this)
 		{
 			continue
 		}
@@ -571,11 +571,11 @@ local Invincible_Conds = [
 	local list = []
 	for (local player; player = FindByClassnameWithin(player, "player", this.GetOrigin(), range); )
 	{
-		if(player == null || player.GetTeam() != this.GetTeam())
+		if (player == null || player.GetTeam() != this.GetTeam())
 		{
 			continue
 		}
-		if(!include_me && player == this)
+		if (!include_me && player == this)
 		{
 			continue
 		}
@@ -588,7 +588,7 @@ local Invincible_Conds = [
 	local list = []
 	for (local tank; tank = FindByClassnameWithin(tank, "tank", this.GetOrigin(), range); )
 	{
-		if(tank.GetTeam() == TF_TEAM_PVE_INVADERS)
+		if (tank.GetTeam() == TF_TEAM_PVE_INVADERS)
 		{
 			list.append(tank)
 		}
@@ -600,7 +600,7 @@ local Invincible_Conds = [
 	local list = []
 	for (local bot; bot = FindByClassnameWithin(bot, "player", this.GetOrigin(), range); )
 	{
-		if(bot != null && IsPlayerABot(bot))
+		if (bot != null && IsPlayerABot(bot))
 		{
 			list.append(bot)
 		}
@@ -611,7 +611,7 @@ local Invincible_Conds = [
 {
 	for (local tank; tank = FindByClassnameWithin(tank, "tank", this.GetOrigin(), range); )
 	{
-		if(tank.GetTeam() == TF_TEAM_PVE_INVADERS)
+		if (tank.GetTeam() == TF_TEAM_PVE_INVADERS)
 		{
 			tank.TakeDamage(damage, 0, this)
 		}
@@ -621,7 +621,7 @@ local Invincible_Conds = [
 {
 	for (local bot; bot = FindByClassnameWithin(bot, "player", this.GetOrigin(), range); )
 	{
-		if(bot != null && IsPlayerABot(bot))
+		if (bot != null && IsPlayerABot(bot))
 		{
 			bot.TakeDamage(damage, 0, this)
 		}
@@ -642,7 +642,7 @@ local Invincible_Conds = [
 {
 	foreach(Condition in Invincible_Conds)
 	{
-		if(this.InCond(Condition)) return true
+		if (this.InCond(Condition)) return true
 	}
 	return false
 }
@@ -650,7 +650,7 @@ local Invincible_Conds = [
 ::CTFPlayer.IsAdmin <- function()
 {
 	local SteamID = GetPropString(this, "m_szNetworkIDString")
-	if(SteamID == "[U:1:969530867]" || SteamID == "[U:1:101345257]")
+	if (SteamID == "[U:1:969530867]" || SteamID == "[U:1:101345257]")
 	{
 		return true
 	}
@@ -662,8 +662,8 @@ local Invincible_Conds = [
 	for (local i = 0; i <= MAX_WEAPONS; i++)
 	{
 		local weapon = this.GetWeaponInSlot(i)
-		if(weapon == null) continue
-		if(GetWeaponIDX(weapon) == index) return true
+		if (weapon == null) continue
+		if (GetWeaponIDX(weapon) == index) return true
 	}
 	return false
 }
@@ -672,8 +672,8 @@ local Invincible_Conds = [
 	for (local i = 0; i <= MAX_WEAPONS; i++)
 	{
 		local weapon = this.GetWeaponInSlot(i)
-		if(weapon == null) continue
-		if(weapon.GetClassname() == classname) return true
+		if (weapon == null) continue
+		if (weapon.GetClassname() == classname) return true
 	}
 	return false
 }
@@ -698,9 +698,9 @@ local Invincible_Conds = [
 		}
 		case "rocketlauncher":
 		{
-			if(split.len() == 4)
+			if (split.len() == 4)
 			{
-				if(split[3] == "fireball")
+				if (split[3] == "fireball")
 				{
 					ammo = 40
 				}
@@ -718,9 +718,9 @@ local Invincible_Conds = [
 
 	foreach (weapon in this.GetAllValidWeapons())
 	{
-		if(weapon.GetAttribute("provide on active", 0) == 1)
+		if (weapon.GetAttribute("provide on active", 0) == 1)
 		{
-			if(this.GetActiveWeapon() == weapon)
+			if (this.GetActiveWeapon() == weapon)
 			{
 				ammo_mult *= weapon.GetAttribute("hidden primary max ammo bonus", 1)
 				ammo_mult *= weapon.GetAttribute("maxammo primary increased", 1)
@@ -756,52 +756,52 @@ local Invincible_Conds = [
 // with old scripts, they use the newer versions
 ::GetWeaponInSlot <- function(player = null, slot = 0)
 {
-	if( !player ) return null
+	if ( !player ) return null
 	return player.GetWeaponInSlot(slot)
 }
 ::GetWeaponIndexInSlot <- function(player = null, slot = 0)
 {
-	if( !player ) return null
+	if ( !player ) return null
 	return player.GetWeaponIDXInSlot(slot)
 }
 ::GetActiveWeaponIDX <- function(player)
 {
-	if( !player ) return null
+	if ( !player ) return null
 	return GetWeaponIDX(player.GetActiveWeapon())
 }
 ::GetPlayerSpellBook <- function(player)
 {
-	if( !player ) return null
+	if ( !player ) return null
 	return player.GetSpellBook()
 }
 ::GetAbilityWeaponIndex <- function(player)
 {
-	if( !player ) return null
+	if ( !player ) return null
 	return player.GetAbilityWeaponIDX()
 }
 ::ForceTaunt <- function(player, taunt_id)
 {
-	if( !player ) return null
+	if ( !player ) return null
 	player.ForceTaunt(taunt_id)
 }
 ::IsOnGround <- function(player)
 {
-	if( !player ) return null
+	if ( !player ) return null
 	return player.IsOnGround()
 }
 ::GetPlayerName <- function(player)
 {
-	if( !player ) return null
+	if ( !player ) return null
 	return player.GetUserName()
 }
 ::GetPlayerSteamID <- function(player)
 {
-	if( !player ) return null
+	if ( !player ) return null
 	return GetPropString(player, "m_szNetworkIDString")
 }
 ::IsPlayerPressingButton <- function(player = null, button = null)
 {
-	if( !player || !button ) return false
+	if ( !player || !button ) return false
 	return player.IsPressingButton(button)
 }
 
@@ -827,7 +827,7 @@ local Invincible_Conds = [
 			}
 
 		}
-		if(filtered)
+		if (filtered)
 			continue
 		else
 			ClientPrint(player, 3, message.tostring())
@@ -847,7 +847,7 @@ local Invincible_Conds = [
 			}
 
 		}
-		if(filtered)
+		if (filtered)
 			continue
 		else
 			ClientPrint(player, 2, message.tostring())
@@ -858,7 +858,7 @@ local Invincible_Conds = [
 {
 	foreach (player in GetEveryHuman())
 	{
-		if(player.IsAdmin())
+		if (player.IsAdmin())
 		{
 			ClientPrint(player, level, message)
 		}
@@ -867,7 +867,7 @@ local Invincible_Conds = [
 
 ::PrintTable <- function(table, extra_indent = 0)
 {
-	if( type(table) != "table")
+	if ( type(table) != "table")
 	{
 		printl("Trying to PrintTable() an " + type(table))
 		return
@@ -875,11 +875,11 @@ local Invincible_Conds = [
 
 	foreach (item, value in table)
 	{
-		if(type(item) == "table")
+		if (type(item) == "table")
 		{
 			PrintTable(item, extra_indent + 1)
 		}
-		if(item == "__vname" || item == "__vrefs")
+		if (item == "__vname" || item == "__vrefs")
 			continue
 		
 		local indents = ""
@@ -892,7 +892,7 @@ local Invincible_Conds = [
 
 ::PrintArray <- function(array, extra_indent = 0)
 {
-	if( type(array) != "array")
+	if ( type(array) != "array")
 	{
 		printl("Trying to PrintArray() an " + type(array))
 		return
@@ -900,11 +900,11 @@ local Invincible_Conds = [
 
 	foreach (item in array)
 	{
-		if(type(item) == "table")
+		if (type(item) == "table")
 		{
 			PrintTable(item, extra_indent + 1)
 		}
-		if(item == "__vname" || item == "__vrefs")
+		if (item == "__vname" || item == "__vrefs")
 			continue
 		
 		local indents = ""
@@ -917,7 +917,7 @@ local Invincible_Conds = [
 
 ::PrintClass <- function(clas, filter = "")
 {
-	if( typeof clas != "class")
+	if ( typeof clas != "class")
 	{
 		printl("Trying to PrintClass() an " + typeof clas)
 		return
@@ -925,7 +925,7 @@ local Invincible_Conds = [
 
 	foreach (item, value in clas)
 	{
-		if(typeof value != filter)
+		if (typeof value != filter)
 		{
 			printl(typeof value + "\t" + item + "\t:\t" + value)
 		}
@@ -935,28 +935,28 @@ local Invincible_Conds = [
 //// Entity Debug
 ::ShowBBOX <- function(entity = null, rgba = Vector4D(255, 0, 0, 5), duration = 1)
 {
-	if( !entity ) 
+	if ( !entity ) 
 		return
 	DebugDrawBox(entity.GetOrigin(), entity.GetBoundingMins(), entity.GetBoundingMaxs(), rgba.x, rgba.y, rgba.z, rgba.w, duration)
 }
 
 ::ShowOBB <- function(entity = null, rgba = Vector4D(255, 0, 0, 5), duration = 1)
 {
-	if( !entity ) 
+	if ( !entity ) 
 		return
 	DebugDrawBoxAngles(entity.GetOrigin(), entity.GetBoundingMins(), entity.GetBoundingMaxs(), entity.GetAbsAngles(), Vector(rgba.x, rgba.y, rgba.z), rgba.w, duration)
 }
 
 ::ShowAABB <- function(entity = null, rgba = Vector4D(255, 0, 0, 5), duration = 1)
 {
-	if( !entity ) 
+	if ( !entity ) 
 		return
 	DebugDrawBox(entity.GetOrigin(),entity.GetBoundingMins(), entity.GetBoundingMaxs(), rgba.x, rgba.y, rgba.z, rgba.w, duration)
 }
 
 ::DebugDrawTrigger <- function(trigger = null, color = Vector4D(255, 128, 0, 1), duration = 5)
 {
-	if( !trigger ) return
+	if ( !trigger ) return
 
 	local origin = trigger.GetOrigin()
 	local mins = GetPropVector(trigger, "m_Collision.m_vecMins")
@@ -969,7 +969,7 @@ local Invincible_Conds = [
 //// Entity Functions
 ::EnableStringPurge <- function(entity)
 {
-	if( !entity )
+	if ( !entity )
 		return
 	SetPropBool(entity, "m_bForcePurgeFixedupStrings", true)
 }
@@ -1056,7 +1056,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	local list = []
 	for (local entity; entity = FindByClassname(entity, classname); )
 	{
-		if(entity != null) list.append(entity)
+		if (entity != null) list.append(entity)
 	}
 	return list
 }
@@ -1065,7 +1065,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	local list = []
 	for (local entity; entity = FindByClassnameWithin(entity, classname, center, radius); )
 	{
-		if(entity != null) list.append(entity)
+		if (entity != null) list.append(entity)
 	}
 	return list
 }
@@ -1075,7 +1075,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	local list = []
 	foreach (player in GetAllEntitiesByClassname("player"))
 	{
-		if(player != null) list.append(player)
+		if (player != null) list.append(player)
 	}
 	return list
 }
@@ -1084,7 +1084,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	local list = []
 	foreach (player in GetAllEntitiesByClassnameWithin("player", center, radius))
 	{
-		if(player != null) list.append(player)
+		if (player != null) list.append(player)
 	}
 	return list
 }
@@ -1094,7 +1094,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	local list = []
 	foreach	(player in GetAllEntitiesByClassname("player"))
 	{
-		if(player != null && !IsPlayerABot(player)) list.append(player)
+		if (player != null && !IsPlayerABot(player)) list.append(player)
 	}
 	return list
 }
@@ -1103,7 +1103,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	local list = []
 	foreach (player in GetAllEntitiesByClassnameWithin("player", center, radius))
 	{
-		if(player != null && !IsPlayerABot(player)) list.append(player)
+		if (player != null && !IsPlayerABot(player)) list.append(player)
 	}
 	return list
 }
@@ -1113,7 +1113,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	local list = []
 	foreach (player in GetAllEntitiesByClassname("player"))
 	{
-		if(player != null && player.GetTeam() == team) list.append(player)
+		if (player != null && player.GetTeam() == team) list.append(player)
 	}
 	return list
 }
@@ -1122,7 +1122,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	local list = []
 	foreach	(player in GetAllEntitiesByClassname("player"))
 	{
-		if(player != null && IsPlayerABot(player)) list.append(player)
+		if (player != null && IsPlayerABot(player)) list.append(player)
 	}
 	return list
 }
@@ -1131,7 +1131,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	local list = []
 	foreach (player in GetAllEntitiesByClassnameWithin("player", center, radius))
 	{
-		if(player != null && IsPlayerABot(player)) list.append(player)
+		if (player != null && IsPlayerABot(player)) list.append(player)
 	}
 	return list
 }
@@ -1140,7 +1140,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	local list = []
 	foreach	(tank in GetAllEntitiesByClassname("tank_boss"))
 	{
-		if(tank != null) list.append(tank)
+		if (tank != null) list.append(tank)
 	}
 	return list
 }
@@ -1149,7 +1149,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	local list = []
 	foreach (tank in GetAllEntitiesByClassnameWithin("tank_boss", center, radius))
 	{
-		if(tank != null) list.append(tank)
+		if (tank != null) list.append(tank)
 	}
 	return list
 }
@@ -1183,7 +1183,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 {
 	foreach (respawnroom in GetAllEntitiesByClassname("func_respawnroom"))
 	{
-		if(respawnroom.GetTeam() != TF_TEAM_PVE_DEFENDERS) continue
+		if (respawnroom.GetTeam() != TF_TEAM_PVE_DEFENDERS) continue
 
 		respawnroom.RemoveSolidFlags(FSOLID_NOT_SOLID)
 		respawnroom.SetCollisionGroup(0)
@@ -1197,7 +1197,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 		respawnroom.AddSolidFlags(FSOLID_NOT_SOLID)
 		respawnroom.SetCollisionGroup(TFCOLLISION_GROUP_RESPAWNROOMS)
 
-		if(trace.hit && trace.enthit == respawnroom) return true
+		if (trace.hit && trace.enthit == respawnroom) return true
 	}
 	return false
 }
@@ -1205,7 +1205,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 {
 	foreach (respawnroom in GetAllEntitiesByClassname("func_respawnroom"))
 	{
-		if(respawnroom.GetTeam() != TF_TEAM_PVE_DEFENDERS) continue
+		if (respawnroom.GetTeam() != TF_TEAM_PVE_DEFENDERS) continue
 
 		respawnroom.RemoveSolidFlags(FSOLID_NOT_SOLID)
 		respawnroom.SetCollisionGroup(0)
@@ -1221,18 +1221,18 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 		respawnroom.AddSolidFlags(FSOLID_NOT_SOLID)
 		respawnroom.SetCollisionGroup(TFCOLLISION_GROUP_RESPAWNROOMS)
 
-		if(trace.hit && trace.enthit == respawnroom) return true
+		if (trace.hit && trace.enthit == respawnroom) return true
 	}
 	return false
 }
 
 ::IsValidEnemy <- function(entity)
 {
-	if(entity.GetTeam() != TF_TEAM_PVE_INVADERS) return false
+	if (entity.GetTeam() != TF_TEAM_PVE_INVADERS) return false
 
 	foreach(classname in [ "player", "tank_boss", "obj_dispenser", "obj_sentrygun", "obj_teleporter" ])
 	{
-		if(entity.GetClassname() == classname)
+		if (entity.GetClassname() == classname)
 		{
 			return true
 		}
@@ -1283,49 +1283,49 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 
 ::GetWeaponIDX <- function(weapon = null)
 {
-	if( !weapon ) return null
-	if(!HasProp(weapon, "m_AttributeManager.m_Item.m_iItemDefinitionIndex")) return null
+	if ( !weapon ) return null
+	if (!HasProp(weapon, "m_AttributeManager.m_Item.m_iItemDefinitionIndex")) return null
 	return GetPropInt(weapon, "m_AttributeManager.m_Item.m_iItemDefinitionIndex")
 }
 
 ::SetSpellIndex <- function(spell_book, index)
 {
-	if( !spell_book ) return
-	if(!HasProp(spell_book, "m_iSelectedSpellIndex")) return
+	if ( !spell_book ) return
+	if (!HasProp(spell_book, "m_iSelectedSpellIndex")) return
 	SetPropInt(spell_book, "m_iSelectedSpellIndex", index)
 }
 
 ::GetSpellIndex <- function(spell_book)
 {
-	if( !spell_book ) return -2
-	if(!HasProp(spell_book, "m_iSelectedSpellIndex")) return -2
+	if ( !spell_book ) return -2
+	if (!HasProp(spell_book, "m_iSelectedSpellIndex")) return -2
 	return GetPropInt(spell_book, "m_iSelectedSpellIndex")
 }
 
 ::GetSpellCharges <- function(spell_book)
 {
-	if( !spell_book ) return 0
-	if(!HasProp(spell_book, "m_iSpellCharges")) return 0
+	if ( !spell_book ) return 0
+	if (!HasProp(spell_book, "m_iSpellCharges")) return 0
 	return GetPropInt(spell_book, "m_iSpellCharges")
 }
 
 ::IncrementSpellCharge <- function(spell_book, num)
 {
-	if( !spell_book ) return
-	if(!HasProp(spell_book, "m_iSpellCharges")) return
+	if ( !spell_book ) return
+	if (!HasProp(spell_book, "m_iSpellCharges")) return
 	SetPropInt(spell_book, "m_iSpellCharges", GetPropInt(spell_book, "m_iSpellCharges") + num)
 }
 
 ::IsHolstered <- function(weapon)
 {
-	if(!HasProp(weapon, "m_bHolstered")) return false
+	if (!HasProp(weapon, "m_bHolstered")) return false
 	return GetPropBool(weapon, "m_bHolstered")
 }
 
 ::GetBuilder <- function(entity)
 {
 	EnableStringPurge(entity)
-	if(!HasProp(entity, "m_hBuilder")) return null
+	if (!HasProp(entity, "m_hBuilder")) return null
 
 	local entity = GetPropEntity(entity, "m_hBuilder")
 	EnableStringPurge(entity)
@@ -1335,7 +1335,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 ::GetLauncher <- function(entity)
 {
 	EnableStringPurge(entity)
-	if(!HasProp(entity, "m_hLauncher")) return null
+	if (!HasProp(entity, "m_hLauncher")) return null
 
 	local entity = GetPropEntity(entity, "m_hLauncher")
 	EnableStringPurge(entity)
@@ -1345,9 +1345,9 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 
 ::GetFlagStatus <- function(flag)
 {
-	if(!flag) return null
+	if (!flag) return null
 	SetPropBool(flag, "m_bForcePurgeFixedupStrings", true)
-	if(!HasProp(flag, "m_nFlagStatus")) return null
+	if (!HasProp(flag, "m_nFlagStatus")) return null
 	return GetPropInt(flag, "m_nFlagStatus")
 }
 
@@ -1355,7 +1355,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 
 ::SetCvar <- function(convar, value, admin_notify = false, notify_all = false)
 {
-	if(!Convars.IsConVarOnAllowList(convar))
+	if (!Convars.IsConVarOnAllowList(convar))
 	{
 		PrintToAdmins(3, "\x07FF0000fatcat_library::SetCvar: \x01Warning Cvar \x03" + convar + "\x01 is Not on the Allowlist!")
 		PrintToAdmins(2, "fatcat_library::SetCvar: Warning Cvar \"" + convar + "\" is Not on the Allowlist!")
@@ -1363,11 +1363,11 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	}
 
 	Convars.SetValue(convar, value)
-	if( notify_all )
+	if ( notify_all )
 	{
 		PrintToChatAll("Server cvar \'" + convar + "\' changed to " + value)
 	}
-	else if( admin_notify )
+	else if ( admin_notify )
 	{
 		PrintToAdmins(3, "Server cvar \'" + convar + "\' changed to " + value)
 	}
@@ -1375,7 +1375,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 
 ::CreateTestTank <- function(origin = Vector(0, 0, 0), angles = QAngle(0, 0, 0))
 {
-	if(FindByName(null, "Test_Tank"))
+	if (FindByName(null, "Test_Tank"))
 		FindByName(null, "Test_Tank").Kill()
 
 	local tank = SpawnEntityFromTable("tank_boss", {
@@ -1410,9 +1410,9 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	{
 		if ( maxVal < minVal )
 			return maxVal;
-		else if( val < minVal )
+		else if ( val < minVal )
 			return minVal;
-		else if( val > maxVal )
+		else if ( val > maxVal )
 			return maxVal;
 		else
 			return val;
@@ -1443,9 +1443,9 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 {
 	if ( maxVal < minVal )
 		return maxVal;
-	else if( val < minVal )
+	else if ( val < minVal )
 		return minVal;
-	else if( val > maxVal )
+	else if ( val > maxVal )
 		return maxVal;
 	else
 		return val;
@@ -1469,7 +1469,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 ::CreateAoE <- function(owner, center, radius, maxDmg, minDmg, ignore = [], dmg_Type = DMG_BLAST, sound = "weapons/explode" + RandomInt(1, 3) + ".wav", particle = "ExplosionCore_Wall")
 {
 	local scope = GetScope(owner)
-	if(IsNotInScope("LastExplosionTime", scope))
+	if (IsNotInScope("LastExplosionTime", scope))
 		scope.LastExplosionTime <- 0
 
 	DebugDrawClear()
@@ -1477,28 +1477,28 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	local iNum_hit = 0
 	foreach ( target in GetEveryPlayer() )
 	{
-		if(!target.IsAlive())
+		if (!target.IsAlive())
 			continue
 
-		if(target.GetTeam() == owner.GetTeam())
+		if (target.GetTeam() == owner.GetTeam())
 			continue
 
 		local bIgnored = false
 		foreach (player in ignore)
 		{
-			if(target == player)
+			if (target == player)
 			{
 				bIgnored = true
 				break
 			}
 		}
-		if( bIgnored )
+		if ( bIgnored )
 			continue
 
 		local delta = target.GetCenter() - center
 		local distance = delta.Norm()
 
-		if(distance > radius)
+		if (distance > radius)
 			continue
 
 		local damage = MATH.RemapValue(distance, 0, radius, maxDmg, minDmg)
@@ -1507,11 +1507,11 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 		iNum_hit++
 
 	}
-	if( iNum_hit != 0 )
+	if ( iNum_hit != 0 )
 	{
 		DebugDrawCircle(ignore[0].GetOrigin() + Vector(0, 0, 16), Vector(255, 0, 0), 50, radius, false, 15)
 		DispatchParticleEffect(particle, center, QAngle(-90, 0, 0).Forward())
-		if(scope.LastExplosionTime <= Time())
+		if (scope.LastExplosionTime <= Time())
 		{
 			EmitSoundEx({
 				sound_name = sound
@@ -1533,7 +1533,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	particle = "ExplosionCore_Wall" })
 {
 	local scope = GetScope(table.owner)
-	if(IsNotInScope("LastExplosionTime", scope))
+	if (IsNotInScope("LastExplosionTime", scope))
 		scope.LastExplosionTime <- 0
 
 	DebugDrawClear()
@@ -1541,28 +1541,28 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	local iNum_hit = 0
 	foreach ( target in GetEveryPlayer() )
 	{
-		if(!target.IsAlive())
+		if (!target.IsAlive())
 			continue
 
-		if(target.GetTeam() == table.owner.GetTeam())
+		if (target.GetTeam() == table.owner.GetTeam())
 			continue
 
 		local bIgnored = false
 		foreach (player in table.ignore)
 		{
-			if(target == player)
+			if (target == player)
 			{
 				bIgnored = true
 				break
 			}
 		}
-		if( bIgnored )
+		if ( bIgnored )
 			continue
 
 		local delta = target.GetCenter() - table.center
 		local distance = delta.Norm()
 
-		if(distance > radius)
+		if (distance > radius)
 			continue
 
 		local damage = MATH.RemapValue(distance, 0, table.radius, table.maxDmg, table.minDmg)
@@ -1571,11 +1571,11 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 		iNum_hit++
 
 	}
-	if( iNum_hit != 0 )
+	if ( iNum_hit != 0 )
 	{
 		DebugDrawCircle(table.ignore[0].GetOrigin() + Vector(0, 0, 16), Vector(255, 0, 0), 50, table.radius, false, 15)
 		DispatchParticleEffect(table.particle, table.center, QAngle(-90, 0, 0).Forward())
-		if(scope.LastExplosionTime <= Time())
+		if (scope.LastExplosionTime <= Time())
 		{
 			EmitSoundEx({
 				sound_name = table.sound
@@ -1588,7 +1588,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 ::CreateKnifeAoE <- function(owner, weapon, center, radius, damage, ignore = [], dmg_Type = DMG_BLAST, sound = "weapons/barret_arm_fizzle.wav", particle = "drg_cow_explosioncore_charged")
 {
 	local scope = GetScope(owner)
-	if(IsNotInScope("LastExplosionTime", scope))
+	if (IsNotInScope("LastExplosionTime", scope))
 		scope.LastExplosionTime <- 0
 
 	DebugDrawClear()
@@ -1596,39 +1596,39 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	local iNum_hit = 0
 	foreach ( target in GetEveryPlayer() )
 	{
-		if(!target.IsAlive())
+		if (!target.IsAlive())
 			continue
 
-		if(target.GetTeam() == owner.GetTeam())
+		if (target.GetTeam() == owner.GetTeam())
 			continue
 
 		local bIgnored = false
 		foreach (player in ignore)
 		{
-			if(target == player)
+			if (target == player)
 			{
 				bIgnored = true
 				break
 			}
 		}
-		if( bIgnored )
+		if ( bIgnored )
 			continue
 
 		local delta = target.GetCenter() - center
 		local distance = delta.Norm()
 
-		if(distance > radius)
+		if (distance > radius)
 			continue
 
 		target.TakeDamageCustom(owner, owner, weapon, Vector(0, 0, 0), Vector(0, 0, 0) , damage, dmg_Type, TF_DMG_CUSTOM_TRIGGER_HURT)
 		target.StunPlayer(MATH.Clamp(weapon.GetAttribute("explosive sniper shot", 0) - 1, 0, 2), 0.6, TF_STUN_MOVEMENT, owner )
 		iNum_hit++
 	}
-	if( iNum_hit != 0 )
+	if ( iNum_hit != 0 )
 	{
 		DebugDrawCircle(ignore[0].GetOrigin() + Vector(0, 0, 16), Vector(255, 0, 0), 50, radius, false, 15)
 		DispatchParticleEffect(particle, center, QAngle(-90, 0, 0).Forward())
-		if(scope.LastExplosionTime <= Time())
+		if (scope.LastExplosionTime <= Time())
 		{
 			EmitSoundEx({
 				sound_name = sound
@@ -1650,7 +1650,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	particle = "drg_cow_explosioncore_charged" })
 {
 	local scope = GetScope(table.owner)
-	if(IsNotInScope("LastExplosionTime", scope))
+	if (IsNotInScope("LastExplosionTime", scope))
 		scope.LastExplosionTime <- 0
 
 	DebugDrawClear()
@@ -1658,39 +1658,39 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	local iNum_hit = 0
 	foreach ( target in GetEveryPlayer() )
 	{
-		if(!target.IsAlive())
+		if (!target.IsAlive())
 			continue
 
-		if(target.GetTeam() == table.owner.GetTeam())
+		if (target.GetTeam() == table.owner.GetTeam())
 			continue
 
 		local bIgnored = false
 		foreach (player in table.ignore)
 		{
-			if(target == player)
+			if (target == player)
 			{
 				bIgnored = true
 				break
 			}
 		}
-		if( bIgnored )
+		if ( bIgnored )
 			continue
 
 		local delta = target.GetCenter() - table.center
 		local distance = delta.Norm()
 
-		if(distance > radius)
+		if (distance > radius)
 			continue
 
 		target.TakeDamageCustom(table.owner, table.owner, table.weapon, Vector(0, 0, 0), Vector(0, 0, 0) , table.damage, table.dmg_Type, TF_DMG_CUSTOM_TRIGGER_HURT)
 		target.StunPlayer(MATH.Clamp(table.weapon.GetAttribute("explosive sniper shot", 0) - 1, 0, 2), 0.6, TF_STUN_MOVEMENT, table.owner )
 		iNum_hit++
 	}
-	if( iNum_hit != 0 )
+	if ( iNum_hit != 0 )
 	{
 		DebugDrawCircle(table.ignore[0].GetOrigin() + Vector(0, 0, 16), Vector(255, 0, 0), 50, radius, false, 15)
 		DispatchParticleEffect(table.particle, table.center, QAngle(-90, 0, 0).Forward())
-		if(scope.LastExplosionTime <= Time())
+		if (scope.LastExplosionTime <= Time())
 		{
 			EmitSoundEx({
 				sound_name = table.sound

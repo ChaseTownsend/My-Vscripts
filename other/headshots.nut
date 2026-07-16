@@ -1,22 +1,22 @@
 ::damage <- {
 	function OnScriptHook_OnTakeDamage(params)
 	{
-		if(!params.const_entity.IsPlayer())
+		if (!params.const_entity.IsPlayer())
 			return
-		if(params.attacker)
-			if(!params.attacker.IsPlayer())
+		if (params.attacker)
+			if (!params.attacker.IsPlayer())
 				return
 
 		local victim = params.const_entity
 		local attacker = params.attacker
 
-		if(attacker == null) return
+		if (attacker == null) return
 
-		if(Convars.GetBool("mp_friendlyfire") == false)
+		if (Convars.GetBool("mp_friendlyfire") == false)
 		{
-			if(victim.GetTeam() == attacker.GetTeam()) return
+			if (victim.GetTeam() == attacker.GetTeam()) return
 		}
-		if(NetProps.GetPropInt(victim, "m_LastHitGroup") != Constants.EHitGroup.HITGROUP_HEAD) return
+		if (NetProps.GetPropInt(victim, "m_LastHitGroup") != Constants.EHitGroup.HITGROUP_HEAD) return
 		NetProps.SetPropInt(victim, "m_LastHitGroup", 0)
 
 		params.weapon.AddAttribute("crit_dmg_falloff", 1, 0)

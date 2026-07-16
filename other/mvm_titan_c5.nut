@@ -3,11 +3,11 @@ IncludeScript("fatcat_library")
 function securitycheck()
 {
 	local human = FindByClassnameNearest("player", Vector(1720, 1120, 630), 75)
-	if(human == null)
+	if (human == null)
 	{
 		return 0.5
 	}
-	if(IsPlayerABot(human))
+	if (IsPlayerABot(human))
 	{
 		return 0.5
 	}
@@ -472,13 +472,13 @@ function pathreroll()
 ::sentryhack <- {
 	function OnScriptHook_OnTakeDamage(params)
 	{
-		if(!params.attacker) return
+		if (!params.attacker) return
 		local attacker = params.attacker
 		if (!attacker || IsPlayerABot(attacker)) return
 
-		if(attacker.GetClassname() == "obj_sentrygun")
+		if (attacker.GetClassname() == "obj_sentrygun")
 		{
-			if(attacker.GetName() == "fort_turrets")
+			if (attacker.GetName() == "fort_turrets")
 			{
 				params.damage *= 12
 			}
@@ -502,7 +502,7 @@ __CollectGameEventCallbacks(teleporterhack)
 // self is the activator, because we are doing CallScriptFunction on activator on a trigger
 function CommitSplash()
 {
-	if(!self.IsPlayer())
+	if (!self.IsPlayer())
 		return
 
 	local splash = SpawnEntityFromTable("info_particle_system", {

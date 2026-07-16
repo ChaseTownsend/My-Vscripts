@@ -4,11 +4,11 @@ IncludeScript("fatcat_library")
 ::Spells <- {
 	function OnGameEvent_player_death(params)
 	{
-		if(!params.attacker) return
+		if (!params.attacker) return
 		local player = GetPlayerFromUserID(params.attacker)
-		if(!player || IsPlayerABot(player)) return
+		if (!player || IsPlayerABot(player)) return
 
-		if(GetPlayerFromUserID(params.userid) == player) return // No Self Kills!
+		if (GetPlayerFromUserID(params.userid) == player) return // No Self Kills!
 
 		local Killed_WeaponIDX = params.weapon_def_index
 		local Weapon_LogName = params.weapon_logclassname
@@ -105,11 +105,11 @@ IncludeScript("fatcat_library")
 	}
 	function OnScriptHook_OnTakeDamage(params)
 	{
-		if(!params.attacker) return
+		if (!params.attacker) return
 		local player = params.attacker
 		if (!player || IsPlayerABot(player)) return
-		if(params.inflictor.entindex() != player.entindex()) return // inflictor is not the attacker!
-		if(params.const_entity == player) return // No Self Hits!
+		if (params.inflictor.entindex() != player.entindex()) return // inflictor is not the attacker!
+		if (params.const_entity == player) return // No Self Hits!
 
 		local Hit_WeaponIDX = GetWeaponIDX(params.weapon)
 
@@ -139,7 +139,7 @@ IncludeScript("fatcat_library")
 
 	function OnGameEvent_player_spawn(params)
 	{
-		if(params.team == Constants.ETFTeam.TEAM_UNASSIGNED) return
+		if (params.team == Constants.ETFTeam.TEAM_UNASSIGNED) return
 		local player = GetPlayerFromUserID(params.userid)
 		if (!player || IsPlayerABot(player)) return
 

@@ -51,7 +51,7 @@ PickupArmors[TF_CLASS_ENGINEER] 		= 25
 		SetPropInt( player, "m_ArmorValue", 0x80000000 )
 
 		local text = FindByName(null, GetPropString(player, "m_szNetname") + " Armor_text")
-		if(!text) {
+		if (!text) {
 			text = SpawnEntityFromTable("game_text",  {
 				targetname = format("%s Armor_text", GetPropString(player, "m_szNetname"))
 				message = format("Armor : %i", scope.armor)
@@ -64,7 +64,7 @@ PickupArmors[TF_CLASS_ENGINEER] 		= 25
 		local text_scope = GetScope(text)
 		text_scope.player <- player
 		text_scope.think <- function() {
-			if(!player.IsValid())
+			if (!player.IsValid())
 			{
 				ClearThinks(self)
 				EntFireByHandle(self, "Kill", null, -1, self, self)
@@ -80,7 +80,7 @@ PickupArmors[TF_CLASS_ENGINEER] 		= 25
 		local victim = GetPlayerFromUserID(params.userid)
 		local attacker = GetPlayerFromUserID(params.attacker)
 
-		if(params.death_flags & TF_DEATH_FEIGN_DEATH)
+		if (params.death_flags & TF_DEATH_FEIGN_DEATH)
 			return
 		
 		local pickup = CreatePickup({
@@ -112,10 +112,10 @@ PickupArmors[TF_CLASS_ENGINEER] 		= 25
 		local weapon = params.weapon
 		local dmg_custom = params.damage_stats
 
-		if(!victim.IsPlayer() || victim == attacker || attacker == Entities.First())
+		if (!victim.IsPlayer() || victim == attacker || attacker == Entities.First())
 			return
 
-		if(	dmg_custom == TF_DMG_CUSTOM_BACKSTAB || 
+		if (	dmg_custom == TF_DMG_CUSTOM_BACKSTAB || 
 			dmg_custom == TF_DMG_CUSTOM_BOOTS_STOMP || 
 			dmg_custom == TF_DMG_CUSTOM_CROC || 
 			dmg_custom == TF_DMG_CUSTOM_TRIGGER_HURT ||
@@ -140,14 +140,14 @@ PickupArmors[TF_CLASS_ENGINEER] 		= 25
 
 		local victim_scope = GetScope(victim)
 
-		if(victim_scope.armor <= 0)
+		if (victim_scope.armor <= 0)
 		{
 			victim_scope.armor = 0
 			return
 		}
 
 		local dmg_reduc = 1.0
-		if( (params.damage / Armor_dmg_mult) <= victim_scope.armor )
+		if ( (params.damage / Armor_dmg_mult) <= victim_scope.armor )
 			dmg_reduc = Armor_reduc
 		else // the stupid part
 			// this formula results in a range of 0.5 minimum to 1.0 maximum, for 0.75 to 1.00, set * 2 to * 1
@@ -160,13 +160,13 @@ PickupArmors[TF_CLASS_ENGINEER] 		= 25
 		victim_scope.armor -= MATH.Clamp(params.damage / Armor_dmg_mult, 0, victim_scope.armor)
 		params.damage = params.damage * dmg_reduc
 
-		if(attacker.IsPlayer() && !IsPlayerABot(attacker)) attacker.PrintToHud(message)
+		if (attacker.IsPlayer() && !IsPlayerABot(attacker)) attacker.PrintToHud(message)
 
-		if(victim.InMultiCond([TF_COND_STEALTHED, TF_COND_STEALTHED_BLINK, TF_COND_STEALTHED_USER_BUFF, TF_COND_STEALTHED_USER_BUFF_FADING]))
+		if (victim.InMultiCond([TF_COND_STEALTHED, TF_COND_STEALTHED_BLINK, TF_COND_STEALTHED_USER_BUFF, TF_COND_STEALTHED_USER_BUFF_FADING]))
 			return
 
 
-		if(	dmg_custom == TF_DMG_CUSTOM_BLEEDING || 
+		if (	dmg_custom == TF_DMG_CUSTOM_BLEEDING || 
 			dmg_custom == TF_DMG_CUSTOM_BURNING )
 			return
 
@@ -186,7 +186,7 @@ PickupArmors[TF_CLASS_ENGINEER] 		= 25
 		shield.DispatchSpawn()
 		GetScope(shield).player <- victim
 		GetScope(shield).think <- function() {
-			if(!player.IsValid() || !player.IsAlive())
+			if (!player.IsValid() || !player.IsAlive())
 			{
 				ClearThinks(self)
 				EntFireByHandle(self, "Kill", null, -1, self, self)

@@ -1,7 +1,7 @@
 IncludeScript("fatcat_library")
 
 local accel_ent = FindByName(null, "_ProjectileAccelerationThink")
-if( accel_ent == null ) accel_ent = SpawnEntityFromTable("info_target", { targetname = "_ProjectileAccelerationThink" })
+if ( accel_ent == null ) accel_ent = SpawnEntityFromTable("info_target", { targetname = "_ProjectileAccelerationThink" })
 AddThinkToEnt(accel_ent, "AccelerationAdd")
 
 function AccelerationAdd()
@@ -9,16 +9,16 @@ function AccelerationAdd()
 	for (local projectile; projectile = FindByClassname(projectile, "tf_projectile*");)
 	{
 		local scope = GetScope(projectile)
-		if("Acceleration" in scope) continue
+		if ("Acceleration" in scope) continue
 
-		if(projectile.GetClassname() != "tf_projectile_rocket") continue
+		if (projectile.GetClassname() != "tf_projectile_rocket") continue
 
 		NetProps.SetPropBool(projectile, "m_bForcePurgeFixedupStrings", true)
 
 		local launcher = GetLauncher(projectile)
 		local launcherID = -1
 
-		if( launcher ) launcherID = launcher.GetIDX()
+		if ( launcher ) launcherID = launcher.GetIDX()
 		else launcherID = GetBuilder(projectile.GetOwner()).GetWeaponIDXInSlotNew(MELEE_SLOT)
 
 		switch (launcherID)
@@ -43,7 +43,7 @@ function AccelerationThink()
 	self.GetOwner().PrintToHud((self.GetAbsVelocity() - StartVel).Norm().tostring())
 	if (this.start_time >= Time())
 		return -1
-	if(self.GetAbsVelocity().Norm() > Convars.GetFloat("sv_maxvelocity"))
+	if (self.GetAbsVelocity().Norm() > Convars.GetFloat("sv_maxvelocity"))
 	{
 		Convars.SetValue("sv_maxvelocity", Convars.GetFloat("sv_maxvelocity") * 2)
 

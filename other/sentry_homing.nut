@@ -1,31 +1,31 @@
 local homing_entity = Entities.FindByName(null, "_HomingSentryThinkEntity")
-if( homing_entity == null ) homing_entity = SpawnEntityFromTable("info_teleport_destination", { targetname = "_HomingSentryThinkEntity" })
+if ( homing_entity == null ) homing_entity = SpawnEntityFromTable("info_teleport_destination", { targetname = "_HomingSentryThinkEntity" })
 AddThinkToEnt(homing_entity, "HomingAdd")
 
 function HomingAdd()
 {
 	for (local ent; ent = Entities.FindByClassname(ent, "tf_projectile*");)
 	{
-		if(ent.GetClassname() != "tf_projectile_rocket") continue
+		if (ent.GetClassname() != "tf_projectile_rocket") continue
 
 		ent.ValidateScriptScope()
 		local projectile_scope = ent.GetScriptScope()
 
-		if(NetProps.GetPropEntity(ent, "m_hLauncher") == null) continue
-		if(NetProps.GetPropEntity(ent, "m_hLauncher").GetClassname() == "tf_point_weapon_mimic")
+		if (NetProps.GetPropEntity(ent, "m_hLauncher") == null) continue
+		if (NetProps.GetPropEntity(ent, "m_hLauncher").GetClassname() == "tf_point_weapon_mimic")
 		{
 			for (local i = 0; i <= MaxClients().tointeger();i++)
 			{
 				local player = PlayerInstanceFromIndex(i)
-				if(player != null)
+				if (player != null)
 				{
 					local name = NetProps.GetPropString(player, "m_szNetname")
-					if(name != null)
+					if (name != null)
 					{
-						if(ent.GetName() == name)
+						if (ent.GetName() == name)
 						{
 							ent.SetOwner(player)
-							if(!("homing" in projectile_scope))
+							if (!("homing" in projectile_scope))
 							{
 								projectile_scope["homing"] <- {}
 								projectile_scope.turn_power <- 0.5 // percent to turn, 1.00 - 0.00
@@ -38,8 +38,8 @@ function HomingAdd()
 			}
 		}
 
-		/* if(!("SENTRY_ABILITY" in projectile_scope)) return
-		if(!("homing" in projectile_scope))
+		/* if (!("SENTRY_ABILITY" in projectile_scope)) return
+		if (!("homing" in projectile_scope))
 		{
 			projectile_scope["homing"] <- {}
 			projectile_scope.turn_power <- 0.5 // percent to turn, 1.00 - 0.00
@@ -52,16 +52,16 @@ function HomingAdd()
 function HomingThink()
 {
 	local target = FindClosestTarget()
-	if(target == null) return -1
+	if (target == null) return -1
 
 	local Deflected = 0
 	local CurrentDeflected = NetProps.GetPropInt(self, "m_iDeflected")
-	if(Deflected != CurrentDeflected)
+	if (Deflected != CurrentDeflected)
 	{
 		Deflected = CurrentDeflected
 		target     = null
 		local target = FindClosestTarget()
-		if(target == null) return -1
+		if (target == null) return -1
 	}
 
 
@@ -109,26 +109,26 @@ function FindClosestTarget()
 	{
 		for (local entity; entity = Entities.FindByClassnameWithin(entity, Classname, self.GetOrigin(), flDistance);)
 		{
-			if(entity == null) continue
-			if(!entity.IsAlive()) continue
-			if(entity.GetTeam() == self.GetTeam()) continue
+			if (entity == null) continue
+			if (!entity.IsAlive()) continue
+			if (entity.GetTeam() == self.GetTeam()) continue
 			local owner = self.GetOwner()
-			if(owner == null)
+			if (owner == null)
 			{
 				// Special stupid case, because some dont have an "m_hOwner" netprop
 				if (NetProps.GetPropEntity(self, "m_hThrower") == entity) continue
 			}
 			else
 			{
-				if(owner.GetClassname() == "obj_sentrygun")
+				if (owner.GetClassname() == "obj_sentrygun")
 				{
 					owner = NetProps.GetPropEntity(owner, "m_hBuilder")
 				}
-				if(entity == owner) continue
+				if (entity == owner) continue
 			}
 
 
-			if(entity.GetClassname() == "player")
+			if (entity.GetClassname() == "player")
 			{
 				if (!(entity.GetFlags() & Constants.FPlayer.FL_NOTARGET) && !IsEntityStealthed(entity) || !IsEntityDisguised(entity))
 				{
@@ -150,13 +150,13 @@ function FindClosestTarget()
 	local lowest_distance = flDistance
 	local lowest_index = 0
 
-	if(entities.len() == 0 || distances.len() == 0) return null
+	if (entities.len() == 0 || distances.len() == 0) return null
 
 	for (local i = 0; i < distances.len(); i = i+1)
 	{
 		local distance = distances[i]
 
-		if(abs(distance) <= abs(lowest_distance))
+		if (abs(distance) <= abs(lowest_distance))
 		{
 			lowest_distance = distance
 			lowest_index = i

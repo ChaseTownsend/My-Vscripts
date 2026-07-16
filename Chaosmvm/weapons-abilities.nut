@@ -1,4 +1,4 @@
-if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
+if (!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 SetScriptVersion("Abilities", "2.7.2")
 
@@ -59,11 +59,11 @@ KartSettings.UseTimes[TF_CLASS_SNIPER] 			= 2.2
 // - - - - - - - - - - - - - - - - - - - - -|
 function AbilityValid(player, player_class, idx)
 {
-	if(!player.IsAlive())
+	if (!player.IsAlive())
 		return false
-	if(!player.HasWeapon(idx))
+	if (!player.HasWeapon(idx))
 		return false
-	if(player_class > TF_CLASS_UNDEFINED && player_class < TF_CLASS_MAXNORMAL)
+	if (player_class > TF_CLASS_UNDEFINED && player_class < TF_CLASS_MAXNORMAL)
 	{
 		return player.GetPlayerClass() == player_class
 	}
@@ -92,7 +92,7 @@ function CreateAbility(weapon, spawncooldown, name, player_class, idx, text_parm
 
 	scope.AbilityThink <- function() 
 	{
-		if(!self.IsValid())
+		if (!self.IsValid())
 			return 500
 
 		local player = self.GetOwner()
@@ -102,7 +102,7 @@ function CreateAbility(weapon, spawncooldown, name, player_class, idx, text_parm
 			local message = "Variable list:\n"
 			foreach(k, v in this)
 			{
-				if(type(v) == "function")
+				if (type(v) == "function")
 					continue
 				if (!startswith(k, "__"))
 					message += (k + " : " + v + "\n")
@@ -110,12 +110,12 @@ function CreateAbility(weapon, spawncooldown, name, player_class, idx, text_parm
 			player.PrintToHud(message)
 		}
 
-		if(!AbilityValid(player, PlayerClass, WeaponIDX))
+		if (!AbilityValid(player, PlayerClass, WeaponIDX))
 			return 1.0
 
 		// Setup Text
 		local text_msg = ""
-		if(!player.IsTaunting())
+		if (!player.IsTaunting())
 		{
 			if (Timestamp-Time() < 0) 
 				text_msg = player.GetTranslatedAndFormattedString("ABILITY_READY", "%T"+TranslationName)
@@ -145,7 +145,7 @@ function CreateAbility(weapon, spawncooldown, name, player_class, idx, text_parm
 
 		ClearThinks(player.GetWeaponInSlotNew(SLOT_MELEE))
 
-		if( player.GetAbilityWeaponIDX() == null )
+		if ( player.GetAbilityWeaponIDX() == null )
 			return
 		
 		local melee = player.GetWeaponInSlotNew(SLOT_MELEE)
@@ -237,7 +237,7 @@ function GiveMeThyHealth(player)
 	local weapon = player.GetAbilityWeapon()
 	if (weapon == null) return
 
-	if(player.GetHealth() >= player.GetMaxHealth() * CheersSettings.HealthMult)
+	if (player.GetHealth() >= player.GetMaxHealth() * CheersSettings.HealthMult)
 		return;
 	player.SetHealth(player.GetMaxHealth() * CheersSettings.HealthMult)
 	player.SetCond(TF_COND_IMMUNE_TO_PUSHBACK, CheersSettings.Duration)
@@ -262,7 +262,7 @@ function SummonLasKart(player)
 		ignore = player
 	}
 	TraceHull(trace)
-	if(trace.allsolid == true)
+	if (trace.allsolid == true)
 	{
 		player.ForceRespawn()
 		player.TranslateToHud("STUCK_RESPAWNED")

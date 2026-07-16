@@ -1,1 +1,1 @@
-if(!Entities.FindByClassname(null, "point_servercommand")) SpawnEntityFromTable("point_servercommand", { targetname = "servercommand" })
+if (!Entities.FindByClassname(null, "point_servercommand")) SpawnEntityFromTable("point_servercommand", { targetname = "servercommand" })

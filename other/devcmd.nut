@@ -1,14 +1,14 @@
 ::DevFuncCollect <- {
 	function OnGameEvent_player_say(params) {
 		local player = GetPlayerFromUserID(params.userid)
-		if(player != null)
+		if (player != null)
 		{
-			if(IsPlayerABot(player))
+			if (IsPlayerABot(player))
 				return
-			if(!player.IsAdmin())
+			if (!player.IsAdmin())
 				return
 		}
-		if(split(params.text, " ")[0] == "-slay")
+		if (split(params.text, " ")[0] == "-slay")
 		{
 			local target_class = TF_CLASS_UNDEFINED
 			local target_team = TF_TEAM_ANY
@@ -64,27 +64,27 @@
 			}
 			foreach (play in Players)
 			{
-				if(target_team != TF_TEAM_ANY && play.GetTeam() != target_team)
+				if (target_team != TF_TEAM_ANY && play.GetTeam() != target_team)
 					continue
-				if(target_class != TF_CLASS_UNDEFINED && play.GetPlayerClass() != target_class)
+				if (target_class != TF_CLASS_UNDEFINED && play.GetPlayerClass() != target_class)
 					continue
-				if(play == player)
+				if (play == player)
 					continue
-				if(play.InAnyRespawnRoom())
+				if (play.InAnyRespawnRoom())
 				{
-					if(text.len() > 2 && text[2] == "-inspawn")
+					if (text.len() > 2 && text[2] == "-inspawn")
 						play.TakeDamageEx(null, null, null, Vector(0, 0, 1000), Vector(0, 0, 1), play.GetMaxHealth() * 10, DMG_GENERIC)
 				}
 				else
 					play.TakeDamageEx(null, null, null, Vector(0, 0, 1000), Vector(0, 0, 1), play.GetMaxHealth() * 10, DMG_GENERIC)
 
-				/* if(text.len() > 2 && text[2] == "-inspawn")
+				/* if (text.len() > 2 && text[2] == "-inspawn")
 				{
 					play.TakeDamage(play.GetMaxHealth() * 10, DMG_GENERIC, player)
 				}
 				else
 				{
-					if(play.InAnyRespawnRoom())
+					if (play.InAnyRespawnRoom())
 						continue
 					play.TakeDamage(play.GetMaxHealth() * 10, DMG_GENERIC, player)
 				} */
@@ -106,17 +106,17 @@
 				}
 				foreach (play in Players)
 				{
-					if(play.GetTeam() != target)
+					if (play.GetTeam() != target)
 						continue
-					if(play == player)
+					if (play == player)
 						continue
-					if(text.len() > 2 && text[2] == "-inspawn")
+					if (text.len() > 2 && text[2] == "-inspawn")
 					{
 						play.TakeDamage(play.GetMaxHealth() * 10, DMG_GENERIC, player)
 					}
 					else
 					{
-						if(play.InAnyRespawnRoom())
+						if (play.InAnyRespawnRoom())
 							continue
 						play.TakeDamage(play.GetMaxHealth() * 10, DMG_GENERIC, player)
 					}
@@ -165,15 +165,15 @@
 				}
 				foreach(play in Players)
 				{
-					if(!IsPlayerABot(play))
+					if (!IsPlayerABot(play))
 						continue
-					if(play.GetPlayerClass() != target.tointeger())
+					if (play.GetPlayerClass() != target.tointeger())
 						continue
 					play.TakeDamage(play.GetMaxHealth() * 10, DMG_GENERIC, player)
 				}
 			} */
 		}
-		if(split(params.text, " ")[0] == "-tele")
+		if (split(params.text, " ")[0] == "-tele")
 		{
 			local text = split(params.text, " ")
 			if (text[1] == "@red" || text[1] == "@blue")
@@ -193,17 +193,17 @@
 				printl(target_team)
 				foreach (play in Players)
 				{
-					if(play.GetTeam() != target_team)
+					if (play.GetTeam() != target_team)
 						continue
-					if(play == player)
+					if (play == player)
 						continue
-					if(text.len() > 3 && text[3] == "-inspawn")
+					if (text.len() > 3 && text[3] == "-inspawn")
 					{
 						play.Teleport(true, player.GetOrigin(), false, QAngle(), false, Vector())
 					}
 					else
 					{
-						if(play.InAnyRespawnRoom())
+						if (play.InAnyRespawnRoom())
 							continue
 						play.Teleport(true, player.GetOrigin(), false, QAngle(), false, Vector())
 					}
@@ -253,15 +253,15 @@
 				}
 				foreach(play in Players)
 				{
-					if(!IsPlayerABot(play))
+					if (!IsPlayerABot(play))
 						continue
-					if(play.GetPlayerClass() != target_class)
+					if (play.GetPlayerClass() != target_class)
 						continue
 					play.Teleport(true, player.GetOrigin(), false, QAngle(), false, Vector())
 				}
 			}
 		}
-		if(split(params.text, " ")[0] == "-slap")
+		if (split(params.text, " ")[0] == "-slap")
 		{
 			local text = split(params.text, " ")
 			local damage = text[1].tointeger()
@@ -281,17 +281,17 @@
 				}
 				foreach (play in Players)
 				{
-					if(play.GetTeam() != target_team)
+					if (play.GetTeam() != target_team)
 						continue
-					if(play == player)
+					if (play == player)
 						continue
-					if(text.len() > 4 && text[4] == "-inspawn")
+					if (text.len() > 4 && text[4] == "-inspawn")
 					{
 						play.TakeDamage(damage, DMG_GENERIC, player)
 					}
 					else
 					{
-						if(play.InAnyRespawnRoom())
+						if (play.InAnyRespawnRoom())
 							continue
 						play.TakeDamage(damage, DMG_GENERIC, player)
 					}
@@ -341,9 +341,9 @@
 				}
 				foreach(play in Players)
 				{
-					if(!IsPlayerABot(play))
+					if (!IsPlayerABot(play))
 						continue
-					if(play.GetPlayerClass() != target_class)
+					if (play.GetPlayerClass() != target_class)
 						continue
 					play.TakeDamage(damage, DMG_GENERIC, player)
 				}

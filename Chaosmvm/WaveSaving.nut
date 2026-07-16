@@ -1,4 +1,4 @@
-if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
+if (!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
 SetScriptVersion("WaveSave", "1.0.3")
@@ -6,20 +6,20 @@ SetScriptVersion("WaveSave", "1.0.3")
 ::CHECKPOINT_ERROR <- "\x07bf4137"
 ::WAVE_SAVE_FILE 	<- "checkpoint.txt"
 
-if(!("CheckpointCommand" in ROOT))
+if (!("CheckpointCommand" in ROOT))
 	::CheckpointCommand <- ""
 
 ::WaveVoteCallback <- function(player, ...) {
 
 	local ret = ReadCheckpoint(player)
 
-	if(typeof ret != "integer")
+	if (typeof ret != "integer")
 	{
 		player.PrintToChat(ret)
 		return
 	}
 
-	if(!FindByClassname(null, "point_populator_interface"))
+	if (!FindByClassname(null, "point_populator_interface"))
 		SpawnEntityFromTable("point_populator_interface", {})
 
 	TranslateToChatAll("CHECKPOINT_RESTORE")
@@ -41,14 +41,14 @@ function GetFileInfo()
 		while (temp.find("\n") != null)
 		{
 			local index = temp.find("\n")
-			if(index == null)
+			if (index == null)
 				break
 			temp.remove(index)
 		}
 		file[file.find(string)] = temp
 	}
 
-	if(file.len() != 5)
+	if (file.len() != 5)
 	{
 		printl(file.len())
 		player.PrintToChat("Broken Checkpoint File! Resetting file.")
@@ -106,10 +106,10 @@ function ReadCheckpoint(player)
 	// printl(waves)
 	// printl(command)
 
-	if(GetMapName() != map)
+	if (GetMapName() != map)
 		return player.GetTranslatedAndFormattedString("CHECKPOINT_WRONG_MAP")
 
-	if(GetPopfileName() != mission)
+	if (GetPopfileName() != mission)
 		return player.GetTranslatedAndFormattedString("CHECKPOINT_WRONG_MISS")
 
 	// fix multiple digits
@@ -122,10 +122,10 @@ function ReadCheckpoint(player)
 	// printl("Saved Wave Num "+saved_wave)
 	// printl(max_wave)
 
-	if(GetCurrentWaveNumber() >= saved_wave)
+	if (GetCurrentWaveNumber() >= saved_wave)
 		return player.GetTranslatedAndFormattedString("CHECKPOINT_CURRENT")
 
-	if(max_wave != GetMaximumWaveNumber())
+	if (max_wave != GetMaximumWaveNumber())
 		return "Checkpoints Maximum waves is different from current Maximum!"
 
 	return saved_wave
@@ -143,7 +143,7 @@ function SaveWaveData(Reset = false)
 	save += map_name + ":\n"
 	save += GetPopfileName() + ":\n"
 
-	if(Reset)
+	if (Reset)
 	{
 		save += "1/" + max_wave + ":\n"
 		save += "0000:\n"
@@ -160,9 +160,9 @@ function SaveWaveData(Reset = false)
 
 function WaveEndLogic()
 {
-	if(GetCurrentWaveNumber() == GetMaximumWaveNumber()+1)
+	if (GetCurrentWaveNumber() == GetMaximumWaveNumber()+1)
 		return	// final wave complete
-	if(CheckpointCommand != "")
+	if (CheckpointCommand != "")
 		RemoveChatTrigger(CheckpointCommand)
 		
 	::CheckpointCommand <- SaveWaveData()
@@ -173,7 +173,7 @@ function WaveEndLogic()
 
 LoadCheckpointCMD()
 
-if("WaveSaving" in ROOT) ::WaveSaving.clear()
+if ("WaveSaving" in ROOT) ::WaveSaving.clear()
 ::WaveSaving <- {
 	function OnScriptEvent_WaveComplete(_)
 	{

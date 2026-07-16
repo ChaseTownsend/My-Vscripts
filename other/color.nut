@@ -2,7 +2,7 @@ IncludeScript("fatcat_library")
 
 
 local thinker = FindByName(null, "colortink")
-if( thinker == null ) thinker = SpawnEntityFromTable("info_target", { targetname = "colortink" })
+if ( thinker == null ) thinker = SpawnEntityFromTable("info_target", { targetname = "colortink" })
 AddThinkToEnt(thinker, "color")
 
 function color()

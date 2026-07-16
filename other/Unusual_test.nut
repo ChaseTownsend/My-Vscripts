@@ -21,9 +21,9 @@
 // bot_kick all									// kicks all bots
 // bot -team #### -class pyro -name Pyro 		// Adds a pyro bot name "Pyro" on whatever team you wanted
 
-if(Convars.GetStr("sv_allow_point_servercommand") != "always")
+if (Convars.GetStr("sv_allow_point_servercommand") != "always")
 {
-	if(Convars.IsConVarOnAllowList("sv_allow_point_servercommand"))
+	if (Convars.IsConVarOnAllowList("sv_allow_point_servercommand"))
 	{
 		Convars.SetValue("sv_allow_point_servercommand", "always")
 		ClientPrint(null, 3, "\x03Set convar \"sv_allow_point_servercommand\" to \"always\"")
@@ -68,7 +68,7 @@ if (!("FoldedNetProps" in ROOT)) // make sure folding is only done once
 
 function ROOT::EnableStringPurge(entity)
 {
-	if( !entity )
+	if ( !entity )
 		return entity
 	SetPropBool(entity, "m_bForcePurgeFixedupStrings", true)
 	return entity
@@ -102,7 +102,7 @@ function ROOT::CTFPlayer::ForceTaunt(taunt_id, particle = null, particle_duratio
 	SetPropEntity(this, "m_hActiveWeapon", active_weapon)
 	weapon.Kill()
 
-	if(particle)
+	if (particle)
 		CreateParticle(particle, particle_duration, true)
 }
 
@@ -118,16 +118,16 @@ function ROOT::CTFPlayer::CreateParticle(particle, duration = -1, used_for_taunt
 	trigger.AcceptInput("StartTouch", "", null, this)
 	trigger.Destroy()
 
-	if(duration > 0)
+	if (duration > 0)
 	{
 		EntFireByHandle(this, "DispatchEffect", "ParticleEffectStop", duration, null, null)
 	}
-	if(used_for_taunt)
+	if (used_for_taunt)
 	{
 		ValidateScriptScope()
 		local scope = GetScriptScope()
 		scope.RemoveTauntParticle <- function() {
-			if(!self.InCond(TF_COND_TAUNTING))
+			if (!self.InCond(TF_COND_TAUNTING))
 			{
 				EntFireByHandle(self, "DispatchEffect", "ParticleEffectStop", -1, null, null)
 				SetPropString(self, "m_iszScriptThinkFunction", "")
@@ -189,16 +189,16 @@ function ROOT::CTFPlayer::CreateWearable( idx, model, attributes = {} )
 		local player = GetPlayerFromUserID(params.userid)
 		local text = split(params.text, " ")
 
-		if(text.len() < 2)
+		if (text.len() < 2)
 			return
 
-		if(player.IsFakeClient())
+		if (player.IsFakeClient())
 			return
 
-		if(text[0].slice(1) != "unusual")
+		if (text[0].slice(1) != "unusual")
 			return
 
-		if(text[1].find("_") == null)
+		if (text[1].find("_") == null)
 				::Next_bot_unusual <- {hat = text[1].tointeger(), taunt = false}
 		else 	::Next_bot_unusual <- {taunt = text[1], hat = false}
 
@@ -208,21 +208,21 @@ function ROOT::CTFPlayer::CreateWearable( idx, model, attributes = {} )
 	function OnGameEvent_player_spawn(params)
 	{
 		local player = GetPlayerFromUserID(params.userid)
-		if(!player.IsFakeClient())
+		if (!player.IsFakeClient())
 			return
 
-		if(GetPropString(player, "m_szNetname") != "Pyro")
+		if (GetPropString(player, "m_szNetname") != "Pyro")
 			return
 
 		player.CreateWearable(BRIGADE_HELM_IDX, "models/player/items/pyro/fireman_helmet.mdl", Next_bot_unusual.hat ? {"attach particle effect" : Next_bot_unusual.hat} : {})
-		if((Next_bot_unusual.hat == false || Next_bot_unusual.hat.tointeger() < 3000) && !Next_bot_unusual.taunt)
+		if ((Next_bot_unusual.hat == false || Next_bot_unusual.hat.tointeger() < 3000) && !Next_bot_unusual.taunt)
 		{
 			EntFireByHandle(player, "RunScriptCode", "self.StunPlayer(10000, 1, TF_STUN_LOSER_NO_EFFECTS+256, self)", 0.1, null, null)
 		}
 		//TODO: make them spawn at spot
 		// player.SetAbsOrigin(Vector())
 		// player.SetAbsAngles(QAngle())
-		if(Next_bot_unusual.taunt || Next_bot_unusual.hat.tointeger() > 3000)
+		if (Next_bot_unusual.taunt || Next_bot_unusual.hat.tointeger() > 3000)
 		{
 			EntFireByHandle(player, "RunScriptCode", "self.ForceTaunt(TAUNT_RPS, Next_bot_unusual.hat.tointeger() >= 3000 ? null : Next_bot_unusual.taunt.tostring())", 0.1, null, null)
 		}

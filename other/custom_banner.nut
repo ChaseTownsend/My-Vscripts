@@ -32,7 +32,7 @@ local g_RageBuffTypes = [
 		if (!player) return
 
 		local weapon = player.GetWeaponInSlot(1)
-		if(GetWeaponIDX(weapon) == 354)
+		if (GetWeaponIDX(weapon) == 354)
 		{
 			weapon.AddAttribute("mod soldier buff type", 7, 0)
 			weapon.ValidateScriptScope()
@@ -50,22 +50,22 @@ local g_RageBuffTypes = [
 
 				local value_list = [ 11 ]
 
-				if( !Soldier.IsRageDraining() ) return 0.1
+				if ( !Soldier.IsRageDraining() ) return 0.1
 
 				foreach (player in Soldier.GetEveryPlayerWithin(range, true))
 				{
-					if(!player.IsValid()) continue
-					if(!player.IsAlive()) continue
+					if (!player.IsValid()) continue
+					if (!player.IsAlive()) continue
 
-					if(BannerType == "Condition") player.AddCondEx(value_list[0], 0.125, Soldier)
+					if (BannerType == "Condition") player.AddCondEx(value_list[0], 0.125, Soldier)
 
 					if (BannerType == "Healing")
 					{
-						if(value_list[1]) player.SetHealth(player.GetHealth() + value_list[0])
+						if (value_list[1]) player.SetHealth(player.GetHealth() + value_list[0])
 						else { if (!player.IsOverhealed()) { player.SetHealth(player.GetHealth() + value_list[0]) } }
 					}
 
-					if(BannerType == "Attribute") player.AddCustomAttribute(value_list[0], value_list[1], 0.1)
+					if (BannerType == "Attribute") player.AddCustomAttribute(value_list[0], value_list[1], 0.1)
 				}
 
 				return 0.1
@@ -80,17 +80,17 @@ local g_RageBuffTypes = [
 		local hAttacker = params.attacker
 		local hWeapon = params.weapon
 
-		if( !hVictim.IsPlayer() )
+		if ( !hVictim.IsPlayer() )
 			return
 		
-		if( !hAttacker.IsPlayer() )
+		if ( !hAttacker.IsPlayer() )
 			return
 
-		if( hWeapon == null )
+		if ( hWeapon == null )
 			return
 
 		local iBuffId = hAttacker.GetWeaponInSlotNew(1).GetAttribute("mod soldier buff type", 0)
-		if( iBuffId <= 6)
+		if ( iBuffId <= 6)
 			return
 
 		// g_RageBuffTypes[iBuffId].m_fRageScale * ((params.damage * hVictim.GetCustomAttribute("rage giving scale", 1)) / 6)

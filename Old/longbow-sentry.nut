@@ -11,10 +11,10 @@ const TF_WEAPON_EUREKA_EFFECT = 589
 ::pickup <- {
 	function OnGameEvent_player_spawn(params)
 	{
-		if(params.team != TF_TEAM_PVE_DEFENDERS) return
+		if (params.team != TF_TEAM_PVE_DEFENDERS) return
 
 		local player = GetPlayerFromUserID(params.userid)
-		if(player.GetWeaponIDXInSlot(SLOT_MELEE) != TF_WEAPON_EUREKA_EFFECT) return
+		if (player.GetWeaponIDXInSlot(SLOT_MELEE) != TF_WEAPON_EUREKA_EFFECT) return
 
 		GetScope(player).sentry <- null
 
@@ -22,21 +22,21 @@ const TF_WEAPON_EUREKA_EFFECT = 589
 	}
 	function OnGameEvent_player_carryobject(params)
 	{
-		if(params.object != OBJ_SENTRY) return
+		if (params.object != OBJ_SENTRY) return
 
 		local player = GetPlayerFromUserID(params.userid)
-		if(player.GetTeam() != TF_TEAM_PVE_DEFENDERS) return
-		if(player.GetWeaponIDXInSlot(SLOT_MELEE) != TF_WEAPON_EUREKA_EFFECT) return
+		if (player.GetTeam() != TF_TEAM_PVE_DEFENDERS) return
+		if (player.GetWeaponIDXInSlot(SLOT_MELEE) != TF_WEAPON_EUREKA_EFFECT) return
 
 		GetScope(player).sentry <- EntIndexToHScript(params.index)
 	}
 	function OnGameEvent_player_builtobject(params)
 	{
-		if(params.object != OBJ_SENTRY) return
+		if (params.object != OBJ_SENTRY) return
 
 		local player = GetPlayerFromUserID(params.userid)
-		if(player.GetTeam() != TF_TEAM_PVE_DEFENDERS) return
-		if(player.GetWeaponIDXInSlot(SLOT_MELEE) != TF_WEAPON_EUREKA_EFFECT) return
+		if (player.GetTeam() != TF_TEAM_PVE_DEFENDERS) return
+		if (player.GetWeaponIDXInSlot(SLOT_MELEE) != TF_WEAPON_EUREKA_EFFECT) return
 
 		// local scope = GetScope(player)
 		AddThinkToEnt(EntIndexToHScript(params.index), "Fragile_Buildings")
@@ -54,8 +54,8 @@ function LongBowSentry()
 	local m_iMetal = GetPropIntArray(self, "m_iAmmo", 3)
 	local scope = GetScope(self)
 	local sentry = scope.sentry
-	if(scope.sentry == null) return -1
-	if(!scope.sentry.IsValid()) return -1
+	if (scope.sentry == null) return -1
+	if (!scope.sentry.IsValid()) return -1
 
 	local min = GetPropVector(scope.sentry, "m_Collision.m_vecMins")
 	local max = GetPropVector(scope.sentry, "m_Collision.m_vecMaxs") + Vector(0, 0, 10)
@@ -69,20 +69,20 @@ function LongBowSentry()
 		hullmax = Vector(25, 25, 40)
 	}
 	TraceHull(btrace)
-	if(IsListenServer())
+	if (IsListenServer())
 	{
 		DebugDrawClear()
 		DebugDrawBox(btrace.start, btrace.hullmin, btrace.hullmax, 0, 0, 255, 5, 60)
 	}
-	if("startsolid" in btrace)
+	if ("startsolid" in btrace)
 	{
-		if(btrace.startsolid)
+		if (btrace.startsolid)
 		{
 			return -1
 		}
 	}
 
-	if(self.InRespawnRoom()) return -1
+	if (self.InRespawnRoom()) return -1
 
 	local ptrace =
 	{
@@ -99,7 +99,7 @@ function LongBowSentry()
 		local allow = false
 		foreach (classname in ["worldspawn", "func_detail", "func_brush"])
 		{
-			if(ptrace.enthit.GetClassname() == classname)
+			if (ptrace.enthit.GetClassname() == classname)
 			{
 				allow = true
 				break
@@ -107,7 +107,7 @@ function LongBowSentry()
 		}
 		if (allow == false)
 		{
-			if(IsListenServer())
+			if (IsListenServer())
 			{
  				DebugDrawBox(ptrace.start, ptrace.hullmin, ptrace.hullmax, 0, 255, 0, 5, 10)
 				DebugDrawBox(ptrace.end, ptrace.hullmin, ptrace.hullmax, 0, 255, 0, 5, 10)
@@ -116,11 +116,11 @@ function LongBowSentry()
 		}
 	}
 
-	if(self.IsPressingButton(IN_RELOAD) && self.IsOnGround())
+	if (self.IsPressingButton(IN_RELOAD) && self.IsOnGround())
 	{
-		if(!dev)
+		if (!dev)
 		{
-			if(m_iMetal <= 499)
+			if (m_iMetal <= 499)
 			{
 				self.PrintToHud("Not enough Metal")
 				return -1
@@ -136,14 +136,14 @@ function LongBowSentry()
 			ignore = 	self
 		}
 		TraceHull(trace)
-		if(IsListenServer()) DebugDrawLine_vCol(trace.startpos, trace.endpos, Vector(255, 0, 0), false, 10)
+		if (IsListenServer()) DebugDrawLine_vCol(trace.startpos, trace.endpos, Vector(255, 0, 0), false, 10)
 
 		if (IsPointInRespawnRoom(trace.endpos))  return -1
-		if(!trace.hit) return -1
+		if (!trace.hit) return -1
 		local allow = false
 		foreach (classname in ["worldspawn", "func_detail", "func_brush"])
 		{
-			if(trace.enthit.GetClassname() == classname)
+			if (trace.enthit.GetClassname() == classname)
 			{
 				allow = true
 				break
@@ -165,9 +165,9 @@ function LongBowSentry()
 			hullmax =	max
 		}
 		TraceHull(htrace)
-		if(htrace.hit)
+		if (htrace.hit)
 		{
-			if(IsListenServer()) DebugDrawBox(htrace.start, min, max, 255, 0, 255, 0, 60)
+			if (IsListenServer()) DebugDrawBox(htrace.start, min, max, 255, 0, 255, 0, 60)
 			return -1
 		}
 
@@ -179,8 +179,8 @@ function LongBowSentry()
 			mask = 		MASK_SHOT_HULL
 		}
 		TraceLineEx(gtrace)
-		if(IsListenServer()) DebugDrawLine_vCol(gtrace.start, gtrace.end, Vector(255, 255, 0), false, 10)
-		if(!gtrace.hit)
+		if (IsListenServer()) DebugDrawLine_vCol(gtrace.start, gtrace.end, Vector(255, 255, 0), false, 10)
+		if (!gtrace.hit)
 		{
 			return -1
 		}
@@ -197,7 +197,7 @@ function LongBowSentry()
             volume = 0.33
 			sound_level = 100
 		})
-		if(!dev) SetPropIntArray(self, "m_iAmmo", m_iMetal - 500, 3)
+		if (!dev) SetPropIntArray(self, "m_iAmmo", m_iMetal - 500, 3)
 	}
 
 	return -1
@@ -224,7 +224,7 @@ function Fragile_Buildings()
 {
 	foreach (bot in GetEveryBotWithin(self.GetOrigin() + Vector(0, 0, 24), 100))
 	{
-		if(bot.InCond(TF_COND_INVULNERABLE_HIDE_UNLESS_DAMAGED))
+		if (bot.InCond(TF_COND_INVULNERABLE_HIDE_UNLESS_DAMAGED))
 		{
 			self.TakeDamage(100000, 0, bot)
 			AddThinkToEnt(self, null)

@@ -3,15 +3,15 @@ IncludeScript("fatcat_library")
 ::stomp <- {
 	function OnScriptHook_OnTakeDamage(params)
 	{
-		if(!MATH.BitWise(params.damage_type, DMG_FALL))
+		if (!MATH.BitWise(params.damage_type, DMG_FALL))
 			return;
 		local victim = params.const_entity
 
-		if(params.attacker != Entities.First())
+		if (params.attacker != Entities.First())
 			return;
 		
 		return
-		if(victim.GetGroundEntity() && victim.GetGroundEntity().IsPlayer())
+		if (victim.GetGroundEntity() && victim.GetGroundEntity().IsPlayer())
 		{
 			local hOther = victim.GetGroundEntity()
 			// local weapon = attacker.GetWeaponInSlotNew(SLOT_SECONDARY)

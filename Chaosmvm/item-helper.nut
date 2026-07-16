@@ -256,10 +256,10 @@ SetScriptVersion("item_helper", "3.4.3")
 }
 
 AddChatTrigger("itemhelp", function(player, ...) { 
-	if(!player)
+	if (!player)
 		return
 
-	if(vargv.len() != 1)
+	if (vargv.len() != 1)
 	{
 		player.TranslateToChat("IH_HELP_MSG")
 		return
@@ -278,11 +278,11 @@ AddChatTrigger("itemhelp", function(player, ...) {
 	}
 
 	GetScope(player).SpawnHelper <- setting
-	if(setting == 0) 
+	if (setting == 0) 
 		player.TranslateToChat("IH_DISABLE")
-	if(setting == 1) 
+	if (setting == 1) 
 		player.TranslateToChat("IH_WAVE_SETUP")
-	if(setting == 2) 
+	if (setting == 2) 
 		player.TranslateToChat("IH_ENABLE")
 } )
 
@@ -295,13 +295,13 @@ AddChatTrigger("itemhelp", function(player, ...) {
 
 		local scope = GetScope(player)
 
-		if(IsNotInScope("spawncount", scope))
+		if (IsNotInScope("spawncount", scope))
 			scope.spawncount <- 0
 
-		if(IsNotInScope("SpawnHelper", scope))
+		if (IsNotInScope("SpawnHelper", scope))
 			scope.SpawnHelper <- 2
 
-		if(player.IsAdmin())
+		if (player.IsAdmin())
 		{
 			scope.SpawnHelper <- 0
 		}
@@ -310,21 +310,21 @@ AddChatTrigger("itemhelp", function(player, ...) {
 	{
 		local player = params.player
 
-		if(!player)
+		if (!player)
 			return
 
 		local scope = GetScope(player)
-		if(params.team == TEAM_UNASSIGNED)
+		if (params.team == TEAM_UNASSIGNED)
 		{
 			scope.spawncount <- 0
 			scope.SpawnHelper <- player.IsAdmin() ? 0 : 2
 			return
 		}
 
-		if(IsNotInScope("spawncount", scope))
+		if (IsNotInScope("spawncount", scope))
 			scope.spawncount <- 0
 
-		if(IsNotInScope("SpawnHelper", scope))
+		if (IsNotInScope("SpawnHelper", scope))
 			scope.SpawnHelper <- 2
 
 		scope.spawncount++
@@ -336,12 +336,12 @@ AddChatTrigger("itemhelp", function(player, ...) {
 
 		local scope = GetScope(player)
 
-		if(IsNotInScope("spawncount", scope)) 	return
-		if(IsNotInScope("SpawnHelper", scope)) 	return
-		if(scope.SpawnHelper == 0) return
-		if(scope.spawncount <= 0) return
+		if (IsNotInScope("spawncount", scope)) 	return
+		if (IsNotInScope("SpawnHelper", scope)) 	return
+		if (scope.SpawnHelper == 0) return
+		if (scope.spawncount <= 0) return
 
-		if(scope.SpawnHelper == 2 || (scope.SpawnHelper == 1 && GetRoundState() != GR_STATE_RND_RUNNING))
+		if (scope.SpawnHelper == 2 || (scope.SpawnHelper == 1 && GetRoundState() != GR_STATE_RND_RUNNING))
 		{
 			RunWithDelay(FIVE_TICKS, @() DisplayItemHelps(player, scope))
 		}
@@ -359,11 +359,11 @@ function DisplayItemHelps(player, scope)
 		foreach (item, indexs in ItemTranslateTable)
 		{
 			Assert(typeof indexs == "array", format("%s has a idx not in an array", item))
-			if(IsInArray(weapon.GetIDX(), indexs))
+			if (IsInArray(weapon.GetIDX(), indexs))
 				player.IHTranslateToChat2(item)
 		}
 	}
-	if(scope.SpawnHelper == 2)
+	if (scope.SpawnHelper == 2)
 		player.TranslateToChat("IH_DIS_MSG_2")
 	else
 		player.TranslateToChat("IH_DIS_MSG")

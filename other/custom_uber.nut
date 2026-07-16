@@ -7,7 +7,7 @@ const CUSTOM_UBER_THINK_DELAY = -1
 	function OnScriptEvent_HumanResupply(params)
 	{
 		local weapon = params.player.GetWeaponInSlotNew(SLOT_SECONDARY)
-		if(weapon.GetIDX() == 29 || weapon.GetIDX() == 961)
+		if (weapon.GetIDX() == 29 || weapon.GetIDX() == 961)
 		{
 			weapon.AddAttribute("uber duration bonus", 0, 0)
 			weapon.AddAttribute("ubercharge rate bonus", 100000000, 0)
@@ -30,10 +30,10 @@ const CUSTOM_UBER_THINK_DELAY = -1
 				// Attribute is [ Attribute, Attribute value ]
 				local list = [ 50 ]
 
-				if( !medic.IsUberDraining() ) return CUSTOM_UBER_THINK_DELAY
-				if( self.IsHolstered() ) return CUSTOM_UBER_THINK_DELAY
+				if ( !medic.IsUberDraining() ) return CUSTOM_UBER_THINK_DELAY
+				if ( self.IsHolstered() ) return CUSTOM_UBER_THINK_DELAY
 
-				if(ChargeType == "Condition")
+				if (ChargeType == "Condition")
 				{
 					medic.AddCondEx(list[0], CUSTOM_UBER_THINK_DELAY * 3, medic)
 
@@ -41,7 +41,7 @@ const CUSTOM_UBER_THINK_DELAY = -1
 						target.AddCondEx(list[0], CUSTOM_UBER_THINK_DELAY * 3, medic)
 				}
 
-				if(ChargeType == "Healing")
+				if (ChargeType == "Healing")
 				{
 					medic.SetHealth(medic.GetHealth() + list[0])
 
@@ -51,7 +51,7 @@ const CUSTOM_UBER_THINK_DELAY = -1
 					EntFireByHandle(self, "runscriptcode", "self.SetUberChargePercent(70.0)", 0.05, null, null)
 				}
 
-				if(ChargeType == "Attribute")
+				if (ChargeType == "Attribute")
 				{
 					medic.AddCustomAttribute(list[0], list[1], CUSTOM_UBER_THINK_DELAY * 2)
 
@@ -59,7 +59,7 @@ const CUSTOM_UBER_THINK_DELAY = -1
 						target.AddCustomAttribute(list[0], list[1], CUSTOM_UBER_THINK_DELAY * 2)
 				}
 
-				if(ChargeType == "Funny")
+				if (ChargeType == "Funny")
 				{
 					CreateAoETable({
 						owner = medic, 

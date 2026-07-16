@@ -5,7 +5,7 @@
     {
         local player = GetPlayerFromUserID(params.userid)
         local text = split(text, " ")
-        if(text[0] == "/changemodel" || text[0] == "/model" )
+        if (text[0] == "/changemodel" || text[0] == "/model" )
         {
             player.SetCustomModelWithClassAnimations(text[1])
         }

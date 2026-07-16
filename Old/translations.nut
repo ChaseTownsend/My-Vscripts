@@ -639,6 +639,6 @@ foreach (language, table in TRANSLATION_TABLE)
 }
 foreach (lang, length in TranslationCounts)
 {
-	if(length != TRANSLATION_TABLE.english.len())
+	if (length != TRANSLATION_TABLE.english.len())
 		printf("Warning, the language \"%s\" has a different amount of translation strings! %i\n", lang, length - TRANSLATION_TABLE.english.len())
 }

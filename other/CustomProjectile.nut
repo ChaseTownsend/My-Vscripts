@@ -5,11 +5,11 @@
 
 function ROOT::CreateProjectile(proj_info)
 {
-	if(!("thinkfunc" in proj_info) || !proj_info.thinkfunc)
+	if (!("thinkfunc" in proj_info) || !proj_info.thinkfunc)
 		return
-	if(!("owner" in proj_info) || !proj_info.owner)
+	if (!("owner" in proj_info) || !proj_info.owner)
 		return
-	if(!("model" in proj_info) || !proj_info.model || proj_info.model == "")
+	if (!("model" in proj_info) || !proj_info.model || proj_info.model == "")
 		return
 	
 	PrecacheModel(proj_info.model)
@@ -29,7 +29,7 @@ function ROOT::CreateProjectile(proj_info)
 	hProj.SetCollisionGroup(TFCOLLISION_GROUP_ROCKET_BUT_NOT_WITH_OTHER_ROCKETS)
 
 	local hParticle = null
-	if("particle" in proj_info)
+	if ("particle" in proj_info)
 	{
 		hParticle = SpawnEntityFromTable("info_particle_system", {
 			effect_name = proj_info.particle
@@ -54,12 +54,12 @@ function ROOT::CreateProjectile(proj_info)
 
 	tScope.m_flThinkDelay 	<- (("delay" in proj_info) ? proj_info.delay : 0.1)
 
-	if(type(proj_info.thinkfunc) == "function")
+	if (type(proj_info.thinkfunc) == "function")
 	{
 		tScope.m_fThinkFunc		<- proj_info.thinkfunc
 		AddThinkToEnt(hProj, "m_fThinkFunc")
 	}
-	else if(type(proj_info.thinkfunc) == "string")
+	else if (type(proj_info.thinkfunc) == "string")
 	{
 		AddThinkToEnt(hProj, proj_info.thinkfunc)
 	}
@@ -73,11 +73,11 @@ function ROOT::CreateProjectile(proj_info)
 
 function ROOT::TestProjThink()
 {
-	if(Time() >= m_flKillMeTime || m_iState == CPROJ_STATE_KILL)
+	if (Time() >= m_flKillMeTime || m_iState == CPROJ_STATE_KILL)
 	{
 		// printf("Killing %s\n", self.tostring())
 		self.Destroy()
-		if(m_hParticle)
+		if (m_hParticle)
 		{
 			EntFireNew(m_hParticle, "Stop")
 			m_hParticle.Destroy()
@@ -85,19 +85,19 @@ function ROOT::TestProjThink()
 		return FLT_MAX;
 	}
 
-	if(m_iState == CPROJ_STATE_MOVE)
+	if (m_iState == CPROJ_STATE_MOVE)
 	{
 		// local victim = FindByClassnameWithin(null, "player", self.GetOrigin(), m_flRadius)
 		local victim = null
 		foreach (player in Players)
 		{
-			if(player.GetTeam() == m_hOwner.GetTeam())
+			if (player.GetTeam() == m_hOwner.GetTeam())
 				continue
-			if(player.IsDead())
+			if (player.IsDead())
 				continue
 			local delta = player.GetCenter() - self.GetOrigin()
 			local dist = delta.Norm()
-			if(dist <= m_flRadius)
+			if (dist <= m_flRadius)
 			{
 				victim = player
 				break
@@ -106,7 +106,7 @@ function ROOT::TestProjThink()
 
 		// DebugDrawText(self.GetOrigin(), victim ? victim.tostring() : "([-1]:NULL)", false, 5)
 
-		if(victim)
+		if (victim)
 		{
 			CreateAoETable({
 				owner = m_hOwner,

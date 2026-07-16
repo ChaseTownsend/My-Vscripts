@@ -1,7 +1,7 @@
 ::CTank <- {
 	function OnScriptHook_OnTakeDamage(params)
 	{
-		if(params.const_entity.GetClassname() != "vscript_boss")
+		if (params.const_entity.GetClassname() != "vscript_boss")
 			return
 		// PrintCollection(params)
 	}
@@ -72,7 +72,7 @@ function DrawPathTracks()
 	foreach (track in GetAllEntitiesByClassname("path_track"))
 	{
 		DebugDrawBox(track.GetOrigin(), Vector(12, 12, 12), Vector(-12, -12, -12), 255, 255, 255, 5, 10)
-		if(GetPropEntity(track, "m_pnext") != null)
+		if (GetPropEntity(track, "m_pnext") != null)
 		{
 			DebugDrawLine_vCol(track.GetOrigin(), GetPropEntity(track, "m_pnext").GetOrigin(), Vector(0, 255, 0), false, 10)
 		}
@@ -93,7 +93,7 @@ function CreateCustomTank(params)
 		model = model
 	})
 	tank.KeyValueFromString("classname", "vscript_boss")
-	if(typeof starting == "string")
+	if (typeof starting == "string")
 		tank.SetAbsOrigin(FindByName(null, starting).GetOrigin())
 	else 
 		tank.SetAbsOrigin( starting ? starting.GetOrigin() : Vector() )
@@ -106,7 +106,7 @@ function CreateCustomTank(params)
 
 	scope.starting_node <- typeof starting == "string" ? FindByName(null, starting) : starting
 
-	if(scope.starting_node == null)
+	if (scope.starting_node == null)
 	{
 		printl("Found no Starting Node")
 		return tank
@@ -118,7 +118,7 @@ function CreateCustomTank(params)
 	// Locomotion
 	scope.Navigation <- tank.GetLocomotionInterface()
 	scope.TrackThink <- function() {
-		if(next_node == null)
+		if (next_node == null)
 			return -1
 
 		// Navigation.DriveTo(next_node.GetOrigin())
@@ -127,7 +127,7 @@ function CreateCustomTank(params)
 
 		DebugDrawText(self.GetOrigin(), Navigation.GetVelocity().ToKVString(), false, 5)
 		
-		if(MATH.Distance(self.GetOrigin(), next_node.GetOrigin()) < 100)
+		if (MATH.Distance(self.GetOrigin(), next_node.GetOrigin()) < 100)
 		{
 			next_node = GetPropEntity(next_node, "m_pnext")
 		}

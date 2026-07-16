@@ -201,7 +201,7 @@ Returns if the player is on the ground.
 
 **Example Usage**
 ```js
-if(player.IsOnGround())
+if (player.IsOnGround())
 {
 	// ...
 }
@@ -217,7 +217,7 @@ Returns the players Username
 
 **Example Usage**
 ```js
-if(player.GetUserName() == "BigBob")
+if (player.GetUserName() == "BigBob")
 {
 	// ...
 }
@@ -233,7 +233,7 @@ Returns the players SteamID
 
 **Example Usage**
 ```js
-if(player.GetSteamID() == "[U:1:969530867]")
+if (player.GetSteamID() == "[U:1:969530867]")
 {
 	// ...
 }
@@ -330,7 +330,7 @@ Returns if we are Overhealed (hp > max_hp)
 
 **Example Usage**
 ```js
-if(player.IsOverhealed())
+if (player.IsOverhealed())
 {
 	// ...
 }
@@ -346,7 +346,7 @@ Returns the Maximum health we use for Buffing
 
 **Example Usage**
 ```js
-if(player.GetMaxBuffedHealth() > 300)
+if (player.GetMaxBuffedHealth() > 300)
 {
 	// ...
 }
@@ -401,7 +401,7 @@ Returns if we are pressing this button
 
 **Example Usage**
 ```js
-if(player.IsPressingButton(IN_ATTACK2))
+if (player.IsPressingButton(IN_ATTACK2))
 {
 	// ...
 }
@@ -540,7 +540,7 @@ Returns the amount of `Heads` we have taken
 
 **Example Usage**
 ```js
-if(player.GetHeads() > 3)
+if (player.GetHeads() > 3)
 {
 	// ...
 }
@@ -582,7 +582,7 @@ Returns if we are actually dead
 
 **Example Usage**
 ```js
-if(player.IsDead())
+if (player.IsDead())
 {
 	// ...
 }
@@ -637,7 +637,7 @@ Return our Ground entity (`m_hGroundEntity`)
 
 **Example Usage**
 ```js
-if(player.GetGroundEntity() == null) // not on ground
+if (player.GetGroundEntity() == null) // not on ground
 {
 	// ...
 }
@@ -653,7 +653,7 @@ Returns our `z` velocity
 
 **Example Usage**
 ```js
-if(player.GetFallingVelocity() < -600)
+if (player.GetFallingVelocity() < -600)
 {
 	// ...
 }
@@ -669,7 +669,7 @@ Return if we are in the ducking state
 
 **Example Usage**
 ```js
-if(player.IsDucking())
+if (player.IsDucking())
 {
 	// ...
 }
@@ -686,7 +686,7 @@ Usually better than [`IsDucking`](#CTFPlayerIsDucking)
 
 **Example Usage**
 ```js
-if(player.IsCrouching())
+if (player.IsCrouching())
 {
 	// ...
 }
@@ -705,7 +705,7 @@ Returns if we are Reprogrammed
 
 **Example Usage**
 ```js
-if(player.IsReprogrammed())
+if (player.IsReprogrammed())
 {
 	// ...
 }
@@ -724,7 +724,7 @@ Return if we are a bot
 
 **Example Usage**
 ```js
-if(player.IsBot())
+if (player.IsBot())
 {
 	// ...
 }
@@ -779,7 +779,7 @@ Returns our internal Tracked damage
 
 **Example Usage**
 ```js
-if(player.GetTrackedDamage() > 1000)
+if (player.GetTrackedDamage() > 1000)
 {
 	// ...
 }
@@ -808,7 +808,7 @@ Returns our internal Tracked Healing
 
 **Example Usage**
 ```js
-if(player.GetTrackedHealing() > 1000)
+if (player.GetTrackedHealing() > 1000)
 {
 	// ...
 }
@@ -837,7 +837,7 @@ Returns our internal Tracked tank Damage
 
 **Example Usage**
 ```js
-if(player.GetTrackedTankDamage() > 1000)
+if (player.GetTrackedTankDamage() > 1000)
 {
 	// ...
 }
@@ -866,7 +866,7 @@ Returns `percent` percent of our current health
 
 **Example Usage**
 ```js
-if(player.GetPercentHealth(50) < 100)
+if (player.GetPercentHealth(50) < 100)
 {
 	// ...
 }
@@ -882,7 +882,7 @@ Returns `percent` percent of our maximum health
 
 **Example Usage**
 ```js
-if(player.GetPercentMaxHealth(50) < 100)
+if (player.GetPercentMaxHealth(50) < 100)
 {
 	// ...
 }
@@ -898,7 +898,7 @@ Returns if we have this Rune.
 
 **Example Usage**
 ```js
-if(player.HasRune(RUNE_STRENGTH))
+if (player.HasRune(RUNE_STRENGTH))
 {
 	// ...
 }
@@ -914,7 +914,7 @@ Returns if our viewmodels are flipped
 
 **Example Usage**
 ```js
-if(player.AreViewModelsFlipped())
+if (player.AreViewModelsFlipped())
 {
 	// ...
 }
@@ -930,7 +930,7 @@ Returns our shield charge meter
 
 **Example Usage**
 ```js
-if(player.GetDemomanChargeMeter() > 50.0)
+if (player.GetDemomanChargeMeter() > 50.0)
 {
 	// ...
 }
@@ -959,7 +959,7 @@ Returns our Supernova rune percent
 
 **Example Usage**
 ```js
-if(player.GetRuneCharge() > 50.0)
+if (player.GetRuneCharge() > 50.0)
 {
 	// ...
 }

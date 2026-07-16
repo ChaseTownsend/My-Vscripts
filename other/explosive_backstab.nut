@@ -12,23 +12,23 @@ local base_damage = 40
 		local hAttacker = params.attacker
 		local hWeapon = params.weapon
 
-		if( !hVictim.IsPlayer() )
+		if ( !hVictim.IsPlayer() )
 			return
 		
-		if( !hAttacker.IsPlayer() )
+		if ( !hAttacker.IsPlayer() )
 			return
 
-		if( hWeapon == null )
+		if ( hWeapon == null )
 			return
 
-		if( params.damage_stats != TF_DMG_CUSTOM_BACKSTAB )
+		if ( params.damage_stats != TF_DMG_CUSTOM_BACKSTAB )
 			return
 
-		if( params.damage_type & DMG_BLAST )
+		if ( params.damage_type & DMG_BLAST )
 			return
 
 		local iExplosiveBackstab = hWeapon.GetAttribute("explosive sniper shot", 0)
-		if( iExplosiveBackstab == 0)
+		if ( iExplosiveBackstab == 0)
 			return
 
 		local flDmgRange = base_range + (iExplosiveBackstab * additive_range)

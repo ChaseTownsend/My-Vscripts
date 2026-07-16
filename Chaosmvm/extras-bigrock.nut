@@ -1,4 +1,4 @@
-if(FindByName(null, "custompath1"))
+if (FindByName(null, "custompath1"))
 	return
 
 CreateTankPath({
@@ -144,7 +144,7 @@ CreateTankPath({
 	}
 	foreach(k, v in data.Starting)
 	{
-		if(startswith(k, "OnPass"))
+		if (startswith(k, "OnPass"))
 			StartingData[k] <- v
 	}
 
@@ -154,7 +154,7 @@ CreateTankPath({
 	}
 	foreach(k, v in data.NextNodes[0])
 	{
-		if(startswith(k, "OnPass"))
+		if (startswith(k, "OnPass"))
 			NextData[k] <- v
 	}
 	
@@ -182,7 +182,7 @@ CreateTankPath({
 	}
 	foreach(k, v in TrackData)
 	{
-		if(startswith(k, "OnPass"))
+		if (startswith(k, "OnPass"))
 			Paths[i].path_track[k] <- v
 	}
 }

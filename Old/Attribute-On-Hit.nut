@@ -11,7 +11,7 @@ IncludeScript("fatcat_library")
 		{
 			// Initalize Weapon in that slot
 			local weapon = attacker.GetWeaponInSlot(i)
-			if( !weapon ) continue
+			if ( !weapon ) continue
 			local weaponIDX = attacker.GetWeaponIDXInSlot(i)
 			if ( !weaponIDX ) continue
 
@@ -24,7 +24,7 @@ IncludeScript("fatcat_library")
 					// is the same as this item in this slot
 
 					local scope = GetScope(weapon)
-					if(IsNotInScope("Hits", scope))
+					if (IsNotInScope("Hits", scope))
 					{
 						scope.Hits <- 1
 					}
@@ -52,15 +52,15 @@ IncludeScript("fatcat_library")
 					////////////////////////////////////////////////////////////
 					CalculateAttributes("dmg taken increased", 0.001, 1, 4, 1, weapon)
 					////////////////////////////////////////////////////////////
-					if(scope.Hits > 1000)
+					if (scope.Hits > 1000)
 					{
 						Weapon.AddAttribute("Set DamageType Ignite", 1, 0)
 					}
-					if(scope.Hits > 2000)
+					if (scope.Hits > 2000)
 					{
 						Weapon.AddAttribute("ragdolls become ash", 1, 0)
 					}
-					if(scope.Hits > 3000)
+					if (scope.Hits > 3000)
 					{
 						Weapon.AddAttribute("turn to gold", 1, 0)
 					}
@@ -105,9 +105,9 @@ function ArePlayersValid(Attacker, victim)
 {
 	if (!Attacker || Attacker.IsBot() || Attacker.GetTeam() != TF_TEAM_PVE_DEFENDERS) return false
 
-	if(IsValidEnemy(victim))
+	if (IsValidEnemy(victim))
 	{
-		if(victim.IsPlayer())
+		if (victim.IsPlayer())
 		{
 			if (victim.IsInvincible()) return false
 		}

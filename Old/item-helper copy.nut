@@ -255,7 +255,7 @@ SetScriptVersion("item_helper", "2.0.4")
 /* 
 foreach (item, idxs in ItemTranslateTable)
 {
-	if(IsInArray(idx, idxs))
+	if (IsInArray(idx, idxs))
 		player.IHTranslateToChat2(item)
 } */
 
@@ -267,13 +267,13 @@ foreach (item, idxs in ItemTranslateTable)
 
 		local scope = GetScope(player)
 
-		if(IsNotInScope("spawncount", scope))
+		if (IsNotInScope("spawncount", scope))
 			scope.spawncount <- 0
 
-		if(IsNotInScope("SpawnHelper", scope))
+		if (IsNotInScope("SpawnHelper", scope))
 			scope.SpawnHelper <- 2
 
-		if(player.IsAdmin())
+		if (player.IsAdmin())
 		{
 			scope.SpawnHelper <- 0
 		}
@@ -283,17 +283,17 @@ foreach (item, idxs in ItemTranslateTable)
 		local player = params.player
 
 		local scope = GetScope(player)
-		if(params.team == TEAM_UNASSIGNED)
+		if (params.team == TEAM_UNASSIGNED)
 		{
 			scope.spawncount <- 0
 			scope.SpawnHelper <- player.IsAdmin() ? 0 : 2
 			return
 		}
 
-		if(IsNotInScope("spawncount", scope))
+		if (IsNotInScope("spawncount", scope))
 			scope.spawncount <- 0
 
-		if(IsNotInScope("SpawnHelper", scope))
+		if (IsNotInScope("SpawnHelper", scope))
 			scope.SpawnHelper <- 2
 
 		scope.spawncount++
@@ -305,12 +305,12 @@ foreach (item, idxs in ItemTranslateTable)
 
 		local scope = GetScope(player)
 
-		if(IsNotInScope("spawncount", scope)) 	return
-		if(IsNotInScope("SpawnHelper", scope)) 	return
-		if(scope.SpawnHelper == 0) return
-		if(scope.spawncount <= 0) return
+		if (IsNotInScope("spawncount", scope)) 	return
+		if (IsNotInScope("SpawnHelper", scope)) 	return
+		if (scope.SpawnHelper == 0) return
+		if (scope.spawncount <= 0) return
 
-		if(scope.SpawnHelper == 2 || (scope.SpawnHelper == 1 && GetRoundState() != GR_STATE_RND_RUNNING))
+		if (scope.SpawnHelper == 2 || (scope.SpawnHelper == 1 && GetRoundState() != GR_STATE_RND_RUNNING))
 		{
 			player.TranslateToChat("IH_INCLUDES")
 
@@ -320,7 +320,7 @@ foreach (item, idxs in ItemTranslateTable)
 				foreach (item, indexs in ItemTranslateTable)
 				{
 					Assert(typeof indexs == "array", format("%s has a idx not in an array", item))
-					if(IsInArray(weapon.GetIDX(), indexs))
+					if (IsInArray(weapon.GetIDX(), indexs))
 						player.IHTranslateToChat2(item)
 					player.IHTranslateToChat2(item, 2)
 				}
@@ -840,7 +840,7 @@ foreach (item, idxs in ItemTranslateTable)
 					// default: {player.PrintToChat(error_color + " [Error]\x01 No Description For Item ID " + GetWeaponIDX(weapon)); break}
 				}
 			}
-			if(scope.SpawnHelper == 2)
+			if (scope.SpawnHelper == 2)
 				player.TranslateToChat("IH_DIS_MSG_2")
 			else
 				player.TranslateToChat("IH_DIS_MSG")
@@ -852,10 +852,10 @@ foreach (item, idxs in ItemTranslateTable)
 		local player = GetPlayerFromUserID(params.userid)
 		local text = split(params.text, " ")
 
-		if(text[0] != "/itemhelp")
-			{ if(text[0] != "!itemhelp") return }
+		if (text[0] != "/itemhelp")
+			{ if (text[0] != "!itemhelp") return }
 		
-		if(text.len() != 2)
+		if (text.len() != 2)
 		{
 			player.TranslateToChat("IH_BAD_ARGS")
 			return
@@ -870,11 +870,11 @@ foreach (item, idxs in ItemTranslateTable)
 		}
 
 		GetScope(player).SpawnHelper <- message_value
-		if(message_value == 0) 
+		if (message_value == 0) 
 			player.TranslateToChat("IH_DISABLE")
-		if(message_value == 1) 
+		if (message_value == 1) 
 			player.TranslateToChat("IH_WAVE_SETUP")
-		if(message_value == 2) 
+		if (message_value == 2) 
 			player.TranslateToChat("IH_ENABLE")
 	}
 }

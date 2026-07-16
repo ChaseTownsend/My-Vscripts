@@ -1,7 +1,7 @@
 IncludeScript("fatcat_library")
 
 local Gravity_Thinker = Entities.FindByName(null, "_GravityThink")
-if(Gravity_Thinker == null) Gravity_Thinker = SpawnEntityFromTable("info_target", { targetname = "_GravityThink" })
+if (Gravity_Thinker == null) Gravity_Thinker = SpawnEntityFromTable("info_target", { targetname = "_GravityThink" })
 AddThinkToEnt(Gravity_Thinker, "GravityThink")
 
 function GravityThink()

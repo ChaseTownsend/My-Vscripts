@@ -198,14 +198,14 @@ const UU_AMOUNT = 2
 ::upgrade <- {
 	function OnGameEvent_player_spawn(params)
 	{
-		if(params.team == TF_TEAM_UNASSIGNED)
+		if (params.team == TF_TEAM_UNASSIGNED)
 		{
 			local player = GetPlayerFromUserID(params.userid)
 			local game_scope = GetScope(Gamerules)
 			local player_scope = GetScope(player)
-			if(IsNotInScope("max_currency", game_scope))
+			if (IsNotInScope("max_currency", game_scope))
 				game_scope.max_currency <- 0
-			if(IsNotInScope("currency", player_scope))
+			if (IsNotInScope("currency", player_scope))
 				player_scope.currency <- 0
 
 
@@ -220,9 +220,9 @@ const UU_AMOUNT = 2
 		local game_scope = GetScope(Gamerules)
 		local player_scope = GetScope(player)
 
-		if(IsNotInScope("max_currency", game_scope))
+		if (IsNotInScope("max_currency", game_scope))
 			game_scope.max_currency <- 0
-		if(IsNotInScope("currency", player_scope))
+		if (IsNotInScope("currency", player_scope))
 			player_scope.currency <- 0
 
 
@@ -237,7 +237,7 @@ const UU_AMOUNT = 2
 			}
 			case UU_COMMAND_PREFIX + "query":
 			{
-				if(text.len() != 1)
+				if (text.len() != 1)
 				{
 					player.PrintToChat(format("%sWarning Invalid Syntax", uu_header))
 					return
@@ -248,14 +248,14 @@ const UU_AMOUNT = 2
 				local defaults = 0
 				foreach(upgrade in WEAPON_UPGRADES)
 				{
-					if(active.GetAttribute(upgrade.attribute, upgrade.default_value) == upgrade.default_value)
+					if (active.GetAttribute(upgrade.attribute, upgrade.default_value) == upgrade.default_value)
 					{
 						defaults++
 						continue
 					}
 					display += format("%s : %.2f\n", upgrade.attribute, active.GetAttribute(upgrade.attribute, upgrade.default_value))
 				}
-				if(defaults == WEAPON_UPGRADES.len())
+				if (defaults == WEAPON_UPGRADES.len())
 				{
 					display = format("%sYou have not bought any Upgrades Yet", uu_header)
 				}
@@ -265,13 +265,13 @@ const UU_AMOUNT = 2
 			case UU_COMMAND_PREFIX + "buy":
 			case UU_COMMAND_PREFIX + "upgrade":
 			{
-				if(text.len() != 2)
+				if (text.len() != 2)
 				{
 					player.PrintToChat(format("%sWarning Invalid Syntax", uu_header))
 					return
 				}
 				local upgrade = text[UU_UPGRADE]
-				if(!IsWeaponUpgradeValid(upgrade))
+				if (!IsWeaponUpgradeValid(upgrade))
 				{
 					player.PrintToChat(format("%sWarning Upgrade \"\x07B0FFB0%s\x01\" is not a valid upgrade", uu_header, upgrade))
 					return
@@ -280,13 +280,13 @@ const UU_AMOUNT = 2
 				local table = WeaponUpgadeToTableEntry(upgrade)
 				local active = player.GetActiveWeapon()
 
-				if(!CanPlayerAffordUpgrade(player, table))
+				if (!CanPlayerAffordUpgrade(player, table))
 				{
 					player.PrintToChat(format("%sOops. You dont have Enough money to Aford that Upgrade. %i Missing", uu_header, table.cost - player_scope.currency))
 					return
 				}
 
-				if(!CanWeaponApplyUpgrade(active, table))
+				if (!CanWeaponApplyUpgrade(active, table))
 				{
 					player.PrintToChat(format("%sOops. You Already Maxed that upgrade out!", uu_header))
 					return
@@ -300,12 +300,12 @@ const UU_AMOUNT = 2
 			case UU_COMMAND_PREFIX + "pl_buy":
 			case UU_COMMAND_PREFIX + "pl_upgrade":
 			{
-				if(text.len() != 3)
+				if (text.len() != 3)
 				{
 					player.PrintToChat(format("%sWarning Invalid Syntax", uu_header))
 					return
 				}
-				if(!IsplayerUpgradeValid(text[1]))
+				if (!IsplayerUpgradeValid(text[1]))
 				{
 					player.PrintToChat(format("%sWarning Upgrade \"\x0700300%s\x01\" is not a valid upgrade", uu_header, text[1]))
 					return
@@ -333,7 +333,7 @@ const UU_AMOUNT = 2
 
 		local scope = GetScope(Gamerules)
 
-		if(IsNotInScope("max_currency", scope))
+		if (IsNotInScope("max_currency", scope))
 		{
 			scope.max_currency <- 0
 		}
@@ -350,7 +350,7 @@ function GiveAllPlayerMoney(money)
 {
 	foreach (player in GetEveryPlayer())
 	{
-		if(IsNotInScope("currency", GetScope(player))) 
+		if (IsNotInScope("currency", GetScope(player))) 
 			GetScope(player).currency <- 0
 		GetScope(player).currency += money
 	}
@@ -364,7 +364,7 @@ function DecrementPlayerCurrency(player, amount)
 function ApplyUpgradeToWeapon(weapon, table)
 {
 	weapon.AddAttribute(table.attribute, weapon.GetAttribute(table.attribute, table.default_value) + table.increment, 0)
-	if(weapon.GetAttribute(table.attribute, table.default_value) < (table.upgrades * table.increment))
+	if (weapon.GetAttribute(table.attribute, table.default_value) < (table.upgrades * table.increment))
 	{
 		weapon.AddAttribute(table.attribute, (table.upgrades * table.increment), 0)
 	}
@@ -422,22 +422,22 @@ function CanPlayerAffordUpgrade(player, table)
 {
 	local currency = GetScope(player).currency
 	local cost = table.cost
-	if(cost <= currency)
+	if (cost <= currency)
 		return true
 	else 
 		return false
 }
 function CanWeaponApplyUpgrade(weapon, upgrade)
 {
-	if(weapon.GetAttribute(upgrade.attribute, upgrade.default_value) == (upgrade.upgrades * upgrade.increment) + upgrade.default_value)
+	if (weapon.GetAttribute(upgrade.attribute, upgrade.default_value) == (upgrade.upgrades * upgrade.increment) + upgrade.default_value)
 	{
 		printl(format("value : %.2f is == %.2f", weapon.GetAttribute(upgrade.attribute, upgrade.default_value), (upgrade.upgrades * upgrade.increment) + upgrade.default_value))
 		return false
 	}
 
-	if(upgrade.increment < 0)
+	if (upgrade.increment < 0)
 	{
-		if(weapon.GetAttribute(upgrade.attribute, upgrade.default_value) <= (upgrade.upgrades * upgrade.increment) + upgrade.default_value)
+		if (weapon.GetAttribute(upgrade.attribute, upgrade.default_value) <= (upgrade.upgrades * upgrade.increment) + upgrade.default_value)
 		{
 			printl(format("value : %.2f is <= %.2f", weapon.GetAttribute(upgrade.attribute, upgrade.default_value), (upgrade.upgrades * upgrade.increment) + upgrade.default_value))
 			return false
@@ -447,7 +447,7 @@ function CanWeaponApplyUpgrade(weapon, upgrade)
 	}
 	else
 	{
-		if(weapon.GetAttribute(upgrade.attribute, upgrade.default_value) >= (upgrade.upgrades * upgrade.increment) + upgrade.default_value)
+		if (weapon.GetAttribute(upgrade.attribute, upgrade.default_value) >= (upgrade.upgrades * upgrade.increment) + upgrade.default_value)
 		{
 			printl(format("value : %.2f is >= %.2f", weapon.GetAttribute(upgrade.attribute, upgrade.default_value), (upgrade.upgrades * upgrade.increment) + upgrade.default_value))
 			return false
@@ -459,24 +459,24 @@ function CanWeaponApplyUpgrade(weapon, upgrade)
 
 function IsUpgradeValidForWeapon(weapon, upgrade)
 {
-	if(weapon == null)
+	if (weapon == null)
 		return false
 
-	if(upgrade.only_allow_weapons.len() == 0)
+	if (upgrade.only_allow_weapons.len() == 0)
 	{
 		foreach (name in upgrade.disallowed_weapons)
 		{
-			if(startswith(name, "slot"))
+			if (startswith(name, "slot"))
 			{
 				local split = split(name, "t")
 				printl(split[0])
 				printl(split[1])
-				if(weapon.GetSlot() == split[1])
+				if (weapon.GetSlot() == split[1])
 				{
 					return false
 				}
 			}
-			else if(weapon.GetClassname() == name)
+			else if (weapon.GetClassname() == name)
 			{
 				return false
 			}
@@ -487,17 +487,17 @@ function IsUpgradeValidForWeapon(weapon, upgrade)
 	{
 		foreach (name in upgrade.only_allow_weapons)
 		{
-			if(startswith(name, "slot"))
+			if (startswith(name, "slot"))
 			{
 				local split = split(name, "t")
 				printl(split[0])
 				printl(split[1])
-				if(weapon.GetSlot() != split[1])
+				if (weapon.GetSlot() != split[1])
 				{
 					return false
 				}
 			}
-			else if(weapon.GetClassname() == name)
+			else if (weapon.GetClassname() == name)
 			{
 				return false
 			}

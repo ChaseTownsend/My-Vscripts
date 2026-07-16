@@ -1,7 +1,7 @@
 IncludeScript("fatcat_library")
 
 local Thinker = FindByName(null, "player_attack_event")
-if( !Thinker ) SpawnEntityFromTable("info_target", { targetname = "player_attack_event" })
+if ( !Thinker ) SpawnEntityFromTable("info_target", { targetname = "player_attack_event" })
 AddThinkToEnt(Thinker, "CheckWeaponFire")
 
 function CheckWeaponFire()
@@ -10,20 +10,20 @@ function CheckWeaponFire()
 	{
 		foreach (weapon in player.GetAllWeapons())
 		{
-			if(startswith(weapon.GetClassname(), "tf_wearable"))
+			if (startswith(weapon.GetClassname(), "tf_wearable"))
 				continue
-			if(weapon.IsMeleeWeapon())
+			if (weapon.IsMeleeWeapon())
 			{
-				if(GetPropInt(player, "m_Shared.m_iNextMeleeCrit") == 0 && player.GetActiveWeapon() == weapon)
+				if (GetPropInt(player, "m_Shared.m_iNextMeleeCrit") == 0 && player.GetActiveWeapon() == weapon)
 				{
 					FireAttackEvent([player, weapon, weapon.GetIDX()])
 				}
 				SetPropInt(player, "m_Shared.m_iNextMeleeCrit", -2)
 				continue
 			}
-			if(weapon.GetClassname() == "tf_weapon_flamethrower")
+			if (weapon.GetClassname() == "tf_weapon_flamethrower")
 			{
-				if(GetPropBool(GetPropEntity(weapon, "LocalFlameThrowerData.m_hFlameManager"), "m_bIsFiring"))
+				if (GetPropBool(GetPropEntity(weapon, "LocalFlameThrowerData.m_hFlameManager"), "m_bIsFiring"))
 					FireAttackEvent([player, weapon, weapon.GetIDX()])
 				
 				continue
@@ -50,7 +50,7 @@ function CheckWeaponFire()
 
 		foreach (weapon in player.GetAllValidWeapons())
 		{
-			if(weapon.IsMeleeWeapon())
+			if (weapon.IsMeleeWeapon())
 			{
 				SetPropInt(player, "m_Shared.m_iNextMeleeCrit", -2)
 				continue

@@ -50,7 +50,7 @@ PrecacheSound("items/cart_explode.wav")
 PrecacheSound("weapons/airstrike_small_explosion_02.wav")
 
 local Ability_Thinker = FindByName(null, "_AbilityThink")
-if(Ability_Thinker == null) Ability_Thinker = SpawnEntityFromTable("info_target", { targetname = "_AbilityThink" })
+if (Ability_Thinker == null) Ability_Thinker = SpawnEntityFromTable("info_target", { targetname = "_AbilityThink" })
 AddThinkToEnt(Ability_Thinker, "AbilityThink")
 
 function AbilityThink()
@@ -59,9 +59,9 @@ function AbilityThink()
 	{
 		local scope = player.GetScriptScope()
 
-		if("Ability" in scope)
+		if ("Ability" in scope)
 		{
-			if(scope.Ability != null) continue
+			if (scope.Ability != null) continue
 
 			switch (player.GetAbilityWeaponIDX())
 			{
@@ -212,9 +212,9 @@ __CollectGameEventCallbacks(ability)
 
 function ValidatePlayer(player)
 {
-	if(!player) return false
-	if(IsPlayerABot(player)) return false
-	if(player.GetTeam() == TF_TEAM_PVE_INVADERS) return false
+	if (!player) return false
+	if (IsPlayerABot(player)) return false
+	if (player.GetTeam() == TF_TEAM_PVE_INVADERS) return false
 	return true
 }
 
@@ -237,7 +237,7 @@ function BaseAbility()
 	//local slot_num = 2 // 0,1,2
 
 
-	if(!self.HasWeapon(TF_ABILITY_BASE) || !self.IsAlive() || self.GetPlayerClass() != player_class)
+	if (!self.HasWeapon(TF_ABILITY_BASE) || !self.IsAlive() || self.GetPlayerClass() != player_class)
 		return 1
 	// Check
 	/* local allow = false
@@ -246,7 +246,7 @@ function BaseAbility()
 		if (self.GetWeaponIDXInSlot(i) == null) continue
 		if (self.GetWeaponIDXInSlot(i) == TF_ABILITY_BASE && self.IsAlive() && self.GetPlayerClass() == player_class) allow = true
 	}
-	if(!allow) return 1 */
+	if (!allow) return 1 */
 
 	local scope = GetScope(self)
 
@@ -258,12 +258,12 @@ function BaseAbility()
 	local text_time = format("Charging: %.0fs", (scope.Ability_timestamp-Time()))
 
 
-	if(scope.Ability_timestamp-Time() < 0) text_message = ability_name + "\n►► Ready ◄◄" + "\n\n(+use_action_slot_item)"
+	if (scope.Ability_timestamp-Time() < 0) text_message = ability_name + "\n►► Ready ◄◄" + "\n\n(+use_action_slot_item)"
 	else text_message = ability_name + "\n" + text_time
 
-	if(self.IsTaunting()) text_message = ""
+	if (self.IsTaunting()) text_message = ""
 
-	if(!text_entity)
+	if (!text_entity)
 	{
 		text_entity = SpawnEntityFromTable("game_text", {
 			targetname = text_name,
@@ -314,7 +314,7 @@ function HeavyRage()
 	local ability_name = "MEGA-CRUSH"
 	local player_class = TF_CLASS_HEAVYWEAPONS
 
-	if(!self.HasWeapon(TF_ABILITY_HEAVY_RAGE) || !self.IsAlive() || self.GetPlayerClass() != player_class)
+	if (!self.HasWeapon(TF_ABILITY_HEAVY_RAGE) || !self.IsAlive() || self.GetPlayerClass() != player_class)
 		return 1
 
 
@@ -328,12 +328,12 @@ function HeavyRage()
 	local text_time = format("Charging: %.0fs", (scope.Ability_timestamp-Time()))
 
 
-	if(scope.Ability_timestamp-Time() < 0) text_message = ability_name + "\n►► Ready ◄◄" + "\n\n(+use_action_slot_item)"
+	if (scope.Ability_timestamp-Time() < 0) text_message = ability_name + "\n►► Ready ◄◄" + "\n\n(+use_action_slot_item)"
 	else text_message = ability_name + "\n" + text_time
 
-	if(self.IsTaunting()) text_message = ""
+	if (self.IsTaunting()) text_message = ""
 
-	if(!text_entity)
+	if (!text_entity)
 	{
 		text_entity = SpawnEntityFromTable("game_text", {
 			targetname = text_name,
@@ -389,7 +389,7 @@ function HeavyRage2()
 	EntFireByHandle(self, "RunScriptCode", "self.AddCondEx(TF_COND_REGENONDAMAGEBUFF, 12, self)", 0.1, null, null)
 
 	local bomb = FindByClassnameWithin(null, "item_teamflag", self.GetOrigin(), RAGE_bomb_range)
-	if(GetFlagStatus(bomb) == 2)
+	if (GetFlagStatus(bomb) == 2)
 	{
 		DispatchParticleEffect("hightower_explosion", bomb.GetOrigin(), QAngle(-90, 0, 0).Forward())
 		bomb.EmitSound("items/cart_explode.wav")
@@ -424,7 +424,7 @@ function CheersAbility()
 		ClientPrint(null, 4, message)
 	}
 
-	if(!self.HasWeapon(TF_ABILITY_CHEERS) || !self.IsAlive())
+	if (!self.HasWeapon(TF_ABILITY_CHEERS) || !self.IsAlive())
 		return 1
 
 	local scope = GetScope(self)
@@ -437,12 +437,12 @@ function CheersAbility()
 	local text_time = format("Charging: %.0fs", (scope.Ability_timestamp-Time()))
 
 
-	if(scope.Ability_timestamp-Time() < 0) text_message = ability_name + "\n►► Ready ◄◄" + "\n\n(+use_action_slot_item)"
+	if (scope.Ability_timestamp-Time() < 0) text_message = ability_name + "\n►► Ready ◄◄" + "\n\n(+use_action_slot_item)"
 	else text_message = ability_name + "\n" + text_time
 
-	if(self.IsTaunting()) text_message = ""
+	if (self.IsTaunting()) text_message = ""
 
-	if(!text_entity)
+	if (!text_entity)
 	{
 		text_entity = SpawnEntityFromTable("game_text", {
 			targetname = text_name,
@@ -507,7 +507,7 @@ function KartAbility()
 	local ability_name = "VEHICULAR MANNSLAUGHTER"
 
 
-	if(!self.HasWeapon(TF_ABILITY_KART) || !self.IsAlive())
+	if (!self.HasWeapon(TF_ABILITY_KART) || !self.IsAlive())
 		return 1
 
 	local scope = GetScope(self)
@@ -520,12 +520,12 @@ function KartAbility()
 	local text_time = format("Charging: %.0fs", (scope.Ability_timestamp-Time()))
 
 
-	if(scope.Ability_timestamp-Time() < 0) text_message = ability_name + "\n►► Ready ◄◄" + "\n\n(+use_action_slot_item)"
+	if (scope.Ability_timestamp-Time() < 0) text_message = ability_name + "\n►► Ready ◄◄" + "\n\n(+use_action_slot_item)"
 	else text_message = ability_name + "\n" + text_time
 
-	if(self.IsTaunting()) text_message = ""
+	if (self.IsTaunting()) text_message = ""
 
-	if(!text_entity)
+	if (!text_entity)
 	{
 		text_entity = SpawnEntityFromTable("game_text", {
 			targetname = text_name,
@@ -570,7 +570,7 @@ function kart2()
 {
 	local scope = GetScope(self)
 
-	if(!self.IsTaunting()) return
+	if (!self.IsTaunting()) return
 
 	self.AddCondEx(TF_COND_HALLOWEEN_KART, 25, self)
 	self.AddCondEx(TF_COND_HALLOWEEN_QUICK_HEAL, 25, self)

@@ -7,7 +7,7 @@ local player_ids = []
 local player = GetListenServerHost()
 local player_id = NetProps.GetPropString(player, "m_szNetworkIDString")
 
-if(!(player_id in player_ids))
+if (!(player_id in player_ids))
 {
 	player_ids.push(player_id)
 }

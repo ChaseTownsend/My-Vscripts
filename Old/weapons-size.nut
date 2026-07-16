@@ -1,7 +1,7 @@
 IncludeScript("fatcat_library")
 
 local Size_Thinker = Entities.FindByName(null, "_SizeThink")
-if(Size_Thinker == null) Size_Thinker = SpawnEntityFromTable("info_target", { targetname = "_SizeThink" })
+if (Size_Thinker == null) Size_Thinker = SpawnEntityFromTable("info_target", { targetname = "_SizeThink" })
 AddThinkToEnt(Size_Thinker, "SizeThink")
 
 function SizeThink()

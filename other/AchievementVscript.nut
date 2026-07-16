@@ -1,12 +1,12 @@
 function TagCheck()
 {
-	if(self.GetTeam() != TF_TEAM_BLUE) return
+	if (self.GetTeam() != TF_TEAM_BLUE) return
 	local tags = {}
 	self.GetAllBotTags(tags)
 	foreach (index, tag in tags)
 	{
 		local parsed_tag = split(tag, "|")
-		if(parsed_tag[0] == "Teleport")
+		if (parsed_tag[0] == "Teleport")
 		{
 			self.RemoveCondEx(TF_COND_INVULNERABLE_HIDE_UNLESS_DAMAGED, true)
 			self.SetAbsOrigin(Vector(parsed_tag[1].tofloat(), parsed_tag[2].tofloat(), parsed_tag[3].tofloat()))
