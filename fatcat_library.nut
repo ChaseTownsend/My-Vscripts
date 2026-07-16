@@ -9853,6 +9853,66 @@ function ROOT::PostPlayerSpawn(player)
 
 		// Assert(eventdata.player && eventdata.player.IsPlayer(), "post_inventory_application Received a NULL/Non player")
 
+		local scope = GetScope(eventdata.player)
+		if (!("HasSpawned" in scope) && !eventdata.player.IsBot())
+		{
+			local TimeTable = {}
+			LocalTime(TimeTable)
+
+			local motd = ""
+			switch(TimeTable.month)
+			{
+			case 1: // January
+			break
+			case 2: // February
+			break
+			case 3: // March
+			break
+			case 4: // April
+				if (TimeTable.day == 1)
+					motd = "Happy April Fools"
+			break
+			case 5: // May
+			break
+			case 6: // June
+				motd = "Happy Pride Month!"
+			break
+			case 7: // July
+			break
+			case 8: // August
+			break
+			case 9: // September
+			break
+			case 10: // October
+				motd = "Happy Halloween!"
+			break
+			case 11: // November
+			break
+			case 12: // December
+				motd = "Merry Christmas!"
+			break
+			}
+			local Override = false
+			/** @type {bool | function} */
+			local override_func = null
+			if ("MOTD_OVERRIDE" in ROOT && MOTD_OVERRIDE != "")
+			{
+				motd = MOTD_OVERRIDE
+				Override = true
+			}
+			if ("MOTD_FUNC" in ROOT && type(MOTD_FUNC) == "function")
+				override_func = MOTD_FUNC
+
+			if (override_func != null)
+				RunWithDelay(3.0, @() override_func(eventdata.player)) // always validate the player in this
+				
+			if (Override)
+				RunWithDelay(3.0, @() eventdata.player.PrintToChat(motd))
+			else if(motd != "")
+				RunWithDelay(3.0, @() eventdata.player.PrintToChatF("\x01\x07E000E0► FatCatLib ◄   \x03%s", motd))
+			scope.HasSpawned <- true
+		}
+
 		// overridden
 		delete eventdata.userid
 
@@ -10540,66 +10600,6 @@ function ROOT::PostPlayerSpawn(player)
 
 		if (player.IsAdmin())
 			SetPropInt(player, "m_autoKickDisabled", 1)
-
-		local scope = GetScope(player)
-		if (!("HasSpawned" in scope) && !player.IsBot())
-		{
-			local TimeTable = {}
-			LocalTime(TimeTable)
-
-			local motd = ""
-			switch(TimeTable.month)
-			{
-			case 1: // January
-			break
-			case 2: // February
-			break
-			case 3: // March
-			break
-			case 4: // April
-				if (TimeTable.day == 1)
-					motd = "Happy April Fools"
-			break
-			case 5: // May
-			break
-			case 6: // June
-				motd = "Happy Pride Month!"
-			break
-			case 7: // July
-			break
-			case 8: // August
-			break
-			case 9: // September
-			break
-			case 10: // October
-				motd = "Happy Halloween!"
-			break
-			case 11: // November
-			break
-			case 12: // December
-				motd = "Merry Christmas!"
-			break
-			}
-			local Override = false
-			/** @type {bool | function} */
-			local override_func = null
-			if ("MOTD_OVERRIDE" in ROOT && MOTD_OVERRIDE != "")
-			{
-				motd = MOTD_OVERRIDE
-				Override = true
-			}
-			if ("MOTD_FUNC" in ROOT && type(MOTD_FUNC) == "function")
-				override_func = MOTD_FUNC
-
-			if (override_func != null)
-				RunWithDelay(3.0, @() override_func(player)) // always validate the player in this
-				
-			if (Override)
-				RunWithDelay(3.0, @() player.PrintToChat(motd))
-			else if(motd != "")
-				RunWithDelay(3.0, @() player.PrintToChatF("\x01\x07E000E0► FatCatLib ◄   \x03%s", motd))
-			scope.HasSpawned <- true
-		}
 
 		// overridden
 		delete eventdata.userid
