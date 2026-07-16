@@ -30,13 +30,13 @@
 // Use example below
 // ALWAYS validate the player
 /**@param {CTFPlayer} player */
-function ROOT::MOTD_FUNC(player)
-{
-	if (!IsValidPlayer(player))
-		return
+// function ROOT::MOTD_FUNC(player)
+// {
+// 	if (!IsValidPlayer(player))
+// 		return
 
-	player.EmitSoundTo("ui/system_message_alert.wav")
-}
+// 	player.EmitSoundTo("ui/system_message_alert.wav")
+// }
 
 function ROOT::PrintGarbage()
 {
