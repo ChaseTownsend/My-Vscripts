@@ -1,3 +1,7 @@
+if (!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
+	IncludeScript("fatcat_library")
+
+
 class BotUpgrade {
 	/** 
 	 * @type {string} 
@@ -36,6 +40,64 @@ class BotUpgrade {
 				this[key] = value
 		}
 	}
+
+	function CanBuyUpgrade(money) {return money >= cost}
+}
+
+class LevelSystem {
+	experience_needed = 0
+	experience_for_level = 50
+	experience_cap_per_level = 50
+
+	level = 0
+
+	OtherLevelFunc = null
+
+	/** 
+	 * @type {function}
+	 * @param {integer} cap
+	 * @param {integer} per_lvl
+	 * @param {function|null} lvl_func
+	 */
+	constructor(cap, per_lvl, lvl_func = null)
+	{
+		this.level = 1
+		this.experience_for_level = cap
+		this.experience_cap_per_level = per_lvl
+		this.experience_needed = this.experience_for_level
+
+		if(lvl_func)
+			this.OtherLevelFunc = lvl_func
+	}
+
+	function AddExp(amount)
+	{
+		experience_needed -= amount
+
+		if(ShouldLevelup())
+		{
+			while(ShouldLevelup())
+			{
+				LevelUp()
+			}
+		}
+	}
+
+	function ShouldLevelup()
+	{
+		return experience_needed <= 0
+	}
+
+	function LevelUp()
+	{
+		level ++
+		experience_for_level += experience_cap_per_level
+		// should really be `=` but this should "allow" multiple levels to be givven at once
+		experience_needed += experience_for_level
+
+		if(OtherLevelFunc)
+			OtherLevelFunc()
+	}
 }
 
 class Gamerules {
@@ -47,18 +109,18 @@ class Gamerules {
 	/** 
 	 * Table of `BotUpgrade`
 	 * 
+	 * 
+	 * 
 	 * @type {table}
 	*/
 	static m_Upgrades = {}
 
+	/** @type {LevelSystem} */
+	static Leveling = null
+
 	static m_iBotCurrency = 0
 	static m_iStartingCurrency = 0
 	static m_iLevelUpCurrency = 0
-
-
-	static m_iExperienceNeeded = 0
-	static m_iExperienceLevel = 0
-	static m_iLevel = 0
 
 	/** 
 	 * @type {function}
@@ -68,6 +130,8 @@ class Gamerules {
 	{
 		this.m_hOuter = outer
 		this.m_Upgrades = {}
+
+		this.Leveling = LevelSystem(50, 15, LevelUp)
 
 		Setup()
 	}
@@ -85,9 +149,7 @@ class Gamerules {
 	*/
 	function AddExperience(amount)
 	{
-		m_iExperienceNeeded -= amount
-		if(m_iExperienceNeeded <= 0)
-			LevelUp()
+		Leveling.AddExp(amount)
 	}
 
 	/** 
@@ -136,7 +198,6 @@ class Gamerules {
 
 	function LevelUp()
 	{
-		m_iExperienceNeeded = m_iExperienceLevel + 50 // todo: val
 		AddCurrency(m_iLevelUpCurrency)
 	}
 
@@ -150,12 +211,61 @@ class Gamerules {
 	function OnBotSpawn(bot)
 	{
 		bot.SetCurrency(m_iBotCurrency)
-		local scope = GetScope(bot)
+		GrantBotUpgrades(bot)
+		// local scope = GetScope(bot)
 	}
 
-	function GrantBotUpgrade()
+	/** 
+	 * @param {CTFBot} bot
+	 */
+	function GrantBotUpgrades(bot)
 	{
-		
+		while (bot.GetCurrency() >= 150)
+		{
+			
+			/* class BotUpgrade {
+				cost: float,
+				default_value: float,
+				attribute: string,
+				cap: float,
+				increment: float,
+
+				CanBuyUpgrade: function
+			} */
+			
+			foreach (/**@type {string} */_name, /**@type {BotUpgrade}*/upgrade in m_Upgrades)
+			{
+				if(upgrade.CanBuyUpgrade(bot.GetCurrency()))
+				{
+					GrantUpgrade(bot, upgrade)
+				}
+			}
+		}
+	}
+
+	/** 
+	 * @type {function}
+	 * @param {CTFBot} bot
+	 * @param {BotUpgrade} upgrade
+	 */
+	function GrantUpgrade(bot, upgrade)
+	{
+		/* class BotUpgrade {
+			cost: float,
+			default_value: float,
+			attribute: string,
+			cap: float,
+			increment: float,
+
+			CanBuyUpgrade: function
+		} */
+		if(default_value == 1.0)
+		{
+		}
+		else if(default_value == 0)
+		{
+
+		}
 	}
 }
 
@@ -171,47 +281,47 @@ Gamerules.DefineUpgrade("speed", "move speed bonus", 1.6, 0.15, 150, 1.0)
 Gamerules.DefineUpgrade("firerate", "halloween fire rate bonus", 0.1, -0.1, 150, 1.0)
 Gamerules.DefineUpgrade("reloadrate", "halloween reload time decreased", 0.1, -0.15, 150, 1.0)
 
-local BOT_BODY_UPGRADES = {
-	HEALTH_UPGRADE = {
-		attribute = "max health additive bonus"
-		cap = 5000
-		increment = 50
-		cost = 300
-		default_value = 0
-	}
-	RES_UPGRADE = {
-		attribute = "dmg taken increased"
-		cap = 0.1
-		increment = -0.15
-		cost = 400
-		default_value = 1.0
-	}
-	CRIT_RES_UPGRADE = {
-		attribute = "dmg taken from crit reduced"
-		cap = 0.1
-		increment = -0.30
-		cost = 200
-		default_value = 1
-	}
-	SPEED_UPGRADE = {
-		attribute = "move speed bonus"
-		cap = 1.5
-		increment = 0.1
-		cost = 100
-		default_value = 1
-	}
-	UNIVERSAL_FIRE_RATE_UPGRADE = {
-		attribute = "halloween fire rate bonus"
-		cap = 0.2
-		increment = -0.2
-		cost = 250
-		default_value = 1
-	}
-	UNIVERSAL_RELOAD_SPEED_UPGRADE = {
-		attribute = "halloween reload time decreased"
-		cap = 0.1
-		increment = -0.15
-		cost = 200
-		default_value = 1
-	}
-}
+// local BOT_BODY_UPGRADES = {
+// 	HEALTH_UPGRADE = {
+// 		attribute = "max health additive bonus"
+// 		cap = 5000
+// 		increment = 50
+// 		cost = 300
+// 		default_value = 0
+// 	}
+// 	RES_UPGRADE = {
+// 		attribute = "dmg taken increased"
+// 		cap = 0.1
+// 		increment = -0.15
+// 		cost = 400
+// 		default_value = 1.0
+// 	}
+// 	CRIT_RES_UPGRADE = {
+// 		attribute = "dmg taken from crit reduced"
+// 		cap = 0.1
+// 		increment = -0.30
+// 		cost = 200
+// 		default_value = 1
+// 	}
+// 	SPEED_UPGRADE = {
+// 		attribute = "move speed bonus"
+// 		cap = 1.5
+// 		increment = 0.1
+// 		cost = 100
+// 		default_value = 1
+// 	}
+// 	UNIVERSAL_FIRE_RATE_UPGRADE = {
+// 		attribute = "halloween fire rate bonus"
+// 		cap = 0.2
+// 		increment = -0.2
+// 		cost = 250
+// 		default_value = 1
+// 	}
+// 	UNIVERSAL_RELOAD_SPEED_UPGRADE = {
+// 		attribute = "halloween reload time decreased"
+// 		cap = 0.1
+// 		increment = -0.15
+// 		cost = 200
+// 		default_value = 1
+// 	}
+// }

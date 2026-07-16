@@ -117,15 +117,21 @@ function CreateCustomTank(params)
 
 	// Locomotion
 	scope.Navigation <- tank.GetLocomotionInterface()
+	/**
+	 * @var {CTFBaseBoss} self 
+	 * @var {ILocomotion} Navigation 
+	 * @var {CBaseEntity|null} next_node 
+	*/
 	scope.TrackThink <- function() {
 		if (next_node == null)
 			return -1
 
 		// Navigation.DriveTo(next_node.GetOrigin())
+		DebugDrawLine_vCol(self.GetCenter(), next_node.GetCenter(), Vector(255, 255, 255), true, TICK_DUR*2)
 		Navigation.Approach(next_node.GetOrigin(), 10000)
 		Navigation.FaceTowards(next_node.GetOrigin())
 
-		DebugDrawText(self.GetOrigin(), Navigation.GetVelocity().ToKVString(), false, 5)
+		DebugDrawText(self.GetOrigin(), Navigation.GetVelocity().ToKVString(), false, TICK_DUR*2)
 		
 		if (MATH.Distance(self.GetOrigin(), next_node.GetOrigin()) < 100)
 		{
@@ -133,12 +139,17 @@ function CreateCustomTank(params)
 		}
 		return -1
 	}
+	/**
+	 * @var {CTFBaseBoss} self 
+	 * @var {ILocomotion} Navigation 
+	 * @var {CBaseEntity|null} next_node 
+	*/
 	scope.TankThink  <- function() {
 		// Assert("TrackThink" in this, "Custom Tank is missing \"TrackThink\" function in scope")
-		DebugDrawClear()
+		// DebugDrawClear()
 
 		TrackThink()
-		DebugDrawTrigger(self)
+		// DebugDrawTrigger(self)
 
 		Navigation.SetDesiredSpeed(300)
 		Navigation.SetSpeedLimit(300)
@@ -154,3 +165,7 @@ function tankthink()
 {
 	
 }
+
+
+CreatePath(tracks)
+CreateCustomTank({startnode = "track1", health = 1})
