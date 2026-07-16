@@ -154,6 +154,9 @@ class Gamerules {
 	}
 
 	function GrantBotUpgrade()
+	{
+		
+	}
 }
 
 ::GameruleEntity <- Gamerules(FindByClassname(null, "tf_gamerules"))
