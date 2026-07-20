@@ -292,11 +292,8 @@ RegisterEquipItem(1121, "Mutated Milk", "mutated", {
 	}
 })
 // RegisterEquipItem(1, "My Custom Item", "test", {override_func = function(player) {return player.GetPlayerClass() == 4},is_segsegv = true})
-// below registers are deprecated
-// RegisterEquipItem(1100, "The Bread Bite", "bread", true, {}, function(player) {return player.GetPlayerClass() == TF_CLASS_HEAVYWEAPONS})
-// RegisterEquipItem(1105, "The Self-Aware Beauty Mark", "mark", true, {}, function(player) {return player.GetPlayerClass() == TF_CLASS_SNIPER})
-// RegisterEquipItem(1121, "Mutated Milk", "mutated", true, {}, function(player) {return player.GetPlayerClass() == TF_CLASS_SCOUT})
 // RegisterEquipItem(30666, "The C.A.P.P.E.R", "capper")
+// below registers are deprecated
 // RegisterEquipItem(30666, "The C.A.P.P.E.R", "capper", true, {}, function(player) {return player.GetPlayerClass() == TF_CLASS_SCOUT})
 // RegisterEquipItem(1, "test item", "Test1", true, {}, function(player) {return false})
 // RegisterEquipItem(2, "test item", "Test2", true, {}, function(player) {return false})
