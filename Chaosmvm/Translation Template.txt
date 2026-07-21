@@ -13,9 +13,9 @@ All the strings and their values are below in this section
 
 english = {
 	IH_TRANSLATE_ITEM		= IH_color + "[%s]" + IH_text_color + "%s"
-	IH_INCLUDES				= IH_color_header + "[►]\x0826beffBB Your loadout includes..."
-	IH_DIS_MSG_2			= IH_disable_color + "Type '/itemhelp 1' to disable these messages during a wave. \nType '/itemhelp 0' to disable these messages entirely."
-	IH_DIS_MSG				= IH_disable_color + "Type '/itemhelp 0' to disable these messages. \nType '/itemhelp 2' to Always display this message."
+	IH_INCLUDES				= IH_color_header + "[►]\x0826beffAA Your loadout includes..."
+	IH_DIS_MSG_2			= IH_disable_color + "Type '/itemhelp 1' to disable item descriptions during a wave. \nType '/itemhelp 0' to disable them entirely."
+	IH_DIS_MSG				= IH_disable_color + "Type '/itemhelp 0' to disable item descriptions. \nType '/itemhelp 2' to always display them."
 	IH_BAD_ARGS				= IH_color_header + "[Item Helper]" + IH_error_color + " {Error}\x01 Incorrect arguments!\n/itemhelp 2 - Enable\n/itemhelp 1 - Enable during Wave Setup only\n/itemhelp 0 - Disable"
 	IH_OOB_ARG				= IH_color_header + "[Item Helper]" + IH_error_color + " {Error}\x01 Out Of Bounds Value Set! : %s"
 	IH_HELP_MSG				= IH_color_header + "[Item Helper]\x01 Item helper provides simple descriptions for each \x03Chaos\x01 Item!" 
@@ -32,6 +32,8 @@ english = {
 	MEGACRUSH 				= "MEGA-CRUSH"
 	VITALRESURGENCE 		= "VITAL RESURGENCE"
 	VEHICULARMANNSLAUGHTER 	= "VEHICULAR MANNSLAUGHTER"
+	TEST 					= "Test Ability" // Dont Translate this
+	NO_MONEY				= "You can't afford this! (Cost: $%s, you have: $%s)" // Dont Translate this, my own project
 	REPROG_BOT_STRONG		= TF_TEAM_COLOR_REPROG_B+"%s\x01 is too resistant and cannot be reprogrammed."
 	REPROG_BOT_NOT_SUIT		= TF_TEAM_COLOR_REPROG_B+"%s\x01 is not suitable for combat and cannot be reprogrammed."
 	REPROG_BOT_MICRO		= TF_TEAM_COLOR_REPROG_B+"%s\x01 is a Micro bot! Reprogramming Micro bots lobotomizes them!" // TODO:
@@ -112,7 +114,7 @@ english = {
 	ATOMIZER_DESC 			= " Cannot deal damage with normal attacks, but a successful taunt kill will grant a critboost lasting 3 minutes."
 	//
 	THREERUNEBLADE_NAME 	= "THREE-RUNE BLADE"
-	THREERUNEBLADE_DESC 	= " While active, gain MASSIVE boost to move speed and ability to triple jump. Grants immunity to fall damage."
+	THREERUNEBLADE_DESC 	= " While active, gain MASSIVE boost to move speed and ability to triple jump. Deals increased damage while airborne. Grants immunity to fall damage."
 	//
 	UNARMEDCOMBAT_NAME 		= "UNARMED COMBAT"
 	UNARMEDCOMBAT_DESC 		= " Every 10 kills, gain a Skeleton minion spell charge (Requires Spellbook)."
@@ -195,7 +197,7 @@ english = {
 	HALFZATOICHI_DESC 		= " Average damage with high health mobility, and increased range."
 	//
 	MARKETGARDENER_NAME 	= "MARKET GARDENER"
-	MARKETGARDENER_DESC 	= " Massive damage bonus while rocket jumping. After getting a kill, enter an enraged state and gain extra health, resistance and increased damage on all attacks."
+	MARKETGARDENER_DESC 	= " Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 	//
 	DISCIPLINARYACTION_NAME = "DISCIPLINARY ACTION"
 	DISCIPLINARYACTION_DESC	= " Standard option for defense and mobility. Instantly gain 1/3 Rage meter on hit."
@@ -260,7 +262,7 @@ english = {
 	POWERJACK_DESC 			= " Fast attacks and move speed. Inflict bleed & ignite enemies on hit and gain mini-crits on kill."
 	//
 	BACKSCRATCHER_NAME 		= "BACK SCRATCHER"
-	BACKSCRATCHER_DESC 		= " Deals lethal damage from behind. After getting a kill, enter an enraged state and gain extra move speed, resistance and increased damage on all attacks."
+	BACKSCRATCHER_DESC 		= " Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 	//
 	VOLCANOFRAGMENT_NAME 	= "SHARPENED VOLCANO FRAGMENT"
 	VOLCANOFRAGMENT_DESC 	= " Chance to stun enemies on hit. Also able to burn enemy Pyros"
@@ -269,7 +271,7 @@ english = {
 	POSTALPUMMELER_DESC 	= " On hit: Inflict Confusion, causing enemies to walk backward along the bomb path for a short time. Hold Alt-Fire when attacking to teleport back to spawn."
 	//
 	MAUL_NAME 				= "MAUL"
-	MAUL_DESC 				= " On hit: Launch enemies into the air with reduced gravity."
+	MAUL_DESC 				= " On hit: Cause an explosion, launching enemies into the air and igniting them."
 	//
 	THIRDDEGREE_NAME 		= "THIRD DEGREE"
 	THIRDDEGREE_DESC 		= " Become nearly immune to fire damage while equipped, and gain and additional heavy resistance to all ranged attacks while active."
@@ -334,7 +336,7 @@ english = {
 	SKULLCUTTER_DESC 		= " Able to cut through enemy Ubercharge and disrupt Medi-Gun functions. Also able to deal increased damage to enemies of the same class as you."
 	//
 	CABER_NAME 				= "ULLAPOOL CABER"
-	CABER_DESC 				= " Damage increases as you become injured. Guaranteed crits if your health is below 2%. The explosion from this attack will kill you."
+	CABER_DESC 				= " You are a Sentry Buster - Taunt to detonate!"
 	//
 	CLAIDHEAMHMOR_NAME 		= "CLAIDHEAMH MOR"
 	CLAIDHEAMHMOR_DESC 		= " Every 10 kills, gain a Monoculus spell charge (Requires Spellbook)."
@@ -372,22 +374,22 @@ english = {
 	SHOTGUN_HVY_DESC 		= " Single shot with high damage, granting 8 seconds of crits on kill."
 	//
 	SANDVICH_NAME 			= "SANDVICH"
-	SANDVICH_DESC 			= " Restore up to 150,000 health. Any damage taken while holding this item active is fatal."
+	SANDVICH_DESC 			= " Consume to gain Concheror buff for 30 seconds."
 	//
 	DALOKOHSBAR_NAME 		= "DALOKOHS BAR"
-	DALOKOHSBAR_DESC 		= " Restore up to 20,000 health. If used while below 350 health you'll gain a large overheal. Passively increases damage taken but gives a chance to self-uber on taking damage."
+	DALOKOHSBAR_DESC 		= " Consume to gain increased move speed, weapon switch speed and faster minigun spinup time for 30 seconds."
 	//
 	BUFFALOSTEAK_NAME 		= "BUFFALO STEAK SANDVICH"
-	BUFFALOSTEAK_DESC 		= " Passively grants immunity to critical hits."
+	BUFFALOSTEAK_DESC 		= " Consume to gain Battalion's Backup buff and backstab immunity for 30 seconds."
 	//
 	FAMILYBUSINESS_NAME 	= "FAMILY BUSINESS"
 	FAMILYBUSINESS_DESC 	= " Unlimited ammo. Attack rate is doubled while receiving a healing effect. Grants a brief critboost and mini-crit boost on kill."
 	//
 	FISHCAKE_NAME 			= "FISHCAKE"
-	FISHCAKE_DESC 			= " Heavy resistance to BULLET damage, but more vulnerable to FIRE and BLAST damage."
+	FISHCAKE_DESC 			= " Consume to gain gravity reversal power for 30 seconds (Crouch to reverse gravity)."
 	//
 	SECONDBANANA_NAME 		= "SECOND BANANA"
-	SECONDBANANA_DESC 		= " Heavy resistance to BLAST damage, but more vulnerable to FIRE and BULLET damage."
+	SECONDBANANA_DESC 		= " Consume to gain explosive melee power for 30 seconds (You are restricted to melee for the duration)."
 	///
 	FISTS_NAME 				= "FISTS"
 	FISTS_DESC 				= " Standard option for defense and mobility. Effective in combat."
@@ -402,10 +404,10 @@ english = {
 	BREADBITE_DESC 			= " Critical hits infect your victim with Corrosion, a permanent debuff that deals damage based on max health and causes the victim to explode into a small corrosive cloud on death, spreading the effect to other enemies."
 	//
 	WARRIRORSSPIRIT_NAME 	= "WARRIOR'S SPIRIT"
-	WARRIRORSSPIRIT_DESC 	= " Left-click to leap high into the air. Land on enemies to deal massive stomp damage. On Kill: Able to Quick-Slam by crouching in air for a short time.  Removes all primary and secondary ammo."
+	WARRIRORSSPIRIT_DESC 	= " Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air. Active buff indicated by flashing \x07ffc400[!] \x01icon."
 	//
 	FISTSOFSTEEL_NAME 		= "FISTS OF STEEL"
-	FISTSOFSTEEL_DESC 		= " Become a giant Heavy gauntlet with 250,000 health. You are immune to push forces and can deal heavy damage. Removes all primary and secondary ammo. You can only heal from lunchbox items."
+	FISTSOFSTEEL_DESC 		= " You are a Giant Heavy Gauntlet - Immune to push forces and able to hit multiple enemies at once for massive damage."
 	//
 	EVICTIONNOTICE_NAME 	= "EVICTION NOTICE"
 	EVICTIONNOTICE_DESC 	= " Gain a rapid healing effect on kill."
@@ -566,7 +568,7 @@ english = {
 	AMBASSADOR_DESC 		= " Deal massive headshot damage. Damage is doubled if you are not disguised."
 	//
 	LETRANGER_NAME 			= "L'ETRANGER"
-	LETRANGER_DESC 			= " Able to execute any non-giant in a single shot. Zero damage to Giants or Tanks however."
+	LETRANGER_DESC 			= " Able to execute any non-giant in a single shot. Deals 2% damage to Giants, zero damage to Tanks."
 	//
 	ENFORCER_NAME 			= "ENFORCER"
 	ENFORCER_DESC 			= " Ignores damage resistances and stores a crit for every backstab or building destroyed with a Sapper."
@@ -584,7 +586,7 @@ english = {
 	KNIFE_DESC 				= " While active, the Knife drains your health but grants immunity to ALL damage. Kills restore health."
 	//
 	YOURETERNALREWARD_NAME 	= "YOUR ETERNAL REWARD"
-	YOURETERNALREWARD_DESC 	= " Damage increases as you become injured and crits while your health is below 10%, but only for front stabs. Resist 90% damage."
+	YOURETERNALREWARD_DESC 	= " Deal massive Giant backstab damage and explosive backstab damage, however each attack has a high chance to miss. Direct kills grant a Teleport spell charge (Requires Spellbook)."
 	//
 	KUNAI_NAME 				= "CONNIVER'S KUNAI"
 	KUNAI_DESC 				= " Infinite melee range. Backstabs trigger an explosion, dealing extra damage to nearby targets."
@@ -593,7 +595,7 @@ english = {
 	BIGEARNER_DESC 			= " You have a massive amount of health and 'missed' swings cause you to heal. Gain a short burst of massively increased heal rate on kill (which can also build overheal). Cannot heal from any other sources."
 	//
 	WANGAPRICK_NAME 		= "WANGA PRICK"
-	WANGAPRICK_DESC 		= " Killing an enemy causes you to immediately enter cloak for a few seconds. You can attack enemies while in this cloak state and chain kills to remain invisible. No disguise."
+	WANGAPRICK_DESC 		= " Killing an enemy causes you to immediately enter stealth for a few seconds, however you cannot disguise. Grants a Cloak spell charge on kill (Requires Spellbook)."
 	//
 	SHARPDRESSER_NAME 		= "SHARP DRESSER"
 	SHARPDRESSER_DESC 		= " Backstabs trigger an explosion, dealing extra damage to nearby targets."
@@ -605,13 +607,13 @@ english = {
 	INVISWATCH_DESC 		= " Infinite cloak, +10% faster move speed."
 	//
 	DEADRINGER_NAME 		= "DEAD RINGER"
-	DEADRINGER_DESC 		= " Activate to gain super-speed for several seconds. Invulnerable while active."
+	DEADRINGER_DESC 		= " Activate to gain super speed for several seconds. Invulnerable while active."
 	//
 	CLOAKANDDAGGER_NAME		= "CLOAK AND DAGGER"
-	CLOAKANDDAGGER_DESC		= " Instant cloak and decloaking."
+	CLOAKANDDAGGER_DESC		= " Activate to transform into a ghost. Able to fly a short distance, or remain stationary to stay intangible indefinitely."
 	//
 	QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
-	QUACKENBIRDT_DESC 		= " Reveals the location of all enemies while cloaked."
+	QUACKENBIRDT_DESC 		= " Activate to reveal the location of all enemies. Alternatively, activating this while holding a Sapper shows your teammates instead."
 	//----------------------------
 	//----------------------------
 	//----------------------------
