@@ -22,7 +22,7 @@ if (!("CHECKPOINT_ERROR" in getroottable()))
 	::CHECKPOINT_ERROR <- "\x07bf4137"
 
 if ("SetScriptVersion" in getroottable())
-	SetScriptVersion("Translations", "1.7.0")
+	SetScriptVersion("Translations", "1.7.1")
 
 ::TRANSLATION_TABLE <- {
 	english = {
@@ -600,7 +600,7 @@ if ("SetScriptVersion" in getroottable())
 		KNIFE_DESC 				= " While active, the Knife drains your health but grants immunity to ALL damage. Kills restore health."
 		//
 		YOURETERNALREWARD_NAME 	= "YOUR ETERNAL REWARD"
-		YOURETERNALREWARD_DESC 	= " Deal massive Giant backstab damage and explosive backstab damage, however each attack has a high chance to miss. Direct kills grant a Teleport spell charge (Requires Spellbook)."
+		YOURETERNALREWARD_DESC 	= " Extremely high backstab damage, able to instakill most Giants. However each attack has a high chance to miss. Grants a Teleport spell charge on kill (Requires Spellbook)."
 		//
 		KUNAI_NAME 				= "CONNIVER'S KUNAI"
 		KUNAI_DESC 				= " Infinite melee range. Backstabs trigger an explosion, dealing extra damage to nearby targets."
@@ -624,10 +624,10 @@ if ("SetScriptVersion" in getroottable())
 		DEADRINGER_DESC 		= " Activate to gain super speed for several seconds. Invulnerable while active."
 		//
 		CLOAKANDDAGGER_NAME		= "CLOAK AND DAGGER"
-		CLOAKANDDAGGER_DESC		= " Activate to transform into a ghost. Able to fly a short distance, or remain stationary to stay intangible indefinitely."
+		CLOAKANDDAGGER_DESC		= " Activate to force enemies to ignore you. Able to attack while active."
 		//
 		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
-		QUACKENBIRDT_DESC 		= " Activate to reveal the location of all enemies. Alternatively, activating this while holding a Sapper shows your teammates instead."
+		QUACKENBIRDT_DESC 		= " Activate to gain flight. Able to attack while active. Grants immunity to fall damage."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -1275,7 +1275,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		YOURETERNALREWARD_NAME 	= "永生的回报"
 		YOURETERNALREWARD_DESC 	= "生命值越低此武器伤害越高并在生命值低于 10% 时必定暴击, 只能攻击敌人的正前方. 获得 90% 全伤害抗性."
-		// TODO: Update! " Deal massive Giant backstab damage and explosive backstab damage, however each attack has a high chance to miss. Direct kills grant a Teleport spell charge (Requires Spellbook)."
+		// TODO: Update! " Extremely high backstab damage, able to instakill most Giants. However each attack has a high chance to miss. Grants a Teleport spell charge on kill (Requires Spellbook)."
 		//
 		KUNAI_NAME 				= "密谋者的苦无"
 		KUNAI_DESC 				= "极大幅度提升近战距离. 背刺会造成爆炸, 伤害附近的敌人."
@@ -1303,10 +1303,10 @@ if ("SetScriptVersion" in getroottable())
 		//
 		CLOAKANDDAGGER_NAME		= "隐形刺客"
 		CLOAKANDDAGGER_DESC		= "能够立刻进入隐形与解除隐形."
-		// TODO: Update! " Activate to transform into a ghost. Able to fly a short distance, or remain stationary to stay intangible indefinitely."
+		// TODO: Update! " Activate to force enemies to ignore you. Able to attack while active."
 		// TODO: TRANSLATE THE BELOW
 		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
-		QUACKENBIRDT_DESC 		= " Activate to reveal the location of all enemies. Alternatively, activating this while holding a Sapper shows your teammates instead."
+		QUACKENBIRDT_DESC 		= " Activate to gain flight. Able to attack while active. Grants immunity to fall damage."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -1948,7 +1948,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		YOURETERNALREWARD_NAME 	= "EVIGHETSBELÖNINGEN"
 		YOURETERNALREWARD_DESC 	= " Skadan ökas ju mer skadad du är och utdelar kritiska träffar medans din hälsa är under 10%, men bara för hugg från framsidan. Motstår 90% skada."
-		// TODO: Update! " Deal massive Giant backstab damage and explosive backstab damage, however each attack has a high chance to miss. Direct kills grant a Teleport spell charge (Requires Spellbook)."
+		// TODO: Update! " Extremely high backstab damage, able to instakill most Giants. However each attack has a high chance to miss. Grants a Teleport spell charge on kill (Requires Spellbook)."
 		//
 		KUNAI_NAME 				= "KONSPIRATÖRENS"
 		KUNAI_DESC 				= " Oändlig närstridsräckvidd. Rygghugg orsakar en explosion, som utdelar extra skada mot mål i närheten."
@@ -1976,10 +1976,10 @@ if ("SetScriptVersion" in getroottable())
 		//
 		CLOAKANDDAGGER_NAME		= "STOPPURET"
 		CLOAKANDDAGGER_DESC		= " Omedelbar döljning och avslöjning."
-		// TODO: Update! " Activate to transform into a ghost. Able to fly a short distance, or remain stationary to stay intangible indefinitely."
+		// TODO: Update! " Activate to force enemies to ignore you. Able to attack while active."
 		// TODO: TRANSLATE THE BELOW
 		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
-		QUACKENBIRDT_DESC 		= " Activate to reveal the location of all enemies. Alternatively, activating this while holding a Sapper shows your teammates instead."
+		QUACKENBIRDT_DESC 		= " Activate to gain flight. Able to attack while active. Grants immunity to fall damage."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -2627,7 +2627,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		YOURETERNALREWARD_NAME 	= "ВЕЧНЫЙ ПОКОЙ"
 		YOURETERNALREWARD_DESC 	= " Урон увеличивается по мере получения вами урона. Когда ваше здоровье ниже 10 %, наносит критические удары, но только при ударах спереди. 90 % сопротивление входящему урону."
-		// TODO: Update! " Deal massive Giant backstab damage and explosive backstab damage, however each attack has a high chance to miss. Direct kills grant a Teleport spell charge (Requires Spellbook)."
+		// TODO: Update! " Extremely high backstab damage, able to instakill most Giants. However each attack has a high chance to miss. Grants a Teleport spell charge on kill (Requires Spellbook)."
 		//
 		KUNAI_NAME 				= "КУНАЙ ЗАГОВОРЩИКА"
 		KUNAI_DESC 				= " Бесконечная дальность радиуса атаки. Удары в спину заставляют роботов взрываться, нанося дополнительный урон ближайшим целям."
@@ -2655,10 +2655,10 @@ if ("SetScriptVersion" in getroottable())
 		//
 		CLOAKANDDAGGER_NAME		= "ПЛАЩ И КИНЖАЛ"
 		CLOAKANDDAGGER_DESC		= " Мгновенная невидимость и выход из невидимости."
-		// TODO: Update! " Activate to transform into a ghost. Able to fly a short distance, or remain stationary to stay intangible indefinitely."
+		// TODO: Update! " Activate to force enemies to ignore you. Able to attack while active."
 		// TODO: TRANSLATE THE BELOW
 		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
-		QUACKENBIRDT_DESC 		= " Activate to reveal the location of all enemies. Alternatively, activating this while holding a Sapper shows your teammates instead."
+		QUACKENBIRDT_DESC 		= " Activate to gain flight. Able to attack while active. Grants immunity to fall damage."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -3300,7 +3300,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		YOURETERNALREWARD_NAME 	= "OSTATECZNA NAGRODA"
 		YOURETERNALREWARD_DESC 	= " Zadawane obrażenia rosną wraz ze spadkiem twojego poziomu zdrowia. Poniżej 10% zdrowia zadajesz obrażenia krytyczne, ale tylko od ataków z przodu. Zapewnia 90% odporności na obrażenia."
-		// TODO: Update! " Deal massive Giant backstab damage and explosive backstab damage, however each attack has a high chance to miss. Direct kills grant a Teleport spell charge (Requires Spellbook)."
+		// TODO: Update! " Extremely high backstab damage, able to instakill most Giants. However each attack has a high chance to miss. Grants a Teleport spell charge on kill (Requires Spellbook)."
 		//
 		KUNAI_NAME 				= "KUNAI KRĘTACZA"
 		KUNAI_DESC 				= " Nieograniczony zasięg ataku. Dźgnięcia w plecy wywołują eksplozję, zadając dodatkowe obrażenia pobliskim wrogom."
@@ -3328,10 +3328,10 @@ if ("SetScriptVersion" in getroottable())
 		//
 		CLOAKANDDAGGER_NAME		= "PELERYNA NOŻOWNIKA"
 		CLOAKANDDAGGER_DESC		= " Natychmiastowa aktywacja i dezaktywacja niewidzialności."
-		// TODO: Update! " Activate to transform into a ghost. Able to fly a short distance, or remain stationary to stay intangible indefinitely."
+		// TODO: Update! " Activate to force enemies to ignore you. Able to attack while active."
 		// TODO: TRANSLATE THE BELOW
 		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
-		QUACKENBIRDT_DESC 		= " Activate to reveal the location of all enemies. Alternatively, activating this while holding a Sapper shows your teammates instead."
+		QUACKENBIRDT_DESC 		= " Activate to gain flight. Able to attack while active. Grants immunity to fall damage."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -3973,7 +3973,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		YOURETERNALREWARD_NAME 	= "YOUR ETERNAL REWARD"
 		YOURETERNALREWARD_DESC 	= " 体力が10%未満の状態でダメージを受けたりクリティカルヒットを受けたりすると、ダメージが増加するが、これは正面からの刺突攻撃にのみ適用される　ダメージの90%を軽減する"
-		// TODO: Update! " Deal massive Giant backstab damage and explosive backstab damage, however each attack has a high chance to miss. Direct kills grant a Teleport spell charge (Requires Spellbook)."
+		// TODO: Update! " Extremely high backstab damage, able to instakill most Giants. However each attack has a high chance to miss. Grants a Teleport spell charge on kill (Requires Spellbook)."
 		//
 		KUNAI_NAME 				= "コニバーズクナイ"
 		KUNAI_DESC 				= " 近接攻撃の射程は無限大に　背後から攻撃すると爆発が発生し、周囲の敵に追加ダメージを与える"
@@ -4001,10 +4001,10 @@ if ("SetScriptVersion" in getroottable())
 		//
 		CLOAKANDDAGGER_NAME		= "クローク&ダガー"
 		CLOAKANDDAGGER_DESC		= " 瞬時の透明化と透明解除。"
-		// TODO: Update! " Activate to transform into a ghost. Able to fly a short distance, or remain stationary to stay intangible indefinitely."
+		// TODO: Update! " Activate to force enemies to ignore you. Able to attack while active."
 		// TODO: TRANSLATE THE BELOW
 		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
-		QUACKENBIRDT_DESC 		= " Activate to reveal the location of all enemies. Alternatively, activating this while holding a Sapper shows your teammates instead."
+		QUACKENBIRDT_DESC 		= " Activate to gain flight. Able to attack while active. Grants immunity to fall damage."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -4646,7 +4646,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		YOURETERNALREWARD_NAME 	= "DIN EVIGE BELØNNING"
 		YOURETERNALREWARD_DESC 	= " Skaden øges, i takt med at du bliver såret, og gør kritiske skade, når dit helbred er under 10%, men kun ved stik forfra. Modstå 90% skade."
-		// TODO: Update! " Deal massive Giant backstab damage and explosive backstab damage, however each attack has a high chance to miss. Direct kills grant a Teleport spell charge (Requires Spellbook)."
+		// TODO: Update! " Extremely high backstab damage, able to instakill most Giants. However each attack has a high chance to miss. Grants a Teleport spell charge on kill (Requires Spellbook)."
 		//
 		KUNAI_NAME 				= "KYNIKERENS KUNAI"
 		KUNAI_DESC 				= " Uendelig rækkevidde med nærkampsvåben. Rygstik udløser en eksplosion, der giver ekstra skade til mål i nærheden."
@@ -4674,10 +4674,10 @@ if ("SetScriptVersion" in getroottable())
 		//
 		CLOAKANDDAGGER_NAME		= "STIKKERENS LOMMEUR"
 		CLOAKANDDAGGER_DESC		= " Øjeblikkelig syn- og usynlighed."
-		// TODO: Update! " Activate to transform into a ghost. Able to fly a short distance, or remain stationary to stay intangible indefinitely."
+		// TODO: Update! " Activate to force enemies to ignore you. Able to attack while active."
 		// TODO: TRANSLATE THE BELOW
 		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
-		QUACKENBIRDT_DESC 		= " Activate to reveal the location of all enemies. Alternatively, activating this while holding a Sapper shows your teammates instead."
+		QUACKENBIRDT_DESC 		= " Activate to gain flight. Able to attack while active. Grants immunity to fall damage."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -5319,7 +5319,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		YOURETERNALREWARD_NAME 	= "TU ETERNA RECOMPENSA"
 		YOURETERNALREWARD_DESC 	= " El daño aumenta a medida que sufres daños, siendo críticos al bajar del 10 % de salud, pero solo de frente. Resiste un 90 % de daño."
-		// TODO: Update! " Deal massive Giant backstab damage and explosive backstab damage, however each attack has a high chance to miss. Direct kills grant a Teleport spell charge (Requires Spellbook)."
+		// TODO: Update! " Extremely high backstab damage, able to instakill most Giants. However each attack has a high chance to miss. Grants a Teleport spell charge on kill (Requires Spellbook)."
 		//
 		KUNAI_NAME 				= "KUNAI DEL CONSPIRADOR"
 		KUNAI_DESC 				= " Alcance cuerpo a cuerpo infinito. Al apuñalar provoca una explosión, causando daño adicional a los enemigos cercanos."
@@ -5347,10 +5347,10 @@ if ("SetScriptVersion" in getroottable())
 		//
 		CLOAKANDDAGGER_NAME		= "EMBOZADOR"
 		CLOAKANDDAGGER_DESC		= " Te hace invisible y quita la invisibilidad al instante."
-		// TODO: Update! " Activate to transform into a ghost. Able to fly a short distance, or remain stationary to stay intangible indefinitely."
+		// TODO: Update! " Activate to force enemies to ignore you. Able to attack while active."
 		// TODO: TRANSLATE THE BELOW
 		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
-		QUACKENBIRDT_DESC 		= " Activate to reveal the location of all enemies. Alternatively, activating this while holding a Sapper shows your teammates instead."
+		QUACKENBIRDT_DESC 		= " Activate to gain flight. Able to attack while active. Grants immunity to fall damage."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -5986,7 +5986,7 @@ if ("SetScriptVersion" in getroottable())
 		//
         YOURETERNALREWARD_NAME 	= "您的永恆獎賞"
 		YOURETERNALREWARD_DESC 	= "當你受傷時增加其傷害且生命低於10%獲得暴擊，但此增益只能適用於正面擊中，獲得90%的傷害抗性."
-		// TODO: Update! " Deal massive Giant backstab damage and explosive backstab damage, however each attack has a high chance to miss. Direct kills grant a Teleport spell charge (Requires Spellbook)."
+		// TODO: Update! " Extremely high backstab damage, able to instakill most Giants. However each attack has a high chance to miss. Grants a Teleport spell charge on kill (Requires Spellbook)."
 		//
 		KUNAI_NAME 				= "陰謀苦無"
 		KUNAI_DESC 				= "攻擊範圍變為無限，背刺能造成爆炸，對周圍的敵人造成額外傷害."
@@ -6014,10 +6014,10 @@ if ("SetScriptVersion" in getroottable())
 		//
 		CLOAKANDDAGGER_NAME		= "隱身匕首"
 		CLOAKANDDAGGER_DESC		= "能立即進入並解除隱形."
-		// TODO: Update! " Activate to transform into a ghost. Able to fly a short distance, or remain stationary to stay intangible indefinitely."
+		// TODO: Update! " Activate to force enemies to ignore you. Able to attack while active."
 		// TODO: TRANSLATE THE BELOW
 		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
-		QUACKENBIRDT_DESC 		= " Activate to reveal the location of all enemies. Alternatively, activating this while holding a Sapper shows your teammates instead."
+		QUACKENBIRDT_DESC 		= " Activate to gain flight. Able to attack while active. Grants immunity to fall damage."
 		//----------------------------
 		//----------------------------
 		//----------------------------
