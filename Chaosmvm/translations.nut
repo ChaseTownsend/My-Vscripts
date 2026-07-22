@@ -9,6 +9,7 @@ if (!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && Fat
 // Japanese				--		Calamari        (steamcommunity.com/id/Bipedal_Calamari)
 // Danish  				--		Thyme			(thyme1 on Discord)
 // Spanish  			--		Ryo				(steamcommunity.com/id/ryo567)
+// Spanish  			--		deltat101		(deltat101 on Discord)
 
 ::IH_color <- "\x08FFD700DD"
 ::IH_text_color <- "\x01"

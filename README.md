@@ -27,3 +27,4 @@ A Documentation page is in the works. You can find it [Here](Assets/documentatio
 - Calamari : Japanese <br>
 - Hanon  :  Danish <br>
 - Ryo  :  Spanish <br>
+- deltat101  :  Spanish <br>
