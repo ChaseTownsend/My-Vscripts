@@ -26,7 +26,7 @@ if ("SetScriptVersion" in getroottable())
 
 ::TRANSLATION_TABLE <- {
 	english = {
-		IH_TRANSLATE_ITEM		= IH_color + "[%s]" + IH_text_color + "%s"
+		IH_TRANSLATE_ITEM		= IH_color + "[%s] " + IH_text_color + "%s"
 		IH_INCLUDES				= IH_color_header + "[►]\x0826beffAA Your loadout includes..."
 		IH_DIS_MSG_2			= IH_disable_color + "Type '/itemhelp 1' to disable item descriptions during a wave. \nType '/itemhelp 0' to disable them entirely."
 		IH_DIS_MSG				= IH_disable_color + "Type '/itemhelp 0' to disable item descriptions. \nType '/itemhelp 2' to always display them."
@@ -62,604 +62,604 @@ if ("SetScriptVersion" in getroottable())
 		CHECKPOINT_RESTORE_HUD	= "Restored to last saved checkpoint."
 		//---------------------------------------------------------
 		SCATTERGUN_NAME 		= "SCATTERGUN"
-		SCATTERGUN_DESC 		= " Standard option for reliable damage. Highly effective at close range."
+		SCATTERGUN_DESC 		= "Standard option for reliable damage. Highly effective at close range."
 		//
 		FORCENATURE_NAME		= "FORCE-A-NATURE"
-		FORCENATURE_DESC		= " Enhanced knockback on hit. Slightly lower DPS than Scattergun."
+		FORCENATURE_DESC		= "Enhanced knockback on hit. Slightly lower DPS than Scattergun."
 		//
 		SHORTSTOP_NAME 			= "SHORTSTOP"
-		SHORTSTOP_DESC 			= " Insane fire rate and guaranteed crits to wet enemies, but slow reload."
+		SHORTSTOP_DESC 			= "Insane fire rate and guaranteed crits to wet enemies, but slow reload."
 		//
 		SODAPOPPER_NAME 		= "SODA POPPER"
-		SODAPOPPER_DESC 		= " Hold fire to load a quick 4-shot burst."
+		SODAPOPPER_DESC 		= "Hold fire to load a quick 4-shot burst."
 		//
 		BABYFACEBLASTER_NAME	= "BABY FACE'S BLASTER"
-		BABYFACEBLASTER_DESC	= " Hold fire to load a massive burst of up to 200 shots, shredding anything at point-blank range. Has very high recoil however."
+		BABYFACEBLASTER_DESC	= "Hold fire to load a massive burst of up to 200 shots, shredding anything at point-blank range. Has very high recoil however."
 		//
 		BACKSCATTER_NAME		= "BACK SCATTER"
-		BACKSCATTER_DESC		= " Full crits on backshots. Does not require ammo and has an endless clip."
+		BACKSCATTER_DESC		= "Full crits on backshots. Does not require ammo and has an endless clip."
 		///
 		PISTOL_NAME 			= "PISTOL"
-		PISTOL_DESC 			= " Fire rockets instead of bullets. Highly effective for mobility."
+		PISTOL_DESC 			= "Fire rockets instead of bullets. Highly effective for mobility."
 		//
 		BONK_NAME 				= "BONK! ATOMIC PUNCH"
-		BONK_DESC 				= " Supercharged drink, granting invulnerability that doesn't remove your ability to attack."
+		BONK_DESC 				= "Supercharged drink, granting invulnerability that doesn't remove your ability to attack."
 		//
 		CRITACOLA_NAME 			= "CRIT-A-COLA"
-		CRITACOLA_DESC 			= " Supercharged drink, giving full crits."
+		CRITACOLA_DESC 			= "Supercharged drink, giving full crits."
 		//
 		MADMILK_NAME 			= "MAD MILK"
-		MADMILK_DESC 			= " Enemies coated in milk are unable to move."
+		MADMILK_DESC 			= "Enemies coated in milk are unable to move."
 		//
 		WINGER_NAME 			= "WINGER"
-		WINGER_DESC 			= " Unlimited air jumps while active. Fires a single focused shot that always crits while you are airborne. This shot also pushes enemies away."
+		WINGER_DESC 			= "Unlimited air jumps while active. Fires a single focused shot that always crits while you are airborne. This shot also pushes enemies away."
 		//
 		PRETTYBOYS_NAME 		= "PRETTY BOY'S POCKET PISTOL"
-		PRETTYBOYS_DESC 		= " Fires rockets that deal damage based on the victim's health. Damage increases as the target becomes injured and is not affected by distance. Alt-Fire: Use Seeker rockets at the cost of -20% damage."
+		PRETTYBOYS_DESC 		= "Fires rockets that deal damage based on the victim's health. Damage increases as the target becomes injured and is not affected by distance. Alt-Fire: Use Seeker rockets at the cost of -20% damage."
 		//
 		CLEAVER_NAME 			= "FLYING GUILLOTINE"
-		CLEAVER_DESC 			= " Yondu's Arrow: Summon a sentient arrow to assist in battle. Alt-Fire: Disruptor mode, -75% damage."
+		CLEAVER_DESC 			= "Yondu's Arrow: Summon a sentient arrow to assist in battle. Alt-Fire: Disruptor mode, -75% damage."
 		//
 		MATATEDMILK_NAME 		= "MUTATED MILK"
-		MATATEDMILK_DESC 		= " Rapidfire explosive milk jars, dealing damage to enemies. Alt-Fire: Throw a cluster of milk jars at once."
+		MATATEDMILK_DESC 		= "Rapidfire explosive milk jars, dealing damage to enemies. Alt-Fire: Throw a cluster of milk jars at once."
 		///
 		BAT_NAME 				= "BAT"
-		BAT_DESC 				= " Chance to ignore death and teleport to spawn with 1hp."
+		BAT_DESC 				= "Chance to ignore death and teleport to spawn with 1hp."
 		//
 		SANDMAN_NAME			= "SANDMAN"
-		SANDMAN_DESC 			= " Able to rapidfire baseballs with high capacity and fast recharge, dealing significant burst damage to single targets."
+		SANDMAN_DESC 			= "Able to rapidfire baseballs with high capacity and fast recharge, dealing significant burst damage to single targets."
 		//
 		HOLYMACKEREL_NAME		= "HOLY MACKEREL"
-		HOLYMACKEREL_DESC		= " Able to mark multiple enemies for death."
+		HOLYMACKEREL_DESC		= "Able to mark multiple enemies for death."
 		//
 		CANDYCANE_NAME 			= "CANDY CANE"
-		CANDYCANE_DESC 			= " Utility Item - You have no gravity and can freely fly."
+		CANDYCANE_DESC 			= "Utility Item - You have no gravity and can freely fly."
 		//
 		BOSTONBASHSER_NAME 		= "BOSTON BASHER"
-		BOSTONBASHSER_DESC 		= " High risk / High reward. Able to instakill most small enemies, giving 10 second critboost. Enemies connected via medigun beams are also hit. However any miss is instant death."
+		BOSTONBASHSER_DESC 		= "High risk / High reward. Able to instakill most small enemies, giving 10 second critboost. Enemies connected via medigun beams are also hit. However any miss is instant death."
 		//
 		SUNONASTICK_NAME		= "SUN-ON-A-STICK"
-		SUNONASTICK_DESC		= " Chance to stun enemies or receive a short critboost. Hits all enemies connected via medigun beams. However any miss will stun yourself."
+		SUNONASTICK_DESC		= "Chance to stun enemies or receive a short critboost. Hits all enemies connected via medigun beams. However any miss will stun yourself."
 		//
 		FANOWAR_NAME 			= "FAN O'WAR"
-		FANOWAR_DESC 			= " Utility Item - Swing this melee to lunge yourself forward at high speed. Grants immunity to fall damage."
+		FANOWAR_DESC 			= "Utility Item - Swing this melee to lunge yourself forward at high speed. Grants immunity to fall damage."
 		//
 		ATOMIZER_NAME 			= "ATOMIZER"
-		ATOMIZER_DESC 			= " Cannot deal damage with normal attacks, but a successful taunt kill will grant a critboost lasting 3 minutes."
+		ATOMIZER_DESC 			= "Cannot deal damage with normal attacks, but a successful taunt kill will grant a critboost lasting 3 minutes."
 		//
 		THREERUNEBLADE_NAME 	= "THREE-RUNE BLADE"
-		THREERUNEBLADE_DESC 	= " While active, gain MASSIVE boost to move speed and ability to triple jump. Deals increased damage while airborne. Grants immunity to fall damage."
+		THREERUNEBLADE_DESC 	= "While active, gain MASSIVE boost to move speed and ability to triple jump. Deals increased damage while airborne. Grants immunity to fall damage."
 		//
 		UNARMEDCOMBAT_NAME 		= "UNARMED COMBAT"
-		UNARMEDCOMBAT_DESC 		= " Every 10 kills, gain a Skeleton minion spell charge (Requires Spellbook)."
+		UNARMEDCOMBAT_DESC 		= "Every 10 kills, gain a Skeleton minion spell charge (Requires Spellbook)."
 		//
 		WRAPAASSASSIN_NAME 		= "WRAP ASSASSIN"
-		WRAPAASSASSIN_DESC 		= " Able to attack incoming projectiles, reflecting them with ease. Also grants immunity to stun."
+		WRAPAASSASSIN_DESC 		= "Able to attack incoming projectiles, reflecting them with ease. Also grants immunity to stun."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		ROCKETLAUNCHER_NAME		= "ROCKET LAUNCHER"
-		ROCKETLAUNCHER_DESC		= " Standard option for reliable damage."
+		ROCKETLAUNCHER_DESC		= "Standard option for reliable damage."
 		//
 		DIRECTHIT_NAME			= "DIRECT HIT"
-		DIRECTHIT_DESC			= " Alt-Fire: Launch a small enemy into the air for an easy minicrit follow-up. Rockets have a small amount of aim assist."
+		DIRECTHIT_DESC			= "Alt-Fire: Launch a small enemy into the air for an easy minicrit follow-up. Rockets have a small amount of aim assist."
 		//
 		BLACKBOX_NAME			= "BLACK BOX"
-		BLACKBOX_DESC			= " Slow down enemies and inflict bleed."
+		BLACKBOX_DESC			= "Slow down enemies and inflict bleed."
 		//
 		ROCKETJUMPER_NAME		= "ROCKET JUMPER"
-		ROCKETJUMPER_DESC		= " Slow fire and reload rate, but high damage and large blast radius. Excellent choice for crowd control."
+		ROCKETJUMPER_DESC		= "Slow fire and reload rate, but high damage and large blast radius. Excellent choice for crowd control."
 		//
 		LIBERTYLAUNCHER_NAME	= "LIBERTY LAUNCHER"
-		LIBERTYLAUNCHER_DESC	= " Fires a slow-moving rocket that deals massive damage in large area. Very slow reload and low ammo. This weapon automatically fires when loaded."
+		LIBERTYLAUNCHER_DESC	= "Fires a slow-moving rocket that deals massive damage in large area. Very slow reload and low ammo. This weapon automatically fires when loaded."
 		//
 		COWMANGLER_NAME			= "COW MANGLER 5000"
-		COWMANGLER_DESC			= " Immobilize small enemies on hit. Charged shot freezes enemies for longer. Hold Alt-Fire to supercharge the weapon for a multishot, resulting in even longer freeze."
+		COWMANGLER_DESC			= "Immobilize small enemies on hit. Charged shot freezes enemies for longer. Hold Alt-Fire to supercharge the weapon for a multishot, resulting in even longer freeze."
 		//
 		ORIGINAL_NAME			= "ORIGINAL"
-		ORIGINAL_DESC			= " Hold fire to load a burst-shot of up to 5 rockets. This weapon automatically fires when loaded."
+		ORIGINAL_DESC			= "Hold fire to load a burst-shot of up to 5 rockets. This weapon automatically fires when loaded."
 		//
 		BEGGARSBAZOOKA_NAME		= "BEGGAR'S BAZOOKA"
-		BEGGARSBAZOOKA_DESC		= " Hold fire to load up to 100 rockets before unleashing them in a massive burst. This weapon does NOT overload."
+		BEGGARSBAZOOKA_DESC		= "Hold fire to load up to 100 rockets before unleashing them in a massive burst. This weapon does NOT overload."
 		//
 		AIRSTRIKE_NAME			= "AIR STRIKE"
-		AIRSTRIKE_DESC			= " Load up to 10 rockets before firing all at once in a fixed spread pattern. These rockets automatically seek enemies."
+		AIRSTRIKE_DESC			= "Load up to 10 rockets before firing all at once in a fixed spread pattern. These rockets automatically seek enemies."
 		///
 		SHOTGUN_SOLD_NAME 		= "SHOTGUN - SOLDIER" 
-		SHOTGUN_SOLD_DESC 		= " Very fast fire rate and crits while rocket jumping." 
+		SHOTGUN_SOLD_DESC 		= "Very fast fire rate and crits while rocket jumping." 
 		//
 		SHOTGUN_NAME 			= "SHOTGUN" 
-		SHOTGUN_DESC 			= " Standard option for reliable damage." 
+		SHOTGUN_DESC 			= "Standard option for reliable damage." 
 		//
 		BUFFBANNER_NAME 		= "BUFF BANNER" 
-		BUFFBANNER_DESC 		= " Unlimited range and significantly increased duration." 
+		BUFFBANNER_DESC 		= "Unlimited range and significantly increased duration." 
 		//
 		GUNBOATS_NAME 			= "GUNBOATS" 
-		GUNBOATS_DESC 			= " Enables bunnyhopping by holding 'jump' key. Grants immunity to fall damage. Hold Crouch key while airborne to reduce gravity." 
+		GUNBOATS_DESC 			= "Enables bunnyhopping by holding 'jump' key. Grants immunity to fall damage. Hold Crouch key while airborne to reduce gravity." 
 		//
 		BATTALIONS_NAME 		= "BATTALION'S BACKUP" 
-		BATTALIONS_DESC 		= " Unlimited range and significantly increased duration." 
+		BATTALIONS_DESC 		= "Unlimited range and significantly increased duration." 
 		//
 		CONCHEROR_NAME 			= "CONCHEROR" 
-		CONCHEROR_DESC 			= " Unlimited range and significantly increased duration." 
+		CONCHEROR_DESC 			= "Unlimited range and significantly increased duration." 
 		//
 		RESERVESHOOTER_NAME 	= "RESERVE SHOOTER" 
-		RESERVESHOOTER_DESC 	= " Deals a flat 10,000 damage per shot no matter the range with 3s mini-crits on kill. However this weapon cannot be crit boosted, and cannot damage Tanks. Hold Alt-Fire to zoom in." 
+		RESERVESHOOTER_DESC 	= "Deals a flat 10,000 damage per shot no matter the range with 3s mini-crits on kill. However this weapon cannot be crit boosted, and cannot damage Tanks. Hold Alt-Fire to zoom in." 
 		//
 		BISON_NAME 				= "RIGHTEOUS BISON" 
-		BISON_DESC 				= " Fires a continuous beam of penetrating damage with full auto-aim." 
+		BISON_DESC 				= "Fires a continuous beam of penetrating damage with full auto-aim." 
 		//
 		MANTREADS_NAME 			= "MANTREADS" 
-		MANTREADS_DESC 			= " Major reduction in knockback taken from damage. Stomp damage buffed and velocity-based. Gain a short critboost on kill." 
+		MANTREADS_DESC 			= "Major reduction in knockback taken from damage. Stomp damage buffed and velocity-based. Gain a short critboost on kill." 
 		//
 		BASEJUMPER_NAME 		= "B.A.S.E. JUMPER" 
-		BASEJUMPER_DESC 		= " Able to toggle parachute. Increases resistance to knockback and bullet damage, reducing your vulnerability in the air." 
+		BASEJUMPER_DESC 		= "Able to toggle parachute. Increases resistance to knockback and bullet damage, reducing your vulnerability in the air." 
 		//
 		PANICATTACK_NAME 		= "PANIC ATTACK" 
-		PANICATTACK_DESC 		= " For when you need emergency healing. Immediately restores up to 10,000 health on hit. Taking damage with this weapon active has a chance to trigger a brief self-uber." 
+		PANICATTACK_DESC 		= "For when you need emergency healing. Immediately restores up to 10,000 health on hit. Taking damage with this weapon active has a chance to trigger a brief self-uber." 
 		///
 		SHOVEL_NAME 			= "SHOVEL"
-		SHOVEL_DESC 			= " Standard option for defense and mobility."
+		SHOVEL_DESC 			= "Standard option for defense and mobility."
 		//
 		EQUALIZER_NAME 			= "EQUALIZER"
-		EQUALIZER_DESC 			= " Damage massively increases as you become injured."
+		EQUALIZER_DESC 			= "Damage massively increases as you become injured."
 		//
 		PAINTRAIN_NAME 			= "PAIN TRAIN"
-		PAINTRAIN_DESC 			= " Inflict bleed and slowdown on hit. Grants immunity to fall damage."
+		PAINTRAIN_DESC 			= "Inflict bleed and slowdown on hit. Grants immunity to fall damage."
 		//
 		HALFZATOICHI_NAME 		= "HALF-ZATOICHI"
-		HALFZATOICHI_DESC 		= " Average damage with high health mobility, and increased range."
+		HALFZATOICHI_DESC 		= "Average damage with high health mobility, and increased range."
 		//
 		MARKETGARDENER_NAME 	= "MARKET GARDENER"
-		MARKETGARDENER_DESC 	= " Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
+		MARKETGARDENER_DESC 	= "Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		DISCIPLINARYACTION_NAME = "DISCIPLINARY ACTION"
-		DISCIPLINARYACTION_DESC	= " Standard option for defense and mobility. Instantly gain 1/3 Rage meter on hit."
+		DISCIPLINARYACTION_DESC	= "Standard option for defense and mobility. Instantly gain 1/3 Rage meter on hit."
 		//
 		ESCAPEPLAN_NAME			= "ESCAPE PLAN"
-		ESCAPEPLAN_DESC			= " Deal guaranteed crits when below 50% health."
+		ESCAPEPLAN_DESC			= "Deal guaranteed crits when below 50% health."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		FLAMETHROWER_NAME 		= "FLAMETHROWER"
-		FLAMETHROWER_DESC		= " Standard option for reliable damage. Gain a short mini-crit boost on kill."
+		FLAMETHROWER_DESC		= "Standard option for reliable damage. Gain a short mini-crit boost on kill."
 		//
 		BACKBURNER_NAME 		= "BACKBURNER"
-		BACKBURNER_DESC			= " Green Fire - Marks enemies for death and stuns airborne enemies for a short time. This weapon deals x2 damage against Pyro bots."
+		BACKBURNER_DESC			= "Green Fire - Marks enemies for death and stuns airborne enemies for a short time. This weapon deals x2 damage against Pyro bots."
 		//
 		DEGREASER_NAME 			= "DEGREASER"
-		DEGREASER_DESC			= " Long-range flamethrower dealing high direct damage, but 0 afterburn damage. This flamethrower cannot airblast."
+		DEGREASER_DESC			= "Long-range flamethrower dealing high direct damage, but 0 afterburn damage. This flamethrower cannot airblast."
 		//
 		PHLOGISTINATOR_NAME 	= "PHLOGISTINATOR"
-		PHLOGISTINATOR_DESC		= " Green Fire - Marks enemies for death and stuns airborne enemies for a short time. Strong against Tanks, but your move speed is reduced."
+		PHLOGISTINATOR_DESC		= "Green Fire - Marks enemies for death and stuns airborne enemies for a short time. Strong against Tanks, but your move speed is reduced."
 		//
 		RAINBLOWER_NAME 		= "RAINBLOWER"
-		RAINBLOWER_DESC			= " Long-range flamethrower dealing low direct damage, but high afterburn damage. Also able to instantly destroy Engineer buildings and burn enemy Pyros. Airblast is weak, but very fast."
+		RAINBLOWER_DESC			= "Long-range flamethrower dealing low direct damage, but high afterburn damage. Also able to instantly destroy Engineer buildings and burn enemy Pyros. Airblast is weak, but very fast."
 		//
 		DRAGONSFURY_NAME 		= "DRAGON'S FURY"
-		DRAGONSFURY_DESC		= " Significantly increased fire rate and airblast rate."
+		DRAGONSFURY_DESC		= "Significantly increased fire rate and airblast rate."
 		//
 		NOSTROMONAPALMER_NAME 	= "NOSTROMO NAPALMER"
-		NOSTROMONAPALMER_DESC	= " Slow enemies down on hit. Builds 'Mmmph' charge similar to the Phlogistinator, but grants yourself Concheror buff. This flamethrower cannot airblast."
+		NOSTROMONAPALMER_DESC	= "Slow enemies down on hit. Builds 'Mmmph' charge similar to the Phlogistinator, but grants yourself Concheror buff. This flamethrower cannot airblast."
 		///
 		SHOTGUN_PYRO_NAME 		= "SHOTGUN - PYRO" 
-		SHOTGUN_PYRO_DESC 		= " Guaranteed crits against burning enemies." 
+		SHOTGUN_PYRO_DESC 		= "Guaranteed crits against burning enemies." 
 		//
 		FLAREGUN_NAME 			= "FLARE GUN" 
-		FLAREGUN_DESC 			= " Fires a hitscan attack that penetrates enemies. Damage exponentially increases with each penetrated enemy along the path. Also has a chance to stun enemies on hit." 
+		FLAREGUN_DESC 			= "Fires a hitscan attack that penetrates enemies. Damage exponentially increases with each penetrated enemy along the path. Also has a chance to stun enemies on hit." 
 		//
 		DETONATOR_NAME 			= "DETONATOR" 
-		DETONATOR_DESC 			= " Flare has infinite explosion radius and will hit anything within line of sight. Forces all spy bots to uncloak and undisguise. Also great choice for mobility." 
+		DETONATOR_DESC 			= "Flare has infinite explosion radius and will hit anything within line of sight. Forces all spy bots to uncloak and undisguise. Also great choice for mobility." 
 		//
 		MANMELTER_NAME 			= "MANMELTER" 
-		MANMELTER_DESC 			= " Rapid-fire flares specialized to automatically seek out enemies. Unlimited ammo and no reload. Alt-Fire: Launch a burst of flares at once." 
+		MANMELTER_DESC 			= "Rapid-fire flares specialized to automatically seek out enemies. Unlimited ammo and no reload. Alt-Fire: Launch a burst of flares at once." 
 		//
 		SCORCHSHOT_NAME 		= "SCORCH SHOT" 
-		SCORCHSHOT_DESC 		= " On hit: Deal large damage, extinguish the enemy and inflict knockback. Your target MUST be on fire, or this attack will do nothing. Alt-Fire: Use slow seeker flare." 
+		SCORCHSHOT_DESC 		= "On hit: Deal large damage, extinguish the enemy and inflict knockback. Your target MUST be on fire, or this attack will do nothing. Alt-Fire: Use slow seeker flare." 
 		//
 		THERMALTHRUSTER_NAME 	= "THERMAL THRUSTER" 
-		THERMALTHRUSTER_DESC 	= " Reduced fuel consumption with no launch delay. Able to redeploy in-air and deal massive stomp damage. Gain a brief critboost on kill." 
+		THERMALTHRUSTER_DESC 	= "Reduced fuel consumption with no launch delay. Able to redeploy in-air and deal massive stomp damage. Gain a brief critboost on kill." 
 		//
 		GASPASSER_NAME 			= "GAS PASSER" 
-		GASPASSER_DESC 			= " Gas meter starts empty and resets on death. Deal 150,000 damage to fill the meter. Explode-on-Ignite deals 105,000 damage." 
+		GASPASSER_DESC 			= "Gas meter starts empty and resets on death. Deal 150,000 damage to fill the meter. Explode-on-Ignite deals 105,000 damage." 
 		///
 		FIREAXE_NAME 			= "FIRE AXE"
-		FIREAXE_DESC 			= " Standard option for defense and mobility."
+		FIREAXE_DESC 			= "Standard option for defense and mobility."
 		//	
 		AXTINGUISHER_NAME 		= "AXTINGUISHER"
-		AXTINGUISHER_DESC		= " Significantly increased damage against burning enemies."
+		AXTINGUISHER_DESC		= "Significantly increased damage against burning enemies."
 		//
 		HOMEWRECKER_NAME 		= "HOMEWRECKER"
-		HOMEWRECKER_DESC 		= " Able to instantly destroy Engineer buildings from anywhere with infinite melee range."
+		HOMEWRECKER_DESC 		= "Able to instantly destroy Engineer buildings from anywhere with infinite melee range."
 		//
 		POWERJACK_NAME 			= "POWERJACK"
-		POWERJACK_DESC 			= " Fast attacks and move speed. Inflict bleed & ignite enemies on hit and gain mini-crits on kill."
+		POWERJACK_DESC 			= "Fast attacks and move speed. Inflict bleed & ignite enemies on hit and gain mini-crits on kill."
 		//
 		BACKSCRATCHER_NAME 		= "BACK SCRATCHER"
-		BACKSCRATCHER_DESC 		= " Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
+		BACKSCRATCHER_DESC 		= "Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		VOLCANOFRAGMENT_NAME 	= "SHARPENED VOLCANO FRAGMENT"
-		VOLCANOFRAGMENT_DESC 	= " Chance to stun enemies on hit. Also able to burn enemy Pyros"
+		VOLCANOFRAGMENT_DESC 	= "Chance to stun enemies on hit. Also able to burn enemy Pyros"
 		//
 		POSTALPUMMELER_NAME 	= "POSTAL PUMMELER"
-		POSTALPUMMELER_DESC 	= " On hit: Inflict Confusion, causing enemies to walk backward along the bomb path for a short time. Hold Alt-Fire when attacking to teleport back to spawn."
+		POSTALPUMMELER_DESC 	= "On hit: Inflict Confusion, causing enemies to walk backward along the bomb path for a short time. Hold Alt-Fire when attacking to teleport back to spawn."
 		//
 		MAUL_NAME 				= "MAUL"
-		MAUL_DESC 				= " On hit: Cause an explosion, launching enemies into the air and igniting them."
+		MAUL_DESC 				= "On hit: Cause an explosion, launching enemies into the air and igniting them."
 		//
 		THIRDDEGREE_NAME 		= "THIRD DEGREE"
-		THIRDDEGREE_DESC 		= " Become nearly immune to fire damage while equipped, and gain and additional heavy resistance to all ranged attacks while active."
+		THIRDDEGREE_DESC 		= "Become nearly immune to fire damage while equipped, and gain and additional heavy resistance to all ranged attacks while active."
 		//
 		LOLLICHOP_NAME 			= "LOLLICHOP"
-		LOLLICHOP_DESC 			= " Every 10 kills, gain a Meteor Storm spell charge (Requires Spellbook)."
+		LOLLICHOP_DESC 			= "Every 10 kills, gain a Meteor Storm spell charge (Requires Spellbook)."
 		//
 		NEONANNIHILATOR_NAME 	= "NEON ANNIHILATOR"
-		NEONANNIHILATOR_DESC 	= " Your gravity is reduced."
+		NEONANNIHILATOR_DESC 	= "Your gravity is reduced."
 		//
 		HOTHAND_NAME 			= "HOT HAND"
-		HOTHAND_DESC 			= " Launch enemies into the air on hit."
+		HOTHAND_DESC 			= "Launch enemies into the air on hit."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		GRENADELAUNCHER_NAME 	= "GRENADE LAUNCHER"
-		GRENADELAUNCHER_DESC	= " Standard option for reliable damage."
+		GRENADELAUNCHER_DESC	= "Standard option for reliable damage."
 		//
 		LOCHNLOAD_NAME 			= "LOCH-N-LOAD"
-		LOCHNLOAD_DESC			= " Slow shots but with high burst damage in a large area. Effective for crowd control."
+		LOCHNLOAD_DESC			= "Slow shots but with high burst damage in a large area. Effective for crowd control."
 		//
 		ALIBABA_NAME			= "ALI BABA'S WEE BOOTIES"
-		ALIBABA_DESC			= " Enhanced shield bash damage. Grants immunity to fall damage."
+		ALIBABA_DESC			= "Enhanced shield bash damage. Grants immunity to fall damage."
 		//
 		BOOTLEGGER_NAME			= "BOOTLEGGER"
-		BOOTLEGGER_DESC			= " Enhanced shield recharge rate. Grants immunity to fall damage."
+		BOOTLEGGER_DESC			= "Enhanced shield recharge rate. Grants immunity to fall damage."
 		//
 		LOOSECANNON_NAME		= "LOOSE CANNON"
-		LOOSECANNON_DESC		= " Load up to 4 cannonballs before firing all at once in a vertical spread pattern. Cannonballs explode on contact with the ground."
+		LOOSECANNON_DESC		= "Load up to 4 cannonballs before firing all at once in a vertical spread pattern. Cannonballs explode on contact with the ground."
 		//
 		IRONBOMBER_NAME			= "IRON BOMBER"
-		IRONBOMBER_DESC			= " Ignores enemy resistances and gains a short critboost on kill. Does not require ammo and has an endless clip. Projectiles can bounce off of walls."
+		IRONBOMBER_DESC			= "Ignores enemy resistances and gains a short critboost on kill. Does not require ammo and has an endless clip. Projectiles can bounce off of walls."
 		///
 		STICKYBOMB_NAME 		= "STICKYBOMB LAUNCHER"
-		STICKYBOMB_DESC 		= " Standard option for reliable damage. Able to place 50 bombs."
+		STICKYBOMB_DESC 		= "Standard option for reliable damage. Able to place 50 bombs."
 		//
 		SCOTTISHRES_NAME 		= "SCOTTISH RESISTANCE"
-		SCOTTISHRES_DESC 		= " Bomb takes 5 seconds to arm and fizzles after 10 seconds, but can deal overwhelming damage with good timing and a full charge."
+		SCOTTISHRES_DESC 		= "Bomb takes 5 seconds to arm and fizzles after 10 seconds, but can deal overwhelming damage with good timing and a full charge."
 		//
 		STICKYJUMPER_NAME 		= "STICKY JUMPER"
-		STICKYJUMPER_DESC 		= " Creates a shutdown field, stunning all enemies hit by the pulse. (Minibosses are immune to stun)"
+		STICKYJUMPER_DESC 		= "Creates a shutdown field, stunning all enemies hit by the pulse. (Minibosses are immune to stun)"
 		//
 		CHARGINTARGE_NAME 		= "CHARGIN' TARGE"
-		CHARGINTARGE_DESC 		= " Heavy Charge - Superior shield bash damage."
+		CHARGINTARGE_DESC 		= "Heavy Charge - Superior shield bash damage."
 		//
 		SPLENDIDSCREEN_NAME 	= "SPLENDID SCREEN"
-		SPLENDIDSCREEN_DESC 	= " Rapid Charge - Superior shield recharge rate."
+		SPLENDIDSCREEN_DESC 	= "Rapid Charge - Superior shield recharge rate."
 		//
 		TIDETURNER_NAME 		= "TIDE TURNER"
-		TIDETURNER_DESC 		= " Burst Charge - Superior shield charge move speed."
+		TIDETURNER_DESC 		= "Burst Charge - Superior shield charge move speed."
 		//
 		QUICKIEBOMB_NAME 		= "QUICKIEBOMB LAUNCHER"
-		QUICKIEBOMB_DESC 		= " Auto-fires stickybombs at an insane rate with very fast arm time. Gain mini-crits on kill."
+		QUICKIEBOMB_DESC 		= "Auto-fires stickybombs at an insane rate with very fast arm time. Gain mini-crits on kill."
 		///
 		BOTTLE_NAME 			= "BOTTLE"
-		BOTTLE_DESC 			= " Standard option for defense and mobility."
+		BOTTLE_DESC 			= "Standard option for defense and mobility."
 		//
 		EYELANDER_NAME 			= "EYELANDER"
-		EYELANDER_DESC 			= " High damage with quick attacks gaining crits and mini-crits on kill, but cannot be used as hybrid-knight."
+		EYELANDER_DESC 			= "High damage with quick attacks gaining crits and mini-crits on kill, but cannot be used as hybrid-knight."
 		//
 		SKULLCUTTER_NAME 		= "SCOTSMAN'S SKULLCUTTER"
-		SKULLCUTTER_DESC 		= " Able to cut through enemy Ubercharge and disrupt Medi-Gun functions. Also able to deal increased damage to enemies of the same class as you."
+		SKULLCUTTER_DESC 		= "Able to cut through enemy Ubercharge and disrupt Medi-Gun functions. Also able to deal increased damage to enemies of the same class as you."
 		//
 		CABER_NAME 				= "ULLAPOOL CABER"
-		CABER_DESC 				= " You are a Sentry Buster - Taunt to detonate!"
+		CABER_DESC 				= "You are a Sentry Buster - Taunt to detonate!"
 		//
 		CLAIDHEAMHMOR_NAME 		= "CLAIDHEAMH MOR"
-		CLAIDHEAMHMOR_DESC 		= " Every 10 kills, gain a Monoculus spell charge (Requires Spellbook)."
+		CLAIDHEAMHMOR_DESC 		= "Every 10 kills, gain a Monoculus spell charge (Requires Spellbook)."
 		//
 		PERSIANPERSUADER_NAME 	= "PERSIAN PERSUADER"
-		PERSIANPERSUADER_DESC 	= " When paired with a shield, grants unlimited shield charging. Shield charge cannot be disrupted by sharp turns or bumping into walls, enemies or other obstacles. Grants immunity to stun."
+		PERSIANPERSUADER_DESC 	= "When paired with a shield, grants unlimited shield charging. Shield charge cannot be disrupted by sharp turns or bumping into walls, enemies or other obstacles. Grants immunity to stun."
 		//
 		NINEIRON_NAME 			= "NESSIE'S NINE IRON"
-		NINEIRON_DESC 			= " Has a massive swing arc, able to hit multiple enemies at once in all directions. Deals double crit damage."
+		NINEIRON_DESC 			= "Has a massive swing arc, able to hit multiple enemies at once in all directions. Deals double crit damage."
 		//
 		SCOTTISHHANDSHAKE_NAME 	= "SCOTTISH HANDSHAKE"
-		SCOTTISHHANDSHAKE_DESC 	= " While active: Resist 90% ranged damage, become immune to knockback and greatly increase max health. However you cannot recover ammo and receive less health from packs."
+		SCOTTISHHANDSHAKE_DESC 	= "While active: Resist 90% ranged damage, become immune to knockback and greatly increase max health. However you cannot recover ammo and receive less health from packs."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		MINIGUN_NAME 			= "MINIGUN"
-		MINIGUN_DESC 			= " Standard option for reliable damage. Gain a short mini-crit boost on kill."
+		MINIGUN_DESC 			= "Standard option for reliable damage. Gain a short mini-crit boost on kill."
 		//
 		NATASCHA_NAME 			= "NATASCHA"
-		NATASCHA_DESC 			= " Slow enemies on hit and apply Death Mark."
+		NATASCHA_DESC 			= "Slow enemies on hit and apply Death Mark."
 		//
 		BRASSBEAST_NAME 		= "BRASS BEAST"
-		BRASSBEAST_DESC 		= " Higher damage with very slow spin-up. Move speed is crippled while deployed. Able to deflect incoming projectiles."
+		BRASSBEAST_DESC 		= "Higher damage with very slow spin-up. Move speed is crippled while deployed. Able to deflect incoming projectiles."
 		//
 		TOMISLAV_NAME 			= "TOMISLAV"
-		TOMISLAV_DESC 			= " Builds 'Heat' by dealing damage. All stats on this weapon are increased based on heat level. However, the weapon begins to cool down if you go too long without dealing damage."
+		TOMISLAV_DESC 			= "Builds 'Heat' by dealing damage. All stats on this weapon are increased based on heat level. However, the weapon begins to cool down if you go too long without dealing damage."
 		//
 		HUOHEATER_NAME 			= "HUO-LONG HEATER"
-		HUOHEATER_DESC 			= " Fires energy beams, igniting enemies on hit"
+		HUOHEATER_DESC 			= "Fires energy beams, igniting enemies on hit"
 		//
 		GENUINEHUOHEATER_NAME 	= "GENUINE HUO-LONG HEATER"
-		GENUINEHUOHEATER_DESC 	= " Fires rockets. Guaranteed crits against burning enemies."
+		GENUINEHUOHEATER_DESC 	= "Fires rockets. Guaranteed crits against burning enemies."
 		///
 		SHOTGUN_HVY_NAME 		= "SHOTGUN - HEAVY"
-		SHOTGUN_HVY_DESC 		= " Single shot with high damage, granting 8 seconds of crits on kill."
+		SHOTGUN_HVY_DESC 		= "Single shot with high damage, granting 8 seconds of crits on kill."
 		//
 		SANDVICH_NAME 			= "SANDVICH"
-		SANDVICH_DESC 			= " Consume to gain Concheror buff for 30 seconds."
+		SANDVICH_DESC 			= "Consume to gain Concheror buff for 30 seconds."
 		//
 		DALOKOHSBAR_NAME 		= "DALOKOHS BAR"
-		DALOKOHSBAR_DESC 		= " Consume to gain increased move speed, weapon switch speed and faster minigun spinup time for 30 seconds."
+		DALOKOHSBAR_DESC 		= "Consume to gain increased move speed, weapon switch speed and faster minigun spinup time for 30 seconds."
 		//
 		BUFFALOSTEAK_NAME 		= "BUFFALO STEAK SANDVICH"
-		BUFFALOSTEAK_DESC 		= " Consume to gain Battalion's Backup buff and backstab immunity for 30 seconds."
+		BUFFALOSTEAK_DESC 		= "Consume to gain Battalion's Backup buff and backstab immunity for 30 seconds."
 		//
 		FAMILYBUSINESS_NAME 	= "FAMILY BUSINESS"
-		FAMILYBUSINESS_DESC 	= " Unlimited ammo. Attack rate is doubled while receiving a healing effect. Grants a brief critboost and mini-crit boost on kill."
+		FAMILYBUSINESS_DESC 	= "Unlimited ammo. Attack rate is doubled while receiving a healing effect. Grants a brief critboost and mini-crit boost on kill."
 		//
 		FISHCAKE_NAME 			= "FISHCAKE"
-		FISHCAKE_DESC 			= " Consume to gain gravity reversal power for 30 seconds (Crouch to reverse gravity)."
+		FISHCAKE_DESC 			= "Consume to gain gravity reversal power for 30 seconds (Crouch to reverse gravity)."
 		//
 		SECONDBANANA_NAME 		= "SECOND BANANA"
-		SECONDBANANA_DESC 		= " Consume to gain explosive melee power for 30 seconds (You are restricted to melee for the duration)."
+		SECONDBANANA_DESC 		= "Consume to gain explosive melee power for 30 seconds (You are restricted to melee for the duration)."
 		///
 		FISTS_NAME 				= "FISTS"
-		FISTS_DESC 				= " Standard option for defense and mobility. Effective in combat."
+		FISTS_DESC 				= "Standard option for defense and mobility. Effective in combat."
 		//
 		KILLINGGLOVES_NAME 		= "KILLING GLOVES OF BOXING"
-		KILLINGGLOVES_DESC 		= " Special Ability: 'Mega-Crush' -  When available, press your action slot key while standing on the bomb to instantly send it back to start. Otherwise, gain temporary move speed buff, defense and crits."
+		KILLINGGLOVES_DESC 		= "Special Ability: 'Mega-Crush' -  When available, press your action slot key while standing on the bomb to instantly send it back to start. Otherwise, gain temporary move speed buff, defense and crits."
 		//
 		GLOVESRUNNING_NAME 		= "GLOVES OF RUNNING URGENTLY"
-		GLOVESRUNNING_DESC 		= " Passively grants ability to deploy a parachute. While active, gain massively increased jump height, damage resistance and health regen."
+		GLOVESRUNNING_DESC 		= "Passively grants ability to deploy a parachute. While active, gain massively increased jump height, damage resistance and health regen."
 		//
 		BREADBITE_NAME 			= "BREAD BITE"
-		BREADBITE_DESC 			= " Critical hits infect your victim with Corrosion, a permanent debuff that deals damage based on max health and causes the victim to explode into a small corrosive cloud on death, spreading the effect to other enemies."
+		BREADBITE_DESC 			= "Critical hits infect your victim with Corrosion, a permanent debuff that deals damage based on max health and causes the victim to explode into a small corrosive cloud on death, spreading the effect to other enemies."
 		//
 		WARRIRORSSPIRIT_NAME 	= "WARRIOR'S SPIRIT"
-		WARRIRORSSPIRIT_DESC 	= " Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air. Active buff indicated by flashing \x07ffc400[!] \x01icon."
+		WARRIRORSSPIRIT_DESC 	= "Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air. Active buff indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		FISTSOFSTEEL_NAME 		= "FISTS OF STEEL"
-		FISTSOFSTEEL_DESC 		= " You are a Giant Heavy Gauntlet - Immune to push forces and able to hit multiple enemies at once for massive damage."
+		FISTSOFSTEEL_DESC 		= "You are a Giant Heavy Gauntlet - Immune to push forces and able to hit multiple enemies at once for massive damage."
 		//
 		EVICTIONNOTICE_NAME 	= "EVICTION NOTICE"
-		EVICTIONNOTICE_DESC 	= " Gain a rapid healing effect on kill."
+		EVICTIONNOTICE_DESC 	= "Gain a rapid healing effect on kill."
 		//
 		APOCOFISTS_NAME 		= "APOCO-FISTS"
-		APOCOFISTS_DESC 		= " Punches push enemies away."
+		APOCOFISTS_DESC 		= "Punches push enemies away."
 		//
 		HOLIDAYPUNCH_NAME 		= "HOLIDAY PUNCH"
-		HOLIDAYPUNCH_DESC 		= " While active, all enemies ignore you. Also grants immunity to stun. This weapon cannot deal damage however."
+		HOLIDAYPUNCH_DESC 		= "While active, all enemies ignore you. Also grants immunity to stun. This weapon cannot deal damage however."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		SHOTGUN_ENGI_NAME		= "SHOTGUN - ENGINEER"
-		SHOTGUN_ENGI_DESC 		= " Deal x4 damage to your Sentry's target."
+		SHOTGUN_ENGI_DESC 		= "Deal x4 damage to your Sentry's target."
 		//
 		FRONTIERJUSTICE_NAME 	= "FRONTIER JUSTICE"
-		FRONTIERJUSTICE_DESC 	= " Insanely fast fire rate. Clip size matches the max revenge crit count. Reloads faster while receiving any healing effect."
+		FRONTIERJUSTICE_DESC 	= "Insanely fast fire rate. Clip size matches the max revenge crit count. Reloads faster while receiving any healing effect."
 		//
 		WIDOWMAKER_NAME 		= "WIDOWMAKER"
-		WIDOWMAKER_DESC 		= " Use 2000 metal to fire a wide shot that pushes enemies away."
+		WIDOWMAKER_DESC 		= "Use 2000 metal to fire a wide shot that pushes enemies away."
 		//
 		POMSON_NAME 			= "POMSON 6000"
-		POMSON_DESC 			= " Inflict bleed, ignite and slow enemies down."
+		POMSON_DESC 			= "Inflict bleed, ignite and slow enemies down."
 		//
 		RESCUERANGER_NAME 		= "RESCUE RANGER"
-		RESCUERANGER_DESC		= " Uses 20 metal per shot, but never has to reload and increases max metal by 1000."
+		RESCUERANGER_DESC		= "Uses 20 metal per shot, but never has to reload and increases max metal by 1000."
 		///
 		WRANGLER_NAME 			= "WRANGLER"
-		WRANGLER_DESC 			= " While active: Increased Sentry damage and double Dispenser range."
+		WRANGLER_DESC 			= "While active: Increased Sentry damage and double Dispenser range."
 		//
 		SHORTCIRCUIT_NAME 		= "SHORT CIRCUIT"
-		SHORTCIRCUIT_DESC 		= " Every 10 kills, gain a Lightning Ball spell charge (Requires Spellbook)"
+		SHORTCIRCUIT_DESC 		= "Every 10 kills, gain a Lightning Ball spell charge (Requires Spellbook)"
 		///
 		WRENCH_NAME 			= "WRENCH"
-		WRENCH_DESC 			= " Standard option for reliable damage."
+		WRENCH_DESC 			= "Standard option for reliable damage."
 		//
 		GUNSLINGER_NAME 		= "GUNSLINGER"
-		GUNSLINGER_DESC	 		= " Able to build a secondary Sentry. Triple-punch combo can execute small enemies and deal heavy damage to Giants."
+		GUNSLINGER_DESC	 		= "Able to build a secondary Sentry. Triple-punch combo can execute small enemies and deal heavy damage to Giants."
 		//
 		SOUTHERNHOS_NAME 		= "SOUTHERN HOSPITALITY"
-		SOUTHERNHOS_DESC 		= " Replaces normal Sentry with a Flame Sentry. Short ranged, but high damage."
+		SOUTHERNHOS_DESC 		= "Replaces normal Sentry with a Flame Sentry. Short ranged, but high damage."
 		//
 		JAG_NAME 				= "JAG"
-		JAG_DESC 				= " Your Sentry has unlimited range."
+		JAG_DESC 				= "Your Sentry has unlimited range."
 		//
 		EUREKAEFFECT_NAME 		= "EUREKA EFFECT"
-		EUREKAEFFECT_DESC 		= " While carrying your Sentry Gun, press 'Reload' key to remotely place it on any wall or ceiling within range."
+		EUREKAEFFECT_DESC 		= "While carrying your Sentry Gun, press 'Reload' key to remotely place it on any wall or ceiling within range."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		SYRINGEGUN_NAME			= "SYRINGE GUN"
-		SYRINGEGUN_DESC			= " Gain 0.5% Ubercharge per hit."
+		SYRINGEGUN_DESC			= "Gain 0.5% Ubercharge per hit."
 		//
 		BLUTSAUGER_NAME			= "BLUTSAUGER"
-		BLUTSAUGER_DESC			= " Requires and consumes 100% Ubercharge to reprogram a robot to join your team temporarily before self-destructing. Alt-Fire: Manually terminate the reprogramming of all affected bots."
+		BLUTSAUGER_DESC			= "Requires and consumes 100% Ubercharge to reprogram a robot to join your team temporarily before self-destructing. Alt-Fire: Manually terminate the reprogramming of all affected bots."
 		//
 		CRUSADERSCROSSBOW_NAME	= "CRUSADER'S CROSSBOW"
-		CRUSADERSCROSSBOW_DESC	= " Gain 0.25% Ubercharge per hit, inflict bleed and gain another 0.5% Ubercharge per tick of bleed damage."
+		CRUSADERSCROSSBOW_DESC	= "Gain 0.25% Ubercharge per hit, inflict bleed and gain another 0.5% Ubercharge per tick of bleed damage."
 		//
 		OVERDOSE_NAME 			= "OVERDOSE"
-		OVERDOSE_DESC 			= " Requires and consumes 50% Ubercharge to launch an EMP mortar, causing nearby enemies to be unable to move or attack for a short time."
+		OVERDOSE_DESC 			= "Requires and consumes 50% Ubercharge to launch an EMP mortar, causing nearby enemies to be unable to move or attack for a short time."
 		///
 		MEDIGUN_NAME			= "MEDI GUN"
-		MEDIGUN_DESC			= " Overheal cap raised to x10 the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
+		MEDIGUN_DESC			= "Overheal cap raised to x10 the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
 		//
 		KRITZKRIEG_NAME			= "KRITZKRIEG"
-		KRITZKRIEG_DESC			= " Able to drain health from enemies, granting self-healing and building Uber. Ubercharge grants a boost to all damage output."
+		KRITZKRIEG_DESC			= "Able to drain health from enemies, granting self-healing and building Uber. Ubercharge grants a boost to all damage output."
 		//
 		QUICKFIX_NAME			= "QUICK-FIX"
-		QUICKFIX_DESC			= " Very fast healing with a level 2 Projectile Shield. Able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
+		QUICKFIX_DESC			= "Very fast healing with a level 2 Projectile Shield. Able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
 		//
 		VACCINATOR_NAME			= "VACCINATOR"
-		VACCINATOR_DESC			= " Active healing grants you and the patient increased mobility and 100% resistance to base damage of the selected damage type. Ubercharge grants full immunity to the selected damage type for 30 seconds."
+		VACCINATOR_DESC			= "Active healing grants you and the patient increased mobility and 100% resistance to base damage of the selected damage type. Ubercharge grants full immunity to the selected damage type for 30 seconds."
 		///
 		BONESAW_NAME 			= "BONESAW"
-		BONESAW_DESC			= " Standard option for defense and mobility. Gain 10% Uber on hit."
+		BONESAW_DESC			= "Standard option for defense and mobility. Gain 10% Uber on hit."
 		//
 		UBERSAW_NAME 			= "UBERSAW"
-		UBERSAW_DESC			= " Inflict bleed on hit. Gain 2% Uber on hit."
+		UBERSAW_DESC			= "Inflict bleed on hit. Gain 2% Uber on hit."
 		//
 		VITASAW_NAME 			= "VITA-SAW"
-		VITASAW_DESC			= " Gain an Overheal spell charge on hit (Requires Spellbook). Gain 5% Uber on hit."
+		VITASAW_DESC			= "Gain an Overheal spell charge on hit (Requires Spellbook). Gain 5% Uber on hit."
 		//
 		AMPUTATOR_NAME 			= "AMPUTATOR"
-		AMPUTATOR_DESC			= " On hit: Your Medigun becomes supercharged and temporarily gains increased heal rate, uber rate and range. Killing an enemy grants a stronger version of this effect."
+		AMPUTATOR_DESC			= "On hit: Your Medigun becomes supercharged and temporarily gains increased heal rate, uber rate and range. Killing an enemy grants a stronger version of this effect."
 		//
 		SOLEMNVOW_NAME 			= "SOLEMN VOW"
-		SOLEMNVOW_DESC			= " Infinite range, hits all enemies connected via Medigun beams and deals x200 damage to Medic bots. Gain 5% Uber for each enemy hit."
+		SOLEMNVOW_DESC			= "Infinite range, hits all enemies connected via Medigun beams and deals x200 damage to Medic bots. Gain 5% Uber for each enemy hit."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		SNIPERRIFLE_NAME 		= "SNIPER RIFLE"
-		SNIPERRIFLE_DESC 		= " Fully charged headshot deals 450,000 damage."
+		SNIPERRIFLE_DESC 		= "Fully charged headshot deals 450,000 damage."
 		//
 		MACHINA_NAME 			= "MACHINA"
-		MACHINA_DESC 			= " Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Gaints and Tanks."
+		MACHINA_DESC 			= "Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Gaints and Tanks."
 		//
 		HITMANSHEATMAKER_NAME 	= "HITMAN'S HEATMAKER"
-		HITMANSHEATMAKER_DESC 	= " Rapidfire without unscoping. No damage on bodyshot."
+		HITMANSHEATMAKER_DESC 	= "Rapidfire without unscoping. No damage on bodyshot."
 		//
 		AWPERHAND_NAME 			= "AWPER HAND"
-		AWPERHAND_DESC 			= " Fire explosive rounds and generate rage on kills. At 100% rage, press 'reload' to gain increased max health and health regen. Rifle only charges when enemies are in your scope."
+		AWPERHAND_DESC 			= "Fire explosive rounds and generate rage on kills. At 100% rage, press 'reload' to gain increased max health and health regen. Rifle only charges when enemies are in your scope."
 		//
 		HUNTSMAN_NAME 			= "HUNTSMAN"
-		HUNTSMAN_DESC 			= " Fire 5 arrows at once. Deal massive burn damage if a Pyro ignites your arrow."
+		HUNTSMAN_DESC 			= "Fire 5 arrows at once. Deal massive burn damage if a Pyro ignites your arrow."
 		//
 		SYDNEYSLEEPER_NAME 		= "SYDNEY SLEEPER"
-		SYDNEYSLEEPER_DESC 		= " Fire a special dart that cripples the movement of non-giants and makes enemies unable to receive healing from Medic bots."
+		SYDNEYSLEEPER_DESC 		= "Fire a special dart that cripples the movement of non-giants and makes enemies unable to receive healing from Medic bots."
 		//
 		BAZAARBARGAIN_NAME 		= "BAZAAR BARGAIN"
-		BAZAARBARGAIN_DESC 		= " Killing enemies of the same class in a row increases fire rate, stacking up to 3. Killing another class resets the combo."
+		BAZAARBARGAIN_DESC 		= "Killing enemies of the same class in a row increases fire rate, stacking up to 3. Killing another class resets the combo."
 		//
 		FORTIFIEDCOMPOUND_NAME 	= "FORTIFIED COMPOUND"
-		FORTIFIEDCOMPOUND_DESC 	= " Reduced damage over Huntsman, but fires faster, penetrates and crits wet enemies."
+		FORTIFIEDCOMPOUND_DESC 	= "Reduced damage over Huntsman, but fires faster, penetrates and crits wet enemies."
 		//
 		CLASSIC_NAME 			= "CLASSIC"
-		CLASSIC_DESC 			= " Fire as fast as you can pull the trigger, or charge a single shot with insane explosive headshot power that obliterates all non-giant bots in the area."
+		CLASSIC_DESC 			= "Fire as fast as you can pull the trigger, or charge a single shot with insane explosive headshot power that obliterates all non-giant bots in the area."
 		///
 		SMG_NAME 				= "SMG"
-		SMG_DESC 				= " Able to headshot for greatly increased damage. Alt-Fire: Zoom in and gain 100% accuracy at the cost of halved fire rate."
+		SMG_DESC 				= "Able to headshot for greatly increased damage. Alt-Fire: Zoom in and gain 100% accuracy at the cost of halved fire rate."
 		//
 		RAZORBACK_NAME 			= "RAZORBACK"
-		RAZORBACK_DESC 			= " Very fast recharge and applies Jarate to your attacker."
+		RAZORBACK_DESC 			= "Very fast recharge and applies Jarate to your attacker."
 		//
 		JARATE_NAME 			= "JARATE"
-		JARATE_DESC 			= " Instant recharge, slows enemies down."
+		JARATE_DESC 			= "Instant recharge, slows enemies down."
 		//
 		DARWIN_NAME 			= "DARWIN'S DANGER SHIELD"
-		DARWIN_DESC 			= " Nearly immune to FIRE damage, but take 50% more damage from BULLET and BLAST."
+		DARWIN_DESC 			= "Nearly immune to FIRE damage, but take 50% more damage from BULLET and BLAST."
 		//
 		COZYCAMPER_NAME 		= "COZY CAMPER"
-		COZYCAMPER_DESC 		= " Minor increase in move speed, max health and health regen. Immune to afterburn."
+		COZYCAMPER_DESC 		= "Minor increase in move speed, max health and health regen. Immune to afterburn."
 		//
 		CLEANERSCARBINE_NAME 	= "CLEANER'S CARBINE"
-		CLEANERSCARBINE_DESC 	= " Mini-crit boost lasts 30 seconds."
+		CLEANERSCARBINE_DESC 	= "Mini-crit boost lasts 30 seconds."
 		//
 		BEAUTYMARK_NAME 		= "SELF-AWARE BEAUTY MARK"
-		BEAUTYMARK_DESC 		= " Rain down holy hellfire with flaming arrows. Alt-Fire: Throw a cluster of flaming arrows at once."
+		BEAUTYMARK_DESC 		= "Rain down holy hellfire with flaming arrows. Alt-Fire: Throw a cluster of flaming arrows at once."
 		///
 		KUKRI_NAME 				= "KUKRI"
-		KUKRI_DESC 				= " Standard option for defense and mobility."
+		KUKRI_DESC 				= "Standard option for defense and mobility."
 		//
 		TRIBALMANSSHIV_NAME 	= "TRIBALMAN'S SHIV"
-		TRIBALMANSSHIV_DESC 	= " Utility Item - You have no gravity and can freely fly."
+		TRIBALMANSSHIV_DESC 	= "Utility Item - You have no gravity and can freely fly."
 		//
 		BUSHWACKA_NAME 			= "BUSHWACKA"
-		BUSHWACKA_DESC 			= " Infinite melee range and guaranteed crits against burning enemies."
+		BUSHWACKA_DESC 			= "Infinite melee range and guaranteed crits against burning enemies."
 		//
 		SHAHANSHAH_NAME 		= "SHAHANSHAH"
-		SHAHANSHAH_DESC 		= " Left-click to send yourself flying upward, good for reaching high places. You are also immune to fall damage."
+		SHAHANSHAH_DESC 		= "Left-click to send yourself flying upward, good for reaching high places. You are also immune to fall damage."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		REVOLVER_NAME 			= "REVOLVER"
-		REVOLVER_DESC 			= " On hit: Apply multiple debuffs, cause enemies to take increased damage for a short time, deplete enemy Medic Ubercharge and force Spy bots to undisguise. Can stun airborne enemies."
+		REVOLVER_DESC 			= "On hit: Apply multiple debuffs, cause enemies to take increased damage for a short time, deplete enemy Medic Ubercharge and force Spy bots to undisguise. Can stun airborne enemies."
 		//
 		AMBASSADOR_NAME 		= "AMBASSADOR"
-		AMBASSADOR_DESC 		= " Deal massive headshot damage. Damage is doubled if you are not disguised."
+		AMBASSADOR_DESC 		= "Deal massive headshot damage. Damage is doubled if you are not disguised."
 		//
 		LETRANGER_NAME 			= "L'ETRANGER"
-		LETRANGER_DESC 			= " Able to execute any non-giant in a single shot. Deals 2% damage to Giants, zero damage to Tanks."
+		LETRANGER_DESC 			= "Able to execute any non-giant in a single shot. Deals 2% damage to Giants, zero damage to Tanks."
 		//
 		ENFORCER_NAME 			= "ENFORCER"
-		ENFORCER_DESC 			= " Ignores damage resistances and stores a crit for every backstab or building destroyed with a Sapper."
+		ENFORCER_DESC 			= "Ignores damage resistances and stores a crit for every backstab or building destroyed with a Sapper."
 		//
 		DIAMONDBACK_NAME 		= "DIAMONDBACK"
-		DIAMONDBACK_DESC 		= " Creates a black hole to pull enemies in."
+		DIAMONDBACK_DESC 		= "Creates a black hole to pull enemies in."
 		///
 		SAPPER_NAME 			= "SAPPER"
-		SAPPER_DESC 			= " Max stun radius and duration. Fast recharge."
+		SAPPER_DESC 			= "Max stun radius and duration. Fast recharge."
 		//
 		REDTAPE_NAME 			= "RED-TAPE RECORDER"
-		REDTAPE_DESC 			= " Instantly destroys Engineer buildings, but can only sap one enemy at a time."
+		REDTAPE_DESC 			= "Instantly destroys Engineer buildings, but can only sap one enemy at a time."
 		///
 		KNIFE_NAME 				= "KNIFE"
-		KNIFE_DESC 				= " While active, the Knife drains your health but grants immunity to ALL damage. Kills restore health."
+		KNIFE_DESC 				= "While active, the Knife drains your health but grants immunity to ALL damage. Kills restore health."
 		//
 		YOURETERNALREWARD_NAME 	= "YOUR ETERNAL REWARD"
-		YOURETERNALREWARD_DESC 	= " Extremely high backstab damage, able to instakill most Giants. However each attack has a high chance to miss. Grants a Teleport spell charge on kill (Requires Spellbook)."
+		YOURETERNALREWARD_DESC 	= "Extremely high backstab damage, able to instakill most Giants. However each attack has a high chance to miss. Grants a Teleport spell charge on kill (Requires Spellbook)."
 		//
 		KUNAI_NAME 				= "CONNIVER'S KUNAI"
-		KUNAI_DESC 				= " Infinite melee range. Backstabs trigger an explosion, dealing extra damage to nearby targets."
+		KUNAI_DESC 				= "Infinite melee range. Backstabs trigger an explosion, dealing extra damage to nearby targets."
 		//
 		BIGEARNER_NAME 			= "BIG EARNER"
-		BIGEARNER_DESC 			= " You have a massive amount of health and 'missed' swings cause you to heal. Gain a short burst of massively increased heal rate on kill (which can also build overheal). Cannot heal from any other sources."
+		BIGEARNER_DESC 			= "You have a massive amount of health and 'missed' swings cause you to heal. Gain a short burst of massively increased heal rate on kill (which can also build overheal). Cannot heal from any other sources."
 		//
 		WANGAPRICK_NAME 		= "WANGA PRICK"
-		WANGAPRICK_DESC 		= " Killing an enemy causes you to immediately enter stealth for a few seconds, however you cannot disguise. Grants a Cloak spell charge on kill (Requires Spellbook)."
+		WANGAPRICK_DESC 		= "Killing an enemy causes you to immediately enter stealth for a few seconds, however you cannot disguise. Grants a Cloak spell charge on kill (Requires Spellbook)."
 		//
 		SHARPDRESSER_NAME 		= "SHARP DRESSER"
-		SHARPDRESSER_DESC 		= " Backstabs trigger an explosion, dealing extra damage to nearby targets."
+		SHARPDRESSER_DESC 		= "Backstabs trigger an explosion, dealing extra damage to nearby targets."
 		//
 		SPYCICLE_NAME 			= "SPY-CICLE"
-		SPYCICLE_DESC 			= " 'Missed' swing causes you to leap into the air for free surf-stabs, but you cannot disguise. Deals massive damage to Giants on backstab."
+		SPYCICLE_DESC 			= "'Missed' swing causes you to leap into the air for free surf-stabs, but you cannot disguise. Deals massive damage to Giants on backstab."
 		///
 		INVISWATCH_NAME 		= "INVIS WATCH"
-		INVISWATCH_DESC 		= " Infinite cloak, +10% faster move speed."
+		INVISWATCH_DESC 		= "Infinite cloak, +10% faster move speed."
 		//
 		DEADRINGER_NAME 		= "DEAD RINGER"
-		DEADRINGER_DESC 		= " Activate to gain super speed for several seconds. Invulnerable while active."
+		DEADRINGER_DESC 		= "Activate to gain super speed for several seconds. Invulnerable while active."
 		//
 		CLOAKANDDAGGER_NAME		= "CLOAK AND DAGGER"
-		CLOAKANDDAGGER_DESC		= " Activate to force enemies to ignore you. Able to attack while active."
+		CLOAKANDDAGGER_DESC		= "Activate to force enemies to ignore you. Able to attack while active."
 		//
 		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
-		QUACKENBIRDT_DESC 		= " Activate to gain flight. Able to attack while active. Grants immunity to fall damage."
+		QUACKENBIRDT_DESC 		= "Activate to gain flight. Able to attack while active. Grants immunity to fall damage."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		FRYINGPAN_NAME 				= "FRYING PAN"
-		FRYINGPAN_DESC 				= " Deal x30 damage to enemies of the same class as you and gain crits on kill."
+		FRYINGPAN_DESC 				= "Deal x30 damage to enemies of the same class as you and gain crits on kill."
 		//
 		SAXXY_NAME 					= "SAXXY"
-		SAXXY_DESC 					= " Deal x30 damage to enemies of the same class as you and gain crits on kill."
+		SAXXY_DESC 					= "Deal x30 damage to enemies of the same class as you and gain crits on kill."
 		//
 		MEMORYMAKER_NAME 			= "MEMORY MAKER"
-		MEMORYMAKER_DESC			= " Deal x30 damage to enemies of the same class as you and gain crits on kill."
+		MEMORYMAKER_DESC			= "Deal x30 damage to enemies of the same class as you and gain crits on kill."
 		//
 		CONOBJECTOR_NAME			= "CONSCIENTIOUS OBJECTOR"
-		CONOBJECTOR_DESC			= " Every 10 kills, roll a random spell (Requires Spellbook)."
+		CONOBJECTOR_DESC			= "Every 10 kills, roll a random spell (Requires Spellbook)."
 		//
 		FREEDOMSTAFF_NAME 			= "FREEDOM STAFF"
-		FREEDOMSTAFF_DESC 			= " Small chance on taking damage to dodge the attack and become ubered for 3s."
+		FREEDOMSTAFF_DESC 			= "Small chance on taking damage to dodge the attack and become ubered for 3s."
 		//
 		BATOUTTAHELL_NAME 			= "BAT OUTTA HELL"
-		BATOUTTAHELL_DESC 			= " While active, you are invulnerable to all incoming damage and generate a massive overheal pool, but you are completely vulnerable to knockback."
+		BATOUTTAHELL_DESC 			= "While active, you are invulnerable to all incoming damage and generate a massive overheal pool, but you are completely vulnerable to knockback."
 		//
 		HAMSHANK_NAME 				= "HAM SHANK"
-		HAMSHANK_DESC 				= " Special Ability: 'Vital Resurgence' -  When available, press your action slot key to instantly gain 10x overheal and become immune to knockback for 20 seconds."
+		HAMSHANK_DESC 				= "Special Ability: 'Vital Resurgence' -  When available, press your action slot key to instantly gain 10x overheal and become immune to knockback for 20 seconds."
 		//
 		NECROSMASHER_NAME 			= "NECRO SMASHER"
-		NECROSMASHER_DESC 			= " Special Ability: 'Vehicular Mannslaughter' -  When available, press your action slot key to enter Bumper-Car mode. While in Bumper-Car mode you are invulnerable, regenerate health and can run enemies over."
+		NECROSMASHER_DESC 			= "Special Ability: 'Vehicular Mannslaughter' -  When available, press your action slot key to enter Bumper-Car mode. While in Bumper-Car mode you are invulnerable, regenerate health and can run enemies over."
 		//
 		CROSSINGGAURD_NAME 			= "CROSSING GUARD"
-		CROSSINGGAURD_DESC 			= " Gain massive resistance to all melee attacks, including backstabs."
+		CROSSINGGAURD_DESC 			= "Gain massive resistance to all melee attacks, including backstabs."
 		//
 		PRINNYMACHETE_NAME 			= "PRINNY MACHETE"
-		PRINNYMACHETE_DESC 			= " Utility Item - Swing this melee to lunge yourself forward at high speed. Grants immunity to fall damage."
+		PRINNYMACHETE_DESC 			= "Utility Item - Swing this melee to lunge yourself forward at high speed. Grants immunity to fall damage."
 		//------------------------------------
 	}
 	schinese = {
@@ -1306,7 +1306,7 @@ if ("SetScriptVersion" in getroottable())
 		// TODO: Update! " Activate to force enemies to ignore you. Able to attack while active."
 		// TODO: TRANSLATE THE BELOW
 		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
-		QUACKENBIRDT_DESC 		= " Activate to gain flight. Able to attack while active. Grants immunity to fall damage."
+		QUACKENBIRDT_DESC 		= "Activate to gain flight. Able to attack while active. Grants immunity to fall damage."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -1384,634 +1384,634 @@ if ("SetScriptVersion" in getroottable())
 		CHECKPOINT_RESTORE_HUD	= "Återställde till senaste sparade punkt."
 		//---------------------------------------------------------
 		SCATTERGUN_NAME 		= "HAGELBÖSSA"
-		SCATTERGUN_DESC 		= " Standard val för pålitig skada. Väldigt effekter på nära håll."
+		SCATTERGUN_DESC 		= "Standard val för pålitig skada. Väldigt effekter på nära håll."
 		//
 		FORCENATURE_NAME		= "NATURKRAFT"
-		FORCENATURE_DESC		= " Förbättrad knuff vid träff. Lite mindre Skada Per Sekund än Hagelbösan."
+		FORCENATURE_DESC		= "Förbättrad knuff vid träff. Lite mindre Skada Per Sekund än Hagelbösan."
 		//
 		SHORTSTOP_NAME 			= "SHORTSTOP"
-		SHORTSTOP_DESC 			= " Sjuk eldgivningshastighet och garanderade kritiska träffar på blöta fiender, men en långsam omladdning."
+		SHORTSTOP_DESC 			= "Sjuk eldgivningshastighet och garanderade kritiska träffar på blöta fiender, men en långsam omladdning."
 		//
 		SODAPOPPER_NAME 		= "LÄSKPOPPAREN"
-		SODAPOPPER_DESC 		= " Håll ner eldgivning till att alla en snabb 4-skotts utbrott."
+		SODAPOPPER_DESC 		= "Håll ner eldgivning till att alla en snabb 4-skotts utbrott."
 		//
 		BABYFACEBLASTER_NAME	= "BARNANSIKTETS BLÄSTARE"
-		BABYFACEBLASTER_DESC	= " Håll ner eldgivning till att ladda ett massivt utbrott av upp till 200 skott, som dödar alla vid nära håll. Har väldigt hög rekyl dock."
+		BABYFACEBLASTER_DESC	= "Håll ner eldgivning till att ladda ett massivt utbrott av upp till 200 skott, som dödar alla vid nära håll. Har väldigt hög rekyl dock."
 		//
 		BACKSCATTER_NAME		= "RYGGSPLITAREN"
-		BACKSCATTER_DESC		= " Fulla kritiska träffar vid ryggskott. Kräver ingen ammunition och har ett oändligt magasin."
+		BACKSCATTER_DESC		= "Fulla kritiska träffar vid ryggskott. Kräver ingen ammunition och har ett oändligt magasin."
 		///
 		PISTOL_NAME 			= "PISTOL"
-		PISTOL_DESC 			= " Avfyrar raketer istället för kulor. Väldigt effekter för rörelse."
+		PISTOL_DESC 			= "Avfyrar raketer istället för kulor. Väldigt effekter för rörelse."
 		//
 		BONK_NAME 				= "BONK! ATOMIC PUNCH"
-		BONK_DESC 				= " Superladdad dricka, ger osårbarhet som inte tar bort din förmåga att attackera."
+		BONK_DESC 				= "Superladdad dricka, ger osårbarhet som inte tar bort din förmåga att attackera."
 		//
 		CRITACOLA_NAME 			= "CRIT-A-COLA"
-		CRITACOLA_DESC 			= " Superladdad dricka, ger fulla kritiska träffar."
+		CRITACOLA_DESC 			= "Superladdad dricka, ger fulla kritiska träffar."
 		//
 		MADMILK_NAME 			= "MANISK MJÖLK"
-		MADMILK_DESC 			= " Fiender täckta i mjölk kan inte röra på sig."
+		MADMILK_DESC 			= "Fiender täckta i mjölk kan inte röra på sig."
 		//
 		WINGER_NAME 			= "YTTERN"
-		WINGER_DESC 			= " Oändligt med lufthopp medans den är aktiv. Avfyrar ett enda fokuserat skott som alltid utdelar ett kritiskt skott medans du är i luften. Detta skott puttar fiender bort."
+		WINGER_DESC 			= "Oändligt med lufthopp medans den är aktiv. Avfyrar ett enda fokuserat skott som alltid utdelar ett kritiskt skott medans du är i luften. Detta skott puttar fiender bort."
 		//
 		PRETTYBOYS_NAME 		= "SNYGGINGENS PANGPISTOL"
-		PRETTYBOYS_DESC 		= " Avfyrar raketer som utdelar skada baserat på offrets hälsa. Skada ökas medans målet blir skadad och inte påverkad av avstånd. Alternativattack: Använd Spårande raketer med kostnaden av -20% skada."
+		PRETTYBOYS_DESC 		= "Avfyrar raketer som utdelar skada baserat på offrets hälsa. Skada ökas medans målet blir skadad och inte påverkad av avstånd. Alternativattack: Använd Spårande raketer med kostnaden av -20% skada."
 		//
 		CLEAVER_NAME 			= "FLYGANDE GILIJOTINEN"
-		CLEAVER_DESC 			= " Yondus Pil: Skapar en medveten pil som assisterar i strid. Alternativattack: Störningsläge, -75% skada."
+		CLEAVER_DESC 			= "Yondus Pil: Skapar en medveten pil som assisterar i strid. Alternativattack: Störningsläge, -75% skada."
 		//
 		MATATEDMILK_NAME 		= "MUTERAD MJÖLK"
-		MATATEDMILK_DESC 		= " Konstrakt avfyrande explosiva mjölkburkar, som utdelar skada mot fiender. Alternativattack: Kasta en kluster av mjölkburkar på samma gång."
+		MATATEDMILK_DESC 		= "Konstrakt avfyrande explosiva mjölkburkar, som utdelar skada mot fiender. Alternativattack: Kasta en kluster av mjölkburkar på samma gång."
 		///
 		BAT_NAME 				= "SLAGTRÄ"
-		BAT_DESC 				= " Chans att ignorera döden och teleportera till återskapning med 1 hälsa."
+		BAT_DESC 				= "Chans att ignorera döden och teleportera till återskapning med 1 hälsa."
 		//
 		SANDMAN_NAME			= "JOHN BLUND"
-		SANDMAN_DESC 			= " Kan avfyra basebollar snabbt med hög kompetens och snabb omladdning, som utdelar ett stort utbrott skada till ett enda mål."
+		SANDMAN_DESC 			= "Kan avfyra basebollar snabbt med hög kompetens och snabb omladdning, som utdelar ett stort utbrott skada till ett enda mål."
 		//
 		HOLYMACKEREL_NAME		= "FINA FISKEN"
-		HOLYMACKEREL_DESC		= " Kan markera flera fiender för döden."
+		HOLYMACKEREL_DESC		= "Kan markera flera fiender för döden."
 		//
 		CANDYCANE_NAME 			= "POLKAGRISEN"
-		CANDYCANE_DESC 			= " Utilitetsföremål - Du har ingen gravitation och kan flyga fritt."
+		CANDYCANE_DESC 			= "Utilitetsföremål - Du har ingen gravitation och kan flyga fritt."
 		//
 		BOSTONBASHSER_NAME 		= "BOSTANBANKAREN"
-		BOSTONBASHSER_DESC 		= " Hög risk / Hög belöning. Kan omedelbart döda de flesta små fiender, som ger en 10 sekunders kritisk laddning. Fiender kopplade via häslovapen ståle kan också träffas. Dock alla missar är en omedelbar död."
+		BOSTONBASHSER_DESC 		= "Hög risk / Hög belöning. Kan omedelbart döda de flesta små fiender, som ger en 10 sekunders kritisk laddning. Fiender kopplade via häslovapen ståle kan också träffas. Dock alla missar är en omedelbar död."
 		//
 		SUNONASTICK_NAME		= "SOLSTICKAN"
-		SUNONASTICK_DESC		= " Chans att bedöva fiender eller få en kort kritisk laddning. Träffar alla fiender kopplade via hälsovapen strålar. Dock alla missar kommer bedöva dig själv."
+		SUNONASTICK_DESC		= "Chans att bedöva fiender eller få en kort kritisk laddning. Träffar alla fiender kopplade via hälsovapen strålar. Dock alla missar kommer bedöva dig själv."
 		//
 		FANOWAR_NAME 			= "KRIGSFJÄRDERN"
-		FANOWAR_DESC 			= " Utilitetsföremål - Svinga detta närstridsvapen till att kasta dig själv frampt med hög hastighet. Get immunitet mot fallskada."
+		FANOWAR_DESC 			= "Utilitetsföremål - Svinga detta närstridsvapen till att kasta dig själv frampt med hög hastighet. Get immunitet mot fallskada."
 		//
 		ATOMIZER_NAME 			= "ATOMISERAREN"
-		ATOMIZER_DESC 			= " Kan inte utdela skada med normala attacker, men ett lyckat dödshån kommer ge en kritisk laddnings om varar i 3 minuter."
+		ATOMIZER_DESC 			= "Kan inte utdela skada med normala attacker, men ett lyckat dödshån kommer ge en kritisk laddnings om varar i 3 minuter."
 		//
 		THREERUNEBLADE_NAME 	= "TRERUNS-SVÄRD"
-		THREERUNEBLADE_DESC 	= " Medans den är aktiv, gå en MASSIV ökning till rörelsehastighet och förmågan att trippelhoppa. Get immunitet mot fallskada."
+		THREERUNEBLADE_DESC 	= "Medans den är aktiv, gå en MASSIV ökning till rörelsehastighet och förmågan att trippelhoppa. Get immunitet mot fallskada."
 		// TODO: Update! " While active, gain MASSIVE boost to move speed and ability to triple jump. Deals increased damage while airborne. Grants immunity to fall damage."
 		//
 		UNARMEDCOMBAT_NAME 		= "OBEVÄPNAD STRID"
-		UNARMEDCOMBAT_DESC 		= " Varje 10 döende träffar, få en Skelett hejduk förtrollningsladdning (Kräver Trolleribok)."
+		UNARMEDCOMBAT_DESC 		= "Varje 10 döende träffar, få en Skelett hejduk förtrollningsladdning (Kräver Trolleribok)."
 		//
 		WRAPAASSASSIN_NAME 		= "OMSLAGSMÖRDAREN"
-		WRAPAASSASSIN_DESC 		= " Kan attackera inkommande projektiler, reflekterar de lätt. Ger också immunitet mot bedövning."
+		WRAPAASSASSIN_DESC 		= "Kan attackera inkommande projektiler, reflekterar de lätt. Ger också immunitet mot bedövning."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		ROCKETLAUNCHER_NAME		= "RAKETGEVÄR"
-		ROCKETLAUNCHER_DESC		= " Standardval för pålitig skada."
+		ROCKETLAUNCHER_DESC		= "Standardval för pålitig skada."
 		//
 		DIRECTHIT_NAME			= "DIREKTA TRÄFFEN"
-		DIRECTHIT_DESC			= " Alternativattack: Avfyra en liten fiende i luften för en enkel mini-kritisk träff efteråt. Raketer har en liten mängd sikteshjälp."
+		DIRECTHIT_DESC			= "Alternativattack: Avfyra en liten fiende i luften för en enkel mini-kritisk träff efteråt. Raketer har en liten mängd sikteshjälp."
 		//
 		BLACKBOX_NAME			= "SVARTA LÅDAN"
-		BLACKBOX_DESC			= " Sakta ner fiender och utdela blöd. Detta vapen utdelar x2 skada mot Soldatbotar."
+		BLACKBOX_DESC			= "Sakta ner fiender och utdela blöd. Detta vapen utdelar x2 skada mot Soldatbotar."
 		// TODO: Update! " Slow down enemies and inflict bleed."
 		//
 		ROCKETJUMPER_NAME		= "RAKETHOPPAREN"
-		ROCKETJUMPER_DESC		= " Långsam eldgivning och omladdningshastighet, men hög skada och stor explosionsradie. Utmärkt val för gruppkontroll."
+		ROCKETJUMPER_DESC		= "Långsam eldgivning och omladdningshastighet, men hög skada och stor explosionsradie. Utmärkt val för gruppkontroll."
 		//
 		LIBERTYLAUNCHER_NAME	= "FRIHETSGEVÄRET"
-		LIBERTYLAUNCHER_DESC	= " Avfyrar en långsam-rörlig raket som utdelar massiv skada i ett stort område. Väldig långsam omladdning och låg ammunition. Detta vapen avfyras automatiskt när den är laddad."
+		LIBERTYLAUNCHER_DESC	= "Avfyrar en långsam-rörlig raket som utdelar massiv skada i ett stort område. Väldig långsam omladdning och låg ammunition. Detta vapen avfyras automatiskt när den är laddad."
 		//
 		COWMANGLER_NAME			= "KOMANGLAREN 5000"
-		COWMANGLER_DESC			= " Immobiliserar små fiender vid träff. Laddade skott stopper fiender längre. Håll ner Alternativattack för att superladda vapnet för ett multiskott, som stoppar de mycket längre."
+		COWMANGLER_DESC			= "Immobiliserar små fiender vid träff. Laddade skott stopper fiender längre. Håll ner Alternativattack för att superladda vapnet för ett multiskott, som stoppar de mycket längre."
 		//
 		ORIGINAL_NAME			= "ORIGINALET"
-		ORIGINAL_DESC			= " Håll ner eldgivning till att ladda ett uttrbottsskott med upp till 5 raketer. Detta vapen avfyras automatiskt när den är laddad."
+		ORIGINAL_DESC			= "Håll ner eldgivning till att ladda ett uttrbottsskott med upp till 5 raketer. Detta vapen avfyras automatiskt när den är laddad."
 		//
 		BEGGARSBAZOOKA_NAME		= "RUINERADES RAKETGEVÄR"
-		BEGGARSBAZOOKA_DESC		= " Håll ner eldgivning för att ladda upp till 100 raketer innan man släpper du i ett massivt utbrott. Detta vapen laddas INTE över."
+		BEGGARSBAZOOKA_DESC		= "Håll ner eldgivning för att ladda upp till 100 raketer innan man släpper du i ett massivt utbrott. Detta vapen laddas INTE över."
 		//
 		AIRSTRIKE_NAME			= "LUFTANGREPPET"
-		AIRSTRIKE_DESC			= " Ladda upp till 10 raketer innan man avfyrar alla på en gång i ett fixerat spridmönster. Dessa raketer går efter fiender automatiskt."
+		AIRSTRIKE_DESC			= "Ladda upp till 10 raketer innan man avfyrar alla på en gång i ett fixerat spridmönster. Dessa raketer går efter fiender automatiskt."
 		///
 		SHOTGUN_SOLD_NAME 		= "HAGELGEVÄR - SOLDAT" 
-		SHOTGUN_SOLD_DESC 		= " Very fast fire rate and crits while rocket jumping." 
+		SHOTGUN_SOLD_DESC 		= "Very fast fire rate and crits while rocket jumping." 
 		//
 		SHOTGUN_NAME 			= "HAGELGEVÄR" 
-		SHOTGUN_DESC 			= " Standardval för pålitig skada." 
+		SHOTGUN_DESC 			= "Standardval för pålitig skada." 
 		//
 		BUFFBANNER_NAME 		= "BUFFBANERET" 
-		BUFFBANNER_DESC 		= " Oändligt avstånd och har mycket ökad varaktighet." 
+		BUFFBANNER_DESC 		= "Oändligt avstånd och har mycket ökad varaktighet." 
 		//
 		GUNBOATS_NAME 			= "KANONBÅTARNA" 
-		GUNBOATS_DESC 			= " Aktiverar kaninhopp genom att hålla ner 'hopp' tangenten. Ger immunitet mot fallskada." 
+		GUNBOATS_DESC 			= "Aktiverar kaninhopp genom att hålla ner 'hopp' tangenten. Ger immunitet mot fallskada." 
 		// TODO: Update! " Enables bunnyhopping by holding 'jump' key. Grants immunity to fall damage. Hold Crouch key while airborne to reduce gravity." 
 		//
 		BATTALIONS_NAME 		= "BATALJONENS FÖRSTÄRKNING" 
-		BATTALIONS_DESC 		= " Oändligt avstånd och har mycket ökad varaktighet." 
+		BATTALIONS_DESC 		= "Oändligt avstånd och har mycket ökad varaktighet." 
 		//
 		CONCHEROR_NAME 			= "TRUMPETSNÄCKA" 
-		CONCHEROR_DESC 			= " Oändligt avstånd och har mycket ökad varaktighet." 
+		CONCHEROR_DESC 			= "Oändligt avstånd och har mycket ökad varaktighet." 
 		//
 		RESERVESHOOTER_NAME 	= "RESERVSKJUTAREN" 
-		RESERVESHOOTER_DESC 	= " Utdelar en stadig 10,000 skada per skott oavsett avståndet med 3s mini-kritiska träffar vid döende träff. Dock detta vapen kan inte laddas med kritiska träffar, och kan inte skada Pansarvagnar. Håll ner Alternativattack för att zooma in." 
+		RESERVESHOOTER_DESC 	= "Utdelar en stadig 10,000 skada per skott oavsett avståndet med 3s mini-kritiska träffar vid döende träff. Dock detta vapen kan inte laddas med kritiska träffar, och kan inte skada Pansarvagnar. Håll ner Alternativattack för att zooma in." 
 		//
 		BISON_NAME 				= "RÄTTSKAFFENS BISONOXE" 
-		BISON_DESC 				= " Avfyrar en konstant stråle av penetrerande skada med fulla auto-träffsäkning." 
+		BISON_DESC 				= "Avfyrar en konstant stråle av penetrerande skada med fulla auto-träffsäkning." 
 		//
 		MANTREADS_NAME 			= "MANSTÖVLARNA" 
-		MANTREADS_DESC 			= " Stor minskning i knuff tagen från skada. Luftrörelser har nu en massivt ökad acceleration. Stampskada förstärkt och velocitet-baserad." 
+		MANTREADS_DESC 			= "Stor minskning i knuff tagen från skada. Luftrörelser har nu en massivt ökad acceleration. Stampskada förstärkt och velocitet-baserad." 
 		// TODO: Update! " Major reduction in knockback taken from damage. Stomp damage buffed and velocity-based. Gain a short critboost on kill."
 		//
 		BASEJUMPER_NAME 		= "B.A.S.E-HOPPAREN" 
-		BASEJUMPER_DESC 		= " Kan växla fallskärmen. Ökad motstånd mot knuff och skada mot kulor, som minskar din sårbarhet i luften." 
+		BASEJUMPER_DESC 		= "Kan växla fallskärmen. Ökad motstånd mot knuff och skada mot kulor, som minskar din sårbarhet i luften." 
 		//
 		PANICATTACK_NAME 		= "PANIKATTACKEN" 
-		PANICATTACK_DESC 		= " För när du behöver helande i nöden. Omedelbart återställer upp till 10,000 hälsa vid träff. Att ta skada med detta vapen aktiv har en chans att sätta på en kort själv-uber." 
+		PANICATTACK_DESC 		= "För när du behöver helande i nöden. Omedelbart återställer upp till 10,000 hälsa vid träff. Att ta skada med detta vapen aktiv har en chans att sätta på en kort själv-uber." 
 		///
 		SHOVEL_NAME 			= "SKYFFEL"
-		SHOVEL_DESC 			= " Standardval för försvar och rörelse."
+		SHOVEL_DESC 			= "Standardval för försvar och rörelse."
 		//
 		EQUALIZER_NAME 			= "UTJÄMNAREN"
-		EQUALIZER_DESC 			= " Hånattacker utdelar massiv skada och knuffar fiender upp i luften."
+		EQUALIZER_DESC 			= "Hånattacker utdelar massiv skada och knuffar fiender upp i luften."
 		// TODO: Update! " Damage massively increases as you become injured."
 		//
 		PAINTRAIN_NAME 			= "PLÅGTÅGET"
-		PAINTRAIN_DESC 			= " Utdelar blöd och saktar ner vid träff. Ger immunitet mot fallskada."
+		PAINTRAIN_DESC 			= "Utdelar blöd och saktar ner vid träff. Ger immunitet mot fallskada."
 		//
 		HALFZATOICHI_NAME 		= "HALF-ZATOICHI"
-		HALFZATOICHI_DESC 		= " Vanlig skada med en hög hälsomobilitet, och ökad räckvidd."
+		HALFZATOICHI_DESC 		= "Vanlig skada med en hög hälsomobilitet, och ökad räckvidd."
 		//
 		MARKETGARDENER_NAME 	= "TRÄGÅRDSMÄSTAREN"
-		MARKETGARDENER_DESC 	= " Utdelar massivt ökad kritisk skada. Efter man får en döende träff, ge dig in i ett argt tillstånd och få extra hälsa, motstånd och ökad skada på alla attacker. Dock alla missar är en omedelbar död."
+		MARKETGARDENER_DESC 	= "Utdelar massivt ökad kritisk skada. Efter man får en döende träff, ge dig in i ett argt tillstånd och få extra hälsa, motstånd och ökad skada på alla attacker. Dock alla missar är en omedelbar död."
 		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		DISCIPLINARYACTION_NAME = "DISCIPLINSÅTGÄRDEN"
-		DISCIPLINARYACTION_DESC	= " Standardval för försvar och rörelse."
+		DISCIPLINARYACTION_DESC	= "Standardval för försvar och rörelse."
 		// TODO: Update! " Standard option for defense and mobility. Instantly gain 1/3 Rage meter on hit."
 		//
 		ESCAPEPLAN_NAME			= "FLYKTPLANEN"
-		ESCAPEPLAN_DESC			= " Standardval för försvar och rörelse."
+		ESCAPEPLAN_DESC			= "Standardval för försvar och rörelse."
 		// TODO: Update! " Deal guaranteed crits when below 50% health."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		FLAMETHROWER_NAME 		= "ELDKASTARE"
-		FLAMETHROWER_DESC		= " Standardval för pålitig skada. Få en liten mini-kritisk laddning vid döende träff."
+		FLAMETHROWER_DESC		= "Standardval för pålitig skada. Få en liten mini-kritisk laddning vid döende träff."
 		//
 		BACKBURNER_NAME 		= "RYGGBRÄNNAREN"
-		BACKBURNER_DESC			= " Grön Eld - Markerar fiender för döden och bedövar fiender i luften en kort stund. Detta vpane utdelar x2 skada mot Pyrobotar."
+		BACKBURNER_DESC			= "Grön Eld - Markerar fiender för döden och bedövar fiender i luften en kort stund. Detta vpane utdelar x2 skada mot Pyrobotar."
 		//
 		DEGREASER_NAME 			= "AVFETTAREN"
-		DEGREASER_DESC			= " Lång-avstånd eldkastare som utdelar hög direkt skada, med 0 efterbrand. Denna kastare kan inte utföra luftstötar."
+		DEGREASER_DESC			= "Lång-avstånd eldkastare som utdelar hög direkt skada, med 0 efterbrand. Denna kastare kan inte utföra luftstötar."
 		//
 		PHLOGISTINATOR_NAME 	= "FLOGISTONERAREN"
-		PHLOGISTINATOR_DESC		= " Grön Eld - Markerar fiender för döden och bedövar fiender i luften en kort stund. Stark mot Pansarvagnar, men din rörelsehastighet är minskad."
+		PHLOGISTINATOR_DESC		= "Grön Eld - Markerar fiender för döden och bedövar fiender i luften en kort stund. Stark mot Pansarvagnar, men din rörelsehastighet är minskad."
 		//
 		RAINBLOWER_NAME 		= "RAINBLOWER"
-		RAINBLOWER_DESC			= " Lång-avstånd eldkastare som utdelar låg direkt skada, men med hög efterbrand skada. Kan också omedelbart förstöra Ingenjörbyggnader och bränna fiende Pyros. Luftstöten är svag, men väldigt snabb."
+		RAINBLOWER_DESC			= "Lång-avstånd eldkastare som utdelar låg direkt skada, men med hög efterbrand skada. Kan också omedelbart förstöra Ingenjörbyggnader och bränna fiende Pyros. Luftstöten är svag, men väldigt snabb."
 		//
 		DRAGONSFURY_NAME 		= "DRAKENS RASERI"
-		DRAGONSFURY_DESC		= " Mycket ökad eldgivningshastighet och luftstöthastighet."
+		DRAGONSFURY_DESC		= "Mycket ökad eldgivningshastighet och luftstöthastighet."
 		//
 		NOSTROMONAPALMER_NAME 	= "NOSTROMO-ELDKASTAREN"
-		NOSTROMONAPALMER_DESC	= " Saktar ner fiender vid träff. Bygger 'Mmmph' laddning likt Flogistoneraren, men ger dig Trumpetsnäckans förstärkning. Denna eldkastare kan inte utföra luftstötar."
+		NOSTROMONAPALMER_DESC	= "Saktar ner fiender vid träff. Bygger 'Mmmph' laddning likt Flogistoneraren, men ger dig Trumpetsnäckans förstärkning. Denna eldkastare kan inte utföra luftstötar."
 		///
 		SHOTGUN_PYRO_NAME 		= "HAGELGEVÄR - PYRO" 
-		SHOTGUN_PYRO_DESC 		= " Garanterade kritiska träffar mot brinnande fiender." 
+		SHOTGUN_PYRO_DESC 		= "Garanterade kritiska träffar mot brinnande fiender." 
 		//
 		FLAREGUN_NAME 			= "SIGNALPISTOL" 
-		FLAREGUN_DESC 			= " Avfyrar en träffskann attack som penetrerar fiender. Skada ökas exponentiellt med varje penetrerad fiende längst vägen. Har också en chans att bedöva fiender vid träff." 
+		FLAREGUN_DESC 			= "Avfyrar en träffskann attack som penetrerar fiender. Skada ökas exponentiellt med varje penetrerad fiende längst vägen. Har också en chans att bedöva fiender vid träff." 
 		//
 		DETONATOR_NAME 			= "DETONATORN" 
-		DETONATOR_DESC 			= " Blosset har en oändlig explosionsradie och kommer träffa allt inom siktlinje. Tvingar alla Spionbotar att avslöja sig och sluta förklä sig. Också ett bra val för rörelse." 
+		DETONATOR_DESC 			= "Blosset har en oändlig explosionsradie och kommer träffa allt inom siktlinje. Tvingar alla Spionbotar att avslöja sig och sluta förklä sig. Också ett bra val för rörelse." 
 		//
 		MANMELTER_NAME 			= "MÄNNISKOSMÄLTAREN" 
-		MANMELTER_DESC 			= " Snabbt-avfyrande specialiserad till att automatiskt följa fiender. Oändligt ammunition och ingen omladdning. Alternativattack: Avfyra ett utbrott av bloss på en gång." 
+		MANMELTER_DESC 			= "Snabbt-avfyrande specialiserad till att automatiskt följa fiender. Oändligt ammunition och ingen omladdning. Alternativattack: Avfyra ett utbrott av bloss på en gång." 
 		//
 		SCORCHSHOT_NAME 		= "SVEDSKOTTET" 
-		SCORCHSHOT_DESC 		= " Vid träff: Utdela en stor mängd skada, som släcker fienden och utdelar knuff. Ditt mål MUSTA vara på eld, eller denna attack kommer inte göra något. Alternativattack: Använd långsamma följande bloss." 
+		SCORCHSHOT_DESC 		= "Vid träff: Utdela en stor mängd skada, som släcker fienden och utdelar knuff. Ditt mål MUSTA vara på eld, eller denna attack kommer inte göra något. Alternativattack: Använd långsamma följande bloss." 
 		//
 		THERMALTHRUSTER_NAME 	= "HÖGTRYCKET" 
-		THERMALTHRUSTER_DESC 	= " Minskade bränsle användning utan någon fördröjning. Kan återanvändas i luften och utdelar massiv stampskada. Gå en kort kritisk laddning vid träff." 
+		THERMALTHRUSTER_DESC 	= "Minskade bränsle användning utan någon fördröjning. Kan återanvändas i luften och utdelar massiv stampskada. Gå en kort kritisk laddning vid träff." 
 		//
 		GASPASSER_NAME 			= "BENSINDUNKEN" 
-		GASPASSER_DESC 			= " Gasmätaren börjar tom och återställs när man dör. Utdela 150,000 skada till att fylla mätaren. Exploderar-vid-Antändning utdelar 105,000 skada." 
+		GASPASSER_DESC 			= "Gasmätaren börjar tom och återställs när man dör. Utdela 150,000 skada till att fylla mätaren. Exploderar-vid-Antändning utdelar 105,000 skada." 
 		///
 		FIREAXE_NAME 			= "BRANDYXA"
-		FIREAXE_DESC 			= " Standardval för försvar och rörelse."
+		FIREAXE_DESC 			= "Standardval för försvar och rörelse."
 		//	
 		AXTINGUISHER_NAME 		= "BRANDSLAKTAREN"
-		AXTINGUISHER_DESC		= " Mycket ökad skada mot fiender som brinner."
+		AXTINGUISHER_DESC		= "Mycket ökad skada mot fiender som brinner."
 		//
 		HOMEWRECKER_NAME 		= "HEMRIVAREN"
-		HOMEWRECKER_DESC 		= " Kan omedelbart förstöra Ingenjörbyggnader överallt med oändligt närstridsavstånd."
+		HOMEWRECKER_DESC 		= "Kan omedelbart förstöra Ingenjörbyggnader överallt med oändligt närstridsavstånd."
 		//
 		POWERJACK_NAME 			= "ELDOMKRAFTEN"
-		POWERJACK_DESC 			= " Snabba attacker och rörelsehastighet. Utdelar blöd & tänder fiender vid träff och ger en mini-kritisk laddning vid döende träff."
+		POWERJACK_DESC 			= "Snabba attacker och rörelsehastighet. Utdelar blöd & tänder fiender vid träff och ger en mini-kritisk laddning vid döende träff."
 		//
 		BACKSCRATCHER_NAME 		= "RYGGKLIAREN"
-		BACKSCRATCHER_DESC 		= " Utdelar dödlig skada bakifrån. Efter man får en döende träff, ge dig in ett argt tillstånd och få extra rörelsehastighet, motstånd och ökad skada på alla attacker."
+		BACKSCRATCHER_DESC 		= "Utdelar dödlig skada bakifrån. Efter man får en döende träff, ge dig in ett argt tillstånd och få extra rörelsehastighet, motstånd och ökad skada på alla attacker."
 		// TODO: Update! " Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		VOLCANOFRAGMENT_NAME 	= "VÄSSAD VULKANBIT"
-		VOLCANOFRAGMENT_DESC 	= " Chans till att bedöva fiender vid träff. Kan också bränna fiende Pyros"
+		VOLCANOFRAGMENT_DESC 	= "Chans till att bedöva fiender vid träff. Kan också bränna fiende Pyros"
 		//
 		POSTALPUMMELER_NAME 	= "POSTPUCKLAREN"
-		POSTALPUMMELER_DESC 	= " Vid träff: Utdela Förvirrning, orsakr fiender att gå baklänges längst bombvägen en kort stånd. Håll ner Alternativattack när man attackerar för att teleportera tillbaks till återskapningsrummet."
+		POSTALPUMMELER_DESC 	= "Vid träff: Utdela Förvirrning, orsakr fiender att gå baklänges längst bombvägen en kort stånd. Håll ner Alternativattack när man attackerar för att teleportera tillbaks till återskapningsrummet."
 		//
 		MAUL_NAME 				= "SLÄGGAN"
-		MAUL_DESC 				= " Vid träff: Kasta fiender upp i luften med minskad gravitation."
+		MAUL_DESC 				= "Vid träff: Kasta fiender upp i luften med minskad gravitation."
 		// TODO: Update! " On hit: Cause an explosion, launching enemies into the air and igniting them."
 		//
 		THIRDDEGREE_NAME 		= "TREDJA GRADEN"
-		THIRDDEGREE_DESC 		= " Bli nästan immun mot eldskada medans den är utrustad, och få ett extra tungt motstånd mot alla attacker från långt håll medans den är aktiv."
+		THIRDDEGREE_DESC 		= "Bli nästan immun mot eldskada medans den är utrustad, och få ett extra tungt motstånd mot alla attacker från långt håll medans den är aktiv."
 		//
 		LOLLICHOP_NAME 			= "SLICKEPINAN"
-		LOLLICHOP_DESC 			= " Varje 10 döende träffar, få en Meteor Stormförtrollning laddning (Kräver Trolleribok)."
+		LOLLICHOP_DESC 			= "Varje 10 döende träffar, få en Meteor Stormförtrollning laddning (Kräver Trolleribok)."
 		//
 		NEONANNIHILATOR_NAME 	= "NEONFÖRINTAREN"
-		NEONANNIHILATOR_DESC 	= " Din gravitation är minskad."
+		NEONANNIHILATOR_DESC 	= "Din gravitation är minskad."
 		//
 		HOTHAND_NAME 			= "ÖRFILEN"
-		HOTHAND_DESC 			= " Kasta fiender upp i luften vid träff."
+		HOTHAND_DESC 			= "Kasta fiender upp i luften vid träff."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		GRENADELAUNCHER_NAME 	= "GRANATKASTARE"
-		GRENADELAUNCHER_DESC	= " Standardval för pålitig skada."
+		GRENADELAUNCHER_DESC	= "Standardval för pålitig skada."
 		//
 		LOCHNLOAD_NAME 			= "LOCH-N-LOAD"
-		LOCHNLOAD_DESC			= " Långsamma skott men med hög snabbt skada i ett stort område. Effektivt för gruppkontroll."
+		LOCHNLOAD_DESC			= "Långsamma skott men med hög snabbt skada i ett stort område. Effektivt för gruppkontroll."
 		//
 		ALIBABA_NAME			= "ALI BABAS LILLA STÖVLAR"
-		ALIBABA_DESC			= " Förbättad sköldkollision skada. Ger immunitet mot fallskada."
+		ALIBABA_DESC			= "Förbättad sköldkollision skada. Ger immunitet mot fallskada."
 		//
 		BOOTLEGGER_NAME			= "SPRITSMUGGLAREN"
-		BOOTLEGGER_DESC			= " Förbättrad sköldomladdnings hastighet. Ger immunitet mot fallskada."
+		BOOTLEGGER_DESC			= "Förbättrad sköldomladdnings hastighet. Ger immunitet mot fallskada."
 		//
 		LOOSECANNON_NAME		= "LADDAD KANON"
-		LOOSECANNON_DESC		= " Ladda upp till 4 kanonbollar innan man avfyrar alla på en gång i ett verktikalt spridmönster. Kanonbollar exploderar vid kontakt med marken."
+		LOOSECANNON_DESC		= "Ladda upp till 4 kanonbollar innan man avfyrar alla på en gång i ett verktikalt spridmönster. Kanonbollar exploderar vid kontakt med marken."
 		//
 		IRONBOMBER_NAME			= "JÄRNBOMBAREN"
-		IRONBOMBER_DESC			= " Ignorerar fienders motstånd och ger en kort kritisk laddning vid döende träff. Kräver ingen ammunition och har ett oändligt magasin. Projektiler kan studsa från väggar."
+		IRONBOMBER_DESC			= "Ignorerar fienders motstånd och ger en kort kritisk laddning vid döende träff. Kräver ingen ammunition och har ett oändligt magasin. Projektiler kan studsa från väggar."
 		///
 		STICKYBOMB_NAME 		= "KLISTERBOMBKASTARE"
-		STICKYBOMB_DESC 		= " Standardval för pålitig skada. Kan lägga ut 50 bomber."
+		STICKYBOMB_DESC 		= "Standardval för pålitig skada. Kan lägga ut 50 bomber."
 		//
 		SCOTTISHRES_NAME 		= "SKOTSKA MOTSTÅNDET"
-		SCOTTISHRES_DESC 		= " Bomber tar 5 sekunder till att armera och fräser efter 10 sekunder, men kan utdela överväldlig skada med bra tajming och en full laddning."
+		SCOTTISHRES_DESC 		= "Bomber tar 5 sekunder till att armera och fräser efter 10 sekunder, men kan utdela överväldlig skada med bra tajming och en full laddning."
 		//
 		STICKYJUMPER_NAME 		= "KLISTERBOMBSHOPPAREN"
-		STICKYJUMPER_DESC 		= " Skaparen ett avstängningsfält, som bedövar alla fiender träffar av pulsen. (Minibossar är immuna till denna bedövning)"
+		STICKYJUMPER_DESC 		= "Skaparen ett avstängningsfält, som bedövar alla fiender träffar av pulsen. (Minibossar är immuna till denna bedövning)"
 		//
 		CHARGINTARGE_NAME 		= "ANFALLSSKÖLDEN"
-		CHARGINTARGE_DESC 		= " Tungt Anfall - Utmärkt sköldkollision skada."
+		CHARGINTARGE_DESC 		= "Tungt Anfall - Utmärkt sköldkollision skada."
 		//
 		SPLENDIDSCREEN_NAME 	= "STRÅLANDE SKYDDET"
-		SPLENDIDSCREEN_DESC 	= " Snabbt Anfall - Utmärkt sköldomladdnings hastighet."
+		SPLENDIDSCREEN_DESC 	= "Snabbt Anfall - Utmärkt sköldomladdnings hastighet."
 		//
 		TIDETURNER_NAME 		= "VINDVÄNDAREN"
-		TIDETURNER_DESC 		= " Utbrott Anfall - Utmärkt sköldanfall rörelsehastighet."
+		TIDETURNER_DESC 		= "Utbrott Anfall - Utmärkt sköldanfall rörelsehastighet."
 		//
 		QUICKIEBOMB_NAME 		= "KVICKBOMBSKJUTAREN"
-		QUICKIEBOMB_DESC 		= " Auto-avfyrar klisterbomber med en sjuk hastighet med väldigt snabb armeringstid. Få mini-kritiska träffar vid döende träff."
+		QUICKIEBOMB_DESC 		= "Auto-avfyrar klisterbomber med en sjuk hastighet med väldigt snabb armeringstid. Få mini-kritiska träffar vid döende träff."
 		///
 		BOTTLE_NAME 			= "FLASKA"
-		BOTTLE_DESC 			= " Standardval för försvar och rörelse."
+		BOTTLE_DESC 			= "Standardval för försvar och rörelse."
 		//
 		EYELANDER_NAME 			= "ÖGLÄNDAREN"
-		EYELANDER_DESC 			= " Hög skada med snabba attacker som ger kritiska och mini-kritiska träffar vid döende träff, men kan inte användas som en hybrid-riddare."
+		EYELANDER_DESC 			= "Hög skada med snabba attacker som ger kritiska och mini-kritiska träffar vid döende träff, men kan inte användas som en hybrid-riddare."
 		//
 		SKULLCUTTER_NAME 		= "SKOTTENS SKALLSKÄRARE"
-		SKULLCUTTER_DESC 		= " Kan skära igenom fiendens Uberladdning och störa Hälsovapen funktioner. Kan också utdela ökad skda mot fiender som är samma klass som dig."
+		SKULLCUTTER_DESC 		= "Kan skära igenom fiendens Uberladdning och störa Hälsovapen funktioner. Kan också utdela ökad skda mot fiender som är samma klass som dig."
 		//
 		CABER_NAME 				= "ULLAPOOL-CABER"
-		CABER_DESC 				= " Skada ökas ju mer skadad du är. Garanterade kritiska träffar om din hälsa är under 2%. Explosionen från denna attack kommer döda dig."
+		CABER_DESC 				= "Skada ökas ju mer skadad du är. Garanterade kritiska träffar om din hälsa är under 2%. Explosionen från denna attack kommer döda dig."
 		// TODO: Update! " You are a Sentry Buster - Taunt to detonate!"
 		//
 		CLAIDHEAMHMOR_NAME 		= "CLAIDHEAMH MOR"
-		CLAIDHEAMHMOR_DESC 		= " Varje 10 döende träffar, få en Monoculus förtrollningsladdning (Kräver Trolleribok)."
+		CLAIDHEAMHMOR_DESC 		= "Varje 10 döende träffar, få en Monoculus förtrollningsladdning (Kräver Trolleribok)."
 		//
 		PERSIANPERSUADER_NAME 	= "ÖSTERLÄNDSKA ÖVERTALAREN"
-		PERSIANPERSUADER_DESC 	= " När den paras ihop med en sköld, så ger den oändlig sköldanfall. Sklödanfallet kan inte avbrytas med skarpa svängningar eller genom att krocka in i väggar, fiender eller andra hinder. Ger immunitet mot bedövningar."
+		PERSIANPERSUADER_DESC 	= "När den paras ihop med en sköld, så ger den oändlig sköldanfall. Sklödanfallet kan inte avbrytas med skarpa svängningar eller genom att krocka in i väggar, fiender eller andra hinder. Ger immunitet mot bedövningar."
 		//
 		NINEIRON_NAME 			= "NESSIES JÄRNNIA"
-		NINEIRON_DESC 			= " Har en massiv svingbåge, som kan träffa flera fiender på samma gång i alla riktningar. Utdelar dubbel kritisk skada."
+		NINEIRON_DESC 			= "Har en massiv svingbåge, som kan träffa flera fiender på samma gång i alla riktningar. Utdelar dubbel kritisk skada."
 		//
 		SCOTTISHHANDSHAKE_NAME 	= "SKOTSKA HANDSLAGET"
-		SCOTTISHHANDSHAKE_DESC 	= " Medans den är aktiv: Motstå 90% skada från avstånd, bli immun mot knuff och öka din maxhälsa stort. Dock du kan inte fylla på din ammunition och får mindre hälsa från kit."
+		SCOTTISHHANDSHAKE_DESC 	= "Medans den är aktiv: Motstå 90% skada från avstånd, bli immun mot knuff och öka din maxhälsa stort. Dock du kan inte fylla på din ammunition och får mindre hälsa från kit."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		MINIGUN_NAME 			= "MINIGUN"
-		MINIGUN_DESC 			= " Standardval för pålitlig skada. Få en kort mini-kritisk laddning vid döende träff."
+		MINIGUN_DESC 			= "Standardval för pålitlig skada. Få en kort mini-kritisk laddning vid döende träff."
 		//
 		NATASCHA_NAME 			= "NATASCHA"
-		NATASCHA_DESC 			= " Saka ner fiender vid träff och lägg till Dödsmarkering."
+		NATASCHA_DESC 			= "Saka ner fiender vid träff och lägg till Dödsmarkering."
 		//
 		BRASSBEAST_NAME 		= "MÄSSINGSMONSTRET"
-		BRASSBEAST_DESC 		= " Högre skada med varje lånsam uppsnurrning. Rörelsehastighet är borta medans den är igång. Kan avleda inkommande projektiler."
+		BRASSBEAST_DESC 		= "Högre skada med varje lånsam uppsnurrning. Rörelsehastighet är borta medans den är igång. Kan avleda inkommande projektiler."
 		//
 		TOMISLAV_NAME 			= "TOMISLAV"
-		TOMISLAV_DESC 			= " Bygger 'Värme' genom att utdela skada. Alla attributer på detta vapen är ökade baserat på värmenivån. Dock, vapnet börjar kylas ner om du inte utdelar skada efter en lång stund."
+		TOMISLAV_DESC 			= "Bygger 'Värme' genom att utdela skada. Alla attributer på detta vapen är ökade baserat på värmenivån. Dock, vapnet börjar kylas ner om du inte utdelar skada efter en lång stund."
 		//
 		HUOHEATER_NAME 			= "ELDDRAKSVÄRMAREN"
-		HUOHEATER_DESC 			= " Avfyrar energistrålar, som tänder fiender vid träff"
+		HUOHEATER_DESC 			= "Avfyrar energistrålar, som tänder fiender vid träff"
 		//
 		GENUINEHUOHEATER_NAME 	= "ÄKTA ELDDRAKSVÄRMAREN"
-		GENUINEHUOHEATER_DESC 	= " Avfyrar raketer. Garanterade kritiska träffar mot fiender som brinner."
+		GENUINEHUOHEATER_DESC 	= "Avfyrar raketer. Garanterade kritiska träffar mot fiender som brinner."
 		///
 		SHOTGUN_HVY_NAME 		= "HAGELGEVÄR - TUNG ARTILLERIST"
-		SHOTGUN_HVY_DESC 		= " Singlärt skott med hög skada, som ger 8 sekunder av kritiska träffar vid döende träff."
+		SHOTGUN_HVY_DESC 		= "Singlärt skott med hög skada, som ger 8 sekunder av kritiska träffar vid döende träff."
 		//
 		SANDVICH_NAME 			= "SMÖRGÅSEN"
-		SANDVICH_DESC 			= " Återställ upp till 150,000 hälsa. All skada tagen medans man håller detta föremål aktivt är dödligt."
+		SANDVICH_DESC 			= "Återställ upp till 150,000 hälsa. All skada tagen medans man håller detta föremål aktivt är dödligt."
 		// TODO: Update! " Consume to gain Concheror buff for 30 seconds."
 		//
 		DALOKOHSBAR_NAME 		= "DALOKOHSKAKAN"
-		DALOKOHSBAR_DESC 		= " Återställ upp till 20,000 hälsa. Om den används under 350 hälsa så kommer du få en stor överhälsa. Ökar passivt skadan tagen men ger en chans att sig själv själv-uber när man tar skada."
+		DALOKOHSBAR_DESC 		= "Återställ upp till 20,000 hälsa. Om den används under 350 hälsa så kommer du få en stor överhälsa. Ökar passivt skadan tagen men ger en chans att sig själv själv-uber när man tar skada."
 		// TODO: Update! " Consume to gain increased move speed, weapon switch speed and faster minigun spinup time for 30 seconds."
 		//
 		BUFFALOSTEAK_NAME 		= "BUFFELBIFFSMÖRGÅS"
-		BUFFALOSTEAK_DESC 		= " Passivt ger immunitet mot kritiska träffar."
+		BUFFALOSTEAK_DESC 		= "Passivt ger immunitet mot kritiska träffar."
 		// TODO: Update! " Consume to gain Battalion's Backup buff and backstab immunity for 30 seconds."
 		//
 		FAMILYBUSINESS_NAME 	= "FAMILIJENS ENSAK"
-		FAMILYBUSINESS_DESC 	= " Oändlig ammunition. Attackhastigheten är dubblad medans man får en helande effekt. Ger en kort kritisk laddning och mini-kritisk laddning vid döende träff."
+		FAMILYBUSINESS_DESC 	= "Oändlig ammunition. Attackhastigheten är dubblad medans man får en helande effekt. Ger en kort kritisk laddning och mini-kritisk laddning vid döende träff."
 		//
 		FISHCAKE_NAME 			= "FISKKAKA"
-		FISHCAKE_DESC 			= " Tungt motstånd mot KULOR, men mer sårbar mot ELD och EXPLOSIONER."
+		FISHCAKE_DESC 			= "Tungt motstånd mot KULOR, men mer sårbar mot ELD och EXPLOSIONER."
 		// TODO: Update! " Consume to gain gravity reversal power for 30 seconds (Crouch to reverse gravity)."
 		//
 		SECONDBANANA_NAME 		= "ANDRA BANANEN"
-		SECONDBANANA_DESC 		= " Tungt motstånd mot EXPLOSIONER, men mer sårbar mot ELD och KULOR."
+		SECONDBANANA_DESC 		= "Tungt motstånd mot EXPLOSIONER, men mer sårbar mot ELD och KULOR."
 		// TODO: Update! " Consume to gain explosive melee power for 30 seconds (You are restricted to melee for the duration)."
 		///
 		FISTS_NAME 				= "KNYTNÄVAR"
-		FISTS_DESC 				= " Standardval för försvar och rörelse. Effektiv i strid."
+		FISTS_DESC 				= "Standardval för försvar och rörelse. Effektiv i strid."
 		//
 		KILLINGGLOVES_NAME 		= "KALINIS GRYMMA BOXNINGSHANDSKAR"
-		KILLINGGLOVES_DESC 		= " Specialförmåga: 'Mega-Kross' -  När den är tillgänglig, tryck din åtgärdstangent medans du står på bomben för att omedelbart skciak tillbaks den till starten. Annars, få en temporör rörelsehastighet förstärkning, skydd och kritiska träffar."
+		KILLINGGLOVES_DESC 		= "Specialförmåga: 'Mega-Kross' -  När den är tillgänglig, tryck din åtgärdstangent medans du står på bomben för att omedelbart skciak tillbaks den till starten. Annars, få en temporör rörelsehastighet förstärkning, skydd och kritiska träffar."
 		//
 		GLOVESRUNNING_NAME 		= "GORBATJOVS RUSHANDE UPPERCUT"
-		GLOVESRUNNING_DESC 		= " Passivt ger förmågan att ta fram en fallskärm. Medans den är aktiv, få en massiv ökad hopphöjd, skademotstånd och hälsoåterställning."
+		GLOVESRUNNING_DESC 		= "Passivt ger förmågan att ta fram en fallskärm. Medans den är aktiv, få en massiv ökad hopphöjd, skademotstånd och hälsoåterställning."
 		//
 		BREADBITE_NAME 			= "BRÖDBETTET"
-		BREADBITE_DESC 			= " Kritiska träffar infekterar ditt offer med Frätning, en permanent negativ effekt som utdelar skada baserat på max hälsan och orsakar offret att explodera till ett litet frätande moln när den dör, som kan sprida effekten till andra fiender."
+		BREADBITE_DESC 			= "Kritiska träffar infekterar ditt offer med Frätning, en permanent negativ effekt som utdelar skada baserat på max hälsan och orsakar offret att explodera till ett litet frätande moln när den dör, som kan sprida effekten till andra fiender."
 		//
 		WARRIRORSSPIRIT_NAME 	= "KRIGARENS ANDA"
-		WARRIRORSSPIRIT_DESC 	= " Vänsterklicka för att hoppa högt upp i luften. Landar man på fiender så utdelas massiv stampskada. Tar bort all primär och sekundär ammunition."
+		WARRIRORSSPIRIT_DESC 	= "Vänsterklicka för att hoppa högt upp i luften. Landar man på fiender så utdelas massiv stampskada. Tar bort all primär och sekundär ammunition."
 		// TODO: Update! " Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air. Active buff indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		FISTSOFSTEEL_NAME 		= "STÅLNÄVARNA"
-		FISTSOFSTEEL_DESC 		= " Bli en stor Tung Artillerist järnhandske med 250,000 hälsa. Du är immun mot knuff och kan utdela stor skada. Tar bort all primär och sekundär ammunition. Du kan bära läkas från lunchlådor."
+		FISTSOFSTEEL_DESC 		= "Bli en stor Tung Artillerist järnhandske med 250,000 hälsa. Du är immun mot knuff och kan utdela stor skada. Tar bort all primär och sekundär ammunition. Du kan bära läkas från lunchlådor."
 		// TODO: Update! " You are a Giant Heavy Gauntlet - Immune to push forces and able to hit multiple enemies at once for massive damage."
 		//
 		EVICTIONNOTICE_NAME 	= "VRÄKNINGSBESKEDET"
-		EVICTIONNOTICE_DESC 	= " Gå en snabb helande effekt vid döende träff."
+		EVICTIONNOTICE_DESC 	= "Gå en snabb helande effekt vid döende träff."
 		//
 		APOCOFISTS_NAME 		= "APOCO-NÄVAR"
-		APOCOFISTS_DESC 		= " Slag puttar bort fiender."
+		APOCOFISTS_DESC 		= "Slag puttar bort fiender."
 		//
 		HOLIDAYPUNCH_NAME 		= "JULKLAPPEN"
-		HOLIDAYPUNCH_DESC 		= " Medans en är aktiv, alla fiender kommer ignorera dig. Ger också immunitet mot bedövningar. Detta vapen kan dock inte utdela skada."
+		HOLIDAYPUNCH_DESC 		= "Medans en är aktiv, alla fiender kommer ignorera dig. Ger också immunitet mot bedövningar. Detta vapen kan dock inte utdela skada."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		SHOTGUN_ENGI_NAME		= "HAGELGEVÄR - INGENGÖR"
-		SHOTGUN_ENGI_DESC 		= " Utdelar x4 skada mot ditt Vaktgevärs mål."
+		SHOTGUN_ENGI_DESC 		= "Utdelar x4 skada mot ditt Vaktgevärs mål."
 		//
 		FRONTIERJUSTICE_NAME 	= "VÄSTERNRÄTTVISAN"
-		FRONTIERJUSTICE_DESC 	= " Sjuk snabb eldgivningshastighet. Magasinstorlek matchar den kritiska max hämnd mängden. Laddar om snabbare medans man får alla läkande effekter."
+		FRONTIERJUSTICE_DESC 	= "Sjuk snabb eldgivningshastighet. Magasinstorlek matchar den kritiska max hämnd mängden. Laddar om snabbare medans man får alla läkande effekter."
 		//
 		WIDOWMAKER_NAME 		= "ÄNKMAKAREN"
-		WIDOWMAKER_DESC 		= " Använd 2000 metall för att avfyra ett brett skott som puttar bort fiender."
+		WIDOWMAKER_DESC 		= "Använd 2000 metall för att avfyra ett brett skott som puttar bort fiender."
 		//
 		POMSON_NAME 			= "POMSON 6000"
-		POMSON_DESC 			= " Utdela blöd, eld och sakta ner fiender."
+		POMSON_DESC 			= "Utdela blöd, eld och sakta ner fiender."
 		//
 		RESCUERANGER_NAME 		= "RÄDDAREN I NÖDEN"
-		RESCUERANGER_DESC		= " Använder 20 metall per skott, men behöver aldrig laddas om och ökar max metallen med 1000."
+		RESCUERANGER_DESC		= "Använder 20 metall per skott, men behöver aldrig laddas om och ökar max metallen med 1000."
 		///
 		WRANGLER_NAME 			= "GRÄLMAKAREN"
-		WRANGLER_DESC 			= " Medans den är aktiv: Öka Vaktgevär skada och dubbla Utmatarräckvidd."
+		WRANGLER_DESC 			= "Medans den är aktiv: Öka Vaktgevär skada och dubbla Utmatarräckvidd."
 		//
 		SHORTCIRCUIT_NAME 		= "KORTSLUTNINGEN"
-		SHORTCIRCUIT_DESC 		= " Varje 10 döende träffar, få en Blixtboll förtrollningsladdning (Kräver Trolleribok)"
+		SHORTCIRCUIT_DESC 		= "Varje 10 döende träffar, få en Blixtboll förtrollningsladdning (Kräver Trolleribok)"
 		///
 		WRENCH_NAME 			= "SKIFTNYCKEL"
-		WRENCH_DESC 			= " Standardval för pålitig skada."
+		WRENCH_DESC 			= "Standardval för pålitig skada."
 		//
 		GUNSLINGER_NAME 		= "REVOLVERMANNEN"
-		GUNSLINGER_DESC	 		= " Kan bygga ett sekundärt Vaktgevär. Trippelslag kombo kan förgöra små fiender och utdela stor skada mot Jättar."
+		GUNSLINGER_DESC	 		= "Kan bygga ett sekundärt Vaktgevär. Trippelslag kombo kan förgöra små fiender och utdela stor skada mot Jättar."
 		//
 		SOUTHERNHOS_NAME 		= "SÖDERNS GÄSTFRIHET"
-		SOUTHERNHOS_DESC 		= " Ersätter det normala Vaktgeväret med ett Eld Vaktgevär. Kort avstånd, men hög skada."
+		SOUTHERNHOS_DESC 		= "Ersätter det normala Vaktgeväret med ett Eld Vaktgevär. Kort avstånd, men hög skada."
 		//
 		JAG_NAME 				= "JACKEN"
-		JAG_DESC 				= " Ditt Vaktgevär har oändligt med räckvidd."
+		JAG_DESC 				= "Ditt Vaktgevär har oändligt med räckvidd."
 		//
 		EUREKAEFFECT_NAME 		= "AHA-UPPLEVELSEN"
-		EUREKAEFFECT_DESC 		= " Medans du bär ditt Vaktgevär, tryck 'Omladdning' tangenten till att avlägset lägga den på en vägg eller ett tak inom räckvidd ey to remotely place it on any wall or ceiling within range."
+		EUREKAEFFECT_DESC 		= "Medans du bär ditt Vaktgevär, tryck 'Omladdning' tangenten till att avlägset lägga den på en vägg eller ett tak inom räckvidd ey to remotely place it on any wall or ceiling within range."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		SYRINGEGUN_NAME			= "SPRUTGEVÄR"
-		SYRINGEGUN_DESC			= " Få 0.5% Uberladdning per träff."
+		SYRINGEGUN_DESC			= "Få 0.5% Uberladdning per träff."
 		//
 		BLUTSAUGER_NAME			= "BLUTSAUGER"
-		BLUTSAUGER_DESC			= " Kräver och använder 100% Uberladdninig till att omprogrammera en robot till att gå med i ditt lag temporärt innan den själv sprängs. Alternativattack: Manuellt avbryta omprogrammeringen på alla påverkade robotar."
+		BLUTSAUGER_DESC			= "Kräver och använder 100% Uberladdninig till att omprogrammera en robot till att gå med i ditt lag temporärt innan den själv sprängs. Alternativattack: Manuellt avbryta omprogrammeringen på alla påverkade robotar."
 		//
 		CRUSADERSCROSSBOW_NAME	= "KORSRIDDARENS ARMBOSRT"
-		CRUSADERSCROSSBOW_DESC	= " Få 0.25% Uberladdning per träff, utdela blöd och få en till 0.5% Uberladdning per tick av blödskada."
+		CRUSADERSCROSSBOW_DESC	= "Få 0.25% Uberladdning per träff, utdela blöd och få en till 0.5% Uberladdning per tick av blödskada."
 		//
 		OVERDOSE_NAME 			= "ÖVERDOSERINGEN"
-		OVERDOSE_DESC 			= " Kräver och använder 50% Uberladdning till att skicka en bomb som stänger ner alla nära små fiender för upp till 15s."
+		OVERDOSE_DESC 			= "Kräver och använder 50% Uberladdning till att skicka en bomb som stänger ner alla nära små fiender för upp till 15s."
 		// TODO: Update! " Requires and consumes 50% Ubercharge to launch an EMP mortar, causing nearby enemies to be unable to move or attack for a short time."
 		///
 		MEDIGUN_NAME			= "HÄLSOVAPEN"
-		MEDIGUN_DESC			= " Överhälsa ökad till x10 av patientens max hälsa. Lägg ut en långvarande nivå 1 Projektilsköld."
+		MEDIGUN_DESC			= "Överhälsa ökad till x10 av patientens max hälsa. Lägg ut en långvarande nivå 1 Projektilsköld."
 		// TODO: Update! " Overheal cap raised to x10 the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
 		//
 		KRITZKRIEG_NAME			= "KRITZKRIEG"
-		KRITZKRIEG_DESC			= " Kan tömma hälsa från fiender, och ger själv-läkande och bygger Uber."
+		KRITZKRIEG_DESC			= "Kan tömma hälsa från fiender, och ger själv-läkande och bygger Uber."
 		// TODO: Update! " Able to drain health from enemies, granting self-healing and building Uber. Ubercharge grants a boost to all damage output."
 		//
 		QUICKFIX_NAME			= "SNABBFIXAREN"
-		QUICKFIX_DESC			= " Väldigt snabbt läkande med nivå 2 Projektilsköld. Kan bygga Uber från sköld kontaktskada."
+		QUICKFIX_DESC			= "Väldigt snabbt läkande med nivå 2 Projektilsköld. Kan bygga Uber från sköld kontaktskada."
 		// TODO: Update! " Very fast healing with a level 2 Projectile Shield. Able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
 		//
 		VACCINATOR_NAME			= "VACCINATÖREN"
-		VACCINATOR_DESC			= " Aktiva läkningar ger dig och patienten 100% motstånd mot grundskadan av den valda typen. Uberladdning ger full immunitet mot den valda skadetypen i 30 sekunder."
+		VACCINATOR_DESC			= "Aktiva läkningar ger dig och patienten 100% motstånd mot grundskadan av den valda typen. Uberladdning ger full immunitet mot den valda skadetypen i 30 sekunder."
 		// TODO: Update! " Active healing grants you and the patient increased mobility and 100% resistance to base damage of the selected damage type. Ubercharge grants full immunity to the selected damage type for 30 seconds."
 		///
 		BONESAW_NAME 			= "BENSÅG"
-		BONESAW_DESC			= " Standardval för försvar och rörelse. Ger 10% Uber vid träff."
+		BONESAW_DESC			= "Standardval för försvar och rörelse. Ger 10% Uber vid träff."
 		//
 		UBERSAW_NAME 			= "UBERSÅGEN"
-		UBERSAW_DESC			= " Utdela blöd vid träff. Få 2% Uber vid träff."
+		UBERSAW_DESC			= "Utdela blöd vid träff. Få 2% Uber vid träff."
 		//
 		VITASAW_NAME 			= "VITA-SÅGEN"
-		VITASAW_DESC			= " Få en Överhälsa förtrollningsladdning vid träff (Kräver Trolleribok). Få 5% Uber vid träff."
+		VITASAW_DESC			= "Få en Överhälsa förtrollningsladdning vid träff (Kräver Trolleribok). Få 5% Uber vid träff."
 		//
 		AMPUTATOR_NAME 			= "AMPUTERAREN"
-		AMPUTATOR_DESC			= " Vid träff: Ditt Hälsovapen blir superladdad och får temporärt ökad läkningshastighet, uberhastighet och räckvidd. Dödar man en fiende så får man en starkare version av denna effekt."
+		AMPUTATOR_DESC			= "Vid träff: Ditt Hälsovapen blir superladdad och får temporärt ökad läkningshastighet, uberhastighet och räckvidd. Dödar man en fiende så får man en starkare version av denna effekt."
 		//
 		SOLEMNVOW_NAME 			= "HÖGTIDLIGA LÖFTET"
-		SOLEMNVOW_DESC			= " Oändligt räckvidd, träffar alla fiender kopplade via Hälsovapen strålar och utdelar x200 skada mot Sjukvårdarbotar. Få 5% Uber för varje fiende träffad."
+		SOLEMNVOW_DESC			= "Oändligt räckvidd, träffar alla fiender kopplade via Hälsovapen strålar och utdelar x200 skada mot Sjukvårdarbotar. Få 5% Uber för varje fiende träffad."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		SNIPERRIFLE_NAME 		= "KRYPSKYTTEGEVÄR"
-		SNIPERRIFLE_DESC 		= " Fullt laddade huvudskott utdelar 450,000 skada."
+		SNIPERRIFLE_DESC 		= "Fullt laddade huvudskott utdelar 450,000 skada."
 		//
 		MACHINA_NAME 			= "MACHINA"
-		MACHINA_DESC 			= " Tar lång tid att ladda, men kan riva Pansarvagnar vid full laddning. Dödar man fiender så laddas en vrede mätare som ger en 1-sekund kritisk laddning. Para ihop den kritiska laddningen med en full laddning för att omedelbart förstöra de flesta Pansarvagnar som du kommer möta."
+		MACHINA_DESC 			= "Tar lång tid att ladda, men kan riva Pansarvagnar vid full laddning. Dödar man fiender så laddas en vrede mätare som ger en 1-sekund kritisk laddning. Para ihop den kritiska laddningen med en full laddning för att omedelbart förstöra de flesta Pansarvagnar som du kommer möta."
 		// TODO: Update! " Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Gaints and Tanks."
 		//
 		HITMANSHEATMAKER_NAME 	= "TORPEDENS TRONGA"
-		HITMANSHEATMAKER_DESC 	= " Snabb eldgivning utan att sikta ut. Ingen skada på kroppskott."
+		HITMANSHEATMAKER_DESC 	= "Snabb eldgivning utan att sikta ut. Ingen skada på kroppskott."
 		//
 		AWPERHAND_NAME 			= "AWPEKAREN"
-		AWPERHAND_DESC 			= " Avfyrar explosiva rundor och genererar vrede vid döende träffar. Vid 100% vrede, tryck 'omladdning' till att få ökad max hälsa och hälsoåterställning. Geväret laddar bara när fiender är i ditt sikte."
+		AWPERHAND_DESC 			= "Avfyrar explosiva rundor och genererar vrede vid döende träffar. Vid 100% vrede, tryck 'omladdning' till att få ökad max hälsa och hälsoåterställning. Geväret laddar bara när fiender är i ditt sikte."
 		//
 		HUNTSMAN_NAME 			= "JÄGAREN"
-		HUNTSMAN_DESC 			= " Avfyrar 5 pilar på samma gång. Utdelar massiv brandskada om en Pyro tänder din pil."
+		HUNTSMAN_DESC 			= "Avfyrar 5 pilar på samma gång. Utdelar massiv brandskada om en Pyro tänder din pil."
 		//
 		SYDNEYSLEEPER_NAME 		= "SYDNEY-SÖVAREN"
-		SYDNEYSLEEPER_DESC 		= " Avfyrar en speciell pil som förlamar rörelser av icke-jättar och gör så att finder inte kan få läkande från Sjukvårdarbotar."
+		SYDNEYSLEEPER_DESC 		= "Avfyrar en speciell pil som förlamar rörelser av icke-jättar och gör så att finder inte kan få läkande från Sjukvårdarbotar."
 		//
 		BAZAARBARGAIN_NAME 		= "BASARSFYNDET"
-		BAZAARBARGAIN_DESC 		= " Dödar man fiender med samma klass på rad så ökas eldgivningshastigheten, staplas upp till 3. Dödar man en annan klass så återställs kombon."
+		BAZAARBARGAIN_DESC 		= "Dödar man fiender med samma klass på rad så ökas eldgivningshastigheten, staplas upp till 3. Dödar man en annan klass så återställs kombon."
 		//
 		FORTIFIEDCOMPOUND_NAME 	= "FÖRSTÄRKTA FÖRENINGEN"
-		FORTIFIEDCOMPOUND_DESC 	= " Minskade skadan över Jägaren, men avfyrar snabbare, penetrerar och utdelar kritiska träffar på våta fiender."
+		FORTIFIEDCOMPOUND_DESC 	= "Minskade skadan över Jägaren, men avfyrar snabbare, penetrerar och utdelar kritiska träffar på våta fiender."
 		//
 		CLASSIC_NAME 			= "KLASSIKERN"
-		CLASSIC_DESC 			= " Avfyrar så snabbt som du kan trycka avtryckaren, eller ladda ett enda skott med sjuk explosiv huvudskottskraft som förgör alla icke-jättar robotar i området."
+		CLASSIC_DESC 			= "Avfyrar så snabbt som du kan trycka avtryckaren, eller ladda ett enda skott med sjuk explosiv huvudskottskraft som förgör alla icke-jättar robotar i området."
 		///
 		SMG_NAME 				= "KPIST"
-		SMG_DESC 				= " Kan utdela huvudskot för en stor mängd ökad skada. Alternativattack: Zooma in och gå 100% träffsäkerhet med kostnaden av halva eldgivningshastigheten."
+		SMG_DESC 				= "Kan utdela huvudskot för en stor mängd ökad skada. Alternativattack: Zooma in och gå 100% träffsäkerhet med kostnaden av halva eldgivningshastigheten."
 		//
 		RAZORBACK_NAME 			= "RAZORBACK"
-		RAZORBACK_DESC 			= " Väldigt snabbt omladdning och lägger Jarate på din attackerare."
+		RAZORBACK_DESC 			= "Väldigt snabbt omladdning och lägger Jarate på din attackerare."
 		//
 		JARATE_NAME 			= "JARATE"
-		JARATE_DESC 			= " Omedelbar omladdning, saktar ner fiender."
+		JARATE_DESC 			= "Omedelbar omladdning, saktar ner fiender."
 		//
 		DARWIN_NAME 			= "DARWINS FAROSKÖLD"
-		DARWIN_DESC 			= " Nästan immun mot ELD, men tar 50% mer skada från KULOR och EXPLOSIONER."
+		DARWIN_DESC 			= "Nästan immun mot ELD, men tar 50% mer skada från KULOR och EXPLOSIONER."
 		//
 		COZYCAMPER_NAME 		= "KRYPSKYTTENS KRYPIN"
-		COZYCAMPER_DESC 		= " Små ökningar i din rörelsehastighet, max hälsa och hälsoåterställning. Immun mot efterbrand."
+		COZYCAMPER_DESC 		= "Små ökningar i din rörelsehastighet, max hälsa och hälsoåterställning. Immun mot efterbrand."
 		//
 		CLEANERSCARBINE_NAME 	= "UNDANRÖJARENS UMGÄNGE"
-		CLEANERSCARBINE_DESC 	= " Mini-kritisk laddning varar i 30 sekunder."
+		CLEANERSCARBINE_DESC 	= "Mini-kritisk laddning varar i 30 sekunder."
 		//
 		BEAUTYMARK_NAME 		= "SJÄLVMEDVETNA SKÖNHETSFLÄCKEN"
-		BEAUTYMARK_DESC 		= " Regna ner helig helveteseld med flammande pilar. Alternativattack: Kasta en kluster av flammande pilar på en gång."
+		BEAUTYMARK_DESC 		= "Regna ner helig helveteseld med flammande pilar. Alternativattack: Kasta en kluster av flammande pilar på en gång."
 		///
 		KUKRI_NAME 				= "KUKRI"
-		KUKRI_DESC 				= " Standardval för försvar och rörelse."
+		KUKRI_DESC 				= "Standardval för försvar och rörelse."
 		//
 		TRIBALMANSSHIV_NAME 	= "STAMHERRENS HANDGJORDA KNIV"
-		TRIBALMANSSHIV_DESC 	= " Utilitetsföremål - Du har ingen gravitation och kan flyga fritt."
+		TRIBALMANSSHIV_DESC 	= "Utilitetsföremål - Du har ingen gravitation och kan flyga fritt."
 		//
 			WACKA_NAME 			= "BUSHWACKA"
-		BUSHWACKA_DESC 			= " Oändligt närstridsräckvidd och aranterade kritiska träffar mot brinnande fiender."
+		BUSHWACKA_DESC 			= "Oändligt närstridsräckvidd och aranterade kritiska träffar mot brinnande fiender."
 		//
 		SHAHANSHAH_NAME 		= "SHAHANSHAHEN"
-		SHAHANSHAH_DESC 		= " Vänsterklicka för att skicka dig själv flygandes uppåt, bra för att nå höga ställen. Du är också immun mot fallskada."
+		SHAHANSHAH_DESC 		= "Vänsterklicka för att skicka dig själv flygandes uppåt, bra för att nå höga ställen. Du är också immun mot fallskada."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		REVOLVER_NAME 			= "REVOLVER"
-		REVOLVER_DESC 			= " Vid träff: Utdelar flera negativa effekter, orsakar fiender att ta ökad skada en kort stund, tömmer fiende Sjukvårdarens Uberladdning och tvingar Spionbotar att sluta förklä sig. Kan bedöva fiender som är i luften."
+		REVOLVER_DESC 			= "Vid träff: Utdelar flera negativa effekter, orsakar fiender att ta ökad skada en kort stund, tömmer fiende Sjukvårdarens Uberladdning och tvingar Spionbotar att sluta förklä sig. Kan bedöva fiender som är i luften."
 		//
 		AMBASSADOR_NAME 		= "AMBASSADÖREN"
-		AMBASSADOR_DESC 		= " Utdela stor huvudskott skada. Skadan är dubblad om du inte är förklädd."
+		AMBASSADOR_DESC 		= "Utdela stor huvudskott skada. Skadan är dubblad om du inte är förklädd."
 		//
 		LETRANGER_NAME 			= "FRÄMLINGEN"
-		LETRANGER_DESC 			= " Kan förgöra alla icke-jättar i ett enda skott. Noll skada mot Jättar eller Pansarvagnar dock."
+		LETRANGER_DESC 			= "Kan förgöra alla icke-jättar i ett enda skott. Noll skada mot Jättar eller Pansarvagnar dock."
 		// TODO: Update! " Able to execute any non-giant in a single shot. Deals 2% damage to Giants, zero damage to Tanks."
 		//
 		ENFORCER_NAME 			= "VERKSTÄLLAREN"
-		ENFORCER_DESC 			= " Ignorerar skademotstånd och lagrar en kritisk träff för varje rygghugg eller byggnad förstörd med en Sapper."
+		ENFORCER_DESC 			= "Ignorerar skademotstånd och lagrar en kritisk träff för varje rygghugg eller byggnad förstörd med en Sapper."
 		//
 		DIAMONDBACK_NAME 		= "DIAMONDBACK"
-		DIAMONDBACK_DESC 		= " Skapar ett svart hål som drar in fiender."
+		DIAMONDBACK_DESC 		= "Skapar ett svart hål som drar in fiender."
 		///
 		SAPPER_NAME 			= "SAPPER"
-		SAPPER_DESC 			= " Maximal bedövningsradie och varaktighet. Snabb omladdning."
+		SAPPER_DESC 			= "Maximal bedövningsradie och varaktighet. Snabb omladdning."
 		//
 		REDTAPE_NAME 			= "AVVECKLAREN"
-		REDTAPE_DESC 			= " Omedelbart förstör Ingenjörens byggnader, man kan vara sappa en fiende åt gången."
+		REDTAPE_DESC 			= "Omedelbart förstör Ingenjörens byggnader, man kan vara sappa en fiende åt gången."
 		///
 		KNIFE_NAME 				= "KNIV"
-		KNIFE_DESC 				= " Medans den är aktiv, Kniven tömmer din hälsa men ger immunitet mot ALL skada. Döende träffar återställer hälsa."
+		KNIFE_DESC 				= "Medans den är aktiv, Kniven tömmer din hälsa men ger immunitet mot ALL skada. Döende träffar återställer hälsa."
 		//
 		YOURETERNALREWARD_NAME 	= "EVIGHETSBELÖNINGEN"
-		YOURETERNALREWARD_DESC 	= " Skadan ökas ju mer skadad du är och utdelar kritiska träffar medans din hälsa är under 10%, men bara för hugg från framsidan. Motstår 90% skada."
+		YOURETERNALREWARD_DESC 	= "Skadan ökas ju mer skadad du är och utdelar kritiska träffar medans din hälsa är under 10%, men bara för hugg från framsidan. Motstår 90% skada."
 		// TODO: Update! " Extremely high backstab damage, able to instakill most Giants. However each attack has a high chance to miss. Grants a Teleport spell charge on kill (Requires Spellbook)."
 		//
 		KUNAI_NAME 				= "KONSPIRATÖRENS"
-		KUNAI_DESC 				= " Oändlig närstridsräckvidd. Rygghugg orsakar en explosion, som utdelar extra skada mot mål i närheten."
+		KUNAI_DESC 				= "Oändlig närstridsräckvidd. Rygghugg orsakar en explosion, som utdelar extra skada mot mål i närheten."
 		//
 		BIGEARNER_NAME 			= "STÖRA LÖNTAGAREN"
-		BIGEARNER_DESC 			= " Du har en massiv mängd hälsa och 'missade' svingar gör att du läks snabbt, dock du tar skada från dina lagkamrater."
+		BIGEARNER_DESC 			= "Du har en massiv mängd hälsa och 'missade' svingar gör att du läks snabbt, dock du tar skada från dina lagkamrater."
 		// TODO: Update! " You have a massive amount of health and 'missed' swings cause you to heal. Gain a short burst of massively increased heal rate on kill (which can also build overheal). Cannot heal from any other sources."
 		//
 		WANGAPRICK_NAME 		= "WANGASTICKET"
-		WANGAPRICK_DESC 		= " Dödar man en fiende så gör den att du döljs omedelbart i några sekunder. Du kan attackera fiender medans du är dold och döende träffar i rad kommer hålla dig osynlig. Inga förklädnad."
+		WANGAPRICK_DESC 		= "Dödar man en fiende så gör den att du döljs omedelbart i några sekunder. Du kan attackera fiender medans du är dold och döende träffar i rad kommer hålla dig osynlig. Inga förklädnad."
 		// TODO: Update! " Killing an enemy causes you to immediately enter stealth for a few seconds, however you cannot disguise. Grants a Cloak spell charge on kill (Requires Spellbook)."
 		//
 		SHARPDRESSER_NAME 		= "PRYDLIGA KLINGAN"
-		SHARPDRESSER_DESC 		= " Rygghugg orsakar en explosion, som gör extra skada mot fiender i närheten."
+		SHARPDRESSER_DESC 		= "Rygghugg orsakar en explosion, som gör extra skada mot fiender i närheten."
 		//
 		SPYCICLE_NAME 			= "SMYGTAPPEN"
-		SPYCICLE_DESC 			= " 'Missade' svingar gör att du hoppar upp i luften för gratis surf-hugg, men du kan inte förklä dig. Utdelar massiv skada mot Jättar på rygghugg."
+		SPYCICLE_DESC 			= "'Missade' svingar gör att du hoppar upp i luften för gratis surf-hugg, men du kan inte förklä dig. Utdelar massiv skada mot Jättar på rygghugg."
 		///
 		INVISWATCH_NAME 		= "OSYNLIGHETSKLOCKAN"
-		INVISWATCH_DESC 		= " Oändlig döljning, +10% snabbare rörelsehastighet."
+		INVISWATCH_DESC 		= "Oändlig döljning, +10% snabbare rörelsehastighet."
 		//
 		DEADRINGER_NAME 		= "DÖDSRINGAREN"
-		DEADRINGER_DESC 		= " Ger en kort rörelsehastighet när den aktiveras, som tillåter dig att rusa i vilket riktning som helst. Inkommande skada minskad med 80% medans man rusar."
+		DEADRINGER_DESC 		= "Ger en kort rörelsehastighet när den aktiveras, som tillåter dig att rusa i vilket riktning som helst. Inkommande skada minskad med 80% medans man rusar."
 		// TODO: Update! " Activate to gain super speed for several seconds. Invulnerable while active."
 		//
 		CLOAKANDDAGGER_NAME		= "STOPPURET"
-		CLOAKANDDAGGER_DESC		= " Omedelbar döljning och avslöjning."
+		CLOAKANDDAGGER_DESC		= "Omedelbar döljning och avslöjning."
 		// TODO: Update! " Activate to force enemies to ignore you. Able to attack while active."
 		// TODO: TRANSLATE THE BELOW
 		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
-		QUACKENBIRDT_DESC 		= " Activate to gain flight. Able to attack while active. Grants immunity to fall damage."
+		QUACKENBIRDT_DESC 		= "Activate to gain flight. Able to attack while active. Grants immunity to fall damage."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		FRYINGPAN_NAME 				= "STEKPANNA"
-		FRYINGPAN_DESC 				= " Utdelar x30 skada mot fiender som är samma klass som dig och få kritiska träffar vid en döende träff."
+		FRYINGPAN_DESC 				= "Utdelar x30 skada mot fiender som är samma klass som dig och få kritiska träffar vid en döende träff."
 		//
 		SAXXY_NAME 					= "SAXXYN"
-		SAXXY_DESC 					= " Utdelar x30 skada mot fiender som är samma klass som dig och få kritiska träffar vid en döende träff."
+		SAXXY_DESC 					= "Utdelar x30 skada mot fiender som är samma klass som dig och få kritiska träffar vid en döende träff."
 		//
 		MEMORYMAKER_NAME 			= "MINNESSSKAPARE"
-		MEMORYMAKER_DESC			= " Utdelar x30 skada mot fiender som är samma klass som dig och få kritiska träffar vid en döende träff."
+		MEMORYMAKER_DESC			= "Utdelar x30 skada mot fiender som är samma klass som dig och få kritiska träffar vid en döende träff."
 		//
 		CONOBJECTOR_NAME			= "VAPENVÄGRAREN"
-		CONOBJECTOR_DESC			= " Varje 10 döende träffar, rulla en slumpmässig förtrollning (Kräver Trolleribok)."
+		CONOBJECTOR_DESC			= "Varje 10 döende träffar, rulla en slumpmässig förtrollning (Kräver Trolleribok)."
 		//
 		FREEDOMSTAFF_NAME 			= "FRIHETSSTAVEN"
-		FREEDOMSTAFF_DESC 			= " Liten chans när man tar skada att man undviker attacken och blir uberladdad i 3s."
+		FREEDOMSTAFF_DESC 			= "Liten chans när man tar skada att man undviker attacken och blir uberladdad i 3s."
 		//
 		BATOUTTAHELL_NAME 			= "BAT OUTTA HELL"
-		BATOUTTAHELL_DESC 			= " Medans den är aktiv, du är osårbar mot all inkommande skada och genererar en massiv överhälsa, men du är helt sårbar mot knuff."
+		BATOUTTAHELL_DESC 			= "Medans den är aktiv, du är osårbar mot all inkommande skada och genererar en massiv överhälsa, men du är helt sårbar mot knuff."
 		//
 		HAMSHANK_NAME 				= "KNIVIGA KALLSKÄNKAN"
-		HAMSHANK_DESC 				= " Specialförmåga: 'Livsgörande Återuppstående' -  När den är tillgänglig, tryck din åtgärdsplats tangent för att omedelbart få 10x överhälsa och bli immun mot knuff i 20 sekunder."
+		HAMSHANK_DESC 				= "Specialförmåga: 'Livsgörande Återuppstående' -  När den är tillgänglig, tryck din åtgärdsplats tangent för att omedelbart få 10x överhälsa och bli immun mot knuff i 20 sekunder."
 		//
 		NECROSMASHER_NAME 			= "KUSLIGA KLUBBAN"
-		NECROSMASHER_DESC 			= " Specialförmåga: 'Fordon Mannsslakt' -  När den är tillgänlig, tryck din åtgärdsplats tangent till att gå in i Krockbils läge. Medans du är i Krockbils läge så är du sårbar, återställer hälsa och kan köra över fiender."
+		NECROSMASHER_DESC 			= "Specialförmåga: 'Fordon Mannsslakt' -  När den är tillgänlig, tryck din åtgärdsplats tangent till att gå in i Krockbils läge. Medans du är i Krockbils läge så är du sårbar, återställer hälsa och kan köra över fiender."
 		//
 		CROSSINGGAURD_NAME 			= "ÖVERGÅNGSVAKTEN"
-		CROSSINGGAURD_DESC 			= " Få massiv motstånd mot alla närstridsattacker, inkluderat rygghugg."
+		CROSSINGGAURD_DESC 			= "Få massiv motstånd mot alla närstridsattacker, inkluderat rygghugg."
 		//
 		PRINNYMACHETE_NAME 			= "PRINNY-MACHETE"
-		PRINNYMACHETE_DESC 			= " Utilitetsföremål - Svinga detta närstridsvapen för att kasta dig själv framåt med hög fart. Ger immunitet mot fallskada."
+		PRINNYMACHETE_DESC 			= "Utilitetsföremål - Svinga detta närstridsvapen för att kasta dig själv framåt med hög fart. Ger immunitet mot fallskada."
 		//------------------------------------
 	}
 	russian = {
@@ -2057,286 +2057,286 @@ if ("SetScriptVersion" in getroottable())
 		CHECKPOINT_RESTORE_HUD	= "Последняя сохранённая контрольная точка была восстановлена."
 		//---------------------------------------------------------
 		SCATTERGUN_NAME 		= "ОБРЕЗ"
-		SCATTERGUN_DESC 		= " Стандартный вариант для надёжного урона. Чрезвычайно эффективен на ближней дистанции."
+		SCATTERGUN_DESC 		= "Стандартный вариант для надёжного урона. Чрезвычайно эффективен на ближней дистанции."
 		//
 		FORCENATURE_NAME		= "НЕУМОЛИМАЯ СИЛА"
-		FORCENATURE_DESC		= " Усиленное отбрасывание при попадании. Слегка ниже урон в секунду, чем у Обреза."
+		FORCENATURE_DESC		= "Усиленное отбрасывание при попадании. Слегка ниже урон в секунду, чем у Обреза."
 		//
 		SHORTSTOP_NAME 			= "ПРЕРЫВАТЕЛЬ"
-		SHORTSTOP_DESC 			= " Бешеная скорострельность и гарантированные криты по мокрым роботам, но медленная перезарядка."
+		SHORTSTOP_DESC 			= "Бешеная скорострельность и гарантированные криты по мокрым роботам, но медленная перезарядка."
 		//
 		SODAPOPPER_NAME 		= "ГАЗИРОВЩИК"
-		SODAPOPPER_DESC 		= " Удерживайте клавишу атаки, чтобы зарядить быструю очередь из 4 выстрелов."
+		SODAPOPPER_DESC 		= "Удерживайте клавишу атаки, чтобы зарядить быструю очередь из 4 выстрелов."
 		//
 		BABYFACEBLASTER_NAME	= "ОБРЕЗ МАЛЫША"
-		BABYFACEBLASTER_DESC	= " Удерживайте клавишу атаки, чтобы зарядить мощную очередь до 200 выстрелов, уничтожая всё в упор. Имеет очень высокую отдачу."
+		BABYFACEBLASTER_DESC	= "Удерживайте клавишу атаки, чтобы зарядить мощную очередь до 200 выстрелов, уничтожая всё в упор. Имеет очень высокую отдачу."
 		//
 		BACKSCATTER_NAME		= "СПИНОБРЕЗ"
-		BACKSCATTER_DESC		= " Криты за выстрелы в спину. Не требует боеприпасов и имеет бесконечный магазин."
+		BACKSCATTER_DESC		= "Криты за выстрелы в спину. Не требует боеприпасов и имеет бесконечный магазин."
 		///
 		PISTOL_NAME 			= "ПИСТОЛЕТ"
-		PISTOL_DESC 			= " Стреляет ракетами вместо пуль. Чрезвычайно эффективен для мобильности."
+		PISTOL_DESC 			= "Стреляет ракетами вместо пуль. Чрезвычайно эффективен для мобильности."
 		//
 		BONK_NAME 				= "БОНК! АТОМНЫЙ ЗАЛП"
-		BONK_DESC 				= " Сверхзаряженный напиток, дарующий неуязвимость, которая не мешает вам атаковать."
+		BONK_DESC 				= "Сверхзаряженный напиток, дарующий неуязвимость, которая не мешает вам атаковать."
 		//
 		CRITACOLA_NAME 			= "КРИТОКОЛА"
-		CRITACOLA_DESC 			= " Сверхзаряженный напиток, дающий криты."
+		CRITACOLA_DESC 			= "Сверхзаряженный напиток, дающий криты."
 		//
 		MADMILK_NAME 			= "ЗЛОМОЛОКО"
-		MADMILK_DESC 			= " Облитые роботы не могут передвигаться."
+		MADMILK_DESC 			= "Облитые роботы не могут передвигаться."
 		//
 		WINGER_NAME 			= "Окрыленный"
-		WINGER_DESC 			= " Бесконечные прыжки, когда оружие активно. Стреляет одним сфокусированным выстрелом, который всегда наносит крит и отталкивает роботов, пока вы в воздухе."
+		WINGER_DESC 			= "Бесконечные прыжки, когда оружие активно. Стреляет одним сфокусированным выстрелом, который всегда наносит крит и отталкивает роботов, пока вы в воздухе."
 		//
 		PRETTYBOYS_NAME 		= "ДАМСКИЙ ПИСТОЛЕТ КРАСАВЧИКА"
-		PRETTYBOYS_DESC 		= " Выпускает ракеты, урон которых зависит от здоровья цели. Урон увеличивается, когда цель ранена, и не зависит от расстояния. Алтернативная атака: использовать самонаводящиеся ракеты (-20 % урона)."
+		PRETTYBOYS_DESC 		= "Выпускает ракеты, урон которых зависит от здоровья цели. Урон увеличивается, когда цель ранена, и не зависит от расстояния. Алтернативная атака: использовать самонаводящиеся ракеты (-20 % урона)."
 		//
 		CLEAVER_NAME 			= "ЛЕТАЮЩАЯ ГИЛЬОТИНА"
-		CLEAVER_DESC 			= " Стрела Йонду: призвать разумную стрелу для помощи в бою. Альтернатиная атака: режим разрушителя, -75 % урона."
+		CLEAVER_DESC 			= "Стрела Йонду: призвать разумную стрелу для помощи в бою. Альтернатиная атака: режим разрушителя, -75 % урона."
 		//
 		MATATEDMILK_NAME 		= "МУТИРОВАВШЕЕ МОЛОКО"
-		MATATEDMILK_DESC 		= " Быстрометательные взрывающиеся банки с молоком, наносящие урон роботам. Альтернативная атака: бросить сразу несколько банок."
+		MATATEDMILK_DESC 		= "Быстрометательные взрывающиеся банки с молоком, наносящие урон роботам. Альтернативная атака: бросить сразу несколько банок."
 		///
 		BAT_NAME 				= "BAT"
-		BAT_DESC 				= " Шанс игнорировать смерть и телепортироваться к месту возрождения с 1 ОЗ."
+		BAT_DESC 				= "Шанс игнорировать смерть и телепортироваться к месту возрождения с 1 ОЗ."
 		//
 		SANDMAN_NAME			= "ДРЁМА"
-		SANDMAN_DESC 			= " Позволяет быстро метать большие бейсбольные мячи, нанося значительный взрывной урон по одиночным целям."
+		SANDMAN_DESC 			= "Позволяет быстро метать большие бейсбольные мячи, нанося значительный взрывной урон по одиночным целям."
 		//
 		HOLYMACKEREL_NAME		= "ПОДДАЙ ЛЕЩА"
-		HOLYMACKEREL_DESC		= " Позволяет нанести метку смерти сразу на несколько роботов."
+		HOLYMACKEREL_DESC		= "Позволяет нанести метку смерти сразу на несколько роботов."
 		//
 		CANDYCANE_NAME 			= "КАРАМЕЛЬНАЯ ТРОСТЬ"
-		CANDYCANE_DESC 			= " Предмет экипировки — гравитация отсутствует. Позволяет свободно летать."
+		CANDYCANE_DESC 			= "Предмет экипировки — гравитация отсутствует. Позволяет свободно летать."
 		//
 		BOSTONBASHSER_NAME 		= "БОСТОНСКИЙ РАЗДОЛБАЙ"
-		BOSTONBASHSER_DESC 		= " Высокий риск - высокая награда. Позволяет убивать с одного удара большинство мелких роботов, давая 10-секундное усиление критами. Роботы, связанные лучом медика, также получают урон. Однако любой промах — мгновенная смерть."
+		BOSTONBASHSER_DESC 		= "Высокий риск - высокая награда. Позволяет убивать с одного удара большинство мелких роботов, давая 10-секундное усиление критами. Роботы, связанные лучом медика, также получают урон. Однако любой промах — мгновенная смерть."
 		//
 		SUNONASTICK_NAME		= "СОЛНЦЕ НА ПАЛОЧКЕ"
-		SUNONASTICK_DESC		= " Шанс оглушить роботов или получить кратковременное усиление критами. Поражает всех роботов, связанных лучами медика. Однако любой промах оглушит вас самих."
+		SUNONASTICK_DESC		= "Шанс оглушить роботов или получить кратковременное усиление критами. Поражает всех роботов, связанных лучами медика. Однако любой промах оглушит вас самих."
 		//
 		FANOWAR_NAME 			= "ВЕЕР ВОЙНЫ"
-		FANOWAR_DESC 			= " Предмет экипировки — при атаке позволяет стремительно броситься вперёд. Дарует иммунитет к урону от падения."
+		FANOWAR_DESC 			= "Предмет экипировки — при атаке позволяет стремительно броситься вперёд. Дарует иммунитет к урону от падения."
 		//
 		ATOMIZER_NAME 			= "РАСЩЕПИТЕЛЬ"
-		ATOMIZER_DESC 			= " Не может наносить урон обычными атаками, но успешная насмешка с атакой дарует усиление критами на 3 минуты."
+		ATOMIZER_DESC 			= "Не может наносить урон обычными атаками, но успешная насмешка с атакой дарует усиление критами на 3 минуты."
 		//
 		THREERUNEBLADE_NAME 	= "ТРЕХРУННЫЙ МЕЧ"
-		THREERUNEBLADE_DESC 	= " Пока оружие активно, даёт ОГРОМНЫЙ бонус к скорости передвижения и возможность тройного прыжка. Дарует иммунитет к урону от падения."
+		THREERUNEBLADE_DESC 	= "Пока оружие активно, даёт ОГРОМНЫЙ бонус к скорости передвижения и возможность тройного прыжка. Дарует иммунитет к урону от падения."
 		// TODO: Update! " While active, gain MASSIVE boost to move speed and ability to triple jump. Deals increased damage while airborne. Grants immunity to fall damage."
 		//
 		UNARMEDCOMBAT_NAME 		= "ГОЛАЯ РУКА"
-		UNARMEDCOMBAT_DESC 		= " Каждые 10 убийств дают заклинание призыва скелета (требуется Книга заклинаний)."
+		UNARMEDCOMBAT_DESC 		= "Каждые 10 убийств дают заклинание призыва скелета (требуется Книга заклинаний)."
 		//
 		WRAPAASSASSIN_NAME 		= "ОБЁРТОЧНЫЙ УБИЙЦА"
-		WRAPAASSASSIN_DESC 		= " Позволяет атаковать летящие снаряды, легко отражая их. Также дарует иммунитет к оглушению."
+		WRAPAASSASSIN_DESC 		= "Позволяет атаковать летящие снаряды, легко отражая их. Также дарует иммунитет к оглушению."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		ROCKETLAUNCHER_NAME		= "РАКЕТОМЁТ"
-		ROCKETLAUNCHER_DESC		= " Стандартный вариант для надёжного урона."
+		ROCKETLAUNCHER_DESC		= "Стандартный вариант для надёжного урона."
 		//
 		DIRECTHIT_NAME			= "ПРЯМОЕ ПОПАДАНИЕ"
-		DIRECTHIT_DESC			= " Альтернативная атака: подбросьте небольшого робота в воздух для лёгкого добивания мини-критом. Ракеты обладают небольшой помощью в прицеливании."
+		DIRECTHIT_DESC			= "Альтернативная атака: подбросьте небольшого робота в воздух для лёгкого добивания мини-критом. Ракеты обладают небольшой помощью в прицеливании."
 		//
 		BLACKBOX_NAME			= "ЧЁРНЫЙ ЯЩИК"
-		BLACKBOX_DESC			= " Замедляет роботов и наносит эффект кровотечения. Наносит удвоенный урон по роботам-солдатам."
+		BLACKBOX_DESC			= "Замедляет роботов и наносит эффект кровотечения. Наносит удвоенный урон по роботам-солдатам."
 		// TODO: Update! " Slow down enemies and inflict bleed."
 		//
 		ROCKETJUMPER_NAME		= "ТРЕНИРОВОЧНЫЙ РАКЕТОМЁТ"
-		ROCKETJUMPER_DESC		= " Медленная скорость стрельбы и перезарядки, но высокий урон и большой радиус взрыва. Эффективен против толпы."
+		ROCKETJUMPER_DESC		= "Медленная скорость стрельбы и перезарядки, но высокий урон и большой радиус взрыва. Эффективен против толпы."
 		//
 		LIBERTYLAUNCHER_NAME	= "ОСВОБОДИТЕЛЬ"
-		LIBERTYLAUNCHER_DESC	= " Выпускает медленно движущуюся ракету, наносящую огромный урон по большой площади. Очень медленная перезарядка и малый боезапас. Автоматически выпускает ракеты при полной обойме."
+		LIBERTYLAUNCHER_DESC	= "Выпускает медленно движущуюся ракету, наносящую огромный урон по большой площади. Очень медленная перезарядка и малый боезапас. Автоматически выпускает ракеты при полной обойме."
 		//
 		COWMANGLER_NAME			= "ЛИНЧЕВАТЕЛЬ СКОТА 5000"
-		COWMANGLER_DESC			= " Обездвиживает мелких роботов при попадании. Заряженный выстрел оглушает роботов дольше обычного. Удерживайте клавишу альтернативной атаки, чтобы перезарядить оружие для многоснарядного выстрела, что приводит к ещё более длительному оглушению."
+		COWMANGLER_DESC			= "Обездвиживает мелких роботов при попадании. Заряженный выстрел оглушает роботов дольше обычного. Удерживайте клавишу альтернативной атаки, чтобы перезарядить оружие для многоснарядного выстрела, что приводит к ещё более длительному оглушению."
 		//
 		ORIGINAL_NAME			= "ПРАРОДИТЕЛЬ"
 		ORIGINAL_DESC			= "Удерживайте клавишу атаки, чтобы зарядить очередь до 5 ракет. Стреляет автоматически при полной обойме."
 		//
 		BEGGARSBAZOOKA_NAME		= "БАЗУКА БРОДЯГИ"
-		BEGGARSBAZOOKA_DESC		= " Удерживайте клавишу атаки, чтобы зарядить до 100 ракет, прежде чем выпустить их мощным залпом. Это оружие НЕ подвержено осечке."
+		BEGGARSBAZOOKA_DESC		= "Удерживайте клавишу атаки, чтобы зарядить до 100 ракет, прежде чем выпустить их мощным залпом. Это оружие НЕ подвержено осечке."
 		//
 		AIRSTRIKE_NAME			= "АВИАУДАР"
-		AIRSTRIKE_DESC			= " Зарядите до 10 ракет, прежде чем выпустить их все за раз по точной траектории. Самонаводящиеся ракеты."
+		AIRSTRIKE_DESC			= "Зарядите до 10 ракет, прежде чем выпустить их все за раз по точной траектории. Самонаводящиеся ракеты."
 		///
 		SHOTGUN_SOLD_NAME 		= "ДРОБОВИК - СОЛДАТ" 
-		SHOTGUN_SOLD_DESC 		= " Очень высокая скорострельность и криты во время прыжка на ракете." 
+		SHOTGUN_SOLD_DESC 		= "Очень высокая скорострельность и криты во время прыжка на ракете." 
 		//
 		SHOTGUN_NAME 			= "ДРОБОВИК" 
-		SHOTGUN_DESC 			= " Стандартный вариант для надёжного урона." 
+		SHOTGUN_DESC 			= "Стандартный вариант для надёжного урона." 
 		//
 		BUFFBANNER_NAME 		= "ВДОХНОВЛЯЮЩЕЕ ЗНАМЯ" 
-		BUFFBANNER_DESC 		= " Бесконечная дальность и значительно увеличенная продолжительность действия." 
+		BUFFBANNER_DESC 		= "Бесконечная дальность и значительно увеличенная продолжительность действия." 
 		//
 		GUNBOATS_NAME 			= "ШТУРМБОТИНКИ" 
-		GUNBOATS_DESC 			= " Позволяют совершать bunnyhop, удерживая клавишу прыжка. Дарует иммунитет к урону от падения." 
+		GUNBOATS_DESC 			= "Позволяют совершать bunnyhop, удерживая клавишу прыжка. Дарует иммунитет к урону от падения." 
 		// TODO: Update! " Enables bunnyhopping by holding 'jump' key. Grants immunity to fall damage. Hold Crouch key while airborne to reduce gravity." 
 		//
 		BATTALIONS_NAME 		= "ПОДДЕРЖКА БАТАЛЬОНА" 
-		BATTALIONS_DESC 		= " Бесконечная дальность и значительно увеличенная продолжительность действия."
+		BATTALIONS_DESC 		= "Бесконечная дальность и значительно увеличенная продолжительность действия."
 		//
 		CONCHEROR_NAME 			= "ЗАВОЕВАТЕЛЬ" 
-		CONCHEROR_DESC 			= " Бесконечная дальность и значительно увеличенная продолжительность действия."
+		CONCHEROR_DESC 			= "Бесконечная дальность и значительно увеличенная продолжительность действия."
 		//
 		RESERVESHOOTER_NAME 	= "ОФИЦЕР ЗАПАСА" 
-		RESERVESHOOTER_DESC 	= " Наносит ровно 10 000 урона за выстрел независимо от дистанции с мини-критами на 3 секунды за убийство. Однако это оружие не может получить усиление критами и не может наносить урон Танкам. Удерживайте клавишу альтернативной атаки, чтобы прицелиться." 
+		RESERVESHOOTER_DESC 	= "Наносит ровно 10 000 урона за выстрел независимо от дистанции с мини-критами на 3 секунды за убийство. Однако это оружие не может получить усиление критами и не может наносить урон Танкам. Удерживайте клавишу альтернативной атаки, чтобы прицелиться." 
 		//
 		BISON_NAME 				= "БЛАГОЧЕСТИВЫЙ БИЗОН" 
-		BISON_DESC 				= " Выпускает непрерывный луч пронзающего урона с автоприцеливанием." 
+		BISON_DESC 				= "Выпускает непрерывный луч пронзающего урона с автоприцеливанием." 
 		//
 		MANTREADS_NAME 			= "ЛЮДОДАВЫ" 
-		MANTREADS_DESC 			= " Значительное снижение отбрасывания от получаемого урона. Воздушное маневрирование теперь имеет значительно увеличенное ускорение. Урон от приземления усилен и зависит от скорости." 
+		MANTREADS_DESC 			= "Значительное снижение отбрасывания от получаемого урона. Воздушное маневрирование теперь имеет значительно увеличенное ускорение. Урон от приземления усилен и зависит от скорости." 
 		// TODO: Update! " Major reduction in knockback taken from damage. Stomp damage buffed and velocity-based. Gain a short critboost on kill."
 		//
 		BASEJUMPER_NAME 		= "ПАРАШЮТИСТ" 
-		BASEJUMPER_DESC 		= " Позволяет раскрыть парашют. Увеличивает сопротивление к отбрасыванию и имеет сопротивляемость пулям, снижая уязвимость в воздухе." 
+		BASEJUMPER_DESC 		= "Позволяет раскрыть парашют. Увеличивает сопротивление к отбрасыванию и имеет сопротивляемость пулям, снижая уязвимость в воздухе." 
 		//
 		PANICATTACK_NAME 		= "ПАНИЧЕСКАЯ АТАКА" 
-		PANICATTACK_DESC 		= " Срочное лечение. Мгновенно восстанавливает до 10 000 здоровья при попадании. Получение урона с оружием в руках имеет шанс вызвать кратковременный убер-заряд." 
+		PANICATTACK_DESC 		= "Срочное лечение. Мгновенно восстанавливает до 10 000 здоровья при попадании. Получение урона с оружием в руках имеет шанс вызвать кратковременный убер-заряд." 
 		///
 		SHOVEL_NAME 			= "ЛОПАТА"
-		SHOVEL_DESC 			= " Стандартный вариант для защиты и мобильности."
+		SHOVEL_DESC 			= "Стандартный вариант для защиты и мобильности."
 		//
 		EQUALIZER_NAME 			= "УРАВНИТЕЛЬ"
-		EQUALIZER_DESC 			= " Насмешка с атакой наносит огромный урон и подбрасывает роботов в воздух."
+		EQUALIZER_DESC 			= "Насмешка с атакой наносит огромный урон и подбрасывает роботов в воздух."
 		// TODO: Update! " Damage massively increases as you become injured."
 		//
 		PAINTRAIN_NAME 			= "КОСТЫЛЬ"
-		PAINTRAIN_DESC 			= " Наносит кровотечение и замедление при попадании. Дарует иммунитет к урону от падения"
+		PAINTRAIN_DESC 			= "Наносит кровотечение и замедление при попадании. Дарует иммунитет к урону от падения"
 		//
 		HALFZATOICHI_NAME 		= "ПОЛУДЗАТОИТИ"
-		HALFZATOICHI_DESC 		= " Средний урон с высокой мобильностью, здоровьем и увеличенному радиусу атаки."
+		HALFZATOICHI_DESC 		= "Средний урон с высокой мобильностью, здоровьем и увеличенному радиусу атаки."
 		//
 		MARKETGARDENER_NAME 	= "ЗЕМЛЕКОП"
-		MARKETGARDENER_DESC 	= " Наносит значительно увеличенный критический урон. После убийства Вы впадаете в состояние ярости и получаете дополнительные ОЗ, сопротивляемость и увеличенный урон от всех атак. Однако любой промах — мгновенная смерть."
+		MARKETGARDENER_DESC 	= "Наносит значительно увеличенный критический урон. После убийства Вы впадаете в состояние ярости и получаете дополнительные ОЗ, сопротивляемость и увеличенный урон от всех атак. Однако любой промах — мгновенная смерть."
 		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		DISCIPLINARYACTION_NAME = "ДИСЦИПЛИНАРНОЕ ВЗЫСКАНИЕ"
-		DISCIPLINARYACTION_DESC	= " Стандартный вариант для защиты и мобильности."
+		DISCIPLINARYACTION_DESC	= "Стандартный вариант для защиты и мобильности."
 		// TODO: Update! " Standard option for defense and mobility. Instantly gain 1/3 Rage meter on hit."
 		//
 		ESCAPEPLAN_NAME			= "ПЛАН ЭВАКУАЦИИ"
-		ESCAPEPLAN_DESC			= " Стандартный вариант для защиты и мобильности."
+		ESCAPEPLAN_DESC			= "Стандартный вариант для защиты и мобильности."
 		// TODO: Update! " Deal guaranteed crits when below 50% health."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		FLAMETHROWER_NAME 		= "ОГНЕМЁТ"
-		FLAMETHROWER_DESC		= " Стандартный вариант для надёжного урона. Даёт кратковременное усиление мини-критами за убийство."
+		FLAMETHROWER_DESC		= "Стандартный вариант для надёжного урона. Даёт кратковременное усиление мини-критами за убийство."
 		//
 		BACKBURNER_NAME 		= "ДОЖИГАТЕЛЬ"
-		BACKBURNER_DESC			= " Зелёное пламя — помечает роботов меткой смерти и оглушает роботов в воздухе на короткое время. Это оружие наносит удвоенный урон по роботам-поджигателям."
+		BACKBURNER_DESC			= "Зелёное пламя — помечает роботов меткой смерти и оглушает роботов в воздухе на короткое время. Это оружие наносит удвоенный урон по роботам-поджигателям."
 		//
 		DEGREASER_NAME 			= "ЧИСТИЛЬЩИК"
-		DEGREASER_DESC			= " Дальнобойный огнемёт, наносящий большой прямой урон, но 0 урона от догорания. Не может использовать сжатый воздух."
+		DEGREASER_DESC			= "Дальнобойный огнемёт, наносящий большой прямой урон, но 0 урона от догорания. Не может использовать сжатый воздух."
 		//
 		PHLOGISTINATOR_NAME 	= "ФЛОГИСТОНАТОР"
-		PHLOGISTINATOR_DESC		= " Зелёный огонь — помечает роботов меткой смерти и оглушает роботов в воздухе на короткое время. Силён против Танков, но сниженная скорость передвижения."
+		PHLOGISTINATOR_DESC		= "Зелёный огонь — помечает роботов меткой смерти и оглушает роботов в воздухе на короткое время. Силён против Танков, но сниженная скорость передвижения."
 		//
 		RAINBLOWER_NAME 		= "РАДУЖИГАТЕЛЬ"
-		RAINBLOWER_DESC			= " Дальнобойный огнемёт, наносящий маленький прямой урон, но большой от догорания. Также способен мгновенно уничтожать постройки роботов-инженеров и поджигать роботов-поджигателей. Небольшая сила отталкивания при помощи сжатого воздуха, но без задержки."
+		RAINBLOWER_DESC			= "Дальнобойный огнемёт, наносящий маленький прямой урон, но большой от догорания. Также способен мгновенно уничтожать постройки роботов-инженеров и поджигать роботов-поджигателей. Небольшая сила отталкивания при помощи сжатого воздуха, но без задержки."
 		//
 		DRAGONSFURY_NAME 		= "ЯРОСТЬ ДРАКОНА"
-		DRAGONSFURY_DESC		= " Значительно увеличенная скорострельность и частота использования сжатого воздуха."
+		DRAGONSFURY_DESC		= "Значительно увеличенная скорострельность и частота использования сжатого воздуха."
 		//
 		NOSTROMONAPALMER_NAME 	= "НОСТРОМСКИЙ ПЛАМЕМЕТ"
-		NOSTROMONAPALMER_DESC	= " Замедляет роботов при попадании. Накапливает заряд 'Mmmph', как у Флогистонатора, но даёт бафф Завоевателя. Не может использовать сжатый воздух."
+		NOSTROMONAPALMER_DESC	= "Замедляет роботов при попадании. Накапливает заряд 'Mmmph', как у Флогистонатора, но даёт бафф Завоевателя. Не может использовать сжатый воздух."
 		///
 		SHOTGUN_PYRO_NAME 		= "ДРОБОВИК - ПОДЖИГАТЕЛЬ" 
-		SHOTGUN_PYRO_DESC 		= " Гарантированные криты по горящим роботам." 
+		SHOTGUN_PYRO_DESC 		= "Гарантированные криты по горящим роботам." 
 		//
 		FLAREGUN_NAME 			= "РАКЕТНИЦА" 
-		FLAREGUN_DESC 			= " Выпускает атаку с определением попадания (hitscan), которая пронзает роботов. Урон экспоненциально увеличивается с каждым пронзённых роботов на пути. Есть шанс оглушить роботов при попадании." 
+		FLAREGUN_DESC 			= "Выпускает атаку с определением попадания (hitscan), которая пронзает роботов. Урон экспоненциально увеличивается с каждым пронзённых роботов на пути. Есть шанс оглушить роботов при попадании." 
 		//
 		DETONATOR_NAME 			= "ДЕТОНАТОР" 
-		DETONATOR_DESC 			= " Снаряд имеет бесконечный радиус взрыва и поражает всё, что находится в прямой видимости. Заставляет всех роботов-шпионов выйти из невидимости и снять маскировку. Отличный выбор для мобильности." 
+		DETONATOR_DESC 			= "Снаряд имеет бесконечный радиус взрыва и поражает всё, что находится в прямой видимости. Заставляет всех роботов-шпионов выйти из невидимости и снять маскировку. Отличный выбор для мобильности." 
 		//
 		MANMELTER_NAME 			= "ЛЮДОПЛАВ" 
-		MANMELTER_DESC 			= " Быстрострельные снаряды с автонаведением. Бесконечный боезапас и отсутствие перезарядки. Альтернативная атака: выпустить сразу несколько снарядов." 
+		MANMELTER_DESC 			= "Быстрострельные снаряды с автонаведением. Бесконечный боезапас и отсутствие перезарядки. Альтернативная атака: выпустить сразу несколько снарядов." 
 		//
 		SCORCHSHOT_NAME 		= "ОБЖИГАЮЩИЙ ВЫСТРЕЛ" 
-		SCORCHSHOT_DESC 		= " При попадании: наносит большой урон, тушит робота и отбрасывает его. Ваша цель ОБЯЗАТЕЛЬНО должна гореть, иначе этот снаряд ничего не сделает. Алтернативная атака: использовать медленный самонаводящийся снаряд." 
+		SCORCHSHOT_DESC 		= "При попадании: наносит большой урон, тушит робота и отбрасывает его. Ваша цель ОБЯЗАТЕЛЬНО должна гореть, иначе этот снаряд ничего не сделает. Алтернативная атака: использовать медленный самонаводящийся снаряд." 
 		//
 		THERMALTHRUSTER_NAME 	= "ТЕРМИЧЕСКАЯ ТЯГА" 
-		THERMALTHRUSTER_DESC 	= " Уменьшенный расход топлива без задержки. Возможность повторного использования в воздухе и нанесение огромного урона от приземления на роботов. Даёт кратковременное усиление критами за убийство." 
+		THERMALTHRUSTER_DESC 	= "Уменьшенный расход топлива без задержки. Возможность повторного использования в воздухе и нанесение огромного урона от приземления на роботов. Даёт кратковременное усиление критами за убийство." 
 		//
 		GASPASSER_NAME 			= "ЗАПАСНОЙ БАК" 
-		GASPASSER_DESC 			= " Нанесите 150 000 урона, чтобы заполнить шкалу. Взрыв при поджигании газа наносит 105 000 урона." 
+		GASPASSER_DESC 			= "Нанесите 150 000 урона, чтобы заполнить шкалу. Взрыв при поджигании газа наносит 105 000 урона." 
 		///
 		FIREAXE_NAME 			= "ПОЖАРНЫЙ ТОПОР"
-		FIREAXE_DESC 			= " Стандартный вариант для защиты и мобильности."
+		FIREAXE_DESC 			= "Стандартный вариант для защиты и мобильности."
 		//	
 		AXTINGUISHER_NAME 		= "Огнетопор"
-		AXTINGUISHER_DESC		= " Значительно увеличенный урон по горящим роботам."
+		AXTINGUISHER_DESC		= "Значительно увеличенный урон по горящим роботам."
 		//
 		HOMEWRECKER_NAME 		= "КРУШИТЕЛЬ"
-		HOMEWRECKER_DESC 		= " Позволяет мгновенно уничтожать постройки роботов-инженеров с бесконечным радиусом атаки."
+		HOMEWRECKER_DESC 		= "Позволяет мгновенно уничтожать постройки роботов-инженеров с бесконечным радиусом атаки."
 		//
 		POWERJACK_NAME 			= "РАЗЪЕДИНИТЕЛЬ"
-		POWERJACK_DESC 			= " Быстрые атаки и скорость передвижения. Наносит кровотечение и поджигает роботов при попадании, даёт мини-криты за убийство."
+		POWERJACK_DESC 			= "Быстрые атаки и скорость передвижения. Наносит кровотечение и поджигает роботов при попадании, даёт мини-криты за убийство."
 		//
 		BACKSCRATCHER_NAME 		= "СПИНОЧЁС"
-		BACKSCRATCHER_DESC 		= " Наносит смертельный урон, атакуя со спины. После убийства Вы впадаете в состояние ярости и получаете дополнительную скорость передвижения, сопротивляемость к урону и увеличенный урон от всех атак."
+		BACKSCRATCHER_DESC 		= "Наносит смертельный урон, атакуя со спины. После убийства Вы впадаете в состояние ярости и получаете дополнительную скорость передвижения, сопротивляемость к урону и увеличенный урон от всех атак."
 		// TODO: Update! " Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		VOLCANOFRAGMENT_NAME 	= "ЗАОСТРЕННЫЙ ОСКОЛОК ВУЛКАНА"
 		VOLCANOFRAGMENT_DESC 	= "Шанс оглушить роботов при попадании. Поджигает роботов-поджигателей."
 		//
 		POSTALPUMMELER_NAME 	= "ПОЧТОВЫЙ ДЕБОШИР"
-		POSTALPUMMELER_DESC 	= " При попадании: вызывает замешательство, заставляя роботов на короткое время идти задом наперёд. Удерживайте клавишу альтернативной атаки, чтобы телепортироваться обратно в зону возрождения."
+		POSTALPUMMELER_DESC 	= "При попадании: вызывает замешательство, заставляя роботов на короткое время идти задом наперёд. Удерживайте клавишу альтернативной атаки, чтобы телепортироваться обратно в зону возрождения."
 		//
 		MAUL_NAME 				= "МОЛОТ"
-		MAUL_DESC 				= " При попадании: подбрасывает роботов в воздух с пониженной гравитацией."
+		MAUL_DESC 				= "При попадании: подбрасывает роботов в воздух с пониженной гравитацией."
 		// TODO: Update! " On hit: Cause an explosion, launching enemies into the air and igniting them."
 		//
 		THIRDDEGREE_NAME 		= "ТРЕТЬЯ СТЕПЕНЬ"
-		THIRDDEGREE_DESC 		= " Вы почти неуязвимы к огню, а также получаете дополнительную высокую сопротивляемость ко всем атакам с дальнего боя, пока оружие находится в руках."
+		THIRDDEGREE_DESC 		= "Вы почти неуязвимы к огню, а также получаете дополнительную высокую сопротивляемость ко всем атакам с дальнего боя, пока оружие находится в руках."
 		//
 		LOLLICHOP_NAME 			= "КЛЕДЕНЕЦ"
-		LOLLICHOP_DESC 			= " Каждые 10 убийств дают заклинание метеоритного дождя (требуется Книга заклинаний)."
+		LOLLICHOP_DESC 			= "Каждые 10 убийств дают заклинание метеоритного дождя (требуется Книга заклинаний)."
 		//
 		NEONANNIHILATOR_NAME 	= "НЕОНОВЫЙ АННИГИЛЯТОР"
-		NEONANNIHILATOR_DESC 	= " Ваша гравитация снижена."
+		NEONANNIHILATOR_DESC 	= "Ваша гравитация снижена."
 		//
 		HOTHAND_NAME 			= "ГОРЯЧАЯ РУКА"
-		HOTHAND_DESC 			= " Подбрасывает роботов в воздух при попадании."
+		HOTHAND_DESC 			= "Подбрасывает роботов в воздух при попадании."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		GRENADELAUNCHER_NAME 	= "ГРАНАТОМЁТ"
-		GRENADELAUNCHER_DESC	= " Стандартный вариант для надёжного урона."
+		GRENADELAUNCHER_DESC	= "Стандартный вариант для надёжного урона."
 		//
 		LOCHNLOAD_NAME 			= "ПОДКИДЫШ"
-		LOCHNLOAD_DESC			= " Медленные выстрелы, но высокий взрывной урон по большой площади. Эффективен против толпы."
+		LOCHNLOAD_DESC			= "Медленные выстрелы, но высокий взрывной урон по большой площади. Эффективен против толпы."
 		//
 		ALIBABA_NAME			= "БОТИНОЧКИ АЛИ-БАБЫ"
-		ALIBABA_DESC			= " Повышенная скорость передвижения, высота прыжка и заряд рывка. Даёт дополнительную сопротивляемость к урону, ускоренную перезарядку щита и повышенный урон от удара щитом."
+		ALIBABA_DESC			= "Повышенная скорость передвижения, высота прыжка и заряд рывка. Даёт дополнительную сопротивляемость к урону, ускоренную перезарядку щита и повышенный урон от удара щитом."
 		// TODO: Update! " Enhanced shield bash damage. Grants immunity to fall damage."
 		//
 		BOOTLEGGER_NAME			= "БУТЛЕГЕР"
-		BOOTLEGGER_DESC			= " Повышенная скорость передвижения, высота прыжка и заряд рывка. Даёт огромную сопротивляемость к атакам ближнего боя, но уязвимость к критическим атакам."
+		BOOTLEGGER_DESC			= "Повышенная скорость передвижения, высота прыжка и заряд рывка. Даёт огромную сопротивляемость к атакам ближнего боя, но уязвимость к критическим атакам."
 		// TODO: Update! " Enhanced shield recharge rate. Grants immunity to fall damage."
 		//
 		LOOSECANNON_NAME		= "ПУШКА БЕЗ ЛАФЕТА"
-		LOOSECANNON_DESC		= " Зарядите до 4 ядер, прежде чем выпустить их все за раз по вертикали. Ядра взрываются при контакте с землёй."
+		LOOSECANNON_DESC		= "Зарядите до 4 ядер, прежде чем выпустить их все за раз по вертикали. Ядра взрываются при контакте с землёй."
 		//
 		IRONBOMBER_NAME			= "ЖЕЛЕЗНЫЙ БОМБАРДИР"
-		IRONBOMBER_DESC			= " Игнорирует сопротивляемость роботов и даёт кратковременное усиление критами за убийство. Не требует боеприпасов и имеет бесконечный магазин. Снаряды могут отскакивать от стен."
+		IRONBOMBER_DESC			= "Игнорирует сопротивляемость роботов и даёт кратковременное усиление критами за убийство. Не требует боеприпасов и имеет бесконечный магазин. Снаряды могут отскакивать от стен."
 		///
 		STICKYBOMB_NAME 		= "ЛИПУЧКОМЁТ"
-		STICKYBOMB_DESC 		= " Стандартный вариант для надёжного урона. Позволяет разместить до 50 бомб-липучек."
+		STICKYBOMB_DESC 		= "Стандартный вариант для надёжного урона. Позволяет разместить до 50 бомб-липучек."
 		//
 		SCOTTISHRES_NAME 		= "ШОТЛАНДСКОЕ СОПРОТИВЛЕНИЕ"
-		SCOTTISHRES_DESC 		= " Снаряд взводится 5 секунд и затухает через 10 секунд, но при хорошем расчёте времени и полной зарядке может нанести сокрушительный урон."
+		SCOTTISHRES_DESC 		= "Снаряд взводится 5 секунд и затухает через 10 секунд, но при хорошем расчёте времени и полной зарядке может нанести сокрушительный урон."
 		//
 		STICKYJUMPER_NAME 		= "ТРЕНИРОВОЧНЫЙ ЛИПУЧКОМЁТ"
 		STICKYJUMPER_DESC 		= "Создаёт поле отключения роботов задетых импульсом, оглушая их. (Мини-боссы невосприимчивы к оглушению)."
 		//
 		CHARGINTARGE_NAME 		= "ШТУРМОВОЙ ЩИТ"
-		CHARGINTARGE_DESC 		= " Высокая сопротивляемость к урону от взрыва, но повышенная уязвимость к огню и пулям. Также даёт дополнительную сопротивляемость к отбрасыванию и критам."
+		CHARGINTARGE_DESC 		= "Высокая сопротивляемость к урону от взрыва, но повышенная уязвимость к огню и пулям. Также даёт дополнительную сопротивляемость к отбрасыванию и критам."
 		// TODO: Update! " Heavy Charge - Superior shield bash damage."
 		//
 		SPLENDIDSCREEN_NAME 	= "РОСКОШНОЕ ПРИКРЫТИЕ"
@@ -2344,353 +2344,353 @@ if ("SetScriptVersion" in getroottable())
 		// TODO: Update! " Rapid Charge - Superior shield recharge rate."
 		// 
 		TIDETURNER_NAME 		= "ВЕРНЫЙ ШТУРВАЛ"
-		TIDETURNER_DESC 		= " Высокая сопротивляемость к урону от пуль, но повышенная уязвимость к огню и взрывам. Также даёт дополнительную сопротивляемость к отбрасыванию и критам."
+		TIDETURNER_DESC 		= "Высокая сопротивляемость к урону от пуль, но повышенная уязвимость к огню и взрывам. Также даёт дополнительную сопротивляемость к отбрасыванию и критам."
 		// TODO: Update! " Burst Charge - Superior shield charge move speed."
 		//
 		QUICKIEBOMB_NAME 		= "БЫСТРОМЁТ"
-		QUICKIEBOMB_DESC 		= " Автоматически стреляет липучками с безумной скоростью и очень сокращённым временем подрыва. Даёт мини-криты за убийство."
+		QUICKIEBOMB_DESC 		= "Автоматически стреляет липучками с безумной скоростью и очень сокращённым временем подрыва. Даёт мини-криты за убийство."
 		///
 		BOTTLE_NAME 			= "БУТЫЛКА"
-		BOTTLE_DESC 			= " Стандартный вариант для защиты и мобильности."
+		BOTTLE_DESC 			= "Стандартный вариант для защиты и мобильности."
 		//
 		EYELANDER_NAME 			= "ОДНОГЛАЗЫЙ ГОРЕЦ"
-		EYELANDER_DESC 			= " Высокий урон с ускоренными атаками, получая криты и мини-криты за убийство. Убирает боеприпасы основного и дополнительного оружия."
+		EYELANDER_DESC 			= "Высокий урон с ускоренными атаками, получая криты и мини-криты за убийство. Убирает боеприпасы основного и дополнительного оружия."
 		//
 		SKULLCUTTER_NAME 		= "ШОТЛАНДСКИЙ ГОЛОВОРЕЗ"
-		SKULLCUTTER_DESC 		= " Способен пробить вражеский убер-заряд и прервать лечение. Также наносит урон в десятикратном размере по роботам того же класса, что и вы."
+		SKULLCUTTER_DESC 		= "Способен пробить вражеский убер-заряд и прервать лечение. Также наносит урон в десятикратном размере по роботам того же класса, что и вы."
 		// TODO: Update! " Able to cut through enemy Ubercharge and disrupt Medi-Gun functions. Also able to deal increased damage to enemies of the same class as you."
 		//
 		CABER_NAME 				= "АЛЛАПУЛЬСКОЕ БРЕВНО"
-		CABER_DESC 				= " Урон увеличивается по мере получаемого урона. Гарантированные криты, если ваше здоровье ниже 2 %. Взрыв бревна мгновенно убивает."
+		CABER_DESC 				= "Урон увеличивается по мере получаемого урона. Гарантированные криты, если ваше здоровье ниже 2 %. Взрыв бревна мгновенно убивает."
 		// TODO: Update! " You are a Sentry Buster - Taunt to detonate!"
 		//
 		CLAIDHEAMHMOR_NAME 		= "КЛЕЙМОР"
-		CLAIDHEAMHMOR_DESC 		= " Каждые 10 убийств дают заклинание призыва ГЛАЗАСТУСА (требуется Книга заклинаний)."
+		CLAIDHEAMHMOR_DESC 		= "Каждые 10 убийств дают заклинание призыва ГЛАЗАСТУСА (требуется Книга заклинаний)."
 		//
 		PERSIANPERSUADER_NAME 	= "ПЕРСИДСКИЙ ЗАКЛИНАТЕЛЬ"
-		PERSIANPERSUADER_DESC 	= " В паре со щитом дарует бесконечный заряд рывка. Рывок не прерывается резкими поворотами или столкновениями со стенами, роботами и другими препятствиями. Дарует иммунитет к оглушению."
+		PERSIANPERSUADER_DESC 	= "В паре со щитом дарует бесконечный заряд рывка. Рывок не прерывается резкими поворотами или столкновениями со стенами, роботами и другими препятствиями. Дарует иммунитет к оглушению."
 		//
 		NINEIRON_NAME 			= "ЖЕЛЕЗНАЯ ДЕВЯТКА НЕССИ"
-		NINEIRON_DESC 			= " Имеет огромную дугу замаха, способную поражать сразу нескольких роботов во всех направлениях. Всегда наносит двойной критический урон."
+		NINEIRON_DESC 			= "Имеет огромную дугу замаха, способную поражать сразу нескольких роботов во всех направлениях. Всегда наносит двойной критический урон."
 		//
 		SCOTTISHHANDSHAKE_NAME 	= "ШОТЛАНДСКОЕ РУКОБИТИЕ"
-		SCOTTISHHANDSHAKE_DESC 	= " Пока активно в руках: сопротивление 90 % урона с дальних дистанций, иммунитет к отбрасыванию и большое увеличение максимального здоровья. Однако вы не можете пополнять боезапас и получаете меньше здоровья от аптечек."
+		SCOTTISHHANDSHAKE_DESC 	= "Пока активно в руках: сопротивление 90 % урона с дальних дистанций, иммунитет к отбрасыванию и большое увеличение максимального здоровья. Однако вы не можете пополнять боезапас и получаете меньше здоровья от аптечек."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		MINIGUN_NAME 			= "ПУЛЕМЁТ"
-		MINIGUN_DESC 			= " Стандартный вариант для надёжного урона. Даёт кратковременное усиление мини-критами за убийство."
+		MINIGUN_DESC 			= "Стандартный вариант для надёжного урона. Даёт кратковременное усиление мини-критами за убийство."
 		//
 		NATASCHA_NAME 			= "НАТАША"
-		NATASCHA_DESC 			= " Замедляет роботов при попадании и накладывает метку смерти."
+		NATASCHA_DESC 			= "Замедляет роботов при попадании и накладывает метку смерти."
 		//
 		BRASSBEAST_NAME 		= "ЛАТУННЫЙ МОНСТР"
-		BRASSBEAST_DESC 		= " Более высокий урон при очень медленной раскрутке. Скорость передвижения сильно снижена при раскручивании ствола. Способен отражать летящие снаряды.."
+		BRASSBEAST_DESC 		= "Более высокий урон при очень медленной раскрутке. Скорость передвижения сильно снижена при раскручивании ствола. Способен отражать летящие снаряды.."
 		//
 		TOMISLAV_NAME 			= "ТОМИСЛАВ"
-		TOMISLAV_DESC 			= " Накапливает «Нагрев» за нанесённый урон. Все характеристики оружия увеличиваются в зависимости от уровня нагрева. Однако, если долго не наносить урон, оружие начинает остывать."
+		TOMISLAV_DESC 			= "Накапливает «Нагрев» за нанесённый урон. Все характеристики оружия увеличиваются в зависимости от уровня нагрева. Однако, если долго не наносить урон, оружие начинает остывать."
 		//
 		HUOHEATER_NAME 			= "ОГНЕННЫЙ ДРАКОН"
-		HUOHEATER_DESC 			= " Выпускает энергетические лучи, поджигающие роботов при попадании."
+		HUOHEATER_DESC 			= "Выпускает энергетические лучи, поджигающие роботов при попадании."
 		//
 		GENUINEHUOHEATER_NAME 	= "ОГНЕННЫЙ ДРАКОН ВЫСШЕЙ ПРОБЫ"
-		GENUINEHUOHEATER_DESC 	= " Выпускает ракеты. Гарантированные криты по горящим роботам."
+		GENUINEHUOHEATER_DESC 	= "Выпускает ракеты. Гарантированные криты по горящим роботам."
 		///
 		SHOTGUN_HVY_NAME 		= "ДРОБОВИК - ПУЛЕМЁТЧИК"
-		SHOTGUN_HVY_DESC 		= " Одиночный выстрел с высоким уроном, дарующий 8 секунд критов за убийство."
+		SHOTGUN_HVY_DESC 		= "Одиночный выстрел с высоким уроном, дарующий 8 секунд критов за убийство."
 		//
 		SANDVICH_NAME 			= "БУТЕРБРОД"
-		SANDVICH_DESC 			= " Восстанавливает до 150 000 единиц здоровья. Любой урон, полученный с Бутербродом в руках, смертельный."
+		SANDVICH_DESC 			= "Восстанавливает до 150 000 единиц здоровья. Любой урон, полученный с Бутербродом в руках, смертельный."
 		// TODO: Update! " Consume to gain Concheror buff for 30 seconds."
 		//
 		DALOKOHSBAR_NAME 		= "ПЛИТКА «ДАЛОКОШ»"
-		DALOKOHSBAR_DESC 		= " Восстанавливает до 20 000 единиц здоровья. При использовании с уровнем здоровья ниже 350 даёт сверхлечение. Пассивно увеличивает получаемый урон, но даёт шанс на убер-заряд при получении урона."
+		DALOKOHSBAR_DESC 		= "Восстанавливает до 20 000 единиц здоровья. При использовании с уровнем здоровья ниже 350 даёт сверхлечение. Пассивно увеличивает получаемый урон, но даёт шанс на убер-заряд при получении урона."
 		// TODO: Update! " Consume to gain increased move speed, weapon switch speed and faster minigun spinup time for 30 seconds."
 		//
 		BUFFALOSTEAK_NAME 		= "БУТЕРБРОД ИЗ МЯСА БУЙВОЛА"
-		BUFFALOSTEAK_DESC 		= " Пассивно дарует иммунитет к критическим попаданиям."
+		BUFFALOSTEAK_DESC 		= "Пассивно дарует иммунитет к критическим попаданиям."
 		// TODO: Update! " Consume to gain Battalion's Backup buff and backstab immunity for 30 seconds."
 		//
 		FAMILYBUSINESS_NAME 	= "СЕМЕЙНОЕ ДЕЛО"
-		FAMILYBUSINESS_DESC 	= " Бесконечный боезапас. Скорострельность удваивается во время получения лечения. Даёт кратковременное усиление критами и мини-критами за убийство."
+		FAMILYBUSINESS_DESC 	= "Бесконечный боезапас. Скорострельность удваивается во время получения лечения. Даёт кратковременное усиление критами и мини-критами за убийство."
 		//
 		FISHCAKE_NAME 			= "РЫБНЫЙ БАТОНЧИК"
-		FISHCAKE_DESC 			= " Высокое сопротивление урону от пуль, но повышенная уязвимость к урону от огня и взрывов."
+		FISHCAKE_DESC 			= "Высокое сопротивление урону от пуль, но повышенная уязвимость к урону от огня и взрывов."
 		// TODO: Update! " Consume to gain gravity reversal power for 30 seconds (Crouch to reverse gravity)."
 		//
 		SECONDBANANA_NAME 		= "УТЕШИТЕЛЬНЫЙ БАНАН"
-		SECONDBANANA_DESC 		= " Высокое сопротивление к урону от взрывов, но повышенная уязвимость к урону от огня и пуль."
+		SECONDBANANA_DESC 		= "Высокое сопротивление к урону от взрывов, но повышенная уязвимость к урону от огня и пуль."
 		// TODO: Update! " Consume to gain explosive melee power for 30 seconds (You are restricted to melee for the duration)."
 		///
 		FISTS_NAME 				= "КУЛАКИ"
-		FISTS_DESC 				= " Стандартный вариант для защиты и мобильности. Эффективны в бою."
+		FISTS_DESC 				= "Стандартный вариант для защиты и мобильности. Эффективны в бою."
 		//
 		KILLINGGLOVES_NAME 		= "КУЛАКИ ГРОЗНОГО БОКСЁРА"
-		KILLINGGLOVES_DESC 		= " Особая способность: «Мега-разрушение» — когда доступна, нажмите клавишу действия, стоя на бомбе, чтобы мгновенно отправить её на базу. Даёт временное усиление скорости, сопротивляемости к урону и от критов."
+		KILLINGGLOVES_DESC 		= "Особая способность: «Мега-разрушение» — когда доступна, нажмите клавишу действия, стоя на бомбе, чтобы мгновенно отправить её на базу. Даёт временное усиление скорости, сопротивляемости к урону и от критов."
 		//
 		GLOVESRUNNING_NAME 		= "ГОРЯЩИЕ РУКАВИЦЫ УСКОРЕНИЯ"
-		GLOVESRUNNING_DESC 		= " Пассивно дарует способность раскрывать парашют. Пока активно в руках, сильно увеличивает высоту прыжка, сопротивление урону и регенерацию здоровья."
+		GLOVESRUNNING_DESC 		= "Пассивно дарует способность раскрывать парашют. Пока активно в руках, сильно увеличивает высоту прыжка, сопротивление урону и регенерацию здоровья."
 		//
 		BREADBITE_NAME 			= "КУСАЙ-ХЛЕБ"
-		BREADBITE_DESC 			= " Критические попадания заражают жертву коррозией - постоянным эффектом, который наносит урон, основываясь на максимальном здоровье. При смерти жертва взрывается, выпуская облако коррозии и распространяя эффект на других роботов."
+		BREADBITE_DESC 			= "Критические попадания заражают жертву коррозией - постоянным эффектом, который наносит урон, основываясь на максимальном здоровье. При смерти жертва взрывается, выпуская облако коррозии и распространяя эффект на других роботов."
 		//
 		WARRIRORSSPIRIT_NAME 	= "ВОИНСКИЙ ДУХ"
-		WARRIRORSSPIRIT_DESC 	= " Альтернативная атака подбрасывает вас в воздух. При приземлении на роботов наносит огромный урон. Убирает все боеприпасы для основного и дополнительного оружия."
+		WARRIRORSSPIRIT_DESC 	= "Альтернативная атака подбрасывает вас в воздух. При приземлении на роботов наносит огромный урон. Убирает все боеприпасы для основного и дополнительного оружия."
 		// TODO: Update! " Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air. Active buff indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		FISTSOFSTEEL_NAME 		= "СТАЛЬНЫЕ КУЛАКИ"
-		FISTSOFSTEEL_DESC 		= " Превращает вас в гигантского робота-пулемётчика с 250 000 здоровья. Иммунитет к отталкиванию и способность наносить огромный урон. Удаляет все боеприпасы для основного и дополнительного оружия. Лечиться можно только при помощи лакомства."
+		FISTSOFSTEEL_DESC 		= "Превращает вас в гигантского робота-пулемётчика с 250 000 здоровья. Иммунитет к отталкиванию и способность наносить огромный урон. Удаляет все боеприпасы для основного и дополнительного оружия. Лечиться можно только при помощи лакомства."
 		// TODO: Update! " You are a Giant Heavy Gauntlet - Immune to push forces and able to hit multiple enemies at once for massive damage."
 		//
 		EVICTIONNOTICE_NAME 	= "УВЕДОМЛЕНИЕ О ВЫСЕЛЕНИИ"
-		EVICTIONNOTICE_DESC 	= " Даёт быстрое исцеление за убийство."
+		EVICTIONNOTICE_DESC 	= "Даёт быстрое исцеление за убийство."
 		//
 		APOCOFISTS_NAME 		= "КУЛАКОПОКАЛИПСИС"
-		APOCOFISTS_DESC 		= " Удары отталкивают роботов."
+		APOCOFISTS_DESC 		= "Удары отталкивают роботов."
 		//
 		HOLIDAYPUNCH_NAME 		= "ПРАЗДНИЧНЫЙ УДАР"
-		HOLIDAYPUNCH_DESC 		= " Пока активно в руках, все роботы игнорируют вас. Также дарует иммунитет к оглушению. Однако это оружие не может наносить урон."
+		HOLIDAYPUNCH_DESC 		= "Пока активно в руках, все роботы игнорируют вас. Также дарует иммунитет к оглушению. Однако это оружие не может наносить урон."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		SHOTGUN_ENGI_NAME		= "ДРОБОВИК - ИНЖЕНЕР"
-		SHOTGUN_ENGI_DESC 		= " Наносит 4-хкратный урон по цели вашей Турели."
+		SHOTGUN_ENGI_DESC 		= "Наносит 4-хкратный урон по цели вашей Турели."
 		//
 		FRONTIERJUSTICE_NAME 	= "САМОСУД"
-		FRONTIERJUSTICE_DESC 	= " Безумно высокая скорострельность. Размер магазина соответствует количеству накопленных критических ударов мести. Перезаряжается быстрее при получении любого лечения."
+		FRONTIERJUSTICE_DESC 	= "Безумно высокая скорострельность. Размер магазина соответствует количеству накопленных критических ударов мести. Перезаряжается быстрее при получении любого лечения."
 		//
 		WIDOWMAKER_NAME 		= "ОВДОВИТЕЛЬ"
-		WIDOWMAKER_DESC 		= " Расходует 2000 единиц металла на горизонтальный широкий выстрел, который отталкивает роботов."
+		WIDOWMAKER_DESC 		= "Расходует 2000 единиц металла на горизонтальный широкий выстрел, который отталкивает роботов."
 		//
 		POMSON_NAME 			= "ПОМСОН 6000"
-		POMSON_DESC 			= " Вызывает кровотечение, поджигает и замедляет роботов."
+		POMSON_DESC 			= "Вызывает кровотечение, поджигает и замедляет роботов."
 		//
 		RESCUERANGER_NAME 		= "СПАСАТЕЛЬ"
 		RESCUERANGER_DESC		= "Расходует 20 металла на выстрел, но не требует перезарядки и увеличивает максимальный запас металла на 1000."
 		///
 		WRANGLER_NAME 			= "ПОВОДЫРЬ"
-		WRANGLER_DESC 			= " Пока активен в руках: увеличенный урон Турели и двойная дальность Раздатчика."
+		WRANGLER_DESC 			= "Пока активен в руках: увеличенный урон Турели и двойная дальность Раздатчика."
 		//
 		SHORTCIRCUIT_NAME 		= "КОРОТКОЕ ЗАМЫКАНИЕ"
-		SHORTCIRCUIT_DESC 		= " Каждые 10 убийств дают заклинание шаровой молнии (требуется Книга заклинаний)."
+		SHORTCIRCUIT_DESC 		= "Каждые 10 убийств дают заклинание шаровой молнии (требуется Книга заклинаний)."
 		///
 		WRENCH_NAME 			= "ГАЕЧНЫЙ КЛЮЧ"
-		WRENCH_DESC 			= " Стандартный вариант для надёжного урона."
+		WRENCH_DESC 			= "Стандартный вариант для надёжного урона."
 		//
 		GUNSLINGER_NAME 		= "ОРУЖЕЙНИК"
-		GUNSLINGER_DESC	 		= " Позволяет построить вторую Турель. Серия из трёх ударов может уничтожить мелких роботов и нанести большой урон гигантским роботам."
+		GUNSLINGER_DESC	 		= "Позволяет построить вторую Турель. Серия из трёх ударов может уничтожить мелких роботов и нанести большой урон гигантским роботам."
 		//
 		SOUTHERNHOS_NAME 		= "ЮЖНОЕ ГОСТЕПРИИМСТВО"
-		SOUTHERNHOS_DESC 		= " Заменяет обычную Турель на Огненную Турель. Малая дальность, но высокий урон."
+		SOUTHERNHOS_DESC 		= "Заменяет обычную Турель на Огненную Турель. Малая дальность, но высокий урон."
 		//
 		JAG_NAME 				= "ОСТРОЗУБ"
 		JAG_DESC 				= "Ваша Турель имеет бесконечную дальность."
 		//
 		EUREKAEFFECT_NAME 		= "ОЗАРЕНИЕ"
-		EUREKAEFFECT_DESC 		= " Пока вы переносите Турель, нажмите клавишу перезарядки', чтобы установить её дистанционно на любую стену или потолок в пределах досягаемости."
+		EUREKAEFFECT_DESC 		= "Пока вы переносите Турель, нажмите клавишу перезарядки', чтобы установить её дистанционно на любую стену или потолок в пределах досягаемости."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		SYRINGEGUN_NAME			= "ШПРИЦЕМЁТ"
-		SYRINGEGUN_DESC			= " Даёт 0,5 % убер-заряда за попадание."
+		SYRINGEGUN_DESC			= "Даёт 0,5 % убер-заряда за попадание."
 		//
 		BLUTSAUGER_NAME			= "КРОВОПИЙЦА"
-		BLUTSAUGER_DESC			= " Требует и расходует 100 % убер-заряда, чтобы перепрограммировать робота и заставить его временно перейти на вашу сторону, после чего он самоуничтожится. Альтернативная атака: принудительно завершить перепрограммирование всех затронутых ботов."
+		BLUTSAUGER_DESC			= "Требует и расходует 100 % убер-заряда, чтобы перепрограммировать робота и заставить его временно перейти на вашу сторону, после чего он самоуничтожится. Альтернативная атака: принудительно завершить перепрограммирование всех затронутых ботов."
 		//
 		CRUSADERSCROSSBOW_NAME	= "АРБАЛЕТ КРЕСТОНОСЦА"
-		CRUSADERSCROSSBOW_DESC	= " Даёт 0,25 % убер-заряда за попадание, наносит кровотечение и ещё 0,5% убер-заряда за каждую секунду урона от кровотечения."
+		CRUSADERSCROSSBOW_DESC	= "Даёт 0,25 % убер-заряда за попадание, наносит кровотечение и ещё 0,5% убер-заряда за каждую секунду урона от кровотечения."
 		//
 		OVERDOSE_NAME 			= "ПЕРЕДОЗ"
-		OVERDOSE_DESC 			= " Требует и расходует 50 % убер-заряда, который отключает всех мелких роботов поблизости на срок до 15 секунд."
+		OVERDOSE_DESC 			= "Требует и расходует 50 % убер-заряда, который отключает всех мелких роботов поблизости на срок до 15 секунд."
 		// TODO: Update! " Requires and consumes 50% Ubercharge to launch an EMP mortar, causing nearby enemies to be unable to move or attack for a short time."
 		///
 		MEDIGUN_NAME			= "ЛЕЧЕБНАЯ ПУШКА"
-		MEDIGUN_DESC			= " Максимальный избыточный запас здоровья увеличен до 10-тикратного от максимального здоровья пациента. Разворачивает долгодействующий щит от снарядов 1-го уровня."
+		MEDIGUN_DESC			= "Максимальный избыточный запас здоровья увеличен до 10-тикратного от максимального здоровья пациента. Разворачивает долгодействующий щит от снарядов 1-го уровня."
 		// TODO: Update! " Overheal cap raised to x10 the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
 		//
 		KRITZKRIEG_NAME			= "КРИЦКРИГ"
-		KRITZKRIEG_DESC			= " Позволяет высасывать здоровье из роботов, обеспечивая самолечение и накопление убер-заряда."
+		KRITZKRIEG_DESC			= "Позволяет высасывать здоровье из роботов, обеспечивая самолечение и накопление убер-заряда."
 		// TODO: Update! " Able to drain health from enemies, granting self-healing and building Uber. Ubercharge grants a boost to all damage output."
 		//
 		QUICKFIX_NAME			= "БЫСТРОПРАВ"
-		QUICKFIX_DESC			= " Очень быстрое лечение и щит от снарядов 2-го уровня. Позволяет накапливать убер-заряд за счёт урона от соприкосновения роботов со щитом."
+		QUICKFIX_DESC			= "Очень быстрое лечение и щит от снарядов 2-го уровня. Позволяет накапливать убер-заряд за счёт урона от соприкосновения роботов со щитом."
 		// TODO: Update! " Very fast healing with a level 2 Projectile Shield. Able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
 		//
 		VACCINATOR_NAME			= "ВАКЦИНАТОР"
-		VACCINATOR_DESC			= " Активное лечение дарует вам и пациенту 100 % сопротивляемость базовому урону выбранного типа. Убер-заряд дарует полную невосприимчивость к выбранному типу урона на 30 секунд."
+		VACCINATOR_DESC			= "Активное лечение дарует вам и пациенту 100 % сопротивляемость базовому урону выбранного типа. Убер-заряд дарует полную невосприимчивость к выбранному типу урона на 30 секунд."
 		// TODO: Update! " Active healing grants you and the patient increased mobility and 100% resistance to base damage of the selected damage type. Ubercharge grants full immunity to the selected damage type for 30 seconds."
 		///
 		BONESAW_NAME 			= "ПИЛА"
-		BONESAW_DESC			= " Стандартный вариант для защиты и мобильности. Даёт 10 % убер-заряда за попадание."
+		BONESAW_DESC			= "Стандартный вариант для защиты и мобильности. Даёт 10 % убер-заряда за попадание."
 		//
 		UBERSAW_NAME 			= "УБЕР-ПИЛА"
-		UBERSAW_DESC			= " Наносит кровотечение при попадании. Даёт 2 % убер-заряда за попадание."
+		UBERSAW_DESC			= "Наносит кровотечение при попадании. Даёт 2 % убер-заряда за попадание."
 		//
 		VITASAW_NAME 			= "ВИТА=ПИЛА"
-		VITASAW_DESC			= " Даёт заклинание сверхлечения при попадании (требуется Книга заклинаний). Даёт 5 % убер-заряда за попадание."
+		VITASAW_DESC			= "Даёт заклинание сверхлечения при попадании (требуется Книга заклинаний). Даёт 5 % убер-заряда за попадание."
 		//
 		AMPUTATOR_NAME 			= "АМПУТАТОР"
-		AMPUTATOR_DESC			= " При попадании: ваша Лечебная пушка перезаряжается и временно получает увеличенную скорость лечения, скорость накопления убер-заряда и дальность лечения. Убийство роботов даёт усиленную версию этого эффекта."
+		AMPUTATOR_DESC			= "При попадании: ваша Лечебная пушка перезаряжается и временно получает увеличенную скорость лечения, скорость накопления убер-заряда и дальность лечения. Убийство роботов даёт усиленную версию этого эффекта."
 		//
 		SOLEMNVOW_NAME 			= "СВЯЩЕННАЯ КЛЯТВА"
-		SOLEMNVOW_DESC			= " Бесконечная дальность, поражает всех роботов, связанных лучами Лечебной пушки, и наносит 200-тикратный урон роботам-медикам. Даёт 5 % убер-заряда за каждого поражённого робота."
+		SOLEMNVOW_DESC			= "Бесконечная дальность, поражает всех роботов, связанных лучами Лечебной пушки, и наносит 200-тикратный урон роботам-медикам. Даёт 5 % убер-заряда за каждого поражённого робота."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		SNIPERRIFLE_NAME 		= "СНАЙПЕРСКАЯ ВИНТОВКА"
-		SNIPERRIFLE_DESC 		= " Полностью заряженный выстрел в голову наносит 450 000 урона."
+		SNIPERRIFLE_DESC 		= "Полностью заряженный выстрел в голову наносит 450 000 урона."
 		//
 		MACHINA_NAME 			= "МАХИНА"
-		MACHINA_DESC 			= " Очень медленная зарядка, но на полном заряде может уничтожать Танки. Убийства роботов заполняют шкалу ярости, которая даёт 1-секундное усиление критами. Совместите усиление критов с полным зарядом, чтобы мгновенно уничтожать большинство Танков."
+		MACHINA_DESC 			= "Очень медленная зарядка, но на полном заряде может уничтожать Танки. Убийства роботов заполняют шкалу ярости, которая даёт 1-секундное усиление критами. Совместите усиление критов с полным зарядом, чтобы мгновенно уничтожать большинство Танков."
 		// TODO: Update! " Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Gaints and Tanks."
 		//
 		HITMANSHEATMAKER_NAME 	= "РАЗЖИГАТЕЛЬ РАЗБОЙНИКА"
-		HITMANSHEATMAKER_DESC 	= " Быстрая стрельба без выхода из прицеливания. Отсутствие урона при попадании в тело."
+		HITMANSHEATMAKER_DESC 	= "Быстрая стрельба без выхода из прицеливания. Отсутствие урона при попадании в тело."
 		//
 		AWPERHAND_NAME 			= "СЛОНОБОЙ"
-		AWPERHAND_DESC 			= " Выпускает взрывчатые заряды и накапливает ярость за убийства. При 100 % ярости нажмите клавишу перезарядки, чтобы получить повышенное максимальное здоровье и регенерацию здоровья. Слонобой заряжается когда роботы находятся в вашем прицеле."
+		AWPERHAND_DESC 			= "Выпускает взрывчатые заряды и накапливает ярость за убийства. При 100 % ярости нажмите клавишу перезарядки, чтобы получить повышенное максимальное здоровье и регенерацию здоровья. Слонобой заряжается когда роботы находятся в вашем прицеле."
 		//
 		HUNTSMAN_NAME 			= "ОХОТНИК"
-		HUNTSMAN_DESC 			= " Выпускает 5 стрел за раз. Наносит огромный урон от огня, если поджигатель подожжёт вашу стрелу."
+		HUNTSMAN_DESC 			= "Выпускает 5 стрел за раз. Наносит огромный урон от огня, если поджигатель подожжёт вашу стрелу."
 		//
 		SYDNEYSLEEPER_NAME 		= "СИДНЕЙСКИЙ СОНЯ"
-		SYDNEYSLEEPER_DESC 		= " Выпускает специальный дротик, который сильно замедляет гигантских роботов и не даёт им получать лечение от роботов-медиков"
+		SYDNEYSLEEPER_DESC 		= "Выпускает специальный дротик, который сильно замедляет гигантских роботов и не даёт им получать лечение от роботов-медиков"
 		//
 		BAZAARBARGAIN_NAME 		= "БАЗАРНАЯ БЕЗДЕЛУШКА"
-		BAZAARBARGAIN_DESC 		= " Убийства роботов одного класса подряд увеличивают скорострельность, накапливая эффект до 3 раз. Убийство другого класса сбрасывает эффект."
+		BAZAARBARGAIN_DESC 		= "Убийства роботов одного класса подряд увеличивают скорострельность, накапливая эффект до 3 раз. Убийство другого класса сбрасывает эффект."
 		//
 		FORTIFIEDCOMPOUND_NAME 	= "УКРЕПЛЕННЫЙ СОСТАВНОЙ ЛУК"
-		FORTIFIEDCOMPOUND_DESC 	= " Урон ниже, чем у Охотника, но стреляет быстрее, пронзает и наносит криты по мокрым роботам."
+		FORTIFIEDCOMPOUND_DESC 	= "Урон ниже, чем у Охотника, но стреляет быстрее, пронзает и наносит криты по мокрым роботам."
 		//
 		CLASSIC_NAME 			= "КЛАССИКА"
-		CLASSIC_DESC 			= " Скорострельность пропорциональна скорости нажатия клавиши атаки. Заряжайте один выстрел с безумной взрывной силой в голову, зажав клавишу атаки, который позволит уничтожить всех роботов (кроме гигантов) в области."
+		CLASSIC_DESC 			= "Скорострельность пропорциональна скорости нажатия клавиши атаки. Заряжайте один выстрел с безумной взрывной силой в голову, зажав клавишу атаки, который позволит уничтожить всех роботов (кроме гигантов) в области."
 		///
 		SMG_NAME 				= "ПИСТОЛЕТ-ПУЛЕМЁТ"
-		SMG_DESC 				= " Позволяет стрелять в голову с сильно увеличенным уроном. Альтернативная атака: приближение прицеливания и 100 % точность, но -50 % скорострельности."
+		SMG_DESC 				= "Позволяет стрелять в голову с сильно увеличенным уроном. Альтернативная атака: приближение прицеливания и 100 % точность, но -50 % скорострельности."
 		//
 		RAZORBACK_NAME 			= "БРОНЕПАНЦИРЬ"
-		RAZORBACK_DESC 			= " Очень быстрая перезарядка. Обливает цель Банкате."
+		RAZORBACK_DESC 			= "Очень быстрая перезарядка. Обливает цель Банкате."
 		//
 		JARATE_NAME 			= "БАНКАТЕ"
-		JARATE_DESC 			= " Мгновенная перезарядка, замедляет роботов."
+		JARATE_DESC 			= "Мгновенная перезарядка, замедляет роботов."
 		//
 		DARWIN_NAME 			= "ДАРВИНИСТСКИЙ ЩИТ"
-		DARWIN_DESC 			= " Почти полная невосприимчивость к огню, но на 50 % больше урона от пуль и взрывов."
+		DARWIN_DESC 			= "Почти полная невосприимчивость к огню, но на 50 % больше урона от пуль и взрывов."
 		//
 		COZYCAMPER_NAME 		= "НАБОР ДЛЯ КЕМПИНГА"
-		COZYCAMPER_DESC 		= " Небольшое увеличение скорости передвижения, максимального здоровья и регенерации здоровья. Иммунитет к догоранию."
+		COZYCAMPER_DESC 		= "Небольшое увеличение скорости передвижения, максимального здоровья и регенерации здоровья. Иммунитет к догоранию."
 		//
 		CLEANERSCARBINE_NAME 	= "КАРАБИН ЧИСТИЛЬЩИКА"
-		CLEANERSCARBINE_DESC 	= " Усиление мини-критами длится 30 секунд."
+		CLEANERSCARBINE_DESC 	= "Усиление мини-критами длится 30 секунд."
 		//
 		BEAUTYMARK_NAME 		= "РОДИНКА С САМОСОЗНАНИЕМ"
-		BEAUTYMARK_DESC 		= " Священный адский огонь из пылающих стрел. Альтернативная атака: бросить сразу несколько пылающих стрел."
+		BEAUTYMARK_DESC 		= "Священный адский огонь из пылающих стрел. Альтернативная атака: бросить сразу несколько пылающих стрел."
 		///
 		KUKRI_NAME 				= "КУКРИ"
-		KUKRI_DESC 				= " Стандартный вариант для защиты и мобильности."
+		KUKRI_DESC 				= "Стандартный вариант для защиты и мобильности."
 		//
 		TRIBALMANSSHIV_NAME 	= "ЗАТОЧКА ДИКАРЯ"
-		TRIBALMANSSHIV_DESC 	= " Предмет экипировки — у вас отсутствует гравитация. Позволяет свободно летать."
+		TRIBALMANSSHIV_DESC 	= "Предмет экипировки — у вас отсутствует гравитация. Позволяет свободно летать."
 		//
 		BUSHWACKA_NAME 			= "КУСТОЛОМ"
-		BUSHWACKA_DESC 			= " Бесконечнй радиус ближнего боя и гарантированные криты по горящим роботам."
+		BUSHWACKA_DESC 			= "Бесконечнй радиус ближнего боя и гарантированные криты по горящим роботам."
 		//
 		SHAHANSHAH_NAME 		= "ШАХАНШАХ"
-		SHAHANSHAH_DESC 		= " Альтернативная атака: отправить себя вверх, хорошо для достижения высоких мест. Иммунитет к урону от падения."
+		SHAHANSHAH_DESC 		= "Альтернативная атака: отправить себя вверх, хорошо для достижения высоких мест. Иммунитет к урону от падения."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		REVOLVER_NAME 			= "REVOLVER"
-		REVOLVER_DESC 			= " При попадании: накладывает несколько ослабляющих эффектов, заставляет роботов получать повышенный урон на короткое время, расходует убер-заряд вражеского медика и заставляет роботов-шпионов снять маскировку. Может оглушать роботов, находящихся в воздухе."
+		REVOLVER_DESC 			= "При попадании: накладывает несколько ослабляющих эффектов, заставляет роботов получать повышенный урон на короткое время, расходует убер-заряд вражеского медика и заставляет роботов-шпионов снять маскировку. Может оглушать роботов, находящихся в воздухе."
 		//
 		AMBASSADOR_NAME 		= "АМБАССАДОР"
-		AMBASSADOR_DESC 		= " Наносит огромный урон при попадании в голову. Урон удваивается, если вы не под маскировкой."
+		AMBASSADOR_DESC 		= "Наносит огромный урон при попадании в голову. Урон удваивается, если вы не под маскировкой."
 		//
 		LETRANGER_NAME 			= "НЕЗНАКОМЕЦ"
-		LETRANGER_DESC 			= " Позволяет убить с одного выстрела любого робота, кроме гигантских роботов. Наносит 0 урона гигантским роботам и Танкам."
+		LETRANGER_DESC 			= "Позволяет убить с одного выстрела любого робота, кроме гигантских роботов. Наносит 0 урона гигантским роботам и Танкам."
 		// TODO: Update! " Able to execute any non-giant in a single shot. Deals 2% damage to Giants, zero damage to Tanks."
 		//
 		ENFORCER_NAME 			= "ПРИНУДИТЕЛЬ"
-		ENFORCER_DESC 			= " Игнорирует сопротивляемость урону и гарантирует крит за каждый удар в спину или уничтоженную Жучком постройку робота-инженера."
+		ENFORCER_DESC 			= "Игнорирует сопротивляемость урону и гарантирует крит за каждый удар в спину или уничтоженную Жучком постройку робота-инженера."
 		//
 		DIAMONDBACK_NAME 		= "АЛМАЗНЫЙ ЗМЕЙ"
-		DIAMONDBACK_DESC 		= " Создаёт чёрную дыру, затягивающую роботов."
+		DIAMONDBACK_DESC 		= "Создаёт чёрную дыру, затягивающую роботов."
 		///
 		SAPPER_NAME 			= "ЖУЧОК"
-		SAPPER_DESC 			= " Максимальный радиус оглушения и длительность. Быстрая перезарядка."
+		SAPPER_DESC 			= "Максимальный радиус оглушения и длительность. Быстрая перезарядка."
 		//
 		REDTAPE_NAME 			= "Откатофон"
-		REDTAPE_DESC 			= " Мгновенно уничтожает постройки робота-инженера. Можно использовать только на одного робота за раз."
+		REDTAPE_DESC 			= "Мгновенно уничтожает постройки робота-инженера. Можно использовать только на одного робота за раз."
 		///
 		KNIFE_NAME 				= "НОЖ"
-		KNIFE_DESC 				= " Пока активен в руках, Нож высасывает ваше здоровье, но дарует иммунитет ко ВСЕМУ урону. Убийства восстанавливают здоровье."
+		KNIFE_DESC 				= "Пока активен в руках, Нож высасывает ваше здоровье, но дарует иммунитет ко ВСЕМУ урону. Убийства восстанавливают здоровье."
 		//
 		YOURETERNALREWARD_NAME 	= "ВЕЧНЫЙ ПОКОЙ"
-		YOURETERNALREWARD_DESC 	= " Урон увеличивается по мере получения вами урона. Когда ваше здоровье ниже 10 %, наносит критические удары, но только при ударах спереди. 90 % сопротивление входящему урону."
+		YOURETERNALREWARD_DESC 	= "Урон увеличивается по мере получения вами урона. Когда ваше здоровье ниже 10 %, наносит критические удары, но только при ударах спереди. 90 % сопротивление входящему урону."
 		// TODO: Update! " Extremely high backstab damage, able to instakill most Giants. However each attack has a high chance to miss. Grants a Teleport spell charge on kill (Requires Spellbook)."
 		//
 		KUNAI_NAME 				= "КУНАЙ ЗАГОВОРЩИКА"
-		KUNAI_DESC 				= " Бесконечная дальность радиуса атаки. Удары в спину заставляют роботов взрываться, нанося дополнительный урон ближайшим целям."
+		KUNAI_DESC 				= "Бесконечная дальность радиуса атаки. Удары в спину заставляют роботов взрываться, нанося дополнительный урон ближайшим целям."
 		//
 		BIGEARNER_NAME 			= "ГЛАВНЫЙ ДЕЛЕЦ"
-		BIGEARNER_DESC 			= " У вас огромный запас здоровья, а промахи вызывают быстрое исцеление, однако вы получаете урон от своих же союзников."
+		BIGEARNER_DESC 			= "У вас огромный запас здоровья, а промахи вызывают быстрое исцеление, однако вы получаете урон от своих же союзников."
 		// TODO: Update! " You have a massive amount of health and 'missed' swings cause you to heal. Gain a short burst of massively increased heal rate on kill (which can also build overheal). Cannot heal from any other sources."
 		//
 		WANGAPRICK_NAME 		= "ИГОЛКА ВУДУ"
-		WANGAPRICK_DESC 		= " Убийство робота заставляет вас немедленно войти в режим невидимости на несколько секунд. Вы можете атаковать роботов и продлевать невидимость уничтожением роботов. Не позволяет использовать маскировку."
+		WANGAPRICK_DESC 		= "Убийство робота заставляет вас немедленно войти в режим невидимости на несколько секунд. Вы можете атаковать роботов и продлевать невидимость уничтожением роботов. Не позволяет использовать маскировку."
 		// TODO: Update! " Killing an enemy causes you to immediately enter stealth for a few seconds, however you cannot disguise. Grants a Cloak spell charge on kill (Requires Spellbook)."
 		//
 		SHARPDRESSER_NAME 		= "ОДЕТЫЙ С ИГОЛОЧКИ"
-		SHARPDRESSER_DESC 		= " Удары в спину зставляет роботов взрываться, нанося дополнительный урон ближайшим целям."
+		SHARPDRESSER_DESC 		= "Удары в спину зставляет роботов взрываться, нанося дополнительный урон ближайшим целям."
 		//
 		SPYCICLE_NAME 			= "СОСУЛЬКА"
-		SPYCICLE_DESC 			= " Промах заставляет вас подпрыгнуть в воздух. Вы не можете маскироваться. Наносит огромный урон гигантским роботам при ударе в спину."
+		SPYCICLE_DESC 			= "Промах заставляет вас подпрыгнуть в воздух. Вы не можете маскироваться. Наносит огромный урон гигантским роботам при ударе в спину."
 		///
 		INVISWATCH_NAME 		= "ЧАСЫ НЕВИДИМОСТИ"
-		INVISWATCH_DESC 		= " Бесконечная невидимость, +10 % к скорости передвижения."
+		INVISWATCH_DESC 		= "Бесконечная невидимость, +10 % к скорости передвижения."
 		//
 		DEADRINGER_NAME 		= "ЗВОН СМЕРТИ"
-		DEADRINGER_DESC 		= " При активации даёт коротковременную большую прибавку к скорости передвижения. Получаемый урон во время прибавки снижен на 80 %."
+		DEADRINGER_DESC 		= "При активации даёт коротковременную большую прибавку к скорости передвижения. Получаемый урон во время прибавки снижен на 80 %."
 		// TODO: Update! " Activate to gain super speed for several seconds. Invulnerable while active."
 		//
 		CLOAKANDDAGGER_NAME		= "ПЛАЩ И КИНЖАЛ"
-		CLOAKANDDAGGER_DESC		= " Мгновенная невидимость и выход из невидимости."
+		CLOAKANDDAGGER_DESC		= "Мгновенная невидимость и выход из невидимости."
 		// TODO: Update! " Activate to force enemies to ignore you. Able to attack while active."
 		// TODO: TRANSLATE THE BELOW
 		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
-		QUACKENBIRDT_DESC 		= " Activate to gain flight. Able to attack while active. Grants immunity to fall damage."
+		QUACKENBIRDT_DESC 		= "Activate to gain flight. Able to attack while active. Grants immunity to fall damage."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		FRYINGPAN_NAME 				= "СКОВОРОДА"
-		FRYINGPAN_DESC 				= " Наносит 30-кратный урон роботам того же класса, что и вы, и даёт криты за убийство."
+		FRYINGPAN_DESC 				= "Наносит 30-кратный урон роботам того же класса, что и вы, и даёт криты за убийство."
 		//
 		SAXXY_NAME 					= "САКСИ"
-		SAXXY_DESC 					= " Наносит 30-кратный урон роботам того же класса, что и вы, и даёт криты за убийство."
+		SAXXY_DESC 					= "Наносит 30-кратный урон роботам того же класса, что и вы, и даёт криты за убийство."
 		//
 		MEMORYMAKER_NAME 			= "СОЗДАТЕЛЬ ВОСПОМИНАНИЙ"
-		MEMORYMAKER_DESC			= " Наносит 30-кратный урон роботам того же класса, что и вы, и даёт криты за убийство."
+		MEMORYMAKER_DESC			= "Наносит 30-кратный урон роботам того же класса, что и вы, и даёт криты за убийство."
 		//
 		CONOBJECTOR_NAME			= "ИДЕЙНЫЙ УКЛОНИСТ"
-		CONOBJECTOR_DESC			= " Каждые 10 убийств дают случайное заклинание (требуется Книга заклинаний)"
+		CONOBJECTOR_DESC			= "Каждые 10 убийств дают случайное заклинание (требуется Книга заклинаний)"
 		//
 		FREEDOMSTAFF_NAME 			= "ПОСОХ СВОБОДЫ"
-		FREEDOMSTAFF_DESC 			= " Небольшой шанс при получении урона уклониться от атаки и стать неуязвимым на 3 секунды."
+		FREEDOMSTAFF_DESC 			= "Небольшой шанс при получении урона уклониться от атаки и стать неуязвимым на 3 секунды."
 		//
 		BATOUTTAHELL_NAME 			= "ДУБИНА ИЗ АДА"
-		BATOUTTAHELL_DESC 			= " Пока активно в руках, вы неуязвимы для всего входящего урона и получаете огромный запас сверхздоровья, но становитесь полностью уязвимы к отталкиванию."
+		BATOUTTAHELL_DESC 			= "Пока активно в руках, вы неуязвимы для всего входящего урона и получаете огромный запас сверхздоровья, но становитесь полностью уязвимы к отталкиванию."
 		//
 		HAMSHANK_NAME 				= "СВИНОЙ ОКОРОК"
-		HAMSHANK_DESC 				= " Особая способность: Жизненное возрождение — когда доступно, нажмите клавишу действия, чтобы мгновенно получить 10-кратный избыточный запас здоровья и иммунитет к отбрасыванию на 20 секунд."
+		HAMSHANK_DESC 				= "Особая способность: Жизненное возрождение — когда доступно, нажмите клавишу действия, чтобы мгновенно получить 10-кратный избыточный запас здоровья и иммунитет к отбрасыванию на 20 секунд."
 		//
 		NECROSMASHER_NAME 			= "ТРУПОКОЛОТУШКА"
-		NECROSMASHER_DESC 			= " Особая способность: Транспортное средство — когда доступно, нажмите клавишу действия, чтобы сесть в бамперную машинку. В машинке вы неуязвимы, восстанавливаете здоровье и можете давить роботов."
+		NECROSMASHER_DESC 			= "Особая способность: Транспортное средство — когда доступно, нажмите клавишу действия, чтобы сесть в бамперную машинку. В машинке вы неуязвимы, восстанавливаете здоровье и можете давить роботов."
 		//
 		CROSSINGGAURD_NAME 			= "РЕГУЛИРОВЩИК"
-		CROSSINGGAURD_DESC 			= " Даёт огромное сопротивление всем атакам ближнего боя, включая удары в спину."
+		CROSSINGGAURD_DESC 			= "Даёт огромное сопротивление всем атакам ближнего боя, включая удары в спину."
 		//
 		PRINNYMACHETE_NAME 			= "МАЧЕТЕ ПРИННИ"
-		PRINNYMACHETE_DESC 			= " Предмет экипировки — атакуйте этим оружием, чтобы стремительно броситься вперёд. Дарует иммунитет к урону от падения."
+		PRINNYMACHETE_DESC 			= "Предмет экипировки — атакуйте этим оружием, чтобы стремительно броситься вперёд. Дарует иммунитет к урону от падения."
 		//------------------------------------
 	}
 	polish = {
@@ -2736,634 +2736,634 @@ if ("SetScriptVersion" in getroottable())
 		CHECKPOINT_RESTORE_HUD	= "Przywrócono do ostatniego zapisanego punktu kontrolnego."
 		//---------------------------------------------------------
 		SCATTERGUN_NAME 		= "DUBELTÓWKA"
-		SCATTERGUN_DESC 		= " Standardowa opcja zapewniająca solidne obrażenia. Bardzo skuteczna na bliskim dystansie."
+		SCATTERGUN_DESC 		= "Standardowa opcja zapewniająca solidne obrażenia. Bardzo skuteczna na bliskim dystansie."
 		//
 		FORCENATURE_NAME		= "SIŁA NATURY"
-		FORCENATURE_DESC		= " Zwiększony odrzut przy trafieniu we wroga. Zadaje nieco mniejsze obrażenia na sekundę w porównaniu do dubeltówki."
+		FORCENATURE_DESC		= "Zwiększony odrzut przy trafieniu we wroga. Zadaje nieco mniejsze obrażenia na sekundę w porównaniu do dubeltówki."
 		//
 		SHORTSTOP_NAME 			= "WSTRZYMYWACZ"
-		SHORTSTOP_DESC 			= " Bardzo duża szybkostrzelność i zadaje trafienia krytyczne mokrym wrogom, ale wolne przeładowanie."
+		SHORTSTOP_DESC 			= "Bardzo duża szybkostrzelność i zadaje trafienia krytyczne mokrym wrogom, ale wolne przeładowanie."
 		//
 		SODAPOPPER_NAME 		= "BUZOWNIK"
-		SODAPOPPER_DESC 		= " Przytrzymaj przycisk strzału, by załadować serię szybkich 4 strzałów."
+		SODAPOPPER_DESC 		= "Przytrzymaj przycisk strzału, by załadować serię szybkich 4 strzałów."
 		//
 		BABYFACEBLASTER_NAME	= "BROWNING BABY FACE'A"
-		BABYFACEBLASTER_DESC	= " Przytrzymaj przycisk strzału, by załadować aż do 200 pocisków, niszcząc wszystko na krótkim dystansie. Ma bardzo duży odrzut."
+		BABYFACEBLASTER_DESC	= "Przytrzymaj przycisk strzału, by załadować aż do 200 pocisków, niszcząc wszystko na krótkim dystansie. Ma bardzo duży odrzut."
 		//
 		BACKSCATTER_NAME		= "DUPELTÓWKA"
-		BACKSCATTER_DESC		= " Trafienia krytyczne przy trafieniu wrogów od tyłu. Nie wymaga amunicji i posiada nieskończony magazynek."
+		BACKSCATTER_DESC		= "Trafienia krytyczne przy trafieniu wrogów od tyłu. Nie wymaga amunicji i posiada nieskończony magazynek."
 		///
 		PISTOL_NAME 			= "PISTOLET"
-		PISTOL_DESC 			= " Strzela rakietami zamiast pociskami. Bardzo przydatny do przemieszczania się."
+		PISTOL_DESC 			= "Strzela rakietami zamiast pociskami. Bardzo przydatny do przemieszczania się."
 		//
 		BONK_NAME 				= "BONK! ATOMOWY KOP"
-		BONK_DESC 				= " Supernaładowany napój, zapewniający niewrażliwość na obrażenia bez odbierania możliwości atakowania podczas trwania efektu."
+		BONK_DESC 				= "Supernaładowany napój, zapewniający niewrażliwość na obrażenia bez odbierania możliwości atakowania podczas trwania efektu."
 		//
 		CRITACOLA_NAME 			= "KRYT-O-COLA"
-		CRITACOLA_DESC 			= " Supernaładowany napój zapewniający trafienia krytyczne."
+		CRITACOLA_DESC 			= "Supernaładowany napój zapewniający trafienia krytyczne."
 		//
 		MADMILK_NAME 			= "WŚCIEKŁE MLEKO"
-		MADMILK_DESC 			= " Wrogowie pokryci mlekiem nie mogą się poruszać."
+		MADMILK_DESC 			= "Wrogowie pokryci mlekiem nie mogą się poruszać."
 		//
 		WINGER_NAME 			= "SKRZYDŁOWY"
-		WINGER_DESC 			= " Nieograniczona ilość skoków w powietrzu, gdy broń jest dobyta. Wystrzeliwuje pojedynczy, precyzyjny strzał, który zadaje obrażenia krytyczne, gdy znajdujesz się w powietrzu. Strzał dodatkowo odpycha wrogów."
+		WINGER_DESC 			= "Nieograniczona ilość skoków w powietrzu, gdy broń jest dobyta. Wystrzeliwuje pojedynczy, precyzyjny strzał, który zadaje obrażenia krytyczne, gdy znajdujesz się w powietrzu. Strzał dodatkowo odpycha wrogów."
 		//
 		PRETTYBOYS_NAME 		= "PORĘCZNY PISTOLET PRETTY BOYA"
-		PRETTYBOYS_DESC 		= " Wystrzeliwuje rakiety zadające obrażenia zależne od zdrowia wroga. Obrażenia rosną, gdy przeciwnik jest ranny i zadaje te same obrażenia niezależnie od odległości do wroga. Atak alternatywny: użyj rakiet naprowadzających zadających -20% obrażeń."
+		PRETTYBOYS_DESC 		= "Wystrzeliwuje rakiety zadające obrażenia zależne od zdrowia wroga. Obrażenia rosną, gdy przeciwnik jest ranny i zadaje te same obrażenia niezależnie od odległości do wroga. Atak alternatywny: użyj rakiet naprowadzających zadających -20% obrażeń."
 		//
 		CLEAVER_NAME 			= "LATAJĄCA GILOTYNA"
-		CLEAVER_DESC 			= " Strzała Yondu: przywołaj świadomą strzałę do pomocy w walce. Atak alternatywny: tryb zakłócający, -75% obrażeń."
+		CLEAVER_DESC 			= "Strzała Yondu: przywołaj świadomą strzałę do pomocy w walce. Atak alternatywny: tryb zakłócający, -75% obrażeń."
 		//
 		MATATEDMILK_NAME 		= "ZMUTOWANE MLEKO"
-		MATATEDMILK_DESC 		= " Szybkostrzelne wybuchowe słoiki z mlekiem, zadające obrażenia wrogom. Atak alternatywny: rzuć kilkoma słoikami naraz."
+		MATATEDMILK_DESC 		= "Szybkostrzelne wybuchowe słoiki z mlekiem, zadające obrażenia wrogom. Atak alternatywny: rzuć kilkoma słoikami naraz."
 		///
 		BAT_NAME 				= "KIJ"
-		BAT_DESC 				= " Szansa na uniknięcie śmierci i teleportowanie do strefy odradzania z 1 pkt. zdrowia."
+		BAT_DESC 				= "Szansa na uniknięcie śmierci i teleportowanie do strefy odradzania z 1 pkt. zdrowia."
 		//
 		SANDMAN_NAME			= "PIASKUN"
-		SANDMAN_DESC 			= " Pozwala na szybkie miotanie piłek baseballowych, z dużym zapasem piłek i ich szybkim odnawianiem, zadając pojedynczym wrogom duże obrażenia serią piłek."
+		SANDMAN_DESC 			= "Pozwala na szybkie miotanie piłek baseballowych, z dużym zapasem piłek i ich szybkim odnawianiem, zadając pojedynczym wrogom duże obrażenia serią piłek."
 		//
 		HOLYMACKEREL_NAME		= "ŚWIĘTA MAKRELA"
-		HOLYMACKEREL_DESC		= " Może nakładać piętna śmierci na wielu wrogów naraz."
+		HOLYMACKEREL_DESC		= "Może nakładać piętna śmierci na wielu wrogów naraz."
 		//
 		CANDYCANE_NAME 			= "CUKROWE LASKI"
-		CANDYCANE_DESC 			= " Przedmiot pomocniczy – grawitacja nie oddziałuje na tobie i możesz swobodnie latać."
+		CANDYCANE_DESC 			= "Przedmiot pomocniczy – grawitacja nie oddziałuje na tobie i możesz swobodnie latać."
 		//
 		BOSTONBASHSER_NAME 		= "BOSTOŃSKI TŁUCZEK"
-		BOSTONBASHSER_DESC 		= " Duże ryzyko/duża nagroda. Może natychmiast zabić większość słabszych wrogów, przyznając 10 sekund trafień krytycznych, jednak chybienie kończy się natychmiastową śmiercią. Wrogowie połączeni wiązką mediguna również są trafiani."
+		BOSTONBASHSER_DESC 		= "Duże ryzyko/duża nagroda. Może natychmiast zabić większość słabszych wrogów, przyznając 10 sekund trafień krytycznych, jednak chybienie kończy się natychmiastową śmiercią. Wrogowie połączeni wiązką mediguna również są trafiani."
 		//
 		SUNONASTICK_NAME		= "SŁOŃCE NA PATYKU"
-		SUNONASTICK_DESC		= " Szansa na ogłuszenie wrogów lub otrzymanie trafień krytycznych, jednak chybienie ogłusza ciebie. Wrogowie połączeni wiązką mediguna również są trafiani."
+		SUNONASTICK_DESC		= "Szansa na ogłuszenie wrogów lub otrzymanie trafień krytycznych, jednak chybienie ogłusza ciebie. Wrogowie połączeni wiązką mediguna również są trafiani."
 		//
 		FANOWAR_NAME 			= "WACHLARZ WOJENNY"
-		FANOWAR_DESC 			= " Przedmiot pomocniczy – zamachnij się tą bronią, by wybić się do przodu z dużą prędkością. Zapewnia odporność na obrażenia od upadku."
+		FANOWAR_DESC 			= "Przedmiot pomocniczy – zamachnij się tą bronią, by wybić się do przodu z dużą prędkością. Zapewnia odporność na obrażenia od upadku."
 		//
 		ATOMIZER_NAME 			= "ATOMIZER"
-		ATOMIZER_DESC 			= " Nie może zadawać obrażeń zwykłymi atakami, ale udane zabójstwo zabójczą drwiną zapewnia trafienia krytyczne na 3 minuty."
+		ATOMIZER_DESC 			= "Nie może zadawać obrażeń zwykłymi atakami, ale udane zabójstwo zabójczą drwiną zapewnia trafienia krytyczne na 3 minuty."
 		//
 		THREERUNEBLADE_NAME 	= "TRÓJRUNICZNE OSTRZE"
-		THREERUNEBLADE_DESC 	= " Gdy broń jest dobyta, zyskujesz OGROMNE zwiększenie szybkości ruchu i możliwość wykonania potrójnego skoku. Zapewnia odporność na obrażenia od upadku."
+		THREERUNEBLADE_DESC 	= "Gdy broń jest dobyta, zyskujesz OGROMNE zwiększenie szybkości ruchu i możliwość wykonania potrójnego skoku. Zapewnia odporność na obrażenia od upadku."
 		// TODO: Update! " While active, gain MASSIVE boost to move speed and ability to triple jump. Deals increased damage while airborne. Grants immunity to fall damage."
 		//
 		UNARMEDCOMBAT_NAME 		= "RĘKODZIEŁO"
-		UNARMEDCOMBAT_DESC 		= " Co 10 zabójstw otrzymujesz ładunek zaklęcia przywołania szkieletowego sługi (wymaga założenia księgi zaklęć)."
+		UNARMEDCOMBAT_DESC 		= "Co 10 zabójstw otrzymujesz ładunek zaklęcia przywołania szkieletowego sługi (wymaga założenia księgi zaklęć)."
 		//
 		WRAPAASSASSIN_NAME 		= "PAKUJĄCY ZABÓJCA"
-		WRAPAASSASSIN_DESC 		= " Pozwala atakować nadciągające pociski i z łatwością je odbijać. Zapewnia również odporność na ogłuszenie."
+		WRAPAASSASSIN_DESC 		= "Pozwala atakować nadciągające pociski i z łatwością je odbijać. Zapewnia również odporność na ogłuszenie."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		ROCKETLAUNCHER_NAME		= "WYRZUTNIA RAKIET"
-		ROCKETLAUNCHER_DESC		= " Standardowa opcja zapewniająca solidne obrażenia."
+		ROCKETLAUNCHER_DESC		= "Standardowa opcja zapewniająca solidne obrażenia."
 		//
 		DIRECTHIT_NAME			= "CELNY STRZAŁ"
-		DIRECTHIT_DESC			= " Atak alternatywny: wystrzel słabszego wroga w powietrze, by łatwo zadać mu obrażenia minikrytyczne w powietrzu. Rakiety mają niewielkie wspomaganie celowania."
+		DIRECTHIT_DESC			= "Atak alternatywny: wystrzel słabszego wroga w powietrze, by łatwo zadać mu obrażenia minikrytyczne w powietrzu. Rakiety mają niewielkie wspomaganie celowania."
 		//
 		BLACKBOX_NAME			= "CZARNA SKRZYNKA"
-		BLACKBOX_DESC			= " Spowalnia wrogów i wywołuje u nich krwawienie. Zadaje 2x większe obrażenia robożołnierzom."
+		BLACKBOX_DESC			= "Spowalnia wrogów i wywołuje u nich krwawienie. Zadaje 2x większe obrażenia robożołnierzom."
 		// TODO: Update! " Slow down enemies and inflict bleed."
 		//
 		ROCKETJUMPER_NAME		= "RAKIETOWY SKOCZEK"
-		ROCKETJUMPER_DESC		= " Niska szybkostrzelność i wolne przeładowanie, lecz zadaje duże obrażenia i posiada duży promień wybuchu. Świetna opcja do kontrolowania grup przeciwników."
+		ROCKETJUMPER_DESC		= "Niska szybkostrzelność i wolne przeładowanie, lecz zadaje duże obrażenia i posiada duży promień wybuchu. Świetna opcja do kontrolowania grup przeciwników."
 		//
 		LIBERTYLAUNCHER_NAME	= "WYRZUTNIA WOLNOŚCI"
-		LIBERTYLAUNCHER_DESC	= " Wystrzeliwuje wolno lecącą rakietę, która zadaje ogromne obrażenia na dużym obszarze. Bardzo wolne przeładowanie i mała ilość amunicji. Strzela automatycznie po załadowaniu."
+		LIBERTYLAUNCHER_DESC	= "Wystrzeliwuje wolno lecącą rakietę, która zadaje ogromne obrażenia na dużym obszarze. Bardzo wolne przeładowanie i mała ilość amunicji. Strzela automatycznie po załadowaniu."
 		//
 		COWMANGLER_NAME			= "WYŻYMACZKA KRÓW 5000"
-		COWMANGLER_DESC			= " Unieruchamia słabszych wrogów przy trafieniu. Naładowany strzał unieruchamia wrogów na dłużej. Przytrzymaj atak alternatywny, by supernaładować broń i oddać serię strzałów, co skutkuje jeszcze dłuższym efektem unieruchomienia."
+		COWMANGLER_DESC			= "Unieruchamia słabszych wrogów przy trafieniu. Naładowany strzał unieruchamia wrogów na dłużej. Przytrzymaj atak alternatywny, by supernaładować broń i oddać serię strzałów, co skutkuje jeszcze dłuższym efektem unieruchomienia."
 		//
 		ORIGINAL_NAME			= "PIERWOWZÓR"
-		ORIGINAL_DESC			= " Przytrzymaj przycisk strzału, by załadować serię aż do 5 rakiet. Strzela automatycznie po załadowaniu."
+		ORIGINAL_DESC			= "Przytrzymaj przycisk strzału, by załadować serię aż do 5 rakiet. Strzela automatycznie po załadowaniu."
 		//
 		BEGGARSBAZOOKA_NAME		= "BAZOOKA BIEDAKA"
-		BEGGARSBAZOOKA_DESC		= " Przytrzymaj przycisk strzału, by załadować aż do 100 rakiet i puść przycisk, by szybko je wystrzelić. Przeładowanie komory NIE doprowadzi do eksplozji."
+		BEGGARSBAZOOKA_DESC		= "Przytrzymaj przycisk strzału, by załadować aż do 100 rakiet i puść przycisk, by szybko je wystrzelić. Przeładowanie komory NIE doprowadzi do eksplozji."
 		//
 		AIRSTRIKE_NAME			= "ATAK POWIETRZNY"
-		AIRSTRIKE_DESC			= " Załaduj aż do 10 rakiet i wystrzel je naraz w stałym wzorze rozrzutu. Rakiety automatycznie naprowadzają się na wrogów."
+		AIRSTRIKE_DESC			= "Załaduj aż do 10 rakiet i wystrzel je naraz w stałym wzorze rozrzutu. Rakiety automatycznie naprowadzają się na wrogów."
 		///
 		SHOTGUN_SOLD_NAME 		= "STRZELBA - ŻOŁNIERZ" 
-		SHOTGUN_SOLD_DESC 		= " Bardzo duża szybkostrzelność i trafienia krytyczne podczas rakietowych skoków." 
+		SHOTGUN_SOLD_DESC 		= "Bardzo duża szybkostrzelność i trafienia krytyczne podczas rakietowych skoków." 
 		//
 		SHOTGUN_NAME 			= "STRZELBA" 
-		SHOTGUN_DESC 			= " Standardowa opcja zapewniająca solidne obrażenia." 
+		SHOTGUN_DESC 			= "Standardowa opcja zapewniająca solidne obrażenia." 
 		//
 		BUFFBANNER_NAME 		= "SZTANDAR CHWAŁY" 
-		BUFFBANNER_DESC 		= " Nieograniczony zasięg i znacznie wydłużony czas trwania efektu." 
+		BUFFBANNER_DESC 		= "Nieograniczony zasięg i znacznie wydłużony czas trwania efektu." 
 		//
 		GUNBOATS_NAME 			= "KANONIERKI" 
-		GUNBOATS_DESC 			= " Umożliwia wykonywanie „bunnyhopów” poprzez przytrzymanie klawisza skoku. Zapewnia odporność na obrażenia od upadku." 
+		GUNBOATS_DESC 			= "Umożliwia wykonywanie „bunnyhopów” poprzez przytrzymanie klawisza skoku. Zapewnia odporność na obrażenia od upadku." 
 		// TODO: Update! " Enables bunnyhopping by holding 'jump' key. Grants immunity to fall damage. Hold Crouch key while airborne to reduce gravity." 
 		//
 		BATTALIONS_NAME 		= "WSPARCIE BATALIONU" 
-		BATTALIONS_DESC 		= " Nieograniczony zasięg i znacznie wydłużony czas trwania efektu." 
+		BATTALIONS_DESC 		= "Nieograniczony zasięg i znacznie wydłużony czas trwania efektu." 
 		//
 		CONCHEROR_NAME 			= "SASHIMONO STRACEŃCA" 
-		CONCHEROR_DESC 			= " Nieograniczony zasięg i znacznie wydłużony czas trwania efektu." 
+		CONCHEROR_DESC 			= "Nieograniczony zasięg i znacznie wydłużony czas trwania efektu." 
 		//
 		RESERVESHOOTER_NAME 	= "REZERWISTA" 
-		RESERVESHOOTER_DESC 	= " Zadaje stałe 10 000 pkt. obrażeń na strzał niezależnie od odległości i przyznaje 3 sekundy trafień minikrytycznych po zabiciu wroga. Nie może uzyskać krytycznych obrażeń i nie zadaje obrażeń czołgom. Przytrzymaj atak alternatywny, by przybliżyć widok." 
+		RESERVESHOOTER_DESC 	= "Zadaje stałe 10 000 pkt. obrażeń na strzał niezależnie od odległości i przyznaje 3 sekundy trafień minikrytycznych po zabiciu wroga. Nie może uzyskać krytycznych obrażeń i nie zadaje obrażeń czołgom. Przytrzymaj atak alternatywny, by przybliżyć widok." 
 		//
 		BISON_NAME 				= "PRAWY BIZON" 
-		BISON_DESC 				= " Wystrzeliwuje ciągłą wiązkę penetrującą wrogów z pełnym automatycznym celowaniem." 
+		BISON_DESC 				= "Wystrzeliwuje ciągłą wiązkę penetrującą wrogów z pełnym automatycznym celowaniem." 
 		//
 		MANTREADS_NAME 			= "MIAŻDŻYCIELE" 
-		MANTREADS_DESC 			= " Znacznie redukuje odrzut przy otrzymywaniu obrażeń. Skręcanie w powietrzu ma teraz znacznie większe przyspieszenie. Obrażenia od upadku na wroga są zwiększone i zależą od szybkości spadania noszącego." 
+		MANTREADS_DESC 			= "Znacznie redukuje odrzut przy otrzymywaniu obrażeń. Skręcanie w powietrzu ma teraz znacznie większe przyspieszenie. Obrażenia od upadku na wroga są zwiększone i zależą od szybkości spadania noszącego." 
 		// TODO: Update! " Major reduction in knockback taken from damage. Stomp damage buffed and velocity-based. Gain a short critboost on kill."
 		//
 		BASEJUMPER_NAME 		= "SPADOCHRONOWY SKOCZEK" 
-		BASEJUMPER_DESC 		= " Umożliwia wielokrotne otwieranie i zamykanie spadochronu w powietrzu. Zwiększa odporność na odrzut i naboje, zmniejszając podatność na ataki będąc w powietrzu." 
+		BASEJUMPER_DESC 		= "Umożliwia wielokrotne otwieranie i zamykanie spadochronu w powietrzu. Zwiększa odporność na odrzut i naboje, zmniejszając podatność na ataki będąc w powietrzu." 
 		//
 		PANICATTACK_NAME 		= "ATAK PANIKI" 
-		PANICATTACK_DESC 		= " Gdy potrzebujesz natychmiastowego leczenia. Natychmiast odnawia do 10 000 pkt. zdrowia przy trafieniu we wroga. Otrzymywanie obrażeń, gdy broń jest dobyta, ma szansę na aktywowanie krótkiego ładunku ÜberCharge." 
+		PANICATTACK_DESC 		= "Gdy potrzebujesz natychmiastowego leczenia. Natychmiast odnawia do 10 000 pkt. zdrowia przy trafieniu we wroga. Otrzymywanie obrażeń, gdy broń jest dobyta, ma szansę na aktywowanie krótkiego ładunku ÜberCharge." 
 		///
 		SHOVEL_NAME 			= "SAPERKA"
-		SHOVEL_DESC 			= " Standardowa opcja zapewniająca ochronę i mobilność."
+		SHOVEL_DESC 			= "Standardowa opcja zapewniająca ochronę i mobilność."
 		//
 		EQUALIZER_NAME 			= "WYRÓWNYWACZ"
-		EQUALIZER_DESC 			= " Zabójcza drwina zadaje ogromne obrażenia i wyrzuca wrogów w powietrze."
+		EQUALIZER_DESC 			= "Zabójcza drwina zadaje ogromne obrażenia i wyrzuca wrogów w powietrze."
 		// TODO: Update! " Damage massively increases as you become injured."
 		//
 		PAINTRAIN_NAME 			= "PAŁKA SOKISTY"
-		PAINTRAIN_DESC 			= " Wywołuje krwawienie i spowalnia wrogów przy trafieniu. Zapewnia odporność na obrażenia od upadku."
+		PAINTRAIN_DESC 			= "Wywołuje krwawienie i spowalnia wrogów przy trafieniu. Zapewnia odporność na obrażenia od upadku."
 		//
 		HALFZATOICHI_NAME 		= "PRAWIE ZATOICHI"
-		HALFZATOICHI_DESC 		= " Średnie obrażenia, duża mobilność i zwiększony zasięg ataku."
+		HALFZATOICHI_DESC 		= "Średnie obrażenia, duża mobilność i zwiększony zasięg ataku."
 		//
 		MARKETGARDENER_NAME 	= "OGRODNIK Z ARNHEM"
-		MARKETGARDENER_DESC 	= " Znacznie zwiększone obrażenia krytyczne. Po zabiciu wroga wchodzisz w stan furii, otrzymując dodatkowe zdrowie, odporność i zwiększone obrażenia do wszystkich ataków. Chybienie kończy się natychmiastową śmiercią."
+		MARKETGARDENER_DESC 	= "Znacznie zwiększone obrażenia krytyczne. Po zabiciu wroga wchodzisz w stan furii, otrzymując dodatkowe zdrowie, odporność i zwiększone obrażenia do wszystkich ataków. Chybienie kończy się natychmiastową śmiercią."
 		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		DISCIPLINARYACTION_NAME = "POSTĘPOWANIE DYSCYPLINARNE"
-		DISCIPLINARYACTION_DESC	= " Standardowa opcja zapewniająca ochronę i mobilność."
+		DISCIPLINARYACTION_DESC	= "Standardowa opcja zapewniająca ochronę i mobilność."
 		// TODO: Update! " Standard option for defense and mobility. Instantly gain 1/3 Rage meter on hit."
 		//
 		ESCAPEPLAN_NAME			= "PLAN UCIECZKI"
-		ESCAPEPLAN_DESC			= " Standardowa opcja zapewniająca ochronę i mobilność."
+		ESCAPEPLAN_DESC			= "Standardowa opcja zapewniająca ochronę i mobilność."
 		// TODO: Update! " Deal guaranteed crits when below 50% health."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		FLAMETHROWER_NAME 		= "MIOTACZ OGNIA"
-		FLAMETHROWER_DESC		= " Standardowa opcja zapewniająca solidne obrażenia. Po zabiciu wroga zyskujesz trafienia minikrytyczne na krótki czas."
+		FLAMETHROWER_DESC		= "Standardowa opcja zapewniająca solidne obrażenia. Po zabiciu wroga zyskujesz trafienia minikrytyczne na krótki czas."
 		//
 		BACKBURNER_NAME 		= "DUPALACZ"
-		BACKBURNER_DESC			= " Zielony ogień – nakłada na wrogów piętno śmierci i ogłusza znajdujących się w powietrzu przeciwników na krótki czas. Zadaje 2x większe obrażenia robopyro."
+		BACKBURNER_DESC			= "Zielony ogień – nakłada na wrogów piętno śmierci i ogłusza znajdujących się w powietrzu przeciwników na krótki czas. Zadaje 2x większe obrażenia robopyro."
 		//
 		DEGREASER_NAME 			= "ODTŁUSZCZACZ"
-		DEGREASER_DESC			= " Miotacz ognia o dużym zasięgu z dużymi obrażeniami bezpośrednimi, lecz bez obrażeń od podpalenia. Nie posiada podmuchu sprężonego powietrza."
+		DEGREASER_DESC			= "Miotacz ognia o dużym zasięgu z dużymi obrażeniami bezpośrednimi, lecz bez obrażeń od podpalenia. Nie posiada podmuchu sprężonego powietrza."
 		//
 		PHLOGISTINATOR_NAME 	= "FLOGISTYNATOR"
-		PHLOGISTINATOR_DESC		= " Zielony ogień – nakłada na wrogów piętno śmierci i ogłusza znajdujących się w powietrzu przeciwników na krótki czas. Skuteczny przeciwko czołgom, ale zmniejsza twoją szybkość ruchu."
+		PHLOGISTINATOR_DESC		= "Zielony ogień – nakłada na wrogów piętno śmierci i ogłusza znajdujących się w powietrzu przeciwników na krótki czas. Skuteczny przeciwko czołgom, ale zmniejsza twoją szybkość ruchu."
 		//
 		RAINBLOWER_NAME 		= "TĘCZOMIOT"
-		RAINBLOWER_DESC			= " Miotacz ognia o dużym zasięgu i z niskimi obrażeniami bezpośrednimi, lecz dużymi obrażeniami od podpalenia. Może natychmiast niszczyć konstrukcje Inżyniera i podpalać wrogich Pyro. Podmuch sprężonego powietrza jest słaby, ale czas oczekiwania na jego kolejne użycie jest bardzo krótki."
+		RAINBLOWER_DESC			= "Miotacz ognia o dużym zasięgu i z niskimi obrażeniami bezpośrednimi, lecz dużymi obrażeniami od podpalenia. Może natychmiast niszczyć konstrukcje Inżyniera i podpalać wrogich Pyro. Podmuch sprężonego powietrza jest słaby, ale czas oczekiwania na jego kolejne użycie jest bardzo krótki."
 		//
 		DRAGONSFURY_NAME 		= "SMOCZA FURIA"
-		DRAGONSFURY_DESC		= " Znacznie zwiększona szybkostrzelność i skrócony czas oczekiwania na kolejne użycie podmuchu sprężonego powietrza."
+		DRAGONSFURY_DESC		= "Znacznie zwiększona szybkostrzelność i skrócony czas oczekiwania na kolejne użycie podmuchu sprężonego powietrza."
 		//
 		NOSTROMONAPALMER_NAME 	= "NAPALM Z NOSTROMO"
-		NOSTROMONAPALMER_DESC	= " Spowalnia wrogów przy trafieniu. Buduje ładunek „Mmmph” podobnie jak Flogistynator, ale przyznaje efekt Sashimona straceńca. Nie posiada podmuchu sprężonego powietrza."
+		NOSTROMONAPALMER_DESC	= "Spowalnia wrogów przy trafieniu. Buduje ładunek „Mmmph” podobnie jak Flogistynator, ale przyznaje efekt Sashimona straceńca. Nie posiada podmuchu sprężonego powietrza."
 		///
 		SHOTGUN_PYRO_NAME 		= "STRZELBA - PYRO" 
-		SHOTGUN_PYRO_DESC 		= " Zadaje trafienia krytyczne płonącym wrogom." 
+		SHOTGUN_PYRO_DESC 		= "Zadaje trafienia krytyczne płonącym wrogom." 
 		//
 		FLAREGUN_NAME 			= "PISTOLET SYGNAŁOWY" 
-		FLAREGUN_DESC 			= " Wystrzeliwuje pocisk w linii prostej, który penetruje wrogów. Obrażenia pocisku są zwiększane z każdym kolejnym trafionym po drodze przeciwnikiem. Ma też szansę ogłuszyć wrogów przy trafieniu." 
+		FLAREGUN_DESC 			= "Wystrzeliwuje pocisk w linii prostej, który penetruje wrogów. Obrażenia pocisku są zwiększane z każdym kolejnym trafionym po drodze przeciwnikiem. Ma też szansę ogłuszyć wrogów przy trafieniu." 
 		//
 		DETONATOR_NAME 			= "DETONATOR" 
-		DETONATOR_DESC 			= " Flara ma nieskończony promień wybuchu i trafia w każdego wroga w jej polu widzenia. Zmusza wszystkich roboszpiegów do usunięcia swoich przebrań i wyłączenia niewidzialności. Świetna opcja zapewniająca mobilność." 
+		DETONATOR_DESC 			= "Flara ma nieskończony promień wybuchu i trafia w każdego wroga w jej polu widzenia. Zmusza wszystkich roboszpiegów do usunięcia swoich przebrań i wyłączenia niewidzialności. Świetna opcja zapewniająca mobilność." 
 		//
 		MANMELTER_NAME 			= "CZŁEKOROZTAPIACZ" 
-		MANMELTER_DESC 			= " Szybkostrzelne flary automatycznie namierzające wrogów. Nieskończona amunicja i brak przeładowania. Atak alternatywny: wystrzel naraz serię wielu flar."
+		MANMELTER_DESC 			= "Szybkostrzelne flary automatycznie namierzające wrogów. Nieskończona amunicja i brak przeładowania. Atak alternatywny: wystrzel naraz serię wielu flar."
 		//
 		SCORCHSHOT_NAME 		= "PIEKĄCA PALBA" 
-		SCORCHSHOT_DESC 		= " Przy trafieniu we wroga: zadaje duże obrażenia, gasi wroga i odrzuca go. Przeciwnik musi być podpalony, w przeciwnym razie atak nie zadziała. Atak alternatywny: użyj wolnej samonaprowadzającej flary." 
+		SCORCHSHOT_DESC 		= "Przy trafieniu we wroga: zadaje duże obrażenia, gasi wroga i odrzuca go. Przeciwnik musi być podpalony, w przeciwnym razie atak nie zadziała. Atak alternatywny: użyj wolnej samonaprowadzającej flary." 
 		//
 		THERMALTHRUSTER_NAME 	= "CIEPLNY CIĄG" 
-		THERMALTHRUSTER_DESC 	= " Zmniejszone zużycie paliwa i brak opóźnienia startu. Umożliwia ponowne użycie plecaka w powietrzu i zadaje ogromne obrażenia przeciwnikowi, na którym wylądujesz. Po zabiciu wroga otrzymujesz na krótki czas trafienia krytyczne." 
+		THERMALTHRUSTER_DESC 	= "Zmniejszone zużycie paliwa i brak opóźnienia startu. Umożliwia ponowne użycie plecaka w powietrzu i zadaje ogromne obrażenia przeciwnikowi, na którym wylądujesz. Po zabiciu wroga otrzymujesz na krótki czas trafienia krytyczne." 
 		//
 		GASPASSER_NAME 			= "CIEPLNY CIĄG" 
-		GASPASSER_DESC 			= " Wskaźnik benzyny jest na początku pusty i resetuje się przy śmierci. Wymaga 150 000 pkt. obrażeń do napełnienia. Wybuch po podpaleniu zadaje 105 000 pkt. obrażeń." 
+		GASPASSER_DESC 			= "Wskaźnik benzyny jest na początku pusty i resetuje się przy śmierci. Wymaga 150 000 pkt. obrażeń do napełnienia. Wybuch po podpaleniu zadaje 105 000 pkt. obrażeń." 
 		///
 		FIREAXE_NAME 			= "TOPÓR STRAŻACKI"
-		FIREAXE_DESC 			= " Standardowa opcja zapewniająca ochronę i mobilność."
+		FIREAXE_DESC 			= "Standardowa opcja zapewniająca ochronę i mobilność."
 		//	
 		AXTINGUISHER_NAME 		= "POSKRAMIACZ PŁOMIENI"
-		AXTINGUISHER_DESC		= " Znacznie zwiększone obrażenia przeciw płonącym wrogom."
+		AXTINGUISHER_DESC		= "Znacznie zwiększone obrażenia przeciw płonącym wrogom."
 		//
 		HOMEWRECKER_NAME 		= "BURZYCIEL"
-		HOMEWRECKER_DESC 		= " Umożliwia natychmiastowe niszczenie konstrukcji Inżyniera z dowolnego miejsca dzięki nieograniczonemu zasięgowi ataku."
+		HOMEWRECKER_DESC 		= "Umożliwia natychmiastowe niszczenie konstrukcji Inżyniera z dowolnego miejsca dzięki nieograniczonemu zasięgowi ataku."
 		//
 		POWERJACK_NAME 			= "LEWAREK"
-		POWERJACK_DESC 			= " Duża szybkość ataku i poruszania się. Wywołuje krwawienie i podpala wrogów przy trafieniu oraz zapewnia trafienia minikrytyczne po zabiciu przeciwnika."
+		POWERJACK_DESC 			= "Duża szybkość ataku i poruszania się. Wywołuje krwawienie i podpala wrogów przy trafieniu oraz zapewnia trafienia minikrytyczne po zabiciu przeciwnika."
 		//
 		BACKSCRATCHER_NAME 		= "DRAPACZKA"
-		BACKSCRATCHER_DESC 		= " Zadaje śmiertelne obrażenia z tyłu. Po zabiciu wroga wchodzisz w stan furii, zyskując dodatkową szybkość ruchu, odporność i zwiększone obrażenia do wszystkich ataków."
+		BACKSCRATCHER_DESC 		= "Zadaje śmiertelne obrażenia z tyłu. Po zabiciu wroga wchodzisz w stan furii, zyskując dodatkową szybkość ruchu, odporność i zwiększone obrażenia do wszystkich ataków."
 		// TODO: Update! " Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		VOLCANOFRAGMENT_NAME 	= "NAOSTRZONY FRAGMENT WULKANU"
-		VOLCANOFRAGMENT_DESC 	= " Szansa na ogłuszenie wrogów przy trafieniu. Może podpalać wrogich Pyro."
+		VOLCANOFRAGMENT_DESC 	= "Szansa na ogłuszenie wrogów przy trafieniu. Może podpalać wrogich Pyro."
 		//
 		POSTALPUMMELER_NAME 	= "POCZTOWY POGROMCA"
-		POSTALPUMMELER_DESC 	= " Przy trafieniu we wroga: wywołuje dezorientację, powodując, że wrogowie przez krótki czas cofają się wzdłuż ścieżki przenoszenia bomby. Przytrzymanie ataku alternatywnego podczas ataku teleportuje cię z powrotem do strefy odradzania."
+		POSTALPUMMELER_DESC 	= "Przy trafieniu we wroga: wywołuje dezorientację, powodując, że wrogowie przez krótki czas cofają się wzdłuż ścieżki przenoszenia bomby. Przytrzymanie ataku alternatywnego podczas ataku teleportuje cię z powrotem do strefy odradzania."
 		//
 		MAUL_NAME 				= "MAUL"
-		MAUL_DESC 				= " Przy trafieniu we wroga: wyrzuca go w powietrze ze zmniejszoną siłą grawitacji."
+		MAUL_DESC 				= "Przy trafieniu we wroga: wyrzuca go w powietrze ze zmniejszoną siłą grawitacji."
 		// TODO: Update! " On hit: Cause an explosion, launching enemies into the air and igniting them."
 		//
 		THIRDDEGREE_NAME 		= "TRZECI STOPIEŃ"
-		THIRDDEGREE_DESC 		= " Stajesz się niemal całkowicie odporny na obrażenia od ognia, gdy broń jest wyposażona, a także zyskujesz dużą odporność na wszystkie ataki dystansowe, gdy broń jest dobyta."
+		THIRDDEGREE_DESC 		= "Stajesz się niemal całkowicie odporny na obrażenia od ognia, gdy broń jest wyposażona, a także zyskujesz dużą odporność na wszystkie ataki dystansowe, gdy broń jest dobyta."
 		//
 		LOLLICHOP_NAME 			= "LIZASIEK"
-		LOLLICHOP_DESC 			= " Co 10 zabójstw otrzymujesz ładunek zaklęcia deszcz meteorytów (wymaga założenia księgi zaklęć)."
+		LOLLICHOP_DESC 			= "Co 10 zabójstw otrzymujesz ładunek zaklęcia deszcz meteorytów (wymaga założenia księgi zaklęć)."
 		//
 		NEONANNIHILATOR_NAME 	= "NISZCZYCIEL"
-		NEONANNIHILATOR_DESC 	= " Twoja grawitacja jest zmniejszona."
+		NEONANNIHILATOR_DESC 	= "Twoja grawitacja jest zmniejszona."
 		//
 		HOTHAND_NAME 			= "GORĄCY PLASKACZ"
-		HOTHAND_DESC 			= " Wyrzuca wrogów w powietrze przy trafieniu."
+		HOTHAND_DESC 			= "Wyrzuca wrogów w powietrze przy trafieniu."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		GRENADELAUNCHER_NAME 	= "GRANATNIK"
-		GRENADELAUNCHER_DESC	= " Standardowa opcja zapewniająca solidne obrażenia."
+		GRENADELAUNCHER_DESC	= "Standardowa opcja zapewniająca solidne obrażenia."
 		//
 		LOCHNLOAD_NAME 			= "LOCH-N-LOAD"
-		LOCHNLOAD_DESC			= " Niska szybkostrzelność, ale duże obrażenia na wielkim obszarze. Dobrze się sprawdza w kontrolowaniu grup przeciwników."
+		LOCHNLOAD_DESC			= "Niska szybkostrzelność, ale duże obrażenia na wielkim obszarze. Dobrze się sprawdza w kontrolowaniu grup przeciwników."
 		//
 		ALIBABA_NAME			= "MALUTKIE BUTKI ALI BABY"
-		ALIBABA_DESC			= " Zwiększone obrażenia od uderzenia tarczą. Zapewniają odporność na obrażenia od upadku."
+		ALIBABA_DESC			= "Zwiększone obrażenia od uderzenia tarczą. Zapewniają odporność na obrażenia od upadku."
 		//
 		BOOTLEGGER_NAME			= "KUTERNOGA"
-		BOOTLEGGER_DESC			= " Zwiększona szybkość odnawiania szarży. Zapewnia odporność na obrażenia od upadku."
+		BOOTLEGGER_DESC			= "Zwiększona szybkość odnawiania szarży. Zapewnia odporność na obrażenia od upadku."
 		//
 		LOOSECANNON_NAME		= "DZIAŁO NAWALONE"
-		LOOSECANNON_DESC		= " Załaduj do 4 kul armatnich, a następnie wystrzel wszystkie naraz w pionowym układzie rozrzutu. Kule armatnie eksplodują przy kontakcie z ziemią."
+		LOOSECANNON_DESC		= "Załaduj do 4 kul armatnich, a następnie wystrzel wszystkie naraz w pionowym układzie rozrzutu. Kule armatnie eksplodują przy kontakcie z ziemią."
 		//
 		IRONBOMBER_NAME			= "ŻELAZNY BOMBARDIER"
-		IRONBOMBER_DESC			= " Ignoruje odporności wrogów i przyznaje trafienia krytyczne po zabiciu przeciwnika. Nie wymaga amunicji i ma nieskończony magazynek. Pociski mogą odbijać się od ścian."
+		IRONBOMBER_DESC			= "Ignoruje odporności wrogów i przyznaje trafienia krytyczne po zabiciu przeciwnika. Nie wymaga amunicji i ma nieskończony magazynek. Pociski mogą odbijać się od ścian."
 		///
 		STICKYBOMB_NAME 		= "WYRZUTNIA BOMB SAMOPRZYLEPNYCH"
-		STICKYBOMB_DESC 		= " Standardowa opcja zapewniająca solidne obrażenia. Można rozmieścić do 50 bomb samoprzylepnych."
+		STICKYBOMB_DESC 		= "Standardowa opcja zapewniająca solidne obrażenia. Można rozmieścić do 50 bomb samoprzylepnych."
 		//
 		SCOTTISHRES_NAME 		= "SZKOCKI OPÓR"
-		SCOTTISHRES_DESC 		= " Bomba uzbraja się po 5 sekundach i wygasa po 10 sekundach, ale przy dobrym wyczuciu czasu i pełnym naładowaniu może zadawać ogromne obrażenia."
+		SCOTTISHRES_DESC 		= "Bomba uzbraja się po 5 sekundach i wygasa po 10 sekundach, ale przy dobrym wyczuciu czasu i pełnym naładowaniu może zadawać ogromne obrażenia."
 		//
 		STICKYJUMPER_NAME 		= "BOMBOWY SKOCZEK"
-		STICKYJUMPER_DESC 		= " Tworzy wyłączające pole, ogłuszając wszystkich wrogów trafionych impulsem (minibossowie są odporni na ogłuszenie)."
+		STICKYJUMPER_DESC 		= "Tworzy wyłączające pole, ogłuszając wszystkich wrogów trafionych impulsem (minibossowie są odporni na ogłuszenie)."
 		//
 		CHARGINTARGE_NAME 		= "TARCZA SZARŻY"
-		CHARGINTARGE_DESC 		= " Mocna szarża – zwiększone obrażenia od uderzenia tarczą."
+		CHARGINTARGE_DESC 		= "Mocna szarża – zwiększone obrażenia od uderzenia tarczą."
 		//
 		SPLENDIDSCREEN_NAME 	= "PRZEŚWIETNY PUKLERZ"
-		SPLENDIDSCREEN_DESC 	= " Odnawiana szarża – zwiększona szybkość odnawiania szarży."
+		SPLENDIDSCREEN_DESC 	= "Odnawiana szarża – zwiększona szybkość odnawiania szarży."
 		//
 		TIDETURNER_NAME 		= "STERBURTA"
-		TIDETURNER_DESC 		= " Szybka szarża – zwiększona szybkość ruchu podczas szarży."
+		TIDETURNER_DESC 		= "Szybka szarża – zwiększona szybkość ruchu podczas szarży."
 		//
 		QUICKIEBOMB_NAME 		= "WYRZUTNIK SZYBKOBOMB"
-		QUICKIEBOMB_DESC 		= " Automatycznie wystrzeliwuje bomby samoprzylepne z ekstremalną szybkostrzelnością i bardzo szybkim czasem uzbrajania. Przyznaje trafienia minikrytyczne po zabiciu wroga."
+		QUICKIEBOMB_DESC 		= "Automatycznie wystrzeliwuje bomby samoprzylepne z ekstremalną szybkostrzelnością i bardzo szybkim czasem uzbrajania. Przyznaje trafienia minikrytyczne po zabiciu wroga."
 		///
 		BOTTLE_NAME 			= "BUTELKA"
-		BOTTLE_DESC 			= " Standardowa opcja zapewniająca ochronę i mobilność."
+		BOTTLE_DESC 			= "Standardowa opcja zapewniająca ochronę i mobilność."
 		//
 		EYELANDER_NAME 			= "WYSZCZERBIEC"
-		EYELANDER_DESC 			= " Duże obrażenia i szybkie ataki przyznające trafienia krytyczne i minikrytyczne po zabiciu wroga, lecz bez możliwości gry jako „hybrid-knight”."
+		EYELANDER_DESC 			= "Duże obrażenia i szybkie ataki przyznające trafienia krytyczne i minikrytyczne po zabiciu wroga, lecz bez możliwości gry jako „hybrid-knight”."
 		//
 		SKULLCUTTER_NAME 		= "CZEREPOŁAMACZ SZKOTA"
-		SKULLCUTTER_DESC 		= " Może przebijać się przez ÜberCharge wroga i zakłócać działanie mediguna. Zadaje także zwiększone obrażenia przeciwnikom tej samej klasy co ty."
+		SKULLCUTTER_DESC 		= "Może przebijać się przez ÜberCharge wroga i zakłócać działanie mediguna. Zadaje także zwiększone obrażenia przeciwnikom tej samej klasy co ty."
 		//
 		CABER_NAME 				= "ULLAPOOLSKI PAL"
-		CABER_DESC 				= " Zadawane obrażenia zwiększają się wraz z utratą twojego zdrowia. Poniżej 2% zdrowia zapewnia trafienia krytyczne. Eksplozja z takiego ataku powoduje twoją śmierć."
+		CABER_DESC 				= "Zadawane obrażenia zwiększają się wraz z utratą twojego zdrowia. Poniżej 2% zdrowia zapewnia trafienia krytyczne. Eksplozja z takiego ataku powoduje twoją śmierć."
 		// TODO: Update! " You are a Sentry Buster - Taunt to detonate!"
 		//
 		CLAIDHEAMHMOR_NAME 		= "CLAIDHEAMH MÒR"
-		CLAIDHEAMHMOR_DESC 		= " Co 10 zabójstw otrzymujesz zaklęcia Monoculus (wymaga założenia księgi zaklęć)."
+		CLAIDHEAMHMOR_DESC 		= "Co 10 zabójstw otrzymujesz zaklęcia Monoculus (wymaga założenia księgi zaklęć)."
 		//
 		PERSIANPERSUADER_NAME 	= "PERSKA PERSWAZJA"
-		PERSIANPERSUADER_DESC 	= " W połączeniu z tarczą zapewnia nieograniczoną szarżę. Szarża nie może zostać przerwana przez ostre skręcanie ani zderzenia ze ścianami, wrogami czy innymi przeszkodami. Zapewnia odporność na ogłuszenie."
+		PERSIANPERSUADER_DESC 	= "W połączeniu z tarczą zapewnia nieograniczoną szarżę. Szarża nie może zostać przerwana przez ostre skręcanie ani zderzenia ze ścianami, wrogami czy innymi przeszkodami. Zapewnia odporność na ogłuszenie."
 		//
 		NINEIRON_NAME 			= "ŻELAZNA NESSIE"
-		NINEIRON_DESC 			= " Posiada ogromny zasięg zamachu, pozwalając trafić wielu wrogów naraz we wszystkich kierunkach. Zadaje podwójne obrażenia krytyczne."
+		NINEIRON_DESC 			= "Posiada ogromny zasięg zamachu, pozwalając trafić wielu wrogów naraz we wszystkich kierunkach. Zadaje podwójne obrażenia krytyczne."
 		//
 		SCOTTISHHANDSHAKE_NAME 	= "SZKOCKI UŚCISK DŁONI"
-		SCOTTISHHANDSHAKE_DESC 	= " Gdy broń jest dobyta, 90% odporności na obrażenia z dystansu, odporność na odrzut i znaczny wzrost maksymalnego zdrowia. Nie możesz jednak odzyskiwać amunicji i otrzymujesz mniej zdrowia z apteczek."
+		SCOTTISHHANDSHAKE_DESC 	= "Gdy broń jest dobyta, 90% odporności na obrażenia z dystansu, odporność na odrzut i znaczny wzrost maksymalnego zdrowia. Nie możesz jednak odzyskiwać amunicji i otrzymujesz mniej zdrowia z apteczek."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		MINIGUN_NAME 			= "MINIGUN"
-		MINIGUN_DESC 			= " Standardowa opcja zapewniająca solidne obrażenia. Po zabiciu wroga zyskujesz trafienia minikrytyczne na krótki czas."
+		MINIGUN_DESC 			= "Standardowa opcja zapewniająca solidne obrażenia. Po zabiciu wroga zyskujesz trafienia minikrytyczne na krótki czas."
 		//
 		NATASCHA_NAME 			= "NATASZA"
-		NATASCHA_DESC 			= " Spowalnia wrogów przy trafieniu i nakłada piętno śmierci."
+		NATASCHA_DESC 			= "Spowalnia wrogów przy trafieniu i nakłada piętno śmierci."
 		//
 		BRASSBEAST_NAME 		= "MOSIĘŻNA BESTIA"
-		BRASSBEAST_DESC 		= " Zwiększone obrażenia, ale bardzo wolne rozkręcanie lufy. Szybkość poruszania jest ograniczona, gdy broń jest dobyta. Umożliwia odbijanie pocisków."
+		BRASSBEAST_DESC 		= "Zwiększone obrażenia, ale bardzo wolne rozkręcanie lufy. Szybkość poruszania jest ograniczona, gdy broń jest dobyta. Umożliwia odbijanie pocisków."
 		//
 		TOMISLAV_NAME 			= "TOMISŁAW"
-		TOMISLAV_DESC 			= " Buduje ładunek „Nagrzanie” poprzez zadawanie obrażeń wrogom. Wszystkie statystyki tej broni rosną wraz z poziomem nagrzania. Zaczyna się schładzać, jeśli zbyt długo nie zadajesz obrażeń."
+		TOMISLAV_DESC 			= "Buduje ładunek „Nagrzanie” poprzez zadawanie obrażeń wrogom. Wszystkie statystyki tej broni rosną wraz z poziomem nagrzania. Zaczyna się schładzać, jeśli zbyt długo nie zadajesz obrażeń."
 		//
 		HUOHEATER_NAME 			= "WEJŚCIE SMOKA"
-		HUOHEATER_DESC 			= " Wystrzeliwuje wiązki energii, podpalając wrogów przy trafieniu."
+		HUOHEATER_DESC 			= "Wystrzeliwuje wiązki energii, podpalając wrogów przy trafieniu."
 		//
 		GENUINEHUOHEATER_NAME 	= "WEJŚCIE SMOKA (ORYGINAŁ)"
-		GENUINEHUOHEATER_DESC 	= " Wystrzeliwuje rakiety. Zadaje obrażenia krytyczne płonącym wrogom."
+		GENUINEHUOHEATER_DESC 	= "Wystrzeliwuje rakiety. Zadaje obrażenia krytyczne płonącym wrogom."
 		///
 		SHOTGUN_HVY_NAME 		= "STRZELBA - GRUBY"
-		SHOTGUN_HVY_DESC 		= " Pojedynczy strzał zadający duże obrażenia i przyznający trafienia krytyczne na 8 sekund po zabiciu wroga."
+		SHOTGUN_HVY_DESC 		= "Pojedynczy strzał zadający duże obrażenia i przyznający trafienia krytyczne na 8 sekund po zabiciu wroga."
 		//
 		SANDVICH_NAME 			= "KANAPKA"
-		SANDVICH_DESC 			= " Przywraca do 150 000 pkt. zdrowia. Każde otrzymane obrażenia, gdy ten przedmiot jest dobyty, powodują natychmiastową śmiercią."
+		SANDVICH_DESC 			= "Przywraca do 150 000 pkt. zdrowia. Każde otrzymane obrażenia, gdy ten przedmiot jest dobyty, powodują natychmiastową śmiercią."
 		// TODO: Update! " Consume to gain Concheror buff for 30 seconds."
 		//
 		DALOKOHSBAR_NAME 		= "TABLICZKA LADYCZEKO"
-		DALOKOHSBAR_DESC 		= " Przywraca do 20 000 pkt. zdrowia. Użycie poniżej 350 pkt. zdrowia przyzna duże nadleczenie. Pasywnie zwiększa otrzymywane obrażenia, ale ma szansę na aktywowanie krótkiego ładunku ÜberCharge otrzymaniu obrażeń."
+		DALOKOHSBAR_DESC 		= "Przywraca do 20 000 pkt. zdrowia. Użycie poniżej 350 pkt. zdrowia przyzna duże nadleczenie. Pasywnie zwiększa otrzymywane obrażenia, ale ma szansę na aktywowanie krótkiego ładunku ÜberCharge otrzymaniu obrażeń."
 		// TODO: Update! " Consume to gain increased move speed, weapon switch speed and faster minigun spinup time for 30 seconds."
 		//
 		BUFFALOSTEAK_NAME 		= "STEK Z BIZONA"
-		BUFFALOSTEAK_DESC 		= " Pasywnie zapewnia odporność na trafienia krytyczne."
+		BUFFALOSTEAK_DESC 		= "Pasywnie zapewnia odporność na trafienia krytyczne."
 		// TODO: Update! " Consume to gain Battalion's Backup buff and backstab immunity for 30 seconds."
 		//
 		FAMILYBUSINESS_NAME 	= "RODZINNY INTERES"
-		FAMILYBUSINESS_DESC 	= " Nieskończona amunicja. Szybkostrzelność jest podwojona podczas otrzymywania leczenia. Przyznaje na krótki czas trafienia krytyczne i minikrytyczne po zabiciu wroga."
+		FAMILYBUSINESS_DESC 	= "Nieskończona amunicja. Szybkostrzelność jest podwojona podczas otrzymywania leczenia. Przyznaje na krótki czas trafienia krytyczne i minikrytyczne po zabiciu wroga."
 		//
 		FISHCAKE_NAME 			= "CIASTKO RYBNE"
-		FISHCAKE_DESC 			= " Duża odporność na obrażenia od NABOJÓW, ale większa podatność na obrażenia od OGNIA i EKSPLOZJI."
+		FISHCAKE_DESC 			= "Duża odporność na obrażenia od NABOJÓW, ale większa podatność na obrażenia od OGNIA i EKSPLOZJI."
 		// TODO: Update! " Consume to gain gravity reversal power for 30 seconds (Crouch to reverse gravity)."
 		//
 		SECONDBANANA_NAME 		= "BANAN POCIESZENIA"
-		SECONDBANANA_DESC 		= " Duża odporność na obrażenia od EKSPLOZJI, ale większa podatność na obrażenia od OGNIA i NABOJÓW."
+		SECONDBANANA_DESC 		= "Duża odporność na obrażenia od EKSPLOZJI, ale większa podatność na obrażenia od OGNIA i NABOJÓW."
 		// TODO: Update! " Consume to gain explosive melee power for 30 seconds (You are restricted to melee for the duration)."
 		///
 		FISTS_NAME 				= "PIĘŚCI"
-		FISTS_DESC 				= " Standardowa opcja zapewniająca ochronę i mobilność. Skuteczne w walce."
+		FISTS_DESC 				= "Standardowa opcja zapewniająca ochronę i mobilność. Skuteczne w walce."
 		//
 		KILLINGGLOVES_NAME 		= "KRYTYCZNE GRZMOTY BOKSERSKIE"
-		KILLINGGLOVES_DESC 		= " Zdolność specjalna: „Megazgniot” – gdy jest dostępna, naciśnij klawisz działania stojąc na bombie, by natychmiast odesłać ją na początek. W przeciwnym razie otrzymasz tymczasowy bonus do szybkości ruchu, obrony i trafienia krytyczne."
+		KILLINGGLOVES_DESC 		= "Zdolność specjalna: „Megazgniot” – gdy jest dostępna, naciśnij klawisz działania stojąc na bombie, by natychmiast odesłać ją na początek. W przeciwnym razie otrzymasz tymczasowy bonus do szybkości ruchu, obrony i trafienia krytyczne."
 		//
 		GLOVESRUNNING_NAME 		= "GORĄCE RĘKAWICE UCIEKINIERA"
-		GLOVESRUNNING_DESC 		= " Pasywnie umożliwia użycie spadochronu. Gdy broń jest dobyta, zyskujesz zwiększoną wysokość skoku, odporność na obrażenia i regenerację zdrowia."
+		GLOVESRUNNING_DESC 		= "Pasywnie umożliwia użycie spadochronu. Gdy broń jest dobyta, zyskujesz zwiększoną wysokość skoku, odporność na obrażenia i regenerację zdrowia."
 		//
 		BREADBITE_NAME 			= "CHLEBOGRYZARKA"
-		BREADBITE_DESC 			= " Trafienia krytyczne nakładają na wroga efekt korozji - permanentny negatywny efekt, który zadaje obrażenia zależne od maksymalnego zdrowia i powodujący, że po śmierci przeciwnik eksploduje, pozostawiając małą żrącą chmurę, rozprzestrzeniając efekt na innych wrogów."
+		BREADBITE_DESC 			= "Trafienia krytyczne nakładają na wroga efekt korozji - permanentny negatywny efekt, który zadaje obrażenia zależne od maksymalnego zdrowia i powodujący, że po śmierci przeciwnik eksploduje, pozostawiając małą żrącą chmurę, rozprzestrzeniając efekt na innych wrogów."
 		//
 		WARRIRORSSPIRIT_NAME 	= "DUSZA WOJOWNIKA"
-		WARRIRORSSPIRIT_DESC 	= " Naciśnij lewy przycisk myszy, by wykonać wysoki skok. Wylądowanie na wrogach zadaje im ogromne obrażenia. Usuwa całą amunicję broni podstawowej i pomocniczej."
+		WARRIRORSSPIRIT_DESC 	= "Naciśnij lewy przycisk myszy, by wykonać wysoki skok. Wylądowanie na wrogach zadaje im ogromne obrażenia. Usuwa całą amunicję broni podstawowej i pomocniczej."
 		// TODO: Update! " Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air. Active buff indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		FISTSOFSTEEL_NAME 		= "PIĘŚCI ZE STALI"
-		FISTSOFSTEEL_DESC 		= " Przekształca cię w gigantycznego pięściarza z 250 000 pkt. zdrowia. Jesteś odporny na odrzut i możesz zadawać duże obrażenia. Usuwa całą amunicję broni podstawowej i pomocniczej. Możesz leczyć się wyłącznie za pomocą własnych artykułów spożywczych."
+		FISTSOFSTEEL_DESC 		= "Przekształca cię w gigantycznego pięściarza z 250 000 pkt. zdrowia. Jesteś odporny na odrzut i możesz zadawać duże obrażenia. Usuwa całą amunicję broni podstawowej i pomocniczej. Możesz leczyć się wyłącznie za pomocą własnych artykułów spożywczych."
 		// TODO: Update! " You are a Giant Heavy Gauntlet - Immune to push forces and able to hit multiple enemies at once for massive damage."
 		//
 		EVICTIONNOTICE_NAME 	= "NAKAZ EKSMISJI"
-		EVICTIONNOTICE_DESC 	= " Otrzymujesz szybkie leczenie po zabiciu wroga."
+		EVICTIONNOTICE_DESC 	= "Otrzymujesz szybkie leczenie po zabiciu wroga."
 		//
 		APOCOFISTS_NAME 		= "PIĄCHOKALIPSA"
-		APOCOFISTS_DESC 		= " Ciosy odrzucają wrogów."
+		APOCOFISTS_DESC 		= "Ciosy odrzucają wrogów."
 		//
 		HOLIDAYPUNCH_NAME 		= "ŚWIĄTECZNY WIGOR"
-		HOLIDAYPUNCH_DESC 		= " Gdy broń jest dobyta, wszyscy wrogowie ignorują cię. Zapewnia odporność na ogłuszenie. Nie zadaje żadnych obrażeń."
+		HOLIDAYPUNCH_DESC 		= "Gdy broń jest dobyta, wszyscy wrogowie ignorują cię. Zapewnia odporność na ogłuszenie. Nie zadaje żadnych obrażeń."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		SHOTGUN_ENGI_NAME		= "STRZELBA - INŻYNIER"
-		SHOTGUN_ENGI_DESC 		= " Zadaje 4x większe obrażenia celowi twojego działka strażniczego."
+		SHOTGUN_ENGI_DESC 		= "Zadaje 4x większe obrażenia celowi twojego działka strażniczego."
 		//
 		FRONTIERJUSTICE_NAME 	= "SAMOSĄD"
-		FRONTIERJUSTICE_DESC 	= " Szaleńczo duża szybkostrzelność. Pojemność magazynka równa się maksymalnej liczbie trafień krytycznych zemsty. Przeładowuje się szybciej podczas otrzymywania jakiegokolwiek leczenia."
+		FRONTIERJUSTICE_DESC 	= "Szaleńczo duża szybkostrzelność. Pojemność magazynka równa się maksymalnej liczbie trafień krytycznych zemsty. Przeładowuje się szybciej podczas otrzymywania jakiegokolwiek leczenia."
 		//
 		WIDOWMAKER_NAME 		= "LIKWIDATOR"
-		WIDOWMAKER_DESC 		= " Zużyj 2000 jedn. metalu, by wystrzelić rozproszony strzał odpychający wrogów."
+		WIDOWMAKER_DESC 		= "Zużyj 2000 jedn. metalu, by wystrzelić rozproszony strzał odpychający wrogów."
 		//
 		POMSON_NAME 			= "POMSON 6000"
-		POMSON_DESC 			= " Wywołuje krwawienie, podpala i spowalnia wrogów."
+		POMSON_DESC 			= "Wywołuje krwawienie, podpala i spowalnia wrogów."
 		//
 		RESCUERANGER_NAME 		= "RYZYKOWNY RATUNEK"
-		RESCUERANGER_DESC		= " Zużywa 20 jedn. metalu na strzał, ale nigdy nie wymaga przeładowania i zwiększa maksymalną ilość metalu o 1000 jednostek."
+		RESCUERANGER_DESC		= "Zużywa 20 jedn. metalu na strzał, ale nigdy nie wymaga przeładowania i zwiększa maksymalną ilość metalu o 1000 jednostek."
 		///
 		WRANGLER_NAME 			= "POSKRAMIACZ"
-		WRANGLER_DESC 			= " Gdy broń jest dobyta, zwiększone obrażenia działka strażniczego i 2x większy zasięg działania zasobnika."
+		WRANGLER_DESC 			= "Gdy broń jest dobyta, zwiększone obrażenia działka strażniczego i 2x większy zasięg działania zasobnika."
 		//
 		SHORTCIRCUIT_NAME 		= "KRÓTKIE SPIĘCIE"
-		SHORTCIRCUIT_DESC 		= " Co 10 zabójstw otrzymujesz ładunek zaklęcia piorun kulisty (wymaga założenia księgi zaklęć)."
+		SHORTCIRCUIT_DESC 		= "Co 10 zabójstw otrzymujesz ładunek zaklęcia piorun kulisty (wymaga założenia księgi zaklęć)."
 		///
 		WRENCH_NAME 			= "KLUCZ"
-		WRENCH_DESC 			= " Standardowa opcja zapewniająca solidne obrażenia."
+		WRENCH_DESC 			= "Standardowa opcja zapewniająca solidne obrażenia."
 		//
 		GUNSLINGER_NAME 		= "JEDNORĘKI BANDYTA"
-		GUNSLINGER_DESC	 		= " Umożliwia budowanie dodatkowego działka strażniczego. Trzy kolejne trafienia pod rząd mogą natychmiast zabijać słabszych wrogów i zadają ogromne obrażenia gigantom."
+		GUNSLINGER_DESC	 		= "Umożliwia budowanie dodatkowego działka strażniczego. Trzy kolejne trafienia pod rząd mogą natychmiast zabijać słabszych wrogów i zadają ogromne obrażenia gigantom."
 		//
 		SOUTHERNHOS_NAME 		= "POŁUDNIOWA GOŚCINNOŚĆ"
-		SOUTHERNHOS_DESC 		= " Zamienia normalne działko strażnicze na ogniste działko. Krótki zasięg, ale duże obrażenia."
+		SOUTHERNHOS_DESC 		= "Zamienia normalne działko strażnicze na ogniste działko. Krótki zasięg, ale duże obrażenia."
 		//
 		JAG_NAME 				= "KIEŁ"
-		JAG_DESC 				= " Działko strażnicze ma nieograniczony zasięg ataku."
+		JAG_DESC 				= "Działko strażnicze ma nieograniczony zasięg ataku."
 		//
 		EUREKAEFFECT_NAME 		= "EFEKT EUREKI"
-		EUREKAEFFECT_DESC 		= " Podczas przenoszenia działka strażniczego wciśnij klawisz przeładowania, by zdalnie umieścić je na dowolnej ścianie lub suficie w twoim zasięgu."
+		EUREKAEFFECT_DESC 		= "Podczas przenoszenia działka strażniczego wciśnij klawisz przeładowania, by zdalnie umieścić je na dowolnej ścianie lub suficie w twoim zasięgu."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		SYRINGEGUN_NAME			= "PISTOLET STRZYKAWKOWY"
-		SYRINGEGUN_DESC			= " Każde trafienie we wroga przyznaje 0,5% ładunku ÜberCharge."
+		SYRINGEGUN_DESC			= "Każde trafienie we wroga przyznaje 0,5% ładunku ÜberCharge."
 		//
 		BLUTSAUGER_NAME			= "BLUTSAUGER"
-		BLUTSAUGER_DESC			= " Wymaga i zużywa 100% ładunku ÜberCharge, by przeprogramować robota, który tymczasowo dołączy do twojej drużyny, po czym ulegnie samozniszczeniu. Atak alternatywny: usuń przeprogramowanie ze wszystkich swoich robotów."
+		BLUTSAUGER_DESC			= "Wymaga i zużywa 100% ładunku ÜberCharge, by przeprogramować robota, który tymczasowo dołączy do twojej drużyny, po czym ulegnie samozniszczeniu. Atak alternatywny: usuń przeprogramowanie ze wszystkich swoich robotów."
 		//
 		CRUSADERSCROSSBOW_NAME	= "KUSZA KRZYŻOWCA"
-		CRUSADERSCROSSBOW_DESC	= " Każde trafienie przyznaje 0,25% ładunku ÜberCharge, wywołuje krwawienie i przyznaje dodatkowe 0,5% ładunku ÜberCharge na każdą instancję obrażeń od krwawienia."
+		CRUSADERSCROSSBOW_DESC	= "Każde trafienie przyznaje 0,25% ładunku ÜberCharge, wywołuje krwawienie i przyznaje dodatkowe 0,5% ładunku ÜberCharge na każdą instancję obrażeń od krwawienia."
 		//
 		OVERDOSE_NAME 			= "KOŃSKA DAWKA"
-		OVERDOSE_DESC 			= " Wymaga i zużywa 50% ładunku ÜberCharge, by wysłać ładunek wyłączający wszystkich pobliskich słabszych wrogów nawet na 15 sekund."
+		OVERDOSE_DESC 			= "Wymaga i zużywa 50% ładunku ÜberCharge, by wysłać ładunek wyłączający wszystkich pobliskich słabszych wrogów nawet na 15 sekund."
 		// TODO: Update! " Requires and consumes 50% Ubercharge to launch an EMP mortar, causing nearby enemies to be unable to move or attack for a short time."
 		///
 		MEDIGUN_NAME			= "MEDIGUN"
-		MEDIGUN_DESC			= " Limit nadleczenia zwiększony do 10x maksymalnego zdrowia pacjenta. Aktywuje długotrwałą tarczę przeciw pociskom poziomu 1."
+		MEDIGUN_DESC			= "Limit nadleczenia zwiększony do 10x maksymalnego zdrowia pacjenta. Aktywuje długotrwałą tarczę przeciw pociskom poziomu 1."
 		// TODO: Update! " Overheal cap raised to x10 the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
 		//
 		KRITZKRIEG_NAME			= "KRITZKRIEG"
-		KRITZKRIEG_DESC			= " Może wysysać zdrowie z wrogów, przyznając samoleczenie i budując ładunek ÜberCharge."
+		KRITZKRIEG_DESC			= "Może wysysać zdrowie z wrogów, przyznając samoleczenie i budując ładunek ÜberCharge."
 		// TODO: Update! " Able to drain health from enemies, granting self-healing and building Uber. Ubercharge grants a boost to all damage output."
 		//
 		QUICKFIX_NAME			= "QUICK-FIX"
-		QUICKFIX_DESC			= " Bardzo szybkie leczenie oraz tarcza przeciw pociskom poziomu 2. Może budować ładunek ÜberCharge poprzez zadawanie obrażeń za pomocą tarczy."
+		QUICKFIX_DESC			= "Bardzo szybkie leczenie oraz tarcza przeciw pociskom poziomu 2. Może budować ładunek ÜberCharge poprzez zadawanie obrażeń za pomocą tarczy."
 		// TODO: Update! " Very fast healing with a level 2 Projectile Shield. Able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
 		//
 		VACCINATOR_NAME			= "ZASZCZEPIACZ"
-		VACCINATOR_DESC			= " Podczas leczenia ty i twój pacjent zyskujecie 100% odporności na podstawowe obrażenia wybranego rodzaju. ÜberCharge zapewnia pełną odporność na obrażenia wybranego rodzaju na 30 sekund."
+		VACCINATOR_DESC			= "Podczas leczenia ty i twój pacjent zyskujecie 100% odporności na podstawowe obrażenia wybranego rodzaju. ÜberCharge zapewnia pełną odporność na obrażenia wybranego rodzaju na 30 sekund."
 		// TODO: Update! " Active healing grants you and the patient increased mobility and 100% resistance to base damage of the selected damage type. Ubercharge grants full immunity to the selected damage type for 30 seconds."
 		///
 		BONESAW_NAME 			= "PIŁA DO KOŚCI"
-		BONESAW_DESC			= " Standardowa opcja zapewniająca ochronę i mobilność. Każde trafienie we wroga przyznaje 10% ładunku ÜberCharge."
+		BONESAW_DESC			= "Standardowa opcja zapewniająca ochronę i mobilność. Każde trafienie we wroga przyznaje 10% ładunku ÜberCharge."
 		//
 		UBERSAW_NAME 			= "ÜBERPIŁA"
-		UBERSAW_DESC			= " Przy trafieniu we wroga wywołuje krwawienie. Przyznaje 2% ładunku ÜberCharge przy trafieniu we wroga."
+		UBERSAW_DESC			= "Przy trafieniu we wroga wywołuje krwawienie. Przyznaje 2% ładunku ÜberCharge przy trafieniu we wroga."
 		//
 		VITASAW_NAME 			= "VITA-PIŁA"
-		VITASAW_DESC			= " Otrzymujesz ładunek zaklęcia nadleczenie przy trafieniu we wroga (wymaga założenia księgi zaklęć). Przyznaje 5% ładunku ÜberCharge przy trafieniu we wroga."
+		VITASAW_DESC			= "Otrzymujesz ładunek zaklęcia nadleczenie przy trafieniu we wroga (wymaga założenia księgi zaklęć). Przyznaje 5% ładunku ÜberCharge przy trafieniu we wroga."
 		//
 		AMPUTATOR_NAME 			= "AMPUTATOR"
-		AMPUTATOR_DESC			= " Przy trafieniu we wroga, twój medigun zostaje supernaładowany, tymczasowo zyskując zwiększone tempo leczenia, ładowania ÜberCharge i zasięg leczenia. Zabicie wroga przyznaje silniejszą wersję tego efektu."
+		AMPUTATOR_DESC			= "Przy trafieniu we wroga, twój medigun zostaje supernaładowany, tymczasowo zyskując zwiększone tempo leczenia, ładowania ÜberCharge i zasięg leczenia. Zabicie wroga przyznaje silniejszą wersję tego efektu."
 		//
 		SOLEMNVOW_NAME 			= "UROCZYSTA PRZYSIĘGA"
-		SOLEMNVOW_DESC			= " Nieograniczony zasięg ataku, trafia wszystkich wrogów połączonych z celem promieniem mediguna i zadaje 200x większe obrażenia robomedykom. Przyznaje 5% ładunku ÜberCharge za każdego trafionego wroga."
+		SOLEMNVOW_DESC			= "Nieograniczony zasięg ataku, trafia wszystkich wrogów połączonych z celem promieniem mediguna i zadaje 200x większe obrażenia robomedykom. Przyznaje 5% ładunku ÜberCharge za każdego trafionego wroga."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		SNIPERRIFLE_NAME 		= "KARABIN SNAJPERSKI"
-		SNIPERRIFLE_DESC 		= " W pełni naładowany strzał w głowę zadaje 450 000 pkt. obrażeń."
+		SNIPERRIFLE_DESC 		= "W pełni naładowany strzał w głowę zadaje 450 000 pkt. obrażeń."
 		//
 		MACHINA_NAME 			= "MACHINA"
-		MACHINA_DESC 			= " Bardzo wolne tempo ładowania strzału, ale przy pełnym naładowaniu zadaje duże obrażenia czołgom. Zabijanie wrogów wypełnia pasek furii, który przyznaje 1 sekundę trafień krytycznych. Połączenie trafień krytycznych z pełnym naładowaniem strzału pozwala natychmiast niszczyć większość napotkanych czołgów."
+		MACHINA_DESC 			= "Bardzo wolne tempo ładowania strzału, ale przy pełnym naładowaniu zadaje duże obrażenia czołgom. Zabijanie wrogów wypełnia pasek furii, który przyznaje 1 sekundę trafień krytycznych. Połączenie trafień krytycznych z pełnym naładowaniem strzału pozwala natychmiast niszczyć większość napotkanych czołgów."
 		// TODO: Update! " Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Gaints and Tanks."
 		//
 		HITMANSHEATMAKER_NAME 	= "ZABAWKA ZAWODOWCA"
-		HITMANSHEATMAKER_DESC 	= " Duża szybkostrzelność bez oddalenia widoku przy celowaniu przez lunetę. Nie zadaje obrażeń przy trafieniu w ciało."
+		HITMANSHEATMAKER_DESC 	= "Duża szybkostrzelność bez oddalenia widoku przy celowaniu przez lunetę. Nie zadaje obrażeń przy trafieniu w ciało."
 		//
 		AWPERHAND_NAME 			= "ALE WIELKA PUKAWKA"
-		AWPERHAND_DESC 			= " Strzela wybuchowymi pociskami i generuje furie poprzez zabijanie wrogów. Przy w pełni naładowanej furii naciśnij klawisz przeładowania, by zwiększyć regenerację i maksymalne zdrowie. Strzał ładuje się tylko wtedy, gdy wrogowie znajdują się na twoim celowniku."
+		AWPERHAND_DESC 			= "Strzela wybuchowymi pociskami i generuje furie poprzez zabijanie wrogów. Przy w pełni naładowanej furii naciśnij klawisz przeładowania, by zwiększyć regenerację i maksymalne zdrowie. Strzał ładuje się tylko wtedy, gdy wrogowie znajdują się na twoim celowniku."
 		//
 		HUNTSMAN_NAME 			= "ŁOWCA"
-		HUNTSMAN_DESC 			= " Wystrzeliwuje 5 strzał naraz. Zadaje ogromne obrażenia od podpalenia, jeśli Pyro podpali twoją strzałę."
+		HUNTSMAN_DESC 			= "Wystrzeliwuje 5 strzał naraz. Zadaje ogromne obrażenia od podpalenia, jeśli Pyro podpali twoją strzałę."
 		//
 		SYDNEYSLEEPER_NAME 		= "SYDNEJSKI USYPIACZ"
-		SYDNEYSLEEPER_DESC 		= " Wystrzeliwuje specjalną strzałkę, która spowalnia szybkość ruchu wszystkich wrogów (oprócz gigantów) i uniemożliwia przeciwnikom otrzymywanie leczenia od robomedyków."
+		SYDNEYSLEEPER_DESC 		= "Wystrzeliwuje specjalną strzałkę, która spowalnia szybkość ruchu wszystkich wrogów (oprócz gigantów) i uniemożliwia przeciwnikom otrzymywanie leczenia od robomedyków."
 		//
 		BAZAARBARGAIN_NAME 		= "DALEKOSIĘŻNY DŻEZAIL"
-		BAZAARBARGAIN_DESC 		= " Zabijanie z rzędu wrogów tej samej klasy zwiększa szybkostrzelność (maks. 3). Zabicie innej klasy resetuje kombo."
+		BAZAARBARGAIN_DESC 		= "Zabijanie z rzędu wrogów tej samej klasy zwiększa szybkostrzelność (maks. 3). Zabicie innej klasy resetuje kombo."
 		//
 		FORTIFIEDCOMPOUND_NAME 	= "BOJOWY ŁUK BLOCZKOWY"
-		FORTIFIEDCOMPOUND_DESC 	= " Zmniejszone obrażenia w porównaniu do Łowcy, ale strzela szybciej, penetruje wrogów i zadaje obrażenia krytyczne mokrym przeciwnikom."
+		FORTIFIEDCOMPOUND_DESC 	= "Zmniejszone obrażenia w porównaniu do Łowcy, ale strzela szybciej, penetruje wrogów i zadaje obrażenia krytyczne mokrym przeciwnikom."
 		//
 		CLASSIC_NAME 			= "Klasyk"
-		CLASSIC_DESC 			= " Strzela tak szybko, jak szybko pociągasz za spust, albo ładuje pojedynczy strzał wywołujący ogromny wybuchowy strzał w głowę, który niszczy wszystkich wrogów w promieniu wybuchu (oprócz gigantów)."
+		CLASSIC_DESC 			= "Strzela tak szybko, jak szybko pociągasz za spust, albo ładuje pojedynczy strzał wywołujący ogromny wybuchowy strzał w głowę, który niszczy wszystkich wrogów w promieniu wybuchu (oprócz gigantów)."
 		///
 		SMG_NAME 				= "PM"
-		SMG_DESC 				= " Może zadawać znacznie większe obrażenia przy strzale w głowę. Atak alternatywny: przybliżenie i 100% celności kosztem zmniejszenia szybkostrzelności o połowę."
+		SMG_DESC 				= "Może zadawać znacznie większe obrażenia przy strzale w głowę. Atak alternatywny: przybliżenie i 100% celności kosztem zmniejszenia szybkostrzelności o połowę."
 		//
 		RAZORBACK_NAME 			= "ANTYKLINGA"
-		RAZORBACK_DESC 			= " Bardzo szybki czas odnawiania i nakłada efekt Sikwondo na wroga, który cię zaatakował."
+		RAZORBACK_DESC 			= "Bardzo szybki czas odnawiania i nakłada efekt Sikwondo na wroga, który cię zaatakował."
 		//
 		JARATE_NAME 			= "Sikwondo"
-		JARATE_DESC 			= " Natychmiastowy czas odnawiania i spowalnia wrogów."
+		JARATE_DESC 			= "Natychmiastowy czas odnawiania i spowalnia wrogów."
 		//
 		DARWIN_NAME 			= "DARWIŃSKA TARCZA OCHRONNA"
-		DARWIN_DESC 			= " Zapewnia niemal pełną odporność na obrażenia od OGNIA, ale otrzymujesz o 50% więcej obrażeń od NABOJÓW i EKSPLOZJI."
+		DARWIN_DESC 			= "Zapewnia niemal pełną odporność na obrażenia od OGNIA, ale otrzymujesz o 50% więcej obrażeń od NABOJÓW i EKSPLOZJI."
 		//
 		COZYCAMPER_NAME 		= "WYGODNICKI WCZASOWICZ"
-		COZYCAMPER_DESC 		= " Lekko zwiększona szybkość ruchu, regenerację i maksymalne zdrowie. Zapewnia odporność na podpalenie."
+		COZYCAMPER_DESC 		= "Lekko zwiększona szybkość ruchu, regenerację i maksymalne zdrowie. Zapewnia odporność na podpalenie."
 		//
 		CLEANERSCARBINE_NAME 	= "SPLUWA SPRZĄTACZA"
-		CLEANERSCARBINE_DESC 	= " Trafienia minikrytyczne trwają przez 30 sekund."
+		CLEANERSCARBINE_DESC 	= "Trafienia minikrytyczne trwają przez 30 sekund."
 		//
 		BEAUTYMARK_NAME 		= "SAMOŚWIADOMY PIEPRZYK"
-		BEAUTYMARK_DESC 		= " Ześlij deszcz świętego ognia płonącymi strzałami. Atak alternatywny: wystrzeliwuje naraz salwę płonących strzał."
+		BEAUTYMARK_DESC 		= "Ześlij deszcz świętego ognia płonącymi strzałami. Atak alternatywny: wystrzeliwuje naraz salwę płonących strzał."
 		///
 		KUKRI_NAME 				= "KUKRI"
-		KUKRI_DESC 				= " Standardowa opcja zapewniająca ochronę i mobilność."
+		KUKRI_DESC 				= "Standardowa opcja zapewniająca ochronę i mobilność."
 		//
 		TRIBALMANSSHIV_NAME 	= "PLEMIENNE OSTRZE"
-		TRIBALMANSSHIV_DESC 	= " Przedmiot pomocniczy – grawitacja nie oddziałuje na tobie i możesz swobodnie latać."
+		TRIBALMANSSHIV_DESC 	= "Przedmiot pomocniczy – grawitacja nie oddziałuje na tobie i możesz swobodnie latać."
 		//
 		BUSHWACKA_NAME 			= "BANDYTA Z BUSZU"
-		BUSHWACKA_DESC 			= " Nieograniczony zasięg ataku i zadaje trafienia krytyczne płonącym wrogom."
+		BUSHWACKA_DESC 			= "Nieograniczony zasięg ataku i zadaje trafienia krytyczne płonącym wrogom."
 		//
 		SHAHANSHAH_NAME 		= "SZACHINSZACH"
-		SHAHANSHAH_DESC 		= " Naciśnij lewy przycisk myszy, by wykonać wysoki skok, ułatwiając sobie dostęp do wysoko położonych miejsc. Zapewnia odporność na obrażenia od upadku."
+		SHAHANSHAH_DESC 		= "Naciśnij lewy przycisk myszy, by wykonać wysoki skok, ułatwiając sobie dostęp do wysoko położonych miejsc. Zapewnia odporność na obrażenia od upadku."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		REVOLVER_NAME 			= "REWOLWER"
-		REVOLVER_DESC 			= " Przy trafieniu we wroga: nakłada kilka negatywnych efektów; sprawia, że wrogowie przez krótki czas otrzymują zwiększone obrażenia, wyczerpuje ÜberCharge wrogich Medyków i zmusza roboszpiegów do usunięcia swoich przebrań. Może ogłuszać znajdujących się w powietrzu przeciwników."
+		REVOLVER_DESC 			= "Przy trafieniu we wroga: nakłada kilka negatywnych efektów; sprawia, że wrogowie przez krótki czas otrzymują zwiększone obrażenia, wyczerpuje ÜberCharge wrogich Medyków i zmusza roboszpiegów do usunięcia swoich przebrań. Może ogłuszać znajdujących się w powietrzu przeciwników."
 		//
 		AMBASSADOR_NAME 		= "AMBASADOR"
-		AMBASSADOR_DESC 		= " Zadaje ogromne obrażenia przy strzale w głowę. Obrażenia są podwójne, jeśli nie jesteś przebrany."
+		AMBASSADOR_DESC 		= "Zadaje ogromne obrażenia przy strzale w głowę. Obrażenia są podwójne, jeśli nie jesteś przebrany."
 		//
 		LETRANGER_NAME 			= "L'ETRANGER"
-		LETRANGER_DESC 			= " Może zabijać każdego słabszego wroga jednym strzałem. Nie zadaje jednak żadnych obrażeń gigantom ani czołgom."
+		LETRANGER_DESC 			= "Może zabijać każdego słabszego wroga jednym strzałem. Nie zadaje jednak żadnych obrażeń gigantom ani czołgom."
 		// TODO: Update! " Able to execute any non-giant in a single shot. Deals 2% damage to Giants, zero damage to Tanks."
 		//
 		ENFORCER_NAME 			= "EGZEKUTOR"
-		ENFORCER_DESC 			= " Ignoruje odporności na obrażenia i gromadzi jeden strzał krytyczny za każde dźgnięcie w plecy lub zniszczenie konstrukcji przy użyciu sapera."
+		ENFORCER_DESC 			= "Ignoruje odporności na obrażenia i gromadzi jeden strzał krytyczny za każde dźgnięcie w plecy lub zniszczenie konstrukcji przy użyciu sapera."
 		//
 		DIAMONDBACK_NAME 		= "GRZECHOTNIK"
-		DIAMONDBACK_DESC 		= " Tworzy czarną dziurę, która wciąga wrogów."
+		DIAMONDBACK_DESC 		= "Tworzy czarną dziurę, która wciąga wrogów."
 		///
 		SAPPER_NAME 			= "SAPER"
-		SAPPER_DESC 			= " Maksymalny zasięg i czas trwania ogłuszenia. Szybki czas odnawiania."
+		SAPPER_DESC 			= "Maksymalny zasięg i czas trwania ogłuszenia. Szybki czas odnawiania."
 		//
 		REDTAPE_NAME 			= "MAGNETOFON URZĘDASA"
-		REDTAPE_DESC 			= " Natychmiast niszczy konstrukcje Inżyniera, ale może sapować tylko jednego wroga naraz."
+		REDTAPE_DESC 			= "Natychmiast niszczy konstrukcje Inżyniera, ale może sapować tylko jednego wroga naraz."
 		///
 		KNIFE_NAME 				= "NÓŻ"
-		KNIFE_DESC 				= " Gdy broń jest dobyta, stopniowo wysysa twoje zdrowie, ale zapewnia odporność na WSZYSTKIE obrażenia. Zabijanie wrogów przywraca zdrowie."
+		KNIFE_DESC 				= "Gdy broń jest dobyta, stopniowo wysysa twoje zdrowie, ale zapewnia odporność na WSZYSTKIE obrażenia. Zabijanie wrogów przywraca zdrowie."
 		//
 		YOURETERNALREWARD_NAME 	= "OSTATECZNA NAGRODA"
-		YOURETERNALREWARD_DESC 	= " Zadawane obrażenia rosną wraz ze spadkiem twojego poziomu zdrowia. Poniżej 10% zdrowia zadajesz obrażenia krytyczne, ale tylko od ataków z przodu. Zapewnia 90% odporności na obrażenia."
+		YOURETERNALREWARD_DESC 	= "Zadawane obrażenia rosną wraz ze spadkiem twojego poziomu zdrowia. Poniżej 10% zdrowia zadajesz obrażenia krytyczne, ale tylko od ataków z przodu. Zapewnia 90% odporności na obrażenia."
 		// TODO: Update! " Extremely high backstab damage, able to instakill most Giants. However each attack has a high chance to miss. Grants a Teleport spell charge on kill (Requires Spellbook)."
 		//
 		KUNAI_NAME 				= "KUNAI KRĘTACZA"
-		KUNAI_DESC 				= " Nieograniczony zasięg ataku. Dźgnięcia w plecy wywołują eksplozję, zadając dodatkowe obrażenia pobliskim wrogom."
+		KUNAI_DESC 				= "Nieograniczony zasięg ataku. Dźgnięcia w plecy wywołują eksplozję, zadając dodatkowe obrażenia pobliskim wrogom."
 		//
 		BIGEARNER_NAME 			= "GRUBA RYBA"
-		BIGEARNER_DESC 			= " Masz ogromną ilość zdrowia, a „chybione” zamachy powodują szybkie leczenie, jednak otrzymujesz obrażenia od ognia sojuszniczego."
+		BIGEARNER_DESC 			= "Masz ogromną ilość zdrowia, a „chybione” zamachy powodują szybkie leczenie, jednak otrzymujesz obrażenia od ognia sojuszniczego."
 		// TODO: Update! " You have a massive amount of health and 'missed' swings cause you to heal. Gain a short burst of massively increased heal rate on kill (which can also build overheal). Cannot heal from any other sources."
 		//
 		WANGAPRICK_NAME 		= "KŁUJKA VOODOO"
-		WANGAPRICK_DESC 		= " Zabicie wroga natychmiast aktywuje niewidzialność na kilka sekund. Możesz atakować przeciwników będąc niewidzialnym, by wydłużyć czas trwania niewidzialność. Nie możesz używać przebrań."
+		WANGAPRICK_DESC 		= "Zabicie wroga natychmiast aktywuje niewidzialność na kilka sekund. Możesz atakować przeciwników będąc niewidzialnym, by wydłużyć czas trwania niewidzialność. Nie możesz używać przebrań."
 		// TODO: Update! " Killing an enemy causes you to immediately enter stealth for a few seconds, however you cannot disguise. Grants a Cloak spell charge on kill (Requires Spellbook)."
 		//
 		SHARPDRESSER_NAME 		= "ZABÓJCZA ELEGANCJA"
-		SHARPDRESSER_DESC 		= " Dźgnięcia w plecy wywołują eksplozję, zadając dodatkowe obrażenia pobliskim wrogom."
+		SHARPDRESSER_DESC 		= "Dźgnięcia w plecy wywołują eksplozję, zadając dodatkowe obrażenia pobliskim wrogom."
 		//
 		SPYCICLE_NAME 			= "ZAMROŻONY AGENT"
-		SPYCICLE_DESC 			= " „Chybiony” zamach powoduje, że wybijasz się w powietrze, umożliwiając wykonywanie tzw. „surf-stabów”, ale nie możesz używać przebrań. Dźgnięcia w plecy zadają ogromne obrażenia gigantom."
+		SPYCICLE_DESC 			= "„Chybiony” zamach powoduje, że wybijasz się w powietrze, umożliwiając wykonywanie tzw. „surf-stabów”, ale nie możesz używać przebrań. Dźgnięcia w plecy zadają ogromne obrażenia gigantom."
 		///
 		INVISWATCH_NAME 		= "ZEGAREK NIEWIDZIALNOŚCI"
-		INVISWATCH_DESC 		= " Nieograniczona niewidzialność i +10% szybkości ruchu."
+		INVISWATCH_DESC 		= "Nieograniczona niewidzialność i +10% szybkości ruchu."
 		//
 		DEADRINGER_NAME 		= "DZWON ZMARŁEGO"
-		DEADRINGER_DESC 		= " Aktywacja wywołuje krótki zryw, pozwalający na odskok w dowolnym kierunku. Podczas odskoku otrzymywane obrażenia są zmniejszone o 80%."
+		DEADRINGER_DESC 		= "Aktywacja wywołuje krótki zryw, pozwalający na odskok w dowolnym kierunku. Podczas odskoku otrzymywane obrażenia są zmniejszone o 80%."
 		// TODO: Update! " Activate to gain super speed for several seconds. Invulnerable while active."
 		//
 		CLOAKANDDAGGER_NAME		= "PELERYNA NOŻOWNIKA"
-		CLOAKANDDAGGER_DESC		= " Natychmiastowa aktywacja i dezaktywacja niewidzialności."
+		CLOAKANDDAGGER_DESC		= "Natychmiastowa aktywacja i dezaktywacja niewidzialności."
 		// TODO: Update! " Activate to force enemies to ignore you. Able to attack while active."
 		// TODO: TRANSLATE THE BELOW
 		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
-		QUACKENBIRDT_DESC 		= " Activate to gain flight. Able to attack while active. Grants immunity to fall damage."
+		QUACKENBIRDT_DESC 		= "Activate to gain flight. Able to attack while active. Grants immunity to fall damage."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		FRYINGPAN_NAME 				= "PATELNIA"
-		FRYINGPAN_DESC 				= " Zadaje 30x większe obrażenia wrogom tej samej klasy co ty oraz przyznaje trafienia krytyczne po zabiciu wroga."
+		FRYINGPAN_DESC 				= "Zadaje 30x większe obrażenia wrogom tej samej klasy co ty oraz przyznaje trafienia krytyczne po zabiciu wroga."
 		//
 		SAXXY_NAME 					= "SAXXY"
-		SAXXY_DESC 					= " Zadaje 30x większe obrażenia wrogom tej samej klasy co ty oraz przyznaje trafienia krytyczne po zabiciu wroga."
+		SAXXY_DESC 					= "Zadaje 30x większe obrażenia wrogom tej samej klasy co ty oraz przyznaje trafienia krytyczne po zabiciu wroga."
 		//
 		MEMORYMAKER_NAME 			= "WSPOMNIENIOTWÓRCA"
-		MEMORYMAKER_DESC			= " Zadaje 30x większe obrażenia wrogom tej samej klasy co ty oraz przyznaje trafienia krytyczne po zabiciu wroga."
+		MEMORYMAKER_DESC			= "Zadaje 30x większe obrażenia wrogom tej samej klasy co ty oraz przyznaje trafienia krytyczne po zabiciu wroga."
 		//
 		CONOBJECTOR_NAME			= "OBDŻEKTOR"
-		CONOBJECTOR_DESC			= " Co 10 zabójstw otrzymujesz losowe zaklęcie (wymaga założenia księgi zaklęć)."
+		CONOBJECTOR_DESC			= "Co 10 zabójstw otrzymujesz losowe zaklęcie (wymaga założenia księgi zaklęć)."
 		//
 		FREEDOMSTAFF_NAME 			= "KOSTUR WOLNOŚCI"
-		FREEDOMSTAFF_DESC 			= " Niewielka szansa przy otrzymaniu obrażeń na uniknięcie ataku i uzyskanie ÜberCharge na 3 sekundy."
+		FREEDOMSTAFF_DESC 			= "Niewielka szansa przy otrzymaniu obrażeń na uniknięcie ataku i uzyskanie ÜberCharge na 3 sekundy."
 		//
 		BATOUTTAHELL_NAME 			= "PIEKIELNA PAŁKA"
-		BATOUTTAHELL_DESC 			= " Gdy broń jest dobyta, zapewnia pełną niewrażliwość na obrażenia oraz ogromne nadleczenie, lecz jesteś podatny na odrzut."
+		BATOUTTAHELL_DESC 			= "Gdy broń jest dobyta, zapewnia pełną niewrażliwość na obrażenia oraz ogromne nadleczenie, lecz jesteś podatny na odrzut."
 		//
 		HAMSHANK_NAME 				= "ZAKOSZONA GOLONKA"
-		HAMSHANK_DESC 				= " Zdolność specjalna: „Witalne odrodzenie” – gdy jest dostępna, naciśnij klawisz działania, by natychmiast uzyskać 10x nadleczenia i odporność na odrzut przez 20 sekund."
+		HAMSHANK_DESC 				= "Zdolność specjalna: „Witalne odrodzenie” – gdy jest dostępna, naciśnij klawisz działania, by natychmiast uzyskać 10x nadleczenia i odporność na odrzut przez 20 sekund."
 		//
 		NECROSMASHER_NAME 			= "NEKROZGNIATACZ"
-		NECROSMASHER_DESC 			= " Zdolność specjalna: „Pojazdowa masakra” – gdy jest dostępna, naciśnij klawisz działania, by wskoczyć do samochodziku. W tym stanie jesteś niewrażliwy na obrażenia, regenerujesz zdrowie i możesz rozjeżdżać wrogów."
+		NECROSMASHER_DESC 			= "Zdolność specjalna: „Pojazdowa masakra” – gdy jest dostępna, naciśnij klawisz działania, by wskoczyć do samochodziku. W tym stanie jesteś niewrażliwy na obrażenia, regenerujesz zdrowie i możesz rozjeżdżać wrogów."
 		//
 		CROSSINGGAURD_NAME 			= "ZAWIADOWCA"
-		CROSSINGGAURD_DESC 			= " Zyskujesz ogromną odporność na wszystkie ataki wręcz, w tym dźgnięcia w plecy."
+		CROSSINGGAURD_DESC 			= "Zyskujesz ogromną odporność na wszystkie ataki wręcz, w tym dźgnięcia w plecy."
 		//
 		PRINNYMACHETE_NAME 			= "MACZETA PRINNYCH"
-		PRINNYMACHETE_DESC 			= " Przedmiot pomocniczy – zamachnij się tą bronią, by wybić się do przodu z dużą prędkością. Zapewnia odporność na obrażenia od upadku."
+		PRINNYMACHETE_DESC 			= "Przedmiot pomocniczy – zamachnij się tą bronią, by wybić się do przodu z dużą prędkością. Zapewnia odporność na obrażenia od upadku."
 		//------------------------------------
 	}
 	japanese = {
@@ -3409,634 +3409,634 @@ if ("SetScriptVersion" in getroottable())
 		CHECKPOINT_RESTORE_HUD	= "最後に保存されたチェックポイントに戻りました"
 		//---------------------------------------------------------
 		SCATTERGUN_NAME 		= "散弾銃"
-		SCATTERGUN_DESC 		= " 安定したダメージを与えられる頼もしい選択肢　特に至近距離での威力が抜群である"
+		SCATTERGUN_DESC 		= "安定したダメージを与えられる頼もしい選択肢　特に至近距離での威力が抜群である"
 		//
 		FORCENATURE_NAME		= "フォース・ア・ネイチャー"
-		FORCENATURE_DESC		= " 弾の命中時にノックバック付くが、散弾銃よりはDPSが低くなっている"
+		FORCENATURE_DESC		= "弾の命中時にノックバック付くが、散弾銃よりはDPSが低くなっている"
 		//
 		SHORTSTOP_NAME 			= "SHORTSTOP"
-		SHORTSTOP_DESC 			= " とんでもない発射速度で、濡れている敵に対してクリティカルヒットする、だがリロードが遅い"
+		SHORTSTOP_DESC 			= "とんでもない発射速度で、濡れている敵に対してクリティカルヒットする、だがリロードが遅い"
 		//
 		SODAPOPPER_NAME 		= "ソーダポッパー"
-		SODAPOPPER_DESC 		= " メイン攻撃キーで4連バーストを素早く装填する"
+		SODAPOPPER_DESC 		= "メイン攻撃キーで4連バーストを素早く装填する"
 		//
 		BABYFACEBLASTER_NAME	= "ベビーフェイス・ブラスター"
-		BABYFACEBLASTER_DESC	= " メイン攻撃キーを押し続けると最大200発の連射が可能で、至近距離ならあらゆるものを粉砕する、ただし反動が非常に強い"
+		BABYFACEBLASTER_DESC	= "メイン攻撃キーを押し続けると最大200発の連射が可能で、至近距離ならあらゆるものを粉砕する、ただし反動が非常に強い"
 		//
 		BACKSCATTER_NAME		= "バックスキャッター"
-		BACKSCATTER_DESC		= " 背後から撃てば必ずクリティカルヒットとなり弾薬は不要で、弾倉の容量は無限だ"
+		BACKSCATTER_DESC		= "背後から撃てば必ずクリティカルヒットとなり弾薬は不要で、弾倉の容量は無限だ"
 		///
 		PISTOL_NAME 			= "ピストル"
-		PISTOL_DESC 			= " 弾丸の代わりにロケット弾を発射する、機動力においては非常に効果的だ"
+		PISTOL_DESC 			= "弾丸の代わりにロケット弾を発射する、機動力においては非常に効果的だ"
 		//
 		BONK_NAME 				= "喉ごしガツン! アトミックパンチ"
-		BONK_DESC 				= " 強化されたソーダ...効果中攻撃能力を失うことなく、無敵の状態を付与される"
+		BONK_DESC 				= "強化されたソーダ...効果中攻撃能力を失うことなく、無敵の状態を付与される"
 		//
 		CRITACOLA_NAME 			= "クリティコーラ"
-		CRITACOLA_DESC 			= " 強化されたソーダ...効果中クリティカルを付与される"
+		CRITACOLA_DESC 			= "強化されたソーダ...効果中クリティカルを付与される"
 		//
 		MADMILK_NAME 			= "MAD MILK"
-		MADMILK_DESC 			= " このミルク？を浴びた敵は動けなくなる"
+		MADMILK_DESC 			= "このミルク？を浴びた敵は動けなくなる"
 		//
 		WINGER_NAME 			= "ウィンガー"
-		WINGER_DESC 			= " 発動中は空中ジャンプが無制限になり空中にいる間、常にクリティカルヒットとなる一発の集中射撃を放つ事ができる、しかもこの攻撃には敵を吹き飛ばす効果もある"
+		WINGER_DESC 			= "発動中は空中ジャンプが無制限になり空中にいる間、常にクリティカルヒットとなる一発の集中射撃を放つ事ができる、しかもこの攻撃には敵を吹き飛ばす効果もある"
 		//
 		PRETTYBOYS_NAME 		= "プリティ・ボーイズ・ポケット・ピストル"
-		PRETTYBOYS_DESC 		= " ターゲットの体力を基にダメージを与えるロケット弾を発射する事ができる　ターゲットが負傷するにつれてダメージが増加し、距離の影響を受けない　サブ攻撃キー：ダメージが20%減少する代わりに、追尾ロケットを使用する"
+		PRETTYBOYS_DESC 		= "ターゲットの体力を基にダメージを与えるロケット弾を発射する事ができる　ターゲットが負傷するにつれてダメージが増加し、距離の影響を受けない　サブ攻撃キー：ダメージが20%減少する代わりに、追尾ロケットを使用する"
 		//
 		CLEAVER_NAME 			= "フライングギロチン"
 		CLEAVER_DESC 			= "ヨンドゥの矢：知性を持つ矢を召喚し、戦闘を支援する　サブ攻撃キー：破壊者モード、与ダメージ-75%。"
 		//
 		MATATEDMILK_NAME 		= "ミュータテッド・ミルク"
-		MATATEDMILK_DESC 		= " 連射でミルク？瓶を投げ、敵にダメージを与える。サブ攻撃キー：ミルク？瓶の束を一気に投げつける"
+		MATATEDMILK_DESC 		= "連射でミルク？瓶を投げ、敵にダメージを与える。サブ攻撃キー：ミルク？瓶の束を一気に投げつける"
 		///
 		BAT_NAME 				= "バット"
-		BAT_DESC 				= " 死を無効化し、HP1でスポーン地点へテレポートするチャンスを得られる"
+		BAT_DESC 				= "死を無効化し、HP1でスポーン地点へテレポートするチャンスを得られる"
 		//
 		SANDMAN_NAME			= "SANDMAN"
-		SANDMAN_DESC 			= " 大容量かつ高速リチャージにより、野球のボールを連射することができ、単体のターゲットに多大なバーストダメージを与える"
+		SANDMAN_DESC 			= "大容量かつ高速リチャージにより、野球のボールを連射することができ、単体のターゲットに多大なバーストダメージを与える"
 		//
 		HOLYMACKEREL_NAME		= "HOLY MACKEREL"
-		HOLYMACKEREL_DESC		= " 複数の敵に「死のマーキング」を付けることができる"
+		HOLYMACKEREL_DESC		= "複数の敵に「死のマーキング」を付けることができる"
 		//
 		CANDYCANE_NAME 			= "キャンディケーン"
-		CANDYCANE_DESC 			= " 便利アイテム - 重力がなくなり、自由に飛ぶことができる"
+		CANDYCANE_DESC 			= "便利アイテム - 重力がなくなり、自由に飛ぶことができる"
 		//
 		BOSTONBASHSER_NAME 		= "ボストン・バッシャー"
-		BOSTONBASHSER_DESC 		= " ハイリスク・ハイリターン　ほとんどの小型敵を一撃で倒すことができ、10秒間のクリティカル率上昇効果を得られる　メディガンのビームでつながっている敵にもダメージが及ぶ　ただし一度でも外すと即死する"
+		BOSTONBASHSER_DESC 		= "ハイリスク・ハイリターン　ほとんどの小型敵を一撃で倒すことができ、10秒間のクリティカル率上昇効果を得られる　メディガンのビームでつながっている敵にもダメージが及ぶ　ただし一度でも外すと即死する"
 		//
 		SUNONASTICK_NAME		= "サン・オン・ア・スティック"
-		SUNONASTICK_DESC		= " 敵をスタンさせたり、短時間のクリティカル率上昇効果を得たりするチャンスを得る　メディガンのビームでつながっている敵にもダメージが及ぶ　ただし外れた場合は自分がスタン状態になる"
+		SUNONASTICK_DESC		= "敵をスタンさせたり、短時間のクリティカル率上昇効果を得たりするチャンスを得る　メディガンのビームでつながっている敵にもダメージが及ぶ　ただし外れた場合は自分がスタン状態になる"
 		//
 		FANOWAR_NAME 			= "ファン・オウォー"
-		FANOWAR_DESC 			= " 便利アイテム - この近接武器を振りかざすと高速で前方に突進する　落下ダメージを無効化する"
+		FANOWAR_DESC 			= "便利アイテム - この近接武器を振りかざすと高速で前方に突進する　落下ダメージを無効化する"
 		//
 		ATOMIZER_NAME 			= "アトマイザー"
-		ATOMIZER_DESC 			= " 通常攻撃ではダメージを与えることができませんが、タウントキルに成功すると、3分間クリティカル率上昇効果が得られる"
+		ATOMIZER_DESC 			= "通常攻撃ではダメージを与えることができませんが、タウントキルに成功すると、3分間クリティカル率上昇効果が得られる"
 		//
 		THREERUNEBLADE_NAME 	= "3つのルーンブレード"
-		THREERUNEBLADE_DESC 	= " 発動中は、移動速度が大幅に上昇し、3段ジャンプが可能になる　落下ダメージを無効化する"
+		THREERUNEBLADE_DESC 	= "発動中は、移動速度が大幅に上昇し、3段ジャンプが可能になる　落下ダメージを無効化する"
 		// TODO: Update! " While active, gain MASSIVE boost to move speed and ability to triple jump. Deals increased damage while airborne. Grants immunity to fall damage."
 		//
 		UNARMEDCOMBAT_NAME 		= "アンアームドコンバット"
-		UNARMEDCOMBAT_DESC 		= " 10キルごとに、スケルトン召喚の呪文チャージを1つ獲得する（魔術書が必要）"
+		UNARMEDCOMBAT_DESC 		= "10キルごとに、スケルトン召喚の呪文チャージを1つ獲得する（魔術書が必要）"
 		//
 		WRAPAASSASSIN_NAME 		= "ラップアサシン"
-		WRAPAASSASSIN_DESC 		= " 飛んでくる投射物を軽々と打ち返すことができる　また、スタン効果を無効化する"
+		WRAPAASSASSIN_DESC 		= "飛んでくる投射物を軽々と打ち返すことができる　また、スタン効果を無効化する"
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		ROCKETLAUNCHER_NAME		= "ロケットランチャー"
-		ROCKETLAUNCHER_DESC		= " 安定したダメージを与えられる頼もしい選択肢"
+		ROCKETLAUNCHER_DESC		= "安定したダメージを与えられる頼もしい選択肢"
 		//
 		DIRECTHIT_NAME			= "ダイレクトヒット"
-		DIRECTHIT_DESC			= " サブ攻撃キー：敵を空中に打ち上げ、簡単にミニクリティカルを叩き込める　ロケット弾にはわずかな照準アシスト機能が付く"
+		DIRECTHIT_DESC			= "サブ攻撃キー：敵を空中に打ち上げ、簡単にミニクリティカルを叩き込める　ロケット弾にはわずかな照準アシスト機能が付く"
 		//
 		BLACKBOX_NAME			= "BLACK BOX"
-		BLACKBOX_DESC			= " 敵の動きを鈍らせ、出血ダメージを与える　この武器はソルジャーボットに対して2倍のダメージを与える"
+		BLACKBOX_DESC			= "敵の動きを鈍らせ、出血ダメージを与える　この武器はソルジャーボットに対して2倍のダメージを与える"
 		// TODO: Update! " Slow down enemies and inflict bleed."
 		//
 		ROCKETJUMPER_NAME		= "ROCKET JUMPER"
-		ROCKETJUMPER_DESC		= " 発射速度とリロード速度は遅いものの、威力が大きく、爆風範囲も広い　群衆に対して最適な選択肢だ"
+		ROCKETJUMPER_DESC		= "発射速度とリロード速度は遅いものの、威力が大きく、爆風範囲も広い　群衆に対して最適な選択肢だ"
 		//
 		LIBERTYLAUNCHER_NAME	= "リバティー・ランチャー"
-		LIBERTYLAUNCHER_DESC	= " 移動速度の遅いロケットを発射し、広範囲に甚大なダメージを与える　リロード速度が非常に遅く、弾薬も少ない　この武器は装填されると自動的に発射される"
+		LIBERTYLAUNCHER_DESC	= "移動速度の遅いロケットを発射し、広範囲に甚大なダメージを与える　リロード速度が非常に遅く、弾薬も少ない　この武器は装填されると自動的に発射される"
 		//
 		COWMANGLER_NAME			= "カウ・マングラー 5000"
-		COWMANGLER_DESC			= " 命中すると小型の敵を動けなくする　チャージショットは敵の動きをより長く停止させる　サブ攻撃キーを押しながら発射すると武器がオーバーチャージされ、連射が可能になり、停止時間がさらに長くなる"
+		COWMANGLER_DESC			= "命中すると小型の敵を動けなくする　チャージショットは敵の動きをより長く停止させる　サブ攻撃キーを押しながら発射すると武器がオーバーチャージされ、連射が可能になり、停止時間がさらに長くなる"
 		//
 		ORIGINAL_NAME			= "オリジナル"
-		ORIGINAL_DESC			= " メイン攻撃キーを長押しすると、最大4発のロケット弾を装填できます　装填が完了すると、この武器は自動的に発射される"
+		ORIGINAL_DESC			= "メイン攻撃キーを長押しすると、最大4発のロケット弾を装填できます　装填が完了すると、この武器は自動的に発射される"
 		//
 		BEGGARSBAZOOKA_NAME		= "ベガーのバズーカ"
-		BEGGARSBAZOOKA_DESC		= " メイン攻撃キー長押しで発射を留め、最大100発のロケット弾を装填し、一斉に放て　過充填なし"
+		BEGGARSBAZOOKA_DESC		= "メイン攻撃キー長押しで発射を留め、最大100発のロケット弾を装填し、一斉に放て　過充填なし"
 		//
 		AIRSTRIKE_NAME			= "エアストライク"
-		AIRSTRIKE_DESC			= " 最大10発のロケット弾を装填し、固定された散弾パターンで一斉に発射する　ロケット弾は自動的に敵を追尾する"
+		AIRSTRIKE_DESC			= "最大10発のロケット弾を装填し、固定された散弾パターンで一斉に発射する　ロケット弾は自動的に敵を追尾する"
 		///
 		SHOTGUN_SOLD_NAME 		= "ショットガン - ソルジャー" 
-		SHOTGUN_SOLD_DESC 		= " ロケットジャンプ中は、発射速度が非常に速く、クリティカルヒットも発生しやすくなる" 
+		SHOTGUN_SOLD_DESC 		= "ロケットジャンプ中は、発射速度が非常に速く、クリティカルヒットも発生しやすくなる" 
 		//
 		SHOTGUN_NAME 			= "ショットガン" 
-		SHOTGUN_DESC 			= " 安定したダメージを与えられる頼もしい選択肢" 
+		SHOTGUN_DESC 			= "安定したダメージを与えられる頼もしい選択肢" 
 		//
 		BUFFBANNER_NAME 		= "バフ・バナー" 
-		BUFFBANNER_DESC 		= " バフの射程が無制限になり、持続時間が大幅に延長された" 
+		BUFFBANNER_DESC 		= "バフの射程が無制限になり、持続時間が大幅に延長された" 
 		//
 		GUNBOATS_NAME 			= "GUNBOATS" 
-		GUNBOATS_DESC 			= " ジャンプキーを押し続ける事でバニーホップが可能にする　落下ダメージを無効化する" 
+		GUNBOATS_DESC 			= "ジャンプキーを押し続ける事でバニーホップが可能にする　落下ダメージを無効化する" 
 		// TODO: Update! " Enables bunnyhopping by holding 'jump' key. Grants immunity to fall damage. Hold Crouch key while airborne to reduce gravity." 
 		//
 		BATTALIONS_NAME 		= "BATTALION'S BACKUP" 
-		BATTALIONS_DESC 		= " バフの射程が無制限になり、持続時間が大幅に延長された" 
+		BATTALIONS_DESC 		= "バフの射程が無制限になり、持続時間が大幅に延長された" 
 		//
 		CONCHEROR_NAME 			= "カンケラー" 
-		CONCHEROR_DESC 			= " バフの射程が無制限になり、持続時間が大幅に延長された" 
+		CONCHEROR_DESC 			= "バフの射程が無制限になり、持続時間が大幅に延長された" 
 		//
 		RESERVESHOOTER_NAME 	= "リザーブ・シューター" 
-		RESERVESHOOTER_DESC 	= " 射程に関係なく、1発につき10,000の固定ダメージを与え、敵を倒すと3秒間ミニクリティカルが発生する　ただし、この武器はクリティカル倍率の恩恵を受けず、タンクにはダメージを与えられない　サブ攻撃キーでズームイン使用可能" 
+		RESERVESHOOTER_DESC 	= "射程に関係なく、1発につき10,000の固定ダメージを与え、敵を倒すと3秒間ミニクリティカルが発生する　ただし、この武器はクリティカル倍率の恩恵を受けず、タンクにはダメージを与えられない　サブ攻撃キーでズームイン使用可能" 
 		//
 		BISON_NAME 				= "ライチャス・バイソン" 
-		BISON_DESC 				= " 完全自動照準で、貫通ダメージを与えるビームを連続して発射する" 
+		BISON_DESC 				= "完全自動照準で、貫通ダメージを与えるビームを連続して発射する" 
 		//
 		MANTREADS_NAME 			= "マントレッズ" 
-		MANTREADS_DESC 			= " ダメージによるノックバックが大幅に軽減され、空中ストレイフの加速力が大幅にアップした　踏みつけ攻撃のダメージが強化され、移動速度に比例するようになった" 
+		MANTREADS_DESC 			= "ダメージによるノックバックが大幅に軽減され、空中ストレイフの加速力が大幅にアップした　踏みつけ攻撃のダメージが強化され、移動速度に比例するようになった" 
 		// TODO: Update! " Major reduction in knockback taken from damage. Stomp damage buffed and velocity-based. Gain a short critboost on kill."
 		//
 		BASEJUMPER_NAME 		= "B.A.S.E. ジャンパー" 
-		BASEJUMPER_DESC 		= " パラシュートの開閉が可能　ノックバックや銃弾によるダメージへの耐性が上がり、空中の無防備な状態を軽減" 
+		BASEJUMPER_DESC 		= "パラシュートの開閉が可能　ノックバックや銃弾によるダメージへの耐性が上がり、空中の無防備な状態を軽減" 
 		//
 		PANICATTACK_NAME 		= "パニック・アタック" 
-		PANICATTACK_DESC 		= " 緊急で回復が必要な時に命中すると、最大10,000のHPを即座に回復する　この武器が有効な状態でダメージを受けると、短時間のセルフ・ユーバーが発動する可能性がある" 
+		PANICATTACK_DESC 		= "緊急で回復が必要な時に命中すると、最大10,000のHPを即座に回復する　この武器が有効な状態でダメージを受けると、短時間のセルフ・ユーバーが発動する可能性がある" 
 		///
 		SHOVEL_NAME 			= "シャベル"
-		SHOVEL_DESC 			= " 防御と機動性のための標準的な選択肢"
+		SHOVEL_DESC 			= "防御と機動性のための標準的な選択肢"
 		//
 		EQUALIZER_NAME 			= "イコライザー"
-		EQUALIZER_DESC 			= " タウント攻撃は、大ダメージを与え、敵を空中に吹き飛ばす"
+		EQUALIZER_DESC 			= "タウント攻撃は、大ダメージを与え、敵を空中に吹き飛ばす"
 		// TODO: Update! " Damage massively increases as you become injured."
 		//
 		PAINTRAIN_NAME 			= "ペイントレイン"
-		PAINTRAIN_DESC 			= " 命中すると出血と移動速度低下を付与する　落下ダメージを無効化する"
+		PAINTRAIN_DESC 			= "命中すると出血と移動速度低下を付与する　落下ダメージを無効化する"
 		//
 		HALFZATOICHI_NAME 		= "ハーフ座頭市"
-		HALFZATOICHI_DESC 		= " 平均的なダメージを与え高い体力と機動性を兼ね備え、攻撃範囲も拡大された"
+		HALFZATOICHI_DESC 		= "平均的なダメージを与え高い体力と機動性を兼ね備え、攻撃範囲も拡大された"
 		//
 		MARKETGARDENER_NAME 	= "マーケットガーデナー"
-		MARKETGARDENER_DESC 	= " クリティカルダメージが大幅に上昇する　敵を倒すとレイジ状態となり、HPと耐性が上昇し、すべての攻撃のダメージが増加する　ただし、攻撃が外れると即死する"
+		MARKETGARDENER_DESC 	= "クリティカルダメージが大幅に上昇する　敵を倒すとレイジ状態となり、HPと耐性が上昇し、すべての攻撃のダメージが増加する　ただし、攻撃が外れると即死する"
 		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		DISCIPLINARYACTION_NAME = "懲戒ムチ"
-		DISCIPLINARYACTION_DESC	= " 防御と機動性のための標準的な選択肢"
+		DISCIPLINARYACTION_DESC	= "防御と機動性のための標準的な選択肢"
 		// TODO: Update! " Standard option for defense and mobility. Instantly gain 1/3 Rage meter on hit."
 		//
 		ESCAPEPLAN_NAME			= "ESCAPE PLAN"
-		ESCAPEPLAN_DESC			= " 防御と機動性のための標準的な選択肢"
+		ESCAPEPLAN_DESC			= "防御と機動性のための標準的な選択肢"
 		// TODO: Update! " Deal guaranteed crits when below 50% health."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		FLAMETHROWER_NAME 		= "火炎放射器"
-		FLAMETHROWER_DESC		= " 安定したダメージを与えられる頼もしい選択肢　敵を倒すと、短時間ミニクリティカルボーナスが得られる"
+		FLAMETHROWER_DESC		= "安定したダメージを与えられる頼もしい選択肢　敵を倒すと、短時間ミニクリティカルボーナスが得られる"
 		//
 		BACKBURNER_NAME 		= "バックバーナー"
-		BACKBURNER_DESC			= " グリーンファイア - 敵に「死のマーキング」を付け、空中の敵を短時間スタンさせる　この武器はパイロボットに対して2倍のダメージを与える"
+		BACKBURNER_DESC			= "グリーンファイア - 敵に「死のマーキング」を付け、空中の敵を短時間スタンさせる　この武器はパイロボットに対して2倍のダメージを与える"
 		//
 		DEGREASER_NAME 			= "DEGREASER"
-		DEGREASER_DESC			= " 長距離火炎放射器で、高い炎ダメージを与えるが、炎上ダメージは0である　この火炎放射器はエアブラストを発動できない"
+		DEGREASER_DESC			= "長距離火炎放射器で、高い炎ダメージを与えるが、炎上ダメージは0である　この火炎放射器はエアブラストを発動できない"
 		//
 		PHLOGISTINATOR_NAME 	= "フロギストネイター"
-		PHLOGISTINATOR_DESC		= " グリーンファイア - 敵に「死のマーキング」を付け、空中の敵を短時間スタンさせる　タンクに対して強力だが、移動速度が低下する"
+		PHLOGISTINATOR_DESC		= "グリーンファイア - 敵に「死のマーキング」を付け、空中の敵を短時間スタンさせる　タンクに対して強力だが、移動速度が低下する"
 		//
 		RAINBLOWER_NAME 		= "レインブロワー"
-		RAINBLOWER_DESC			= " 長距離の火炎放射器で、炎ダメージは低いが、炎上ダメージは高い　また、エンジニアの建造物を瞬時に破壊したり、敵のパイロを炎上したりすることもできる　エアブラストの威力は弱いものの、非常に速い"
+		RAINBLOWER_DESC			= "長距離の火炎放射器で、炎ダメージは低いが、炎上ダメージは高い　また、エンジニアの建造物を瞬時に破壊したり、敵のパイロを炎上したりすることもできる　エアブラストの威力は弱いものの、非常に速い"
 		//
 		DRAGONSFURY_NAME 		= "ドラゴンズフューリー"
-		DRAGONSFURY_DESC		= " 発射速度とエアブラスト速度が大幅に増加"
+		DRAGONSFURY_DESC		= "発射速度とエアブラスト速度が大幅に増加"
 		//
 		NOSTROMONAPALMER_NAME 	= "ノストロモ・ナパーマー"
-		NOSTROMONAPALMER_DESC	= " 命中すると敵の移動速度を低下させる　フロギストネイターと同様に「Mmmph」チャージを蓄積し、自身に「カンケラー」バフを付与する　この火炎放射器はエアブラストを発動できない"
+		NOSTROMONAPALMER_DESC	= "命中すると敵の移動速度を低下させる　フロギストネイターと同様に「Mmmph」チャージを蓄積し、自身に「カンケラー」バフを付与する　この火炎放射器はエアブラストを発動できない"
 		///
 		SHOTGUN_PYRO_NAME 		= "ショットガン - パイロ" 
-		SHOTGUN_PYRO_DESC 		= " 燃えているプレイヤーに対して 100% クリティカルヒット" 
+		SHOTGUN_PYRO_DESC 		= "燃えているプレイヤーに対して 100% クリティカルヒット" 
 		//
 		FLAREGUN_NAME 			= "フレアガン" 
-		FLAREGUN_DESC 			= " 敵を貫通するヒットスキャン攻撃を発動する　経路上の敵を貫通するたびに、ダメージが指数関数的に増加する　また、命中時に敵をスタンさせる可能性がある" 
+		FLAREGUN_DESC 			= "敵を貫通するヒットスキャン攻撃を発動する　経路上の敵を貫通するたびに、ダメージが指数関数的に増加する　また、命中時に敵をスタンさせる可能性がある" 
 		//
 		DETONATOR_NAME 			= "雷管" 
-		DETONATOR_DESC 			= " フレア弾の爆発範囲は無限で、視界内にあるあらゆる対象に命中する　すべてのスパイボットをステルス状態から解除し、変装を解除させる　機動性を高めるのにも最適な選択肢だ" 
+		DETONATOR_DESC 			= "フレア弾の爆発範囲は無限で、視界内にあるあらゆる対象に命中する　すべてのスパイボットをステルス状態から解除し、変装を解除させる　機動性を高めるのにも最適な選択肢だ" 
 		//
 		MANMELTER_NAME 			= "マンメルター" 
-		MANMELTER_DESC 			= " 敵を自動的に探知する高速発射型フレア弾を発射する　弾薬は無制限で、リロードも不要　サブ攻撃キー：フレア弾を一斉に発射する" 
+		MANMELTER_DESC 			= "敵を自動的に探知する高速発射型フレア弾を発射する　弾薬は無制限で、リロードも不要　サブ攻撃キー：フレア弾を一斉に発射する" 
 		//
 		SCORCHSHOT_NAME 		= "スコーチ・ショット" 
-		SCORCHSHOT_DESC 		= " 命中時：大ダメージを与え、敵の炎を消化し、ノックバックさせる　ターゲットが炎に包まれていなければならず、そうでない場合、効果を発揮しない　サブ攻撃キー：低速追尾フレア弾を発射する" 
+		SCORCHSHOT_DESC 		= "命中時：大ダメージを与え、敵の炎を消化し、ノックバックさせる　ターゲットが炎に包まれていなければならず、そうでない場合、効果を発揮しない　サブ攻撃キー：低速追尾フレア弾を発射する" 
 		//
 		THERMALTHRUSTER_NAME 	= "サーマルスラスター" 
-		THERMALTHRUSTER_DESC 	= " 発射の遅延がなく、燃料消費も抑えられる　空中での再展開が可能で、踏みつけによる大ダメージを与えることができる　敵を倒すと、一時的にクリティカル率が高まる" 
+		THERMALTHRUSTER_DESC 	= "発射の遅延がなく、燃料消費も抑えられる　空中での再展開が可能で、踏みつけによる大ダメージを与えることができる　敵を倒すと、一時的にクリティカル率が高まる" 
 		//
 		GASPASSER_NAME 			= "ガスパサー" 
-		GASPASSER_DESC 			= " メーターは空の状態から始まり、死亡時にリセットされる　150,000のダメージを与えるとメーターが満タンとなる　「点火時に爆発」の効果で105,000のダメージを与える" 
+		GASPASSER_DESC 			= "メーターは空の状態から始まり、死亡時にリセットされる　150,000のダメージを与えるとメーターが満タンとなる　「点火時に爆発」の効果で105,000のダメージを与える" 
 		///
 		FIREAXE_NAME 			= "消防斧"
-		FIREAXE_DESC 			= " 防御と機動性のための標準的な選択肢"
+		FIREAXE_DESC 			= "防御と機動性のための標準的な選択肢"
 		//	
 		AXTINGUISHER_NAME 		= "アクスティングイシャー"
-		AXTINGUISHER_DESC		= " 燃えている敵へのダメージが大幅に増加する"
+		AXTINGUISHER_DESC		= "燃えている敵へのダメージが大幅に増加する"
 		//
 		HOMEWRECKER_NAME 		= "ホームレッカー"
-		HOMEWRECKER_DESC 		= " 近接攻撃の射程が無限であるため、どこからでもエンジニアの建造物を瞬時に破壊できる"
+		HOMEWRECKER_DESC 		= "近接攻撃の射程が無限であるため、どこからでもエンジニアの建造物を瞬時に破壊できる"
 		//
 		POWERJACK_NAME 			= "POWERJACK"
-		POWERJACK_DESC 			= " 素早い攻撃と移動速度、命中時に敵に出血と炎上効果を与え、敵を倒すとミニクリティカルを獲得する"
+		POWERJACK_DESC 			= "素早い攻撃と移動速度、命中時に敵に出血と炎上効果を与え、敵を倒すとミニクリティカルを獲得する"
 		//
 		BACKSCRATCHER_NAME 		= "バックスクラッチャー"
-		BACKSCRATCHER_DESC 		= " 背後から致命的なダメージを与える　敵を倒すとレイジ状態となり、移動速度と耐性が上昇し、すべての攻撃のダメージが増加する"
+		BACKSCRATCHER_DESC 		= "背後から致命的なダメージを与える　敵を倒すとレイジ状態となり、移動速度と耐性が上昇し、すべての攻撃のダメージが増加する"
 		// TODO: Update! " Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		VOLCANOFRAGMENT_NAME 	= "研ぎ澄まされた火山の破片"
-		VOLCANOFRAGMENT_DESC 	= " 攻撃が命中した際に敵をスタンさせる可能性がある　また、敵のパイロに炎上効果を与えることもできる"
+		VOLCANOFRAGMENT_DESC 	= "攻撃が命中した際に敵をスタンさせる可能性がある　また、敵のパイロに炎上効果を与えることもできる"
 		//
 		POSTALPUMMELER_NAME 	= "ポスタル・パメラー"
-		POSTALPUMMELER_DESC 	= " 命中時：混乱状態を付与し、敵を短時間、爆弾の軌跡に沿って後退させる　攻撃時にサブ攻撃キーを押したままにすると、スポーン地点へテレポートする"
+		POSTALPUMMELER_DESC 	= "命中時：混乱状態を付与し、敵を短時間、爆弾の軌跡に沿って後退させる　攻撃時にサブ攻撃キーを押したままにすると、スポーン地点へテレポートする"
 		//
 		MAUL_NAME 				= "モール"
-		MAUL_DESC 				= " 命中時：敵を空中に吹き飛ばし、重力を低下させる"
+		MAUL_DESC 				= "命中時：敵を空中に吹き飛ばし、重力を低下させる"
 		// TODO: Update! " On hit: Cause an explosion, launching enemies into the air and igniting them."
 		//
 		THIRDDEGREE_NAME 		= "サードディグリー"
-		THIRDDEGREE_DESC 		= " 装備中は火ダメージに対してほぼ無敵となり、発動中はすべての遠距離攻撃に対して追加の重耐性が付与される"
+		THIRDDEGREE_DESC 		= "装備中は火ダメージに対してほぼ無敵となり、発動中はすべての遠距離攻撃に対して追加の重耐性が付与される"
 		//
 		LOLLICHOP_NAME 			= "ロリチョップ"
-		LOLLICHOP_DESC 			= " 10キルごとに、メテオストームの呪文チャージを1つ獲得する（魔術書が必要）"
+		LOLLICHOP_DESC 			= "10キルごとに、メテオストームの呪文チャージを1つ獲得する（魔術書が必要）"
 		//
 		NEONANNIHILATOR_NAME 	= "ネオンアナイレイター"
-		NEONANNIHILATOR_DESC 	= " 重力が軽減される"
+		NEONANNIHILATOR_DESC 	= "重力が軽減される"
 		//
 		HOTHAND_NAME 			= "ホットハンド"
-		HOTHAND_DESC 			= " 命中時に敵を空中に吹き飛ばす"
+		HOTHAND_DESC 			= "命中時に敵を空中に吹き飛ばす"
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		GRENADELAUNCHER_NAME 	= "グレネードランチャー"
-		GRENADELAUNCHER_DESC	= " 安定したダメージを与えられる頼もしい選択肢"
+		GRENADELAUNCHER_DESC	= "安定したダメージを与えられる頼もしい選択肢"
 		//
 		LOCHNLOAD_NAME 			= "ロックンロード"
-		LOCHNLOAD_DESC			= " 発射速度は遅いものの、広範囲に高い瞬間火力を発揮する　群衆に対し効果的"
+		LOCHNLOAD_DESC			= "発射速度は遅いものの、広範囲に高い瞬間火力を発揮する　群衆に対し効果的"
 		//
 		ALIBABA_NAME			= "ALI BABA'S WEE BOOTIES"
-		ALIBABA_DESC			= " シールドバッシュのダメージが増加し　落下ダメージを無効化する"
+		ALIBABA_DESC			= "シールドバッシュのダメージが増加し　落下ダメージを無効化する"
 		//
 		BOOTLEGGER_NAME			= "ブートレガー"
-		BOOTLEGGER_DESC			= " シールドのチャージ回復速度が向上し　落下ダメージを無効化する"
+		BOOTLEGGER_DESC			= "シールドのチャージ回復速度が向上し　落下ダメージを無効化する"
 		//
 		LOOSECANNON_NAME		= "ルースキャノン"
-		LOOSECANNON_DESC		= " 最大4発の砲弾を装填し、垂直方向に一斉射撃できる　砲弾は地面に接触すると爆発する"
+		LOOSECANNON_DESC		= "最大4発の砲弾を装填し、垂直方向に一斉射撃できる　砲弾は地面に接触すると爆発する"
 		//
 		IRONBOMBER_NAME			= "アイアンボンバー"
-		IRONBOMBER_DESC			= " 敵の耐性を無視し、敵を倒すと短時間クリティカル率アップの効果を得る　弾薬を消費せず、弾倉は無限である　弾は壁に跳ね返る"
+		IRONBOMBER_DESC			= "敵の耐性を無視し、敵を倒すと短時間クリティカル率アップの効果を得る　弾薬を消費せず、弾倉は無限である　弾は壁に跳ね返る"
 		///
 		STICKYBOMB_NAME 		= "粘着爆弾ランチャー"
-		STICKYBOMB_DESC 		= " 安定したダメージを与えられる頼もしい選択肢　50個の爆弾を設置可能"
+		STICKYBOMB_DESC 		= "安定したダメージを与えられる頼もしい選択肢　50個の爆弾を設置可能"
 		//
 		SCOTTISHRES_NAME 		= "スコットランドレジスタンス"
-		SCOTTISHRES_DESC 		= " 爆弾は起爆までに5秒かかり、10秒後に不発となるが、タイミングをうまく合わせ、フルチャージすれば圧倒的なダメージを与えることができる"
+		SCOTTISHRES_DESC 		= "爆弾は起爆までに5秒かかり、10秒後に不発となるが、タイミングをうまく合わせ、フルチャージすれば圧倒的なダメージを与えることができる"
 		//
 		STICKYJUMPER_NAME 		= "スティッキージャンパー"
-		STICKYJUMPER_DESC 		= " 停止フィールドを生成し、衝撃波が当たったすべての敵をスタン状態にする（ミニボスにはスタン効果が効きません）"
+		STICKYJUMPER_DESC 		= "停止フィールドを生成し、衝撃波が当たったすべての敵をスタン状態にする（ミニボスにはスタン効果が効きません）"
 		//
 		CHARGINTARGE_NAME 		= "チャージン・ターゲット"
-		CHARGINTARGE_DESC 		= " ヘビーチャージ - シールドバッシュのダメージが大幅に増加する"
+		CHARGINTARGE_DESC 		= "ヘビーチャージ - シールドバッシュのダメージが大幅に増加する"
 		//
 		SPLENDIDSCREEN_NAME 	= "スプレンディッド・スクリーン"
-		SPLENDIDSCREEN_DESC 	= " 急速チャージ - シールドの回復速度が大幅に向上"
+		SPLENDIDSCREEN_DESC 	= "急速チャージ - シールドの回復速度が大幅に向上"
 		//
 		TIDETURNER_NAME 		= "タイド・ターナー"
-		TIDETURNER_DESC 		= " バーストチャージ - シールドチャージ時の移動速度が向上"
+		TIDETURNER_DESC 		= "バーストチャージ - シールドチャージ時の移動速度が向上"
 		//
 		QUICKIEBOMB_NAME 		= "クイックボムランチャー"
-		QUICKIEBOMB_DESC 		= " 粘着爆弾を信じられないほどの速さで自動発射し、チャージ時間も極めて短い　敵を倒すとミニクリティカルが発生する"
+		QUICKIEBOMB_DESC 		= "粘着爆弾を信じられないほどの速さで自動発射し、チャージ時間も極めて短い　敵を倒すとミニクリティカルが発生する"
 		///
 		BOTTLE_NAME 			= "ボトル"
-		BOTTLE_DESC 			= " 防御と機動性のための標準的な選択肢"
+		BOTTLE_DESC 			= "防御と機動性のための標準的な選択肢"
 		//
 		EYELANDER_NAME 			= "アイランダー"
-		EYELANDER_DESC 			= " 素早い攻撃で高いダメージを与え、敵を倒すとクリティカルやミニクリティカルが発生するが、ハイブリッドナイトとしては使用できない"
+		EYELANDER_DESC 			= "素早い攻撃で高いダメージを与え、敵を倒すとクリティカルやミニクリティカルが発生するが、ハイブリッドナイトとしては使用できない"
 		//
 		SKULLCUTTER_NAME 		= "スコッツマンズ・スカルカッター"
-		SKULLCUTTER_DESC 		= " 敵のオーバーチャージを無効化し、メディガンの機能を妨害できる　また、自分と同じクラスの敵に対して、より大きなダメージを与えることができる"
+		SKULLCUTTER_DESC 		= "敵のオーバーチャージを無効化し、メディガンの機能を妨害できる　また、自分と同じクラスの敵に対して、より大きなダメージを与えることができる"
 		//
 		CABER_NAME 				= "ウラプール・ケイバー"
-		CABER_DESC 				= " ダメージは、負傷するにつれて増加し、体力が2%未満の場合、必ずクリティカルヒットとなる　この攻撃による爆発で、お前は死に至る"
+		CABER_DESC 				= "ダメージは、負傷するにつれて増加し、体力が2%未満の場合、必ずクリティカルヒットとなる　この攻撃による爆発で、お前は死に至る"
 		// TODO: Update! " You are a Sentry Buster - Taunt to detonate!"
 		//
 		CLAIDHEAMHMOR_NAME 		= "クレイドヒーム・モア"
-		CLAIDHEAMHMOR_DESC 		= " 10キルごとに、モノキュラーズ召喚の呪文チャージを1つ獲得する（魔術書が必要）"
+		CLAIDHEAMHMOR_DESC 		= "10キルごとに、モノキュラーズ召喚の呪文チャージを1つ獲得する（魔術書が必要）"
 		//
 		PERSIANPERSUADER_NAME 	= "ペルシャ・パースエイダー"
-		PERSIANPERSUADER_DESC 	= " シールドと組み合わせると、シールドのチャージが無制限になる　急な方向転換や、壁、敵、その他の障害物への衝突によってシールドのチャージが中断されることもなくなる　スタン効果を無効化する"
+		PERSIANPERSUADER_DESC 	= "シールドと組み合わせると、シールドのチャージが無制限になる　急な方向転換や、壁、敵、その他の障害物への衝突によってシールドのチャージが中断されることもなくなる　スタン効果を無効化する"
 		//
 		NINEIRON_NAME 			= "ネッシーのナインアイアン"
-		NINEIRON_DESC 			= " スイングの軌道が広範囲に及び、あらゆる方向の複数の敵を同時に攻撃できる　クリティカルダメージが2倍になる"
+		NINEIRON_DESC 			= "スイングの軌道が広範囲に及び、あらゆる方向の複数の敵を同時に攻撃できる　クリティカルダメージが2倍になる"
 		//
 		SCOTTISHHANDSHAKE_NAME 	= "スコティッシュ・ハンドシェイク"
-		SCOTTISHHANDSHAKE_DESC 	= " 発動中：遠距離攻撃のダメージを90%軽減し、ノックバックを無効化し、最大HPを大幅に増加させる　ただし、弾薬を回復できず、敵グループから得られるHP回復量も減少する"
+		SCOTTISHHANDSHAKE_DESC 	= "発動中：遠距離攻撃のダメージを90%軽減し、ノックバックを無効化し、最大HPを大幅に増加させる　ただし、弾薬を回復できず、敵グループから得られるHP回復量も減少する"
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		MINIGUN_NAME 			= "ミニガン"
-		MINIGUN_DESC 			= " 安定したダメージを与えられる頼もしい選択肢　敵を倒すと、短時間ミニクリティカルボーナスが得られる"
+		MINIGUN_DESC 			= "安定したダメージを与えられる頼もしい選択肢　敵を倒すと、短時間ミニクリティカルボーナスが得られる"
 		//
 		NATASCHA_NAME 			= "ナターシャ"
-		NATASCHA_DESC 			= " 命中時に敵の移動速度を低下させ、「死のマーキング」を付与する"
+		NATASCHA_DESC 			= "命中時に敵の移動速度を低下させ、「死のマーキング」を付与する"
 		//
 		BRASSBEAST_NAME 		= "ブラス・ビースト"
-		BRASSBEAST_DESC 		= " ダメージは高いが、銃身回転開始まで非常に時間がかかる　展開中は移動速度が大幅に低下するが、飛来する投射物を弾き返すことができる"
+		BRASSBEAST_DESC 		= "ダメージは高いが、銃身回転開始まで非常に時間がかかる　展開中は移動速度が大幅に低下するが、飛来する投射物を弾き返すことができる"
 		//
 		TOMISLAV_NAME 			= "TOMISLAV"
-		TOMISLAV_DESC 			= " ダメージを与えることで「ヒート」が蓄積される　この武器のすべてのステータスは、ヒートレベルに応じて上昇する　ただし、一定時間ダメージを与え続けると、武器は冷却され始めます"
+		TOMISLAV_DESC 			= "ダメージを与えることで「ヒート」が蓄積される　この武器のすべてのステータスは、ヒートレベルに応じて上昇する　ただし、一定時間ダメージを与え続けると、武器は冷却され始めます"
 		//
 		HUOHEATER_NAME 			= "フオロングヒーター"
-		HUOHEATER_DESC 			= " エネルギービームを発射し、命中した敵に火をつける"
+		HUOHEATER_DESC 			= "エネルギービームを発射し、命中した敵に火をつける"
 		//
 		GENUINEHUOHEATER_NAME 	= "ジェニュイン フオロングヒーター"
-		GENUINEHUOHEATER_DESC 	= " ロケット弾を発射する　炎に包まれた敵に対しては必ずクリティカルヒットとなる"
+		GENUINEHUOHEATER_DESC 	= "ロケット弾を発射する　炎に包まれた敵に対しては必ずクリティカルヒットとなる"
 		///
 		SHOTGUN_HVY_NAME 		= "ショットガン - ヘビー"
-		SHOTGUN_HVY_DESC 		= " 一撃で高いダメージを与え、敵を倒すと8秒間クリティカル率が上昇する"
+		SHOTGUN_HVY_DESC 		= "一撃で高いダメージを与え、敵を倒すと8秒間クリティカル率が上昇する"
 		//
 		SANDVICH_NAME 			= "サンドヴィッチ"
-		SANDVICH_DESC 			= " 最大150,000のHPを回復する。このアイテムの効果発動中に受けたダメージは、すべて致命傷となる"
+		SANDVICH_DESC 			= "最大150,000のHPを回復する。このアイテムの効果発動中に受けたダメージは、すべて致命傷となる"
 		// TODO: Update! " Consume to gain Concheror buff for 30 seconds."
 		//
 		DALOKOHSBAR_NAME 		= "ダロコス・バー"
-		DALOKOHSBAR_DESC 		= " 最大20,000のHPを回復する　HPが350未満の状態で使用すると、大幅なオーバーヒールが発生する　被ダメージ量が増加するが、ダメージを受けた際に自己ウーバー状態になるチャンスが得られる"
+		DALOKOHSBAR_DESC 		= "最大20,000のHPを回復する　HPが350未満の状態で使用すると、大幅なオーバーヒールが発生する　被ダメージ量が増加するが、ダメージを受けた際に自己ウーバー状態になるチャンスが得られる"
 		// TODO: Update! " Consume to gain increased move speed, weapon switch speed and faster minigun spinup time for 30 seconds."
 		//
 		BUFFALOSTEAK_NAME 		= "バッファロー・ステーキ・サンドヴィッチ"
-		BUFFALOSTEAK_DESC 		= " クリティカルヒットに対する耐性を自動的に付与する"
+		BUFFALOSTEAK_DESC 		= "クリティカルヒットに対する耐性を自動的に付与する"
 		// TODO: Update! " Consume to gain Battalion's Backup buff and backstab immunity for 30 seconds."
 		//
 		FAMILYBUSINESS_NAME 	= "ファミリービジネス"
-		FAMILYBUSINESS_DESC 	= " 弾薬無制限。回復を受けている間は攻撃速度が2倍になる　敵を倒すと、一時的にクリティカル率とミニクリティカル率が上昇する"
+		FAMILYBUSINESS_DESC 	= "弾薬無制限。回復を受けている間は攻撃速度が2倍になる　敵を倒すと、一時的にクリティカル率とミニクリティカル率が上昇する"
 		//
 		FISHCAKE_NAME 			= "フィッシュケーキ"
-		FISHCAKE_DESC 			= " 弾丸によるダメージには高い耐性を持つが、炎や爆発によるダメージにはより弱くなる"
+		FISHCAKE_DESC 			= "弾丸によるダメージには高い耐性を持つが、炎や爆発によるダメージにはより弱くなる"
 		// TODO: Update! " Consume to gain gravity reversal power for 30 seconds (Crouch to reverse gravity)."
 		//
 		SECONDBANANA_NAME 		= "セカンドバナナ"
-		SECONDBANANA_DESC 		= " 爆発によるダメージには高い耐性を持つが、炎や弾丸ダメージにはより弱く、ダメージを受けやすい"
+		SECONDBANANA_DESC 		= "爆発によるダメージには高い耐性を持つが、炎や弾丸ダメージにはより弱く、ダメージを受けやすい"
 		// TODO: Update! " Consume to gain explosive melee power for 30 seconds (You are restricted to melee for the duration)."
 		///
 		FISTS_NAME 				= "拳"
-		FISTS_DESC 				= " 防御と機動性のための標準的な選択肢 戦闘で効果的"
+		FISTS_DESC 				= "防御と機動性のための標準的な選択肢 戦闘で効果的"
 		//
 		KILLINGGLOVES_NAME 		= "キリング・グローブ・オブ・ボクシング"
-		KILLINGGLOVES_DESC 		= " 特殊能力：「メガクラッシュ」 - 使用可能時に爆弾の上でアクションスロットのキーを押すと、爆弾を即座にスタート地点へ戻す　それ以外の場合は、一時的に移動速度、防御力、クリティカル率が上昇する"
+		KILLINGGLOVES_DESC 		= "特殊能力：「メガクラッシュ」 - 使用可能時に爆弾の上でアクションスロットのキーを押すと、爆弾を即座にスタート地点へ戻す　それ以外の場合は、一時的に移動速度、防御力、クリティカル率が上昇する"
 		//
 		GLOVESRUNNING_NAME 		= "GLOVES OF RUNNING URGENTLY"
-		GLOVESRUNNING_DESC 		= " パラシュートを展開する能力を自動的に付与する　発動中は、ジャンプ力、ダメージ耐性、HP回復量が大幅に上昇する"
+		GLOVESRUNNING_DESC 		= "パラシュートを展開する能力を自動的に付与する　発動中は、ジャンプ力、ダメージ耐性、HP回復量が大幅に上昇する"
 		//
 		BREADBITE_NAME 			= "ブレッド・バイト"
-		BREADBITE_DESC 			= " クリティカルヒットを当てると、対象に「腐食」という永続的なデバフを付与します　このデバフは最大HPに基づいてダメージを与え、対象が死亡した際に小さな腐食性の雲となって爆発し、その効果を周囲の敵に広げます"
+		BREADBITE_DESC 			= "クリティカルヒットを当てると、対象に「腐食」という永続的なデバフを付与します　このデバフは最大HPに基づいてダメージを与え、対象が死亡した際に小さな腐食性の雲となって爆発し、その効果を周囲の敵に広げます"
 		//
 		WARRIRORSSPIRIT_NAME 	= "ウォリアーズスピリット"
-		WARRIRORSSPIRIT_DESC 	= " 左クリックで高く跳び上がり、敵の上に着地すると、強力な踏みつけダメージを与えます　メインとサブの弾薬をすべて消費します"
+		WARRIRORSSPIRIT_DESC 	= "左クリックで高く跳び上がり、敵の上に着地すると、強力な踏みつけダメージを与えます　メインとサブの弾薬をすべて消費します"
 		// TODO: Update! " Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air. Active buff indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		FISTSOFSTEEL_NAME 		= "フィスト・オブ・スティール"
-		FISTSOFSTEEL_DESC 		= " HP25万の巨大なヘビーガントレットに変身する　ノックバック効果を受けなくなり、大ダメージを与えることができる　すべてのメインおよびサブの弾薬が消費される　回復はランチボックスのアイテムからのみ可能となる"
+		FISTSOFSTEEL_DESC 		= "HP25万の巨大なヘビーガントレットに変身する　ノックバック効果を受けなくなり、大ダメージを与えることができる　すべてのメインおよびサブの弾薬が消費される　回復はランチボックスのアイテムからのみ可能となる"
 		// TODO: Update! " You are a Giant Heavy Gauntlet - Immune to push forces and able to hit multiple enemies at once for massive damage."
 		//
 		EVICTIONNOTICE_NAME 	= "エビクションノウティス"
-		EVICTIONNOTICE_DESC 	= " 敵を倒すと、急速な回復効果を得る"
+		EVICTIONNOTICE_DESC 	= "敵を倒すと、急速な回復効果を得る"
 		//
 		APOCOFISTS_NAME 		= "アポコ・フィスト"
-		APOCOFISTS_DESC 		= " パンチで敵を吹き飛ばす"
+		APOCOFISTS_DESC 		= "パンチで敵を吹き飛ばす"
 		//
 		HOLIDAYPUNCH_NAME 		= "ホリデーパンチ"
-		HOLIDAYPUNCH_DESC 		= " 発動中は、すべての敵があなたを無視します　また、スタン効果を無効化する　ただし、この武器ではダメージを与えることはできない"
+		HOLIDAYPUNCH_DESC 		= "発動中は、すべての敵があなたを無視します　また、スタン効果を無効化する　ただし、この武器ではダメージを与えることはできない"
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		SHOTGUN_ENGI_NAME		= "ショットガン - エンジニア"
-		SHOTGUN_ENGI_DESC 		= " 自分のセントリーのターゲットに4倍のダメージを与える"
+		SHOTGUN_ENGI_DESC 		= "自分のセントリーのターゲットに4倍のダメージを与える"
 		//
 		FRONTIERJUSTICE_NAME 	= "フロンティアジャスティス"
-		FRONTIERJUSTICE_DESC 	= " とてつもなく速い発射速度　弾倉容量は「リベンジ」のクリティカルヒット最大回数に一致する　回復を受けている間はリロード速度が向上する"
+		FRONTIERJUSTICE_DESC 	= "とてつもなく速い発射速度　弾倉容量は「リベンジ」のクリティカルヒット最大回数に一致する　回復を受けている間はリロード速度が向上する"
 		//
 		WIDOWMAKER_NAME 		= "ウィドウメーカー"
-		WIDOWMAKER_DESC 		= " 2000のメタルを使用して、敵を吹き飛ばす広範囲攻撃を発動できる"
+		WIDOWMAKER_DESC 		= "2000のメタルを使用して、敵を吹き飛ばす広範囲攻撃を発動できる"
 		//
 		POMSON_NAME 			= "POMSON 6000"
-		POMSON_DESC 			= " 敵に出血、炎上、および移動速度低下効果を与える"
+		POMSON_DESC 			= "敵に出血、炎上、および移動速度低下効果を与える"
 		//
 		RESCUERANGER_NAME 		= "救助レンジャー"
-		RESCUERANGER_DESC		= " 1発につき金属を20消費するが、再装填の必要がなく、最大金属量を1000増加させる"
+		RESCUERANGER_DESC		= "1発につき金属を20消費するが、再装填の必要がなく、最大金属量を1000増加させる"
 		///
 		WRANGLER_NAME 			= "ラングラー"
-		WRANGLER_DESC 			= " 発動中：セントリーのダメージが増加し、ディスペンサーの有効範囲が2倍になる"
+		WRANGLER_DESC 			= "発動中：セントリーのダメージが増加し、ディスペンサーの有効範囲が2倍になる"
 		//
 		SHORTCIRCUIT_NAME 		= "ショート・サーキット"
-		SHORTCIRCUIT_DESC 		= " 10キルごとに、ライトニングボールの呪文チャージを1つ獲得する（魔術書が必要）"
+		SHORTCIRCUIT_DESC 		= "10キルごとに、ライトニングボールの呪文チャージを1つ獲得する（魔術書が必要）"
 		///
 		WRENCH_NAME 			= "レンチ"
-		WRENCH_DESC 			= " 確実なダメージを与えるための標準的な選択肢"
+		WRENCH_DESC 			= "確実なダメージを与えるための標準的な選択肢"
 		//
 		GUNSLINGER_NAME 		= "ガンスリンガー"
-		GUNSLINGER_DESC	 		= " セカンダリ・セントリーを構築可能　3連撃パンチコンボで小型の敵を瞬殺し、ジャイアントに多大なダメージを与えることができる"
+		GUNSLINGER_DESC	 		= "セカンダリ・セントリーを構築可能　3連撃パンチコンボで小型の敵を瞬殺し、ジャイアントに多大なダメージを与えることができる"
 		//
 		SOUTHERNHOS_NAME 		= "サウザンホスピタリティ"
-		SOUTHERNHOS_DESC 		= " 通常のセントリーをフレイム・セントリーに置き換える　射程は短いが、ダメージは高い"
+		SOUTHERNHOS_DESC 		= "通常のセントリーをフレイム・セントリーに置き換える　射程は短いが、ダメージは高い"
 		//
 		JAG_NAME 				= "ジャグ"
-		JAG_DESC 				= " セントリーの射程距離が無制限になる"
+		JAG_DESC 				= "セントリーの射程距離が無制限になる"
 		//
 		EUREKAEFFECT_NAME 		= "ユーレカエフェクト"
-		EUREKAEFFECT_DESC 		= " セントリーガンを運んでいる状態で、リロードキーを押すと、射程内の壁や天井に遠隔で設置できる"
+		EUREKAEFFECT_DESC 		= "セントリーガンを運んでいる状態で、リロードキーを押すと、射程内の壁や天井に遠隔で設置できる"
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		SYRINGEGUN_NAME			= "注射銃"
-		SYRINGEGUN_DESC			= " ヒットするたびに0.5%のユーバーチャージを獲得する"
+		SYRINGEGUN_DESC			= "ヒットするたびに0.5%のユーバーチャージを獲得する"
 		//
 		BLUTSAUGER_NAME			= "ブルートザウガー"
-		BLUTSAUGER_DESC			= " ロボットの再プログラムには100%のユーバーチャージが必要であり、これを消費することで、ロボットを一時的に味方チームに加えた後、自爆させることができる　サブ攻撃キー：影響を受けたすべてのボットのプログラム書き換えを強制終了する"
+		BLUTSAUGER_DESC			= "ロボットの再プログラムには100%のユーバーチャージが必要であり、これを消費することで、ロボットを一時的に味方チームに加えた後、自爆させることができる　サブ攻撃キー：影響を受けたすべてのボットのプログラム書き換えを強制終了する"
 		//
 		CRUSADERSCROSSBOW_NAME	= "クルセイダーズ・クロスボウ"
-		CRUSADERSCROSSBOW_DESC	= " 攻撃が命中するたびに0.25%のユーバーチャージを獲得し、出血状態を付与する　さらに、出血ダメージが1回発生するごとに0.5%のユーバーチャージを獲得する"
+		CRUSADERSCROSSBOW_DESC	= "攻撃が命中するたびに0.25%のユーバーチャージを獲得し、出血状態を付与する　さらに、出血ダメージが1回発生するごとに0.5%のユーバーチャージを獲得する"
 		//
 		OVERDOSE_NAME 			= "過剰摂取"
-		OVERDOSE_DESC 			= " 100%のユーバーチャージを消費して発動し、周囲の小型敵を最大15秒間無力化する攻撃を放つ"
+		OVERDOSE_DESC 			= "100%のユーバーチャージを消費して発動し、周囲の小型敵を最大15秒間無力化する攻撃を放つ"
 		// TODO: Update! " Requires and consumes 50% Ubercharge to launch an EMP mortar, causing nearby enemies to be unable to move or attack for a short time."
 		///
 		MEDIGUN_NAME			= "メディガン"
-		MEDIGUN_DESC			= " オーバーヒールの上限が、対象の最大HPの10倍まで引き上げられる　持続時間の長いレベル1の「投射物シールド」を展開する"
+		MEDIGUN_DESC			= "オーバーヒールの上限が、対象の最大HPの10倍まで引き上げられる　持続時間の長いレベル1の「投射物シールド」を展開する"
 		// TODO: Update! " Overheal cap raised to x10 the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
 		//
 		KRITZKRIEG_NAME			= "クリッツクリーク"
-		KRITZKRIEG_DESC			= " 敵から体力を奪い、自己回復効果を得て、ユーバーチャージを蓄積できる"
+		KRITZKRIEG_DESC			= "敵から体力を奪い、自己回復効果を得て、ユーバーチャージを蓄積できる"
 		// TODO: Update! " Able to drain health from enemies, granting self-healing and building Uber. Ubercharge grants a boost to all damage output."
 		//
 		QUICKFIX_NAME			= "クイックフィックス"
-		QUICKFIX_DESC			= " 非常に回復速度が速く、レベル2の「投射物シールド」を備えている　シールドへの接触ダメージからユーバーチャージを蓄積できる"
+		QUICKFIX_DESC			= "非常に回復速度が速く、レベル2の「投射物シールド」を備えている　シールドへの接触ダメージからユーバーチャージを蓄積できる"
 		// TODO: Update! " Very fast healing with a level 2 Projectile Shield. Able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
 		//
 		VACCINATOR_NAME			= "ワクチネーター"
-		VACCINATOR_DESC			= " 「アクティブヒーリング」を発動すると、あなたと回復対象は、選択したダメージタイプの基本ダメージに対して100%の耐性を得る　ユーバーチャージを発動すると、30秒間、選択したダメージタイプに対して完全な免疫を得る"
+		VACCINATOR_DESC			= "「アクティブヒーリング」を発動すると、あなたと回復対象は、選択したダメージタイプの基本ダメージに対して100%の耐性を得る　ユーバーチャージを発動すると、30秒間、選択したダメージタイプに対して完全な免疫を得る"
 		// TODO: Update! " Active healing grants you and the patient increased mobility and 100% resistance to base damage of the selected damage type. Ubercharge grants full immunity to the selected damage type for 30 seconds."
 		///
 		BONESAW_NAME 			= "骨用電ノコ"
-		BONESAW_DESC			= " 防御と機動性のための標準的な選択肢　攻撃が命中すると、ユーバーが10%上昇する"
+		BONESAW_DESC			= "防御と機動性のための標準的な選択肢　攻撃が命中すると、ユーバーが10%上昇する"
 		//
 		UBERSAW_NAME 			= "ユーバーソー"
-		UBERSAW_DESC			= " 命中時に出血効果を与え、ユーバーが2%上昇する"
+		UBERSAW_DESC			= "命中時に出血効果を与え、ユーバーが2%上昇する"
 		//
 		VITASAW_NAME 			= "VITA-SAW"
-		VITASAW_DESC			= " 命中時にユーバーヒールの呪文チャージを1つ獲得する（魔術書が必要）　攻撃が命中すると、ユーバーが5%上昇する"
+		VITASAW_DESC			= "命中時にユーバーヒールの呪文チャージを1つ獲得する（魔術書が必要）　攻撃が命中すると、ユーバーが5%上昇する"
 		//
 		AMPUTATOR_NAME 			= "AMPUTATOR"
-		AMPUTATOR_DESC			= " 命中時：メディガンがスーパーチャージ状態となり、一時的に回復量、ユーバーチャージ速度、射程が向上する　敵を倒すと、この効果の強化版が発動する"
+		AMPUTATOR_DESC			= "命中時：メディガンがスーパーチャージ状態となり、一時的に回復量、ユーバーチャージ速度、射程が向上する　敵を倒すと、この効果の強化版が発動する"
 		//
 		SOLEMNVOW_NAME 			= "厳粛な誓い"
-		SOLEMNVOW_DESC			= " 射程無制限　メディガンのビームでつながっているすべての敵に命中し、メディックボットには200倍のダメージを与える　命中した敵1体につき、ユーバーメーターが5%増加する"
+		SOLEMNVOW_DESC			= "射程無制限　メディガンのビームでつながっているすべての敵に命中し、メディックボットには200倍のダメージを与える　命中した敵1体につき、ユーバーメーターが5%増加する"
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		SNIPERRIFLE_NAME 		= "スナイパーライフル"
-		SNIPERRIFLE_DESC 		= " フルチャージしたヘッドショットは45万のダメージを与える"
+		SNIPERRIFLE_DESC 		= "フルチャージしたヘッドショットは45万のダメージを与える"
 		//
 		MACHINA_NAME 			= "マキナ"
-		MACHINA_DESC 			= " チャージにかかる時間は非常に長いが、フルチャージ状態ならタンクを瞬殺できる　敵を倒すとレイジメーターが溜まり、1秒間のクリティカルブーストが発動する　このクリティカルブーストとフルチャージを組み合わせれば、遭遇するほとんどのタンクを瞬時に倒すことができる"
+		MACHINA_DESC 			= "チャージにかかる時間は非常に長いが、フルチャージ状態ならタンクを瞬殺できる　敵を倒すとレイジメーターが溜まり、1秒間のクリティカルブーストが発動する　このクリティカルブーストとフルチャージを組み合わせれば、遭遇するほとんどのタンクを瞬時に倒すことができる"
 		// TODO: Update! " Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Gaints and Tanks."
 		//
 		HITMANSHEATMAKER_NAME 	= "ヒットマンズ・ヒートメーカー"
-		HITMANSHEATMAKER_DESC 	= " スコープを解除せずに連射出来る　体への攻撃はダメージを与えない"
+		HITMANSHEATMAKER_DESC 	= "スコープを解除せずに連射出来る　体への攻撃はダメージを与えない"
 		//
 		AWPERHAND_NAME 			= "ウェイパーハンド"
-		AWPERHAND_DESC 			= " 爆発弾を発射し、敵を倒すたびにレイジを蓄積する　レイジが100%に達した後、リロードボタンを押すと、最大HPとHP回復量が上昇する　ライフルは、スコープに敵が捉えられている時のみチャージされる"
+		AWPERHAND_DESC 			= "爆発弾を発射し、敵を倒すたびにレイジを蓄積する　レイジが100%に達した後、リロードボタンを押すと、最大HPとHP回復量が上昇する　ライフルは、スコープに敵が捉えられている時のみチャージされる"
 		//
 		HUNTSMAN_NAME 			= "ハンツマン"
-		HUNTSMAN_DESC 			= " 一度に5本の矢を放つ　パイロが矢に火をつけると、大ダメージを与える"
+		HUNTSMAN_DESC 			= "一度に5本の矢を放つ　パイロが矢に火をつけると、大ダメージを与える"
 		//
 		SYDNEYSLEEPER_NAME 		= "SYDNEY SLEEPER"
-		SYDNEYSLEEPER_DESC 		= " 特殊な矢を放ち、巨人以外の敵の移動を妨げ、メディックボットからの回復を受けられなくする"
+		SYDNEYSLEEPER_DESC 		= "特殊な矢を放ち、巨人以外の敵の移動を妨げ、メディックボットからの回復を受けられなくする"
 		//
 		BAZAARBARGAIN_NAME 		= "バザールバーゲン"
-		BAZAARBARGAIN_DESC 		= " 同じクラスの敵を連続して倒すと発射速度が上がり、最大3回まで積み重なる　別のクラスの敵を倒すとコンボがリセットされます"
+		BAZAARBARGAIN_DESC 		= "同じクラスの敵を連続して倒すと発射速度が上がり、最大3回まで積み重なる　別のクラスの敵を倒すとコンボがリセットされます"
 		//
 		FORTIFIEDCOMPOUND_NAME 	= "強化コンパウンド"
-		FORTIFIEDCOMPOUND_DESC 	= " ハンツマンよりも与ダメージは低いが、発射速度が速く、濡れた敵に対しては貫通効果とクリティカルヒットが発生する"
+		FORTIFIEDCOMPOUND_DESC 	= "ハンツマンよりも与ダメージは低いが、発射速度が速く、濡れた敵に対しては貫通効果とクリティカルヒットが発生する"
 		//
 		CLASSIC_NAME 			= "クラシック"
-		CLASSIC_DESC 			= " トリガーを引ける限り連射するか、あるいは一発に集中して、そのエリアにいる巨大ボット以外の敵をすべて吹き飛ばすほどの凄まじい爆発力を秘めたヘッドショットを放つ"
+		CLASSIC_DESC 			= "トリガーを引ける限り連射するか、あるいは一発に集中して、そのエリアにいる巨大ボット以外の敵をすべて吹き飛ばすほどの凄まじい爆発力を秘めたヘッドショットを放つ"
 		///
 		SMG_NAME 				= "SMG"
-		SMG_DESC 				= " ヘッドショットが可能で、ダメージが大幅に増加する　サブ攻撃キー：ズームインし、命中率が100%になりますが、発射速度は半分になる"
+		SMG_DESC 				= "ヘッドショットが可能で、ダメージが大幅に増加する　サブ攻撃キー：ズームインし、命中率が100%になりますが、発射速度は半分になる"
 		//
 		RAZORBACK_NAME 			= "レイザーバック"
-		RAZORBACK_DESC 			= " 非常に速くチャージされ、攻撃者にジャラテを浴びせる"
+		RAZORBACK_DESC 			= "非常に速くチャージされ、攻撃者にジャラテを浴びせる"
 		//
 		JARATE_NAME 			= "ジャラテ"
-		JARATE_DESC 			= " 即座にリチャージし、敵の移動速度を低下させる"
+		JARATE_DESC 			= "即座にリチャージし、敵の移動速度を低下させる"
 		//
 		DARWIN_NAME 			= "DARWIN'S DANGER SHIELD"
-		DARWIN_DESC 			= " 炎攻撃にはほぼ無敵だが、弾丸と爆発ダメージを50％増しで受ける"
+		DARWIN_DESC 			= "炎攻撃にはほぼ無敵だが、弾丸と爆発ダメージを50％増しで受ける"
 		//
 		COZYCAMPER_NAME 		= "コージー・キャンパー"
-		COZYCAMPER_DESC 		= " 移動速度、最大HP、HP回復量がわずかに上昇する　炎上効果を受けない"
+		COZYCAMPER_DESC 		= "移動速度、最大HP、HP回復量がわずかに上昇する　炎上効果を受けない"
 		//
 		CLEANERSCARBINE_NAME 	= "クリーナーズ・カービン"
-		CLEANERSCARBINE_DESC 	= " ミニクリティカルブーストの効果は30秒間持続する"
+		CLEANERSCARBINE_DESC 	= "ミニクリティカルブーストの効果は30秒間持続する"
 		//
 		BEAUTYMARK_NAME 		= "セルフアウェア・ビューティー・マーク"
-		BEAUTYMARK_DESC 		= " 燃える矢で聖なる地獄の炎を降り注ぐ　サブ攻撃キー：燃える矢の束を一気に放つ"
+		BEAUTYMARK_DESC 		= "燃える矢で聖なる地獄の炎を降り注ぐ　サブ攻撃キー：燃える矢の束を一気に放つ"
 		///
 		KUKRI_NAME 				= "ククリ刀"
-		KUKRI_DESC 				= " 防御と機動性のための標準的な選択肢"
+		KUKRI_DESC 				= "防御と機動性のための標準的な選択肢"
 		//
 		TRIBALMANSSHIV_NAME 	= "トライバルマンズ・シヴ"
-		TRIBALMANSSHIV_DESC 	= " 便利アイテム - 重力がなくなり、自由に空を飛ぶことができる"
+		TRIBALMANSSHIV_DESC 	= "便利アイテム - 重力がなくなり、自由に空を飛ぶことができる"
 		//
 		BUSHWACKA_NAME 			= "BUSHWACKA"
-		BUSHWACKA_DESC 			= " 近接攻撃範囲が無限となり、炎に包まれた敵に対しては必ずクリティカルヒットが発生する"
+		BUSHWACKA_DESC 			= "近接攻撃範囲が無限となり、炎に包まれた敵に対しては必ずクリティカルヒットが発生する"
 		//
 		SHAHANSHAH_NAME 		= "シャハンシャー"
-		SHAHANSHAH_DESC 		= " メイン攻撃キーで上空へ飛び上がり、高い場所へ到達するのに便利　また、落下ダメージ無効化する"
+		SHAHANSHAH_DESC 		= "メイン攻撃キーで上空へ飛び上がり、高い場所へ到達するのに便利　また、落下ダメージ無効化する"
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		REVOLVER_NAME 			= "リボルバー"
-		REVOLVER_DESC 			= " 命中時：複数のデバフを付与する　（短時間敵の被ダメージを増加、敵のメディックのオーバーチャージを消費、スパイのボットを偽装解除、空中の敵をスタン）"
+		REVOLVER_DESC 			= "命中時：複数のデバフを付与する　（短時間敵の被ダメージを増加、敵のメディックのオーバーチャージを消費、スパイのボットを偽装解除、空中の敵をスタン）"
 		//
 		AMBASSADOR_NAME 		= "アンバサダー"
-		AMBASSADOR_DESC 		= " ヘッドショットで多大なダメージを与える　変装していない場合、ダメージは2倍になる"
+		AMBASSADOR_DESC 		= "ヘッドショットで多大なダメージを与える　変装していない場合、ダメージは2倍になる"
 		//
 		LETRANGER_NAME 			= "L'ETRANGER"
-		LETRANGER_DESC 			= " 一撃でジャイアント以外の敵を倒すことができる。ただし、ジャイアントやタンクにはダメージを与えられない"
+		LETRANGER_DESC 			= "一撃でジャイアント以外の敵を倒すことができる。ただし、ジャイアントやタンクにはダメージを与えられない"
 		// TODO: Update! " Able to execute any non-giant in a single shot. Deals 2% damage to Giants, zero damage to Tanks."
 		//
 		ENFORCER_NAME 			= "執行者"
-		ENFORCER_DESC 			= " ダメージ耐性を無視し、バックスタブまたはサッパーで建物を破壊するたびにクリティカルを1回蓄積する。"
+		ENFORCER_DESC 			= "ダメージ耐性を無視し、バックスタブまたはサッパーで建物を破壊するたびにクリティカルを1回蓄積する。"
 		//
 		DIAMONDBACK_NAME 		= "ダイヤモンドバック"
-		DIAMONDBACK_DESC 		= " ブラックホールを発生させ、敵を引き寄せる"
+		DIAMONDBACK_DESC 		= "ブラックホールを発生させ、敵を引き寄せる"
 		///
 		SAPPER_NAME 			= "サッパー"
-		SAPPER_DESC 			= " スタン範囲と持続時間が最大でチャージ時間が短い"
+		SAPPER_DESC 			= "スタン範囲と持続時間が最大でチャージ時間が短い"
 		//
 		REDTAPE_NAME 			= "レッドテープレコーダー"
-		REDTAPE_DESC 			= " エンジニアの建造物を即座に破壊するが、一度にサップできる敵は1体のみである"
+		REDTAPE_DESC 			= "エンジニアの建造物を即座に破壊するが、一度にサップできる敵は1体のみである"
 		///
 		KNIFE_NAME 				= "ナイフ"
-		KNIFE_DESC 				= " ナイフ発動中は、体力が減少するが、あらゆるダメージを受けなくなる　敵を倒すと体力が回復する"
+		KNIFE_DESC 				= "ナイフ発動中は、体力が減少するが、あらゆるダメージを受けなくなる　敵を倒すと体力が回復する"
 		//
 		YOURETERNALREWARD_NAME 	= "YOUR ETERNAL REWARD"
-		YOURETERNALREWARD_DESC 	= " 体力が10%未満の状態でダメージを受けたりクリティカルヒットを受けたりすると、ダメージが増加するが、これは正面からの刺突攻撃にのみ適用される　ダメージの90%を軽減する"
+		YOURETERNALREWARD_DESC 	= "体力が10%未満の状態でダメージを受けたりクリティカルヒットを受けたりすると、ダメージが増加するが、これは正面からの刺突攻撃にのみ適用される　ダメージの90%を軽減する"
 		// TODO: Update! " Extremely high backstab damage, able to instakill most Giants. However each attack has a high chance to miss. Grants a Teleport spell charge on kill (Requires Spellbook)."
 		//
 		KUNAI_NAME 				= "コニバーズクナイ"
-		KUNAI_DESC 				= " 近接攻撃の射程は無限大に　背後から攻撃すると爆発が発生し、周囲の敵に追加ダメージを与える"
+		KUNAI_DESC 				= "近接攻撃の射程は無限大に　背後から攻撃すると爆発が発生し、周囲の敵に追加ダメージを与える"
 		//
 		BIGEARNER_NAME 			= "ビッグアーナー"
-		BIGEARNER_DESC 			= " HPが非常に高く、攻撃が外れるたびに急速に回復するが、味方からの誤射を受けることになる"
+		BIGEARNER_DESC 			= "HPが非常に高く、攻撃が外れるたびに急速に回復するが、味方からの誤射を受けることになる"
 		// TODO: Update! " You have a massive amount of health and 'missed' swings cause you to heal. Gain a short burst of massively increased heal rate on kill (which can also build overheal). Cannot heal from any other sources."
 		//
 		WANGAPRICK_NAME 		= "ワンガプリック"
-		WANGAPRICK_DESC 		= " 敵を倒すと、数秒間即座に透明状態になる　この透明状態では敵を攻撃でき、連続キルを達成することで不可視状態を維持できるが変装はできない"
+		WANGAPRICK_DESC 		= "敵を倒すと、数秒間即座に透明状態になる　この透明状態では敵を攻撃でき、連続キルを達成することで不可視状態を維持できるが変装はできない"
 		// TODO: Update! " Killing an enemy causes you to immediately enter stealth for a few seconds, however you cannot disguise. Grants a Cloak spell charge on kill (Requires Spellbook)."
 		//
 		SHARPDRESSER_NAME 		= "シャープドレッサー"
-		SHARPDRESSER_DESC 		= " 背後から攻撃すると爆発が発生し、周囲の敵に追加ダメージを与える"
+		SHARPDRESSER_DESC 		= "背後から攻撃すると爆発が発生し、周囲の敵に追加ダメージを与える"
 		//
 		SPYCICLE_NAME 			= "スパイ・シクル"
-		SPYCICLE_DESC 			= " 空振りしたスイングで空中に跳び上がり、自由にサーフ・スタブを繰り出せるが、変装はできない　背後から攻撃すると、巨人に対して大ダメージを与える"
+		SPYCICLE_DESC 			= "空振りしたスイングで空中に跳び上がり、自由にサーフ・スタブを繰り出せるが、変装はできない　背後から攻撃すると、巨人に対して大ダメージを与える"
 		///
 		INVISWATCH_NAME 		= "透明ウォッチ"
-		INVISWATCH_DESC 		= " 無限のマント、移動速度+10%"
+		INVISWATCH_DESC 		= "無限のマント、移動速度+10%"
 		//
 		DEADRINGER_NAME 		= "デッドリンガー"
-		DEADRINGER_DESC 		= " 発動すると、短時間移動速度が上昇し、任意の方向へダッシュできるようになる　ダッシュ中は受けるダメージが80%軽減される"
+		DEADRINGER_DESC 		= "発動すると、短時間移動速度が上昇し、任意の方向へダッシュできるようになる　ダッシュ中は受けるダメージが80%軽減される"
 		// TODO: Update! " Activate to gain super speed for several seconds. Invulnerable while active."
 		//
 		CLOAKANDDAGGER_NAME		= "クローク&ダガー"
-		CLOAKANDDAGGER_DESC		= " 瞬時の透明化と透明解除。"
+		CLOAKANDDAGGER_DESC		= "瞬時の透明化と透明解除。"
 		// TODO: Update! " Activate to force enemies to ignore you. Able to attack while active."
 		// TODO: TRANSLATE THE BELOW
 		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
-		QUACKENBIRDT_DESC 		= " Activate to gain flight. Able to attack while active. Grants immunity to fall damage."
+		QUACKENBIRDT_DESC 		= "Activate to gain flight. Able to attack while active. Grants immunity to fall damage."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		FRYINGPAN_NAME 			= "フライパン"
-		FRYINGPAN_DESC 			= " 自分と同じクラスの敵に30倍のダメージを与え、敵を倒すとクリティカルが発生する"
+		FRYINGPAN_DESC 			= "自分と同じクラスの敵に30倍のダメージを与え、敵を倒すとクリティカルが発生する"
 		//
 		SAXXY_NAME 				= "ザクシー"
-		SAXXY_DESC 				= " 自分と同じクラスの敵に30倍のダメージを与え、敵を倒すとクリティカルが発生する"
+		SAXXY_DESC 				= "自分と同じクラスの敵に30倍のダメージを与え、敵を倒すとクリティカルが発生する"
 		//
 		MEMORYMAKER_NAME 		= "メモリーメーカー"
-		MEMORYMAKER_DESC		= " 自分と同じクラスの敵に30倍のダメージを与え、敵を倒すとクリティカルが発生する"
+		MEMORYMAKER_DESC		= "自分と同じクラスの敵に30倍のダメージを与え、敵を倒すとクリティカルが発生する"
 		//
 		CONOBJECTOR_NAME		= "コンシエンタスオブジェクター"
-		CONOBJECTOR_DESC		= " 10キルごとに、ランダムな呪文チャージを1つ獲得する（魔術書が必要）"
+		CONOBJECTOR_DESC		= "10キルごとに、ランダムな呪文チャージを1つ獲得する（魔術書が必要）"
 		//
 		FREEDOMSTAFF_NAME 		= "フリーダムスタッフ"
-		FREEDOMSTAFF_DESC 		= " 攻撃をかわすことでダメージを受ける確率がわずかに上がり、3秒間ユーバー状態になる"
+		FREEDOMSTAFF_DESC 		= "攻撃をかわすことでダメージを受ける確率がわずかに上がり、3秒間ユーバー状態になる"
 		//
 		BATOUTTAHELL_NAME 		= "バット・アウタ・ヘル"
-		BATOUTTAHELL_DESC 		= " 発動中は、あらゆる被ダメージを受けず、膨大なオーバーヒール量を蓄積しますが、ノックバックには完全に無防備となる"
+		BATOUTTAHELL_DESC 		= "発動中は、あらゆる被ダメージを受けず、膨大なオーバーヒール量を蓄積しますが、ノックバックには完全に無防備となる"
 		//
 		HAMSHANK_NAME 			= "ハム・シャンク"
-		HAMSHANK_DESC 			= " 特殊能力：「バイタル・リサージェンス」 - 使用可能時にアクションスロットのキーを押すと、即座に10倍のオーバーヒール効果を得て、20秒間ノックバックを無効化する"
+		HAMSHANK_DESC 			= "特殊能力：「バイタル・リサージェンス」 - 使用可能時にアクションスロットのキーを押すと、即座に10倍のオーバーヒール効果を得て、20秒間ノックバックを無効化する"
 		//
 		NECROSMASHER_NAME 		= "ネクロスマッシャー"
-		NECROSMASHER_DESC 		= " 特殊能力：「バンパーカー・マンズローター」 - 使用可能時にアクションスロットのキーを押すと、バンパーカーモードに入る　バンパーカーモード中は無敵状態となり、体力が回復し、敵を轢き潰すことができる"
+		NECROSMASHER_DESC 		= "特殊能力：「バンパーカー・マンズローター」 - 使用可能時にアクションスロットのキーを押すと、バンパーカーモードに入る　バンパーカーモード中は無敵状態となり、体力が回復し、敵を轢き潰すことができる"
 		//
 		CROSSINGGAURD_NAME 		= "クロッシングガード"
-		CROSSINGGAURD_DESC 		= " バックスタブを含む、すべての近接攻撃に対して極めて高い耐性を得る"
+		CROSSINGGAURD_DESC 		= "バックスタブを含む、すべての近接攻撃に対して極めて高い耐性を得る"
 		//
 		PRINNYMACHETE_NAME 		= "プリニー・マチェーテ"
-		PRINNYMACHETE_DESC 		= " 便利アイテム - この近接武器をスイングして、高速で前方に突進する事ができる　落下ダメージを無効化する"
+		PRINNYMACHETE_DESC 		= "便利アイテム - この近接武器をスイングして、高速で前方に突進する事ができる　落下ダメージを無効化する"
 		//------------------------------------
 	} 
 	danish = {
@@ -4085,644 +4085,638 @@ if ("SetScriptVersion" in getroottable())
 		SCATTERGUN_DESC 		= "Standardvalg til pålidelig skade. Meget effektiv på tæt hold."
 		//
 		FORCENATURE_NAME		= "NATURKRAFTEN"
-		FORCENATURE_DESC		= " Forbedret tilbageslag ved træf. Lidt lavere skadesudbytte pr. sekund end Haglsprederen."
+		FORCENATURE_DESC		= "Forbedret tilbageslag ved træf. Lidt lavere skadesudbytte pr. sekund end Haglsprederen."
 		//
 		SHORTSTOP_NAME 			= "HÅNDBREMSEN"
-		SHORTSTOP_DESC 			= " Vanvittig skudhastighed og garanterede kritiske træffere mod våde fjender, men langsom genladning."
+		SHORTSTOP_DESC 			= "Vanvittig skudhastighed og garanterede kritiske træffere mod våde fjender, men langsom genladning."
 		//
 		SODAPOPPER_NAME 		= "SODA-POPPEREN"
-		SODAPOPPER_DESC 		= " Hold skudknappen inde for at affyre en hurtig serie på 4 skud."
+		SODAPOPPER_DESC 		= "Hold skudknappen inde for at affyre en hurtig serie på 4 skud."
 		//
 		BABYFACEBLASTER_NAME	= "DENGSEDRENGENS DRÆBER"
-		BABYFACEBLASTER_DESC	= " Hold skudknappen nede for at lade en massiv salve på op til 200 skud, der flår alt i stykker på klos hold. Har dog meget kraftig rekyl."
+		BABYFACEBLASTER_DESC	= "Hold skudknappen nede for at lade en massiv salve på op til 200 skud, der flår alt i stykker på klos hold. Har dog meget kraftig rekyl."
 		//
 		BACKSCATTER_NAME		= "RYGSPREDER"
-		BACKSCATTER_DESC		= " Fuld kritisk skade ved skud i ryggen. Kræver ingen ammunition og har et uendeligt magasin."
+		BACKSCATTER_DESC		= "Fuld kritisk skade ved skud i ryggen. Kræver ingen ammunition og har et uendeligt magasin."
 		///
 		PISTOL_NAME 			= "PISTOL"
-		PISTOL_DESC 			= " Affyrer raketter i stedet for kugler. Meget effektivt, når man skal bevæge sig hurtigt."
+		PISTOL_DESC 			= "Affyrer raketter i stedet for kugler. Meget effektivt, når man skal bevæge sig hurtigt."
 		//
 		BONK_NAME 				= "BONK!-ATOMPUNCH"
-		BONK_DESC 				= " En kraftfuld drik, der giver usårlighed uden at forhindre dig i at angribe."
+		BONK_DESC 				= "En kraftfuld drik, der giver usårlighed uden at forhindre dig i at angribe."
 		//
 		CRITACOLA_NAME 			= "KRIT-A-COLA"
-		CRITACOLA_DESC 			= " En drik med ekstra kraft, der giver fulde kritiske slag."
+		CRITACOLA_DESC 			= "En drik med ekstra kraft, der giver fulde kritiske slag."
 		//
 		MADMILK_NAME 			= "MANISK MÆLK"
-		MADMILK_DESC 			= " Fjender, der er dækket af mælk, kan ikke bevæge sig."
+		MADMILK_DESC 			= "Fjender, der er dækket af mælk, kan ikke bevæge sig."
 		//
 		WINGER_NAME 			= "FLØJSPILLEREN"
-		WINGER_DESC 			= " Ubegrænset antal luftspring, mens aktiv. Affyrer et enkelt, målrettet skud, der altid giver kritisk skade, mens du er i luften. Dette skud skubber desuden fjender væk."
+		WINGER_DESC 			= "Ubegrænset antal luftspring, mens aktiv. Affyrer et enkelt, målrettet skud, der altid giver kritisk skade, mens du er i luften. Dette skud skubber desuden fjender væk."
 		//
 		PRETTYBOYS_NAME 		= "LÆKKERBISKENS LOMMEPISTOL"
-		PRETTYBOYS_DESC 		= " Affyrer raketter, der forårsager skade baseret på offerets livspoint. Skaden stiger, efterhånden som målet bliver såret, og påvirkes ikke af afstanden. Alternativt skud: Brug søgende raketter til gengæld for -20% mindre skade."
+		PRETTYBOYS_DESC 		= "Affyrer raketter, der forårsager skade baseret på offerets livspoint. Skaden stiger, efterhånden som målet bliver såret, og påvirkes ikke af afstanden. Alternativt skud: Brug søgende raketter til gengæld for -20% mindre skade."
 		//
 		CLEAVER_NAME 			= "FLYVENDE GUILLOTINE"
-		CLEAVER_DESC 			= " Yondus pil: Fremkald en levende pil, der hjælper i kampen. Alternativt skud: Disruptor-tilstand, -75% skade."
+		CLEAVER_DESC 			= "Yondus pil: Fremkald en levende pil, der hjælper i kampen. Alternativt skud: Disruptor-tilstand, -75% skade."
 		//
 		MATATEDMILK_NAME 		= "MUTERET MÆLK"
-		MATATEDMILK_DESC 		= " Hurtigskydende eksplosive mælkekander, der forårsager skade på fjender. Alternativt skud: Kast en hel flok mælkekander på én gang."
+		MATATEDMILK_DESC 		= "Hurtigskydende eksplosive mælkekander, der forårsager skade på fjender. Alternativt skud: Kast en hel flok mælkekander på én gang."
 		///
 		BAT_NAME 				= "BAT"
-		BAT_DESC 				= " Mulighed for at ignorere døden og teleportere sig til spawn med 1 hp."
+		BAT_DESC 				= "Mulighed for at ignorere døden og teleportere sig til spawn med 1 hp."
 		//
 		SANDMAN_NAME			= "OLE LUKØJE"
-		SANDMAN_DESC 			= " Kan affyre baseballs i hurtig rækkefølge med stor kapacitet og hurtig genopladning, hvilket påfører enkelte mål betydelig skade i hurtige skudsalver."
+		SANDMAN_DESC 			= "Kan affyre baseballs i hurtig rækkefølge med stor kapacitet og hurtig genopladning, hvilket påfører enkelte mål betydelig skade i hurtige skudsalver."
 		//
 		HOLYMACKEREL_NAME		= "MILDE MAKREL"
-		HOLYMACKEREL_DESC		= " Kan markere flere fjender til døden."
+		HOLYMACKEREL_DESC		= "Kan markere flere fjender til døden."
 		//
 		CANDYCANE_NAME 			= "SLIKSTOKKEN"
-		CANDYCANE_DESC 			= " Utility Genstand - Du er ikke påvirket af tyngdekraften og kan flyve frit."
+		CANDYCANE_DESC 			= "Utility Genstand - Du er ikke påvirket af tyngdekraften og kan flyve frit."
 		//
 		BOSTONBASHSER_NAME 		= "BOSTON-BASKEREN"
-		BOSTONBASHSER_DESC 		= " Høj risiko / Høj gevinst. Kan dræbe de fleste små fjender med ét slag og giver et krit boost på 10 sekunder. Fjender, der er forbundet via medi-gevær stråler, rammes også. Men et eneste fejlskud betyder øjeblikkelig død."
+		BOSTONBASHSER_DESC 		= "Høj risiko / Høj gevinst. Kan dræbe de fleste små fjender med ét slag og giver et krit boost på 10 sekunder. Fjender, der er forbundet via medi-gevær stråler, rammes også. Men et eneste fejlskud betyder øjeblikkelig død."
 		//
 		SUNONASTICK_NAME		= "SOLEN-PÅ-EN-PIND"
-		SUNONASTICK_DESC		= " Mulighed for at lamme fjender eller få et kortvarigt krit boost. Rammer alle fjender, der er forbundet via medi-gevær stråler. Hvis du rammer forbi, lammer du dog dig selv."
+		SUNONASTICK_DESC		= "Mulighed for at lamme fjender eller få et kortvarigt krit boost. Rammer alle fjender, der er forbundet via medi-gevær stråler. Hvis du rammer forbi, lammer du dog dig selv."
 		//
 		FANOWAR_NAME 			= "KRIGSVIFTEN"
-		FANOWAR_DESC 			= " Utility Genstand - Sving dette nærkampsvåben for at kaste dig fremad med høj hastighed. Giver immunitet over for faldskade."
+		FANOWAR_DESC 			= "Utility Genstand - Sving dette nærkampsvåben for at kaste dig fremad med høj hastighed. Giver immunitet over for faldskade."
 		//
 		ATOMIZER_NAME 			= "ATOMBATTET"
-		ATOMIZER_DESC 			= " Kan ikke forårsage skade med normale angreb, men et vellykket drab efter et hån giver et krit boost, der varer i 3 minutter."
+		ATOMIZER_DESC 			= "Kan ikke forårsage skade med normale angreb, men et vellykket drab efter et hån giver et krit boost, der varer i 3 minutter."
 		//
 		THREERUNEBLADE_NAME 	= "TRE-RUNE-KLINGEN"
-		THREERUNEBLADE_DESC 	= " Mens den er aktiv, får du et KÆMPESTORT boost til bevægelseshastigheden og muligheden for at udføre et tredobbelt hop. Giver immunitet over for faldskade."
+		THREERUNEBLADE_DESC 	= "Mens den er aktiv, får du et KÆMPESTORT boost til bevægelseshastigheden og muligheden for at udføre et tredobbelt hop. Giver immunitet over for faldskade."
 		// TODO: Update! " While active, gain MASSIVE boost to move speed and ability to triple jump. Deals increased damage while airborne. Grants immunity to fall damage."
 		//
 		UNARMEDCOMBAT_NAME 		= "UHÅNDGRIBELIG ARMERING"
-		UNARMEDCOMBAT_DESC 		= " For hver 10 drab får du en trylleformularladning til en skelet håndlanger (kræver tryllebog)."
+		UNARMEDCOMBAT_DESC 		= "For hver 10 drab får du en trylleformularladning til en skelet håndlanger (kræver tryllebog)."
 		//
 		WRAPAASSASSIN_NAME 		= "GAVEPAPIRSMORDEREN"
-		WRAPAASSASSIN_DESC 		= " Kan afværge indkommende projektiler og let reflektere dem. Giver desuden immunitet over for lammelse."
+		WRAPAASSASSIN_DESC 		= "Kan afværge indkommende projektiler og let reflektere dem. Giver desuden immunitet over for lammelse."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		ROCKETLAUNCHER_NAME		= "RAKETKASTER"
-		ROCKETLAUNCHER_DESC		= " Standard valg for pålidelig skade."
+		ROCKETLAUNCHER_DESC		= "Standard valg for pålidelig skade."
 		//
 		DIRECTHIT_NAME			= "FULDTRÆFFEREN"
-		DIRECTHIT_DESC			= " Alt-Skyd: Kast en lille fjende i luften for en nem minikrit opfølgning. Raketter har en lille mængde sigtehjælp."
+		DIRECTHIT_DESC			= "Alt-Skyd: Kast en lille fjende i luften for en nem minikrit opfølgning. Raketter har en lille mængde sigtehjælp."
 		//
 		BLACKBOX_NAME			= "DEN SORTE BOKS"
-		BLACKBOX_DESC			= " Sæt farten ned på fjender og påfør blødning. Dette våben gør x2 skade mod Soldier robotter."
+		BLACKBOX_DESC			= "Sæt farten ned på fjender og påfør blødning. Dette våben gør x2 skade mod Soldier robotter."
 		// TODO: Update! " Slow down enemies and inflict bleed."
 		//
 		ROCKETJUMPER_NAME		= "RAKETHOPPEREN"
-		ROCKETJUMPER_DESC		= " Lav skudhastighed og genladningstid, men høj skade og stor eksplosionsradius. Fremragende valg til at kontrollere store grupper."
+		ROCKETJUMPER_DESC		= "Lav skudhastighed og genladningstid, men høj skade og stor eksplosionsradius. Fremragende valg til at kontrollere store grupper."
 		//
 		LIBERTYLAUNCHER_NAME	= "FRIHEDSFORDREREN"
-		LIBERTYLAUNCHER_DESC	= " Affyrer en langsomtgående raket, der ør massiv skade i et stort område. Meget langsom genladning og lav ammunitionsmængde. Dette våben affyrer automatisk, når det er ladt."
+		LIBERTYLAUNCHER_DESC	= "Affyrer en langsomtgående raket, der ør massiv skade i et stort område. Meget langsom genladning og lav ammunitionsmængde. Dette våben affyrer automatisk, når det er ladt."
 		//
 		COWMANGLER_NAME			= "KOKVÆSTER 5000"
-		COWMANGLER_DESC			= " Lammer små fjender ved træf. Et opladet skud lammer fjender i længere tid. Hold Alt-Skyd nede for at oplade våbnet til et multiskud, hvilket resulterer i endnu længere lammelse."
+		COWMANGLER_DESC			= "Lammer små fjender ved træf. Et opladet skud lammer fjender i længere tid. Hold Alt-Skyd nede for at oplade våbnet til et multiskud, hvilket resulterer i endnu længere lammelse."
 		//
 		ORIGINAL_NAME			= "ORIGINALEN"
-		ORIGINAL_DESC			= " Hold skudknappen nede for at lade en salve på op til 5 raketter. Våbnet affyres automatisk, når det er ladt."
+		ORIGINAL_DESC			= "Hold skudknappen nede for at lade en salve på op til 5 raketter. Våbnet affyres automatisk, når det er ladt."
 		//
 		BEGGARSBAZOOKA_NAME		= "TIGGERENS BAZOOKA"
-		BEGGARSBAZOOKA_DESC		= " Hold skudknappen inde for at oplade op til 100 raketter, før du affyrer dem i en massiv salve. Dette våben kan IKKE overfyldes."
+		BEGGARSBAZOOKA_DESC		= "Hold skudknappen inde for at oplade op til 100 raketter, før du affyrer dem i en massiv salve. Dette våben kan IKKE overfyldes."
 		//
 		AIRSTRIKE_NAME			= "LUFTANGREBET"
-		AIRSTRIKE_DESC			= " Læg op til 10 raketter i magasinet, før du affyrer dem alle på én gang i et fast spredningsmønster. Raketterne søger automatisk mod fjenderne."
+		AIRSTRIKE_DESC			= "Læg op til 10 raketter i magasinet, før du affyrer dem alle på én gang i et fast spredningsmønster. Raketterne søger automatisk mod fjenderne."
 		///
 		SHOTGUN_SOLD_NAME 		= "HAGLGEVÆR - SOLDIER" 
-		SHOTGUN_SOLD_DESC 		= " Meget høj skudhastighed og kritiske træffere under rakethop." 
+		SHOTGUN_SOLD_DESC 		= "Meget høj skudhastighed og kritiske træffere under rakethop." 
 		//
 		SHOTGUN_NAME 			= "HAGLGEVÆR" 
-		SHOTGUN_DESC 			= " Standard valg for pålidelig skade." 
+		SHOTGUN_DESC 			= "Standard valg for pålidelig skade." 
 		//
 		BUFFBANNER_NAME 		= "BUFF-BANNERET" 
-		BUFFBANNER_DESC 		= " Ubegrænset rækkevidde og markant længere varighed." 
+		BUFFBANNER_DESC 		= "Ubegrænset rækkevidde og markant længere varighed." 
 		//
 		GUNBOATS_NAME 			= "BLYSÅLERNE" 
-		GUNBOATS_DESC 			= " Aktiverer bunnyhopping ved at holde 'hop' tasten nede. Giver immunitet over for faldskade." 
+		GUNBOATS_DESC 			= "Aktiverer bunnyhopping ved at holde 'hop' tasten nede. Giver immunitet over for faldskade." 
 		// TODO: Update! " Enables bunnyhopping by holding 'jump' key. Grants immunity to fall damage. Hold Crouch key while airborne to reduce gravity." 
 		//
 		BATTALIONS_NAME 		= "FORSVARSFANEN" 
-		BATTALIONS_DESC 		= " Ubegrænset rækkevidde og markant længere varighed." 
+		BATTALIONS_DESC 		= "Ubegrænset rækkevidde og markant længere varighed." 
 		//
 		CONCHEROR_NAME 			= "KONG-KYLIEN" 
-		CONCHEROR_DESC 			= " Ubegrænset rækkevidde og markant længere varighed." 
+		CONCHEROR_DESC 			= "Ubegrænset rækkevidde og markant længere varighed." 
 		//
 		RESERVESHOOTER_NAME 	= "BAGHÅNDSGEVÆRET" 
-		RESERVESHOOTER_DESC 	= " Gør 10.000 skade pr. skud uanset afstand og udløser mini-kritiske slag på 3 sekunder ved drab. Våbnet kan dog ikke forstærkes med kritiske slag og kan ikke skade tanks. Hold Alt-Skyd nede for at zoome ind." 
+		RESERVESHOOTER_DESC 	= "Gør 10.000 skade pr. skud uanset afstand og udløser mini-kritiske slag på 3 sekunder ved drab. Våbnet kan dog ikke forstærkes med kritiske slag og kan ikke skade tanks. Hold Alt-Skyd nede for at zoome ind." 
 		//
 		BISON_NAME 				= "RETSKAFNE BISON" 
-		BISON_DESC 				= " Affyrer en kontinuerlig stråle af gennemtrængende skade med fuld automatisk sigtning." 
+		BISON_DESC 				= "Affyrer en kontinuerlig stråle af gennemtrængende skade med fuld automatisk sigtning." 
 		//
 		MANTREADS_NAME 			= "MANDETRÆDERNE" 
-		MANTREADS_DESC 			= " Skaden, der forårsager tilbageslag, er blevet væsentligt reduceret. Luftangreb har nu fået en markant øget acceleration. Stomp-skaden er blevet forbedret og er nu baseret på hastighed." 
+		MANTREADS_DESC 			= "Skaden, der forårsager tilbageslag, er blevet væsentligt reduceret. Luftangreb har nu fået en markant øget acceleration. Stomp-skaden er blevet forbedret og er nu baseret på hastighed." 
 		// TODO: Update! " Major reduction in knockback taken from damage. Stomp damage buffed and velocity-based. Gain a short critboost on kill."
 		//
 		BASEJUMPER_NAME 		= "B.A.S.E.-HOPPEREN" 
-		BASEJUMPER_DESC 		= " Mulighed for at aktivere faldskærm. Øger modstandsdygtigheden over for tilbageslag og skudskader, hvilket mindsker din sårbarhed i luften." 
+		BASEJUMPER_DESC 		= "Mulighed for at aktivere faldskærm. Øger modstandsdygtigheden over for tilbageslag og skudskader, hvilket mindsker din sårbarhed i luften." 
 		//
 		PANICATTACK_NAME 		= "PANIKANFALDET" 
-		PANICATTACK_DESC 		= " Når du har brug for akut helbredelse. Gendanner straks op til 10.000 livspoint ved træf. Hvis du tager skade, mens dette våben er aktivt, er der en chance for, at det udløser en kortvarig selv-über." 
+		PANICATTACK_DESC 		= "Når du har brug for akut helbredelse. Gendanner straks op til 10.000 livspoint ved træf. Hvis du tager skade, mens dette våben er aktivt, er der en chance for, at det udløser en kortvarig selv-über." 
 		///
 		SHOVEL_NAME 			= "SKOVL"
-		SHOVEL_DESC 			= " Standard valg for pålidelig skade."
+		SHOVEL_DESC 			= "Standard valg for pålidelig skade."
 		//
 		EQUALIZER_NAME 			= "UDLIGNEREN"
-		EQUALIZER_DESC 			= " Hån angrebet forårsager enorm skade og slår fjenderne op i luften."
+		EQUALIZER_DESC 			= "Hån angrebet forårsager enorm skade og slår fjenderne op i luften."
 		// TODO: Update! " Damage massively increases as you become injured."
 		//
 		PAINTRAIN_NAME 			= "TORTURTOGET"
-		PAINTRAIN_DESC 			= " Forårsager blødning og nedsat bevægelse ved træf. Giver immunitet over for faldskade."
+		PAINTRAIN_DESC 			= "Forårsager blødning og nedsat bevægelse ved træf. Giver immunitet over for faldskade."
 		//
 		HALFZATOICHI_NAME 		= "HALV-ZATOICHI"
-		HALFZATOICHI_DESC 		= " Gennemsnitlig skade med høj helbred og mobilitet samt øget rækkevidde."
+		HALFZATOICHI_DESC 		= "Gennemsnitlig skade med høj helbred og mobilitet samt øget rækkevidde."
 		//
 		MARKETGARDENER_NAME 	= "KRIGERENS KAMPSKOVL"
-		MARKETGARDENER_DESC 	= " Markant øget kritisk skade. Efter at have dræbt en fjende går du ind i en rasende tilstand og får ekstra liv, modstand og øget skade på alle angreb. Men hvis du rammer forbi, dør du med det samme."
+		MARKETGARDENER_DESC 	= "Markant øget kritisk skade. Efter at have dræbt en fjende går du ind i en rasende tilstand og får ekstra liv, modstand og øget skade på alle angreb. Men hvis du rammer forbi, dør du med det samme."
 		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		DISCIPLINARYACTION_NAME = "DISCIPLINÆRSAGEN"
-		DISCIPLINARYACTION_DESC	= " Standardvalg til forsvar og mobilitet."
+		DISCIPLINARYACTION_DESC	= "Standardvalg til forsvar og mobilitet."
 		// TODO: Update! " Standard option for defense and mobility. Instantly gain 1/3 Rage meter on hit."
 		//
 		ESCAPEPLAN_NAME			= "REDNINGSPLANEN"
-		ESCAPEPLAN_DESC			= " Standardvalg til forsvar og mobilitet."
+		ESCAPEPLAN_DESC			= "Standardvalg til forsvar og mobilitet."
 		// TODO: Update! " Deal guaranteed crits when below 50% health."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		FLAMETHROWER_NAME 		= "FLAMMEKASTER"
-		FLAMETHROWER_DESC		= " Standard valg for pålidelig skade. Giver et kortvarigt minikrit boost ved drab."
+		FLAMETHROWER_DESC		= "Standard valg for pålidelig skade. Giver et kortvarigt minikrit boost ved drab."
 		//
 		BACKBURNER_NAME 		= "BAGBRÆNDEREN"
-		BACKBURNER_DESC			= " Grøn ild – Markerer fjender til døden og lammer fjender i luften i kort tid. Dette våben gør dobbelt så meget skade mod Pyro robotter."
+		BACKBURNER_DESC			= "Grøn ild – Markerer fjender til døden og lammer fjender i luften i kort tid. Dette våben gør dobbelt så meget skade mod Pyro robotter."
 		//
 		DEGREASER_NAME 			= "FEDTFJERNEREN"
-		DEGREASER_DESC			= " Langdistance flammekaster, der gør stor direkte skade, men ingen efterbrændingsskade. Denne flammekaster kan ikke lave luftstød."
+		DEGREASER_DESC			= "Langdistance flammekaster, der gør stor direkte skade, men ingen efterbrændingsskade. Denne flammekaster kan ikke lave luftstød."
 		//
 		PHLOGISTINATOR_NAME 	= "PHLOGISTINATOREN"
-		PHLOGISTINATOR_DESC		= " Grøn ild – Markerer fjender til døden og lammer fjender i luften i kort tid. Effektiv mod tanks, men din bevægelseshastighed nedsættes."
+		PHLOGISTINATOR_DESC		= "Grøn ild – Markerer fjender til døden og lammer fjender i luften i kort tid. Effektiv mod tanks, men din bevægelseshastighed nedsættes."
 		//
 		RAINBLOWER_NAME 		= "REGNBLÆSEREN"
-		RAINBLOWER_DESC			= " Langdistance flammekaster, der gør lav direkte skade, men stor efterbrændingsskade. Kan desuden øjeblikkeligt ødelægge Engineers bygninger og brænde fjendtlige Pyros. Luftstødet er svagt, men meget hurtigt."
+		RAINBLOWER_DESC			= "Langdistance flammekaster, der gør lav direkte skade, men stor efterbrændingsskade. Kan desuden øjeblikkeligt ødelægge Engineers bygninger og brænde fjendtlige Pyros. Luftstødet er svagt, men meget hurtigt."
 		//
 		DRAGONSFURY_NAME 		= "DRAGENS VREDE"
-		DRAGONSFURY_DESC		= " Markant stigning i skudhastigheden og tryklufthastigheden."
+		DRAGONSFURY_DESC		= "Markant stigning i skudhastigheden og tryklufthastigheden."
 		//
 		NOSTROMONAPALMER_NAME 	= "NOSTROMO NAPALMEREN"
-		NOSTROMONAPALMER_DESC	= " Bremser fjender ved træf. Opbygger 'Mmmph' ladning på samme måde som Phlogistinatoren, men giver dig selv Kong-kylien buffen. Denne flammekaster kan ikke bruge luftstød."
+		NOSTROMONAPALMER_DESC	= "Bremser fjender ved træf. Opbygger 'Mmmph' ladning på samme måde som Phlogistinatoren, men giver dig selv Kong-kylien buffen. Denne flammekaster kan ikke bruge luftstød."
 		///
 		SHOTGUN_PYRO_NAME 		= "HAGLGEVÆR- PYRO" 
-		SHOTGUN_PYRO_DESC 		= " Garanterede kritiske træffere mod brændende fjender." 
+		SHOTGUN_PYRO_DESC 		= "Garanterede kritiske træffere mod brændende fjender." 
 		//
 		FLAREGUN_NAME 			= "SIGNALPISTOLEN" 
-		FLAREGUN_DESC 			= " Affyrer et hitscan-angreb, der trænger igennem fjender. Skaden stiger eksponentielt for hver fjende, der gennemtrænges på vejen. Der er også en chance for at lamme fjender ved træf." 
+		FLAREGUN_DESC 			= "Affyrer et hitscan-angreb, der trænger igennem fjender. Skaden stiger eksponentielt for hver fjende, der gennemtrænges på vejen. Der er også en chance for at lamme fjender ved træf." 
 		//
 		DETONATOR_NAME 			= "DETONATOREN" 
-		DETONATOR_DESC 			= " Signalblus har en uendelig eksplosionsradius og rammer alt, hvad der befinder sig inden for synsfeltet. Den tvinger alle Spy robotter til at afsløre sig selv og fjerne deres forklædning. Et fremragende valg, hvis man har brug for mobilitet." 
+		DETONATOR_DESC 			= "Signalblus har en uendelig eksplosionsradius og rammer alt, hvad der befinder sig inden for synsfeltet. Den tvinger alle Spy robotter til at afsløre sig selv og fjerne deres forklædning. Et fremragende valg, hvis man har brug for mobilitet." 
 		//
 		MANMELTER_NAME 			= "MANDESMELTEREN" 
-		MANMELTER_DESC 			= " Hurtigskydende signalblus, der er specialudviklet til automatisk at opspore fjender. Ubegrænset ammunition og ingen genladning. Alt-Skyd: Affyr en hel salve af signalblus på én gang." 
+		MANMELTER_DESC 			= "Hurtigskydende signalblus, der er specialudviklet til automatisk at opspore fjender. Ubegrænset ammunition og ingen genladning. Alt-Skyd: Affyr en hel salve af signalblus på én gang." 
 		//
 		SCORCHSHOT_NAME 		= "BRANDSKUDDET" 
-		SCORCHSHOT_DESC 		= " Ved træf: Gør stor skade, slukker fjendens ild og skubber ham væk. Der SKAL være ild i dit mål, ellers har dette angreb ingen effekt. Alt-Skyd: Brug en langsomt søgende signalblus." 
+		SCORCHSHOT_DESC 		= "Ved træf: Gør stor skade, slukker fjendens ild og skubber ham væk. Der SKAL være ild i dit mål, ellers har dette angreb ingen effekt. Alt-Skyd: Brug en langsomt søgende signalblus." 
 		//
 		THERMALTHRUSTER_NAME 	= "TERMISKE TRYKMOTOR" 
-		THERMALTHRUSTER_DESC 	= " Reduceret brændstofforbrug uden forsinkelse ved start. Kan genindsættes i luften og gøre massiv stomp skade. Får en kortvarig kritboost ved drab." 
+		THERMALTHRUSTER_DESC 	= "Reduceret brændstofforbrug uden forsinkelse ved start. Kan genindsættes i luften og gøre massiv stomp skade. Får en kortvarig kritboost ved drab." 
 		//
 		GASPASSER_NAME 			= "BENZINDUNKEN" 
-		GASPASSER_DESC 			= " Måleren starter tom og nulstilles, når du dør. Gør 150.000 skade for at fylde måleren. Eksploder ved antænding gør 105.000 skade." 
+		GASPASSER_DESC 			= "Måleren starter tom og nulstilles, når du dør. Gør 150.000 skade for at fylde måleren. Eksploder ved antænding gør 105.000 skade." 
 		///
 		FIREAXE_NAME 			= "BRANDØKSE"
-		FIREAXE_DESC 			= " Standardvalg til forsvar og mobilitet."
+		FIREAXE_DESC 			= "Standardvalg til forsvar og mobilitet."
 		//	
 		AXTINGUISHER_NAME 		= "UDBRÆNDEREN"
-		AXTINGUISHER_DESC		= " Gør markant mere skade mod brændende spillere."
+		AXTINGUISHER_DESC		= "Gør markant mere skade mod brændende spillere."
 		//
 		HOMEWRECKER_NAME 		= "HUSVRAGEREN"
-		HOMEWRECKER_DESC 		= " Kan øjeblikkeligt ødelægge Engineer bygninger hvor som helst fra med ubegrænset nærkampsrækkevidde."
+		HOMEWRECKER_DESC 		= "Kan øjeblikkeligt ødelægge Engineer bygninger hvor som helst fra med ubegrænset nærkampsrækkevidde."
 		//
 		POWERJACK_NAME 			= "DONHAMMEREN"
-		POWERJACK_DESC 			= " Hurtige angreb og bevægelseshastighed. Påfører fjender blødning og antændelse ved træf og giver minikritiske slag ved drab."
+		POWERJACK_DESC 			= "Hurtige angreb og bevægelseshastighed. Påfører fjender blødning og antændelse ved træf og giver minikritiske slag ved drab."
 		//
 		BACKSCRATCHER_NAME 		= "RYGKRADSEREN"
-		BACKSCRATCHER_DESC 		= " Gør dødelig skade bagfra. Efter et drab går du i en rasende tilstand og opnår ekstra bevægelseshastighed, modstand og øget skade på alle angreb."
+		BACKSCRATCHER_DESC 		= "Gør dødelig skade bagfra. Efter et drab går du i en rasende tilstand og opnår ekstra bevægelseshastighed, modstand og øget skade på alle angreb."
 		// TODO: Update! " Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		VOLCANOFRAGMENT_NAME 	= "SKÆRPET VULKANFRAGMENT"
-		VOLCANOFRAGMENT_DESC 	= " Chance for at lamme fjender ved træf. Er også i stand til at brænde fjendtlige Pyros."
+		VOLCANOFRAGMENT_DESC 	= "Chance for at lamme fjender ved træf. Er også i stand til at brænde fjendtlige Pyros."
 		//
 		POSTALPUMMELER_NAME 	= "POSTPRYGLEREN"
-		POSTALPUMMELER_DESC 	= " Ved træf: Påfør Forvirring, som får fjender til at gå baglæns langs bombestien i kort tid. Hold Alt-Skyd nede, når du angriber, for at teleportere tilbage til spawn."
+		POSTALPUMMELER_DESC 	= "Ved træf: Påfør Forvirring, som får fjender til at gå baglæns langs bombestien i kort tid. Hold Alt-Skyd nede, når du angriber, for at teleportere tilbage til spawn."
 		//
 		MAUL_NAME 				= "MUGGERTEN"
-		MAUL_DESC 				= " Ved træf: Opsend fjender i luften med reduceret tyngdekraft."
+		MAUL_DESC 				= "Ved træf: Opsend fjender i luften med reduceret tyngdekraft."
 		// TODO: Update! " On hit: Cause an explosion, launching enemies into the air and igniting them."
 		//
 		THIRDDEGREE_NAME 		= "TREDJEGRADSFORBRÆNDINGEN"
-		THIRDDEGREE_DESC 		= " Bliv næsten immun over for ildskade, mens våbnet er udrustet, og opnå yderligere tung modstand mod alle langtrækkende angreb, mens det er aktivt."
+		THIRDDEGREE_DESC 		= "Bliv næsten immun over for ildskade, mens våbnet er udrustet, og opnå yderligere tung modstand mod alle langtrækkende angreb, mens det er aktivt."
 		//
 		LOLLICHOP_NAME 			= "SUKKERSLAGET"
-		LOLLICHOP_DESC 			= " Hver 10. drab giver en Meteor Storm-trylleformular (kræver Tryllebog)."
+		LOLLICHOP_DESC 			= "Hver 10. drab giver en Meteor Storm-trylleformular (kræver Tryllebog)."
 		//
 		NEONANNIHILATOR_NAME 	= "NEON ANNIHILATOREN"
-		NEONANNIHILATOR_DESC 	= " Din tyngdekræft er reduceret"
+		NEONANNIHILATOR_DESC 	= "Din tyngdekræft er reduceret"
 		//
 		HOTHAND_NAME 			= "VARME HÅND"
-		HOTHAND_DESC 			= " Ved træf: Opsend fjender i luften."
+		HOTHAND_DESC 			= "Ved træf: Opsend fjender i luften."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		GRENADELAUNCHER_NAME 	= "GRANATKASTER"
-		GRENADELAUNCHER_DESC	= " Standard valg for pålidelig skade"
+		GRENADELAUNCHER_DESC	= "Standard valg for pålidelig skade"
 		//
 		LOCHNLOAD_NAME 			= "LOCH-N-LADEREN"
-		LOCHNLOAD_DESC			= " Langsomme skud, men med høj skade over et stort område. Effektiv til kontrol af grupper."
+		LOCHNLOAD_DESC			= "Langsomme skud, men med høj skade over et stort område. Effektiv til kontrol af grupper."
 		//
 		ALIBABA_NAME			= "ALI BABAS SMÅ FUTTER"
-		ALIBABA_DESC			= " Øget skade ved skjold-bash. Giver immunitet over for faldskade."
+		ALIBABA_DESC			= "Øget skade ved skjold-bash. Giver immunitet over for faldskade."
 		//
 		BOOTLEGGER_NAME			= "SMUGLEREN"
-		BOOTLEGGER_DESC			= " Øget skade ved skjold-bash. Giver immunitet over for faldskade."
+		BOOTLEGGER_DESC			= "Øget skade ved skjold-bash. Giver immunitet over for faldskade."
 		//
 		LOOSECANNON_NAME		= "LØSE KANON"
-		LOOSECANNON_DESC		= " Læg op til 4 kanonkugler i magasinet, før de affyres på én gang i et lodret spredningsmønster. Kanonkuglerne eksploderer ved kontakt med jorden."
+		LOOSECANNON_DESC		= "Læg op til 4 kanonkugler i magasinet, før de affyres på én gang i et lodret spredningsmønster. Kanonkuglerne eksploderer ved kontakt med jorden."
 		//
 		IRONBOMBER_NAME			= "JERNKÆMPEN"
-		IRONBOMBER_DESC			= " Ignorerer fjendtlige modstandskræfter og giver et kortvarigt kritisk boost ved drab. Kræver ikke ammunition og har et uendeligt magasin. Projektiler kan hoppe af på vægge."
+		IRONBOMBER_DESC			= "Ignorerer fjendtlige modstandskræfter og giver et kortvarigt kritisk boost ved drab. Kræver ikke ammunition og har et uendeligt magasin. Projektiler kan hoppe af på vægge."
 		///
 		STICKYBOMB_NAME 		= "KLÆBEBOMBEKASTER"
-		STICKYBOMB_DESC 		= " Standard valg for pålidelig skade. Kan placerer op til 50 bomber."
+		STICKYBOMB_DESC 		= "Standard valg for pålidelig skade. Kan placerer op til 50 bomber."
 		//
 		SCOTTISHRES_NAME 		= "SKOTSKE MODSTAND"
-		SCOTTISHRES_DESC 		= " Bomben tager 5 sekunder om at blive armeret og fiser ud efter 10 sekunder, men kan gøre overvældende skade med god timing og en fuld opladning."
+		SCOTTISHRES_DESC 		= "Bomben tager 5 sekunder om at blive armeret og fiser ud efter 10 sekunder, men kan gøre overvældende skade med god timing og en fuld opladning."
 		//
 		STICKYJUMPER_NAME 		= "KLÆBEHOPPEREN"
-		STICKYJUMPER_DESC 		= " Skaber et deaktiveringsfelt, der lammer alle fjender, som rammes af impulsen. (Minibosser er immune over for lammelse)."
+		STICKYJUMPER_DESC 		= "Skaber et deaktiveringsfelt, der lammer alle fjender, som rammes af impulsen. (Minibosser er immune over for lammelse)."
 		//
 		CHARGINTARGE_NAME 		= "ANGREBSSKJOLDET"
-		CHARGINTARGE_DESC 		= " Tungt Løb – Overlegen skade ved skjold-bash."
+		CHARGINTARGE_DESC 		= "Tungt Løb – Overlegen skade ved skjold-bash."
 		//
 		SPLENDIDSCREEN_NAME 	= "PRAGTIGE SKÆRM"
-		SPLENDIDSCREEN_DESC 	= " Hurtig Løb – Overlegen hastighed for genopladning af skjold.."
+		SPLENDIDSCREEN_DESC 	= "Hurtig Løb – Overlegen hastighed for genopladning af skjold.."
 		//
 		TIDETURNER_NAME 		= "TIDEVANDSVENDEREN"
-		TIDETURNER_DESC 		= " Eksplosiv Løb - Overlegen bevægelseshastighed ved skjoldangreb."
+		TIDETURNER_DESC 		= "Eksplosiv Løb - Overlegen bevægelseshastighed ved skjoldangreb."
 		//
 		QUICKIEBOMB_NAME 		= "KORTE LUNTE"
-		QUICKIEBOMB_DESC 		= " Affyrer automatisk klæbebomber med en vanvittig hastighed og meget kort armeringstid. Giver mini-krits ved drab."
+		QUICKIEBOMB_DESC 		= "Affyrer automatisk klæbebomber med en vanvittig hastighed og meget kort armeringstid. Giver mini-krits ved drab."
 		///
 		BOTTLE_NAME 			= "FLASKE"
-		BOTTLE_DESC 			= " Standard valg for forsvar og mobilitet."
+		BOTTLE_DESC 			= "Standard valg for forsvar og mobilitet."
 		//
 		EYELANDER_NAME 			= "HØJLANDSKLINGEN"
-		EYELANDER_DESC 			= " Høj skade med hurtige angreb, der giver krits og mini-krits ved drab, men kan ikke bruges som hybrid-knight."
+		EYELANDER_DESC 			= "Høj skade med hurtige angreb, der giver krits og mini-krits ved drab, men kan ikke bruges som hybrid-knight."
 		//
 		SKULLCUTTER_NAME 		= "SKOTTENS KRANIEKLØVER"
-		SKULLCUTTER_DESC 		= " I stand til at skære igennem fjendens ÜberLadning og forstyrre Medi-Gevær-funktioner. Kan desuden give øget skade på fjender af samme klasse som dig selv."
+		SKULLCUTTER_DESC 		= "I stand til at skære igennem fjendens ÜberLadning og forstyrre Medi-Gevær-funktioner. Kan desuden give øget skade på fjender af samme klasse som dig selv."
 		//
 		CABER_NAME 				= "ULLAPOOL-PÆLEN"
-		CABER_DESC 				= " Skaden øges, i takt med at du bliver såret. Garanteret krits, hvis dit helbred er under 2%. Eksplosionen fra dette angreb vil dræbe dig."
+		CABER_DESC 				= "Skaden øges, i takt med at du bliver såret. Garanteret krits, hvis dit helbred er under 2%. Eksplosionen fra dette angreb vil dræbe dig."
 		// TODO: Update! " You are a Sentry Buster - Taunt to detonate!"
 		//
 		CLAIDHEAMHMOR_NAME 		= "CLAIDHEAMH MOR"
-		CLAIDHEAMHMOR_DESC 		= " For hver 10. drab modtager du en Monoculus-besværgelse (kræver tryllebog)."
+		CLAIDHEAMHMOR_DESC 		= "For hver 10. drab modtager du en Monoculus-besværgelse (kræver tryllebog)."
 		//
 		PERSIANPERSUADER_NAME 	= "PERSISKE OVERTALER"
-		PERSIANPERSUADER_DESC 	= " Når den parres med et skjold, giver den ubegrænset skjoldangreb. Skjoldangrebet kan ikke afbrydes af skarpe sving eller ved at støde ind i vægge, fjender eller andre forhindringer. Giver immunitet over for lammelse."
+		PERSIANPERSUADER_DESC 	= "Når den parres med et skjold, giver den ubegrænset skjoldangreb. Skjoldangrebet kan ikke afbrydes af skarpe sving eller ved at støde ind i vægge, fjender eller andre forhindringer. Giver immunitet over for lammelse."
 		//
 		NINEIRON_NAME 			= "NESSIE'S NIER-JERN"
-		NINEIRON_DESC 			= " Har en massiv angrebsbue, der er i stand til at ramme flere fjender på én gang i alle retninger. Gør dobbelt kritisk skade."
+		NINEIRON_DESC 			= "Har en massiv angrebsbue, der er i stand til at ramme flere fjender på én gang i alle retninger. Gør dobbelt kritisk skade."
 		//
 		SCOTTISHHANDSHAKE_NAME 	= "SKOTSKE HÅNDTRYK"
-		SCOTTISHHANDSHAKE_DESC 	= " Mens aktiv: Modstå 90% afstandsskade, bliv immun over for tilbageslag og øg dit maksimale helbred betydeligt. Du kan dog ikke genforsyne dig med ammunition og modtager mindre helbred fra pakker."
+		SCOTTISHHANDSHAKE_DESC 	= "Mens aktiv: Modstå 90% afstandsskade, bliv immun over for tilbageslag og øg dit maksimale helbred betydeligt. Du kan dog ikke genforsyne dig med ammunition og modtager mindre helbred fra pakker."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		MINIGUN_NAME 			= "RULLEKANON"
-		MINIGUN_DESC 			= " Standard valg for pålidelig skade. Giver et kortvarigt minikrit boost ved drab."
+		MINIGUN_DESC 			= "Standard valg for pålidelig skade. Giver et kortvarigt minikrit boost ved drab."
 		//
 		NATASCHA_NAME 			= "NATASCHA"
-		NATASCHA_DESC 			= " Sinker fjender ved hit og markerer dem til døden."
+		NATASCHA_DESC 			= "Sinker fjender ved hit og markerer dem til døden."
 		//
 		BRASSBEAST_NAME 		= "MESSINGBÆSTET"
-		BRASSBEAST_DESC 		= " Højere skade med meget langsom opspinningstid. Bevægelseshastigheden er voldsomt reduceret, når våbnet er i brug. I stand til at afbøje indkommende projektiler."
+		BRASSBEAST_DESC 		= "Højere skade med meget langsom opspinningstid. Bevægelseshastigheden er voldsomt reduceret, når våbnet er i brug. I stand til at afbøje indkommende projektiler."
 		//
 		TOMISLAV_NAME 			= "TOMISLAV"
-		TOMISLAV_DESC 			= " Opbygger 'Varme' ved at gøre skade. Alle statistikker på dette våben øges baseret på varmeniveauet. Våbnet begynder dog at køle ned, hvis der går for lang tid, uden at du gør skade."
+		TOMISLAV_DESC 			= "Opbygger 'Varme' ved at gøre skade. Alle statistikker på dette våben øges baseret på varmeniveauet. Våbnet begynder dog at køle ned, hvis der går for lang tid, uden at du gør skade."
 		//
 		HUOHEATER_NAME 			= "HUO-LONG HEDER"
-		HUOHEATER_DESC 			= " Affyrer energistråler, der antænder fjender ved træf."
+		HUOHEATER_DESC 			= "Affyrer energistråler, der antænder fjender ved træf."
 		//
 		GENUINEHUOHEATER_NAME 	= "ÆGTE HUO-LONG HEDER"
-		GENUINEHUOHEATER_DESC 	= " Affyrer raketter. Garanteret krits mod brændende fjender."
+		GENUINEHUOHEATER_DESC 	= "Affyrer raketter. Garanteret krits mod brændende fjender."
 		///
 		SHOTGUN_HVY_NAME 		= "HAGLGEVÆR - HEAVY"
-		SHOTGUN_HVY_DESC 		= " Enkelt skud med høj skade, der giver 8 sekunders crits ved drab."
+		SHOTGUN_HVY_DESC 		= "Enkelt skud med høj skade, der giver 8 sekunders crits ved drab."
 		//
 		SANDVICH_NAME 			= "SANDVICHEN"
-		SANDVICH_DESC 			= " Gendanner op til 150.000 helbred. Enhver skade modtaget, mens denne genstand er aktiv, er dødelig."
+		SANDVICH_DESC 			= "Gendanner op til 150.000 helbred. Enhver skade modtaget, mens denne genstand er aktiv, er dødelig."
 		// TODO: Update! " Consume to gain Concheror buff for 30 seconds."
 		//
 		DALOKOHSBAR_NAME 		= "DALOKOHS BAR"
-		DALOKOHSBAR_DESC 		= " Gendanner op til 20.000 helbred. Hvis den bruges, mens du har under 350 helbred, får du en stor overheal. Øger passivt mængden af skade, du modtager, men giver en chance for selv-ÜberLadning, når du tager skade."
+		DALOKOHSBAR_DESC 		= "Gendanner op til 20.000 helbred. Hvis den bruges, mens du har under 350 helbred, får du en stor overheal. Øger passivt mængden af skade, du modtager, men giver en chance for selv-ÜberLadning, når du tager skade."
 		// TODO: Update! " Consume to gain increased move speed, weapon switch speed and faster minigun spinup time for 30 seconds."
 		//
 		BUFFALOSTEAK_NAME 		= "BØFFELBØF-SANDVICHEN"
-		BUFFALOSTEAK_DESC 		= " Giver passiv immunitet over for kritiske slag."
+		BUFFALOSTEAK_DESC 		= "Giver passiv immunitet over for kritiske slag."
 		// TODO: Update! " Consume to gain Battalion's Backup buff and backstab immunity for 30 seconds."
 		//
 		FAMILYBUSINESS_NAME 	= "FAMILIEFORRETNINGEN"
-		FAMILYBUSINESS_DESC 	= " Ubegrænset ammunition. Angrebshastigheden fordobles, mens du modtager en helbredende effekt. Giver et kortvarigt crit-boost og mini-crit-boost ved drab."
+		FAMILYBUSINESS_DESC 	= "Ubegrænset ammunition. Angrebshastigheden fordobles, mens du modtager en helbredende effekt. Giver et kortvarigt crit-boost og mini-crit-boost ved drab."
 		//
 		FISHCAKE_NAME 			= "FIKEFRIKADELLE"
-		FISHCAKE_DESC 			= " Kraftig modstand mod SKUD-skade, men mere sårbar over for ILD- og SPRÆNG-skade."
+		FISHCAKE_DESC 			= "Kraftig modstand mod SKUD-skade, men mere sårbar over for ILD- og SPRÆNG-skade."
 		// TODO: Update! " Consume to gain gravity reversal power for 30 seconds (Crouch to reverse gravity)."
 		//
 		SECONDBANANA_NAME 		= "ANDEN BANAN"
-		SECONDBANANA_DESC 		= " Kraftig modstand mod SPRÆNG-skade, men mere sårbar over for ILD- og SKUD-skade."
+		SECONDBANANA_DESC 		= "Kraftig modstand mod SPRÆNG-skade, men mere sårbar over for ILD- og SKUD-skade."
 		// TODO: Update! " Consume to gain explosive melee power for 30 seconds (You are restricted to melee for the duration)."
 		///
 		FISTS_NAME 				= "NÆVER"
-		FISTS_DESC 				= " Standardvalg til forsvar og mobilitet. Effektiv i kamp."
+		FISTS_DESC 				= "Standardvalg til forsvar og mobilitet. Effektiv i kamp."
 		//
 		KILLINGGLOVES_NAME 		= "KALININS GRUSOMME BOKSEHANDSKER"
-		KILLINGGLOVES_DESC 		= " Speciel evne: 'Mega-Knus' – Når den er tilgængelig, kan du trykke på din handlingsknap, mens du står på bomben, for øjeblikkeligt at sende den tilbage til start. Ellers modtager du en midlertidig buff til bevægelseshastighed, forsvar og krits."
+		KILLINGGLOVES_DESC 		= "Speciel evne: 'Mega-Knus' – Når den er tilgængelig, kan du trykke på din handlingsknap, mens du står på bomben, for øjeblikkeligt at sende den tilbage til start. Ellers modtager du en midlertidig buff til bevægelseshastighed, forsvar og krits."
 		//
 		GLOVESRUNNING_NAME 		= "GEVALDIGT RAPFODEDE UNIONSHANDSKER"
-		GLOVESRUNNING_DESC 		= " Giver passivt evnen til at folde en faldskærm ud. Mens den er aktiv, får du massivt øget hoppehøjde, skadesmodstand og helbredsregenerering."
+		GLOVESRUNNING_DESC 		= "Giver passivt evnen til at folde en faldskærm ud. Mens den er aktiv, får du massivt øget hoppehøjde, skadesmodstand og helbredsregenerering."
 		//
 		BREADBITE_NAME 			= "BRØDBIDDET"
-		BREADBITE_DESC 			= " Kritiske hits inficerer dit offer med Corrosion,en permanent debuff, der gør skade baseret på maksimalt helbred og får offeret til at eksplodere i en lille ætsende sky ved død, hvilket spreder effekten til andre fjender."
+		BREADBITE_DESC 			= "Kritiske hits inficerer dit offer med Corrosion,en permanent debuff, der gør skade baseret på maksimalt helbred og får offeret til at eksplodere i en lille ætsende sky ved død, hvilket spreder effekten til andre fjender."
 		//
 		WARRIRORSSPIRIT_NAME 	= "KRIGERENS ÅND"
-		WARRIRORSSPIRIT_DESC 	= " Venstreklik for at springe højt op i luften. Land på fjender for at give massiv stomp skade. Fjerner al primær og sekundær ammunition."
+		WARRIRORSSPIRIT_DESC 	= "Venstreklik for at springe højt op i luften. Land på fjender for at give massiv stomp skade. Fjerner al primær og sekundær ammunition."
 		// TODO: Update! " Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air. Active buff indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		FISTSOFSTEEL_NAME 		= "STÅLNÆVERNE"
-		FISTSOFSTEEL_DESC 		= " Bliv til en gigantisk Heavy-handske med 250.000 helbred. Du er immun over for skubbekræfter og kan gøre massiv skade. Fjerner al primær og sekundær ammunition. Du kan kun modtage helbredelse fra madkasse genstande."
+		FISTSOFSTEEL_DESC 		= "Bliv til en gigantisk Heavy-handske med 250.000 helbred. Du er immun over for skubbekræfter og kan gøre massiv skade. Fjerner al primær og sekundær ammunition. Du kan kun modtage helbredelse fra madkasse genstande."
 		// TODO: Update! " You are a Giant Heavy Gauntlet - Immune to push forces and able to hit multiple enemies at once for massive damage."
 		//
 		EVICTIONNOTICE_NAME 	= "UDSÆTTELSESVARSLET"
-		EVICTIONNOTICE_DESC 	= " Modtag en hurtig helbredende effekt ved drab."
+		EVICTIONNOTICE_DESC 	= "Modtag en hurtig helbredende effekt ved drab."
 		//
 		APOCOFISTS_NAME 		= "APOKO-NÆVERNE"
-		APOCOFISTS_DESC 		= " Slag skubber fjender væk"
+		APOCOFISTS_DESC 		= "Slag skubber fjender væk"
 		//
 		HOLIDAYPUNCH_NAME 		= "HELLIGDAGSSLAGET"
-		HOLIDAYPUNCH_DESC 		= " Mens den er aktiv, ignorerer alle fjender dig. Giver også immunitet over for lammelse. Dette våben kan dog ikke gøre skade."
+		HOLIDAYPUNCH_DESC 		= "Mens den er aktiv, ignorerer alle fjender dig. Giver også immunitet over for lammelse. Dette våben kan dog ikke gøre skade."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		SHOTGUN_ENGI_NAME		= "HAGLGEVÆR- ENGINEER"
-		SHOTGUN_ENGI_DESC 		= " Gør x4 skade til din Sentrys mål."
+		SHOTGUN_ENGI_DESC 		= "Gør x4 skade til din Sentrys mål."
 		//
 		FRONTIERJUSTICE_NAME 	= "PRÆRIENS HÆVN"
-		FRONTIERJUSTICE_DESC 	= " Sindssygt høj skudhastighed. Magasinstørrelsen svarer til det maksimale antal hævn-krits. Genlader hurtigere, mens du modtager en helbredende effekt."
+		FRONTIERJUSTICE_DESC 	= "Sindssygt høj skudhastighed. Magasinstørrelsen svarer til det maksimale antal hævn-krits. Genlader hurtigere, mens du modtager en helbredende effekt."
 		//
 		WIDOWMAKER_NAME 		= "ENKEMAGEREN"
-		WIDOWMAKER_DESC 		= " Brug 2.000 metal på at affyre et bredt skud, der skubber fjender væk."
+		WIDOWMAKER_DESC 		= "Brug 2.000 metal på at affyre et bredt skud, der skubber fjender væk."
 		//
 		POMSON_NAME 			= "POMSON 6000"
-		POMSON_DESC 			= " Påfør blødning, sæt ild til fjender og gør dem langsommere."
+		POMSON_DESC 			= "Påfør blødning, sæt ild til fjender og gør dem langsommere."
 		//
 		RESCUERANGER_NAME 		= "AFSTANDSREDDER"
-		RESCUERANGER_DESC		= " Bruger 20 metal pr. skud, men skal aldrig genlades og øger maksimal metal med 1.000."
+		RESCUERANGER_DESC		= "Bruger 20 metal pr. skud, men skal aldrig genlades og øger maksimal metal med 1.000."
 		///
 		WRANGLER_NAME 			= "FJERNBETJENEREN"
-		WRANGLER_DESC 			= " Mens aktiv: Øget Sentry-skade og dobbelt rækkevidde for Dispensere."
+		WRANGLER_DESC 			= "Mens aktiv: Øget Sentry-skade og dobbelt rækkevidde for Dispensere."
 		//
 		SHORTCIRCUIT_NAME 		= "KORTSLUTNINGEN"
-		SHORTCIRCUIT_DESC 		= " For hver 10. drab modtager du en Lightning Ball spell-ladning (kræver Tryllebog)."
+		SHORTCIRCUIT_DESC 		= "For hver 10. drab modtager du en Lightning Ball spell-ladning (kræver Tryllebog)."
 		///
 		WRENCH_NAME 			= "SKRUENØGLE"
-		WRENCH_DESC 			= " Standardvalg for pålidelig skade."
+		WRENCH_DESC 			= "Standardvalg for pålidelig skade."
 		//
 		GUNSLINGER_NAME 		= "ROPROTESEN"
-		GUNSLINGER_DESC	 		= " Kan bygge en sekundær Sentry. En tredobbelt slag-kombination kan henrette små fjender og gør massiv skade på giganter."
+		GUNSLINGER_DESC	 		= "Kan bygge en sekundær Sentry. En tredobbelt slag-kombination kan henrette små fjender og gør massiv skade på giganter."
 		//
 		SOUTHERNHOS_NAME 		= "SYDENS GÆSTFRIHED"
-		SOUTHERNHOS_DESC 		= " Erstatter den normale Sentry med en Flamme Sentry. Kort rækkevidde, men høj skade."
+		SOUTHERNHOS_DESC 		= "Erstatter den normale Sentry med en Flamme Sentry. Kort rækkevidde, men høj skade."
 		//
 		JAG_NAME 				= "JAGUAREN"
-		JAG_DESC 				= " Din Sentry har uendelig rækkevidde."
+		JAG_DESC 				= "Din Sentry har uendelig rækkevidde."
 		//
 		EUREKAEFFECT_NAME 		= "EUREKA-EFFEKTEN"
-		EUREKAEFFECT_DESC 		= " Mens du bærer din Sentry Gun, kan du trykke på 'Genlad'-tasten for at placere den på en hvilken som helst væg eller loft inden for rækkevidde."
+		EUREKAEFFECT_DESC 		= "Mens du bærer din Sentry Gun, kan du trykke på 'Genlad'-tasten for at placere den på en hvilken som helst væg eller loft inden for rækkevidde."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		SYRINGEGUN_NAME			= "INJEKTIONSSPRØJTEPISTOL"
-		SYRINGEGUN_DESC			= " Få 0.5% ÜberLadning ved træffer."
+		SYRINGEGUN_DESC			= "Få 0.5% ÜberLadning ved træffer."
 		//
 		BLUTSAUGER_NAME			= "BLUTSAUGER"
-		BLUTSAUGER_DESC			= " Kræver og forbruger 100 % Ubercharge for at omprogrammere en robot til midlertidigt at kæmpe for dit hold, før den selvdestruerer. Alt-Skyd: Afbryd manuelt omprogrammeringen af alle berørte robotter."
+		BLUTSAUGER_DESC			= "Kræver og forbruger 100 % Ubercharge for at omprogrammere en robot til midlertidigt at kæmpe for dit hold, før den selvdestruerer. Alt-Skyd: Afbryd manuelt omprogrammeringen af alle berørte robotter."
 		//
 		CRUSADERSCROSSBOW_NAME	= "KORSRIDDERENS ARMBRØST"
-		CRUSADERSCROSSBOW_DESC	= " Få 0,25 % UberLadning ved træffer, påfør blødning og modtag yderligere 0,5 % UberLadning pr. tick af blødningsskade."
+		CRUSADERSCROSSBOW_DESC	= "Få 0,25 % UberLadning ved træffer, påfør blødning og modtag yderligere 0,5 % UberLadning pr. tick af blødningsskade."
 		//
 		OVERDOSE_NAME 			= "OVERDOSEN"
-		OVERDOSE_DESC 			= " Kræver og forbruger 50 % UberLadning for at sende en impuls, der deaktiverer alle små fjender i nærheden i op til 15 sekunder."
+		OVERDOSE_DESC 			= "Kræver og forbruger 50 % UberLadning for at sende en impuls, der deaktiverer alle små fjender i nærheden i op til 15 sekunder."
 		// TODO: Update! " Requires and consumes 50% Ubercharge to launch an EMP mortar, causing nearby enemies to be unable to move or attack for a short time."
 		///
 		MEDIGUN_NAME			= "MEDI-GEVÆR"
-		MEDIGUN_DESC			= " Maksimumgrænsen for Overheal er øget til x10 af patientens maksimale helbred. Brug et langvarigt niveau 1 Projektilskjold."
+		MEDIGUN_DESC			= "Maksimumgrænsen for Overheal er øget til x10 af patientens maksimale helbred. Brug et langvarigt niveau 1 Projektilskjold."
 		// TODO: Update! " Overheal cap raised to x10 the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
 		//
 		KRITZKRIEG_NAME			= "KRITZKRIEG"
-		KRITZKRIEG_DESC			= " I stand til at dræne helbred fra fjender, hvilket giver selv-heling og opbygger Uber."
+		KRITZKRIEG_DESC			= "I stand til at dræne helbred fra fjender, hvilket giver selv-heling og opbygger Uber."
 		// TODO: Update! " Able to drain health from enemies, granting self-healing and building Uber. Ubercharge grants a boost to all damage output."
 		//
 		QUICKFIX_NAME			= "HURTIGE FIKS"
-		QUICKFIX_DESC			= " Meget hurtig helbredelse med et niveau 2 Projektilskjold. I stand til at opbygge Uber fra skjoldets kontaktskade."
+		QUICKFIX_DESC			= "Meget hurtig helbredelse med et niveau 2 Projektilskjold. I stand til at opbygge Uber fra skjoldets kontaktskade."
 		// TODO: Update! " Very fast healing with a level 2 Projectile Shield. Able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
 		//
 		VACCINATOR_NAME			= "VACCINATOR"
-		VACCINATOR_DESC			= " Aktiv helbredelse giver dig og patienten 100 % modstand mod basisskade fra den valgte skadetype. UberLadning giver fuld immunitet over for den valgte skadetype i 30 sekunder."
+		VACCINATOR_DESC			= "Aktiv helbredelse giver dig og patienten 100 % modstand mod basisskade fra den valgte skadetype. UberLadning giver fuld immunitet over for den valgte skadetype i 30 sekunder."
 		// TODO: Update! " Active healing grants you and the patient increased mobility and 100% resistance to base damage of the selected damage type. Ubercharge grants full immunity to the selected damage type for 30 seconds."
 		///
 		BONESAW_NAME 			= "KNOGLESAV"
-		BONESAW_DESC			= " Standard valgmulighed for forsvar og mobilitet. Modtag 10 % Uber ved hit."
+		BONESAW_DESC			= "Standard valgmulighed for forsvar og mobilitet. Modtag 10 % Uber ved hit."
 		//
 		UBERSAW_NAME 			= "ÜBERSAVEN"
-		UBERSAW_DESC			= " Påfør blødning ved hit. Modtag 2 % Über ved hit."
+		UBERSAW_DESC			= "Påfør blødning ved hit. Modtag 2 % Über ved hit."
 		//
 		VITASAW_NAME 			= "VITA-SAVEN"
-		VITASAW_DESC			= " Modtag en Overheal spell-ladning ved hit (kræver Tryllebog). Modtag 5 % Uber ved hit."
+		VITASAW_DESC			= "Modtag en Overheal spell-ladning ved hit (kræver Tryllebog). Modtag 5 % Uber ved hit."
 		//
 		AMPUTATOR_NAME 			= "AMPUTØREN"
-		AMPUTATOR_DESC			= " Ved træf: Dit Medi-gevær bliver supercharged og får midlertidigt øget helbredelsesrate, Über-rate og rækkevidde. Drab på en fjende giver en stærkere version af denne effekt."
+		AMPUTATOR_DESC			= "Ved træf: Dit Medi-gevær bliver supercharged og får midlertidigt øget helbredelsesrate, Über-rate og rækkevidde. Drab på en fjende giver en stærkere version af denne effekt."
 		//
 		SOLEMNVOW_NAME 			= "HØJTIDELIGE LØFTE"
-		SOLEMNVOW_DESC			= " Uendelig rækkevidde, rammer alle fjender forbundet via Medi-gevær stråler og gør x200 skade på Medic robotter. Modtag 5 % Über for hver fjende, der rammes."
+		SOLEMNVOW_DESC			= "Uendelig rækkevidde, rammer alle fjender forbundet via Medi-gevær stråler og gør x200 skade på Medic robotter. Modtag 5 % Über for hver fjende, der rammes."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		SNIPERRIFLE_NAME 		= "SNIGSKYTTERIFFEL"
-		SNIPERRIFLE_DESC 		= " Fuldt opladet hovedskud gør 450.000 i skade."
+		SNIPERRIFLE_DESC 		= "Fuldt opladet hovedskud gør 450.000 i skade."
 		//
 		MACHINA_NAME 			= "MACHINA"
-		MACHINA_DESC 			= " Meget langsom at lade op, men kan flænse Tanks ved fuld opladning. Drab på fjender fylder en raserimåler, der giver et 1-sekunds kritisk boost. Kombiner det kritiske boost med en fuld opladning for øjeblikkeligt at destruere de fleste Tanks, du møder."
+		MACHINA_DESC 			= "Meget langsom at lade op, men kan flænse Tanks ved fuld opladning. Drab på fjender fylder en raserimåler, der giver et 1-sekunds kritisk boost. Kombiner det kritiske boost med en fuld opladning for øjeblikkeligt at destruere de fleste Tanks, du møder."
 		// TODO: Update! " Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Gaints and Tanks."
 		//
 		HITMANSHEATMAKER_NAME 	= "SNIGMORDERENS SAGSLUTTER"
-		HITMANSHEATMAKER_DESC 	= " Hurtigskydende uden at gå ud af sigtet. Ingen skade ved kropsskud."
+		HITMANSHEATMAKER_DESC 	= "Hurtigskydende uden at gå ud af sigtet. Ingen skade ved kropsskud."
 		//
 		AWPERHAND_NAME 			= "AWPER HAND"
-		AWPERHAND_DESC 			= " Affyr eksplosive projektiler og generér raseri ved drab. Ved 100 % raseri kan du trykke på 'genlad' for at få øget maksimalt helbred og helbredsregenerering. Riflen lader kun op, når der er fjender i dit sigte."
+		AWPERHAND_DESC 			= "Affyr eksplosive projektiler og generér raseri ved drab. Ved 100 % raseri kan du trykke på 'genlad' for at få øget maksimalt helbred og helbredsregenerering. Riflen lader kun op, når der er fjender i dit sigte."
 		//
 		HUNTSMAN_NAME 			= "JÆGEREN"
-		HUNTSMAN_DESC 			= " Affyr 5 pile på én gang. Gør massiv brandskade, hvis en Pyro antænder din pil."
+		HUNTSMAN_DESC 			= "Affyr 5 pile på én gang. Gør massiv brandskade, hvis en Pyro antænder din pil."
 		//
 		SYDNEYSLEEPER_NAME 		= "SYDNEY-SOVEREN"
-		SYDNEYSLEEPER_DESC 		= " Affyr en speciel pil, der lammer bevægelsen hos ikke-giganter og gør fjender ude af stand til at modtage heling fra Medic robotter."
+		SYDNEYSLEEPER_DESC 		= "Affyr en speciel pil, der lammer bevægelsen hos ikke-giganter og gør fjender ude af stand til at modtage heling fra Medic robotter."
 		//
 		BAZAARBARGAIN_NAME 		= "RØVERKØBET"
-		BAZAARBARGAIN_DESC 		= " Drab på fjender af samme klasse i træk øger din skudrate og kan stackes op til 3 gange. Drab på en anden klasse nulstiller din combo."
+		BAZAARBARGAIN_DESC 		= "Drab på fjender af samme klasse i træk øger din skudrate og kan stackes op til 3 gange. Drab på en anden klasse nulstiller din combo."
 		//
 		FORTIFIEDCOMPOUND_NAME 	= "SAMMENSATTE BEFÆSTNING"
-		FORTIFIEDCOMPOUND_DESC 	= " Reduceret skade i forhold til Jægeren, men skyder hurtigere, penetrerer fjender og gør kritiske slag på våde fjender."
+		FORTIFIEDCOMPOUND_DESC 	= "Reduceret skade i forhold til Jægeren, men skyder hurtigere, penetrerer fjender og gør kritiske slag på våde fjender."
 		//
 		CLASSIC_NAME 			= "KLASSIKEREN"
-		CLASSIC_DESC 			= " Affyr så hurtigt som du kan trykke på aftrækkeren, eller oplad et enkelt skud med voldsom Eksplosivt hovedskud-kraft, der udraderer alle ikke-gigantiske robotter i området."
+		CLASSIC_DESC 			= "Affyr så hurtigt som du kan trykke på aftrækkeren, eller oplad et enkelt skud med voldsom Eksplosivt hovedskud-kraft, der udraderer alle ikke-gigantiske robotter i området."
 		///
 		SMG_NAME 				= "MASKINPISTOL"
-		SMG_DESC 				= " I stand til at gøre hovedskud for betydeligt øget skade. Alt-Skyd: Zoom ind og få 100 % nøjagtighed på bekostning af halveret skudrate."
+		SMG_DESC 				= "I stand til at gøre hovedskud for betydeligt øget skade. Alt-Skyd: Zoom ind og få 100 % nøjagtighed på bekostning af halveret skudrate."
 		//
 		RAZORBACK_NAME 			= "STIKSKJOLDET"
-		RAZORBACK_DESC 			= " Meget hurtig genopladning og påfører Jarate på din angriber."
+		RAZORBACK_DESC 			= "Meget hurtig genopladning og påfører Jarate på din angriber."
 		//
 		JARATE_NAME 			= "JARATE"
-		JARATE_DESC 			= " Øjeblikkelig genopladning, sænker fjendens hastighed."
+		JARATE_DESC 			= "Øjeblikkelig genopladning, sænker fjendens hastighed."
 		//
 		DARWIN_NAME 			= "DARWIN'S FARESKJOLD"
-		DARWIN_DESC 			= " Næsten immun over for ILD-skade, men tager 50 % mere skade fra SKUD og SPRÆNG."
+		DARWIN_DESC 			= "Næsten immun over for ILD-skade, men tager 50 % mere skade fra SKUD og SPRÆNG."
 		//
 		COZYCAMPER_NAME 		= "BEKVEMME CAMPIST"
-		COZYCAMPER_DESC 		= " Mindre stigning i bevægelseshastighed, maksimalt helbred og helbredsregenerering. Immun over for efterforbrænding."
+		COZYCAMPER_DESC 		= "Mindre stigning i bevægelseshastighed, maksimalt helbred og helbredsregenerering. Immun over for efterforbrænding."
 		//
 		CLEANERSCARBINE_NAME 	= "KRYBSKYTTENS KARABIN"
-		CLEANERSCARBINE_DESC 	= " Mini-kritisk boost varer i 30 sekunder."
+		CLEANERSCARBINE_DESC 	= "Mini-kritisk boost varer i 30 sekunder."
 		//
 		BEAUTYMARK_NAME 		= "SELVBEVIDSTE SKØNHEDSPLET"
-		BEAUTYMARK_DESC 		= " Lad hellig helvedesild regne ned med flammende pile. Alt-Skyd: Kast en klynge af flammende pile på én gang."
+		BEAUTYMARK_DESC 		= "Lad hellig helvedesild regne ned med flammende pile. Alt-Skyd: Kast en klynge af flammende pile på én gang."
 		///
 		KUKRI_NAME 				= "KUKRI"
-		KUKRI_DESC 				= " Standardvalg for forsvar og mobilitet."
+		KUKRI_DESC 				= "Standardvalg for forsvar og mobilitet."
 		//
 		TRIBALMANSSHIV_NAME 	= "STAMMEMANDENS MACHETE"
-		TRIBALMANSSHIV_DESC 	= " Utility Genstand - Du er ikke påvirket af tyngdekraften og kan flyve frit."
+		TRIBALMANSSHIV_DESC 	= "Utility Genstand - Du er ikke påvirket af tyngdekraften og kan flyve frit."
 		//
 		BUSHWACKA_NAME 			= "LØVBASKEREN"
-		BUSHWACKA_DESC 			= " Uendelig rækkevidde med nærkampsvåben og garanterede kritiske slag mod brændende fjender."
+		BUSHWACKA_DESC 			= "Uendelig rækkevidde med nærkampsvåben og garanterede kritiske slag mod brændende fjender."
 		//
 		SHAHANSHAH_NAME 		= "SHAHANSHAH"
-		SHAHANSHAH_DESC 		= " Venstreklik for at sende dig selv flyvende opad, hvilket er godt til at nå høje steder. Du er desuden immun over for faldskade."
+		SHAHANSHAH_DESC 		= "Venstreklik for at sende dig selv flyvende opad, hvilket er godt til at nå høje steder. Du er desuden immun over for faldskade."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		REVOLVER_NAME 			= "REVOLVER"
-		REVOLVER_DESC 			= " Ved træf: Påfør flere debuffs, få fjender til at tage øget skade i en kort periode, tøm fjendtlige Medic robotters ÜberLadning og tving Spy robotter ud af deres forklædning. Kan lamme fjender i luften."
+		REVOLVER_DESC 			= "Ved træf: Påfør flere debuffs, få fjender til at tage øget skade i en kort periode, tøm fjendtlige Medic robotters ÜberLadning og tving Spy robotter ud af deres forklædning. Kan lamme fjender i luften."
 		//
 		AMBASSADOR_NAME 		= "AMBASSADØREN"
-		AMBASSADOR_DESC 		= " Gør massiv hovedskuds-skade. Skaden fordobles, hvis du ikke er forklædt."
+		AMBASSADOR_DESC 		= "Gør massiv hovedskuds-skade. Skaden fordobles, hvis du ikke er forklædt."
 		//
 		LETRANGER_NAME 			= "L'ETRANGER"
-		LETRANGER_DESC 			= " I stand til at henrette enhver ikke-gigant med et enkelt skud. Gør og ingen skade på giganter eller tanks."
+		LETRANGER_DESC 			= "I stand til at henrette enhver ikke-gigant med et enkelt skud. Gør og ingen skade på giganter eller tanks."
 		// TODO: Update! " Able to execute any non-giant in a single shot. Deals 2% damage to Giants, zero damage to Tanks."
 		//
 		ENFORCER_NAME 			= "HÅNDHÆVEREN"
-		ENFORCER_DESC 			= " Ignorerer skadesmodstand og gemmer et kritisk slag for hvert rygstik eller hver bygning, der ødelægges med en Sapper."
+		ENFORCER_DESC 			= "Ignorerer skadesmodstand og gemmer et kritisk slag for hvert rygstik eller hver bygning, der ødelægges med en Sapper."
 		//
 		DIAMONDBACK_NAME 		= "TILBAGELÅNET"
-		DIAMONDBACK_DESC 		= " Skaber et sort hul, der trækker fjender til sig."
+		DIAMONDBACK_DESC 		= "Skaber et sort hul, der trækker fjender til sig."
 		///
 		SAPPER_NAME 			= "SAPPER"
-		SAPPER_DESC 			= " Maksimal lammelsesradius og varighed. Hurtig genopladning."
+		SAPPER_DESC 			= "Maksimal lammelsesradius og varighed. Hurtig genopladning."
 		//
 		REDTAPE_NAME 			= "BUREAUKRATIOPTAGEREN"
-		REDTAPE_DESC 			= " Ødelægger Engineer bygninger øjeblikkeligt, men kan kun placere en sapper på én fjende ad gangen."
+		REDTAPE_DESC 			= "Ødelægger Engineer bygninger øjeblikkeligt, men kan kun placere en sapper på én fjende ad gangen."
 		///
 		KNIFE_NAME 				= "KNIV"
-		KNIFE_DESC 				= " Mens den er aktiv, dræner kniven dit helbred, men giver immunitet over for AL skade. Drab genopretter helbredet."
+		KNIFE_DESC 				= "Mens den er aktiv, dræner kniven dit helbred, men giver immunitet over for AL skade. Drab genopretter helbredet."
 		//
 		YOURETERNALREWARD_NAME 	= "DIN EVIGE BELØNNING"
-		YOURETERNALREWARD_DESC 	= " Skaden øges, i takt med at du bliver såret, og gør kritiske skade, når dit helbred er under 10%, men kun ved stik forfra. Modstå 90% skade."
+		YOURETERNALREWARD_DESC 	= "Skaden øges, i takt med at du bliver såret, og gør kritiske skade, når dit helbred er under 10%, men kun ved stik forfra. Modstå 90% skade."
 		// TODO: Update! " Extremely high backstab damage, able to instakill most Giants. However each attack has a high chance to miss. Grants a Teleport spell charge on kill (Requires Spellbook)."
 		//
 		KUNAI_NAME 				= "KYNIKERENS KUNAI"
-		KUNAI_DESC 				= " Uendelig rækkevidde med nærkampsvåben. Rygstik udløser en eksplosion, der giver ekstra skade til mål i nærheden."
+		KUNAI_DESC 				= "Uendelig rækkevidde med nærkampsvåben. Rygstik udløser en eksplosion, der giver ekstra skade til mål i nærheden."
 		//
 		BIGEARNER_NAME 			= "STORE INDTJENER"
-		BIGEARNER_DESC 			= " Du har en enorm mængde helbred, og sving, der 'misser', får dig til at hele hurtigt, men du modtager friendly fire fra dine holdkammerater."
+		BIGEARNER_DESC 			= "Du har en enorm mængde helbred, og sving, der 'misser', får dig til at hele hurtigt, men du modtager friendly fire fra dine holdkammerater."
 		// TODO: Update! " You have a massive amount of health and 'missed' swings cause you to heal. Gain a short burst of massively increased heal rate on kill (which can also build overheal). Cannot heal from any other sources."
 		//
 		WANGAPRICK_NAME 		= "VOODOO-PRIKKET"
-		WANGAPRICK_DESC 		= " Drab på en fjende får dig til øjeblikkeligt at blive usynlig i et par sekunder. Du kan angribe fjender, mens du er i denne usynlige tilstand, og lænke drab sammen for at forblive usynlig. Ingen forklædning."
+		WANGAPRICK_DESC 		= "Drab på en fjende får dig til øjeblikkeligt at blive usynlig i et par sekunder. Du kan angribe fjender, mens du er i denne usynlige tilstand, og lænke drab sammen for at forblive usynlig. Ingen forklædning."
 		// TODO: Update! " Killing an enemy causes you to immediately enter stealth for a few seconds, however you cannot disguise. Grants a Cloak spell charge on kill (Requires Spellbook)."
 		//
 		SHARPDRESSER_NAME 		= "SKARPE PÅKLÆDER"
-		SHARPDRESSER_DESC 		= " Rygstik udløser en eksplosion, der giver ekstra skade til mål i nærheden."
+		SHARPDRESSER_DESC 		= "Rygstik udløser en eksplosion, der giver ekstra skade til mål i nærheden."
 		//
 		SPYCICLE_NAME 			= "KOLDE SKULDER"
-		SPYCICLE_DESC 			= " 'Missede' sving får dig til at springe op i luften for gratis 'surf-stabs', men du kan ikke forklæde dig. Gør massiv skade på giganter ved rygstik."
+		SPYCICLE_DESC 			= "'Missede' sving får dig til at springe op i luften for gratis 'surf-stabs', men du kan ikke forklæde dig. Gør massiv skade på giganter ved rygstik."
 		///
 		INVISWATCH_NAME 		= "USYNLIGHEDSUR"
-		INVISWATCH_DESC 		= " Uendelig usynlighed, +10 % hurtigere bevægelseshastighed.."
+		INVISWATCH_DESC 		= "Uendelig usynlighed, +10 % hurtigere bevægelseshastighed.."
 		//
 		DEADRINGER_NAME 		= "GENGANGEREN"
-		DEADRINGER_DESC 		= " Udløser et kort boost i bevægelseshastighed ved aktivering, som lader dig dashe i alle retninger. Indkommende skade reduceres med 80%, mens du dasher."
+		DEADRINGER_DESC 		= "Udløser et kort boost i bevægelseshastighed ved aktivering, som lader dig dashe i alle retninger. Indkommende skade reduceres med 80%, mens du dasher."
 		// TODO: Update! " Activate to gain super speed for several seconds. Invulnerable while active."
 		//
 		CLOAKANDDAGGER_NAME		= "STIKKERENS LOMMEUR"
-		CLOAKANDDAGGER_DESC		= " Øjeblikkelig syn- og usynlighed."
+		CLOAKANDDAGGER_DESC		= "Øjeblikkelig syn- og usynlighed."
 		// TODO: Update! " Activate to force enemies to ignore you. Able to attack while active."
 		// TODO: TRANSLATE THE BELOW
 		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
-		QUACKENBIRDT_DESC 		= " Activate to gain flight. Able to attack while active. Grants immunity to fall damage."
+		QUACKENBIRDT_DESC 		= "Activate to gain flight. Able to attack while active. Grants immunity to fall damage."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		FRYINGPAN_NAME 				= "STEGEPANDE"
-		FRYINGPAN_DESC 				= " Gør x30 skade til fjender af samme klasse som dig selv og få kritiske slag ved drab."
+		FRYINGPAN_DESC 				= "Gør x30 skade til fjender af samme klasse som dig selv og få kritiske slag ved drab."
 		//
 		SAXXY_NAME 					= "SAXXY"
-		SAXXY_DESC 					= " Gør x30 skade til fjender af samme klasse som dig selv og få kritiske slag ved drab."
+		SAXXY_DESC 					= "Gør x30 skade til fjender af samme klasse som dig selv og få kritiske slag ved drab."
 		//
 		MEMORYMAKER_NAME 			= "MINDESKABEREN"
-		MEMORYMAKER_DESC			= " Gør x30 skade til fjender af samme klasse som dig selv og få kritiske slag ved drab."
+		MEMORYMAKER_DESC			= "Gør x30 skade til fjender af samme klasse som dig selv og få kritiske slag ved drab."
 		//
 		CONOBJECTOR_NAME			= "MILITÆRNÆGTEREN"
-		CONOBJECTOR_DESC			= " For hver 10. drab modtager du en tilfældig trylleformular (Kræver Tryllebog)."
+		CONOBJECTOR_DESC			= "For hver 10. drab modtager du en tilfældig trylleformular (Kræver Tryllebog)."
 		//
 		FREEDOMSTAFF_NAME 			= "FRIHEDSSTAVEN"
-		FREEDOMSTAFF_DESC 			= " Lille chance for at undvige et angreb, når du tager skade, og blive ubered i 3 sekunder."
+		FREEDOMSTAFF_DESC 			= "Lille chance for at undvige et angreb, når du tager skade, og blive ubered i 3 sekunder."
 		//
 		BATOUTTAHELL_NAME 			= "BAT FRA HELVEDE"
-		BATOUTTAHELL_DESC 			= " Mens den er aktiv, er du usårlig over for al indkommende skade og genererer en enorm mængde overheal, men du er fuldstændig sårbar over for tilbageslag."
+		BATOUTTAHELL_DESC 			= "Mens den er aktiv, er du usårlig over for al indkommende skade og genererer en enorm mængde overheal, men du er fuldstændig sårbar over for tilbageslag."
 		//
 		HAMSHANK_NAME 				= "SKINKESKAFTET"
-		HAMSHANK_DESC 				= " Speciel evne: 'Vital Genopstandelse', når den er tilgængelig, skal du trykke på din handlingsknap for øjeblikkeligt at få 10x overheal og blive immun over for tilbageslag i 20 sekunder."
+		HAMSHANK_DESC 				= "Speciel evne: 'Vital Genopstandelse', når den er tilgængelig, skal du trykke på din handlingsknap for øjeblikkeligt at få 10x overheal og blive immun over for tilbageslag i 20 sekunder."
 		//
 		NECROSMASHER_NAME 			= "NEKROMANISK NAKKER"
-		NECROSMASHER_DESC 			= " Speciel evne: 'Trafikdrab' - Når den er tilgængelig, skal du trykke på din handlingsknap for at gå i Bumper Car-tilstand. Mens du er i Bumper Car-tilstand, er du usårlig, regenererer helbred og kan køre fjender ned."
+		NECROSMASHER_DESC 			= "Speciel evne: 'Trafikdrab' - Når den er tilgængelig, skal du trykke på din handlingsknap for at gå i Bumper Car-tilstand. Mens du er i Bumper Car-tilstand, er du usårlig, regenererer helbred og kan køre fjender ned."
 		//
 		CROSSINGGAURD_NAME 			= "CROSSING GUARD"
-		CROSSINGGAURD_DESC 			= " Få massiv modstand mod alle nærkampsangreb, herunder rygstik."
+		CROSSINGGAURD_DESC 			= "Få massiv modstand mod alle nærkampsangreb, herunder rygstik."
 		//
 		PRINNYMACHETE_NAME 			= "PRINNY-MACHETE"
-		PRINNYMACHETE_DESC 			= " Utility Genstand - Sving dette nærkampsvåben for at kaste dig fremad med høj hastighed. Giver immunitet over for faldskade."
+		PRINNYMACHETE_DESC 			= "Utility Genstand - Sving dette nærkampsvåben for at kaste dig fremad med høj hastighed. Giver immunitet over for faldskade."
 		//------------------------------------
 	}
 	spanish = {
 		IH_TRANSLATE_ITEM		= IH_color + "[%s]" + IH_text_color + "%s"
-		IH_INCLUDES				= IH_color_header + "[►]\x0826beffBB Tu equipamiento incluye..."
-		IH_DIS_MSG_2			= IH_disable_color + "Pon «/itemhelp 1» para desactivar estos mensajes durante una oleada. \nPon «/itemhelp 0» para desactivarlos en todo momento."
-		IH_DIS_MSG				= IH_disable_color + "Por «/itemhelp 0» para desactivar estos mensajes. \nPon «/itemhelp 2» para que se muestren siempre."
-		// TODO: Update!
-		/* 
-		IH_INCLUDES				= IH_color_header + "[►]\x0826beffAA Your loadout includes..."
-		IH_DIS_MSG_2			= IH_disable_color + "Type '/itemhelp 1' to disable item descriptions during a wave. \nType '/itemhelp 0' to disable them entirely."
-		IH_DIS_MSG				= IH_disable_color + "Type '/itemhelp 0' to disable item descriptions. \nType '/itemhelp 2' to always display them."
-		 */
+		IH_INCLUDES				= IH_color_header + "[►]\x0826beffAA Tu equipamiento incluye..."
+		IH_DIS_MSG_2			= IH_disable_color + "Pon '/itemhelp 1' para desactivar estos mensajes durante una oleada. \nPon '/itemhelp 0' para desactivarlos en todo momento."
+		IH_DIS_MSG				= IH_disable_color + "Type '/itemhelp 0' para desactivar estos mensajes. \nPon '/itemhelp 2' para que se muestren siempre."
 		IH_BAD_ARGS				= IH_color_header + "[Asistente de artículos]" + IH_error_color + " {Error}\x01 ¡Argumentos incorrectos!\n/itemhelp 2: Activar.\n/itemhelp 1: Activar solo en preparación.\n/itemhelp 0: Desactivar."
 		IH_OOB_ARG				= IH_color_header + "[Asistente de artículos]" + IH_error_color + " {Error}\x01 ¡Valor fuera de límites! : %s"
 		IH_HELP_MSG				= IH_color_header + "[Asistente de artículos]\x01 El asistente de artículos da descripciones para cada artículo de \x03Caos\x01!" 
@@ -4743,646 +4737,616 @@ if ("SetScriptVersion" in getroottable())
 		NO_MONEY				= "You can't afford this! (Cost: $%s, you have: $%s)" // Dont Translate this, my own project
 		REPROG_BOT_STRONG		= TF_TEAM_COLOR_REPROG_B+"%s\x01 resiste demasiado y no puede reprogramarse."
 		REPROG_BOT_NOT_SUIT		= TF_TEAM_COLOR_REPROG_B+"%s\x01 no vale para combatir y no puede reprogramarse."
-		REPROG_BOT_MICRO		= TF_TEAM_COLOR_REPROG_B+"%s\x01 is a Micro bot! Reprogramming Micro bots lobotomizes them!" // TODO:
+		REPROG_BOT_MICRO		= TF_TEAM_COLOR_REPROG_B+"%s\x01 es un Micro bot! Reprogramar Micro bots destroza sus circuitos!"
 		REPROG_BOT_LEAVE		= TF_TEAM_COLOR_SPEC+"%s ha muerto."
 		REPROG_BOT_MESSAGE 		= TF_TEAM_COLOR_RED+"%s\x01 ha reprogramado a "+TF_TEAM_COLOR_REPROG_B+"%s\x01."
 		//---------------------------------------------------------
 		CHECKPOINT_CREATED		= "\x077c8cc2Punto de control creado:\x078165cf [/%s]"
 		CHECKPOINT_WRONG_MAP	= CHECKPOINT_ERROR+"Ese punto de control no era para este mapa."
 		CHECKPOINT_WRONG_MISS	= CHECKPOINT_ERROR+"Ese punto de control no era para esta misión."
-		CHECKPOINT_CURRENT      = CHECKPOINT_ERROR+"Current wave already matches checkpoint." // TODO UPDATE TRANSLATION!
+		CHECKPOINT_CURRENT      = CHECKPOINT_ERROR+"La oleada actual está utilizando ese punto de control."
 		CHECKPOINT_RESTORE		= "\x0744CC44Resaturado en el último punto de control."
 		CHECKPOINT_RESTORE_HUD	= "Resaturado en el último punto de control."
 		//---------------------------------------------------------
 		SCATTERGUN_NAME 		= "RECORTADA"
-		SCATTERGUN_DESC 		= " Una opción estándar para un daño contundente. Extremadamente efectiva a quemarropa."
+		SCATTERGUN_DESC 		= "Una opción estándar para un daño contundente. Extremadamente efectiva a quemarropa."
 		//
 		FORCENATURE_NAME		= "DISPENSADORA DE CAÑA"
-		FORCENATURE_DESC		= " Con tanta fuerza que empuja al disparar. Hace algo menos de daño máximo que la Recortada."
+		FORCENATURE_DESC		= "Con tanta fuerza que empuja al disparar. Hace algo menos de daño máximo que la Recortada."
 		//
 		SHORTSTOP_NAME 			= "PARATENSECO"
-		SHORTSTOP_DESC 			= " Una velocidad de disparo frenética y críticos asegurados contra enemigos mojados, pero lenta de recargar."
+		SHORTSTOP_DESC 			= "Una velocidad de disparo frenética y críticos asegurados contra enemigos mojados, pero lenta de recargar."
 		//
 		SODAPOPPER_NAME 		= "REFRESCOPETA"
-		SODAPOPPER_DESC 		= " Mantén el botón de disparo para lanzar 4 ráfagas rápidas."
+		SODAPOPPER_DESC 		= "Mantén el botón de disparo para lanzar 4 ráfagas rápidas."
 		//
 		BABYFACEBLASTER_NAME	= "DEVASTADORA DEL IMBERBE"
-		BABYFACEBLASTER_DESC	= " Mantén el botón de disparo para cargar una ráfaga de hasta 200 tiros, destroza cualquier cosa a quemarropa. El retroceso es apabullante."
+		BABYFACEBLASTER_DESC	= "Mantén el botón de disparo para cargar una ráfaga de hasta 200 tiros, destroza cualquier cosa a quemarropa. El retroceso es apabullante."
 		//
 		BACKSCATTER_NAME		= "RETROESCOPETA"
-		BACKSCATTER_DESC		= " Críticos por la espalda. No necesita munición, su cargador es infinito."
+		BACKSCATTER_DESC		= "Críticos por la espalda. No necesita munición, su cargador es infinito."
 		///
 		PISTOL_NAME 			= "PISTOLA"
-		PISTOL_DESC 			= " Lanza cohetes en vez de balas. Muy eficaz para la movilidad."
+		PISTOL_DESC 			= "Lanza cohetes en vez de balas. Muy eficaz para la movilidad."
 		//
 		BONK_NAME 				= "¡BONK! LA BEBIDA SALVAVIDAS"
-		BONK_DESC 				= " Bebida radiactiva, da invulnerabilidad sin quitarte la habilidad de atacar."
+		BONK_DESC 				= "Bebida radiactiva, da invulnerabilidad sin quitarte la habilidad de atacar."
 		//
 		CRITACOLA_NAME 			= "CRITICOLA"
-		CRITACOLA_DESC 			= " Bebida radioactiva, da críticos durante un tiempo."
+		CRITACOLA_DESC 			= "Bebida radioactiva, da críticos durante un tiempo."
 		//
 		MADMILK_NAME 			= "LECHE LOCA"
-		MADMILK_DESC 			= " Los enemigos cubiertos de leche no se pueden mover."
+		MADMILK_DESC 			= "Los enemigos cubiertos de leche no se pueden mover."
 		//
 		WINGER_NAME 			= "AEROPISTOLA"
-		WINGER_DESC 			= " Olvídate de dar saltos mientras la empuñas. Lanza un único disparo cargado que siempre es crítico mientras estás en el aire. Este disparo además empuja al enemigo."
+		WINGER_DESC 			= "Olvídate de dar saltos mientras la empuñas. Lanza un único disparo cargado que siempre es crítico mientras estás en el aire. Este disparo además empuja al enemigo."
 		//
 		PRETTYBOYS_NAME 		= "PISTOLA DE BOLSILLO DEL GUAPERAS"
-		PRETTYBOYS_DESC 		= " Lanza cohetes que quitan vida segun los PS de la víctima. El daño aumenta cuando el objetivo pierde vida y la distancia no influye. Disparo secundario: Los misiles guiados hacen -20 % de daño."
+		PRETTYBOYS_DESC 		= "Lanza cohetes que quitan vida segun los PS de la víctima. El daño aumenta cuando el objetivo pierde vida y la distancia no influye. Disparo secundario: Los misiles guiados hacen -20 % de daño."
 		//
 		CLEAVER_NAME 			= "GUILLOTINA VOLADORA"
-		CLEAVER_DESC 			= " Flecha de Yondu: Invoca una flecha para que te ayude en la batalla. Disparo secundario: Modo diruptor, -75 % de daño."
+		CLEAVER_DESC 			= "Flecha de Yondu: Invoca una flecha para que te ayude en la batalla. Disparo secundario: Modo diruptor, -75 % de daño."
 		//
 		MATATEDMILK_NAME 		= "LECHE MUTADA"
-		MATATEDMILK_DESC 		= " Lanza frascos explosivos con leche a toda velocidad, causando daño a los enemigos. Disparo secundario: Lanza varios frascos a la vez."
+		MATATEDMILK_DESC 		= "Lanza frascos explosivos con leche a toda velocidad, causando daño a los enemigos. Disparo secundario: Lanza varios frascos a la vez."
 		///
 		BAT_NAME 				= "BATE"
-		BAT_DESC 				= " Da una probabilidad de ignorar la muerte y regresar a base con 1 PS."
+		BAT_DESC 				= "Da una probabilidad de ignorar la muerte y regresar a base con 1 PS."
 		//
 		SANDMAN_NAME			= "SOMNÍFERO"
-		SANDMAN_DESC 			= " Permite lanzar a toda velocidad bolas de béisbol con gran velocidad de recarga, causando daño a objetivos individuales."
+		SANDMAN_DESC 			= "Permite lanzar a toda velocidad bolas de béisbol con gran velocidad de recarga, causando daño a objetivos individuales."
 		//
 		HOLYMACKEREL_NAME		= "ARENQUE SAGRADO"
-		HOLYMACKEREL_DESC		= " Permite marcar de muerte a varios enemigos."
+		HOLYMACKEREL_DESC		= "Permite marcar de muerte a varios enemigos."
 		//
 		CANDYCANE_NAME 			= "BASTÓN DE CARAMELO"
-		CANDYCANE_DESC 			= " Artículo de utilidad: No tendrás gravedad y podrás volar libremente."
+		CANDYCANE_DESC 			= "Artículo de utilidad: No tendrás gravedad y podrás volar libremente."
 		//
 		BOSTONBASHSER_NAME 		= "MACHACADOR DE BOSTON"
-		BOSTONBASHSER_DESC 		= " A mayor riesgo, mejores recompensas. Mata de un golpe a todos los enemigos pequeños, otorgando 10 segundos de críticos. Golpea a ambos jugadores  conectados por un rayo de Pistola Médica. Si el portador falla un golpe, muere."
+		BOSTONBASHSER_DESC 		= "A mayor riesgo, mejores recompensas. Mata de un golpe a todos los enemigos pequeños, otorgando 10 segundos de críticos. Golpea a ambos jugadores  conectados por un rayo de Pistola Médica. Si el portador falla un golpe, muere."
 		//
 		SUNONASTICK_NAME		= "SOL-EN-UN-PALO"
-		SUNONASTICK_DESC		= " Puede aturdir u otorgar críticos durante unos segundos. Golpea a ambos jugadores  conectados por un rayo de Pistola Médica. Si el portador falla un golpe, se aturde."
+		SUNONASTICK_DESC		= "Puede aturdir u otorgar críticos durante unos segundos. Golpea a ambos jugadores  conectados por un rayo de Pistola Médica. Si el portador falla un golpe, se aturde."
 		//
 		FANOWAR_NAME 			= "ABANICO BÉLICO"
-		FANOWAR_DESC 			= " Artículo de utilidad: Sacude este abanico para darte velocidad adicional. Otorga inmunidad al daño por caída."
+		FANOWAR_DESC 			= "Artículo de utilidad: Sacude este abanico para darte velocidad adicional. Otorga inmunidad al daño por caída."
 		//
 		ATOMIZER_NAME 			= "ATOMIZADOR"
-		ATOMIZER_DESC 			= " No causa daño atacando de forma normal, pero al matar con la burla otorgará 3 minutos de críticos."
+		ATOMIZER_DESC 			= "No causa daño atacando de forma normal, pero al matar con la burla otorgará 3 minutos de críticos."
 		//
 		THREERUNEBLADE_NAME 	= "HOJA TRIRRÚNICA"
-		THREERUNEBLADE_DESC 	= " Al empuñarla, otorga una bonificación MASIVA de velocidad de movimiento y triple salto. Otorga inmunidad al daño por caída."
-		// TODO: Update! " While active, gain MASSIVE boost to move speed and ability to triple jump. Deals increased damage while airborne. Grants immunity to fall damage."
+		THREERUNEBLADE_DESC 	= "Al empuñarla, otorga triple salto y una bonificación MASIVA de velocidad de movimiento. Inflige más daño mientras estás en el aire. Otorga inmunidad al daño por caída."
 		//
 		UNARMEDCOMBAT_NAME 		= "ABRAZO DE LA MUERTE"
-		UNARMEDCOMBAT_DESC 		= " Cada 10 muertes, otorga un hechizo para generar esqueletos (requiere Libro de Hechizos)."
+		UNARMEDCOMBAT_DESC 		= "Cada 10 muertes, otorga un hechizo para generar esqueletos (requiere Libro de Hechizos)."
 		//
 		WRAPAASSASSIN_NAME 		= "ASESINO ENVUELTO"
-		WRAPAASSASSIN_DESC 		= " Permite atacar a los proyectiles para devolverlos. Otorga inmunidad al aturdimiento."
+		WRAPAASSASSIN_DESC 		= "Permite atacar a los proyectiles para devolverlos. Otorga inmunidad al aturdimiento."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		ROCKETLAUNCHER_NAME		= "LANZACOHETES"
-		ROCKETLAUNCHER_DESC		= " Una opción estándar para un daño contundente."
+		ROCKETLAUNCHER_DESC		= "Una opción estándar para un daño contundente."
 		//
 		DIRECTHIT_NAME			= "IMPACTO DIRECTO"
-		DIRECTHIT_DESC			= " Disparo secundario: Lanza a un enemigo pequeño al aire para causarle minicríticos fácilmente. Los proyectiles van levemente guiados."
+		DIRECTHIT_DESC			= "Disparo secundario: Lanza a un enemigo pequeño al aire para causarle minicríticos fácilmente. Los proyectiles van levemente guiados."
 		//
 		BLACKBOX_NAME			= "CAJA NEGRA"
-		BLACKBOX_DESC			= " Ralentiza enemigos y causa hemorragia. Esta arma causa daño x2 contra Soldier robot."
-		// TODO: Update! " Slow down enemies and inflict bleed."
+		BLACKBOX_DESC			= "Ralentiza enemigos y causa hemorragia."
 		//
 		ROCKETJUMPER_NAME		= "SALTACOHETES"
-		ROCKETJUMPER_DESC		= " Velocidad de disparo y recarga reducida, pero gran capacidad de daño y alcance de explosiones. Excelente para el control de masas."
+		ROCKETJUMPER_DESC		= "Velocidad de disparo y recarga reducida, pero gran capacidad de daño y alcance de explosiones. Excelente para el control de masas."
 		//
 		LIBERTYLAUNCHER_NAME	= "LIBERTADOR"
-		LIBERTYLAUNCHER_DESC	= " Dispara cohetes que van a muy poca velocidad en zonas amplias. Recarga muy lento y tiene poca munición. Esta arma dispara automáticamente al recargarse."
+		LIBERTYLAUNCHER_DESC	= "Dispara cohetes que van a muy poca velocidad en zonas amplias. Recarga muy lento y tiene poca munición. Esta arma dispara automáticamente al recargarse."
 		//
 		COWMANGLER_NAME			= "EXPRIMEVACAS 5000"
-		COWMANGLER_DESC			= " Inmoviliza a enemigos pequeños al impactar. Los disparos cargados inmovilizan durante más tiempo. Al mantener el disparo secundario se sorbecarga el arma, lanzando un multidisparo más inmovilizador."
+		COWMANGLER_DESC			= "Inmoviliza a enemigos pequeños al impactar. Los disparos cargados inmovilizan durante más tiempo. Al mantener el disparo secundario se sorbecarga el arma, lanzando un multidisparo más inmovilizador."
 		//
 		ORIGINAL_NAME			= "ORIGINAL"
-		ORIGINAL_DESC			= " Al mantener el botón de disparo se carga una ráfaga de 5 cohetes. Esta arma dispara automáticamente al recargarse."
+		ORIGINAL_DESC			= "Al mantener el botón de disparo se carga una ráfaga de 5 cohetes. Esta arma dispara automáticamente al recargarse."
 		//
 		BEGGARSBAZOOKA_NAME		= "BAZUCA DEL MENDIGO"
-		BEGGARSBAZOOKA_DESC		= " Al mantener el botón de disparo se lanza una ráfaga masiva de 100 proyectiles. Esta arma NO se sobrecarga."
+		BEGGARSBAZOOKA_DESC		= "Al mantener el botón de disparo se lanza una ráfaga masiva de 100 proyectiles. Esta arma NO se sobrecarga."
 		//
 		AIRSTRIKE_NAME			= "ATAQUE AÉREO"
-		AIRSTRIKE_DESC			= " Carga hasta 10 cohetes, que dispara a la vez formado un patrón. Estos proyectiles son guiados."
+		AIRSTRIKE_DESC			= "Carga hasta 10 cohetes, que dispara a la vez formado un patrón. Estos proyectiles son guiados."
 		///
 		SHOTGUN_SOLD_NAME 		= "ESCOPETA DEL SOLDIER" 
-		SHOTGUN_SOLD_DESC 		= " Gran velocidad de disparo y críticos al saltar con explosivos." 
+		SHOTGUN_SOLD_DESC 		= "Gran velocidad de disparo y críticos al saltar con explosivos." 
 		//
 		SHOTGUN_NAME 			= "ESCOPETA" 
-		SHOTGUN_DESC 			= " Una opción estándar para un daño contundente." 
+		SHOTGUN_DESC 			= "Una opción estándar para un daño contundente." 
 		//
 		BUFFBANNER_NAME 		= "ESTANDARTE DE ÁNIMO" 
-		BUFFBANNER_DESC 		= " Alcance ilimitado y gran aumento de duración." 
+		BUFFBANNER_DESC 		= "Alcance ilimitado y gran aumento de duración." 
 		//
 		GUNBOATS_NAME 			= "BOTAS BLINDADAS" 
-		GUNBOATS_DESC 			= " Permiten hacer el salto del conejo, conocido como «bunnyhop» con la tecla de saltar. Otorga inmunidad al daño por caída." 
-		// TODO: Update! " Enables bunnyhopping by holding 'jump' key. Grants immunity to fall damage. Hold Crouch key while airborne to reduce gravity." 
+		GUNBOATS_DESC 			= "Permiten hacer el salto del conejo, conocido como «bunnyhop», manteniendo la tecla de saltar. Otorga inmunidad al daño por caída. Mantén la tecla de agacharse en el aire para reducir la gravedad."
 		//
 		BATTALIONS_NAME 		= "REFUERZO DEL BATALLÓN" 
-		BATTALIONS_DESC 		= " Alcance ilimitado y gran aumento de duración." 
+		BATTALIONS_DESC 		= "Alcance ilimitado y gran aumento de duración." 
 		//
 		CONCHEROR_NAME 			= "CONCHEROR" 
-		CONCHEROR_DESC 			= " Alcance ilimitado y gran aumento de duración." 
+		CONCHEROR_DESC 			= "Alcance ilimitado y gran aumento de duración." 
 		//
 		RESERVESHOOTER_NAME 	= "TIRADOR DE RESERVA" 
-		RESERVESHOOTER_DESC 	= " Causa 10 000 de daño por disparo sin importar la distancia, con 3 segundos de minicríticos por víctima. Sin embargo, esta arma no puede recibir críticos. Mantén el disparo secundario para apuntar con ella." 
+		RESERVESHOOTER_DESC 	= "Causa 10 000 de daño por disparo sin importar la distancia, con 3 segundos de minicríticos por víctima. Sin embargo, esta arma no puede recibir críticos. Mantén el disparo secundario para apuntar con ella." 
 		//
 		BISON_NAME 				= "BISONTE JUSTICIERO" 
-		BISON_DESC 				= " Dispara un rayo continuo de daño penetrante con puntería automática." 
+		BISON_DESC 				= "Dispara un rayo continuo de daño penetrante con puntería automática." 
 		//
 		MANTREADS_NAME 			= "APLASTACABEZAS" 
-		MANTREADS_DESC 			= " Reduce mucho el retroceso recibido. Aumenta la velocidad de giro al estrafear por el aire. Aumenta el daño al caer sobre otro jugador." 
-		// TODO: Update! " Major reduction in knockback taken from damage. Stomp damage buffed and velocity-based. Gain a short critboost on kill."
+		MANTREADS_DESC 			= "Reduce mucho el retroceso recibido por daño. Inlfige más daño al caer sobre un enemigo, y aún más dependiendo de la velocidad. Otorga algunos segundos de críticos al matar."
 		//
 		BASEJUMPER_NAME 		= "SALTADOR B.A.S.E." 
-		BASEJUMPER_DESC 		= " Permite abrir y cerrar el paracaídas. Aumenta la resistencia al retroceso y daño de balas, reduciendo la vulnerabilidad en el aire." 
+		BASEJUMPER_DESC 		= "Permite abrir y cerrar el paracaídas. Aumenta la resistencia al retroceso y daño de balas, reduciendo la vulnerabilidad en el aire." 
 		//
 		PANICATTACK_NAME 		= "ATAQUE DE PÁNICO" 
-		PANICATTACK_DESC 		= " Para cuando se necesita un botiquín de emergencia. Restaura 10 000 PS al instante al impactar. Recibir daño empuñando esta arma, puede otorgar invlunerabilidad temporal." 
+		PANICATTACK_DESC 		= "Para cuando se necesita un botiquín de emergencia. Restaura 10 000 PS al instante al impactar. Recibir daño empuñando esta arma, puede otorgar invlunerabilidad temporal." 
 		///
 		SHOVEL_NAME 			= "PALA"
-		SHOVEL_DESC 			= " Una opción estándar para defensa y movilidad."
+		SHOVEL_DESC 			= "Una opción estándar para defensa y movilidad."
 		//
 		EQUALIZER_NAME 			= "ECUALIZADOR"
-		EQUALIZER_DESC 			= " La burla de ataque causa daño masivo y empuja a los jugadores en el aire."
-		// TODO: Update! " Damage massively increases as you become injured."
+		EQUALIZER_DESC 			= "El daño aumenta masivamente mientras más herido te encuentres."
 		//
 		PAINTRAIN_NAME 			= "TREN DEL DOLOR"
-		PAINTRAIN_DESC 			= " Causa hemorragia y ralentiza al impactar. Otorga inmunidad al daño por caída."
+		PAINTRAIN_DESC 			= "Causa hemorragia y ralentiza al impactar. Otorga inmunidad al daño por caída."
 		//
 		HALFZATOICHI_NAME 		= "KATANA DEL MEDIO ZATOICHI"
-		HALFZATOICHI_DESC 		= " Daño medio con gran movilidad de salud y alcance aumentado."
+		HALFZATOICHI_DESC 		= "Daño medio con gran movilidad de salud y alcance aumentado."
 		//
 		MARKETGARDENER_NAME 	= "HORTELANO"
-		MARKETGARDENER_DESC 	= " Causa daño crítico muy elevado. Al matar, otorga un estado de ira, dando salud adicional, resistencia y aumento de todo tipo de daño. Si el portador falla un golpe, muere."
-		// TODO: Update! " Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
+		MARKETGARDENER_DESC 	= "Causa daño crítico masivo durante un salto con cohete. Al matar, aumenta temporalmente tu salud, y resistencia, y daño con todas tus armas. La mejora se indica con el ícono \x07ffc400[!] \x01 parpadeando."
 		//
 		DISCIPLINARYACTION_NAME = "ACCIÓN DISCIPLINARIA"
-		DISCIPLINARYACTION_DESC	= " Una opción estándar para defensa y movilidad."
-		// TODO: Update! " Standard option for defense and mobility. Instantly gain 1/3 Rage meter on hit."
+		DISCIPLINARYACTION_DESC	= "Una opción estándar para defensa y movilidad. Llena 1/3 del medidor de furia con cada azote."
 		//
 		ESCAPEPLAN_NAME			= "PLAN DE HUIDA"
-		ESCAPEPLAN_DESC			= " Una opción estándar para defensa y movilidad."
-		// TODO: Update! " Deal guaranteed crits when below 50% health."
+		ESCAPEPLAN_DESC			= "Ataca con críticos asegurados cuando tu salud es menor al 50%."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		FLAMETHROWER_NAME 		= "LANZALLAMAS"
-		FLAMETHROWER_DESC		= " Una opción estándar para un daño contundente. Otorga un pequeño subidón de minicríticos al matar."
+		FLAMETHROWER_DESC		= "Una opción estándar para un daño contundente. Otorga un pequeño subidón de minicríticos al matar."
 		//
 		BACKBURNER_NAME 		= "TUESTALOMOS"
-		BACKBURNER_DESC			= " Fuego verde: Marca a los enemigos de muerte y aturde a los que están en el aire. Esta arma causa daño x2 contra Pyros robot."
+		BACKBURNER_DESC			= "Fuego verde: Marca a los enemigos de muerte y aturde a los que están en el aire. Esta arma causa daño x2 contra Pyros robot."
 		//
 		DEGREASER_NAME 			= "DESENGRASADOR"
-		DEGREASER_DESC			= " Lanzallamas de largo alcance, con gran daño directo pero 0 daño por quemaduras. Esta arma no dispara aire comprimido."
+		DEGREASER_DESC			= "Lanzallamas de largo alcance, con gran daño directo pero 0 daño por quemaduras. Esta arma no dispara aire comprimido."
 		//
 		PHLOGISTINATOR_NAME 	= "FLOGISTONADOR"
-		PHLOGISTINATOR_DESC		= " Fuego verde: Marca a los enemigos de muerte y aturde a los que están en el aire. Fuerte contra tanques, pero reduce la velocidad de movimiento."
+		PHLOGISTINATOR_DESC		= "Fuego verde: Marca a los enemigos de muerte y aturde a los que están en el aire. Fuerte contra tanques, pero reduce la velocidad de movimiento."
 		//
 		RAINBLOWER_NAME 		= "LANZARCOÍRIS"
-		RAINBLOWER_DESC			= " Lanzallamas de largo alcance, con poco daño directo pero gran daño por quemaduras. Además permite destruir instantáneamente construcciones de Engineers y quemar a otros Pyros. El aire comprimido es leve, pero rápido."
+		RAINBLOWER_DESC			= "Lanzallamas de largo alcance, con poco daño directo pero gran daño por quemaduras. Además permite destruir instantáneamente construcciones de Engineers y quemar a otros Pyros. El aire comprimido es leve, pero rápido."
 		//
 		DRAGONSFURY_NAME 		= "FURIA DEL DRAGÓN"
-		DRAGONSFURY_DESC		= " Velocidad de disparo y aire comprimido muy elevada."
+		DRAGONSFURY_DESC		= "Velocidad de disparo y aire comprimido muy elevada."
 		//
 		NOSTROMONAPALMER_NAME 	= "NAPALMEADOR DE NOSTROMO"
-		NOSTROMONAPALMER_DESC	= " Ralentiza a los enemigos. Llena un medidor de «Mmmf» similar al Flogistonador, que otorga el efecto del Conchistador. Esta arma no tiene aire comprimido."
+		NOSTROMONAPALMER_DESC	= "Ralentiza a los enemigos. Llena un medidor de «Mmmf» similar al Flogistonador, que otorga el efecto del Conchistador. Esta arma no tiene aire comprimido."
 		///
 		SHOTGUN_PYRO_NAME 		= "ESCOPETA DEL PYRO" 
-		SHOTGUN_PYRO_DESC 		= " Causa críticos a enemigos en llamas." 
+		SHOTGUN_PYRO_DESC 		= "Causa críticos a enemigos en llamas." 
 		//
 		FLAREGUN_NAME 			= "PISTOLA DE BENGALAS" 
-		FLAREGUN_DESC 			= " Dispara balas que impactan en enemigos. El daño aumenta exponencialmente con cada enemigo en el camino. Además puede llegar a aturdir." 
+		FLAREGUN_DESC 			= "Dispara balas que impactan en enemigos. El daño aumenta exponencialmente con cada enemigo en el camino. Además puede llegar a aturdir." 
 		//
 		DETONATOR_NAME 			= "DETONADOR" 
-		DETONATOR_DESC 			= " La bengala tiene el mismo alcance de explosión. Golpeará todo aquello que esté en la línea de visión del jugador. Gran elección para movilidad." 
+		DETONATOR_DESC 			= "La bengala tiene el mismo alcance de explosión. Golpeará todo aquello que esté en la línea de visión del jugador. Gran elección para movilidad." 
 		//
 		MANMELTER_NAME 			= "DERRITEGENTE" 
-		MANMELTER_DESC 			= " Dispara munición rápidamente que rastrea automáticamente en busca de enemigos. Tiene munición ilimitada y no necesita recargar. Disparo secundario: Dispara muchas a la vez." 
+		MANMELTER_DESC 			= "Dispara munición rápidamente que rastrea automáticamente en busca de enemigos. Tiene munición ilimitada y no necesita recargar. Disparo secundario: Dispara muchas a la vez." 
 		//
 		SCORCHSHOT_NAME 		= "CHAMUSCADOR" 
-		SCORCHSHOT_DESC 		= " Al impactar: Causa mucho daño, apaga las llamas del enemigo y causa retroceso. El objetivo debe estar en llamas o el ataque no hará nada. Disparo secundario: Usa una bengala guiada más lenta." 
+		SCORCHSHOT_DESC 		= "Al impactar: Causa mucho daño, apaga las llamas del enemigo y causa retroceso. El objetivo debe estar en llamas o el ataque no hará nada. Disparo secundario: Usa una bengala guiada más lenta." 
 		//
 		THERMALTHRUSTER_NAME 	= "PROPULSOR TÉRMICO" 
-		THERMALTHRUSTER_DESC 	= " Reduce el consumo de combustible sin ralentizar el lanzamiento. Se puede reutilizar en el aire y causa mucho daño a otro jugador al caer sobre él. Otorga un pequeño subidón de críticos al matar." 
+		THERMALTHRUSTER_DESC 	= "Reduce el consumo de combustible sin ralentizar el lanzamiento. Se puede reutilizar en el aire y causa mucho daño a otro jugador al caer sobre él. Otorga un pequeño subidón de críticos al matar." 
 		//
 		GASPASSER_NAME 			= "Lanzacombustible" 
-		GASPASSER_DESC 			= " El medidor de gasolina empieza vacío y se reinicia al morir. El medidor se llena al causar 150 000 de daño. La explosión al arder causa 105 000 de daño." 
+		GASPASSER_DESC 			= "El medidor de gasolina empieza vacío y se reinicia al morir. El medidor se llena al causar 150 000 de daño. La explosión al arder causa 105 000 de daño." 
 		///
 		FIREAXE_NAME 			= "HACHA DE BOMBERO"
-		FIREAXE_DESC 			= " Una opción estándar para defensa y movilidad."
+		FIREAXE_DESC 			= "Una opción estándar para defensa y movilidad."
 		//	
 		AXTINGUISHER_NAME 		= "HACHERMINADOR"
-		AXTINGUISHER_DESC		= " Aumenta significativamente el daño contra enemigos en llamas."
+		AXTINGUISHER_DESC		= "Aumenta significativamente el daño contra enemigos en llamas."
 		//
 		HOMEWRECKER_NAME 		= "DEMOLEDOR"
-		HOMEWRECKER_DESC 		= " Permite destruir al instante las construcciones de Engineers desde donde sea, con alcance cuerpo a cuerpo infinito."
+		HOMEWRECKER_DESC 		= "Permite destruir al instante las construcciones de Engineers desde donde sea, con alcance cuerpo a cuerpo infinito."
 		//
 		POWERJACK_NAME 			= "BATEMARTILLO"
-		POWERJACK_DESC 			= " Gran velocidad de ataque y movimiento. Causa hemorragia y quema a los enemigos que golpea, además otorga minicríticos al matar."
+		POWERJACK_DESC 			= "Gran velocidad de ataque y movimiento. Causa hemorragia y quema a los enemigos que golpea, además otorga minicríticos al matar."
 		//
 		BACKSCRATCHER_NAME 		= "RASCAESPALDAS"
-		BACKSCRATCHER_DESC 		= " Causa daño letal por la espalda. Al matar, entra en un estado de furia que otorga velocidad de movimiento, resistencia y aumenta el daño de todos los ataques."
-		// TODO: Update! " Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
+		BACKSCRATCHER_DESC 		= "Causa daño letal por la espalda. Al matar, aumenta temporalmente tu velocidad de movimiento, resistencia y daño con todas tus armas. La mejora se indica con el ícono \x07ffc400[!] \x01 parpadeando."
 		//
 		VOLCANOFRAGMENT_NAME 	= "FRAGMENTO VOLCÁNICO AFILADO"
-		VOLCANOFRAGMENT_DESC 	= " Probabilidad de aturdir enemigos al impactar. También puede quemar a los Pyros."
+		VOLCANOFRAGMENT_DESC 	= "Probabilidad de aturdir enemigos al impactar. También puede quemar a los Pyros."
 		//
 		POSTALPUMMELER_NAME 	= "PALIZA POSTAL"
-		POSTALPUMMELER_DESC 	= " Al impactar: Confunde al enemigo, haciendo que retrocedan con la bomba durante unos segundos. Mantén el disparo secundario al atacar para volver a la base."
+		POSTALPUMMELER_DESC 	= "Al impactar: Confunde al enemigo, haciendo que retrocedan con la bomba durante unos segundos. Mantén el disparo secundario al atacar para volver a la base."
 		//
 		MAUL_NAME 				= "MUTILADOR"
-		MAUL_DESC 				= " Al impactar: Lanza los enemigos al aire con gravedad reducida."
-		// TODO: Update! " On hit: Cause an explosion, launching enemies into the air and igniting them."
+		MAUL_DESC 				= "Al impactar: Causa una explosión que lanza a los enemigos al aire y los prende en llamas."
 		//
 		THIRDDEGREE_NAME 		= "TERCER GRADO"
-		THIRDDEGREE_DESC 		= " El portador se vuelve casi inmune al fuego y recibe gran resistencia a todos los ataques mientras la empuña."
+		THIRDDEGREE_DESC 		= "El portador se vuelve casi inmune al fuego y recibe gran resistencia a todos los ataques mientras la empuña."
 		//
 		LOLLICHOP_NAME 			= "PYROLETA"
-		LOLLICHOP_DESC 			= " Cada 10 víctimas, otorga un hechizo de lluvia de meteoritos (requiere Libro de Hechizos)."
+		LOLLICHOP_DESC 			= "Cada 10 víctimas, otorga un hechizo de lluvia de meteoritos (requiere Libro de Hechizos)."
 		//
 		NEONANNIHILATOR_NAME 	= "ANIQUILADOR DE NEÓN"
-		NEONANNIHILATOR_DESC 	= " Tu gravedad se reduce."
+		NEONANNIHILATOR_DESC 	= "Tu gravedad se reduce."
 		//
 		HOTHAND_NAME 			= "MANO CALIENTE"
-		HOTHAND_DESC 			= " Lanza a los enemigos al aire de un golpe."
+		HOTHAND_DESC 			= "Lanza a los enemigos al aire de un golpe."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		GRENADELAUNCHER_NAME 	= "LANZAGRANADAS"
-		GRENADELAUNCHER_DESC	= " Una opción estándar para un daño contundente."
+		GRENADELAUNCHER_DESC	= "Una opción estándar para un daño contundente."
 		//
 		LOCHNLOAD_NAME 			= "BOMBSTRUO DEL LAGO NESS"
-		LOCHNLOAD_DESC			= " Dispara muy lento, pero tiene una gran capacidad de daño en zonas amplias. Excelente para el control de masas."
+		LOCHNLOAD_DESC			= "Dispara muy lento, pero tiene una gran capacidad de daño en zonas amplias. Excelente para el control de masas."
 		//
 		ALIBABA_NAME			= "BABUCHAS DE ALÍ BABÁ"
-		ALIBABA_DESC			= " Mejora el daño del escudo. Otorga inmunidad al daño por caída."
+		ALIBABA_DESC			= "Mejora el daño del escudo. Otorga inmunidad al daño por caída."
 		//
 		BOOTLEGGER_NAME			= "PATAPALO"
-		BOOTLEGGER_DESC			= " Mejora la velocidad de carga de embestida del escudo. Otorga inmunidad al daño por caída."
+		BOOTLEGGER_DESC			= "Mejora la velocidad de carga de embestida del escudo. Otorga inmunidad al daño por caída."
 		//
 		LOOSECANNON_NAME		= "BALA PERDIDA"
-		LOOSECANNON_DESC		= " Carga hasta 4 bolas de cañón para poder lanzarlas a la vez en disposición vertical. Las bolas de cañón explotan al tocar el suelo."
+		LOOSECANNON_DESC		= "Carga hasta 4 bolas de cañón para poder lanzarlas a la vez en disposición vertical. Las bolas de cañón explotan al tocar el suelo."
 		//
 		IRONBOMBER_NAME			= "BOMBARDERO DE ACERO"
-		IRONBOMBER_DESC			= " Ignora la resistencia del enemigo y otorga un breve subidón de críticos al matar. No requiere munición, su cargador es infinito. Los proyectiles pueden rebotar en las paredes."
+		IRONBOMBER_DESC			= "Ignora la resistencia del enemigo y otorga un breve subidón de críticos al matar. No requiere munición, su cargador es infinito. Los proyectiles pueden rebotar en las paredes."
 		///
 		STICKYBOMB_NAME 		= "LANZABOMBAS LAPA"
-		STICKYBOMB_DESC 		= " Una opción estándar para un daño contundente. Permite colocar hasta 50 bombas."
+		STICKYBOMB_DESC 		= "Una opción estándar para un daño contundente. Permite colocar hasta 50 bombas."
 		//
 		SCOTTISHRES_NAME 		= "RESISTENCIA ESCOCESA"
-		SCOTTISHRES_DESC 		= " Cada bomba tarda 5 segundos en armarse y empieza a chisporrotear pasados 10 segundos, pero puede causar buena cantidad de daño con buena precisión y una carga completa."
+		SCOTTISHRES_DESC 		= "Cada bomba tarda 5 segundos en armarse y empieza a chisporrotear pasados 10 segundos, pero puede causar buena cantidad de daño con buena precisión y una carga completa."
 		//
 		STICKYJUMPER_NAME 		= "SALTALAPAS"
-		STICKYJUMPER_DESC 		= " Crea un campo inhibidor, aturdiendo a todos los enemigos que lo pisen (los minijefes son inmunes a esto)."
+		STICKYJUMPER_DESC 		= "Crea un campo inhibidor, aturdiendo a todos los enemigos que lo pisen (los minijefes son inmunes a esto)."
 		//
 		CHARGINTARGE_NAME 		= "TARGE DE CARGA"
-		CHARGINTARGE_DESC 		= " Embestida pesada: Gran daño del escudo."
+		CHARGINTARGE_DESC 		= "Embestida pesada: Gran daño del escudo."
 		//
 		SPLENDIDSCREEN_NAME 	= "ESCUDO ESPLÉNDIDO"
-		SPLENDIDSCREEN_DESC 	= " Embestida rápida: Gran velocidad de recarga del escudo."
+		SPLENDIDSCREEN_DESC 	= "Embestida rápida: Gran velocidad de recarga del escudo."
 		//
 		TIDETURNER_NAME 		= "TUERCEOLAS"
-		TIDETURNER_DESC 		= " Embestida explosiva: Gran capacidad de giro del escudo."
+		TIDETURNER_DESC 		= "Embestida explosiva: Gran capacidad de giro del escudo."
 		//
 		QUICKIEBOMB_NAME 		= "LANZABOMBAS RÁPIDO"
-		QUICKIEBOMB_DESC 		= " Dispara bombas lapa automáticamente a una velocidad frenética, armándose al instante. Otorga minicríticos al matar."
+		QUICKIEBOMB_DESC 		= "Dispara bombas lapa automáticamente a una velocidad frenética, armándose al instante. Otorga minicríticos al matar."
 		///
 		BOTTLE_NAME 			= "BOTELLA"
-		BOTTLE_DESC 			= " Una opción estándar para defensa y movilidad."
+		BOTTLE_DESC 			= "Una opción estándar para defensa y movilidad."
 		//
 		EYELANDER_NAME 			= "INTUERTAL"
-		EYELANDER_DESC 			= " Causa mucho daño, con ataques rápidos, otorgando críticos y minicríticos al matar. No puede usarse como Democaballero híbrido."
+		EYELANDER_DESC 			= "Causa mucho daño, con ataques rápidos, otorgando críticos y minicríticos al matar. No puede usarse como Democaballero híbrido."
 		//
 		SKULLCUTTER_NAME 		= "CORTACRÁNEOS ESCOCÉS"
-		SKULLCUTTER_DESC 		= " Se puede utilizar contra una Supercarga y detener las funciones de una Pistola Médica. También causa mucho daño contra enemigos de la misma clase."
+		SKULLCUTTER_DESC 		= "Se puede utilizar contra una Supercarga y detener las funciones de una Pistola Médica. También causa mucho daño contra enemigos de la misma clase."
 		//
 		CABER_NAME 				= "CÁBER DE ULLAPOOL"
-		CABER_DESC 				= " El daño aumenta a medida que sufres daños. Otorga críticos si la salud está por debajo del 2 %. La explosión de este artículo, mata al portador."
-		// TODO: Update! " You are a Sentry Buster - Taunt to detonate!"
+		CABER_DESC 				= "¡Eres un petacentinelas! ¡Usa la burla de tu arma para explotar!."
 		//
 		CLAIDHEAMHMOR_NAME 		= "CLAIDHEAMH MÒR"
-		CLAIDHEAMHMOR_DESC 		= " Cada 10 víctimas, otorga el hechizo Monóculus (requiere Libro de Hechizos)."
+		CLAIDHEAMHMOR_DESC 		= "Cada 10 víctimas, otorga el hechizo Monóculus (requiere Libro de Hechizos)."
 		//
 		PERSIANPERSUADER_NAME 	= "PERSA PERSUASIVO"
-		PERSIANPERSUADER_DESC 	= " Al combinarse con un escudo, otorga una carga de escudo infinita. La embestida del escudo no puede detenerse por esquinas ni al chocar contra paredes, enemigos u otros obstáculos. Otorga inmunidad al aturdimiento."
+		PERSIANPERSUADER_DESC 	= "Al combinarse con un escudo, otorga una carga de escudo infinita. La embestida del escudo no puede detenerse por esquinas ni al chocar contra paredes, enemigos u otros obstáculos. Otorga inmunidad al aturdimiento."
 		//
 		NINEIRON_NAME 			= "HIERRO DEL NUEVE DE NESSIE"
-		NINEIRON_DESC 			= " Tiene un alcance apabullante, permite golpear a varios enemigos a la vez, en todas las direcciones. Causa daño crítico doble."
+		NINEIRON_DESC 			= "Tiene un alcance apabullante, permite golpear a varios enemigos a la vez, en todas las direcciones. Causa daño crítico doble."
 		//
 		SCOTTISHHANDSHAKE_NAME 	= "SALUDO ESCOCÉS"
-		SCOTTISHHANDSHAKE_DESC 	= " Al activar: Resiste al 90 % de los ataques a distancia, se hace inmune al retroceso y aumenta la salud máxima. Sin embargo, no puedes recuperar munición y recibes menos PS de botiquines."
+		SCOTTISHHANDSHAKE_DESC 	= "Al activar: Resiste al 90 % de los ataques a distancia, se hace inmune al retroceso y aumenta la salud máxima. Sin embargo, no puedes recuperar munición y recibes menos PS de botiquines."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		MINIGUN_NAME 			= "AMETRALLADORA"
-		MINIGUN_DESC 			= " Una opción estándar para un daño contundente. Otorga un pequeño subidón de minicríticos al morir."
+		MINIGUN_DESC 			= "Una opción estándar para un daño contundente. Otorga un pequeño subidón de minicríticos al morir."
 		//
 		NATASCHA_NAME 			= "NATASCHA"
-		NATASCHA_DESC 			= " Ralentiza a los enemigos a dispararles y los marca de muerte."
+		NATASCHA_DESC 			= "Ralentiza a los enemigos a dispararles y los marca de muerte."
 		//
 		BRASSBEAST_NAME 		= "TITÁN DE LATÓN"
-		BRASSBEAST_DESC 		= " Hace mucho daño, pero gira muy lentamente. La velocidad de movimiento es nula mientras está desplegada. Permite devolver proyectiles."
+		BRASSBEAST_DESC 		= "Hace mucho daño, pero gira muy lentamente. La velocidad de movimiento es nula mientras está desplegada. Permite devolver proyectiles."
 		//
 		TOMISLAV_NAME 			= "TOMISLAV"
-		TOMISLAV_DESC 			= " Se llena la barra de «Temperatura» al disparar. A medida que esta aumenta, todas las estadísticas aumentan. Sin embargo, el arma tiene que enfriarse si pasas mucho tiempo sin causar daños."
+		TOMISLAV_DESC 			= "Se llena la barra de «Temperatura» al disparar. A medida que esta aumenta, todas las estadísticas aumentan. Sin embargo, el arma tiene que enfriarse si pasas mucho tiempo sin causar daños."
 		//
 		HUOHEATER_NAME 			= "ACHICHARRADORA HUO-LONG"
-		HUOHEATER_DESC 			= " Lanza rayos de energía, quemando a los enemigos al impactar."
+		HUOHEATER_DESC 			= "Lanza rayos de energía, quemando a los enemigos al impactar."
 		//
 		GENUINEHUOHEATER_NAME 	= "ACHICHARRADORA HUO-LONG GENUINA"
-		GENUINEHUOHEATER_DESC 	= " Dispara proyectiles. Causa críticos contra enemigos en llamas."
+		GENUINEHUOHEATER_DESC 	= "Dispara proyectiles. Causa críticos contra enemigos en llamas."
 		///
 		SHOTGUN_HVY_NAME 		= "ESCOPETA DEL HEAVY"
-		SHOTGUN_HVY_DESC 		= " Un único disparo que causa mucho daño, otorga 8 8 segundos de críticos al matar."
+		SHOTGUN_HVY_DESC 		= "Un único disparo que causa mucho daño, otorga 8 segundos de críticos al matar."
 		//
 		SANDVICH_NAME 			= "FOCATA"
-		SANDVICH_DESC 			= " Restaura hasta 150 000 PS. Cualquier daño recibido con este artículo en la mano, es letal."
-		// TODO: Update! " Consume to gain Concheror buff for 30 seconds."
+		SANDVICH_DESC 			= "Cómetelo para ganar el efecto del Conchistador durante 30 segundos."
 		//
 		DALOKOHSBAR_NAME 		= "CHOCOLATINA DALOKOHS"
-		DALOKOHSBAR_DESC 		= " Restaura hasta 20 000 PS. Si se usa por debajo de 350 PS, se obtendrá un exceso de curación. Además aumenta del daño y otorga la posibilidad de hacer invencible al recibir daño."
-		// TODO: Update! " Consume to gain increased move speed, weapon switch speed and faster minigun spinup time for 30 seconds."
+		DALOKOHSBAR_DESC 		= "Cómetela para aumentar tu velocidad de movimiento, de cambio de arma y de giro de ametralladora durante 30 segundos."
 		//
 		BUFFALOSTEAK_NAME 		= "FOCATA DE FILETE DE BÚFALO"
-		BUFFALOSTEAK_DESC 		= " Otorga inmunidad pasiva a impactos críticos."
-		// TODO: Update! " Consume to gain Battalion's Backup buff and backstab immunity for 30 seconds."
+		BUFFALOSTEAK_DESC 		= "Cómetelo para ganar el efecto del Refuerzo del Batallón e inmunidad a las apuñaladas por la espalda durante 30 segundos."
 		//
 		FAMILYBUSINESS_NAME 	= "NEGOCIO FAMILIAR"
-		FAMILYBUSINESS_DESC 	= " Munición ilimitada. Doble de velocidad de ataque al recibir curación. Otorga un breve subidón de críticos y minicríticos al matar."
+		FAMILYBUSINESS_DESC 	= "Munición ilimitada. Doble de velocidad de ataque al recibir curación. Otorga un breve subidón de críticos y minicríticos al matar."
 		//
 		FISHCAKE_NAME 			= "BARRITA DE PESCADO"
-		FISHCAKE_DESC 			= " Otorga al Heavy resistencia a las BALAS, pero mayor vulnerabilidad a FUEGO y EXPLOSIONES."
-		// TODO: Update! " Consume to gain gravity reversal power for 30 seconds (Crouch to reverse gravity)."
+		FISHCAKE_DESC 			= "Cómetela para ganar la habilidad de cambio de gravedad durante 30 segundos (agáchate para invertir la gravedad)."
 		//
 		SECONDBANANA_NAME 		= "BANANA SEGUNDONA"
-		SECONDBANANA_DESC 		= " Otorga al Heavy resistencia a las EXPLOSIONES, pero mayor vulnerabilidad a FUEGO y BALAS."
-		// TODO: Update! " Consume to gain explosive melee power for 30 seconds (You are restricted to melee for the duration)."
+		SECONDBANANA_DESC 		= "Cómetela para causar explosiones con tus golpes durante 30 segundos. Durante este tiempo solo podrás usar tu arma cuerpo a cuerpo."
 		///
 		FISTS_NAME 				= "PUÑOS"
-		FISTS_DESC 				= " Una opción estándar para defensa y movilidad. Eficaz en combate."
+		FISTS_DESC 				= "Una opción estándar para defensa y movilidad. Eficaz en combate."
 		//
 		KILLINGGLOVES_NAME 		= "KAÑONEROS GUANTES DE BOXEO"
-		KILLINGGLOVES_DESC 		= " Habilidad especial: «Megaimpacto». Al estar disponible, pulsa el botón de acción junto a la bomba para devolverla al principio. En otra situación, otorga velocidad, críticos y defensa temporal."
+		KILLINGGLOVES_DESC 		= "Habilidad especial: «Megaimpacto». Al estar disponible, pulsa el botón de acción junto a la bomba para devolverla al principio. En otra situación, otorga velocidad, críticos y defensa temporal."
 		//
 		GLOVESRUNNING_NAME 		= "GUANTES DE RAPIDEZ ULTRATERRENA"
-		GLOVESRUNNING_DESC 		= " Otorgan la capacidad de desplegar un paracaídas. Al tenerlos fuera, la altura de los saltos será mucho mayor, la resistencia al daño aumenta y la salud se regenera."
+		GLOVESRUNNING_DESC 		= "Otorgan la capacidad de desplegar un paracaídas. Al tenerlos fuera, la altura de los saltos será mucho mayor, la resistencia al daño aumenta y la salud se regenera."
 		//
 		BREADBITE_NAME 			= "PANPUÑOS"
-		BREADBITE_DESC 			= " Los impactos críticos causan Corrosión en la víctimas, un efecto perjudicial que causa daño según los PS máximos de la víctima y hace que, al morir, explote dejando una pequeña nube de corrosión, esparciendo su efecto."
+		BREADBITE_DESC 			= "Los impactos críticos causan Corrosión en la víctimas, un efecto perjudicial que causa daño según los PS máximos de la víctima y hace que, al morir, explote dejando una pequeña nube de corrosión, esparciendo su efecto."
 		//
 		WARRIRORSSPIRIT_NAME 	= "ZARPAS DEL GUERRERO"
-		WARRIRORSSPIRIT_DESC 	= " Usa el ataque principal para dar un gran salto. Cae sobre enemigos para causar gran cantidad de daño. Elimina toda la munición principal y secundaria."
-		// TODO: Update! " Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air. Active buff indicated by flashing \x07ffc400[!] \x01icon."
+		WARRIRORSSPIRIT_DESC 	= "Usa el ataque principal para dar un enorme salto y aterrizar con un ataque aplastante en un área pequeña. Al matar: permite realizar un aterrizaje aplastante rápido al agacharte en el aire. La mejora se indica con el ícono \x07ffc400[!] \x01 parpadeando."
 		//
 		FISTSOFSTEEL_NAME 		= "PUÑOS DE ACERO"
-		FISTSOFSTEEL_DESC 		= " Conviértete en un Heavy gigante con 250 000 PS. Eres inmune a empujones y causas gran cantidad de daño. Elimina toda la munición principal y secundaria. Solo te puedes curar de artículos de tipo fiambrera."
-		// TODO: Update! " You are a Giant Heavy Gauntlet - Immune to push forces and able to hit multiple enemies at once for massive damage."
+		FISTSOFSTEEL_DESC 		= "¡Eres un Heavy Gigante de Acero! ¡Inmune al empuje y capaz de golpear a múltiples enemigos a la vez con un daño masivo!"
 		//
 		EVICTIONNOTICE_NAME 	= "ORDEN DE DESHAUCIO"
-		EVICTIONNOTICE_DESC 	= " Otorga un efecto de curación al matar."
+		EVICTIONNOTICE_DESC 	= "Otorga un efecto de curación al matar."
 		//
 		APOCOFISTS_NAME 		= "PUÑOS CATACLÍSMICOS"
-		APOCOFISTS_DESC 		= " Los puños empujan a los enemigos."
+		APOCOFISTS_DESC 		= "Los puños empujan a los enemigos."
 		//
 		HOLIDAYPUNCH_NAME 		= "PUÑETAZO FESTIVO"
-		HOLIDAYPUNCH_DESC 		= " Al usarlos, todos los enemigos te ignoran. Además eres inmune al aturdimiento. Esta arma no puede causar daño."
+		HOLIDAYPUNCH_DESC 		= "Al usarlos, todos los enemigos te ignoran. Además eres inmune al aturdimiento. Esta arma no puede causar daño."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		SHOTGUN_ENGI_NAME		= "ESCOPETA DEL ENGINEER"
-		SHOTGUN_ENGI_DESC 		= " Causa daño x4 al objetivo de tu arma centinela."
+		SHOTGUN_ENGI_DESC 		= "Causa daño x4 al objetivo de tu arma centinela."
 		//
 		FRONTIERJUSTICE_NAME 	= "JUSTICIERA"
-		FRONTIERJUSTICE_DESC 	= " Una velocidad de disparo alucinante. El tamaño del cargador coincide con la cuenta de críticos de venganza máximos. Recarga más rápido al recibir curación."
+		FRONTIERJUSTICE_DESC 	= "Una velocidad de disparo alucinante. El tamaño del cargador coincide con la cuenta de críticos de venganza máximos. Recarga más rápido al recibir curación."
 		//
 		WIDOWMAKER_NAME 		= "ENVIUDADORA"
-		WIDOWMAKER_DESC 		= " Usa 2 000 de metal para disparar un disparo amplio que empuja a los enemigos."
+		WIDOWMAKER_DESC 		= "Usa 2 000 de metal para disparar un disparo amplio que empuja a los enemigos."
 		//
 		POMSON_NAME 			= "POMSON 6000"
-		POMSON_DESC 			= " Causa hemorragia, quemaduras y ralentiza al enemigo."
+		POMSON_DESC 			= "Causa hemorragia, quemaduras y ralentiza al enemigo."
 		//
 		RESCUERANGER_NAME 		= "RESCATADORA"
-		RESCUERANGER_DESC		= " Usa 20 de metal por disparo, pero nunca tiene que recargar y aumenta el metal máximo a 1 000."
+		RESCUERANGER_DESC		= "Usa 20 de metal por disparo, pero nunca tiene que recargar y aumenta el metal máximo a 1 000."
 		///
 		WRANGLER_NAME 			= "ARREO"
-		WRANGLER_DESC 			= " Al empuñarlo: Aumenta el daño del arma centinela y duplica el alcance del dispensador."
+		WRANGLER_DESC 			= "Al empuñarlo: Aumenta el daño del arma centinela y duplica el alcance del dispensador."
 		//
 		SHORTCIRCUIT_NAME 		= "CORTOCIRCUITADOR"
-		SHORTCIRCUIT_DESC 		= " Cada 10 víctimas, otorga un hechizo de esfera de relámpagos (requiere Libro de Hechizos)"
+		SHORTCIRCUIT_DESC 		= "Cada 10 víctimas, otorga un hechizo de esfera de relámpagos (requiere Libro de Hechizos)"
 		///
 		WRENCH_NAME 			= "LLAVE INGLESA"
-		WRENCH_DESC 			= " Una opción estándar para un daño contundente."
+		WRENCH_DESC 			= "Una opción estándar para un daño contundente."
 		//
 		GUNSLINGER_NAME 		= "FORAJIDO"
-		GUNSLINGER_DESC	 		= " Permite construir una segunda arma centinela. El combo del triple puñetazo puede matar a enemigos pequeños y causar daño a gigantes."
+		GUNSLINGER_DESC	 		= "Permite construir una segunda arma centinela. El combo del triple puñetazo puede matar a enemigos pequeños y causar daño a gigantes."
 		//
 		SOUTHERNHOS_NAME 		= "HOSPITALIDAD SUREÑA"
-		SOUTHERNHOS_DESC 		= " Modifica el arma centinela, añadiendo un lanzallamas. Menos alcance, pero más daño."
+		SOUTHERNHOS_DESC 		= "Modifica el arma centinela, añadiendo un lanzallamas. Menos alcance, pero más daño."
 		//
 		JAG_NAME 				= "MANITAS"
-		JAG_DESC 				= " Tu arma centinela no tiene límite de alcance."
+		JAG_DESC 				= "Tu arma centinela no tiene límite de alcance."
 		//
 		EUREKAEFFECT_NAME 		= "EFECTO EUREKA"
-		EUREKAEFFECT_DESC 		= " Al transportar tu arma centinela, pulsa la tecla de «Recargar» para colocarla de forma remota en cualquier muro o techo a tu alcance."
+		EUREKAEFFECT_DESC 		= "Al transportar tu arma centinela, pulsa la tecla de «Recargar» para colocarla de forma remota en cualquier muro o techo a tu alcance."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		SYRINGEGUN_NAME			= "PISTOLA DE JERINGAS"
-		SYRINGEGUN_DESC			= " Al impactar: Aumenta en 0,5 % la Supercaga."
+		SYRINGEGUN_DESC			= "Al impactar: Aumenta en 0,5 % la Supercaga."
 		//
 		BLUTSAUGER_NAME			= "BLUTSAUGER"
-		BLUTSAUGER_DESC			= " Requiere y consume una Supercarga al 100 % para reprogramar un robot para que se una a tu equipo temporalmente, hasta que se autodestruye. Disparo secundario: Anula manualmente la reprogramación de todos los bots afectados."
+		BLUTSAUGER_DESC			= "Requiere y consume una Supercarga al 100 % para reprogramar un robot para que se una a tu equipo temporalmente, hasta que se autodestruye. Disparo secundario: Anula manualmente la reprogramación de todos los bots afectados."
 		//
 		CRUSADERSCROSSBOW_NAME	= "BALLETAS DEL CRUZADO"
-		CRUSADERSCROSSBOW_DESC	= " Al impactar: Aumenta en 0,25 % la Supercarga, causa hemorragia y aumenta 0,5 % de Supercarga por daño de hemorragia."
+		CRUSADERSCROSSBOW_DESC	= "Al impactar: Aumenta en 0,25 % la Supercarga, causa hemorragia y aumenta 0,5 % de Supercarga por daño de hemorragia."
 		//
 		OVERDOSE_NAME 			= "SOBREDOSIS"
-		OVERDOSE_DESC 			= " Requiere y consume una Supercarga al 50 % para enviar una carga explosiva que apaga los sistemas de todos los enemigos cercanos hasta 15 segundos."
-		// TODO: Update! " Requires and consumes 50% Ubercharge to launch an EMP mortar, causing nearby enemies to be unable to move or attack for a short time."
+		OVERDOSE_DESC 			= "Requiere y consume una Supercarga al 50 % para lanzar una descarga PEM, paralizando e impidiendo atacar a los enemigos cercanos por unos segundos."
 		///
 		MEDIGUN_NAME			= "PISTOLA MÉDICA"
-		MEDIGUN_DESC			= " Se aumenta el límite de exceso de curación hasta x10 la salud máxima del paciente. Despliega un duradero escudo de proyectiles de nivel 1."
-		// TODO: Update! " Overheal cap raised to x10 the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
+		MEDIGUN_DESC			= "Se aumenta el límite de exceso de curación hasta x10 la salud máxima del paciente. Despliega un duradero escudo de proyectiles de nivel 1. La Supercarga ofrece inmunidad al retroceso."
 		//
 		KRITZKRIEG_NAME			= "KRITZKRIEG"
-		KRITZKRIEG_DESC			= " Permite consumir los PS de los enemigos, curándote y generando Supercarga."
-		// TODO: Update! " Able to drain health from enemies, granting self-healing and building Uber. Ubercharge grants a boost to all damage output."
+		KRITZKRIEG_DESC			= "Permite consumir los PS de los enemigos, curándote y generando Supercarga. La Supercarga potencia cualquier tipo de daño."
 		//
 		QUICKFIX_NAME			= "APAÑADOR"
-		QUICKFIX_DESC			= " Cura a gran velocidad y despliega un duradero escudo para proyectiles de nivel 2. Permite aumentar la Supercarga al parar daño con el escudo."
-		// TODO: Update! " Very fast healing with a level 2 Projectile Shield. Able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
+		QUICKFIX_DESC			= "Cura a gran velocidad y despliega un duradero escudo para proyectiles de nivel 2. Permite aumentar la Supercarga al infligir daño con el escudo. La Supercarga aumenta la velocidad de disparo y recarga."
 		//
 		VACCINATOR_NAME			= "VACUNADOR"
-		VACCINATOR_DESC			= " Al curar otorga a ambos una resistencia del 100 % al daño base seleccionado. La Supercarga otorga inmunidad total al daño seleccinoado durante 30 segundos."
-		// TODO: Update! " Active healing grants you and the patient increased mobility and 100% resistance to base damage of the selected damage type. Ubercharge grants full immunity to the selected damage type for 30 seconds."
+		VACCINATOR_DESC			= "Al curar otorga a tu paciente y a tí mayor movilidad, además de resistencia del 100 % al daño base seleccionado. La Supercarga otorga inmunidad total al daño seleccinoado durante 30 segundos."
 		///
 		BONESAW_NAME 			= "SERRUCHO"
-		BONESAW_DESC			= " Una opción estándar para defensa y movilidad. Al impactar: Aumenta un 10 % de Supercarga."
+		BONESAW_DESC			= "Una opción estándar para defensa y movilidad. Al impactar: Aumenta un 10 % de Supercarga."
 		//
 		UBERSAW_NAME 			= "ÜBERSAW"
-		UBERSAW_DESC			= " Al impactar: Causa hemorragia y aumenta un 2 % la Supercarga."
+		UBERSAW_DESC			= "Al impactar: Causa hemorragia y aumenta un 2 % la Supercarga."
 		//
 		VITASAW_NAME 			= "VITASIERRA"
-		VITASAW_DESC			= " Al impactar, otorga un hechizo de exceso de curación (requiere Libro de Hechizos) y aumenta un 5 % la Supercarga."
+		VITASAW_DESC			= "Al impactar, otorga un hechizo de exceso de curación (requiere Libro de Hechizos) y aumenta un 5 % la Supercarga."
 		//
 		AMPUTATOR_NAME 			= "AMPUTADOR"
-		AMPUTATOR_DESC			= " Al impactar: Tu Pistola Médica se Supercarga y aumenta temporalmente su velocidad de curación, cantidad de Supercarga y alcance. Al matar: se obtiene el mismo efecto durante más tiempo."
+		AMPUTATOR_DESC			= "Al impactar: Tu Pistola Médica se Supercarga y aumenta temporalmente su velocidad de curación, cantidad de Supercarga y alcance. Al matar: se obtiene el mismo efecto durante más tiempo."
 		//
 		SOLEMNVOW_NAME 			= "JURAMENTO SOLEMNE"
-		SOLEMNVOW_DESC			= " Alcance infinito, golpea a todos los enemigos conectados por un rayo de Pistola Médica y causa x200 de daño a Medics robot. Al impactar: Aumenta un 5 % de Supercarga."
+		SOLEMNVOW_DESC			= "Alcance infinito, golpea a todos los enemigos conectados por un rayo de Pistola Médica y causa x200 de daño a Medics robot. Al impactar: Aumenta un 5 % de Supercarga."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		SNIPERRIFLE_NAME 		= "RIFLE DE FRANCOTIRADOR"
-		SNIPERRIFLE_DESC 		= " Un disparo a la cabeza completamente cargado causa 450 000 de daño."
+		SNIPERRIFLE_DESC 		= "Un disparo a la cabeza completamente cargado causa 450 000 de daño."
 		//
 		MACHINA_NAME 			= "MACHINA"
-		MACHINA_DESC 			= " Carga muy lentamente, pero puede destruir tanques con un disparo cargado. Al matar enemigos se llena el medidor que otorga 1 segundo de críticos. El crítico con una carga completa permite destruir tanques de un disparo."
-		// TODO: Update! " Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Gaints and Tanks."
+		MACHINA_DESC 			= "Mata enemigos para llenar el medidor de Enfoque. Una vez lleno, usa la tecla de recargar para utilizarlo, obteniendo críticos y daño drásticamente aumentado contra Gigantes y Tanques."
 		//
 		HITMANSHEATMAKER_NAME 	= "ASESINO A SUELDO"
-		HITMANSHEATMAKER_DESC 	= " Dispara rápidamente sin apuntar. Solo hace daño a la cabeza."
+		HITMANSHEATMAKER_DESC 	= "Dispara rápidamente sin apuntar. Solo hace daño a la cabeza."
 		//
 		AWPERHAND_NAME 			= "AWPA CABEZAS"
-		AWPERHAND_DESC 			= " Dispara munición explosiva y aumenta el medidor al matar. Al llenar el medidor al 100 %, pulsa «Recargar» para aumentar la salud al máximo y regenerarla. El rifle solo carga cuando tienes un enemigo en la mirilla."
+		AWPERHAND_DESC 			= "Dispara munición explosiva y aumenta el medidor al matar. Al llenar el medidor al 100 %, pulsa «Recargar» para aumentar la salud al máximo y regenerarla. El rifle solo carga cuando tienes un enemigo en la mirilla."
 		//
 		HUNTSMAN_NAME 			= "CAZADOR"
-		HUNTSMAN_DESC 			= " Dispara 5 flechas a la vez. Causa daño por quemaduras si un Pyro quema tu flecha."
+		HUNTSMAN_DESC 			= "Dispara 5 flechas a la vez. Causa daño por quemaduras si un Pyro quema tu flecha."
 		//
 		SYDNEYSLEEPER_NAME 		= "ADORMECEDOR DE SÍDNEY"
-		SYDNEYSLEEPER_DESC 		= " Dispara un dardo especial que ralentiza los movimientos de robots que no sean gigantes e impide que reciban curación de Medics robot."
+		SYDNEYSLEEPER_DESC 		= "Dispara un dardo especial que ralentiza los movimientos de robots que no sean gigantes e impide que reciban curación de Medics robot."
 		//
 		BAZAARBARGAIN_NAME 		= "GANGA DEL BAZAR"
-		BAZAARBARGAIN_DESC 		= " Al matar enemigos de la misma clase seguidos, aumenta la velocidad de disparo, hasta 3. Al matar una clase distinta se reinicia el combo."
+		BAZAARBARGAIN_DESC 		= "Al matar enemigos de la misma clase seguidos, aumenta la velocidad de disparo, hasta 3. Al matar una clase distinta se reinicia el combo."
 		//
 		FORTIFIEDCOMPOUND_NAME 	= "COMPUESTO FORTIFICADO"
-		FORTIFIEDCOMPOUND_DESC 	= " Hace menos daño que el Cazador, pero dispara más rápido, atraviesa y causa crítico en enemigos mojados."
+		FORTIFIEDCOMPOUND_DESC 	= "Hace menos daño que el Cazador, pero dispara más rápido, atraviesa y causa crítico en enemigos mojados."
 		//
 		CLASSIC_NAME 			= "CLÁSICO"
-		CLASSIC_DESC 			= " Dispara a la velocidad que puedas apretar el gatillo o carga un único disparo con capacidad explosiva que daña a todos los robots no gigantes cercanos."
+		CLASSIC_DESC 			= "Dispara a la velocidad que puedas apretar el gatillo o carga un único disparo con capacidad explosiva que daña a todos los robots no gigantes cercanos."
 		///
 		SMG_NAME 				= "METRALLETA"
-		SMG_DESC 				= " Permite disparar a la cabeza para causar más daño. Disparo secundario: Aumenta y mejora un 100 % la precisión, reduciendo la velocidad de disparo."
+		SMG_DESC 				= "Permite disparar a la cabeza para causar más daño. Disparo secundario: Aumenta y mejora un 100 % la precisión, reduciendo la velocidad de disparo."
 		//
 		RAZORBACK_NAME 			= "CAPARAZUMBADOR"
-		RAZORBACK_DESC 			= " Recarga muy rápido y aplica Fraskungfú a tu atacante."
+		RAZORBACK_DESC 			= "Recarga muy rápido y aplica Fraskungfú a tu atacante."
 		//
 		JARATE_NAME 			= "FRASKUNGFÚ"
-		JARATE_DESC 			= " Recarga instantánea, ralentiza al enemigo."
+		JARATE_DESC 			= "Recarga instantánea, ralentiza al enemigo."
 		//
 		DARWIN_NAME 			= "ESCUDO DE DARWIN"
-		DARWIN_DESC 			= " Casi inmune al daño por FUEGO, pero recibe un 50 % más de daño de BALAS y EXPLOSIONES."
+		DARWIN_DESC 			= "Casi inmune al daño por FUEGO, pero recibe un 50 % más de daño de BALAS y EXPLOSIONES."
 		//
 		COZYCAMPER_NAME 		= "CAMPISTA COMODÓN"
-		COZYCAMPER_DESC 		= " Aumenta levemente la velocidad de movimiento, la salud máxima y la regeneración de salud. Inmune a las quemaduras."
+		COZYCAMPER_DESC 		= "Aumenta levemente la velocidad de movimiento, la salud máxima y la regeneración de salud. Inmune a las quemaduras."
 		//
 		CLEANERSCARBINE_NAME 	= "CARABINA DEL LIMPIADOR"
-		CLEANERSCARBINE_DESC 	= " La bonificación de minicríticos dura 30 segundos."
+		CLEANERSCARBINE_DESC 	= "La bonificación de minicríticos dura 30 segundos."
 		//
 		BEAUTYMARK_NAME 		= "LUNAR AUTOCONSCIENTE"
-		BEAUTYMARK_DESC 		= " Hace caer fuego sagrado con flechas en llamas. Disparo secundario: Lanza un montón de flechas en llamas a la vez."
+		BEAUTYMARK_DESC 		= "Hace caer fuego sagrado con flechas en llamas. Disparo secundario: Lanza un montón de flechas en llamas a la vez."
 		///
 		KUKRI_NAME 				= "KUKRI"
-		KUKRI_DESC 				= " Una opción estándar para defensa y movilidad."
+		KUKRI_DESC 				= "Una opción estándar para defensa y movilidad."
 		//
 		TRIBALMANSSHIV_NAME 	= "CUCHILLA TRIBAL"
-		TRIBALMANSSHIV_DESC 	= " Artículo de utilidad: No tendrás gravedad y podrás volar libremente."
+		TRIBALMANSSHIV_DESC 	= "Artículo de utilidad: No tendrás gravedad y podrás volar libremente."
 		//
 		BUSHWACKA_NAME 			= "MACHETÓN"
-		BUSHWACKA_DESC 			= " Alcance cuerpo a cuerpo infinito y críticos contra enemigos en llamas."
+		BUSHWACKA_DESC 			= "Alcance cuerpo a cuerpo infinito y críticos contra enemigos en llamas."
 		//
 		SHAHANSHAH_NAME 		= "SHAHANSHAH"
-		SHAHANSHAH_DESC 		= " Usa el ataque principal para echar a volar, ideal para llegar a zonas altas. Además eres inmune al daño por caída."
+		SHAHANSHAH_DESC 		= "Usa el ataque principal para echar a volar, ideal para llegar a zonas altas. Además eres inmune al daño por caída."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		REVOLVER_NAME 			= "REVÓLVER"
-		REVOLVER_DESC 			= " Al impactar: Aplica varios efectos negativos, hace que los enemigos reciben más daño durante un tiempo, fuerza la Supercarga del Medic y quita el disfraz a los Spies robot. Puede aturdir a enemigos en el aire."
+		REVOLVER_DESC 			= "Al impactar: Aplica varios efectos negativos, hace que los enemigos reciben más daño durante un tiempo, fuerza la Supercarga del Medic y quita el disfraz a los Spies robot. Puede aturdir a enemigos en el aire."
 		//
 		AMBASSADOR_NAME 		= "EMBAJADORA"
-		AMBASSADOR_DESC 		= " Causa gran daño a la cabeza. Hace el doble de daño si no estás disfrazado."
+		AMBASSADOR_DESC 		= "Causa gran daño a la cabeza. Hace el doble de daño si no estás disfrazado."
 		//
 		LETRANGER_NAME 			= "EXTRANJERO"
-		LETRANGER_DESC 			= " Permite matar a cualquier robot no gigante de un disparo. No hace daño a gigantes ni tanques."
-		// TODO: Update! " Able to execute any non-giant in a single shot. Deals 2% damage to Giants, zero damage to Tanks."
+		LETRANGER_DESC 			= "Permite matar a cualquier robot no gigante de un disparo. Solo hace 2% de daño a Gigantes. No hace daño a Tanques."
 		//
 		ENFORCER_NAME 			= "EJECUTOR"
-		ENFORCER_DESC 			= " Ignora la resistencia al daño y almacen críticos por cada apuñalamiento o construcción destruida con un Zapador."
+		ENFORCER_DESC 			= "Ignora la resistencia al daño y almacen críticos por cada apuñalamiento o construcción destruida con un Zapador."
 		//
 		DIAMONDBACK_NAME 		= "DIAMONDBACK"
-		DIAMONDBACK_DESC 		= " Crea un agujero negro donde mete a los enemigos."
+		DIAMONDBACK_DESC 		= "Crea un agujero negro donde mete a los enemigos."
 		///
 		SAPPER_NAME 			= "ZAPADOR"
-		SAPPER_DESC 			= " Máxima duración y alcance de aturdimiento. Recarga rápida."
+		SAPPER_DESC 			= "Máxima duración y alcance de aturdimiento. Recarga rápida."
 		//
 		REDTAPE_NAME 			= "GRABADORA BUROCRÁTICA"
-		REDTAPE_DESC 			= " Destruye las construcciones del Engineer al instante, pero no puede sabotear más de una al mismo tiempo."
+		REDTAPE_DESC 			= "Destruye las construcciones del Engineer al instante, pero no puede sabotear más de una al mismo tiempo."
 		///
 		KNIFE_NAME 				= "MARIPOSA"
-		KNIFE_DESC 				= " Al empuñarla, la Mariposa consume tu salud pero da inmunidad a todos los daños. Al matar restauras tu salud."
+		KNIFE_DESC 				= "Al empuñarla, la Mariposa consume tu salud pero da inmunidad a todos los daños. Al matar restauras tu salud."
 		//
 		YOURETERNALREWARD_NAME 	= "TU ETERNA RECOMPENSA"
-		YOURETERNALREWARD_DESC 	= " El daño aumenta a medida que sufres daños, siendo críticos al bajar del 10 % de salud, pero solo de frente. Resiste un 90 % de daño."
-		// TODO: Update! " Extremely high backstab damage, able to instakill most Giants. However each attack has a high chance to miss. Grants a Teleport spell charge on kill (Requires Spellbook)."
+		YOURETERNALREWARD_DESC 	= "Daño extremadamente alto al apuñalar por la espalda, capaz de matar instantáneamente a la mayoría de Gigantes. Sin embargo, cada ataque tiene una alta probabilidad de fallar. Matar te otorga un hechizo de Teletransportación (requiere un Libro de Hechizos)."
 		//
 		KUNAI_NAME 				= "KUNAI DEL CONSPIRADOR"
-		KUNAI_DESC 				= " Alcance cuerpo a cuerpo infinito. Al apuñalar provoca una explosión, causando daño adicional a los enemigos cercanos."
+		KUNAI_DESC 				= "Alcance cuerpo a cuerpo infinito. Al apuñalar provoca una explosión, causando daño adicional a los enemigos cercanos."
 		//
 		BIGEARNER_NAME 			= "CABEZA DE FAMILIA"
-		BIGEARNER_DESC 			= " Tienes gran cantidad de salud y cada ataque al aire te cura rápidamente, aunque recibes daño de tus aliados."
-		// TODO: Update! " You have a massive amount of health and 'missed' swings cause you to heal. Gain a short burst of massively increased heal rate on kill (which can also build overheal). Cannot heal from any other sources."
+		BIGEARNER_DESC 			= "Tienes gran cantidad de salud y cada ataque al aire te cura. Al matar ganas un breve pero masivo effecto de regeneración que te puede sobrecurar. No puedes curarte de otras formas."
 		//
 		WANGAPRICK_NAME 		= "AGUIJÓN WANGA"
-		WANGAPRICK_DESC 		= " Al matar a un enemigo te haces invisible durante unos segundos. Puedes atacar mientras estás invisible y encadenar muertes te mantiene así. No tienes disfraces."
-		// TODO: Update! " Killing an enemy causes you to immediately enter stealth for a few seconds, however you cannot disguise. Grants a Cloak spell charge on kill (Requires Spellbook)."
+		WANGAPRICK_DESC 		= "Al matar a un enemigo entras en sigilo durante unos segundos, pero no puedes disfrazarte. Matar te otorga un hechizo de Invisibilidad (requiere un Libro de Hechizos)"
 		//
 		SHARPDRESSER_NAME 		= "MANGA AFILADA"
-		SHARPDRESSER_DESC 		= " Al apuñalar provoca una explosión, causando daño adicional a los enemigos cercanos."
+		SHARPDRESSER_DESC 		= "Al apuñalar provoca una explosión, causando daño adicional a los enemigos cercanos."
 		//
 		SPYCICLE_NAME 			= "APUNGELADOR"
-		SPYCICLE_DESC 			= " Al atacar al aire saltarás muy alto, pero no puedes disfrazarte. Causa daño adicional a robots gigantes al apuñalarlos."
+		SPYCICLE_DESC 			= "Al atacar al aire saltarás muy alto, pero no puedes disfrazarte. Causa daño adicional a robots gigantes al apuñalarlos."
 		///
 		INVISWATCH_NAME 		= "RELOJ DE INVISIBILIDAD"
-		INVISWATCH_DESC 		= " Invisibilidad infinita, +10 % de velocidad de movimiento."
+		INVISWATCH_DESC 		= "Invisibilidad infinita, +10 % de velocidad de movimiento."
 		//
 		DEADRINGER_NAME 		= "DUPLICANTE"
-		DEADRINGER_DESC 		= " Registra un breve aumento de velocidad al activarse, permitiendo correr en cualquier dirección. El daño recibido se reduce un 80 % al correr."
-		// TODO: Update! " Activate to gain super speed for several seconds. Invulnerable while active."
+		DEADRINGER_DESC 		= "Activarlo otorga supervelocidad e invulnerabilidad durante varios segundos."
 		//
 		CLOAKANDDAGGER_NAME		= "EMBOZADOR"
-		CLOAKANDDAGGER_DESC		= " Te hace invisible y quita la invisibilidad al instante."
-		// TODO: Update! " Activate to force enemies to ignore you. Able to attack while active."
-		// TODO: TRANSLATE THE BELOW
+		CLOAKANDDAGGER_DESC		= "Mientras está activo los enemigos te ignoran y no pierdes la capacidad de atacar."
+		//
 		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
-		QUACKENBIRDT_DESC 		= " Activate to gain flight. Able to attack while active. Grants immunity to fall damage."
+		QUACKENBIRDT_DESC 		= "Actívalo para mostrar la posición de los enemigos. Si tienes tu zapador en la mano, muestra a los aliados en su lugar."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		FRYINGPAN_NAME 				= "SARTÉN"
-		FRYINGPAN_DESC 				= " Causa x30 de daño a enemigos de la misma clase y otorga críticos al matar."
+		FRYINGPAN_DESC 				= "Causa x30 de daño a enemigos de la misma clase y otorga críticos al matar."
 		//
 		SAXXY_NAME 					= "SAXXY"
-		SAXXY_DESC 					= " Causa x30 de daño a enemigos de la misma clase y otorga críticos al matar."
+		SAXXY_DESC 					= "Causa x30 de daño a enemigos de la misma clase y otorga críticos al matar."
 		//
 		MEMORYMAKER_NAME 			= "INMORTALIZADOR"
-		MEMORYMAKER_DESC			= " Causa x30 de daño a enemigos de la misma clase y otorga críticos al matar."
+		MEMORYMAKER_DESC			= "Causa x30 de daño a enemigos de la misma clase y otorga críticos al matar."
 		//
 		CONOBJECTOR_NAME			= "OBJETOR DE CONCIENCIA"
-		CONOBJECTOR_DESC			= " Cada 10 víctimas, lanza un hechizo al azar (requiere Libro de Hechizos)."
+		CONOBJECTOR_DESC			= "Cada 10 víctimas, lanza un hechizo al azar (requiere Libro de Hechizos)."
 		//
 		FREEDOMSTAFF_NAME 			= "BASTÓN DE LA LIBERTAD"
-		FREEDOMSTAFF_DESC 			= " Pequeña probabilidad de recibir daño para esquivar el ataque y recibir una Supercarga durante 3 segundos."
+		FREEDOMSTAFF_DESC 			= "Pequeña probabilidad de recibir daño para esquivar el ataque y recibir una Supercarga durante 3 segundos."
 		//
 		BATOUTTAHELL_NAME 			= "BATE DEL INFIERNO"
-		BATOUTTAHELL_DESC 			= " Al empuñarlo, eres invlunerable a cualquier daño y generas un exceso de curación, pero serás totalmente vulnerable al empuje por retroceso."
+		BATOUTTAHELL_DESC 			= "Al empuñarlo, eres invlunerable a cualquier daño y generas un exceso de curación, pero serás totalmente vulnerable al empuje por retroceso."
 		//
 		HAMSHANK_NAME 				= "MUSLO DE JAMÓN"
-		HAMSHANK_DESC 				= " Habilidad especial: «Resurgimiento vital». Al empuñarlo, pulsa tu tecla de acción para ganar x10 de exceso de curación al instante y hacerte inmune al retroceso durante 20 segundos."
+		HAMSHANK_DESC 				= "Habilidad especial: «Resurgimiento vital». Al empuñarlo, pulsa tu tecla de acción para ganar x10 de exceso de curación al instante y hacerte inmune al retroceso durante 20 segundos."
 		//
 		NECROSMASHER_NAME 			= "NECROMACHACADOR"
-		NECROSMASHER_DESC 			= " Habilidad especial: «Mannsacrew sobre ruedas». Al empuñarlo, pulsa tu tecla de acción para conducir un coche de choque. Mientras conduces eres invulnerable, regeneras salud y puede atropellar enemigos."
+		NECROSMASHER_DESC 			= "Habilidad especial: «Mannsacrew sobre ruedas». Al empuñarlo, pulsa tu tecla de acción para conducir un coche de choque. Mientras conduces eres invulnerable, regeneras salud y puede atropellar enemigos."
 		//
 		CROSSINGGAURD_NAME 			= "TORTAZO A NIVEL"
-		CROSSINGGAURD_DESC 			= " Otorga gran resistencia a ataques cuerpo a cuerpo, incluyendo apuñalamientos."
+		CROSSINGGAURD_DESC 			= "Otorga gran resistencia a ataques cuerpo a cuerpo, incluyendo apuñalamientos."
 		//
 		PRINNYMACHETE_NAME 			= "MACHETE PRINNY"
-		PRINNYMACHETE_DESC 			= " Artículo de utilidad: Ataca con el arma para avanzar con gran velocidad. Otorga inmunidad al daño por caída."
+		PRINNYMACHETE_DESC 			= "Artículo de utilidad: Ataca con el arma para avanzar con gran velocidad. Otorga inmunidad al daño por caída."
 		//------------------------------------
 	}
 	// tchinese is lacking and maybe needs to be redone
@@ -5596,7 +5560,7 @@ if ("SetScriptVersion" in getroottable())
 		BACKBURNER_NAME 		= "背後火焰發射器"
 		BACKBURNER_DESC			= "綠焰：打上死亡標記且能短暫擊暈空中敵人. 對火焰兵機器人傷害加倍."
 		//
-		DEGREASER_NAME 			= " 除油者"
+		DEGREASER_NAME 			= "除油者"
 		DEGREASER_DESC			= "能造成高額直擊傷害的長距離火焰噴射器, 但餘火傷害歸零. 此火焰噴射器無法壓縮氣爆."
 		//
 		PHLOGISTINATOR_NAME 	= "燃素噴射器"
@@ -6017,7 +5981,7 @@ if ("SetScriptVersion" in getroottable())
 		// TODO: Update! " Activate to force enemies to ignore you. Able to attack while active."
 		// TODO: TRANSLATE THE BELOW
 		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
-		QUACKENBIRDT_DESC 		= " Activate to gain flight. Able to attack while active. Grants immunity to fall damage."
+		QUACKENBIRDT_DESC 		= "Activate to gain flight. Able to attack while active. Grants immunity to fall damage."
 		//----------------------------
 		//----------------------------
 		//----------------------------
