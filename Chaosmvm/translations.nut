@@ -22,7 +22,7 @@ if (!("CHECKPOINT_ERROR" in getroottable()))
 	::CHECKPOINT_ERROR <- "\x07bf4137"
 
 if ("SetScriptVersion" in getroottable())
-	SetScriptVersion("Translations", "1.7.1")
+	SetScriptVersion("Translations", "1.7.2")
 
 ::TRANSLATION_TABLE <- {
 	english = {
