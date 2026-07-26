@@ -6,7 +6,7 @@ SetScriptVersion("longbow_sentry", "2.0.2")
 
 ///// Events! /////
 ::longbow_events <- {
-	function OnScriptEvent_HumanSpawn(params)
+	function OnScriptEvent_HumanSpawn( params )
 	{
 		local player = params.player
 		if (player.HookAdditiveAttributes("longbow buildings") == 0)

@@ -9,7 +9,7 @@ SetScriptVersion("WaveSave", "1.0.3")
 if (!("CheckpointCommand" in ROOT))
 	::CheckpointCommand <- ""
 
-::WaveVoteCallback <- function(player, ...) {
+::WaveVoteCallback <- function( player, ... ) {
 
 	local ret = ReadCheckpoint(player)
 
@@ -80,7 +80,7 @@ function LoadCheckpointCMD()
 }
 
 
-function ReadCheckpoint(player)
+function ReadCheckpoint( player )
 {
 	local file = GetFileInfo()
 
@@ -131,7 +131,7 @@ function ReadCheckpoint(player)
 	return saved_wave
 }
 
-function SaveWaveData(Reset = false)
+function SaveWaveData( Reset = false )
 {
 	local save 		= ""
 	local wave 		= GetCurrentWaveNumber()
@@ -175,7 +175,7 @@ LoadCheckpointCMD()
 
 if ("WaveSaving" in ROOT) ::WaveSaving.clear()
 ::WaveSaving <- {
-	function OnScriptEvent_WaveComplete(_)
+	function OnScriptEvent_WaveComplete( _ )
 	{
 		RunWithDelay(0.1, @() WaveEndLogic())
 	}

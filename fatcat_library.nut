@@ -1,3 +1,14 @@
+// Remember to use VSCode's Regex with these
+
+// This will add spaces between opening and closing parentheses
+// Find: ^(?!.*\\b)(.*?\bfunction\b.*?\()(\S(?:.*?\S)?)\)
+// Replace: $1 $2 )
+
+// This will add spaces after commas
+// Find: ^(?!.*\\b)(.*?\bfunction\b.*?\(.+?,)(\S)
+// Replace: $1 $2
+
+
 ::CONST <- getconsttable()
 ::ROOT <- getroottable()
 
@@ -12,7 +23,7 @@
 {
 	ROOT.__DoIncludeScript <- DoIncludeScript
 
-	function ROOT::DoIncludeScript(file, scope = null)
+	function ROOT::DoIncludeScript( file, scope = null )
 	{
 		if (file != "fatcat_library")
 		{
@@ -30,7 +41,7 @@
 // Use example below
 // ALWAYS validate the player
 /**@param {CTFPlayer} player */
-// function ROOT::MOTD_FUNC(player)
+// function ROOT::MOTD_FUNC( player )
 // {
 // 	if (!IsValidPlayer(player))
 // 		return
@@ -82,7 +93,7 @@ function ROOT::IsTF2C()
  */
 
 // lib_version is the current installment of this version
-function ROOT::SetLibraryVersion(lib_version, subversion = 0, fail_msg = true, force_include = false)
+function ROOT::SetLibraryVersion( lib_version, subversion = 0, fail_msg = true, force_include = false )
 {
 	local force = false
 	if ("FatCatLibForce" in ROOT)
@@ -144,7 +155,7 @@ function ROOT::SetLibraryVersion(lib_version, subversion = 0, fail_msg = true, f
 if (!("FatCatLibScriptsVersion" in ROOT))
 	::FatCatLibScriptsVersion <- {}
 
-function ROOT::SetScriptVersion(item, version)
+function ROOT::SetScriptVersion( item, version )
 	FatCatLibScriptsVersion[item] <- version
 
 ::ValidLibrarySettings <- {
@@ -172,7 +183,7 @@ function ROOT::SetScriptVersion(item, version)
 	"TestPurgeString" : false
 }
 
-function IsValidSetting(setting)
+function IsValidSetting( setting )
 	return setting in ValidLibrarySettings
 
 function ROOT::ReloadLibrary()
@@ -186,7 +197,7 @@ function ROOT::ReloadLibrary()
 		ToggleForceFlag(false)
 }
 
-function ROOT::SetLibrarySettings(settings_table = {})
+function ROOT::SetLibrarySettings( settings_table = {} )
 {
 	if (!("FatCatLibSettings" in ROOT))
 	{
@@ -262,7 +273,7 @@ if (!("FoldedNetProps" in ROOT)) // make sure folding is only done once
  * @param {integer} value
  * @param {integer} index
  */
-function ROOT::SetPropInt(entity, prop, value, index = 0)
+function ROOT::SetPropInt( entity, prop, value, index = 0 )
 {
 	EnableStringPurge(entity)
 	NetProps.SetPropIntArray(entity, prop, value, index)
@@ -274,7 +285,7 @@ function ROOT::SetPropInt(entity, prop, value, index = 0)
  * @param {integer} index
  * @returns {integer} -1 if not found
  */
-function ROOT::GetPropInt(entity, prop, index = 0)
+function ROOT::GetPropInt( entity, prop, index = 0 )
 {
 	EnableStringPurge(entity)
 	return NetProps.GetPropIntArray(entity, prop, index)
@@ -286,7 +297,7 @@ function ROOT::GetPropInt(entity, prop, index = 0)
  * @param {float} value
  * @param {integer} index
  */
-function ROOT::SetPropFloat(entity, prop, value, index = 0)
+function ROOT::SetPropFloat( entity, prop, value, index = 0 )
 {
 	EnableStringPurge(entity)
 	NetProps.SetPropFloatArray(entity, prop, value, index)
@@ -298,7 +309,7 @@ function ROOT::SetPropFloat(entity, prop, value, index = 0)
  * @param {integer} index
  * @returns {float} -1.0 if not found
  */
-function ROOT::GetPropFloat(entity, prop, index = 0)
+function ROOT::GetPropFloat( entity, prop, index = 0 )
 {
 	EnableStringPurge(entity)
 	return NetProps.GetPropFloatArray(entity, prop, index)
@@ -310,7 +321,7 @@ function ROOT::GetPropFloat(entity, prop, index = 0)
  * @param {CBaseEntity} value
  * @param {integer} index
  */
-function ROOT::SetPropEntity(entity, prop, value, index = 0)
+function ROOT::SetPropEntity( entity, prop, value, index = 0 )
 {
 	EnableStringPurge(entity)
 	EnableStringPurge(value)
@@ -323,7 +334,7 @@ function ROOT::SetPropEntity(entity, prop, value, index = 0)
  * @param {integer} index
  * @returns {CBaseEntity|null} null if not found
  */
-function ROOT::GetPropEntity(entity, prop, index = 0)
+function ROOT::GetPropEntity( entity, prop, index = 0 )
 {
 	EnableStringPurge(entity)
 	local new_ent = NetProps.GetPropEntityArray(entity, prop, index)
@@ -338,7 +349,7 @@ function ROOT::GetPropEntity(entity, prop, index = 0)
  * @param {string} value
  * @param {integer} index
  */
-function ROOT::SetPropString(entity, prop, value, index = 0)
+function ROOT::SetPropString( entity, prop, value, index = 0 )
 {
 	EnableStringPurge(entity)
 	NetProps.SetPropStringArray(entity, prop, value, index)
@@ -350,7 +361,7 @@ function ROOT::SetPropString(entity, prop, value, index = 0)
  * @param {integer} index
  * @returns {string} "" if not found
  */
-function ROOT::GetPropString(entity, prop, index = 0)
+function ROOT::GetPropString( entity, prop, index = 0 )
 {
 	EnableStringPurge(entity)
 	return NetProps.GetPropStringArray(entity, prop, index)
@@ -362,7 +373,7 @@ function ROOT::GetPropString(entity, prop, index = 0)
  * @param {bool} value
  * @param {integer} index
  */
-function ROOT::SetPropBool(entity, prop, value, index = 0)
+function ROOT::SetPropBool( entity, prop, value, index = 0 )
 {
 	EnableStringPurge(entity)
 	NetProps.SetPropBoolArray(entity, prop, value, index)
@@ -374,7 +385,7 @@ function ROOT::SetPropBool(entity, prop, value, index = 0)
  * @param {integer} index
  * @returns {bool} false if not found
  */
-function ROOT::GetPropBool(entity, prop, index = 0)
+function ROOT::GetPropBool( entity, prop, index = 0 )
 {
 	EnableStringPurge(entity)
 	return NetProps.GetPropBoolArray(entity, prop, index)
@@ -386,7 +397,7 @@ function ROOT::GetPropBool(entity, prop, index = 0)
  * @param {Vector} value
  * @param {integer} index
  */
-function ROOT::SetPropVector(entity, prop, value, index = 0)
+function ROOT::SetPropVector( entity, prop, value, index = 0 )
 {
 	EnableStringPurge(entity)
 	NetProps.SetPropVectorArray(entity, prop, value, index)
@@ -398,7 +409,7 @@ function ROOT::SetPropVector(entity, prop, value, index = 0)
  * @param {integer} index
  * @returns {Vector|instance} Vector(0,0,0) if not found
  */
-function ROOT::GetPropVector(entity, prop, index = 0)
+function ROOT::GetPropVector( entity, prop, index = 0 )
 {
 	EnableStringPurge(entity)
 	return NetProps.GetPropVectorArray(entity, prop, index)
@@ -409,7 +420,7 @@ function ROOT::GetPropVector(entity, prop, index = 0)
  * @param {string} prop
  * @returns {bool}
  */
-function ROOT::HasProp(entity, prop)
+function ROOT::HasProp( entity, prop )
 {
 	EnableStringPurge(entity)
 	return NetProps.HasProp(entity, prop)
@@ -771,10 +782,10 @@ BONUS_EFFECT_REMAP[kBonusEffect_Stomp] 					= BONUS_EFFECT_STOMP
 ::TF_DMG_CUSTOM_NO_CALLBACKS_IGNORE 	<- (TF_DMG_CUSTOM_IGNORE_EVENTS|TF_DMG_CUSTOM_NO_CALLBACKS)
 ::TF_DMG_CUSTOM_IGNORE_INTERNAL 		<- (1<<31)
 
-function ROOT::IsCustomFlags(dmg_custom)
+function ROOT::IsCustomFlags( dmg_custom )
 	return dmg_custom >= (1<<7)
 
-function ROOT::HasCustomFlag(dmg_custom, flag)
+function ROOT::HasCustomFlag( dmg_custom, flag )
 	return IsCustomFlags(dmg_custom) && (dmg_custom & flag)
 
 ////////// RUNES
@@ -795,7 +806,7 @@ function ROOT::HasCustomFlag(dmg_custom, flag)
 /**
  * @param {integer} rune
  */
-function ROOT::GetRuneCondition(rune)
+function ROOT::GetRuneCondition( rune )
 {
 	switch (rune)
 	{
@@ -1109,10 +1120,10 @@ class color32 {
 if (!("MissionMakers" in ROOT))
 	::MissionMakers <- []
 
-function ROOT::AddMissionMaker(id)
+function ROOT::AddMissionMaker( id )
 	MissionMakers.append(id)
 
-function ROOT::RemoveMissionMaker(id)
+function ROOT::RemoveMissionMaker( id )
 {
 	if (MissionMakers.find(id))
 		MissionMakers.remove(MissionMakers.find(id))
@@ -1131,29 +1142,29 @@ function ROOT::RemoveMissionMaker(id)
 /**
  * @param {string} cvar
  */
-function ROOT::IsConvarAllowed(cvar)
+function ROOT::IsConvarAllowed( cvar )
 	return Convars.IsConVarOnAllowList(cvar)
 
 ROOT.IsCvarAllowed <- ROOT.IsConvarAllowed
 /**
  * @param {string} cvar
  */
-function ROOT::GetCvarFloat(cvar)
+function ROOT::GetCvarFloat( cvar )
 	return Convars.GetFloat(cvar)
 /**
  * @param {string} cvar
  */
-function ROOT::GetCvarBool(cvar)
+function ROOT::GetCvarBool( cvar )
 	return Convars.GetBool(cvar)
 /**
  * @param {string} cvar
  */
-function ROOT::GetCvarInt(cvar)
+function ROOT::GetCvarInt( cvar )
 	return Convars.GetInt(cvar)
 /**
  * @param {string} cvar
  */
-function ROOT::GetCvarStr(cvar)
+function ROOT::GetCvarStr( cvar )
 {
 	local ret = Convars.GetStr(cvar)
 	if (ret == "hunter2")
@@ -1162,7 +1173,7 @@ function ROOT::GetCvarStr(cvar)
 }
 ROOT.GetCvarString <- ROOT.GetCvarStr
 
-function ROOT::GetClientConVar(cvar, entindex)
+function ROOT::GetClientConVar( cvar, entindex )
 	return Convars.GetClientConvarValue(cvar, entindex)
 
 
@@ -1170,7 +1181,7 @@ function ROOT::GetClientConVar(cvar, entindex)
  * @param {string} convar
  * @param {any} value
  */
-function ROOT::SetCvar(convar, value, admin_notify = false, notify_all = false)
+function ROOT::SetCvar( convar, value, admin_notify = false, notify_all = false )
 {
 	local PrintToChatAll = @(m) ("PrintToChatAll" in ROOT ? PrintToChatAll(m) : ClientPrint(null, 3, m))
 	local PrintToAdmins = @(l, m) ("PrintToAdmins" in ROOT ? PrintToAdmins(l, m) : ClientPrint(null, 2, m))
@@ -1220,22 +1231,22 @@ catch (e)
   ======================
 */
 ///////////////////////////////////////
-function CTFPlayer::PrintToHud(message = "") // add default so it wont print "NULL" if left blank
+function CTFPlayer::PrintToHud( message = "" ) // add default so it wont print "NULL" if left blank
 	PrintBetter(this, message, HUD_PRINTCENTER)
 
-function CTFPlayer::PrintToChat(message = "")
+function CTFPlayer::PrintToChat( message = "" )
 	PrintBetter(this, message, HUD_PRINTTALK)
 
-function CTFPlayer::PrintToConsole(message = "")
+function CTFPlayer::PrintToConsole( message = "" )
 	PrintBetter(this, message, HUD_PRINTCONSOLE)
 
-function CTFPlayer::PrintToHudF(message, ...)
+function CTFPlayer::PrintToHudF( message, ... )
 	PrintBetter(this, CleanUpAndFormatString.acall([this, message ? message : "null"].extend(vargv)), HUD_PRINTCENTER)
 
-function CTFPlayer::PrintToChatF(message, ...)
+function CTFPlayer::PrintToChatF( message, ... )
 	PrintBetter(this, CleanUpAndFormatString.acall([this, message ? message : "null"].extend(vargv)), HUD_PRINTTALK)
 
-function CTFPlayer::PrintToConsoleF(message, ...)
+function CTFPlayer::PrintToConsoleF( message, ... )
 	PrintBetter(this, CleanUpAndFormatString.acall([this, message ? message : "null"].extend(vargv)), HUD_PRINTCONSOLE)
 
 function CTFPlayer::IsOnGround()
@@ -1254,7 +1265,7 @@ function CTFPlayer::GetHealers()
 	return GetPropInt(this, "m_Shared.m_nNumHealers")
 
 /** @param {integer} index */
-function CTFPlayer::GetAmmoByIndex(index)
+function CTFPlayer::GetAmmoByIndex( index )
 	return GetPropInt(this, PROP_PLAYER_AMMO, index)
 
 function CTFPlayer::GetPrimaryAmmo()
@@ -1276,38 +1287,38 @@ function CTFPlayer::EyeVector()
 	return EyeAngles().Forward()
 
 /** @param {float} offset */
-function CTFPlayer::GetFrontOffset(offset)
+function CTFPlayer::GetFrontOffset( offset )
 	return GetOrigin() + (EyeVector() * offset)
 
 /** @param {float} offset */
-function CTFPlayer::GetEyeOffset(offset)
+function CTFPlayer::GetEyeOffset( offset )
 	return EyePosition() + (EyeVector() * offset)
 
 /** @param {integer} button */
-function CTFPlayer::IsPressingButton(button)
+function CTFPlayer::IsPressingButton( button )
 	return ( GetPropInt(this, "m_nButtons") & button ) ? true : false
 
 /**
  * @deprecated Use GetWeaponInSlotNew instead
  */
-function CTFPlayer::GetWeaponInSlot(slot = 0)
-	return EnableStringPurge(GetPropEntityArray(this, "m_hMyWeapons", slot))
+function CTFPlayer::GetWeaponInSlot( slot = 0 )
+	return GetPropEntity(this, "m_hMyWeapons", slot)
 
 /** 
  * @param {integer} index 
  * @param {integer} ammo 
 */
-function CTFPlayer::SetAmmoByIndex(index, ammo)
+function CTFPlayer::SetAmmoByIndex( index, ammo )
 	SetPropInt(this, PROP_PLAYER_AMMO, ammo, index)
 
 /** @param {integer} ammo */
-function CTFPlayer::SetPrimaryAmmo(ammo)
+function CTFPlayer::SetPrimaryAmmo( ammo )
 	SetPropInt(this, PROP_PLAYER_AMMO, ammo, 1)
 /** @param {integer} ammo */
-function CTFPlayer::SetSecondaryAmmo(ammo)
+function CTFPlayer::SetSecondaryAmmo( ammo )
 	SetPropInt(this, PROP_PLAYER_AMMO, ammo, 2)
 /** @param {integer} metal */
-function CTFPlayer::SetMetal(metal)
+function CTFPlayer::SetMetal( metal )
 	SetPropInt(this, PROP_PLAYER_AMMO, metal, 3)
 
 function CTFPlayer::ResetHealth()
@@ -1316,10 +1327,10 @@ function CTFPlayer::ResetHealth()
 function CTFPlayer::ResetColor()
 	AcceptInput("Color", "255 255 255", this, this)
 
-function CTFPlayer::SetColor(color = "255 255 255")
+function CTFPlayer::SetColor( color = "255 255 255" )
 	AcceptInput("Color", color, this, this)
 
-function CTFPlayer::SetScale(scale = 1.0)
+function CTFPlayer::SetScale( scale = 1.0 )
 	SetModelScale(scale, 0)
 
 function CTFPlayer::GetHeads()
@@ -1334,17 +1345,17 @@ function CTFPlayer::AddHeads( num )
 function CTFPlayer::IsDead()
 	return !IsAlive()
 
-function CTFPlayer::MultiplyGravity(mult)
+function CTFPlayer::MultiplyGravity( mult )
 	SetGravity(GetGravity() * mult)
 
-function CTFPlayer::PlayerFire(action = "", input = "", delay = -1, activator = this, caller = this)
+function CTFPlayer::PlayerFire( action = "", input = "", delay = -1, activator = this, caller = this )
 	EntFireNew(this, action, input, delay, activator, caller)
 
 /** 
  * @param {string} input 
  * @param {float} delay 
 */
-function CTFPlayer::RunScriptCode(input, delay = -1)
+function CTFPlayer::RunScriptCode( input, delay = -1 )
 	RunWithDelay(delay, this.compilestring(input, "Input__runscriptcode"))
 
 function CTFPlayer::GetGroundEntity()
@@ -1365,13 +1376,13 @@ function CTFPlayer::IsReprogrammed()
 function CTFPlayer::IsBot()
 	return false
 
-function CTFPlayer::SetFoodItemCharge(charge)
+function CTFPlayer::SetFoodItemCharge( charge )
 	SetPropFloat(this, "m_Shared.m_flItemChargeMeter", charge, 1)
 
-function CTFPlayer::TakeUnblockableDamage(damage, attacker = Entities.First(), inflictor = this, weapon = this)
+function CTFPlayer::TakeUnblockableDamage( damage, attacker = Entities.First( ), inflictor = this, weapon = this)
 	TakeDamageCustom(inflictor, attacker, weapon, Vector(0, 0, 1), GetOrigin(), damage, DMG_GENERIC|DMG_PREVENT_PHYSICS_FORCE, TF_DMG_CUSTOM_TRIGGER_HURT)
 
-function CTFPlayer::SetCond(cond, duration = -1)
+function CTFPlayer::SetCond( cond, duration = -1 )
 	AddCondEx(cond, duration, this)
 
 function CTFPlayer::GetTrackedDamage()
@@ -1395,18 +1406,18 @@ function CTFPlayer::SetTrackedTankDamage( damage = 0 )
 /**
  * @param {float|integer} percent
  */
-function CTFPlayer::GetPercentHealth(percent)
+function CTFPlayer::GetPercentHealth( percent )
 	return GetHealth() * (percent / 100)
 /**
  * @param {float|integer} percent
  */
-function CTFPlayer::GetPercentMaxHealth(percent)
+function CTFPlayer::GetPercentMaxHealth( percent )
 	return GetMaxBuffedHealth().tofloat() * (percent.tofloat() / 100)
 
 /**
  * @param {integer} rune
  */
-function CTFPlayer::HasRune(rune)
+function CTFPlayer::HasRune( rune )
 	return GetCurrentRune() == rune
 
 /**
@@ -1426,7 +1437,7 @@ function CTFPlayer::GetDemomanChargeMeter()
 /** 
  * @param {float} num
  */
-function CTFPlayer::SetDemomanChargeMeter(num)
+function CTFPlayer::SetDemomanChargeMeter( num )
 	SetPropFloat(this, "m_Shared.m_flChargeMeter", num)
 
 /** 
@@ -1437,13 +1448,13 @@ function CTFPlayer::GetRuneCharge()
 /** 
  * @param {float} num
  */
-function CTFPlayer::SetRuneCharge(num)
+function CTFPlayer::SetRuneCharge( num )
 	SetPropFloat(this, "m_Shared.m_flRuneCharge", num)
 
 /**
  * @param {integer} playerclass
  */
-function CTFPlayer::IsPlayerClass(playerclass)
+function CTFPlayer::IsPlayerClass( playerclass )
 	return GetPlayerClass() == playerclass
 
 function CTFPlayer::GetDisguiseClass() 
@@ -1452,12 +1463,12 @@ function CTFPlayer::GetDisguiseClass()
 /**
  * @param {integer} amount
  */
-function CTFPlayer::AddHealth(amount)
+function CTFPlayer::AddHealth( amount )
 	SetHealth(GetHealth()+amount)
 /**
  * @param {integer} amount
  */
-function CTFPlayer::RemoveHealth(amount)
+function CTFPlayer::RemoveHealth( amount )
 	SetHealth(GetHealth()-amount)
 	
 function CTFPlayer::IsMedicButtonDown()
@@ -1466,7 +1477,7 @@ function CTFPlayer::IsMedicButtonDown()
 function CTFPlayer::GetChatColor()
 	return (GetTeam() == TF_TEAM_RED) ? TF_TEAM_COLOR_RED : (GetTeam() == TF_TEAM_BLUE ? TF_TEAM_COLOR_BLUE : "")
 
-function CTFPlayer::SetThrowableAmmo(ammo)
+function CTFPlayer::SetThrowableAmmo( ammo )
 	SetPropInt(this, PROP_PLAYER_AMMO, ammo, TF_AMMO_GRENADES2)
 
 /**
@@ -1482,7 +1493,7 @@ function CTFPlayer::InAnyRespawnRoom()
  * 
  * @deprecated Loop over the `m_aHumans` array and filter by range
  */
-function CTFPlayer::GetEveryHumanWithin(range, include_me = false)
+function CTFPlayer::GetEveryHumanWithin( range, include_me = false )
 	return include_me ? GetAllPlayers(TF_TEAM_PVE_DEFENDERS, range ? [GetOrigin(), range] : range, false) : GetAllPlayers(TF_TEAM_PVE_DEFENDERS, [GetOrigin(), range], false).filter(@(_, value) value != this)
 /**
  * @param {float} range
@@ -1490,7 +1501,7 @@ function CTFPlayer::GetEveryHumanWithin(range, include_me = false)
  * 
  * @deprecated Loop over the `Players` array and filter by range
  */
-function CTFPlayer::GetEveryPlayerWithin(range, include_me = false)
+function CTFPlayer::GetEveryPlayerWithin( range, include_me = false )
 	return include_me ? GetAllPlayers(false, range ? [GetOrigin(), range] : range, false) : GetAllPlayers(false, range ? [GetOrigin(), range] : range, false).filter(@(_, value) value != this)
 
 /**
@@ -1499,7 +1510,7 @@ function CTFPlayer::GetEveryPlayerWithin(range, include_me = false)
  * 
  * @deprecated Loop over the `m_aBots` array and filter by range
  */
-function CTFPlayer::GetEveryBotWithin(range)
+function CTFPlayer::GetEveryBotWithin( range )
 	return GetAllPlayers(TF_TEAM_PVE_INVADERS, [GetOrigin(), range], false).extend(GetAllPlayers(TF_TEAM_PVE_INVADERS_GIANTS, [GetOrigin(), range], false))
 
 /**
@@ -1520,27 +1531,27 @@ function CTFPlayer::ResetMetal()
 /** 
  * @param {float|integer} percent
  */
-function CTFPlayer::GivePercentPrimaryAmmo(percent)
+function CTFPlayer::GivePercentPrimaryAmmo( percent )
 	GivePercentAmmo(TF_AMMO_PRIMARY, percent)
 /** 
  * @param {float|integer} percent
  */
-function CTFPlayer::GivePercentSecondaryAmmo(percent)
+function CTFPlayer::GivePercentSecondaryAmmo( percent )
 	GivePercentAmmo(TF_AMMO_SECONDARY, percent)
 /** 
  * @param {float|integer} percent
  */
-function CTFPlayer::GivePercentMetal(percent)
+function CTFPlayer::GivePercentMetal( percent )
 	GivePercentAmmo(TF_AMMO_METAL, percent)
 /** 
  * @param {float|integer} percent
  */
-function CTFPlayer::GivePercentGrenadesAmmo(percent)
+function CTFPlayer::GivePercentGrenadesAmmo( percent )
 	GivePercentAmmo(TF_AMMO_GRENADES1, percent)
 /**
  * @param {bool} bool
  */
-function CTFPlayer::ToggleGlow(bool)
+function CTFPlayer::ToggleGlow( bool )
 	SetPropBool(this, "m_bGlowEnabled", bool)
 /**
  * @returns {string}
@@ -1552,22 +1563,22 @@ function CTFPlayer::GetLanguage()
  * @param {string} name
  * @param {string} description
  */
-function CTFPlayer::IHTranslateToChat(name, description)
+function CTFPlayer::IHTranslateToChat( name, description )
 	TranslateToChat("IH_TRANSLATE_ITEM", "%T" + name, "%T" + description)
 /**
  * @param {string} item
  */
-function CTFPlayer::IHTranslateToChat2(item)
+function CTFPlayer::IHTranslateToChat2( item )
 	TranslateToChat("IH_TRANSLATE_ITEM", "%T" + item+"_NAME", "%T" + item+"_DESC")
 /** 
  * Translates a message to the players hud
  */
-function CTFPlayer::TranslateToHud(...)
+function CTFPlayer::TranslateToHud( ... )
 	PrintToHud(GetTranslatedAndFormattedString.acall([this].extend(vargv)))
 /** 
  * Translates a message to the players chat
  */
-function CTFPlayer::TranslateToChat(...)
+function CTFPlayer::TranslateToChat( ... )
 	PrintToChat(GetTranslatedAndFormattedString.acall([this].extend(vargv)))
 
 /**
@@ -1637,13 +1648,13 @@ CTFPlayer.GenerateAndWearItem <- CTFBot.GenerateAndWearItem
 	Multiline Functions
  */
 
-function CTFPlayer::GetWeaponIDXInSlot(slot)
+function CTFPlayer::GetWeaponIDXInSlot( slot )
 { 
 	local weapon = GetWeaponInSlotNew(slot)
 	return weapon ? weapon.GetIDX() : -1 
 }
 
-function CTFPlayer::GetWeaponIDXInSlotNew(slot)
+function CTFPlayer::GetWeaponIDXInSlotNew( slot )
 { 
 	local weapon = GetWeaponInSlotNew(slot)
 	return weapon ? weapon.GetIDX() : -1  
@@ -1676,9 +1687,9 @@ if (!("__ORIGINAL_RemoveCondEx" in CTFPlayer))
 {
 	CTFPlayer.__ORIGINAL_RemoveCondEx <- CTFPlayer.RemoveCondEx
 	CTFBot.__ORIGINAL_RemoveCondEx <- CTFBot.RemoveCondEx
-	function CTFPlayer::RemoveCondEx(cond, ignoreDuration = true)
+	function CTFPlayer::RemoveCondEx( cond, ignoreDuration = true )
 		__ORIGINAL_RemoveCondEx(cond, ignoreDuration)
-	function CTFBot::RemoveCondEx(cond, ignoreDuration = true)
+	function CTFBot::RemoveCondEx( cond, ignoreDuration = true )
 		__ORIGINAL_RemoveCondEx(cond, ignoreDuration)
 }
 
@@ -1749,7 +1760,7 @@ function CTFPlayer::GetRuneResistance()
 	else return 1.0
 }
 
-function CTFPlayer::IsValidReprogramTarget(medics = false)
+function CTFPlayer::IsValidReprogramTarget( medics = false )
 {
 	if (!IsBot())
 		return false
@@ -1768,7 +1779,7 @@ function CTFPlayer::Suicide()
 	TakeUnblockableDamage(INT_MAX) 
 }
 
-function CTFPlayer::AddThrowableCharge(charge)
+function CTFPlayer::AddThrowableCharge( charge )
 {
 	local secondary = GetWeaponInSlotNew(SLOT_SECONDARY)
 	local def_time = secondary.GetDefaultChargeTime()
@@ -1781,7 +1792,7 @@ function CTFPlayer::AddThrowableCharge(charge)
 	secondary.SetChargeTime(secondary.GetChargeTime() - percent_time)
 }
 
-function CTFPlayer::SetThrowableCharge(charge)
+function CTFPlayer::SetThrowableCharge( charge )
 {
 	local secondary = GetWeaponInSlotNew(SLOT_SECONDARY)
 	local def_time = secondary.GetDefaultChargeTime()
@@ -1822,7 +1833,7 @@ function CTFPlayer::GetAbilityWeapons()
 	return weapons.len() == 0 ? null : weapons
 }
 
-function CTFPlayer::ForceTaunt(taunt_id)
+function CTFPlayer::ForceTaunt( taunt_id )
 {
 	local weapon = CreateByClassname("tf_weapon_bat")
 	local active_weapon = GetActiveWeapon()
@@ -1850,7 +1861,7 @@ function CTFPlayer::GetMyWeaponsArray()
  * @param {integer} slot
  * @returns {CTFWeaponBase|null}
  */
-function CTFPlayer::GetWeaponInSlotNew(slot)
+function CTFPlayer::GetWeaponInSlotNew( slot )
 {
 	if (!IsValid() || !this)
 		return null
@@ -1918,7 +1929,7 @@ function CTFPlayer::GetSpellBook()
 	return null
 }
 
-function CTFPlayer::InRespawnRoom(any = false)
+function CTFPlayer::InRespawnRoom( any = false )
 {	
 	// does not solve if touching any though ....
 	return GetPropInt(this, "m_Shared.m_iSpawnRoomTouchCount")
@@ -1935,7 +1946,7 @@ function CTFPlayer::InRespawnRoom(any = false)
 			hullmin = GetPlayerMins()
 			hullmax = GetPlayerMaxs()
 			mask = CONTENTS_SOLID,
-			filter = function(entity)
+			filter = function( entity )
 			{
 				if (entity.GetClassname() != "func_respawnroom")
 					return TRACE_CONTINUE
@@ -1962,7 +1973,7 @@ function CTFPlayer::InRespawnRoom(any = false)
  * @param {float} range
  * @returns {[CTFBaseBoss]}
  */
-function CTFPlayer::GetEveryTankWithin(range)
+function CTFPlayer::GetEveryTankWithin( range )
 {
 	local list = []
 	for (local tank; tank = FindByClassnameWithin(tank, "tank", GetOrigin(), range); )
@@ -1978,7 +1989,7 @@ function CTFPlayer::GetEveryTankWithin(range)
  * 
  * @deprecated Use CreateBaseExplosion and filter
  */
-function CTFPlayer::DamageEveryTankWithin(range, damage)
+function CTFPlayer::DamageEveryTankWithin( range, damage )
 {
 	for (local tank; tank = FindByClassnameWithin(tank, "tank", GetOrigin(), range); )
 	{
@@ -1991,7 +2002,7 @@ function CTFPlayer::DamageEveryTankWithin(range, damage)
  * 
  * @deprecated Use CreateBaseExplosion and filter
  */
-function CTFPlayer::DamageEveryBotWithin(range, damage)
+function CTFPlayer::DamageEveryBotWithin( range, damage )
 {
 	foreach (bot in GetEveryBotWithin(range))
 		bot.TakeDamage(damage, 0, this)
@@ -2066,7 +2077,7 @@ function CTFPlayer::IsAdmin()
 /**
  * @param {integer} index
  */
-function CTFPlayer::HasWeapon(index)
+function CTFPlayer::HasWeapon( index )
 {
 	foreach (weapon in GetAllWeapons())
 		if (weapon.GetIDX() == index) return true
@@ -2075,7 +2086,7 @@ function CTFPlayer::HasWeapon(index)
 /**
  * @param {string} classname
  */
-function CTFPlayer::HasWeaponClassname(classname)
+function CTFPlayer::HasWeaponClassname( classname )
 {
 	foreach (weapon in GetAllWeapons())
 		if (weapon.GetClassname() == classname) return true
@@ -2085,7 +2096,7 @@ function CTFPlayer::HasWeaponClassname(classname)
  * @param {integer} index
  * @returns {CTFWeaponBase|null}
  */
-function CTFPlayer::GetWeapon(index)
+function CTFPlayer::GetWeapon( index )
 {
 	foreach (weapon in GetAllWeapons())
 		if (weapon.GetIDX() == index) return weapon
@@ -2095,14 +2106,14 @@ function CTFPlayer::GetWeapon(index)
  * @param {string} classname
  * @returns {CTFWeaponBase|null}
  */
-function CTFPlayer::GetWeaponClassname(classname)
+function CTFPlayer::GetWeaponClassname( classname )
 {
 	foreach (weapon in GetAllWeapons())
 		if (weapon.GetClassname() == classname) return weapon
 	return null
 }
 
-function CTFPlayer::RegenerateNoHP(ammo)
+function CTFPlayer::RegenerateNoHP( ammo )
 {
 	local hp = GetHealth()
 	Regenerate(ammo)
@@ -2112,7 +2123,7 @@ function CTFPlayer::RegenerateNoHP(ammo)
 if (!("__ORIGINAL_Regenerate" in CTFPlayer))
 {
 	CTFPlayer.__ORIGINAL_Regenerate <- CTFPlayer.Regenerate
-	function CTFPlayer::Regenerate(ammo, hp = true)
+	function CTFPlayer::Regenerate( ammo, hp = true )
 	{
 		if (hp)
 			__ORIGINAL_Regenerate(ammo)
@@ -2282,7 +2293,7 @@ function CTFPlayer::GetMaximumGrenades3()
 	return grenades
 }
 
-function CTFPlayer::GivePercentAmmo(index, percent)
+function CTFPlayer::GivePercentAmmo( index, percent )
 {
 	local maximum = 0
 	local current = GetAmmoByIndex(index)
@@ -2322,7 +2333,7 @@ function CTFPlayer::ResetAmmo()
 /**
  * @param {array} conds
  */
-function CTFPlayer::InMultiCond(conds)
+function CTFPlayer::InMultiCond( conds )
 {
 	foreach (cond in conds)
 		if (InCond(cond))
@@ -2333,7 +2344,7 @@ function CTFPlayer::InMultiCond(conds)
 /**
  * @param {integer} index
  */
-function CTFPlayer::ForceChangeClass(index, respawn = false)
+function CTFPlayer::ForceChangeClass( index, respawn = false )
 {
 	local old_class = GetPlayerClass()
 	if (old_class != TF_CLASS_ENGINEER && index == TF_CLASS_ENGINEER)
@@ -2366,7 +2377,7 @@ function CTFPlayer::GetPlayerClassName()
 /**
  * @param {string} string
  */
-function CTFPlayer::GetTranslatedString(string)
+function CTFPlayer::GetTranslatedString( string )
 {
 	if(!IsValidPlayer(this))
 		return
@@ -2396,7 +2407,7 @@ function CTFPlayer::GetTranslatedString(string)
 /**
  * @returns {string}
  */
-function CTFPlayer::GetTranslatedAndFormattedString(...)
+function CTFPlayer::GetTranslatedAndFormattedString( ... )
 {
 	if(!IsValidPlayer(this))
 		return
@@ -2428,7 +2439,7 @@ function CTFPlayer::GetTranslatedAndFormattedString(...)
 /**
  * @param {float} time
  */
-function CTFPlayer::SetAbilityTime(time)
+function CTFPlayer::SetAbilityTime( time )
 {
 	local weapon = GetAbilityWeapon()
 	if (weapon)
@@ -2437,7 +2448,7 @@ function CTFPlayer::SetAbilityTime(time)
 /**
  * @param {float} time
  */
-function CTFPlayer::AddAbilityTime(time)
+function CTFPlayer::AddAbilityTime( time )
 {
 	local weapon = GetAbilityWeapon()
 	if (weapon)
@@ -2462,7 +2473,7 @@ function CTFPlayer::TeamFortress_SetSpeed()
 function ROOT::GetGameText()
 	return FindByName(null, "GlobalGameText") ? FindByName(null, "GlobalGameText") : SpawnEntityFromTable("game_text", {targetname = "GlobalGameText", holdtime = 0.5})
 
-function CTFPlayer::DisplayHudText(msg = "", clr = false, pos = false, holdtime = false, channel = false)
+function CTFPlayer::DisplayHudText( msg = "", clr = false, pos = false, holdtime = false, channel = false )
 {
 	local text = GetGameText()
 	local text_scope = GetScope(text)
@@ -2664,7 +2675,7 @@ class Corrosion {
 			m_hOuter = outer
 	}	
 
-	function CreateCorrosion(attacker, weapon, exdata = false)
+	function CreateCorrosion( attacker, weapon, exdata = false )
 	{
 		this.hAttacker 		= attacker
 		this.hWeapon 		= weapon
@@ -2823,7 +2834,7 @@ if (!("__CORROSION_DEBUG" in ROOT))
  * @param {CTFPlayer} 		attacker
  * @param {CTFWeaponBase} 	weapon
  */
-function CTFPlayer::MakeCorrosion(attacker, weapon)
+function CTFPlayer::MakeCorrosion( attacker, weapon )
 {
 	if (IsInvincible())
 	{
@@ -2861,7 +2872,7 @@ function CTFPlayer::CanHaveCorrosion()
 	return true
 }
 
-function IsGasNotValid(gas)
+function IsGasNotValid( gas )
 {
 	return !GetScope(gas).Attacker || !GetScope(gas).Attacker.IsValid() || GetScope(gas).TimeCreated + 15 <= Time() || IsPointInRespawnRoom(gas.GetOrigin())
 }
@@ -2985,14 +2996,14 @@ function CTFPlayer::RollSpell()
 
 /*	PrintTime = {
 		owner = player
-		func = function(self) {
+		func = function( self ) {
 			// self is the player, "this" is the table above
 			self.PrintToHud(Time())
 			return 0.995
 		}
 	}
 	Heal = {
-		func = function(self) {
+		func = function( self ) {
 			self.SetHealth(self.GetHealth() + (self.GetMaxHealth() /10))
 			if (self.GetHealth() > self.GetMaxHealth() * 1.5)
 			self.SetHealth(self.GetMaxHealth()*1.5)
@@ -3035,11 +3046,11 @@ function CTFPlayer::SetUpThinkTable()
  * and `this` is the players scope.
  * 
  * @param {function} 	func 		The Think Function.
- * @param {string|null} name 		The Think function name in the ThinkTable (used for removing a think). (Default: null)
+ * @param {string|null} name 		The Think function name in the ThinkTable ( used for removing a think ). ( Default: null )
  * @param {float} 		offset 		Time offset of the first Think. (Default: 0.0)
  * @returns {string}
  */
-function CTFPlayer::AddPreservedThink(func, name = null, offset = 0.0)
+function CTFPlayer::AddPreservedThink( func, name = null, offset = 0.0 )
 {
 	name = name||UniqueString()
 	AddThink(func, name, offset)
@@ -3056,11 +3067,11 @@ function CTFPlayer::AddPreservedThink(func, name = null, offset = 0.0)
  * and `this` is the players scope.
  * 
  * @param {function} 	func 		The Think Function.
- * @param {string|null} name 		The Think function name in the ThinkTable (used for removing a think). (Default: null)
+ * @param {string|null} name 		The Think function name in the ThinkTable ( used for removing a think ). ( Default: null )
  * @param {float} 		offset 		Time offset of the first Think. (Default: 0.0)
  * @returns {string}
  */
-function CTFPlayer::AddThink(func, name = null, offset = 0.0)
+function CTFPlayer::AddThink( func, name = null, offset = 0.0 )
 {
 	if (!("ThinkTable" in GetScope(this)))
 		SetUpThinkTable()
@@ -3075,7 +3086,7 @@ function CTFPlayer::AddThink(func, name = null, offset = 0.0)
 /**
  * @param {string} name
  */
-function CTFPlayer::RemoveThink(name)
+function CTFPlayer::RemoveThink( name )
 {
 	if (IsNotInScope("ThinkTable", GetScope(this)))
 		SetUpThinkTable()
@@ -3191,7 +3202,7 @@ function CTFPlayer::IsGHeavy()
  * @param {table} attrib_overrides
  * @param {bool} IsCustom			if this item is from Rafmods `CustomWeapon` block
  */
-function CTFPlayer::EquipItem(ItemName, swit = true, attrib_overrides = {}, IsCustom = false)
+function CTFPlayer::EquipItem( ItemName, swit = true, attrib_overrides = {}, IsCustom = false )
 {
 	if (IsCustom)
 	{
@@ -3290,7 +3301,7 @@ function CTFPlayer::EquipItem(ItemName, swit = true, attrib_overrides = {}, IsCu
 	FixAmmo()
 }
 
-/* function CTFPlayer::EquipWearableItem(idx, classname_override = false, attrib_overrides = {})
+/* function CTFPlayer::EquipWearableItem( idx, classname_override = false, attrib_overrides = {} )
 {
 	local dummy = CreateByClassname( "tf_weapon_parachute" )
 	SetPropInt( dummy, PROP_ITEM_DEF_IDX, 1101 )
@@ -3341,7 +3352,7 @@ function CTFPlayer::EquipItem(ItemName, swit = true, attrib_overrides = {}, IsCu
  * @param {string} ItemName
  * @returns {CTFWeaponBase|[CTFWeaponBase]|null}
  */
-function CTFPlayer::EquipItemBAD(ItemName)
+function CTFPlayer::EquipItemBAD( ItemName )
 {
 	local OldWeapons = GetMoveChildrenWeapons()
 	AddEFlags(EFL_NO_MEGAPHYSCANNON_RAGDOLL)  // prevent inf resupply loop
@@ -3381,7 +3392,7 @@ function CTFPlayer::GetActiveHealers()
  * @param {float} start
  * @returns {float}
  */
-function CTFPlayer::GetOverHealCapMult(start = 1.0)
+function CTFPlayer::GetOverHealCapMult( start = 1.0 )
 {
 	local cap_mult = start
 	cap_mult *= HookMultAttributes("patient overheal penalty")
@@ -3392,7 +3403,7 @@ function CTFPlayer::GetOverHealCapMult(start = 1.0)
  * @param {integer|float} amount
  * @param {float|bool} overheal
  */
-function CTFPlayer::HealPlayer(amount, overheal = false, display = true, type = T_HEAL_NONE)
+function CTFPlayer::HealPlayer( amount, overheal = false, display = true, type = T_HEAL_NONE )
 {
 	local mult = 1.0
 	mult *= HookMultAttributes("healing received penalty")
@@ -3454,7 +3465,7 @@ function CTFPlayer::HealPlayer(amount, overheal = false, display = true, type = 
  * @param {string} attribute
  * @returns {float}
  */
-function CTFPlayer::HookMultAttributes(attribute, Mode = 3, def_plr = 1.0, def_wep = 1.0)
+function CTFPlayer::HookMultAttributes( attribute, Mode = 3, def_plr = 1.0, def_wep = 1.0 )
 {
 	local amount = 1.0
 	if (MATH.HasBitFlag(Mode, 1))
@@ -3475,7 +3486,7 @@ function CTFPlayer::HookMultAttributes(attribute, Mode = 3, def_plr = 1.0, def_w
  * @param {string} attribute
  * @returns {float}
  */
-function CTFPlayer::HookAdditiveAttributes(attribute, Mode = 3, def_plr = 0, def_wep = 0)
+function CTFPlayer::HookAdditiveAttributes( attribute, Mode = 3, def_plr = 0, def_wep = 0 )
 {
 	local amount = 0.0
 	if (MATH.HasBitFlag(Mode, 1))
@@ -3623,7 +3634,7 @@ function CTFPlayer::GetMoveSpeed()
  * @param {Vector|CBaseEntity} thing
  * @returns {float}
  */
-function CTFPlayer::DistanceTo(thing)
+function CTFPlayer::DistanceTo( thing )
 {
 	if (typeof thing == "Vector")
 		return GetOrigin().DistanceTo(thing)
@@ -3635,7 +3646,7 @@ function CTFPlayer::DistanceTo(thing)
 /**
  * @returns {CTFPlayer|null}
  */
-function CTFPlayer::GetClosestPlayer(team = null, offset = Vector())
+function CTFPlayer::GetClosestPlayer( team = null, offset = Vector( ))
 {
 	if (team == null)
 		team = GetTeam()
@@ -3645,7 +3656,7 @@ function CTFPlayer::GetClosestPlayer(team = null, offset = Vector())
 /**
  * @param {string} particle
  */
-function CTFPlayer::AttachParticle(particle, duration = -1, attachment_point = PATTACH_ABSORIGIN_FOLLOW, attachment_name = "")
+function CTFPlayer::AttachParticle( particle, duration = -1, attachment_point = PATTACH_ABSORIGIN_FOLLOW, attachment_name = "" )
 {
 	AttachEntityParticle(this, particle, attachment_point, attachment_name)
 	if (duration > 0)
@@ -3657,7 +3668,7 @@ function CTFPlayer::AttachParticle(particle, duration = -1, attachment_point = P
  * @param {string} sound
  * @param {table} data
  */
-function CTFPlayer::EmitSoundTo(sound, data = {})
+function CTFPlayer::EmitSoundTo( sound, data = {} )
 {
 	PrecacheSound(sound)
 	// is Likely a soundscript, and not Raw Sound
@@ -3691,7 +3702,7 @@ function CTFPlayer::PrintConds()
 /**
  * @param {integer} slot
  */
-function CTFPlayer::StripItemSlot(slot)
+function CTFPlayer::StripItemSlot( slot )
 {
 	if (slot == 0)
 		return
@@ -3786,7 +3797,7 @@ function CTFPlayer::GetWearables()
 /**
  * @return {CTFWeaponBase|CEconEntity|null}
  */
-function CTFPlayer::GetWearableByIDX(idx)
+function CTFPlayer::GetWearableByIDX( idx )
 {
 	local wearables = GetWearables()
 	foreach (wearable in wearables)
@@ -3842,7 +3853,7 @@ function CTFPlayer::IsTruceValidForEnt()
 	return true;
 }
 
-function IsTruceValidForEnt(entity)
+function IsTruceValidForEnt( entity )
 {
 	if (!entity)
 		return false
@@ -3969,7 +3980,7 @@ function CTFPlayer::AddTmpDamageBonus( flBonus, flExpiration )
 	SetInternalVar("m_flTmpDamageBonusAmount", GetInternalVar("m_flTmpDamageBonusAmount", 1.0) + flBonus)
 }
 
-function CTFPlayer::GetInternalVar(var_name, def = 0)
+function CTFPlayer::GetInternalVar( var_name, def = 0 )
 {
 	if (!("Internal_Vars" in GetScope(this)))
 		GetScope(this).Internal_Vars <- {}
@@ -3979,13 +3990,13 @@ function CTFPlayer::GetInternalVar(var_name, def = 0)
 	return GetScope(this).Internal_Vars[var_name]
 }
 
-function CTFPlayer::SetInternalVar(var_name, value)
+function CTFPlayer::SetInternalVar( var_name, value )
 {
 	GetInternalVar(var_name) // cheeky to fix it up so its not missing
 	GetScope(this).Internal_Vars[var_name] = value
 }
 
-function CTFPlayer::UseGiantModel(buster = false)
+function CTFPlayer::UseGiantModel( buster = false )
 {
 	StripItemSlot(STRIPSLOT_COSMETICS)
 	if (buster)
@@ -4039,7 +4050,7 @@ function CTFPlayer::SentryBusterExplode()
 	Suicide()
 }
 
-function CTFPlayer::MakeBleed(attacker, weapon, duration = -1.0, damage = 4, permanent = false, dmg_type = 34)
+function CTFPlayer::MakeBleed( attacker, weapon, duration = -1.0, damage = 4, permanent = false, dmg_type = 34 )
 {
 	if (!("MakeBleedInternal" in CTFPlayer))
 		throw "Cant use CTFPlayer::MakeBleed without CTFPlayer::MakeBleedInternal"
@@ -4055,7 +4066,7 @@ function ROOT::GetHudHint()
 	return FindByName(null, "GlobalHudHint") ? FindByName(null, "GlobalHudHint") : SpawnEntityFromTable("env_hudhint", {targetname = "GlobalHudHint", spawnflags = 0})
 
 //TODO: Use a THINK to handle re sending and ending
-function CTFPlayer::DisplayHudHint(text, duration = 10.0, flash = true, Hide = true)
+function CTFPlayer::DisplayHudHint( text, duration = 10.0, flash = true, Hide = true )
 {
 	local hint_ent = GetHudHint()
 	local hint_scope = GetScope(hint_ent)
@@ -4088,7 +4099,7 @@ if (!("_GetCustomAttribute" in CTFPlayer))
 	 * @param {float} def
 	 * @returns {float}
 	 */
-	function CTFPlayer::GetCustomAttribute(attrib, def)
+	function CTFPlayer::GetCustomAttribute( attrib, def )
 	{
 		if (!this || !this.IsValid())
 			return 0
@@ -4109,7 +4120,7 @@ if (!("_GetCustomAttribute" in CTFPlayer))
 	 * @param {float} def
 	 * @returns {float}
 	 */
-	function CTFBot::GetCustomAttribute(attrib, def)
+	function CTFBot::GetCustomAttribute( attrib, def )
 	{
 		if (!this || !this.IsValid())
 			return 0
@@ -4135,7 +4146,7 @@ if (!("_GetCustomAttribute" in CTFPlayer))
  * 
  * @returns {table}
  */
-function CTFPlayer::GetEyeTrace(overrides = {})
+function CTFPlayer::GetEyeTrace( overrides = {} )
 {
 	local scope = GetScope(this)
 	if (!("EyeTraceDataCache" in scope))
@@ -4179,7 +4190,7 @@ function CTFPlayer::GetEyeTrace(overrides = {})
 	return trace
 }
 
-// function CTFPlayer::DisplayHudHint(text, duration = 10.0, flash = true, Hide = true)
+// function CTFPlayer::DisplayHudHint( text, duration = 10.0, flash = true, Hide = true )
 // {
 // 	local hint_ent = GetHudHint()
 // 	local hint_scope = GetScope(hint_ent)
@@ -4283,7 +4294,7 @@ function CTFPlayer::GetEyeTrace(overrides = {})
 // somewhat stolen from ZI
 foreach ( key, value in CTFPlayer )
 {
-	if ( typeof( value ) == "function" && !(key in CTFBot) )
+	if ( typeof( value ) == "function" && !( key in CTFBot ) )
 	{
 		if (NoFormatToBot.find(key) != null)
 			continue
@@ -4303,7 +4314,7 @@ function CTFBot::IsReprogrammed()
 /**
  * @param {CTFPlayer} victim
  */
-function CTFBot::SayChatterMessage(victim)
+function CTFBot::SayChatterMessage( victim )
 {
 	local Messages = []
 	foreach (Rarity in [ChatterMessages["Commons"], ChatterMessages["Rares"]])
@@ -4393,7 +4404,7 @@ function CTFBot::SayChatterMessage(victim)
 	PrintToChatAll(format("%s%s\x01 :  %s", GetChatColor(), GetUserName(), Message))
 }
 
-function CTFBot::UndoReprogram(kill = true)
+function CTFBot::UndoReprogram( kill = true )
 {
 	if (!this||!IsValid()||IsDead())
 		return
@@ -4432,7 +4443,7 @@ if (!("CUSTOM_ATTRIBUTE_WEAPONS" in ROOT))
 /**
  * @param {string} attrib
  */
-function ROOT::DEFINE_CUSTOM_ATTRIBUTE(attrib)
+function ROOT::DEFINE_CUSTOM_ATTRIBUTE( attrib )
 {
 	if (GET_CUSTOM_ATTRIBUTE(attrib) == null)
 		CUSTOM_ATTRIBUTES_DEFINES.append(attrib)
@@ -4440,7 +4451,7 @@ function ROOT::DEFINE_CUSTOM_ATTRIBUTE(attrib)
 /**
  * @param {string} attrib
  */
-function ROOT::REMOVE_CUSTOM_ATTRIBUTE(attrib)
+function ROOT::REMOVE_CUSTOM_ATTRIBUTE( attrib )
 {
 	if (GET_CUSTOM_ATTRIBUTE(attrib) != null)
 		CUSTOM_ATTRIBUTES_DEFINES.remove(CUSTOM_ATTRIBUTES_DEFINES.find(attrib))
@@ -4450,7 +4461,7 @@ function ROOT::REMOVE_CUSTOM_ATTRIBUTE(attrib)
  * @param {string} attrib
  * @param {integer|float} value
  */
-function ROOT::DEFINE_CUSTOM_WEAPON_ATTRIBUTE(idx, attrib, value)
+function ROOT::DEFINE_CUSTOM_WEAPON_ATTRIBUTE( idx, attrib, value )
 {
 	if (!GET_CUSTOM_ATTRIBUTE(attrib))
 		return
@@ -4463,7 +4474,7 @@ function ROOT::DEFINE_CUSTOM_WEAPON_ATTRIBUTE(idx, attrib, value)
  * @param {integer} idx
  * @param {string} attrib
  */
-function ROOT::REMOVE_CUSTOM_WEAPON_ATTRIBUTE(idx, attrib)
+function ROOT::REMOVE_CUSTOM_WEAPON_ATTRIBUTE( idx, attrib )
 {
 	if (!GET_CUSTOM_ATTRIBUTE(attrib))
 		return
@@ -4475,13 +4486,13 @@ function ROOT::REMOVE_CUSTOM_WEAPON_ATTRIBUTE(idx, attrib)
 	delete CUSTOM_ATTRIBUTE_WEAPONS[idx][attrib]
 }
 
-function ROOT::GET_CUSTOM_ATTRIBUTE(attrib)
+function ROOT::GET_CUSTOM_ATTRIBUTE( attrib )
 	return CUSTOM_ATTRIBUTES_DEFINES.find(attrib) != null
 /**
  * @param {integer} idx
  * @param {string} attrib
  */
-function ROOT::GET_CUSTOM_WEAPON_ATTRIBUTE(idx, attrib)
+function ROOT::GET_CUSTOM_WEAPON_ATTRIBUTE( idx, attrib )
 {
 	if (!(idx in CUSTOM_ATTRIBUTE_WEAPONS))
 		return false
@@ -4494,7 +4505,7 @@ function ROOT::GET_CUSTOM_WEAPON_ATTRIBUTE(idx, attrib)
  * 
  * @returns {integer|float} Will return def if not found
  */
-function ROOT::GET_CUSTOM_ATTRIBUTE_VALUE(idx, attrib, def = 0)
+function ROOT::GET_CUSTOM_ATTRIBUTE_VALUE( idx, attrib, def = 0 )
 {
 	if (GET_CUSTOM_ATTRIBUTE(attrib) == null)
 		return def
@@ -4508,7 +4519,7 @@ function ROOT::GET_CUSTOM_ATTRIBUTE_VALUE(idx, attrib, def = 0)
  * @param {integer} idx
  * @param {string} attrib
  */
-// function ROOT::SET_CUSTOM_ATTRIBUTE_VALUE(idx, attrib, def = 0)
+// function ROOT::SET_CUSTOM_ATTRIBUTE_VALUE( idx, attrib, def = 0 )
 // {
 // 	if (GET_CUSTOM_ATTRIBUTE(attrib) == null)
 // 		return def
@@ -4524,7 +4535,7 @@ function ROOT::GET_CUSTOM_ATTRIBUTE_VALUE(idx, attrib, def = 0)
  * 
  * @returns {integer|float} Will return def if not found
  */
-function ROOT::GET_CUSTOM_PLAYER_ATTRIBUTE_VALUE(player, attrib, def = 0)
+function ROOT::GET_CUSTOM_PLAYER_ATTRIBUTE_VALUE( player, attrib, def = 0 )
 {
 	if (GET_CUSTOM_ATTRIBUTE(attrib) == null)
 		return def
@@ -4545,7 +4556,7 @@ function ROOT::GET_CUSTOM_PLAYER_ATTRIBUTE_VALUE(player, attrib, def = 0)
  * @param {string} attrib
  * @param {float|integer} value
  */
-function ROOT::SET_CUSTOM_PLAYER_ATTRIBUTE_VALUE(player, attrib, value)
+function ROOT::SET_CUSTOM_PLAYER_ATTRIBUTE_VALUE( player, attrib, value )
 {
 	if (GET_CUSTOM_ATTRIBUTE(attrib) == null)
 		return
@@ -4715,7 +4726,7 @@ if (!("_GetAttribute" in CTFWeaponBase))
 	 * @param {float} def
 	 * @returns {float}
 	 */
-	function CTFWeaponBase::GetAttribute(attrib, def)
+	function CTFWeaponBase::GetAttribute( attrib, def )
 	{
 		if (!this || !this.IsValid())
 			return 0
@@ -4730,7 +4741,7 @@ if (!("_GetAttribute" in CTFWeaponBase))
 	 * @param {float} def
 	 * @returns {float}
 	 */
-	function CEconEntity::GetAttribute(attrib, def)
+	function CEconEntity::GetAttribute( attrib, def )
 	{
 		if (!this || !this.IsValid())
 			return 0
@@ -4745,7 +4756,7 @@ if (!("_GetAttribute" in CTFWeaponBase))
 	 * @param {float} value
 	 * @param {float} _duration
 	 */
-	function CTFWeaponBase::AddAttribute(attrib, value, _duration)
+	function CTFWeaponBase::AddAttribute( attrib, value, _duration )
 	{
 		if (!this || !this.IsValid())
 			return
@@ -4761,7 +4772,7 @@ if (!("_GetAttribute" in CTFWeaponBase))
 	 * @param {float} value
 	 * @param {float} _duration
 	 */
-	function CEconEntity::AddAttribute(attrib, value, _duration)
+	function CEconEntity::AddAttribute( attrib, value, _duration )
 	{
 		if (!this || !this.IsValid())
 			return 
@@ -4778,27 +4789,27 @@ if (!("_GetAttribute" in CTFWeaponBase))
  * @param {float|integer} def_val
  * @deprecated Use HasAdditiveAttribute or HasMultAttribute instead
  */
-function CTFWeaponBase::HasAttribute(attrib, def_val)
+function CTFWeaponBase::HasAttribute( attrib, def_val )
 	return GetAttribute(attrib, def_val) != def_val
 /**
  * @param {string} attrib
  */
-function CTFWeaponBase::HasAdditiveAttribute(attrib, def = 0)
+function CTFWeaponBase::HasAdditiveAttribute( attrib, def = 0 )
 	return GetAttribute(attrib, def) != def
 /**
  * @param {string} attrib
  */
-function CTFWeaponBase::HasMultAttribute(attrib, def = 1.0)
+function CTFWeaponBase::HasMultAttribute( attrib, def = 1.0 )
 	return GetAttribute(attrib, def) != def
 /**
  * @param {string} attrib
  */
-function CTFWeaponBase::GetAdditiveAttribute(attrib, def = 0)
+function CTFWeaponBase::GetAdditiveAttribute( attrib, def = 0 )
 	return GetAttribute(attrib, def)
 /**
  * @param {string} attrib
  */
-function CTFWeaponBase::GetMultAttribute(attrib, def = 1.0)
+function CTFWeaponBase::GetMultAttribute( attrib, def = 1.0 )
 	return GetAttribute(attrib, def)
 /**
  * @returns {integer}
@@ -4813,7 +4824,7 @@ function CTFWeaponBase::GetChargeTime()
 /**
  * @param {float} time
  */
-function CTFWeaponBase::SetChargeTime(time)
+function CTFWeaponBase::SetChargeTime( time )
 	SetPropFloat(this, PROP_CHARGE_TIME, time)
 
 /**
@@ -4863,7 +4874,7 @@ function CTFWeaponBase::IsAbilityWeapon()
  * @param {float} MaxValue
  * @param {float} MinValue
  */
-function CTFWeaponBase::CalculateAttributes(AttributeName, AttributeChange, StartingValue, MaxValue, MinValue)
+function CTFWeaponBase::CalculateAttributes( AttributeName, AttributeChange, StartingValue, MaxValue, MinValue )
 {
 	local EndingValue = (GetAttribute(AttributeName, StartingValue) + AttributeChange)
 
@@ -4879,7 +4890,7 @@ function CTFWeaponBase::CalculateAttributes(AttributeName, AttributeChange, Star
  * @param {float} MaxValue
  * @param {float} MinValue
  */
-function CTFWeaponBase::CalculateAttributeChange(mult_val, AttributeName, AttributeChange, StartingValue, MaxValue, MinValue)
+function CTFWeaponBase::CalculateAttributeChange( mult_val, AttributeName, AttributeChange, StartingValue, MaxValue, MinValue )
 {
 	local EndingValue = (StartingValue + (AttributeChange * mult_val))
 
@@ -4892,14 +4903,14 @@ function CTFWeaponBase::CalculateAttributeChange(mult_val, AttributeName, Attrib
  * @param {string} propertyName
  * @param {any} value
  */
-function CTFWeaponBase::SetProp(propertyName, value)
+function CTFWeaponBase::SetProp( propertyName, value )
 	SetPropArray(propertyName, value, 0)
 /**
  * @param {string} propertyName
  * @param {any} value
  * @param {integer} index
  */
-function CTFWeaponBase::SetPropArray(propertyName, value, index)
+function CTFWeaponBase::SetPropArray( propertyName, value, index )
 {
 	if (!HasProp(this, propertyName))
 	{
@@ -4927,7 +4938,7 @@ function CTFWeaponBase::SetPropArray(propertyName, value, index)
 /**
  * @param {integer} index
  */
-function CTFWeaponBase::SetSpellIndex(index)
+function CTFWeaponBase::SetSpellIndex( index )
 	if (HasProp(this, PROP_SPELL_INDEX)) { SetPropInt(this, PROP_SPELL_INDEX, index) }
 /**
  * @returns {integer|null}
@@ -4942,12 +4953,12 @@ function CTFWeaponBase::GetSpellCharges()
 /**
  * @param {integer} charge
  */
-function CTFWeaponBase::SetSpellCharges(charge)
+function CTFWeaponBase::SetSpellCharges( charge )
 	if (HasProp(this, PROP_SPELL_CHARGES)) { SetPropInt(this, PROP_SPELL_CHARGES, charge) }
 /**
  * @param {integer} num
  */
-function CTFWeaponBase::IncrementSpellCharge(num)
+function CTFWeaponBase::IncrementSpellCharge( num )
 	if (HasProp(this, PROP_SPELL_CHARGES)) SetPropInt(this, PROP_SPELL_CHARGES, GetSpellCharges() + num)
 /**
  * @returns {bool}
@@ -4957,7 +4968,7 @@ function CTFWeaponBase::IsHolstered()
 /**
  * @param {integer|float} level
  */
-function CTFWeaponBase::SetUberChargePercent(level)
+function CTFWeaponBase::SetUberChargePercent( level )
 	if (HasProp(this, PROP_MEDIGUN_CHARGE)) { SetPropFloat(this, PROP_MEDIGUN_CHARGE, level.tofloat()/100) }
 /**
  * @returns {float|null}
@@ -4967,7 +4978,7 @@ function CTFWeaponBase::GetUberChargePercent()
 /**
  * @param {integer|float} level
  */
-function CTFWeaponBase::IncreaseUberChargePercent(level)
+function CTFWeaponBase::IncreaseUberChargePercent( level )
 {
 	if (HasProp(this, PROP_MEDIGUN_CHARGE))
 	{
@@ -4980,7 +4991,7 @@ function CTFWeaponBase::IncreaseUberChargePercent(level)
 /**
  * @param {float} level
  */
-function CTFWeaponBase::DecreaseUberChargePercent(level)
+function CTFWeaponBase::DecreaseUberChargePercent( level )
 {
 	IncreaseUberChargePercent(-level)
 	return
@@ -4989,7 +5000,7 @@ function CTFWeaponBase::DecreaseUberChargePercent(level)
  * @param {integer} index
  * @param {integer} max
  */
-function CTFWeaponBase::ModifySpells(index, max, compared = 1, mod_compare = 1)
+function CTFWeaponBase::ModifySpells( index, max, compared = 1, mod_compare = 1 )
 {
 	if ((compared % mod_compare) != 0) 
 		return
@@ -5022,17 +5033,17 @@ function CTFWeaponBase::IsAbilityReady()
 /**
  * @param {float} time
  */
-function CTFWeaponBase::SetAbilityTime(time)
+function CTFWeaponBase::SetAbilityTime( time )
 	GetScope(this).Timestamp <- time
 /**
  * @param {float} time
  */
-function CTFWeaponBase::AddAbilityTime(time)
+function CTFWeaponBase::AddAbilityTime( time )
 	SetAbilityTime(Time() + time)
 /**
  * @param {float} max_dmg
  */
-function CTFWeaponBase::SetAbilityDamage(max_dmg, cur_dmg = 0.0)
+function CTFWeaponBase::SetAbilityDamage( max_dmg, cur_dmg = 0.0 )
 {
 	GetScope(this).DamageNeeded <- max_dmg
 	GetScope(this).CurrentDamage <- cur_dmg
@@ -5040,7 +5051,7 @@ function CTFWeaponBase::SetAbilityDamage(max_dmg, cur_dmg = 0.0)
 /**
  * @param {integer} dmg
  */
-function CTFWeaponBase::AddAbilityDamage(dmg)
+function CTFWeaponBase::AddAbilityDamage( dmg )
 	if (!("CurrentDamage" in GetScope(this))) { GetScope(this).CurrentDamage <- dmg } 
 	else { GetScope(this).CurrentDamage += dmg }
 
@@ -5052,7 +5063,7 @@ function CTFWeaponBase::GetAbilityDamage()
 /**
  * @param {integer} type
  */
-function CTFWeaponBase::SetAbilityType(type)
+function CTFWeaponBase::SetAbilityType( type )
 	if (type != ABILITY_REMOVE)
 		GetScope(this).__ABILITY_TYPE <- type
 	else if ("__ABILITY_TYPE" in GetScope(this)) delete GetScope(this).__ABILITY_TYPE
@@ -5065,7 +5076,7 @@ function CTFWeaponBase::GetAbilityType()
 function CTFWeaponBase::IsAbilityActive()
 	return "AbilityActive" in GetScope(this) ? GetScope(this).AbilityActive : false
 
-function CTFWeaponBase::SetRandomSpell(rares = true, lower_rares = false)
+function CTFWeaponBase::SetRandomSpell( rares = true, lower_rares = false )
 {
 	local spell = RandomInt(TF_SPELL_FIREBALL, rares ? TF_SPELL_SKELETON : TF_SPELL_TELEPORT)
 	if (lower_rares && spell > TF_SPELL_TELEPORT && MATH.RandomChance() > 0.333)
@@ -5491,7 +5502,7 @@ if (!("FileWeaponInfo_t" in ROOT))
 		 */
 		function Parse( pKeyValuesData, szWeaponName )
 		{
-			local function GetKey(name, def) {
+			local function GetKey( name, def ) {
 				if (name in pKeyValuesData)
 					return pKeyValuesData[name]
 				else return def
@@ -5665,7 +5676,7 @@ if (!("CTFWeaponInfo" in ROOT))
 			
 			// base.Parse(pKeyValuesData, szWeaponName)
 
-			local function GetKey(name, def) {
+			local function GetKey( name, def ) {
 				if (name in pKeyValuesData)
 					return pKeyValuesData[name]
 				else return def
@@ -6136,7 +6147,7 @@ function CTFWeaponBase::ApplyOnHitAttributes( pVictimBaseEntity, pAttacker, info
 				/** 
 				 * @param {CTFPlayer} pTFPlayer
 				 */
-				function ExplodeFunc(pTFPlayer)
+				function ExplodeFunc( pTFPlayer )
 				{
 					if (pTFPlayer.IsDead())
 						return
@@ -6250,7 +6261,7 @@ function CTFWeaponBase::ApplyOnHitAttributes( pVictimBaseEntity, pAttacker, info
 /**
  * @param {integer} ItemID
  */
-function ROOT::GetItemModelName(ItemID)
+function ROOT::GetItemModelName( ItemID )
 {
 	local wearable = CreateByClassname("tf_wearable")
 	
@@ -6335,7 +6346,7 @@ function CTFBaseBoss::Disabledamage( events = true )
  * @param {integer} perc
  * @param {function} callback
  */
-function CTFBaseBoss::RegisterHurtPercentCallback(perc, callback)
+function CTFBaseBoss::RegisterHurtPercentCallback( perc, callback )
 {
 	local OutputName = format("OnHealthBelow%sPercent", perc.tostring())
 	GetScope(this)[OutputName] <- callback
@@ -6432,7 +6443,7 @@ function CTFNavArea::IsTFInSpawnroom()
   ==========================
 */
 
-function ROOT::CleanUpAndFormatString(msg, ...)
+function ROOT::CleanUpAndFormatString( msg, ... )
 {
 	if (msg == null)
 		msg = "NULL"
@@ -6464,13 +6475,13 @@ function ROOT::CleanUpAndFormatString(msg, ...)
  * @param {any} message
  * @param {integer} level
  */
-function ROOT::PrintBetter(player, message, level = HUD_PRINTTALK)
+function ROOT::PrintBetter( player, message, level = HUD_PRINTTALK )
 {
 	if (message == null)
 		message = "null"
 	if (typeof message != "string")
 		message = message.tostring()
-	local PRINT = function(m) {
+	local PRINT = function( m ) {
 		if (m.len() > MAX_CLIENT_PRINT_DATA)
 		{
 			printl("Warning! a Message is too long!!!")
@@ -6527,12 +6538,12 @@ function ROOT::PrintBetter(player, message, level = HUD_PRINTTALK)
 }
 
 ////// HUD PRINTS //////
-function ROOT::PrintToHudAll(msg)
+function ROOT::PrintToHudAll( msg )
 	PrintBetter(null, msg, HUD_PRINTCENTER)
 /**
  * @param {string} msg
  */
-function ROOT::PrintToHudAllF(msg, ...)
+function ROOT::PrintToHudAllF( msg, ... )
 	PrintBetter(null, CleanUpAndFormatString.acall([this, msg].extend(vargv)), HUD_PRINTCENTER)
 function ROOT::TranslateToHudAll( ... )
 {
@@ -6542,7 +6553,7 @@ function ROOT::TranslateToHudAll( ... )
 /**
  * @param {string} msg
  */
-function ROOT::PrintToHudAllFilter(msg, filter = [])
+function ROOT::PrintToHudAllFilter( msg, filter = [] )
 {
 	ReCalculatePlayers()
 	local plrs = Players.filter(@(_, p) !IsInArray(p, filter))
@@ -6550,10 +6561,10 @@ function ROOT::PrintToHudAllFilter(msg, filter = [])
 		player.PrintToHud(msg)
 }
 ///// CHAT PRINTS /////
-function ROOT::PrintToChatAll(msg)
+function ROOT::PrintToChatAll( msg )
 	PrintBetter(null, msg, HUD_PRINTTALK)
 
-function ROOT::PrintToChatAllF(msg, ...)
+function ROOT::PrintToChatAllF( msg, ... )
 	PrintBetter(null, CleanUpAndFormatString.acall([this, msg].extend(vargv)), HUD_PRINTTALK)
 
 function ROOT::TranslateToChatAll( ... )
@@ -6564,7 +6575,7 @@ function ROOT::TranslateToChatAll( ... )
 /**
  * @param {string} msg
  */
-function ROOT::PrintToChatAllFilter(msg, filter = [])
+function ROOT::PrintToChatAllFilter( msg, filter = [] )
 {
 	ReCalculatePlayers()
 	local plrs = Players.filter(@(_, p) !IsInArray(p, filter))
@@ -6573,16 +6584,16 @@ function ROOT::PrintToChatAllFilter(msg, filter = [])
 }
 
 ///// CONSOLE PRINTS /////
-function ROOT::PrintToConsoleAll(msg)
+function ROOT::PrintToConsoleAll( msg )
 	PrintBetter(null, msg, HUD_PRINTCONSOLE)
 /**
  * @param {string} msg
  */
-function ROOT::PrintToConsoleAllF(msg, ...)
+function ROOT::PrintToConsoleAllF( msg, ... )
 	PrintBetter(null, CleanUpAndFormatString.acall([this, msg].extend(vargv)), HUD_PRINTCONSOLE)
 
 ///// OTHER PRINTS /////
-function ROOT::PrintToAdmins(level, message)
+function ROOT::PrintToAdmins( level, message )
 {
 	foreach (player in m_aHumans)
 	{
@@ -6594,27 +6605,27 @@ function ROOT::PrintToAdmins(level, message)
 /**
  * @param {table} table
  */
-function ROOT::PrintTable(table, filter = [])
+function ROOT::PrintTable( table, filter = [] )
 	PrintCollection(table, filter)
 /**
  * @param {array} array
  */
-function ROOT::PrintArray(array, filter = [])
+function ROOT::PrintArray( array, filter = [] )
 	PrintCollection(array, filter)
 /**
  * @param {class} clas
  */
-function ROOT::PrintClass(clas, filter = [])
+function ROOT::PrintClass( clas, filter = [] )
 	PrintCollection(clas, filter)
 /**
  * @param {instance} inst
  */
-function ROOT::PrintInstance(inst, filter = [])
+function ROOT::PrintInstance( inst, filter = [] )
 	PrintCollection(inst, filter)
 /**
  * @param {table|array|class|instance} collection
  */
-function ROOT::PrintCollection(collection, filter = [], indentation = 0, header_prefix = "")
+function ROOT::PrintCollection( collection, filter = [], indentation = 0, header_prefix = "" )
 {
 	local type = typeof collection
 	local obj_class = null
@@ -6680,7 +6691,7 @@ function ROOT::PrintCollection(collection, filter = [], indentation = 0, header_
 			PrintCollection(value, filter, indentation + 1, prefix)
 		}
 		else if (valType == "function" || valType == "native function")
-			PrintToConsoleAll(itemIndents + "function (" + keyDisplay + "): " + value)
+			PrintToConsoleAll(itemIndents + "function ( " + keyDisplay + " ): " + value)
 		else
 			PrintToConsoleAll(itemIndents + keyDisplay + " : " + value)
 	}
@@ -6700,25 +6711,25 @@ function ROOT::PrintCollection(collection, filter = [], indentation = 0, header_
 */
 
 //// Entity Debug
-function ROOT::ShowBBOX(entity, rgb = Vector(255, 0, 0), alpha = 5, duration = 5)
+function ROOT::ShowBBOX( entity, rgb = Vector( 255, 0, 0 ), alpha = 5, duration = 5 )
 {
 	Assert(entity, "ROOT::ShowBBOX Missing Entity")
 	DebugDrawBox(entity.GetOrigin(), entity.GetBoundingMins(), entity.GetBoundingMaxs(), rgb.x.tointeger(), rgb.y.tointeger(), rgb.z.tointeger(), alpha,  duration)
 }
 
-function ROOT::ShowOBB(entity, rgb = Vector(255, 0, 0), alpha = 5, duration = 5)
+function ROOT::ShowOBB( entity, rgb = Vector( 255, 0, 0 ), alpha = 5, duration = 5 )
 {
 	Assert(entity, "ROOT::ShowOBB Missing Entity")
 	DebugDrawBoxAngles(entity.GetOrigin(), entity.GetBoundingMins(), entity.GetBoundingMaxs(), entity.GetAbsAngles(), Vector(rgb.x, rgb.y, rgb.z), alpha, duration)
 }
 
-function ROOT::ShowAABB(entity, rgb = Vector(255, 0, 0), alpha = 5, duration = 5)
+function ROOT::ShowAABB( entity, rgb = Vector( 255, 0, 0 ), alpha = 5, duration = 5 )
 {
 	Assert(entity, "ROOT::ShowAABB Missing Entity")
 	DebugDrawBox(entity.GetOrigin(),entity.GetBoundingMins(), entity.GetBoundingMaxs(), rgb.x.tointeger(), rgb.y.tointeger(), rgb.z.tointeger(), alpha, duration)
 }
 
-function ROOT::DebugDrawTrigger(trigger, color = Vector(255, 128, 0), alpha = 5, duration = 5)
+function ROOT::DebugDrawTrigger( trigger, color = Vector( 255, 128, 0 ), alpha = 5, duration = 5 )
 {
 	Assert(trigger, "ROOT::DebugDrawTrigger Missing Trigger")
 
@@ -6742,7 +6753,7 @@ function ROOT::IsListenServer()
   ========================
 */
 /// Credit to LizardOfOz in TF2Maps Discord
-function ROOT::EnableStringPurge(entity)
+function ROOT::EnableStringPurge( entity )
 {
 	if ( !entity )
 		return entity
@@ -6750,41 +6761,41 @@ function ROOT::EnableStringPurge(entity)
 	return entity
 }
 
-function ROOT::CreateByClassname(classname)
+function ROOT::CreateByClassname( classname )
 	return EnableStringPurge(Entities.CreateByClassname(classname))
 
-function ROOT::FindByClassname(previous, classname)
+function ROOT::FindByClassname( previous, classname )
 	return EnableStringPurge(Entities.FindByClassname(previous, classname))
 /**
  * @param {string} classname
  * @param {Vector} center
  * @param {integer|float} radius
  */
-function ROOT::FindByClassnameNearest(classname, center, radius)
+function ROOT::FindByClassnameNearest( classname, center, radius )
 	return EnableStringPurge(Entities.FindByClassnameNearest(classname, center, radius))
 /**
  * @param {CBaseEntity|null} previous
  * @param {Vector} center
  */
-function ROOT::FindByClassnameWithin(previous, classname, center, radius)
+function ROOT::FindByClassnameWithin( previous, classname, center, radius )
 	return EnableStringPurge(Entities.FindByClassnameWithin(previous, classname, center, radius))
 /**
  * @param {CBaseEntity|null} previous
  * @param {string} modelname
  */
-function ROOT::FindByModel(previous, modelname)
+function ROOT::FindByModel( previous, modelname )
 	return EnableStringPurge(Entities.FindByModel(previous, modelname))
 /**
  * @param {CBaseEntity|null} previous
  */
-function ROOT::FindByName(previous, name)
+function ROOT::FindByName( previous, name )
 	return EnableStringPurge(Entities.FindByName(previous, name))
 /**
  * @param {string} targetname
  * @param {Vector} center
  * @param {integer|float} radius
  */
-function ROOT::FindByNameNearest(targetname, center, radius)
+function ROOT::FindByNameNearest( targetname, center, radius )
 	return EnableStringPurge(Entities.FindByNameNearest(targetname, center, radius))
 
 /**
@@ -6793,13 +6804,13 @@ function ROOT::FindByNameNearest(targetname, center, radius)
  * @param {Vector} center
  * @param {integer|float} radius
  */
-function ROOT::FindByNameWithin(previous, targetname, center, radius)
+function ROOT::FindByNameWithin( previous, targetname, center, radius )
 	return EnableStringPurge(Entities.FindByNameWithin(previous, targetname, center, radius))
 /**
  * @param {CBaseEntity|null} previous
  * @param {string} target
  */
-function ROOT::FindByTarget(previous, target)
+function ROOT::FindByTarget( previous, target )
 	return EnableStringPurge(Entities.FindByTarget(previous, target))
 
 /**
@@ -6807,7 +6818,7 @@ function ROOT::FindByTarget(previous, target)
  * @param {Vector} center
  * @param {integer|float} radius
  */
-function ROOT::FindInSphere(previous, center, radius)
+function ROOT::FindInSphere( previous, center, radius )
 	return EnableStringPurge(Entities.FindInSphere(previous, center, radius))
 
 
@@ -6819,13 +6830,13 @@ function ROOT::FirstEntity()
 /**
  * @param {CBaseEntity} previous
  */
-function ROOT::NextEntity(previous)
+function ROOT::NextEntity( previous )
 	return EnableStringPurge(Entities.Next(previous))
 
 
 if (!("SpawnEntityFromTableOriginal" in ROOT))
    ::SpawnEntityFromTableOriginal <- ::SpawnEntityFromTable
-function ROOT::SpawnEntityFromTable(name, keyvalues)
+function ROOT::SpawnEntityFromTable( name, keyvalues )
 	return EnableStringPurge(SpawnEntityFromTableOriginal(name, keyvalues))
 if (!("_AddThinkToEnt" in ROOT))
 {
@@ -6836,7 +6847,7 @@ if (!("_AddThinkToEnt" in ROOT))
 	 * @param {CBaseEntity} entity
 	 * @param {string|function} think_func
 	 */
-	function ROOT::AddThinkToEnt(entity, think_func)
+	function ROOT::AddThinkToEnt( entity, think_func )
 	{
 		if (think_func == null)
 			think_func = ""
@@ -6846,7 +6857,7 @@ if (!("_AddThinkToEnt" in ROOT))
 		}
 		else if (type(think_func) == "function")
 		{
-			local function __InternalThinkFunc() {return think_func()}
+			local function __InternalThinkFunc( ) {return think_func( )}
 			GetScope(entity).__InternalThinkFunc <- __InternalThinkFunc
 			_AddThinkToEnt(entity, "__InternalThinkFunc")
 		}
@@ -6856,7 +6867,7 @@ if (!("_AddThinkToEnt" in ROOT))
 	}
 }
 
-function ROOT::GetScope(entity)
+function ROOT::GetScope( entity )
 {
 	if (!entity || !entity.IsValid())
 		return null
@@ -6866,7 +6877,7 @@ function ROOT::GetScope(entity)
 /**
  * @returns {[CBaseEntity]} Empty Array or Array of CBaseEntity
  */
-function ROOT::GetAllEntitiesByClassname(classname)
+function ROOT::GetAllEntitiesByClassname( classname )
 {
 	local list = []
 	for (local entity; entity = FindByClassname(entity, classname); )
@@ -6879,7 +6890,7 @@ function ROOT::GetAllEntitiesByClassname(classname)
  * @param {Vector} center
  * @returns {[CBaseEntity]} Empty Array or Array of CBaseEntity
  */
-function ROOT::GetAllEntitiesByClassnameWithin(classname, center, radius)
+function ROOT::GetAllEntitiesByClassnameWithin( classname, center, radius )
 {
 	local list = []
 	for (local entity; entity = FindByClassnameWithin(entity, classname, center, radius); )
@@ -6892,7 +6903,7 @@ function ROOT::GetAllEntitiesByClassnameWithin(classname, center, radius)
  * @param {string} targetname
  * @returns {[CBaseEntity]} Empty Array or Array of CBaseEntity
  */
-function ROOT::GetAllEntitiesByTargetname(targetname)
+function ROOT::GetAllEntitiesByTargetname( targetname )
 {
 	local list = []
 	for (local entity; entity = FindByName(entity, targetname); )
@@ -6907,7 +6918,7 @@ function ROOT::GetAllEntitiesByTargetname(targetname)
  * @param {integer|float} radius
  * @returns {[CBaseEntity]} Empty Array or Array of CBaseEntity
  */
-function ROOT::GetAllEntitiesByTargetnameWithin(targetname, center, radius)
+function ROOT::GetAllEntitiesByTargetnameWithin( targetname, center, radius )
 {
 	local list = []
 	for (local entity; entity = FindByNameWithin(entity, targetname, center, radius); )
@@ -6919,7 +6930,7 @@ function ROOT::GetAllEntitiesByTargetnameWithin(targetname, center, radius)
 /**
  * @returns {[CTFPlayer]} Empty Array or Array of CTFPlayer
  */
-function ROOT::GetAllPlayers(team = false, radius = false, alive = true)
+function ROOT::GetAllPlayers( team = false, radius = false, alive = true )
 {
 	local players = []
  
@@ -6962,7 +6973,7 @@ function ROOT::GetEveryTank()
  * @param {integer|float} radius
  * @returns {[CTFBaseBoss]} Empty Array or Array of CTFBaseBoss
  */
-function ROOT::GetEveryTankWithin(center, radius)
+function ROOT::GetEveryTankWithin( center, radius )
 {
 	local list = []
 	foreach (tank in GetAllEntitiesByClassnameWithin("tank_boss", center, radius))
@@ -6975,9 +6986,10 @@ function ROOT::GetEveryTankWithin(center, radius)
 /**
  * @param {CBaseEntity} entity
  */
-function ROOT::IsValidEnemy(entity)
+function ROOT::IsValidEnemy( entity )
 {
-	if (entity.GetTeam() != TF_TEAM_PVE_INVADERS) return false
+	if (entity.GetTeam() != TF_TEAM_PVE_INVADERS) 
+		return false
 
 	foreach (classname in [ "player", "tank_boss", "obj_dispenser", "obj_sentrygun", "obj_teleporter" ])
 	{
@@ -6992,18 +7004,16 @@ function ROOT::IsValidEnemy(entity)
  * @param {CBaseEntity|CTFPlayer|CTFBot|null} entity
  * @returns {bool}
  */
-function ROOT::IsValidPlayer(entity)
-{
+function ROOT::IsValidPlayer( entity )
 	return entity && entity.IsValid() && entity.IsPlayer()
-}
 
 /**
  * @param {CBaseEntity} entity
  */
-function ROOT::IsEntityAProjectile(entity)
+function ROOT::IsEntityAProjectile( entity )
 	return startswith(entity.GetClassname(), "tf_projectile")
 	
-function ROOT::CreateTestTank(origin = Vector(0, 0, 0), angles = QAngle(0, 0, 0))
+function ROOT::CreateTestTank( origin = Vector( 0, 0, 0 ), angles = QAngle( 0, 0, 0 ) )
 {
 	if (FindByName(null, "Test_Tank"))
 		FindByName(null, "Test_Tank").Kill()
@@ -7020,45 +7030,28 @@ function ROOT::CreateTestTank(origin = Vector(0, 0, 0), angles = QAngle(0, 0, 0)
  * @param {CBaseEntity} entity
  * @returns {CTFPlayer|null}
  */
-function ROOT::GetBuilder(entity)
-{
-	EnableStringPurge(entity)
-	if (!HasProp(entity, "m_hBuilder")) return null
-
-	return EnableStringPurge(GetPropEntity(entity, "m_hBuilder"))
-}
+function ROOT::GetBuilder( entity )
+	return GetPropEntity(entity, "m_hBuilder")
 /**
  * @param {CBaseEntity} entity
  * @returns {CTFPlayer|null}
  */
-function ROOT::GetLauncher(entity)
-{
-	EnableStringPurge(entity)
-	if (!HasProp(entity, "m_hLauncher")) return null
-	return EnableStringPurge(GetPropEntity(entity, "m_hLauncher"))
-}
+function ROOT::GetLauncher( entity )
+	return GetPropEntity(entity, "m_hLauncher")
 /**
  * @param {CBaseEntity} flag
  */
-function ROOT::GetFlagStatus(flag)
-{
-	EnableStringPurge(flag)
-	if (!HasProp(flag, "m_nFlagStatus")) return -1
+function ROOT::GetFlagStatus( flag )
 	return GetPropInt(flag, "m_nFlagStatus")
-}
 /**
  * @param {CBaseEntity} entity
  */
-function ROOT::GetState(entity)
-{
-	EnableStringPurge(entity)
-	if (!HasProp(entity, "m_iState")) return -1
+function ROOT::GetState( entity )
 	return GetPropInt(entity, "m_iState")
-}
 /**
  * @param {CBaseEntity} entity
  */
-function ROOT::ClearThinks(entity)
+function ROOT::ClearThinks( entity )
 {
 	SetPropString(entity, "m_iszScriptThinkFunction", "")
 	AddThinkToEnt(entity, "")
@@ -7066,19 +7059,19 @@ function ROOT::ClearThinks(entity)
 /**
  * @param {CBaseEntity} object
  */
-function ROOT::IsBuilding(object)
+function ROOT::IsBuilding( object )
 	return startswith(object.GetClassname(), "obj_")
 
 /**
  * @param {CBaseEntity} object
  */
-function ROOT::IsTank(object)
+function ROOT::IsTank( object )
 	return endswith(object.GetClassname(), "boss")
 
 /**
  * @param {CBaseEntity} building
  */
-function ROOT::IsBuildingValid(building)
+function ROOT::IsBuildingValid( building )
 {
 	if (!building) return false
 	EnableStringPurge(building)
@@ -7089,20 +7082,20 @@ function ROOT::IsBuildingValid(building)
 /**
  * @param {CBaseEntity} sentry
  */
-function ROOT::GetSentryAngles(sentry)
+function ROOT::GetSentryAngles( sentry )
 	return QAngle((GetPropFloatArray(sentry, "m_flPoseParameter", 0) * -100 + 50) * DEG2RAD, (GetPropFloatArray(sentry, "m_flPoseParameter", 1) * -360 + 180 + sentry.GetAbsAngles().y) * DEG2RAD, 0)
 
 /**
  * @param {QAngle} Angle
  */
-function ROOT::ConvertAngleToEndpoint(Angle, length = 600)
+function ROOT::ConvertAngleToEndpoint( Angle, length = 600 )
 	return Vector(cos(Angle.Pitch()) * cos(Angle.Yaw()), cos(Angle.Pitch()) * sin(Angle.Yaw()), -sin(Angle.Pitch())) * length
 
 /**
  * @param {CBaseEntity} entity
  * @param {function} callback
  */
-function ROOT::SetDestroyCallback(entity, callback)
+function ROOT::SetDestroyCallback( entity, callback )
 {
 	local scope = GetScope(entity)
 	scope.setdelegate({}.setdelegate({
@@ -7110,11 +7103,11 @@ function ROOT::SetDestroyCallback(entity, callback)
 			id       = entity.GetScriptId()
 			index    = entity.entindex()
 			callback = callback
-			_get = function(k)
+			_get = function( k )
 			{
 				return parent[k]
 			}
-			_delslot = function(k)
+			_delslot = function( k )
 			{
 				if (k == id)
 				{
@@ -7134,7 +7127,7 @@ function ROOT::SetDestroyCallback(entity, callback)
  * @param {CBaseEntity|null} activator
  * @param {CBaseEntity|null} caller
  */
-function ROOT::EntFireNew(target, action, input = "", delay = -1, activator = null, caller = null)
+function ROOT::EntFireNew( target, action, input = "", delay = -1, activator = null, caller = null )
 {
 	if (typeof target != "string" && target.IsPlayer() && action == "RunScriptCode")
 	{
@@ -7150,7 +7143,7 @@ function ROOT::EntFireNew(target, action, input = "", delay = -1, activator = nu
 	PurgeString(input)
 }
 
-function ROOT::CreateKillIcon(icon)
+function ROOT::CreateKillIcon( icon )
 {
 	if (FindByClassname(null, icon))
 		return FindByClassname(null, icon)
@@ -7162,7 +7155,7 @@ function ROOT::CreateKillIcon(icon)
 	return classicon;
 }
 
-function ROOT::PurgeString(string)
+function ROOT::PurgeString( string )
 {
 	if (!("TestPurgeString" in FatCatLibSettings))
 		SetLibrarySettings()
@@ -7209,7 +7202,7 @@ function ROOT::GetPopfileName()
  * Sets this Population files Name in the scoreboard.
  * @param {string} name
  */
-function ROOT::SetPopfileName(name)
+function ROOT::SetPopfileName( name )
 	SetPropString(ObjResource, "m_iszMvMPopfileName", name)
 
 /*
@@ -7222,7 +7215,7 @@ function ROOT::SetPopfileName(name)
  * @param {CTFPlayer|CBaseEntity} target
  * @param {integer} team 
  */
-function ROOT::GetClosestPlayer(target, team = TF_TEAM_BLUE, offset = Vector())
+function ROOT::GetClosestPlayer( target, team = TF_TEAM_BLUE, offset = Vector( ))
 {
 	local closest_dist = 100000
 	local closest = null
@@ -7246,7 +7239,7 @@ function ROOT::GetClosestPlayer(target, team = TF_TEAM_BLUE, offset = Vector())
 ::THINKER_PERSIST <- 0
 ::THINKER_NO_PERSIST <- 1
 
-function ROOT::CreateThinker(name, think_func, type = THINKER_NO_PERSIST)
+function ROOT::CreateThinker( name, think_func, type = THINKER_NO_PERSIST )
 {
 	local Thinker = FindByName(null, name)
 	if (Thinker == null) Thinker = SpawnEntityFromTable( type == THINKER_PERSIST ? "info_target" : "info_teleport_destination", { targetname = name })
@@ -7257,7 +7250,7 @@ function ROOT::CreateThinker(name, think_func, type = THINKER_NO_PERSIST)
 		AddThinkToEnt(Thinker, think_func)
 	else if (typeof think_func == "function")
 	{
-		local function ThinkerThink() {think_func()}
+		local function ThinkerThink( ) {think_func( )}
  		GetScope(Thinker).ThinkerThink <- ThinkerThink
 		AddThinkToEnt(Thinker, "ThinkerThink")
 	} */
@@ -7274,7 +7267,7 @@ function ROOT::GetPlayerReadyCount()
 	local size = GetPropArraySize( Gamerules, "m_bPlayerReady" )
 
 	for ( local i = 0; i < size; i++ ) 
-		if ( GetPropBoolArray( Gamerules, "m_bPlayerReady", i ) )
+		if ( GetPropBool( Gamerules, "m_bPlayerReady", i ) )
 			ready++
 
 	return ready
@@ -7401,7 +7394,7 @@ function DebugDrawTriangle( p1, p2, p3, r, g, b, noDepthTest, duration )
 }
 
 /**
- * From Mr. Burguers on TF2Maps Discord "username : (cb8493076c75466b9bfca4caaacc22a8)"
+ * From Mr. Burguers on TF2Maps Discord `Username : (cb8493076c75466b9bfca4caaacc22a8)`
  * @param {Vector} center
  * @param {Vector} color
  * @param {float} radius
@@ -7469,7 +7462,7 @@ function ROOT::DebugDrawSphere( center, color, radius, ztest, duration, rings = 
 // 	local vecStart = position + xAxis * radius
 // 	local vecPosition = vecStart;
 
-// 	local function Line(start, end, r, g, b, depth, dur) {DebugDrawLine(start, end, r, g, b, depth, dur)}
+// 	local function Line( start, end, r, g, b, depth, dur ) {DebugDrawLine( start, end, r, g, b, depth, dur )}
 
 // 	// Draw out each segment (fanning triangles if we have an alpha amount)
 // 	for ( local i = 1; i <= nSegments; i++ )
@@ -7515,7 +7508,7 @@ function ROOT::DebugDrawSphere( center, color, radius, ztest, duration, rings = 
 /**
  * @param {string} string
  */
-function ROOT::StringToArray(string)
+function ROOT::StringToArray( string )
 {
 	local char_array = []
 	for (local i = 0; i < string.len(); i++) {
@@ -7524,7 +7517,7 @@ function ROOT::StringToArray(string)
 	return char_array
 }
 
-function ROOT::ArrayToString(array)
+function ROOT::ArrayToString( array )
 {
 	local str = ""
 	foreach (item in array)
@@ -7536,12 +7529,12 @@ function ROOT::ArrayToString(array)
  * @param {string} string
  * @returns {bool}
  */
-function ROOT::IsStringATrigger(string, triggers = ["/", "!"])
+function ROOT::IsStringATrigger( string, triggers = ["/", "!"] )
 	return IsInArray(StringToArray(string)[0], triggers)
 /**
  * @param {string} string
  */
-function ROOT::RemoveCommandTrigger(string, triggers = ["/", "!"])
+function ROOT::RemoveCommandTrigger( string, triggers = ["/", "!"] )
 {
 	if (!IsStringATrigger(string, triggers))
 		return string
@@ -7551,7 +7544,7 @@ function ROOT::RemoveCommandTrigger(string, triggers = ["/", "!"])
  * @param {string} string
  * @returns {[string]}
  */
-function ROOT::SplitStringBetter(string)
+function ROOT::SplitStringBetter( string )
 {
 	local string_debug = false
 
@@ -7567,7 +7560,7 @@ function ROOT::SplitStringBetter(string)
 		added_final = false
 		if (byte == escape)
 		{
-			if (string_debug) ("found special escape char, setting val to "+!found_prev_escape)
+			if (string_debug) printf("found special escape char, setting val to "+!found_prev_escape)
 			found_prev_escape = !found_prev_escape
 
 			if (temp_output.len() != 0 && temp_output != " ")
@@ -7604,7 +7597,7 @@ function ROOT::SplitStringBetter(string)
 /**
  * @param {string|[string]} trigger
  */
-function ROOT::RemoveChatTrigger(trigger)
+function ROOT::RemoveChatTrigger( trigger )
 {
 	local errors = []
 	if (typeof trigger == "string")
@@ -7649,9 +7642,9 @@ function ROOT::dummy_ent() {
 	return relay
 }
 /* 
-function ROOT::RunWithDelay(func, delay = 0.0)
+function ROOT::RunWithDelay( func, delay = 0.0 )
 {
-	if (type(delay) == "function" && type(func) != "function")
+	if (type(delay) == "function" && type( func ) != "function")
 	{
 		local temp = func
 		func = delay
@@ -7672,10 +7665,10 @@ function ROOT::RunWithDelay(func, delay = 0.0)
  * @param {float|integer|function} 	func
  * @returns {CBaseEntity|null}
  */
-function ROOT::RunWithDelay(delay, func)
+function ROOT::RunWithDelay( delay, func )
 {
 	// using `function() {}, delay` is now deprecated, looks bad with long funcs
-	if (type(delay) == "function" && type(func) != "function")
+	if (type(delay) == "function" && type( func ) != "function")
 	{
 		DeprecatedWarning(getstackinfos(1), getstackinfos(2))
 		/** @type {function} */
@@ -7696,7 +7689,7 @@ function ROOT::RunWithDelay(delay, func)
 /**
  * @param {function} on_timer_func
  */
-function ROOT::CreateTimer(on_timer_func, first_delay = 0.0)
+function ROOT::CreateTimer( on_timer_func, first_delay = 0.0 )
 {
 	local dummy = dummy_ent()
 	GetScope(dummy)["Run"] <- function()
@@ -7730,7 +7723,7 @@ function ROOT::CreateTimer(on_timer_func, first_delay = 0.0)
 /**
  * @param {CBaseEntity} timer
  */
-function ROOT::KillTimer(timer)
+function ROOT::KillTimer( timer )
 {
 	if (timer.IsValid())
 		timer.Kill()
@@ -7738,7 +7731,7 @@ function ROOT::KillTimer(timer)
 /**
  * @param {CBaseEntity} timer
  */
-function ROOT::FireTimer(timer)
+function ROOT::FireTimer( timer )
 {
 	if (timer.IsValid())
 	{
@@ -7790,24 +7783,24 @@ RunWithDelay(@() FireTimer(timer), 7.0)
  * @param {table} scope
  * @deprecated this is cleaner, but uses more jump routines
  */
-function ROOT::IsNotInScope(item, scope)
+function ROOT::IsNotInScope( item, scope )
 	return (!(item in scope))
 /**
  * @param {any} item
  * @deprecated this is cleaner, but uses more jump routines
  */
-function ROOT::IsNotInTable(item, table)
+function ROOT::IsNotInTable( item, table )
 	return (!(item in table))
 /**
  * @param {integer} dmg_type
  * @deprecated Do not use! likely to get removed in some later date
  */
-function ROOT::IsDamageTypeSpell(dmg_type)
+function ROOT::IsDamageTypeSpell( dmg_type )
 	return dmg_type >= 65 && dmg_type <= 75
 /**
  * @param {array} array
  */
-function ROOT::IsInArray(item, array)
+function ROOT::IsInArray( item, array )
 	return array.find(item) != null
 
 
@@ -7820,7 +7813,7 @@ function ROOT::IsChaosMvM()
 /**
  * @param {Vector} point
  */
-function ROOT::IsPointInRespawnRoom(point)
+function ROOT::IsPointInRespawnRoom( point )
 {
 	foreach (respawnroom in GetAllEntitiesByClassname("func_respawnroom"))
 	{
@@ -7845,7 +7838,7 @@ function ROOT::IsPointInRespawnRoom(point)
  * @param {Vector} min
  * @param {Vector} max
  */
-function ROOT::IsHullInRespawnRoom(start, min, max)
+function ROOT::IsHullInRespawnRoom( start, min, max )
 {
 	foreach (respawnroom in GetAllEntitiesByClassname("func_respawnroom"))
 	{
@@ -7874,7 +7867,7 @@ function ROOT::IsHullInRespawnRoom(start, min, max)
  * @param {Vector} point1
  * @param {Vector} point2
  */
-function ROOT::CanPointSeePoint(point1, point2)
+function ROOT::CanPointSeePoint( point1, point2 )
 {
 	local trace = {
 		start = point1
@@ -7888,7 +7881,7 @@ function ROOT::CanPointSeePoint(point1, point2)
 /**
  * @param {table} info
  */
-function ROOT::EmitGlobalSound(info)
+function ROOT::EmitGlobalSound( info )
 	EmitSoundEx({
 		sound_name = info.sound_name
 		channel = "channel" in info ? info.channel : 0
@@ -7904,7 +7897,7 @@ function ROOT::EmitGlobalSound(info)
  * @param {Vector} origin
  * @param {QAngle} angle
  */
-function ROOT::CreateParticle(particle, origin, angle = QAngle(-90, 0, 0))
+function ROOT::CreateParticle( particle, origin, angle = QAngle( -90, 0, 0 ) )
 {
 	local temp = SpawnEntityFromTable("info_particle_system", {effect_name = particle})
 	temp.SetAbsOrigin(origin)
@@ -7932,7 +7925,7 @@ else if (!GlobalParticleSpawner.IsValid())
  * @param {integer} attach_type
  * @param {string} attachment_name
  */
-function ROOT::AttachEntityParticle(entity, particle, attach_type = PATTACH_ABSORIGIN, attachment_name = "")
+function ROOT::AttachEntityParticle( entity, particle, attach_type = PATTACH_ABSORIGIN, attachment_name = "" )
 {
 	if (entity == null || !entity.IsValid())
 		return
@@ -7952,7 +7945,7 @@ function ROOT::AttachEntityParticle(entity, particle, attach_type = PATTACH_ABSO
  * @param {CTFWeaponBase|CEconEntity|null} weapon
  * @param {string} classname
  */
-function ROOT::IsWeaponClass(weapon, classname, starts = false)
+function ROOT::IsWeaponClass( weapon, classname, starts = false )
 {
 	if (weapon == null || !weapon.IsValid())
 		return false
@@ -7975,7 +7968,7 @@ function ROOT::IsWeaponClass(weapon, classname, starts = false)
  * @param {float} 		lifetime 	How long the Pickup should live for.
  * @param {function} 	func	 	What function to run when the pickup is picked up
  */
-function ROOT::CreatePickup(table)
+function ROOT::CreatePickup( table )
 {
 	if ( type(table) != "table" )
 		return null
@@ -7995,7 +7988,7 @@ function ROOT::CreatePickup(table)
 	pickup.SetMoveType(MOVETYPE_FLYGRAVITY, 1)
 	pickup.SetAbsVelocity(table.velocity)
 
-	local function func() { if (Time() >= life_time) {self.Kill()} }
+	local function func( ) { if ( Time( ) >= life_time ) {self.Kill()} }
 
 	GetScope(pickup).life_time <- Time() + table.lifetime
 	GetScope(pickup).LifeTime <- func
@@ -8012,7 +8005,7 @@ function ROOT::CreatePickup(table)
  * i.e. node 1 is "path", while node 2 is "path_2"
  * @param {table} data
  */
-function ROOT::CreateTankPath(data)
+function ROOT::CreateTankPath( data )
 {
 	foreach (PathName, PathData in data)
 	{
@@ -8078,7 +8071,7 @@ DMG_BIT_NAMES[DMG_BUCKSHOT] 			<- "DMG_BUCKSHOT"
 /**
  * @param {integer} bits
  */
-function ROOT::PrintDamageBits(bits)
+function ROOT::PrintDamageBits( bits )
 {
 	for (local i = 0; i < 32; i++) {
 		local bit = 1 << i
@@ -8087,7 +8080,7 @@ function ROOT::PrintDamageBits(bits)
 	}
 }
 
-function ROOT::IsDamageTaunt(damagecustom)
+function ROOT::IsDamageTaunt( damagecustom )
 {
 	return damagecustom == TF_DMG_CUSTOM_TAUNTATK_HADOUKEN
 		|| damagecustom == TF_DMG_CUSTOM_TAUNTATK_ARROW_STAB
@@ -8105,7 +8098,7 @@ function ROOT::IsDamageTaunt(damagecustom)
 		|| damagecustom == TF_DMG_CUSTOM_TAUNTATK_GASBLAST
 }
 
-function ROOT::ToggleSlowDown(amount = 1.0, sound = "", revert_sound = "", revert = 0.0)
+function ROOT::ToggleSlowDown( amount = 1.0, sound = "", revert_sound = "", revert = 0.0 )
 {
 	Assert(amount > 0.01, "Cannot set Timescale below 0.01")
 
@@ -8140,10 +8133,10 @@ function ROOT::ToggleSlowDown(amount = 1.0, sound = "", revert_sound = "", rever
  * @param {string} name
  * @param {table} set
  */
-function ROOT::CreateItemSet(name, set)
+function ROOT::CreateItemSet( name, set )
 	ItemSets[name] <- set
 
-function ROOT::ProccessItemSets(client)
+function ROOT::ProccessItemSets( client )
 {
 	foreach (_name, set in ItemSets)
 	{
@@ -8266,7 +8259,7 @@ function ROOT::ProccessItemSets(client)
  * @param {CBaseEntity|null} ent
  * @returns {bool}
  */
-function ROOT::IsProjectile(ent)
+function ROOT::IsProjectile( ent )
 {
 	if (!ent || !ent.IsValid() || !startswith(ent.GetClassname(), "tf_proj"))
 		return false
@@ -8276,7 +8269,7 @@ function ROOT::IsProjectile(ent)
  * @param {CBaseEntity|null} ent
  * @returns {bool}
  */
-function ROOT::IsBaseGrenade(ent)
+function ROOT::IsBaseGrenade( ent )
 {
 	if (!IsProjectile(ent) || !IsInArray(ent.GetClassname(), PipeBombClassnames))
 		return false
@@ -8286,7 +8279,7 @@ function ROOT::IsBaseGrenade(ent)
  * @param {CBaseEntity|null} ent
  * @returns {bool}
  */
-function ROOT::IsBaseRocket(ent)
+function ROOT::IsBaseRocket( ent )
 {
 	if (!IsProjectile(ent) || !IsInArray(ent.GetClassname(), RocketClassnames))
 		return false
@@ -8296,7 +8289,7 @@ function ROOT::IsBaseRocket(ent)
 // fix tf2c
 if (!("Assert" in ROOT))
 {
-	function ROOT::Assert(bool, msg = null)
+	function ROOT::Assert( bool, msg = null )
 	{
 		if (bool)
 			return
@@ -8310,10 +8303,10 @@ if (!("Assert" in ROOT))
 // fake parity with TF2C
 if (!("ListenToEvent" in ROOT))
 {
-	function ROOT::ListenToEvent(event, callback, context, prefix = "OnGameEvent")
+	function ROOT::ListenToEvent( event, callback, context, prefix = "OnGameEvent" )
 	{
 		ROOT[context] <- {}
-		local function CallFunc(params) {callback(params)}
+		local function CallFunc( params ) {callback( params )}
 		ROOT[context][prefix+"_"+event] <- CallFunc
 
 		__CollectGameEventCallbacks(ROOT[context])
@@ -8321,12 +8314,12 @@ if (!("ListenToEvent" in ROOT))
 }
 if (!("ListenToGameEvent" in ROOT))
 {
-	function ROOT::ListenToGameEvent(event, callback, context)
+	function ROOT::ListenToGameEvent( event, callback, context )
 		ListenToEvent(event, callback, context)
 }
 if (!("ListenToScriptEvent" in ROOT))
 {
-	function ROOT::ListenToScriptEvent(event, callback, context)
+	function ROOT::ListenToScriptEvent( event, callback, context )
 		ListenToEvent(event, callback, context, "OnScriptEvent")
 }
 /*
@@ -8365,7 +8358,7 @@ function ROOT::StopBenchmark()
 		error("Warning Benchmarking is not enabled, please load the extension\n")
 	return null
 }
-function ROOT::PrintBenchmarkTime(text = "")
+function ROOT::PrintBenchmarkTime( text = "" )
 {
 	if (IsBenchmarkLoaded())
 		return printf(text + "%.5f ms\n", StopBenchmark())
@@ -8391,7 +8384,7 @@ function ROOT::PrintBenchmarkTime(text = "")
  * @param {string} name
  * @param {function} func
  */
-function ROOT::OnAddCondListener(cond, name, func)
+function ROOT::OnAddCondListener( cond, name, func )
 {
 	if (!("OnCondPostHooks" in FatCatLibSettings))
 		SetLibrarySettings()
@@ -8421,7 +8414,7 @@ function ROOT::OnAddCondListener(cond, name, func)
  * @param {string} name
  * @param {function} func
  */
-function ROOT::OnRemoveCondListener(cond, name, func)
+function ROOT::OnRemoveCondListener( cond, name, func )
 {
 	if (!("OnCondPostHooks" in FatCatLibSettings))
 		SetLibrarySettings()
@@ -8460,7 +8453,7 @@ function ROOT::OnRemoveCondListener(cond, name, func)
 /**
  * @param {table} trace
  */
-function ROOT::DrawTraceHull(trace, starting_color = Vector(255, 0, 0), ending_color = Vector(0, 0, 255))
+function ROOT::DrawTraceHull( trace, starting_color = Vector( 255, 0, 0 ), ending_color = Vector( 0, 0, 255 ) )
 {
 	local max = "hullmax" in trace ? trace.hullmax : Vector(1, -1, 1)
 	local min = "hullmin" in trace ? trace.hullmin : Vector(-1, 1, -1)
@@ -8486,11 +8479,11 @@ function ROOT::DrawTraceHull(trace, starting_color = Vector(255, 0, 0), ending_c
  * @param {table} info1
  * @param {table} info2
  */
-function ROOT::DeprecatedWarning(info1, info2)
+function ROOT::DeprecatedWarning( info1, info2 )
 	error(format("FatCatLibrary::%s  :  %s on Line %i is running a Deprecated Version of %s\n", info1.func, info2.src, info2.line, info1.func))
 
 
-function ROOT::PrecacheObject(thing)
+function ROOT::PrecacheObject( thing )
 {
 	local ret = 0
 	if (thing.find(".mdl") != null || thing.find(".vmt") != null)
@@ -8523,7 +8516,7 @@ function ROOT::PrecacheObject(thing)
 	 * @param {integer} b
 	 * @deprecated for singular flags use HasBitFlag, for multiple flags use HasBitMask.
 	 */
-	function BitWise(a, b)
+	function BitWise( a, b )
 	{
 		return (a & b) == b
 	}
@@ -8534,7 +8527,7 @@ function ROOT::PrecacheObject(thing)
 	 * @param {integer} bits
 	 * @param {integer} flag
 	 */
-	function HasBitFlag(bits, flag)
+	function HasBitFlag( bits, flag )
 	{
 		return ( bits & flag ) != 0
 	}
@@ -8545,7 +8538,7 @@ function ROOT::PrecacheObject(thing)
 	 * @param {integer} bits
 	 * @param {integer} mask
 	 */
-	function HasBitMask(bits, mask)
+	function HasBitMask( bits, mask )
 	{
 		return ( bits & mask ) == mask
 	}
@@ -8557,7 +8550,7 @@ function ROOT::PrecacheObject(thing)
 	 * @param {integer|float} a
 	 * @param {integer|float} b
 	 */
-	function Min(a, b)
+	function Min( a, b )
 	{
 		return (a < b) ? a : b
 	}
@@ -8568,7 +8561,7 @@ function ROOT::PrecacheObject(thing)
 	 * @param {integer|float} a
 	 * @param {integer|float} b
 	 */
-	function Max(a, b)
+	function Max( a, b )
 	{
 		return (a < b) ? b : a
 	}
@@ -8599,7 +8592,7 @@ function ROOT::PrecacheObject(thing)
 	 * @param {integer|float} C
 	 * @param {integer|float} D
 	 */
-	function RemapVal(val, A, B, C, D)
+	function RemapVal( val, A, B, C, D )
 	{
 		if ( A == B )
 			return val >= B ? D : C;
@@ -8612,7 +8605,7 @@ function ROOT::PrecacheObject(thing)
 	 * @param {integer|float} C
 	 * @param {integer|float} D
 	 */
-	function RemapValClamped(val, A, B, C, D)
+	function RemapValClamped( val, A, B, C, D )
 	{
 		if ( A == B )
 			return val >= B ? D : C;
@@ -8621,7 +8614,7 @@ function ROOT::PrecacheObject(thing)
 
 		return C + (D - C) * cVal;
 	}
-	function ConvertRadiusToSndLvl(radius)
+	function ConvertRadiusToSndLvl( radius )
 	{
 		return (40 + (20 * log10(radius / 36.0))).tointeger()
 	}
@@ -8629,7 +8622,7 @@ function ROOT::PrecacheObject(thing)
 	 * @param {integer|float} min
 	 * @param {integer|float} max
 	 */
-	function RandomVec(min, max)
+	function RandomVec( min, max )
 	{
 		local v = Vector()
 		v.Random(min, max)
@@ -8639,7 +8632,7 @@ function ROOT::PrecacheObject(thing)
 	 * @param {Vector} point1
 	 * @param {Vector} point2
 	 */
-	function Distance(point1, point2)
+	function Distance( point1, point2 )
 	{
 		return (point1 - point2).Length()
 	}
@@ -8650,7 +8643,7 @@ function ROOT::PrecacheObject(thing)
 	/**
 	 * @param {integer} num
 	 */
-	function OneInChance(num)
+	function OneInChance( num )
 		return RandomChance() <= (1.0/num.tofloat())
 
 	/**
@@ -8673,7 +8666,7 @@ function ROOT::PrecacheObject(thing)
 	 * @param {Vector} Vec
 	 * @return Returns the Angle Pointing Towards Vector
 	 */
-	function VectorAngles(Vec)
+	function VectorAngles( Vec )
 	{
 		local yaw, pitch
 		if ( Vec.y == 0.0 && Vec.x == 0.0 )
@@ -8773,7 +8766,7 @@ function Vector::Normalize()
  * @param {float} min
  * @param {float} max
  */
-function Vector::Random(min, max)
+function Vector::Random( min, max )
 {	//VALVE_RAND_MAX == 0x7FFF
 	this.x = min + (::RandomInt(0, 0x7FFF).tofloat() / 0x7FFF) * (max - min)
 	this.y = min + (::RandomInt(0, 0x7FFF).tofloat() / 0x7FFF) * (max - min)
@@ -8783,7 +8776,7 @@ function Vector::Random(min, max)
  * @param {Vector} point2
  * @returns {float}
  */
-function Vector::DistanceTo(point2)
+function Vector::DistanceTo( point2 )
 {
 	try {
 	return (this-point2).Length()
@@ -8835,7 +8828,7 @@ if (!("min" in ROOT))
 	/**
 	 * @deprecated Use MATH.Min instead.
 	 */
-	function ROOT::min(a, b)
+	function ROOT::min( a, b )
 	{
 		DeprecatedWarning(getstackinfos(1), getstackinfos(2))
 		return (b < a) ? b : a;
@@ -8846,7 +8839,7 @@ if (!("max" in ROOT))
 	/**
 	 * @deprecated use MATH.Max instead.
 	 */
-	function ROOT::max(a, b)
+	function ROOT::max( a, b )
 	{
 		DeprecatedWarning(getstackinfos(1), getstackinfos(2))
 		return (a < b) ? b : a;
@@ -8875,7 +8868,7 @@ if (!("remapValue" in ROOT))
 	/**
 	 * @deprecated use MATH.RemapVal instead.
 	 */
-	function ROOT::remapValue(val, A, B, C, D)
+	function ROOT::remapValue( val, A, B, C, D )
 	{
 		DeprecatedWarning(getstackinfos(1), getstackinfos(2))
 		if ( A == B )
@@ -8888,7 +8881,7 @@ if (!("remapValueClamped" in ROOT))
 	/**
 	 * @deprecated use MATH.RemapValClamped instead.
 	 */
-	function ROOT::remapValueClamped(val, A, B, C, D)
+	function ROOT::remapValueClamped( val, A, B, C, D )
 	{
 		DeprecatedWarning(getstackinfos(1), getstackinfos(2))
 		if ( A == B )
@@ -8903,7 +8896,7 @@ if (!("ConvertRadiusToSndLvl" in ROOT))
 	/**
 	 * @deprecated use MATH.ConvertRadiusToSndLvl instead.
 	 */
-	function ROOT::ConvertRadiusToSndLvl(radius)
+	function ROOT::ConvertRadiusToSndLvl( radius )
 	{
 		DeprecatedWarning(getstackinfos(1), getstackinfos(2))
 		return (40 + (20 * log10(radius / 36.0))).tointeger()
@@ -8917,7 +8910,7 @@ if (!("GetWeaponInSlot" in ROOT))
 	 * @param {CTFPlayer} player
 	 * @deprecated use player.GetWeaponInSlotNew instead.
 	 */
-	function ROOT::GetWeaponInSlot(player, slot = 0)
+	function ROOT::GetWeaponInSlot( player, slot = 0 )
 	{
 		if ( !player ) return null
 		DeprecatedWarning(getstackinfos(1), getstackinfos(2))
@@ -8988,14 +8981,14 @@ if (!("BUSTER_ICON" in ROOT))
  * @param {integer}				DmgCustom 			The custom damage type to use.
  * @param {float}				SoundRadius			The radius the sound travels. (Default: radius)
  * @param {float}				SoundDelay			Cooldown between explosion sounds. (Default: 0.5)
- * @param {function}			ExplodeFunc			Callback function for players hit. (Default: null)
+ * @param {function}			ExplodeFunc			Callback function for players hit. ( Default: null )
  * @param {bool}				FuncBeforeDmg		If true, call ExplodeFunc before dealing damage. (Default: false)
  * @param {bool}				FuncOnIgnore		If true, call ExplodeFunc on ignored targets. (Default: false)
  * @param {bool}				OnlyPlayers			If true, only collect players to attack. (Default: false)
  * @param {bool}				FuncIgnoreObjects	If true, ignore non-players when calling ExplodeFunc. (Default: false)
  * @param {string}				kill_icon			Override the kill icon in killfeed, forces DmgCustom to 0 (Default: "")
  */
-function ROOT::CreateBaseExplosion(table)
+function ROOT::CreateBaseExplosion( table )
 {
 	local owner 			= "owner" 				in table ? table.owner 				: null
 	local weapon 			= "weapon" 				in table ? table.weapon 			: null
@@ -9013,7 +9006,7 @@ function ROOT::CreateBaseExplosion(table)
 	local DmgType 			= "DmgType" 			in table ? table.DmgType 			: DMG_GENERIC|DMG_BLAST
 	local DmgCustom 		= "DmgCustom" 			in table ? table.DmgCustom 			: TF_DMG_CUSTOM_TRIGGER_HURT
 	local FuncBeforeDmg		= "FuncBeforeDmg"		in table ? table.FuncBeforeDmg 		: false
-	local ExplodeFunc		= "ExplodeFunc"			in table ? table.ExplodeFunc		: function(...) { /* do what you want on explosion */ }
+	local ExplodeFunc		= "ExplodeFunc"			in table ? table.ExplodeFunc		: function( ... ) { /* do what you want on explosion */ }
 	local ignores			= "ignores"				in table ? table.ignores			: []
 	local OnlyPlayers		= "OnlyPlayers"			in table ? table.OnlyPlayers		: false
 	local FuncOnIgnore		= "FuncOnIgnore"		in table ? table.FuncOnIgnore 		: false
@@ -9116,7 +9109,7 @@ function ROOT::CreateBaseExplosion(table)
  * @param {string}		sound		Sound to play on explosion.
  * @param {string}		particle	Particle to spawn on explosion.
  */
-function ROOT::CreateAoE(table)
+function ROOT::CreateAoE( table )
 {
 	CreateBaseExplosion({
 		owner = table.owner,
@@ -9141,7 +9134,7 @@ function ROOT::CreateAoE(table)
  * @param {float} 			SoundRadius	Radius in which the sound can be heard
  * @param {function}		func		Function to use on players hit
  */
-function ROOT::CreateKnifeAoE(table)
+function ROOT::CreateKnifeAoE( table )
 {
 	CreateBaseExplosion({
 		owner = table.owner,
@@ -9168,7 +9161,7 @@ function ROOT::CreateKnifeAoE(table)
  * @param {float} 			damage		How much damage to deal.
  * @param {CBaseEntity}		ignore		What entitys to ignore in the explosion.
  */
-function ROOT::CreateSlamAoE(table)
+function ROOT::CreateSlamAoE( table )
 {
 	if (!SLAM_ICON || !SLAM_ICON.IsValid())
 		SLAM_ICON = CreateKillIcon("hale_slam_collateral")
@@ -9205,7 +9198,7 @@ function ROOT::CreateSlamAoE(table)
  * @param {float} 				radius			The Radius of the explosion (Default: 200)
  * @param {function}			func			the fireball function
  */
-function ROOT::CreateFireballExplosion(table)
+function ROOT::CreateFireballExplosion( table )
 {
 	CreateBaseExplosion({
 		owner = table.owner,
@@ -9227,7 +9220,7 @@ function ROOT::CreateFireballExplosion(table)
  * @param {CTFPlayer} 	owner			The owner of the damage to report it back to.
  * @param {Vector} 		center			The position to create the explosion at.
  */
-function ROOT::CreateSentryBusterExplosion(table)
+function ROOT::CreateSentryBusterExplosion( table )
 {
 	CreateKillIcon("megaton")
 	if (!BUSTER_ICON || !BUSTER_ICON.IsValid())
@@ -9260,7 +9253,7 @@ function ROOT::CreateSentryBusterExplosion(table)
 if (!("ChatTriggers" in ROOT))
 	::ChatTriggers <- {}
 
-function ROOT::AddChatTrigger(trigger, callback, ...)
+function ROOT::AddChatTrigger( trigger, callback, ... )
 {
 	local errors = []
 	if (typeof trigger == "string")
@@ -9281,7 +9274,7 @@ function ROOT::AddChatTrigger(trigger, callback, ...)
 	if (errors.len() != 0)
 		PrintArray(errors)
 }
-function ROOT::RegisterAdminTrigger(trigger, callback)
+function ROOT::RegisterAdminTrigger( trigger, callback )
 	AddChatTrigger(trigger, callback, "IsAdmin")
 
 /*
@@ -9313,7 +9306,7 @@ function ROOT::ClearDamageCallbacks()
  * @param {string} callback_name
  * @param {function} callback
  */
-function ROOT::RegisterDamageCallback(entity_name, callback_name, callback)
+function ROOT::RegisterDamageCallback( entity_name, callback_name, callback )
 {
 	if (typeof entity_name == "array")
 	{
@@ -9338,7 +9331,7 @@ function ROOT::RegisterDamageCallback(entity_name, callback_name, callback)
  * @param {string|[string]} entity_name
  * @param {string} callback_name
  */
-function ROOT::RemoveDamageCallback(entity_name, callback_name)
+function ROOT::RemoveDamageCallback( entity_name, callback_name )
 {
 	if (typeof entity_name == "string")
 	{
@@ -9374,7 +9367,7 @@ function ROOT::RemoveDamageCallback(entity_name, callback_name)
 /**
  * @param {table} params
  */
-function ParamsToDamageCallbackData(params)
+function ParamsToDamageCallbackData( params )
 	return {
 		victim 				= params.const_entity
 		attacker 			= params.attacker
@@ -9503,7 +9496,7 @@ function ROOT::ClearSpawnCallbacks()
  * @param {string} callback_name
  * @param {function} callback
  */
-function ROOT::RegisterSpawnCallback(entity_name, callback_name, callback)
+function ROOT::RegisterSpawnCallback( entity_name, callback_name, callback )
 {
 	if (typeof entity_name == "array")
 	{
@@ -9523,7 +9516,7 @@ function ROOT::RegisterSpawnCallback(entity_name, callback_name, callback)
 	else throw format("Unknown Type \"%s\" in SpawnCallback ", typeof entity_name)
 }
 
-function ROOT::RemoveSpawnCallback(entity_name, callback_name)
+function ROOT::RemoveSpawnCallback( entity_name, callback_name )
 {
 	if (typeof entity_name == "string")
 	{
@@ -9577,7 +9570,7 @@ CreateThinker("OnEntityPostSpawn" , function() {
 	return -1
 }, THINKER_PERSIST)
 
-/* RegisterSpawnCallback("tf_projectile_rocket", function(entity) {
+/* RegisterSpawnCallback("tf_projectile_rocket", function( entity ) {
 	AddThinkToEnt(entity, "ProjectileThink")
 
 	local owner = entity.GetOwner()
@@ -9785,7 +9778,7 @@ function SwapWeaponThink()
  * @type {function}
  * @param {CTFPlayer|CTFBot} player
  */
-function ROOT::PostPlayerSpawn(player)
+function ROOT::PostPlayerSpawn( player )
 {
 	if (!IsValidPlayer(player))
 		return
@@ -9842,7 +9835,7 @@ function ROOT::PostPlayerSpawn(player)
 	/**
 	 * @param {table} params
 	 */
-	function OnGameEvent_post_inventory_application(params)
+	function OnGameEvent_post_inventory_application( params )
 	{
 		local eventdata = clone params
 
@@ -9924,7 +9917,7 @@ function ROOT::PostPlayerSpawn(player)
 	/**
 	 * @param {table} params
 	 */
-	function OnGameEvent_player_death(params)
+	function OnGameEvent_player_death( params )
 	{
 		local eventdata = clone params
 
@@ -10048,7 +10041,7 @@ function ROOT::PostPlayerSpawn(player)
 	/**
 	 * @param {table} params
 	 */
-	function OnScriptHook_OnTakeDamage(params)
+	function OnScriptHook_OnTakeDamage( params )
 	{
 		if (HasCustomFlag(params.damage_custom, TF_DMG_CUSTOM_IGNORE_INTERNAL))
 			return
@@ -10078,7 +10071,7 @@ function ROOT::PostPlayerSpawn(player)
 		 * @param {CBaseEntity|null} ent
 		 * @returns {string}
 		 */
-		// local function str(ent) { return ent && ent.IsValid() ? ent.tostring() : "null"	}
+		// local function str( ent ) { return ent && ent.IsValid( ) ? ent.tostring( ) : "null"	}
 
 		// local builder = inflictor ? GetBuilder(inflictor.GetOwner()) : null
 		// local thrower = HasProp(inflictor, "m_hThrower") ? GetPropEntity(inflictor, "m_hThrower") : null
@@ -10232,7 +10225,7 @@ function ROOT::PostPlayerSpawn(player)
 					/**
 					 * @param {CTFPlayer|CTFBot|CBaseEntity} player
 					 */
-					function func(player) {
+					function func( player ) {
 						if (!player || !player.IsValid() || !player.IsPlayer())
 							return
 						player.StunPlayer(MATH.Clamp(iExplosiveBackstab - 1, 0, 2), 0.6, TF_STUN_MOVEMENT, attacker )
@@ -10506,7 +10499,7 @@ function ROOT::PostPlayerSpawn(player)
 	/**
 	 * @param {table} params
 	 */
-	function OnGameEvent_player_hurt(params)
+	function OnGameEvent_player_hurt( params )
 	{
 		local eventdata = clone params
 
@@ -10567,7 +10560,7 @@ function ROOT::PostPlayerSpawn(player)
 	/**
 	 * @param {table} params
 	 */
-	function OnGameEvent_player_spawn(params)
+	function OnGameEvent_player_spawn( params )
 	{
 		local eventdata = clone params
 
@@ -10618,7 +10611,7 @@ function ROOT::PostPlayerSpawn(player)
 	/**
 	 * @param {table} params
 	 */
-	function OnGameEvent_player_team(params)
+	function OnGameEvent_player_team( params )
 	{
 		local eventdata = clone params
 
@@ -10666,7 +10659,7 @@ function ROOT::PostPlayerSpawn(player)
 	/**
 	 * @param {table} params
 	 */
-	function OnGameEvent_player_say(params)
+	function OnGameEvent_player_say( params )
 	{
 		local eventdata = {}
 
@@ -10730,7 +10723,7 @@ function ROOT::PostPlayerSpawn(player)
 	/**
 	 * @param {table} params
 	 */
-	function OnGameEvent_npc_hurt(params)
+	function OnGameEvent_npc_hurt( params )
 	{
 		local eventdata = clone params
 
@@ -10807,7 +10800,7 @@ function ROOT::PostPlayerSpawn(player)
 	/**
 	 * @param {table} params
 	 */
-	function OnGameEvent_player_healed(params)
+	function OnGameEvent_player_healed( params )
 	{
 		local eventdata = clone params
 
@@ -10823,7 +10816,7 @@ function ROOT::PostPlayerSpawn(player)
 	/**
 	 * @param {table} params
 	 */
-	function OnGameEvent_player_disconnect(params) 
+	function OnGameEvent_player_disconnect( params ) 
 	{
 		ReCalculatePlayers()
 		RunWithDelay(0.1, @() (ReCalculatePlayers()))
@@ -10854,7 +10847,7 @@ function ROOT::PostPlayerSpawn(player)
 	/**
 	 * @param {table} params
 	 */
-	function OnGameEvent_player_builtobject(params)
+	function OnGameEvent_player_builtobject( params )
 	{
 		local eventdata = clone params
 		
@@ -10890,7 +10883,7 @@ function ROOT::PostPlayerSpawn(player)
 		// printf("Added %s to players object array\n", object.tostring())
 
 		/* GetScope(object).DestroyCallbacks <- [] 
-		local function AddDestroyCallback(func) { DestroyCallbacks.append(func) }
+		local function AddDestroyCallback( func ) { DestroyCallbacks.append( func ) }
 		GetScope(object).AddDestroyCallback <- AddDestroyCallback
 
 		SetDestroyCallback(object, function() {
@@ -10936,7 +10929,7 @@ function ROOT::PostPlayerSpawn(player)
 
 		FireScriptEvent(event_name, eventdata)
 	}
-	function OnGameEvent_object_destroyed(params)
+	function OnGameEvent_object_destroyed( params )
 	{
 		local owner = "userid" in params ? GetPlayerFromUserID(params.userid) : null
 		local attacker = "attacker" in params ? GetPlayerFromUserID(params.attacker) : null
@@ -10978,7 +10971,7 @@ function ROOT::PostPlayerSpawn(player)
 
 		// FireScriptEvent(event_name + "")
 	}
-	function OnGameEvent_object_detonated(params)
+	function OnGameEvent_object_detonated( params )
 	{
 		// local eventdata = {}
 		// PrintTable(params)
@@ -11003,7 +10996,7 @@ function ROOT::PostPlayerSpawn(player)
 	/**
 	 * @param {table} params
 	 */
-	function OnGameEvent_player_stunned(params)
+	function OnGameEvent_player_stunned( params )
 	{
 		local eventdata = clone params
 		eventdata.stunner 			<- "stunner" in params ? GetPlayerFromUserID(params.stunner) : null
@@ -11016,7 +11009,7 @@ function ROOT::PostPlayerSpawn(player)
 	/**
 	 * @param {table} params
 	 */
-	function OnGameEvent_player_activate(params)
+	function OnGameEvent_player_activate( params )
 	{
 		local player = GetPlayerFromUserID(params.userid)
 
@@ -11034,7 +11027,7 @@ function ROOT::PostPlayerSpawn(player)
 	/**
 	 * @param {table} params
 	 */
-	function OnGameEvent_object_deflected(params)
+	function OnGameEvent_object_deflected( params )
 	{
 		local object = EntIndexToHScript(params.object_entindex)
 		local deflector = GetPlayerFromUserID(params.userid)
@@ -11051,7 +11044,7 @@ function ROOT::PostPlayerSpawn(player)
 				event_name = "ObjectDeflected"
 		}
 
-		// local function str(obj) {return obj?obj.tostring():"null"}
+		// local function str( obj ) {return obj?obj.tostring():"null"}
 
 		// printf("%s Deflected %s that was shot from %s\n", str(deflector), str(object), str(old_owner))
 
@@ -11080,7 +11073,7 @@ function ROOT::PostPlayerSpawn(player)
 		})
 	}
 
-	function OnScriptHook_player_postspawn(params)
+	function OnScriptHook_player_postspawn( params )
 	{
 		FireScriptEvent(params.player.IsBot() ? "PostBotSpawn" : "PostHumanSpawn", params)
 	}
@@ -11089,7 +11082,7 @@ function ROOT::PostPlayerSpawn(player)
 	/**
 	 * @param {table} _
 	 */
-	function OnGameEvent_mvm_wave_complete(_)
+	function OnGameEvent_mvm_wave_complete( _ )
 	{
 		FireScriptEvent("WaveComplete", {})
 		GetScope(Gamerules).IsWaveStarted <- false
@@ -11097,7 +11090,7 @@ function ROOT::PostPlayerSpawn(player)
 	/**
 	 * @param {table} _
 	 */
-	function OnGameEvent_mvm_wave_failed(_)
+	function OnGameEvent_mvm_wave_failed( _ )
 	{
 		FireScriptEvent("WaveFailed", {})
 		GetScope(Gamerules).IsWaveStarted <- false
@@ -11106,12 +11099,12 @@ function ROOT::PostPlayerSpawn(player)
 	/**
 	 * @param {table} _
 	 */
-	function OnGameEvent_teamplay_round_start(_)
+	function OnGameEvent_teamplay_round_start( _ )
 		GetScope(Gamerules).IsWaveStarted <- false
 	/**
 	 * @param {table} _
 	 */
-	function OnGameEvent_mvm_begin_wave(_)
+	function OnGameEvent_mvm_begin_wave( _ )
 		GetScope(Gamerules).IsWaveStarted <- true
 
 	// Initalize Listensers so game wont discard the events
@@ -11123,13 +11116,13 @@ function ROOT::PostPlayerSpawn(player)
 	 * 
 	 * @param {CTFPlayer}	player				The player who resupplied.
 	 */
-	function OnScriptEvent_HumanResupply(_params) 				{}
+	function OnScriptEvent_HumanResupply( _params ) 				{}
 	/**
 	 * Fired when a Human Upgrades and Before `HumanResupply`
 	 * 
 	 * @param {CTFPlayer}	player				The player who Upgraded.
 	 */
-	function OnScriptEvent_HumanUpgraded(_params) 				{}
+	function OnScriptEvent_HumanUpgraded( _params ) 				{}
 
 	/**
 	 * Fired when a Bot touches a resupply cabinet or respawns.
@@ -11138,7 +11131,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * 
 	 * @param {CTFBot}		player				The bot who resupplied.
 	 */
-	function OnScriptEvent_BotResupply(_params) 				{}
+	function OnScriptEvent_BotResupply( _params ) 				{}
 	/**
 	 * Fired when a Bot Upgrades and Before `BotResupply`
 	 * 
@@ -11146,7 +11139,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * 
 	 * @param {CTFBot}		player				The bot who Upgraded.
 	 */
-	function OnScriptEvent_BotUpgraded(_params) 				{}
+	function OnScriptEvent_BotUpgraded( _params ) 				{}
 
 	/**
 	 * Fired when a bot dies. 
@@ -11164,7 +11157,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {integer}				stun_flags			The victim's stun flags at the moment of death
 	 * @param {bool}				rocket_jump			True if the attacker was rocket jumping.
 	 */
-	function OnScriptEvent_BotDeath(_params) 					{}
+	function OnScriptEvent_BotDeath( _params ) 					{}
 	/**
 	 * Fired when a human dies. 
 	 *
@@ -11181,7 +11174,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {integer}				stun_flags			The victim's stun flags at the moment of death
 	 * @param {bool}				rocket_jump			True if the attacker was rocket jumping.
 	 */
-	function OnScriptEvent_HumanDeath(_params) 					{}
+	function OnScriptEvent_HumanDeath( _params ) 					{}
 
 	/**
 	 * Fired when a bot is about to take damage (Script Hook).
@@ -11200,7 +11193,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {integer}				penetration_count	How many players the damage has penetrated so far.
 	 * @param {integer}				others_damaged		How many players other than the attacker has the damage been applied to.
 	 */
-	function OnScriptEvent_PostTakeDamageBot(_params) 			{}
+	function OnScriptEvent_PostTakeDamageBot( _params ) 			{}
 	/**
 	 * Fired when a human is about to take damage (Script Hook).
 	 * 
@@ -11218,7 +11211,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {integer}				penetration_count	How many players the damage has penetrated so far.
 	 * @param {integer}				others_damaged		How many players other than the attacker has the damage been applied to.
 	 */
-	function OnScriptEvent_PostTakeDamageHuman(_params) 		{}
+	function OnScriptEvent_PostTakeDamageHuman( _params ) 		{}
 
 	/**
 	 * Fired when the world is about to take damage (Script Hook).
@@ -11236,7 +11229,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {integer}				penetration_count	How many players the damage has penetrated so far.
 	 * @param {integer}				others_damaged		How many players other than the attacker has the damage been applied to.
 	 */
-	function OnScriptEvent_PostTakeDamageWorld(_params) 		{}
+	function OnScriptEvent_PostTakeDamageWorld( _params ) 		{}
 	/**
 	 * Fired when any other entity is about to take damage (Script Hook).
 	 * 
@@ -11253,7 +11246,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {integer}				penetration_count	How many players the damage has penetrated so far.
 	 * @param {integer}				others_damaged		How many players other than the attacker has the damage been applied to.
 	 */
-	function OnScriptEvent_PostTakeDamage(_params) 				{}
+	function OnScriptEvent_PostTakeDamage( _params ) 				{}
 
 	/**
 	 * Fired when a bot is hurt (after damage calculation).
@@ -11269,7 +11262,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {bool}				showdisguisedcrit 	True if crit should be shown freely.
 	 * @param {bool}				allseecrit			True if everyone sees the crit.
 	 */
-	function OnScriptEvent_PostBotHurt(_params) 				{}
+	function OnScriptEvent_PostBotHurt( _params ) 				{}
 	/**
 	 * Fired when a human is hurt (after damage calculation).
 	 * 
@@ -11284,7 +11277,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {bool}				showdisguisedcrit 	True if crit should be shown freely.
 	 * @param {bool}				allseecrit			True if everyone sees the crit.
 	 */
-	function OnScriptEvent_PostHumanHurt(_params) 				{}
+	function OnScriptEvent_PostHumanHurt( _params ) 				{}
 
 	/**
 	 * Fired when a bot spawns for the first time.
@@ -11293,7 +11286,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {integer}				class				The class index of the player.
 	 * @param {integer}				team				The team index.
 	 */
-	function OnScriptEvent_BotInitialSpawn(_params) 			{}
+	function OnScriptEvent_BotInitialSpawn( _params ) 			{}
 	/**
 	 * Fired when a bot spawns.
 	 * 
@@ -11301,7 +11294,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {integer}				class				The class index of the player.
 	 * @param {integer}				team				The team index.
 	 */
-	function OnScriptEvent_BotSpawn(_params) 					{}
+	function OnScriptEvent_BotSpawn( _params ) 					{}
 
 	/**
 	 * Fired when a human spawns for the first time.
@@ -11310,7 +11303,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {integer}				class				The class index of the player.
 	 * @param {integer}				team				The team index.
 	 */
-	function OnScriptEvent_HumanInitialSpawn(_params) 			{}
+	function OnScriptEvent_HumanInitialSpawn( _params ) 			{}
 		/**
 	 * Fired when a human spawns.
 	 * 
@@ -11318,7 +11311,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {integer}				class				The class index of the player.
 	 * @param {integer}				team				The team index.
 	 */
-	function OnScriptEvent_HumanSpawn(_params) 					{}
+	function OnScriptEvent_HumanSpawn( _params ) 					{}
 
 	/**
 	 * Fired when a bot changes team.
@@ -11331,7 +11324,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {bool}				silent				True if silent change.
 	 * @param {string}				username			Username of the client.
 	 */
-	function OnScriptEvent_BotTeam(_params) 					{}
+	function OnScriptEvent_BotTeam( _params ) 					{}
 	/**
 	 * Fired when a human changes team.
 	 * 
@@ -11343,7 +11336,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {bool}				silent				True if silent change.
 	 * @param {string}				username			Username of the client.
 	 */
-	function OnScriptEvent_HumanTeam(_params) 					{}
+	function OnScriptEvent_HumanTeam( _params ) 					{}
 
 	/**
 	 * Fired when a bot speaks.
@@ -11352,7 +11345,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {string}					message			The text message.
 	 * @param {bool}					teamonly		True if team-only chat.
 	 */
-	function OnScriptEvent_BotSay(_params) 						{}
+	function OnScriptEvent_BotSay( _params ) 						{}
 	/**
 	 * Fired when a player speaks.
 	 * 
@@ -11360,7 +11353,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {string}					message			The text message.
 	 * @param {bool}					teamonly		True if team-only chat.
 	 */
-	function OnScriptEvent_HumanSay(_params) 					{}
+	function OnScriptEvent_HumanSay( _params ) 					{}
 	/**
 	 * Fired when the console speaks.
 	 * 
@@ -11368,7 +11361,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {string}					message			The text message.
 	 * @param {bool}					teamonly		True if team-only chat.
 	 */
-	function OnScriptEvent_ConsoleSay(_params) 					{}
+	function OnScriptEvent_ConsoleSay( _params ) 					{}
 
 	/**
 	 * Fired when a building is hurt.
@@ -11379,7 +11372,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {integer}					health			How much health the object is currently at.
 	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
 	 */	
-	function OnScriptEvent_BuildingHurt(_params) 				{}
+	function OnScriptEvent_BuildingHurt( _params ) 				{}
 
 	/**
 	 * Fired when a tank is hurt.
@@ -11390,7 +11383,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {integer}					health			How much health the object is currently at.
 	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
 	 */	
-	function OnScriptEvent_TankHurt(_params) 					{}
+	function OnScriptEvent_TankHurt( _params ) 					{}
 	/**
 	 * Fired when a tank is hurt.
 	 * 
@@ -11400,7 +11393,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {integer}					health			How much health the object is currently at.
 	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
 	 */	
-	function OnScriptEvent_BaseBossHurt(_params) 				{}
+	function OnScriptEvent_BaseBossHurt( _params ) 				{}
 
 	/**
 	 * Fired when a boss is hurt.
@@ -11411,7 +11404,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {integer}					health			How much health the object is currently at.
 	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
 	 */	
-	function OnScriptEvent_HHHHurt(_params) 					{}
+	function OnScriptEvent_HHHHurt( _params ) 					{}
 	/**
 	 * Fired when a boss is hurt.
 	 * 
@@ -11421,7 +11414,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {integer}					health			How much health the object is currently at.
 	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
 	 */	
-	function OnScriptEvent_MonoculusHurt(_params) 				{}
+	function OnScriptEvent_MonoculusHurt( _params ) 				{}
 	/**
 	 * Fired when a boss is hurt.
 	 * 
@@ -11431,7 +11424,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {integer}					health			How much health the object is currently at.
 	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
 	 */	
-	function OnScriptEvent_MerasmusHurt(_params) 				{}
+	function OnScriptEvent_MerasmusHurt( _params ) 				{}
 
 	/**
 	 * Fired when a building is killed.
@@ -11443,7 +11436,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {integer}					over_damage		Amount of damage that exceeded the building's remaining health.
 	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
 	 */
-	function OnScriptEvent_BuildingKilled(_params) 				{}
+	function OnScriptEvent_BuildingKilled( _params ) 				{}
 	
 	/**
 	 * Fired when a tank is killed.
@@ -11455,7 +11448,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {integer}					over_damage		Amount of damage that exceeded the tank's remaining health.
 	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
 	 */
-	function OnScriptEvent_TankKilled(_params) 					{}
+	function OnScriptEvent_TankKilled( _params ) 					{}
 	/**
 	 * Fired when a tank is killed.
 	 * 
@@ -11466,7 +11459,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {integer}					over_damage		Amount of damage that exceeded the tank's remaining health.
 	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
 	 */
-	function OnScriptEvent_BaseBossKilled(_params) 				{}
+	function OnScriptEvent_BaseBossKilled( _params ) 				{}
 	
 	/**
 	 * Fired when HHH is killed.
@@ -11478,7 +11471,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {integer}					over_damage		Amount of damage that exceeded the bosses remaining health.
 	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
 	 */
-	function OnScriptEvent_HHHKilled(_params) 					{}
+	function OnScriptEvent_HHHKilled( _params ) 					{}
 	/**
 	 * Fired when Monoculus is killed.
 	 * 
@@ -11489,7 +11482,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {integer}					over_damage		Amount of damage that exceeded the bosses remaining health.
 	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
 	 */
-	function OnScriptEvent_MonoculusKilled(_params) 			{}
+	function OnScriptEvent_MonoculusKilled( _params ) 			{}
 	/**
 	 * Fired when Merasmus is killed.
 	 * 
@@ -11500,7 +11493,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {integer}					over_damage		Amount of damage that exceeded the bosses remaining health.
 	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
 	 */
-	function OnScriptEvent_MerasmusKilled(_params) 				{}
+	function OnScriptEvent_MerasmusKilled( _params ) 				{}
 
 	/**
 	 * Fired when a bot/player is healed.
@@ -11509,7 +11502,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {CTFPlayer|CBaseEntity|null}	healer			The healer entity (e.g. Medic/Dispenser).
 	 * @param {integer}						amount			Heal amount.
 	 */
-	function OnScriptEvent_BotHealed(_params) 					{}
+	function OnScriptEvent_BotHealed( _params ) 					{}
 	/**
 	 * Fired when a human is healed.
 	 * 
@@ -11517,7 +11510,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {CTFPlayer|CBaseEntity|null}	healer			The healer entity (e.g. Medic/Dispenser).
 	 * @param {integer}						amount			Heal amount.
 	 */
-	function OnScriptEvent_HumanHealed(_params) 				{}
+	function OnScriptEvent_HumanHealed( _params ) 				{}
 
 	/**
 	 * Fired when a Dispenser is Created
@@ -11525,28 +11518,28 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {CTFPlayer} 				player	 		The player that created the Dispenser.
 	 * @param {CBaseEntity|null} 		object	 		The Dispenser that was Created.
 	 */
-	function OnScriptEvent_DispenserBuilt(_params)				{}
+	function OnScriptEvent_DispenserBuilt( _params )				{}
 	/**
 	 * Fired when a Teleporter is Created
 	 *
 	 * @param {CTFPlayer} 				player	 		The player that created the Teleporter.
 	 * @param {CBaseEntity|null} 		object	 		The Teleporter that was Created.
 	 */
-	function OnScriptEvent_TeleporterBuilt(_params)				{}
+	function OnScriptEvent_TeleporterBuilt( _params )				{}
 	/**
 	 * Fired when a Sentry is Created
 	 *
 	 * @param {CTFPlayer} 				player	 		The player that created the Sentry.
 	 * @param {CBaseEntity|null} 		object	 		The Sentry that was Created.
 	 */
-	function OnScriptEvent_SentryBuilt(_params)					{}
+	function OnScriptEvent_SentryBuilt( _params )					{}
 	/**
 	 * Fired when a Sapper is Created
 	 *
 	 * @param {CTFPlayer} 				player	 		The player that created the Sapper.
 	 * @param {CBaseEntity|null} 		object	 		The Sapper that was Created.
 	 */
-	function OnScriptEvent_SapperBuilt(_params)					{}
+	function OnScriptEvent_SapperBuilt( _params )					{}
 
 	/** 
 	 * Fired when a Player is deflected
@@ -11555,7 +11548,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {CBaseEntity|null} 		object			The player that was deflected.
 	 * @param {CBaseEntity|null} 		old_owner		The owner of object before deflection.
 	 */
-	function OnScriptEvent_PlayerDeflected(_params) 			{}
+	function OnScriptEvent_PlayerDeflected( _params ) 			{}
 	/** 
 	 * Fired when a Rocket is deflected
 	 * 
@@ -11563,7 +11556,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {CBaseEntity|null} 		object			The rocket that was deflected.
 	 * @param {CBaseEntity|null} 		old_owner		The owner of object before deflection.
 	 */		
-	function OnScriptEvent_RocketDeflected(_params) 			{}
+	function OnScriptEvent_RocketDeflected( _params ) 			{}
 	/** 
 	 * Fired when a Grenade is deflected
 	 * 
@@ -11571,7 +11564,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {CBaseEntity|null} 		object			The grenade that was deflected.
 	 * @param {CBaseEntity|null} 		old_owner		The owner of object before deflection.
 	 */
-	function OnScriptEvent_GrenadeDeflected(_params) 			{}
+	function OnScriptEvent_GrenadeDeflected( _params ) 			{}
 	/** 
 	 * Fired when a different Object is deflected
 	 * 
@@ -11579,7 +11572,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {CBaseEntity|null} 		object			The entity that was deflected.
 	 * @param {CBaseEntity|null} 		old_owner		The owner of object before deflection.
 	 */
-	function OnScriptEvent_ObjectDeflected(_params) 			{}
+	function OnScriptEvent_ObjectDeflected( _params ) 			{}
 
 
 	/**
@@ -11587,7 +11580,7 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {CTFPlayer|null}			player			The player that triggered this chat command (null for console).
 	 * @param {table}					data			Any other data the chat command was passed.
 	 */
-	function OnScriptEvent_ChatCommand(_params)					{}
+	function OnScriptEvent_ChatCommand( _params )					{}
 
 	/**
 	 * Fired when a player is Stunned
@@ -11597,14 +11590,14 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {bool} 					big_stun 		Wether the stun was a Big Stun.
 	 * @param {bool} 					victim_capping 	If the victim was attempting to cap before getting stunned.
 	 */
-	function OnScriptEvent_PlayerStunned(_params)				{}
+	function OnScriptEvent_PlayerStunned( _params )				{}
 
 	/**
 	 * Fired when a wave fails/completes
 	 * . . . literally 0 parameters
 	 */
-	function OnScriptEvent_WaveFailed(_)						{}
-	function OnScriptEvent_WaveComplete(_)						{}
+	function OnScriptEvent_WaveFailed( _ )						{}
+	function OnScriptEvent_WaveComplete( _ )						{}
 
 	/**
 	 * Fired whenever a primary or secondary weapon fires
@@ -11613,20 +11606,20 @@ function ROOT::PostPlayerSpawn(player)
 	 * @param {CTFPlayer}				player			The Player who shot this weapon.
 	 * @param {CTFWeaponBase}			weapon			The Weapon the player fired.
 	 */
-	function OnScriptEvent_PlayerFireWeapon(_params)			{}
+	function OnScriptEvent_PlayerFireWeapon( _params )			{}
 
 	/**
 	 * Fired After we Handle our Custom Attributes
 	 * 
 	 * @param {CTFBot}					player			The bot who spawned.
 	 */
-	function OnScriptEvent_PostBotSpawn(_params)				{}
+	function OnScriptEvent_PostBotSpawn( _params )				{}
 	/**
 	 * Fired After we Handle our Custom Attributes
 	 * 
 	 * @param {CTFPlayer}				player			The player who spawned.
 	 */
-	function OnScriptEvent_PostHumanSpawn(_params)				{}
+	function OnScriptEvent_PostHumanSpawn( _params )				{}
 }
 __CollectGameEventCallbacks(ChaosCustomEvents)
 
@@ -11638,7 +11631,7 @@ __CollectGameEventCallbacks(ChaosCustomEvents)
 /** 
  * @param {CBaseEntity|null} rocket
  */
-function ROOT::FixTheFuckingRockets(rocket)
+function ROOT::FixTheFuckingRockets( rocket )
 {
 	if (rocket && rocket.IsValid())
 	{
@@ -11652,18 +11645,18 @@ function ROOT::FixTheFuckingRockets(rocket)
   ========================
 */
 
-AddChatTrigger(["lib_version", "lib_versions"], function(_player, ...) {
+AddChatTrigger(["lib_version", "lib_versions"], function( _player, ... ) {
 	PrintToChatAllF("\x07D000D0► FatCatLib ◄\x03 Version\x01: \x04%s\x01 - \x03sub_version\x01: \x04%s\x01", FatCatLibVersion.version, FatCatLibVersion.sub_version.tostring())
 
 	foreach (item, value in FatCatLibScriptsVersion)
 		PrintToChatAllF("\x07D000D0► FatCatLib ◄\x03 %s\x01: \x04%s\x01", item, value)
 })
 
-AddChatTrigger("lib_info", function(_player, ...) {
+AddChatTrigger("lib_info", function( _player, ... ) {
 	PrintToChatAllF("\x07D000D0► FatCatLib ◄\x03 Version\x01: \x04%s\x01 - \x03sub_version\x01: \x04%s\x01", FatCatLibVersion.version, FatCatLibVersion.sub_version.tostring())
 })
 
-AddChatTrigger("Test", function(player, ...) {
+AddChatTrigger("Test", function( player, ... ) {
 	player.PrintToChat("hi")
 })
 
@@ -11679,7 +11672,7 @@ AddChatTrigger("Test", function(player, ...) {
   ==============================
 */
 
-RegisterAdminTrigger("lib_force", function(_, ...) {
+RegisterAdminTrigger("lib_force", function( _, ... ) {
 	if ("FatCatLibForce" in ROOT)
 		::FatCatLibForce = !FatCatLibForce
 	else
@@ -11687,33 +11680,33 @@ RegisterAdminTrigger("lib_force", function(_, ...) {
 	PrintToChatAll("\x07D000D0► FatCatLib ◄\x03 Setting Force include flag to \"\x04"+FatCatLibForce.tostring()+"\x03\"\x01.")
 })
 
-RegisterAdminTrigger("noclip", function(player, ...) {
+RegisterAdminTrigger("noclip", function( player, ... ) {
 	if (player.GetMoveType() == MOVETYPE_NOCLIP)
 		player.SetMoveType(MOVETYPE_WALK, MOVECOLLIDE_DEFAULT)
 	else 
 		player.SetMoveType(MOVETYPE_NOCLIP, MOVECOLLIDE_DEFAULT)
 })
 
-RegisterAdminTrigger("disable_errors", function(_, ...) {
+RegisterAdminTrigger("disable_errors", function( _, ... ) {
 	SetLibrarySettings({
 		"ConsoleErrors" : true
 		"PublicErrors" : false
 	})
 })
 
-RegisterAdminTrigger("enable_errors", function(_, ...) {
+RegisterAdminTrigger("enable_errors", function( _, ... ) {
 	SetLibrarySettings({
 		"ConsoleErrors" : false
 		"PublicErrors" : true
 	})
 })
 
-RegisterAdminTrigger(["lib_reload", "reload_library"], function(player, ...) {
+RegisterAdminTrigger(["lib_reload", "reload_library"], function( player, ... ) {
 	ReloadLibrary()
 	player.PrintToChat("Force Reloaded Library")
 })
 
-RegisterAdminTrigger("vcvar", function(player, ...) {
+RegisterAdminTrigger("vcvar", function( player, ... ) {
 	if (vargv.len() < 1)
 		return player.PrintToChat("Incorrect Arguments (cvar_name, [value]). Only cvar_name is needed to Query.")
 	local cvar = vargv[0]
@@ -11734,7 +11727,7 @@ RegisterAdminTrigger("vcvar", function(player, ...) {
 	return player.PrintToChat(format(FATCATLIB_PREFIX+" Set Cvar \"%s\": \"%s\"", cvar, vargv[1]))
 })
 
-RegisterAdminTrigger("purge", function(_, ...) {
+RegisterAdminTrigger("purge", function( _, ... ) {
 	if (!("TestPurgeString" in FatCatLibSettings))
 		SetLibrarySettings()
 	local value = FatCatLibSettings["TestPurgeString"]
@@ -11743,7 +11736,7 @@ RegisterAdminTrigger("purge", function(_, ...) {
 	})
 })
 
-RegisterAdminTrigger("test_tank", function(player, ...) {
+RegisterAdminTrigger("test_tank", function( player, ... ) {
 	local targetname = "Test_Tank"
 	local tank_name = "Tank"
 	local offset = Vector()
@@ -11787,14 +11780,14 @@ RegisterAdminTrigger("test_tank", function(player, ...) {
 	return player.PrintToChat("Created A "+tank_name+" with the name "+targetname.tolower())
 })
 
-function PostHelicopterSpawn(self)
+function PostHelicopterSpawn( self )
 {
 	local scope = GetScope(self)
 	scope.flGravity <- 0
 	SetPropFloat(self, "m_speed", 0.0)
 }
 
-RegisterAdminTrigger("kill_tank", function(player, ...) {
+RegisterAdminTrigger("kill_tank", function( player, ... ) {
 	if (vargv.len() != 0)
 	{
 		if (vargv[0] == "help")
@@ -11818,7 +11811,7 @@ RegisterAdminTrigger("kill_tank", function(player, ...) {
 	}
 	local trace = player.GetEyeTrace({
 		mask = MASK_OPAQUE_AND_NPCS,
-		function filter(entity)
+		function filter( entity )
 		{
 			if (entity.GetClassname() == "tank_boss")
 				return TRACE_STOP
@@ -11836,7 +11829,7 @@ RegisterAdminTrigger("kill_tank", function(player, ...) {
 	return player.PrintToChat("Failed to Kill Test Tank: Not found or Not a Tank")
 })
 
-RegisterAdminTrigger("setspell", function(player, ...) {
+RegisterAdminTrigger("setspell", function( player, ... ) {
 	if (vargv.len() != 2)
 		return player.PrintToChat("Incorrect Arguments [spell_index, charges] ")
 	local book = player.GetSpellBook()
@@ -11851,7 +11844,7 @@ RegisterAdminTrigger("setspell", function(player, ...) {
 	book.SetSpellCharges(charges)
 })
 
-RegisterAdminTrigger("uber", function(player, ...) {
+RegisterAdminTrigger("uber", function( player, ... ) {
 	if (vargv.len() > 1)
 		return player.PrintToChat("Incorrect Arguments [{uber}] ")
 	if (!player.HasWeaponClassname("tf_weapon_medigun") || !player.IsPlayerClass(TF_CLASS_MEDIC))
@@ -11864,7 +11857,7 @@ RegisterAdminTrigger("uber", function(player, ...) {
 	return player.PrintToChat("Set your uber to "+uber+"%")
 })
 
-RegisterAdminTrigger("bot", function(player, ...) {
+RegisterAdminTrigger("bot", function( player, ... ) {
 	foreach (bot in GetAllPlayers(TF_TEAM_BLUE, false, false))
 	{
 		if (GetClientConVar("name", bot.entindex()) == "Johnny Silverhand" && bot.IsAlive())
@@ -11895,7 +11888,7 @@ RegisterAdminTrigger("bot", function(player, ...) {
 	RunWithDelay(THREE_TICKS, @() SpawnJohhny(bot, trace.pos + Vector(0, 0, 16), Giant))
 })
 
-function SpawnJohhny(bot, pos, Giant = false)
+function SpawnJohhny( bot, pos, Giant = false )
 {
 	bot.SetTeam(TF_TEAM_BLUE)
 	bot.SetAbsOrigin(pos)
@@ -11947,7 +11940,7 @@ function SpawnJohhny(bot, pos, Giant = false)
 	bot.AddBotAttribute(IGNORE_FLAG)
 }
 
-RegisterAdminTrigger("respawn", function(player, ...) { player.ForceRegenerateAndRespawn() })
+RegisterAdminTrigger("respawn", function( player, ... ) { player.ForceRegenerateAndRespawn( ) } )
 /*
   =====================================
   === END OF LIBRARY ADMIN COMMANDS ===
@@ -11960,7 +11953,7 @@ RegisterAdminTrigger("respawn", function(player, ...) { player.ForceRegenerateAn
 // the admins wowow
 ::TheFatCat		<- "[U:1:969530867]"
 ::ShadowBolt 	<- "[U:1:101345257]"
-seterrorhandler(function(e)
+seterrorhandler(function( e )
 {
 	if (e in Errors)
 	{
@@ -11981,7 +11974,7 @@ seterrorhandler(function(e)
 		STACK.append(format("%s line [%d]\n", s.src, s.line))
 	}
 	local temp_stack = [e]
-	local function Chat(m) 
+	local function Chat( m ) 
 	{
 		if ("Discord_SendError" in ROOT)
 			temp_stack.append(m)
@@ -12003,7 +11996,7 @@ seterrorhandler(function(e)
 	{
 		console = false
 		public = false
-		Chat = function(m)
+		Chat = function( m )
 		{
 			temp_stack.append(m)
 		}
@@ -12042,7 +12035,7 @@ seterrorhandler(function(e)
 	Chat("CALLSTACK")
 	local s, l = 2
 	while (s = getstackinfos(l++))
-		Chat(format("*FUNCTION [%s()] %s line [%d]", s.func, s.src, s.line))
+		Chat(format("*FUNCTION [%s( )] %s line [%d]", s.func, s.src, s.line ))
 	Chat("LOCALS")
 	if (s = getstackinfos(2))
 	{

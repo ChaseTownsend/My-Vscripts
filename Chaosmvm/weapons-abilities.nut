@@ -57,7 +57,7 @@ KartSettings.UseTimes[TF_CLASS_MEDIC] 			= 2.6
 KartSettings.UseTimes[TF_CLASS_HEAVYWEAPONS] 	= 2.6
 KartSettings.UseTimes[TF_CLASS_SNIPER] 			= 2.2
 // - - - - - - - - - - - - - - - - - - - - -|
-function AbilityValid(player, player_class, idx)
+function AbilityValid( player, player_class, idx )
 {
 	if (!player.IsAlive())
 		return false
@@ -82,7 +82,7 @@ function AbilityValid(player, player_class, idx)
  * @param {table}			text_parms		Table of Text parameters for the GlobalGameText.
  * @param {function}		ability_func	Function to use when the Ability is used
  */
-function CreateAbility(weapon, spawncooldown, name, player_class, idx, text_parms, ability_func) {
+function CreateAbility( weapon, spawncooldown, name, player_class, idx, text_parms, ability_func ) {
 	local scope = GetScope(weapon)
 	weapon.SetAbilityTime(Time() + spawncooldown)
 	scope.WeaponIDX <- idx
@@ -139,7 +139,7 @@ function CreateAbility(weapon, spawncooldown, name, player_class, idx, text_parm
 }
 
 ::AbilityEvents <- {
-	function OnScriptEvent_HumanResupply(params)
+	function OnScriptEvent_HumanResupply( params )
 	{
 		local player = params.player
 
@@ -192,7 +192,7 @@ function CreateAbility(weapon, spawncooldown, name, player_class, idx, text_parm
 }
 __CollectGameEventCallbacks(AbilityEvents)
 
-function HeavyGoKaboom(player)
+function HeavyGoKaboom( player )
 {
 	if (!player.IsAlive()) return
 	if (!player.IsTaunting()) return
@@ -229,7 +229,7 @@ function HeavyGoKaboom(player)
 		player.DamageEveryTankWithin(RageSettings.ExplodeRadSmall, RageSettings.ExplodeDmgSmall)
 	}
 }
-function GiveMeThyHealth(player)
+function GiveMeThyHealth( player )
 {
 	if (!player.IsAlive()) return
 	if (!player.IsTaunting()) return
@@ -245,7 +245,7 @@ function GiveMeThyHealth(player)
 
 	player.AddAbilityTime(CheersSettings.AttackCooldown + 3) // + 3 for taunt duration
 }
-function SummonLasKart(player)
+function SummonLasKart( player )
 {
 	if (!player.IsAlive()) return
 	if (!player.IsTaunting()) return

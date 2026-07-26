@@ -255,7 +255,7 @@ SetScriptVersion("item_helper", "3.4.3")
 	"PRINNYMACHETE"		: [30758]
 }
 
-AddChatTrigger("itemhelp", function(player, ...) { 
+AddChatTrigger("itemhelp", function( player, ... ) { 
 	if (!player)
 		return
 
@@ -289,7 +289,7 @@ AddChatTrigger("itemhelp", function(player, ...) {
 
 ::helper <-{
 	/////////////////
-	function OnScriptEvent_HumanTeam(params)
+	function OnScriptEvent_HumanTeam( params )
 	{
 		local player = params.player
 
@@ -306,7 +306,7 @@ AddChatTrigger("itemhelp", function(player, ...) {
 			scope.SpawnHelper <- 0
 		}
 	}
-	function OnScriptEvent_HumanSpawn(params)
+	function OnScriptEvent_HumanSpawn( params )
 	{
 		local player = params.player
 
@@ -330,7 +330,7 @@ AddChatTrigger("itemhelp", function(player, ...) {
 		scope.spawncount++
 	}
 	//////////////////
-	function OnScriptEvent_HumanResupply(params)
+	function OnScriptEvent_HumanResupply( params )
 	{
 		local player = params.player
 
@@ -349,7 +349,7 @@ AddChatTrigger("itemhelp", function(player, ...) {
 }
 __CollectGameEventCallbacks(helper)
 
-function DisplayItemHelps(player, scope)
+function DisplayItemHelps( player, scope )
 {
 	player.TranslateToChat("IH_INCLUDES")
 

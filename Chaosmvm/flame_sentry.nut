@@ -29,7 +29,7 @@ const FLAME_SENTRY_SOUND = "misc/flame_engulf.wav"
 const FLAME_SENTRY_SOUND_EMIT_RATE = 0.025
 
 ::FlameSentryEvents <-{
-	function OnScriptEvent_SentryBuilt(params)
+	function OnScriptEvent_SentryBuilt( params )
 	{
 		local player = params.player
 		if (player.GetWeaponIDXInSlotNew(SLOT_MELEE) != TF_WEAPON_SOUTHERN_HOSPITALITY)
@@ -59,7 +59,7 @@ const FLAME_SENTRY_SOUND_EMIT_RATE = 0.025
 		scope.m_flNextSoundEmit <- 0
 		scope.hParticle <- null
 	}
-	function OnGameEvent_object_destroyed(params) {
+	function OnGameEvent_object_destroyed( params ) {
 		local building = EntIndexToHScript(params.index)
 		ClearThinks(building)
 		if (params.objecttype == OBJ_SENTRY && "hParticle" in GetScope(building) && GetScope(building).hParticle != null)
@@ -68,7 +68,7 @@ const FLAME_SENTRY_SOUND_EMIT_RATE = 0.025
 			GetScope(building).hParticle.Destroy()
 		}
 	}
-	function OnGameEvent_object_detonated(params) {
+	function OnGameEvent_object_detonated( params ) {
 		local building = EntIndexToHScript(params.index)
 		ClearThinks(building)
 		if (params.objecttype == OBJ_SENTRY && "hParticle" in GetScope(building) && GetScope(building).hParticle != null)
@@ -111,7 +111,7 @@ function FlameSentry()
 		hullmax = Vector(12, -12, 12)
 		// ignore = self,
 		mask = MASK_SHOT_HULL,
-		filter = function(entity)
+		filter = function( entity )
 		{
 			if (IsValidEnemy(entity)) return TRACE_OK_CONTINUE
 			else return TRACE_CONTINUE

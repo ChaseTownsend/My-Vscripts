@@ -69,7 +69,7 @@ if (FatCatLibSettings["OnCondPostHooks"] == true)
 
 PrecacheSound(BlutsaugerSettings.sound)
 
-AddChatTrigger("ehp", function(player, ...) { 
+AddChatTrigger("ehp", function( player, ... ) { 
 	if (!player || vargv.len() > 1)
 		return
 	if (vargv.len() == 0)
@@ -78,7 +78,7 @@ AddChatTrigger("ehp", function(player, ...) {
 		player.PrintToChat("\x07FFFF00[Effective Hp]: \x03Calculates your Effective Health.\n\x04Just say \x03/ehp\x04 or \x03!ehp\x04 (not case sensitive)")
 } )
 
-AddChatTrigger(["shape", "class", "change", "changeclass", "switch", "shapeshift"], function(player, ...) {
+AddChatTrigger(["shape", "class", "change", "changeclass", "switch", "shapeshift"], function( player, ... ) {
 	if (!player)
 		return
 	if (vargv.len() == 0)
@@ -203,7 +203,7 @@ class EquipWeaponData {
 	 * @type {function}
 	 * @returns {bool}
 	 */
-	override_func = function(...) 
+	override_func = function( ... ) 
 	{
 		if(func_override_stupid.len() != 0 && type(func_override_stupid[0]) == "function")
 			return func_override_stupid[0].acall([this].extend(vargv))
@@ -220,7 +220,7 @@ class EquipWeaponData {
 	*/
 	is_segsegv = false
 
-	constructor(ItemID, InternalName, MakingName, table/*DoSwitch = true, AttribOverrides = {}, FuncOverride = function(...) {return true} */)
+	constructor(ItemID, InternalName, MakingName, table)
 	{
 		this.idx = ItemID
 		this.internal_name = InternalName
@@ -245,7 +245,7 @@ class EquipWeaponData {
  * @param {string} name_make		Name that players can use to create the item.
  * @param {table} data				look in class `EquipWeaponData` for more information
  */
-function ROOT::RegisterEquipItem(idx, internal_name, name_make, data/* swit = true, overrides = {}, override_func = function(...) {return true} */)
+function ROOT::RegisterEquipItem( idx, internal_name, name_make, data )
 {
 	if (startswith(name_make, "page"))
 		throw "Cannot make items with make names that start with page!"
@@ -261,7 +261,7 @@ function ROOT::RegisterEquipItem(idx, internal_name, name_make, data/* swit = tr
 	// }
 }
 
-function ROOT::DoesItemExist(finder)
+function ROOT::DoesItemExist( finder )
 {
 	foreach (idx, data in RegisteredItems)
 		if (idx == finder.tostring() || data.make_name == finder)
@@ -269,7 +269,7 @@ function ROOT::DoesItemExist(finder)
 	return false
 }
 
-function ROOT::FindItemBy(name)
+function ROOT::FindItemBy( name )
 {
 	foreach (_idx, data in RegisteredItems)
 		if (data.make_name == name)
@@ -277,34 +277,35 @@ function ROOT::FindItemBy(name)
 	return false
 }
 RegisterEquipItem(1100, "The Bread Bite", "bread", {
-	override_func = function(player) {
+	override_func = function( player ) {
 		return player.GetPlayerClass() == TF_CLASS_HEAVYWEAPONS
 	}
 })
 RegisterEquipItem(1105, "The Self-Aware Beauty Mark", "mark", {
-	override_func = function(player) {
+	override_func = function( player ) {
 		return player.GetPlayerClass() == TF_CLASS_SNIPER
 	}
 })
 RegisterEquipItem(1121, "Mutated Milk", "mutated", {
-	override_func = function(player) {
+	override_func = function( player ) {
 		return player.GetPlayerClass() == TF_CLASS_SCOUT
 	}
 })
-// RegisterEquipItem(1, "My Custom Item", "test", {override_func = function(player) {return player.GetPlayerClass() == 4},is_segsegv = true})
+// RegisterEquipItem(1, "My Custom Item", "test", {override_func = function( player ) {return player.GetPlayerClass() == 4}, is_segsegv = true})
 // RegisterEquipItem(30666, "The C.A.P.P.E.R", "capper")
+
 // below registers are deprecated
-// RegisterEquipItem(30666, "The C.A.P.P.E.R", "capper", true, {}, function(player) {return player.GetPlayerClass() == TF_CLASS_SCOUT})
-// RegisterEquipItem(1, "test item", "Test1", true, {}, function(player) {return false})
-// RegisterEquipItem(2, "test item", "Test2", true, {}, function(player) {return false})
-// RegisterEquipItem(3, "test item", "Test3", true, {}, function(player) {return false})
-// RegisterEquipItem(4, "test item", "Test4", true, {}, function(player) {return false})
-// RegisterEquipItem(5, "test item", "Test5", true, {}, function(player) {return false})
-// RegisterEquipItem(6, "test item", "Test6", true, {}, function(player) {return false})
-// RegisterEquipItem(7, "test item", "Test7", true, {}, function(player) {return false})
-// RegisterEquipItem(8, "test item", "Test8", true, {}, function(player) {return false})
-// RegisterEquipItem(9, "test item", "Test9", true, {}, function(player) {return false})
-// RegisterEquipItem(0, "test item", "Test0", true, {}, function(player) {return false})
+// RegisterEquipItem(30666, "The C.A.P.P.E.R", "capper", true, {}, function( player ) {return player.GetPlayerClass() == TF_CLASS_SCOUT})
+// RegisterEquipItem(1, "test item", "Test1", true, {}, function( player ) {return false})
+// RegisterEquipItem(2, "test item", "Test2", true, {}, function( player ) {return false})
+// RegisterEquipItem(3, "test item", "Test3", true, {}, function( player ) {return false})
+// RegisterEquipItem(4, "test item", "Test4", true, {}, function( player ) {return false})
+// RegisterEquipItem(5, "test item", "Test5", true, {}, function( player ) {return false})
+// RegisterEquipItem(6, "test item", "Test6", true, {}, function( player ) {return false})
+// RegisterEquipItem(7, "test item", "Test7", true, {}, function( player ) {return false})
+// RegisterEquipItem(8, "test item", "Test8", true, {}, function( player ) {return false})
+// RegisterEquipItem(9, "test item", "Test9", true, {}, function( player ) {return false})
+// RegisterEquipItem(0, "test item", "Test0", true, {}, function( player ) {return false})
 
 /* RegisterEquipItem(100000, "Upgradeable TF_WEAPON_ROCKETLAUNCHER", "ValveRocket", true, {
 	"damage bonus hidden" 			: 10.0
@@ -319,9 +320,9 @@ RegisterEquipItem(1121, "Mutated Milk", "mutated", {
 	"reload time increased" 		: 5
 	"projectile no deflect" 		: 1
 	"projectile spread angle mult" 	: 0
-}, function(player) {return player.GetSteamID() == "[U:1:969530867]"}) */
+}, function( player ) {return player.GetSteamID() == "[U:1:969530867]"}) */
 
-AddChatTrigger("equip" function(player, ...) {
+AddChatTrigger("equip" function( player, ... ) {
 	if (!player)
 		return
 
@@ -449,10 +450,10 @@ AddChatTrigger("equip" function(player, ...) {
 	player.EquipItem(item_data[1], item_data[2], item_data[3], item_data[4])
 } )
 
-AddChatTrigger("scoreboard", function(player) {
+AddChatTrigger("scoreboard", function( player ) {
 	player.PrintToChat("[►] Scores printed to Console.")
-	local function GetKills(plrr) {return GetPropInt(plrr, "m_Shared.tfsharedlocaldata.m_ScoreData.m_iKills")}
-	local function GetDeaths(plrr) {return GetPropInt(plrr, "m_Shared.tfsharedlocaldata.m_ScoreData.m_iDeaths")-GetPropInt(plrr, "m_Shared.tfsharedlocaldata.m_ScoreData.m_iSuicides")}
+	local function GetKills( plrr ) {return GetPropInt(plrr, "m_Shared.tfsharedlocaldata.m_ScoreData.m_iKills")}
+	local function GetDeaths( plrr ) {return GetPropInt(plrr, "m_Shared.tfsharedlocaldata.m_ScoreData.m_iDeaths")-GetPropInt(plrr, "m_Shared.tfsharedlocaldata.m_ScoreData.m_iSuicides")}
 	ReCalculatePlayers() //
 	foreach (plr in m_aHumans)
 	{
@@ -476,7 +477,7 @@ ClearSpawnCallbacks()
  * @param {CTFPlayer} owner
  * @param {CTFPlayer} victim
  */
-function BlutsuagerHit(owner, victim) 
+function BlutsuagerHit( owner, victim ) 
 {
 	if ( !victim.IsValidReprogramTarget(true) )
 	{
@@ -560,7 +561,7 @@ function BlutsuagerHit(owner, victim)
 	})
 }
 
-RegisterSpawnCallback("tf_projectile_healing_bolt", "BlutsaugerFUCK", function(entity) {
+RegisterSpawnCallback("tf_projectile_healing_bolt", "BlutsaugerFUCK", function( entity ) {
 	/** @type {CBaseEntity} */
 	local entity = entity
 
@@ -806,7 +807,7 @@ function GameplayThink()
  * @param {CTFWeaponBase} weapon
  * @param {CBaseEntity|null} inflictor
  */
-function ROOT::ModifyCallbackDamage(params, victim, attacker, weapon, inflictor)
+function ROOT::ModifyCallbackDamage( params, victim, attacker, weapon, inflictor )
 {
 	local custom = params.damage_custom
 	if (custom > (1<<7))
@@ -826,7 +827,7 @@ function ROOT::ModifyCallbackDamage(params, victim, attacker, weapon, inflictor)
 			center = victim.GetOrigin() + Vector(0, 0, 16)
 			ignore = [victim]
 			SoundRadius = (EBSettings.base_range + (iExplosiveBackstab * EBSettings.additive_range)) * 3
-			func = function(player) {
+			func = function( player ) {
 				if (!player || !player.IsValid() || !player.IsPlayer())
 					return
 				player.StunPlayer(MATH.Clamp(iExplosiveBackstab - 1, 0, 2), 0.6, TF_STUN_MOVEMENT, attacker )
@@ -858,7 +859,7 @@ function ROOT::ModifyCallbackDamage(params, victim, attacker, weapon, inflictor)
  * @param {CTFWeaponBase} weapon
  * @param {CBaseEntity|null} _inflictor
  */
-function ROOT::ProcessChaosWeaponHit(params, victim, attacker, weapon, _inflictor)
+function ROOT::ProcessChaosWeaponHit( params, victim, attacker, weapon, _inflictor )
 {
 	switch (weapon.GetIDX())
 	{
@@ -915,7 +916,7 @@ function ROOT::ProcessChaosWeaponHit(params, victim, attacker, weapon, _inflicto
 // if other scripts use DamageCallbacks then Remove this!!
 ClearDamageCallbacks()
 
-RegisterDamageCallback("player", "GameplayPlayer" function(params) {
+RegisterDamageCallback("player", "GameplayPlayer" function( params ) {
 	if (HasCustomFlag(params.damage_custom, TF_DMG_CUSTOM_IGNORE_EVENTS) || params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
 		return
 
@@ -953,7 +954,7 @@ RegisterDamageCallback("player", "GameplayPlayer" function(params) {
 	ProcessChaosWeaponHit(params, victim, attacker, weapon, inflictor)
 })
 
-RegisterDamageCallback(["obj_sentrygun", "obj_teleporter", "obj_dispenser", "tank_boss"], "GameplayOthers", function(params) {
+RegisterDamageCallback(["obj_sentrygun", "obj_teleporter", "obj_dispenser", "tank_boss"], "GameplayOthers", function( params ) {
 	if (HasCustomFlag(params.damage_custom, TF_DMG_CUSTOM_IGNORE_EVENTS) || params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
 		return
 
@@ -972,7 +973,7 @@ RegisterDamageCallback(["obj_sentrygun", "obj_teleporter", "obj_dispenser", "tan
 	ProcessChaosWeaponHit(params, victim, attacker, weapon, inflictor)
 })
 
-RegisterDamageCallback("tf_zombie", "GameplaySkeletons", function(params) {
+RegisterDamageCallback("tf_zombie", "GameplaySkeletons", function( params ) {
 	if (HasCustomFlag(params.damage_custom, TF_DMG_CUSTOM_IGNORE_EVENTS) || params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
 		return
 	local victim = params.victim
@@ -994,7 +995,7 @@ RegisterDamageCallback("tf_zombie", "GameplaySkeletons", function(params) {
 
 if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 ::GameplayEvents <- {
-	function OnScriptEvent_HumanDeath(params)
+	function OnScriptEvent_HumanDeath( params )
 	{
 		local human = params.victim
 		local attacker = params.attacker
@@ -1009,7 +1010,7 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 			return
 		attacker.SayChatterMessage(human)
 	}
-	function OnScriptEvent_BotDeath(params)
+	function OnScriptEvent_BotDeath( params )
 	{
 		local victim = params.victim
 		local attacker = params.attacker
@@ -1054,7 +1055,7 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 			case TF_WEAPON_CONSCIENTIOUS_OBJECTOR: { if (scope.m_iKills % 10 == 0 && spell_book.GetSpellCharges().tointeger() != SpellDefaults[spell_book.GetSpellIndex()+2].tointeger()) { attacker.RollSpell() } ; return }
 		} */
 	}
-	function OnScriptEvent_HumanResupply(params)
+	function OnScriptEvent_HumanResupply( params )
 	{
 		local player = params.player
 
@@ -1070,7 +1071,7 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 		else
 			RunWithDelay(0.1, @() player.UndoGHeavy())
 	}
-	function OnScriptEvent_HumanSpawn(params)
+	function OnScriptEvent_HumanSpawn( params )
 	{
 		if (!params.player)
 			return
@@ -1192,7 +1193,7 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 			}
 		}
 	}
-	function OnScriptEvent_BotSpawn(params)
+	function OnScriptEvent_BotSpawn( params )
 	{
 		local player = params.player
 
@@ -1222,7 +1223,7 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 		}
 		player.AddCustomAttribute("cannot swim", 1.0, -1)
 	}
-	function OnScriptEvent_BotTeam(params)
+	function OnScriptEvent_BotTeam( params )
 	{
 		if (params.oldteam == TF_TEAM_PVE_INVADERS) return;
 		local player = params.player
@@ -1237,7 +1238,7 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 			scope.ReProgrammer = null
 		}
 	}
-	function OnGameEvent_mvm_begin_wave(_)
+	function OnGameEvent_mvm_begin_wave( _ )
 	{
 		local ConfusionEnt = FindByName(null, "ConfusionEnt")
 		if (!ConfusionEnt) ConfusionEnt = SpawnEntityFromTable("info_target", {targetname = "ConfusionEnt"})
