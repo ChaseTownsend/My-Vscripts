@@ -223,7 +223,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format) (GMT-5)
-if (!SetLibraryVersion("07.16.2026.14", 0))
+if (!SetLibraryVersion("07.25.2026.20", 0))
 	return
 
 SetLibrarySettings({})
@@ -7618,14 +7618,14 @@ function ROOT::RemoveChatTrigger(trigger)
 		{
 			if (typeof trig != "string")
 			{
-				errors.append(format("AddChatTrigger: Item %s : Unknown Type %s when Removing Chat Trigger", trig.tostring(), typeof trig))
+				errors.append(format("RemoveChatTrigger: Item %s : Unknown Type %s when Removing Chat Trigger", trig.tostring(), typeof trig))
 				continue
 			}
 			if (trig in ChatTriggers)
 				delete ChatTriggers[trig]
 		}
 	}
-	else throw format("AddChatTrigger: Unknown Type %s when Removing Chat Trigger", typeof trigger)
+	else throw format("RemoveChatTrigger: Unknown Type %s when Removing Chat Trigger", typeof trigger)
 	if (errors.len() != 0)
 		PrintArray(errors)
 }
@@ -10668,17 +10668,11 @@ function ROOT::PostPlayerSpawn(player)
 	 */
 	function OnGameEvent_player_say(params)
 	{
-		local eventdata = clone params
+		local eventdata = {}
 
-		local player = GetPlayerFromUserID(eventdata.userid)
-		eventdata.message <- eventdata.text
+		local player = GetPlayerFromUserID(params.userid)
+		eventdata.message <- params.text
 		eventdata.player <- player
-
-		// overridden
-		delete eventdata.userid
-		delete eventdata.text
-		// useless
-		if ("priority" in eventdata) delete eventdata.priority
 
 		local text = eventdata.message.tolower() // could be a problem but, ehh, who cares
 
