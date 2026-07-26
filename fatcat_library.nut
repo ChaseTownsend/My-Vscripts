@@ -3,10 +3,20 @@
 // This will add spaces between opening and closing parentheses
 // Find: ^(?!.*\\b)(.*?\bfunction\b.*?\()(\S(?:.*?\S)?)\)
 // Replace: $1 $2 )
+//
+// As in, if it has `function` with () then add spaces inbetween parentheses if they are lacking
+// `function test(player)`
+// Into:
+// `function test( player )`
 
 // This will add spaces after commas
 // Find: ^(?!.*\\b)(.*?\bfunction\b.*?\(.+?,)(\S)
 // Replace: $1 $2
+//
+// As in, if it has `function` with () and comma's with no space after it, add a space
+// `function test( bob,joe )`
+// Into:
+// `function test( bob, joe )`
 
 
 ::CONST <- getconsttable()
