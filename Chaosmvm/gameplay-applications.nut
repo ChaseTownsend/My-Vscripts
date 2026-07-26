@@ -814,7 +814,7 @@ function ROOT::ModifyCallbackDamage( params, victim, attacker, weapon, inflictor
 		return
 	switch (custom)
 	{
-		//Deprecated, use `explosive backstab custom attribute`
+		//Deprecated, use `explosive backstab` custom attribute
 	/* case TF_DMG_CUSTOM_BACKSTAB: {
 		local iExplosiveBackstab = weapon.GetAttribute("explosive sniper shot", 0)
 		if ( iExplosiveBackstab == 0 )
