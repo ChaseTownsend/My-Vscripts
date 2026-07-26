@@ -664,7 +664,7 @@ if ("SetScriptVersion" in getroottable())
 		//------------------------------------
 	}
 	schinese = {
-		IH_TRANSLATE_ITEM		= IH_color + "[%s]" + IH_text_color + "%s"
+		IH_TRANSLATE_ITEM		= IH_color + "[%s] " + IH_text_color + "%s"
 		IH_INCLUDES				= IH_color_header + "[►]\x0826beffBB 你的武器配置包括了..."
 		IH_DIS_MSG_2			= IH_disable_color + "输入 '/itemhelp 1' 可在回合中隐藏武器配置信息. \n输入 '/itemhelp 0' 可隐藏武器配置信息."
 		IH_DIS_MSG				= IH_disable_color + "输入 '/itemhelp 0' 可隐藏武器配置信息. \n输入 '/itemhelp 2' 可持续显示武器配置信息."
@@ -1343,7 +1343,7 @@ if ("SetScriptVersion" in getroottable())
 		//------------------------------------
 	}
 	swedish = {
-		IH_TRANSLATE_ITEM		= IH_color + "[%s]" + IH_text_color + "%s"
+		IH_TRANSLATE_ITEM		= IH_color + "[%s] " + IH_text_color + "%s"
 		IH_INCLUDES				= IH_color_header + "[►]\x0826beffBB Din utrustning inkluderar..."
 		IH_DIS_MSG_2			= IH_disable_color + "Skriv '/itemhelp 1' för att avaktivera dessa meddelanden under en våg. \nSkriv '/itemhelp 0' för att avaktivera dessa meddelanden helt."
 		IH_DIS_MSG				= IH_disable_color + "Skriv '/itemhelp 0' för att avaktivera dessa meddelanden. \nSkriv '/itemhelp 2' för att Alltid visa detta meddelande."
@@ -2016,7 +2016,7 @@ if ("SetScriptVersion" in getroottable())
 		//------------------------------------
 	}
 	russian = {
-		IH_TRANSLATE_ITEM		= IH_color + "[%s]" + IH_text_color + "%s"
+		IH_TRANSLATE_ITEM		= IH_color + "[%s] " + IH_text_color + "%s"
 		IH_INCLUDES				= IH_color_header + "[►]\x0826beffBB Ваше снаряжение включает в себя..."
 		IH_DIS_MSG_2			= IH_disable_color + "Введите '/itemhelp 1' чтобы отключить данные сообщения во время волны. \nType '/itemhelp 0' чтобы полностью отключить данные сообщения"
 		IH_DIS_MSG				= IH_disable_color + "Введите '/itemhelp 0' чтобы отключить данные сообщения. \nType '/itemhelp 2' чтобы эти сообщения показывались вновь."
@@ -2695,7 +2695,7 @@ if ("SetScriptVersion" in getroottable())
 		//------------------------------------
 	}
 	polish = {
-		IH_TRANSLATE_ITEM		= IH_color + "[%s]" + IH_text_color + "%s"
+		IH_TRANSLATE_ITEM		= IH_color + "[%s] " + IH_text_color + "%s"
 		IH_INCLUDES				= IH_color_header + "[►]\x0826beffBB Twoje wyposażenie składa się z..."
 		IH_DIS_MSG_2			= IH_disable_color + "Wpisz „/itemhelp 1”, by wyłączyć te wiadomości podczas fali. \nWpisz „/itemhelp 0”, by całkowicie wyłączyć te wiadomości."
 		IH_DIS_MSG				= IH_disable_color + "Wpisz „/itemhelp 0”, by wyłączyć te wiadomości. \nWpisz „/itemhelp 2”, by zawsze wyświetlać tę wiadomość."
@@ -3368,7 +3368,7 @@ if ("SetScriptVersion" in getroottable())
 		//------------------------------------
 	}
 	japanese = {
-		IH_TRANSLATE_ITEM		= IH_color + "[%s]" + IH_text_color + "%s"
+		IH_TRANSLATE_ITEM		= IH_color + "[%s] " + IH_text_color + "%s"
 		IH_INCLUDES				= IH_color_header + "[►]\x0826beffBB 装備内容："
 		IH_DIS_MSG_2			= IH_disable_color + "Type '/itemhelp 1' ウェーブ中にこれらのメッセージを表示しないようにする \nType '/itemhelp 0' これらのメッセージを完全に無効にする"
 		IH_DIS_MSG				= IH_disable_color + "Type '/itemhelp 0' これらのメッセージを非表示にする \nType '/itemhelp 2' このメッセージを常に表示する"
@@ -3385,7 +3385,7 @@ if ("SetScriptVersion" in getroottable())
 		IH_WAVE_SETUP			= IH_color_header + "[►]\x01 アイテムヘルパーは、セットアップ中のみ有効になっています"
 		IH_ENABLE 				= IH_color_header + "[►]\x01 アイテムヘルパーが有効になっています"
 		LOW_METAL 				= "メタルが足りません"
-		TOMISLAV_HEAT			= "Tomislav　ヒート: %s%%"
+		TOMISLAV_HEAT			= "Tomislav ヒート: %s%%"
 		STUCK_RESPAWNED 		= "スタック解消のため、リスポーンしました."
 		ABILITY_READY			= "%s\n► 準備完了 ◄"
 		ABILITY_CHARGING		= "%s\n%s"
@@ -3410,7 +3410,7 @@ if ("SetScriptVersion" in getroottable())
 		CHECKPOINT_RESTORE_HUD	= "最後に保存されたチェックポイントに戻りました"
 		//---------------------------------------------------------
 		SCATTERGUN_NAME 		= "散弾銃"
-		SCATTERGUN_DESC 		= "安定したダメージを与えられる頼もしい選択肢　特に至近距離での威力が抜群である"
+		SCATTERGUN_DESC 		= "安定したダメージを与えられる頼もしい選択肢 特に至近距離での威力が抜群である"
 		//
 		FORCENATURE_NAME		= "フォース・ア・ネイチャー"
 		FORCENATURE_DESC		= "弾の命中時にノックバック付くが、散弾銃よりはDPSが低くなっている"
@@ -3443,10 +3443,10 @@ if ("SetScriptVersion" in getroottable())
 		WINGER_DESC 			= "発動中は空中ジャンプが無制限になり空中にいる間、常にクリティカルヒットとなる一発の集中射撃を放つ事ができる、しかもこの攻撃には敵を吹き飛ばす効果もある"
 		//
 		PRETTYBOYS_NAME 		= "プリティ・ボーイズ・ポケット・ピストル"
-		PRETTYBOYS_DESC 		= "ターゲットの体力を基にダメージを与えるロケット弾を発射する事ができる　ターゲットが負傷するにつれてダメージが増加し、距離の影響を受けない　サブ攻撃キー：ダメージが20%減少する代わりに、追尾ロケットを使用する"
+		PRETTYBOYS_DESC 		= "ターゲットの体力を基にダメージを与えるロケット弾を発射する事ができる ターゲットが負傷するにつれてダメージが増加し、距離の影響を受けない サブ攻撃キー：ダメージが20%減少する代わりに、追尾ロケットを使用する"
 		//
 		CLEAVER_NAME 			= "フライングギロチン"
-		CLEAVER_DESC 			= "ヨンドゥの矢：知性を持つ矢を召喚し、戦闘を支援する　サブ攻撃キー：破壊者モード、与ダメージ-75%。"
+		CLEAVER_DESC 			= "ヨンドゥの矢：知性を持つ矢を召喚し、戦闘を支援する サブ攻撃キー：破壊者モード、与ダメージ-75%。"
 		//
 		MATATEDMILK_NAME 		= "ミュータテッド・ミルク"
 		MATATEDMILK_DESC 		= "連射でミルク？瓶を投げ、敵にダメージを与える。サブ攻撃キー：ミルク？瓶の束を一気に投げつける"
@@ -3464,26 +3464,26 @@ if ("SetScriptVersion" in getroottable())
 		CANDYCANE_DESC 			= "便利アイテム - 重力がなくなり、自由に飛ぶことができる"
 		//
 		BOSTONBASHSER_NAME 		= "ボストン・バッシャー"
-		BOSTONBASHSER_DESC 		= "ハイリスク・ハイリターン　ほとんどの小型敵を一撃で倒すことができ、10秒間のクリティカル率上昇効果を得られる　メディガンのビームでつながっている敵にもダメージが及ぶ　ただし一度でも外すと即死する"
+		BOSTONBASHSER_DESC 		= "ハイリスク・ハイリターン ほとんどの小型敵を一撃で倒すことができ、10秒間のクリティカル率上昇効果を得られる メディガンのビームでつながっている敵にもダメージが及ぶ ただし一度でも外すと即死する"
 		//
 		SUNONASTICK_NAME		= "サン・オン・ア・スティック"
-		SUNONASTICK_DESC		= "敵をスタンさせたり、短時間のクリティカル率上昇効果を得たりするチャンスを得る　メディガンのビームでつながっている敵にもダメージが及ぶ　ただし外れた場合は自分がスタン状態になる"
+		SUNONASTICK_DESC		= "敵をスタンさせたり、短時間のクリティカル率上昇効果を得たりするチャンスを得る メディガンのビームでつながっている敵にもダメージが及ぶ ただし外れた場合は自分がスタン状態になる"
 		//
 		FANOWAR_NAME 			= "ファン・オウォー"
-		FANOWAR_DESC 			= "便利アイテム - この近接武器を振りかざすと高速で前方に突進する　落下ダメージを無効化する"
+		FANOWAR_DESC 			= "便利アイテム - この近接武器を振りかざすと高速で前方に突進する 落下ダメージを無効化する"
 		//
 		ATOMIZER_NAME 			= "アトマイザー"
 		ATOMIZER_DESC 			= "通常攻撃ではダメージを与えることができませんが、タウントキルに成功すると、3分間クリティカル率上昇効果が得られる"
 		//
 		THREERUNEBLADE_NAME 	= "3つのルーンブレード"
-		THREERUNEBLADE_DESC 	= "発動中は、移動速度が大幅に上昇し、3段ジャンプが可能になる　落下ダメージを無効化する"
+		THREERUNEBLADE_DESC 	= "発動中は、移動速度が大幅に上昇し、3段ジャンプが可能になる 落下ダメージを無効化する"
 		// TODO: Update! "While active, gain MASSIVE boost to move speed and ability to triple jump. Deals increased damage while airborne. Grants immunity to fall damage."
 		//
 		UNARMEDCOMBAT_NAME 		= "アンアームドコンバット"
 		UNARMEDCOMBAT_DESC 		= "10キルごとに、スケルトン召喚の呪文チャージを1つ獲得する（魔術書が必要）"
 		//
 		WRAPAASSASSIN_NAME 		= "ラップアサシン"
-		WRAPAASSASSIN_DESC 		= "飛んでくる投射物を軽々と打ち返すことができる　また、スタン効果を無効化する"
+		WRAPAASSASSIN_DESC 		= "飛んでくる投射物を軽々と打ち返すことができる また、スタン効果を無効化する"
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -3491,29 +3491,29 @@ if ("SetScriptVersion" in getroottable())
 		ROCKETLAUNCHER_DESC		= "安定したダメージを与えられる頼もしい選択肢"
 		//
 		DIRECTHIT_NAME			= "ダイレクトヒット"
-		DIRECTHIT_DESC			= "サブ攻撃キー：敵を空中に打ち上げ、簡単にミニクリティカルを叩き込める　ロケット弾にはわずかな照準アシスト機能が付く"
+		DIRECTHIT_DESC			= "サブ攻撃キー：敵を空中に打ち上げ、簡単にミニクリティカルを叩き込める ロケット弾にはわずかな照準アシスト機能が付く"
 		//
 		BLACKBOX_NAME			= "BLACK BOX"
-		BLACKBOX_DESC			= "敵の動きを鈍らせ、出血ダメージを与える　この武器はソルジャーボットに対して2倍のダメージを与える"
+		BLACKBOX_DESC			= "敵の動きを鈍らせ、出血ダメージを与える この武器はソルジャーボットに対して2倍のダメージを与える"
 		// TODO: Update! "Slow down enemies and inflict bleed."
 		//
 		ROCKETJUMPER_NAME		= "ROCKET JUMPER"
-		ROCKETJUMPER_DESC		= "発射速度とリロード速度は遅いものの、威力が大きく、爆風範囲も広い　群衆に対して最適な選択肢だ"
+		ROCKETJUMPER_DESC		= "発射速度とリロード速度は遅いものの、威力が大きく、爆風範囲も広い 群衆に対して最適な選択肢だ"
 		//
 		LIBERTYLAUNCHER_NAME	= "リバティー・ランチャー"
-		LIBERTYLAUNCHER_DESC	= "移動速度の遅いロケットを発射し、広範囲に甚大なダメージを与える　リロード速度が非常に遅く、弾薬も少ない　この武器は装填されると自動的に発射される"
+		LIBERTYLAUNCHER_DESC	= "移動速度の遅いロケットを発射し、広範囲に甚大なダメージを与える リロード速度が非常に遅く、弾薬も少ない この武器は装填されると自動的に発射される"
 		//
 		COWMANGLER_NAME			= "カウ・マングラー 5000"
-		COWMANGLER_DESC			= "命中すると小型の敵を動けなくする　チャージショットは敵の動きをより長く停止させる　サブ攻撃キーを押しながら発射すると武器がオーバーチャージされ、連射が可能になり、停止時間がさらに長くなる"
+		COWMANGLER_DESC			= "命中すると小型の敵を動けなくする チャージショットは敵の動きをより長く停止させる サブ攻撃キーを押しながら発射すると武器がオーバーチャージされ、連射が可能になり、停止時間がさらに長くなる"
 		//
 		ORIGINAL_NAME			= "オリジナル"
-		ORIGINAL_DESC			= "メイン攻撃キーを長押しすると、最大4発のロケット弾を装填できます　装填が完了すると、この武器は自動的に発射される"
+		ORIGINAL_DESC			= "メイン攻撃キーを長押しすると、最大4発のロケット弾を装填できます 装填が完了すると、この武器は自動的に発射される"
 		//
 		BEGGARSBAZOOKA_NAME		= "ベガーのバズーカ"
-		BEGGARSBAZOOKA_DESC		= "メイン攻撃キー長押しで発射を留め、最大100発のロケット弾を装填し、一斉に放て　過充填なし"
+		BEGGARSBAZOOKA_DESC		= "メイン攻撃キー長押しで発射を留め、最大100発のロケット弾を装填し、一斉に放て 過充填なし"
 		//
 		AIRSTRIKE_NAME			= "エアストライク"
-		AIRSTRIKE_DESC			= "最大10発のロケット弾を装填し、固定された散弾パターンで一斉に発射する　ロケット弾は自動的に敵を追尾する"
+		AIRSTRIKE_DESC			= "最大10発のロケット弾を装填し、固定された散弾パターンで一斉に発射する ロケット弾は自動的に敵を追尾する"
 		///
 		SHOTGUN_SOLD_NAME 		= "ショットガン - ソルジャー" 
 		SHOTGUN_SOLD_DESC 		= "ロケットジャンプ中は、発射速度が非常に速く、クリティカルヒットも発生しやすくなる" 
@@ -3525,7 +3525,7 @@ if ("SetScriptVersion" in getroottable())
 		BUFFBANNER_DESC 		= "バフの射程が無制限になり、持続時間が大幅に延長された" 
 		//
 		GUNBOATS_NAME 			= "GUNBOATS" 
-		GUNBOATS_DESC 			= "ジャンプキーを押し続ける事でバニーホップが可能にする　落下ダメージを無効化する" 
+		GUNBOATS_DESC 			= "ジャンプキーを押し続ける事でバニーホップが可能にする 落下ダメージを無効化する" 
 		// TODO: Update! "Enables bunnyhopping by holding 'jump' key. Grants immunity to fall damage. Hold Crouch key while airborne to reduce gravity." 
 		//
 		BATTALIONS_NAME 		= "BATTALION'S BACKUP" 
@@ -3535,20 +3535,20 @@ if ("SetScriptVersion" in getroottable())
 		CONCHEROR_DESC 			= "バフの射程が無制限になり、持続時間が大幅に延長された" 
 		//
 		RESERVESHOOTER_NAME 	= "リザーブ・シューター" 
-		RESERVESHOOTER_DESC 	= "射程に関係なく、1発につき10,000の固定ダメージを与え、敵を倒すと3秒間ミニクリティカルが発生する　ただし、この武器はクリティカル倍率の恩恵を受けず、タンクにはダメージを与えられない　サブ攻撃キーでズームイン使用可能" 
+		RESERVESHOOTER_DESC 	= "射程に関係なく、1発につき10,000の固定ダメージを与え、敵を倒すと3秒間ミニクリティカルが発生する ただし、この武器はクリティカル倍率の恩恵を受けず、タンクにはダメージを与えられない サブ攻撃キーでズームイン使用可能" 
 		//
 		BISON_NAME 				= "ライチャス・バイソン" 
 		BISON_DESC 				= "完全自動照準で、貫通ダメージを与えるビームを連続して発射する" 
 		//
 		MANTREADS_NAME 			= "マントレッズ" 
-		MANTREADS_DESC 			= "ダメージによるノックバックが大幅に軽減され、空中ストレイフの加速力が大幅にアップした　踏みつけ攻撃のダメージが強化され、移動速度に比例するようになった" 
+		MANTREADS_DESC 			= "ダメージによるノックバックが大幅に軽減され、空中ストレイフの加速力が大幅にアップした 踏みつけ攻撃のダメージが強化され、移動速度に比例するようになった" 
 		// TODO: Update! "Major reduction in knockback taken from damage. Stomp damage buffed and velocity-based. Gain a short critboost on kill."
 		//
 		BASEJUMPER_NAME 		= "B.A.S.E. ジャンパー" 
-		BASEJUMPER_DESC 		= "パラシュートの開閉が可能　ノックバックや銃弾によるダメージへの耐性が上がり、空中の無防備な状態を軽減" 
+		BASEJUMPER_DESC 		= "パラシュートの開閉が可能 ノックバックや銃弾によるダメージへの耐性が上がり、空中の無防備な状態を軽減" 
 		//
 		PANICATTACK_NAME 		= "パニック・アタック" 
-		PANICATTACK_DESC 		= "緊急で回復が必要な時に命中すると、最大10,000のHPを即座に回復する　この武器が有効な状態でダメージを受けると、短時間のセルフ・ユーバーが発動する可能性がある" 
+		PANICATTACK_DESC 		= "緊急で回復が必要な時に命中すると、最大10,000のHPを即座に回復する この武器が有効な状態でダメージを受けると、短時間のセルフ・ユーバーが発動する可能性がある" 
 		///
 		SHOVEL_NAME 			= "シャベル"
 		SHOVEL_DESC 			= "防御と機動性のための標準的な選択肢"
@@ -3558,13 +3558,13 @@ if ("SetScriptVersion" in getroottable())
 		// TODO: Update! "Damage massively increases as you become injured."
 		//
 		PAINTRAIN_NAME 			= "ペイントレイン"
-		PAINTRAIN_DESC 			= "命中すると出血と移動速度低下を付与する　落下ダメージを無効化する"
+		PAINTRAIN_DESC 			= "命中すると出血と移動速度低下を付与する 落下ダメージを無効化する"
 		//
 		HALFZATOICHI_NAME 		= "ハーフ座頭市"
 		HALFZATOICHI_DESC 		= "平均的なダメージを与え高い体力と機動性を兼ね備え、攻撃範囲も拡大された"
 		//
 		MARKETGARDENER_NAME 	= "マーケットガーデナー"
-		MARKETGARDENER_DESC 	= "クリティカルダメージが大幅に上昇する　敵を倒すとレイジ状態となり、HPと耐性が上昇し、すべての攻撃のダメージが増加する　ただし、攻撃が外れると即死する"
+		MARKETGARDENER_DESC 	= "クリティカルダメージが大幅に上昇する 敵を倒すとレイジ状態となり、HPと耐性が上昇し、すべての攻撃のダメージが増加する ただし、攻撃が外れると即死する"
 		// TODO: Update! "Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		DISCIPLINARYACTION_NAME = "懲戒ムチ"
@@ -3578,46 +3578,46 @@ if ("SetScriptVersion" in getroottable())
 		//----------------------------
 		//----------------------------
 		FLAMETHROWER_NAME 		= "火炎放射器"
-		FLAMETHROWER_DESC		= "安定したダメージを与えられる頼もしい選択肢　敵を倒すと、短時間ミニクリティカルボーナスが得られる"
+		FLAMETHROWER_DESC		= "安定したダメージを与えられる頼もしい選択肢 敵を倒すと、短時間ミニクリティカルボーナスが得られる"
 		//
 		BACKBURNER_NAME 		= "バックバーナー"
-		BACKBURNER_DESC			= "グリーンファイア - 敵に「死のマーキング」を付け、空中の敵を短時間スタンさせる　この武器はパイロボットに対して2倍のダメージを与える"
+		BACKBURNER_DESC			= "グリーンファイア - 敵に「死のマーキング」を付け、空中の敵を短時間スタンさせる この武器はパイロボットに対して2倍のダメージを与える"
 		//
 		DEGREASER_NAME 			= "DEGREASER"
-		DEGREASER_DESC			= "長距離火炎放射器で、高い炎ダメージを与えるが、炎上ダメージは0である　この火炎放射器はエアブラストを発動できない"
+		DEGREASER_DESC			= "長距離火炎放射器で、高い炎ダメージを与えるが、炎上ダメージは0である この火炎放射器はエアブラストを発動できない"
 		//
 		PHLOGISTINATOR_NAME 	= "フロギストネイター"
-		PHLOGISTINATOR_DESC		= "グリーンファイア - 敵に「死のマーキング」を付け、空中の敵を短時間スタンさせる　タンクに対して強力だが、移動速度が低下する"
+		PHLOGISTINATOR_DESC		= "グリーンファイア - 敵に「死のマーキング」を付け、空中の敵を短時間スタンさせる タンクに対して強力だが、移動速度が低下する"
 		//
 		RAINBLOWER_NAME 		= "レインブロワー"
-		RAINBLOWER_DESC			= "長距離の火炎放射器で、炎ダメージは低いが、炎上ダメージは高い　また、エンジニアの建造物を瞬時に破壊したり、敵のパイロを炎上したりすることもできる　エアブラストの威力は弱いものの、非常に速い"
+		RAINBLOWER_DESC			= "長距離の火炎放射器で、炎ダメージは低いが、炎上ダメージは高い また、エンジニアの建造物を瞬時に破壊したり、敵のパイロを炎上したりすることもできる エアブラストの威力は弱いものの、非常に速い"
 		//
 		DRAGONSFURY_NAME 		= "ドラゴンズフューリー"
 		DRAGONSFURY_DESC		= "発射速度とエアブラスト速度が大幅に増加"
 		//
 		NOSTROMONAPALMER_NAME 	= "ノストロモ・ナパーマー"
-		NOSTROMONAPALMER_DESC	= "命中すると敵の移動速度を低下させる　フロギストネイターと同様に「Mmmph」チャージを蓄積し、自身に「カンケラー」バフを付与する　この火炎放射器はエアブラストを発動できない"
+		NOSTROMONAPALMER_DESC	= "命中すると敵の移動速度を低下させる フロギストネイターと同様に「Mmmph」チャージを蓄積し、自身に「カンケラー」バフを付与する この火炎放射器はエアブラストを発動できない"
 		///
 		SHOTGUN_PYRO_NAME 		= "ショットガン - パイロ" 
 		SHOTGUN_PYRO_DESC 		= "燃えているプレイヤーに対して 100% クリティカルヒット" 
 		//
 		FLAREGUN_NAME 			= "フレアガン" 
-		FLAREGUN_DESC 			= "敵を貫通するヒットスキャン攻撃を発動する　経路上の敵を貫通するたびに、ダメージが指数関数的に増加する　また、命中時に敵をスタンさせる可能性がある" 
+		FLAREGUN_DESC 			= "敵を貫通するヒットスキャン攻撃を発動する 経路上の敵を貫通するたびに、ダメージが指数関数的に増加する また、命中時に敵をスタンさせる可能性がある" 
 		//
 		DETONATOR_NAME 			= "雷管" 
-		DETONATOR_DESC 			= "フレア弾の爆発範囲は無限で、視界内にあるあらゆる対象に命中する　すべてのスパイボットをステルス状態から解除し、変装を解除させる　機動性を高めるのにも最適な選択肢だ" 
+		DETONATOR_DESC 			= "フレア弾の爆発範囲は無限で、視界内にあるあらゆる対象に命中する すべてのスパイボットをステルス状態から解除し、変装を解除させる 機動性を高めるのにも最適な選択肢だ" 
 		//
 		MANMELTER_NAME 			= "マンメルター" 
-		MANMELTER_DESC 			= "敵を自動的に探知する高速発射型フレア弾を発射する　弾薬は無制限で、リロードも不要　サブ攻撃キー：フレア弾を一斉に発射する" 
+		MANMELTER_DESC 			= "敵を自動的に探知する高速発射型フレア弾を発射する 弾薬は無制限で、リロードも不要 サブ攻撃キー：フレア弾を一斉に発射する" 
 		//
 		SCORCHSHOT_NAME 		= "スコーチ・ショット" 
-		SCORCHSHOT_DESC 		= "命中時：大ダメージを与え、敵の炎を消化し、ノックバックさせる　ターゲットが炎に包まれていなければならず、そうでない場合、効果を発揮しない　サブ攻撃キー：低速追尾フレア弾を発射する" 
+		SCORCHSHOT_DESC 		= "命中時：大ダメージを与え、敵の炎を消化し、ノックバックさせる ターゲットが炎に包まれていなければならず、そうでない場合、効果を発揮しない サブ攻撃キー：低速追尾フレア弾を発射する" 
 		//
 		THERMALTHRUSTER_NAME 	= "サーマルスラスター" 
-		THERMALTHRUSTER_DESC 	= "発射の遅延がなく、燃料消費も抑えられる　空中での再展開が可能で、踏みつけによる大ダメージを与えることができる　敵を倒すと、一時的にクリティカル率が高まる" 
+		THERMALTHRUSTER_DESC 	= "発射の遅延がなく、燃料消費も抑えられる 空中での再展開が可能で、踏みつけによる大ダメージを与えることができる 敵を倒すと、一時的にクリティカル率が高まる" 
 		//
 		GASPASSER_NAME 			= "ガスパサー" 
-		GASPASSER_DESC 			= "メーターは空の状態から始まり、死亡時にリセットされる　150,000のダメージを与えるとメーターが満タンとなる　「点火時に爆発」の効果で105,000のダメージを与える" 
+		GASPASSER_DESC 			= "メーターは空の状態から始まり、死亡時にリセットされる 150,000のダメージを与えるとメーターが満タンとなる 「点火時に爆発」の効果で105,000のダメージを与える" 
 		///
 		FIREAXE_NAME 			= "消防斧"
 		FIREAXE_DESC 			= "防御と機動性のための標準的な選択肢"
@@ -3632,14 +3632,14 @@ if ("SetScriptVersion" in getroottable())
 		POWERJACK_DESC 			= "素早い攻撃と移動速度、命中時に敵に出血と炎上効果を与え、敵を倒すとミニクリティカルを獲得する"
 		//
 		BACKSCRATCHER_NAME 		= "バックスクラッチャー"
-		BACKSCRATCHER_DESC 		= "背後から致命的なダメージを与える　敵を倒すとレイジ状態となり、移動速度と耐性が上昇し、すべての攻撃のダメージが増加する"
+		BACKSCRATCHER_DESC 		= "背後から致命的なダメージを与える 敵を倒すとレイジ状態となり、移動速度と耐性が上昇し、すべての攻撃のダメージが増加する"
 		// TODO: Update! "Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		VOLCANOFRAGMENT_NAME 	= "研ぎ澄まされた火山の破片"
-		VOLCANOFRAGMENT_DESC 	= "攻撃が命中した際に敵をスタンさせる可能性がある　また、敵のパイロに炎上効果を与えることもできる"
+		VOLCANOFRAGMENT_DESC 	= "攻撃が命中した際に敵をスタンさせる可能性がある また、敵のパイロに炎上効果を与えることもできる"
 		//
 		POSTALPUMMELER_NAME 	= "ポスタル・パメラー"
-		POSTALPUMMELER_DESC 	= "命中時：混乱状態を付与し、敵を短時間、爆弾の軌跡に沿って後退させる　攻撃時にサブ攻撃キーを押したままにすると、スポーン地点へテレポートする"
+		POSTALPUMMELER_DESC 	= "命中時：混乱状態を付与し、敵を短時間、爆弾の軌跡に沿って後退させる 攻撃時にサブ攻撃キーを押したままにすると、スポーン地点へテレポートする"
 		//
 		MAUL_NAME 				= "モール"
 		MAUL_DESC 				= "命中時：敵を空中に吹き飛ばし、重力を低下させる"
@@ -3663,22 +3663,22 @@ if ("SetScriptVersion" in getroottable())
 		GRENADELAUNCHER_DESC	= "安定したダメージを与えられる頼もしい選択肢"
 		//
 		LOCHNLOAD_NAME 			= "ロックンロード"
-		LOCHNLOAD_DESC			= "発射速度は遅いものの、広範囲に高い瞬間火力を発揮する　群衆に対し効果的"
+		LOCHNLOAD_DESC			= "発射速度は遅いものの、広範囲に高い瞬間火力を発揮する 群衆に対し効果的"
 		//
 		ALIBABA_NAME			= "ALI BABA'S WEE BOOTIES"
-		ALIBABA_DESC			= "シールドバッシュのダメージが増加し　落下ダメージを無効化する"
+		ALIBABA_DESC			= "シールドバッシュのダメージが増加し 落下ダメージを無効化する"
 		//
 		BOOTLEGGER_NAME			= "ブートレガー"
-		BOOTLEGGER_DESC			= "シールドのチャージ回復速度が向上し　落下ダメージを無効化する"
+		BOOTLEGGER_DESC			= "シールドのチャージ回復速度が向上し 落下ダメージを無効化する"
 		//
 		LOOSECANNON_NAME		= "ルースキャノン"
-		LOOSECANNON_DESC		= "最大4発の砲弾を装填し、垂直方向に一斉射撃できる　砲弾は地面に接触すると爆発する"
+		LOOSECANNON_DESC		= "最大4発の砲弾を装填し、垂直方向に一斉射撃できる 砲弾は地面に接触すると爆発する"
 		//
 		IRONBOMBER_NAME			= "アイアンボンバー"
-		IRONBOMBER_DESC			= "敵の耐性を無視し、敵を倒すと短時間クリティカル率アップの効果を得る　弾薬を消費せず、弾倉は無限である　弾は壁に跳ね返る"
+		IRONBOMBER_DESC			= "敵の耐性を無視し、敵を倒すと短時間クリティカル率アップの効果を得る 弾薬を消費せず、弾倉は無限である 弾は壁に跳ね返る"
 		///
 		STICKYBOMB_NAME 		= "粘着爆弾ランチャー"
-		STICKYBOMB_DESC 		= "安定したダメージを与えられる頼もしい選択肢　50個の爆弾を設置可能"
+		STICKYBOMB_DESC 		= "安定したダメージを与えられる頼もしい選択肢 50個の爆弾を設置可能"
 		//
 		SCOTTISHRES_NAME 		= "スコットランドレジスタンス"
 		SCOTTISHRES_DESC 		= "爆弾は起爆までに5秒かかり、10秒後に不発となるが、タイミングをうまく合わせ、フルチャージすれば圧倒的なダメージを与えることができる"
@@ -3696,7 +3696,7 @@ if ("SetScriptVersion" in getroottable())
 		TIDETURNER_DESC 		= "バーストチャージ - シールドチャージ時の移動速度が向上"
 		//
 		QUICKIEBOMB_NAME 		= "クイックボムランチャー"
-		QUICKIEBOMB_DESC 		= "粘着爆弾を信じられないほどの速さで自動発射し、チャージ時間も極めて短い　敵を倒すとミニクリティカルが発生する"
+		QUICKIEBOMB_DESC 		= "粘着爆弾を信じられないほどの速さで自動発射し、チャージ時間も極めて短い 敵を倒すとミニクリティカルが発生する"
 		///
 		BOTTLE_NAME 			= "ボトル"
 		BOTTLE_DESC 			= "防御と機動性のための標準的な選択肢"
@@ -3705,43 +3705,43 @@ if ("SetScriptVersion" in getroottable())
 		EYELANDER_DESC 			= "素早い攻撃で高いダメージを与え、敵を倒すとクリティカルやミニクリティカルが発生するが、ハイブリッドナイトとしては使用できない"
 		//
 		SKULLCUTTER_NAME 		= "スコッツマンズ・スカルカッター"
-		SKULLCUTTER_DESC 		= "敵のオーバーチャージを無効化し、メディガンの機能を妨害できる　また、自分と同じクラスの敵に対して、より大きなダメージを与えることができる"
+		SKULLCUTTER_DESC 		= "敵のオーバーチャージを無効化し、メディガンの機能を妨害できる また、自分と同じクラスの敵に対して、より大きなダメージを与えることができる"
 		//
 		CABER_NAME 				= "ウラプール・ケイバー"
-		CABER_DESC 				= "ダメージは、負傷するにつれて増加し、体力が2%未満の場合、必ずクリティカルヒットとなる　この攻撃による爆発で、お前は死に至る"
+		CABER_DESC 				= "ダメージは、負傷するにつれて増加し、体力が2%未満の場合、必ずクリティカルヒットとなる この攻撃による爆発で、お前は死に至る"
 		// TODO: Update! "You are a Sentry Buster - Taunt to detonate!"
 		//
 		CLAIDHEAMHMOR_NAME 		= "クレイドヒーム・モア"
 		CLAIDHEAMHMOR_DESC 		= "10キルごとに、モノキュラーズ召喚の呪文チャージを1つ獲得する（魔術書が必要）"
 		//
 		PERSIANPERSUADER_NAME 	= "ペルシャ・パースエイダー"
-		PERSIANPERSUADER_DESC 	= "シールドと組み合わせると、シールドのチャージが無制限になる　急な方向転換や、壁、敵、その他の障害物への衝突によってシールドのチャージが中断されることもなくなる　スタン効果を無効化する"
+		PERSIANPERSUADER_DESC 	= "シールドと組み合わせると、シールドのチャージが無制限になる 急な方向転換や、壁、敵、その他の障害物への衝突によってシールドのチャージが中断されることもなくなる スタン効果を無効化する"
 		//
 		NINEIRON_NAME 			= "ネッシーのナインアイアン"
-		NINEIRON_DESC 			= "スイングの軌道が広範囲に及び、あらゆる方向の複数の敵を同時に攻撃できる　クリティカルダメージが2倍になる"
+		NINEIRON_DESC 			= "スイングの軌道が広範囲に及び、あらゆる方向の複数の敵を同時に攻撃できる クリティカルダメージが2倍になる"
 		//
 		SCOTTISHHANDSHAKE_NAME 	= "スコティッシュ・ハンドシェイク"
-		SCOTTISHHANDSHAKE_DESC 	= "発動中：遠距離攻撃のダメージを90%軽減し、ノックバックを無効化し、最大HPを大幅に増加させる　ただし、弾薬を回復できず、敵グループから得られるHP回復量も減少する"
+		SCOTTISHHANDSHAKE_DESC 	= "発動中：遠距離攻撃のダメージを90%軽減し、ノックバックを無効化し、最大HPを大幅に増加させる ただし、弾薬を回復できず、敵グループから得られるHP回復量も減少する"
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		MINIGUN_NAME 			= "ミニガン"
-		MINIGUN_DESC 			= "安定したダメージを与えられる頼もしい選択肢　敵を倒すと、短時間ミニクリティカルボーナスが得られる"
+		MINIGUN_DESC 			= "安定したダメージを与えられる頼もしい選択肢 敵を倒すと、短時間ミニクリティカルボーナスが得られる"
 		//
 		NATASCHA_NAME 			= "ナターシャ"
 		NATASCHA_DESC 			= "命中時に敵の移動速度を低下させ、「死のマーキング」を付与する"
 		//
 		BRASSBEAST_NAME 		= "ブラス・ビースト"
-		BRASSBEAST_DESC 		= "ダメージは高いが、銃身回転開始まで非常に時間がかかる　展開中は移動速度が大幅に低下するが、飛来する投射物を弾き返すことができる"
+		BRASSBEAST_DESC 		= "ダメージは高いが、銃身回転開始まで非常に時間がかかる 展開中は移動速度が大幅に低下するが、飛来する投射物を弾き返すことができる"
 		//
 		TOMISLAV_NAME 			= "TOMISLAV"
-		TOMISLAV_DESC 			= "ダメージを与えることで「ヒート」が蓄積される　この武器のすべてのステータスは、ヒートレベルに応じて上昇する　ただし、一定時間ダメージを与え続けると、武器は冷却され始めます"
+		TOMISLAV_DESC 			= "ダメージを与えることで「ヒート」が蓄積される この武器のすべてのステータスは、ヒートレベルに応じて上昇する ただし、一定時間ダメージを与え続けると、武器は冷却され始めます"
 		//
 		HUOHEATER_NAME 			= "フオロングヒーター"
 		HUOHEATER_DESC 			= "エネルギービームを発射し、命中した敵に火をつける"
 		//
 		GENUINEHUOHEATER_NAME 	= "ジェニュイン フオロングヒーター"
-		GENUINEHUOHEATER_DESC 	= "ロケット弾を発射する　炎に包まれた敵に対しては必ずクリティカルヒットとなる"
+		GENUINEHUOHEATER_DESC 	= "ロケット弾を発射する 炎に包まれた敵に対しては必ずクリティカルヒットとなる"
 		///
 		SHOTGUN_HVY_NAME 		= "ショットガン - ヘビー"
 		SHOTGUN_HVY_DESC 		= "一撃で高いダメージを与え、敵を倒すと8秒間クリティカル率が上昇する"
@@ -3751,7 +3751,7 @@ if ("SetScriptVersion" in getroottable())
 		// TODO: Update! "Consume to gain Concheror buff for 30 seconds."
 		//
 		DALOKOHSBAR_NAME 		= "ダロコス・バー"
-		DALOKOHSBAR_DESC 		= "最大20,000のHPを回復する　HPが350未満の状態で使用すると、大幅なオーバーヒールが発生する　被ダメージ量が増加するが、ダメージを受けた際に自己ウーバー状態になるチャンスが得られる"
+		DALOKOHSBAR_DESC 		= "最大20,000のHPを回復する HPが350未満の状態で使用すると、大幅なオーバーヒールが発生する 被ダメージ量が増加するが、ダメージを受けた際に自己ウーバー状態になるチャンスが得られる"
 		// TODO: Update! "Consume to gain increased move speed, weapon switch speed and faster minigun spinup time for 30 seconds."
 		//
 		BUFFALOSTEAK_NAME 		= "バッファロー・ステーキ・サンドヴィッチ"
@@ -3759,7 +3759,7 @@ if ("SetScriptVersion" in getroottable())
 		// TODO: Update! "Consume to gain Battalion's Backup buff and backstab immunity for 30 seconds."
 		//
 		FAMILYBUSINESS_NAME 	= "ファミリービジネス"
-		FAMILYBUSINESS_DESC 	= "弾薬無制限。回復を受けている間は攻撃速度が2倍になる　敵を倒すと、一時的にクリティカル率とミニクリティカル率が上昇する"
+		FAMILYBUSINESS_DESC 	= "弾薬無制限。回復を受けている間は攻撃速度が2倍になる 敵を倒すと、一時的にクリティカル率とミニクリティカル率が上昇する"
 		//
 		FISHCAKE_NAME 			= "フィッシュケーキ"
 		FISHCAKE_DESC 			= "弾丸によるダメージには高い耐性を持つが、炎や爆発によるダメージにはより弱くなる"
@@ -3773,20 +3773,20 @@ if ("SetScriptVersion" in getroottable())
 		FISTS_DESC 				= "防御と機動性のための標準的な選択肢 戦闘で効果的"
 		//
 		KILLINGGLOVES_NAME 		= "キリング・グローブ・オブ・ボクシング"
-		KILLINGGLOVES_DESC 		= "特殊能力：「メガクラッシュ」 - 使用可能時に爆弾の上でアクションスロットのキーを押すと、爆弾を即座にスタート地点へ戻す　それ以外の場合は、一時的に移動速度、防御力、クリティカル率が上昇する"
+		KILLINGGLOVES_DESC 		= "特殊能力：「メガクラッシュ」 - 使用可能時に爆弾の上でアクションスロットのキーを押すと、爆弾を即座にスタート地点へ戻す それ以外の場合は、一時的に移動速度、防御力、クリティカル率が上昇する"
 		//
 		GLOVESRUNNING_NAME 		= "GLOVES OF RUNNING URGENTLY"
-		GLOVESRUNNING_DESC 		= "パラシュートを展開する能力を自動的に付与する　発動中は、ジャンプ力、ダメージ耐性、HP回復量が大幅に上昇する"
+		GLOVESRUNNING_DESC 		= "パラシュートを展開する能力を自動的に付与する 発動中は、ジャンプ力、ダメージ耐性、HP回復量が大幅に上昇する"
 		//
 		BREADBITE_NAME 			= "ブレッド・バイト"
-		BREADBITE_DESC 			= "クリティカルヒットを当てると、対象に「腐食」という永続的なデバフを付与します　このデバフは最大HPに基づいてダメージを与え、対象が死亡した際に小さな腐食性の雲となって爆発し、その効果を周囲の敵に広げます"
+		BREADBITE_DESC 			= "クリティカルヒットを当てると、対象に「腐食」という永続的なデバフを付与します このデバフは最大HPに基づいてダメージを与え、対象が死亡した際に小さな腐食性の雲となって爆発し、その効果を周囲の敵に広げます"
 		//
 		WARRIRORSSPIRIT_NAME 	= "ウォリアーズスピリット"
-		WARRIRORSSPIRIT_DESC 	= "左クリックで高く跳び上がり、敵の上に着地すると、強力な踏みつけダメージを与えます　メインとサブの弾薬をすべて消費します"
+		WARRIRORSSPIRIT_DESC 	= "左クリックで高く跳び上がり、敵の上に着地すると、強力な踏みつけダメージを与えます メインとサブの弾薬をすべて消費します"
 		// TODO: Update! "Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air. Active buff indicated by flashing \x07ffc400[!] \x01icon."
 		//
 		FISTSOFSTEEL_NAME 		= "フィスト・オブ・スティール"
-		FISTSOFSTEEL_DESC 		= "HP25万の巨大なヘビーガントレットに変身する　ノックバック効果を受けなくなり、大ダメージを与えることができる　すべてのメインおよびサブの弾薬が消費される　回復はランチボックスのアイテムからのみ可能となる"
+		FISTSOFSTEEL_DESC 		= "HP25万の巨大なヘビーガントレットに変身する ノックバック効果を受けなくなり、大ダメージを与えることができる すべてのメインおよびサブの弾薬が消費される 回復はランチボックスのアイテムからのみ可能となる"
 		// TODO: Update! "You are a Giant Heavy Gauntlet - Immune to push forces and able to hit multiple enemies at once for massive damage."
 		//
 		EVICTIONNOTICE_NAME 	= "エビクションノウティス"
@@ -3796,7 +3796,7 @@ if ("SetScriptVersion" in getroottable())
 		APOCOFISTS_DESC 		= "パンチで敵を吹き飛ばす"
 		//
 		HOLIDAYPUNCH_NAME 		= "ホリデーパンチ"
-		HOLIDAYPUNCH_DESC 		= "発動中は、すべての敵があなたを無視します　また、スタン効果を無効化する　ただし、この武器ではダメージを与えることはできない"
+		HOLIDAYPUNCH_DESC 		= "発動中は、すべての敵があなたを無視します また、スタン効果を無効化する ただし、この武器ではダメージを与えることはできない"
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -3804,7 +3804,7 @@ if ("SetScriptVersion" in getroottable())
 		SHOTGUN_ENGI_DESC 		= "自分のセントリーのターゲットに4倍のダメージを与える"
 		//
 		FRONTIERJUSTICE_NAME 	= "フロンティアジャスティス"
-		FRONTIERJUSTICE_DESC 	= "とてつもなく速い発射速度　弾倉容量は「リベンジ」のクリティカルヒット最大回数に一致する　回復を受けている間はリロード速度が向上する"
+		FRONTIERJUSTICE_DESC 	= "とてつもなく速い発射速度 弾倉容量は「リベンジ」のクリティカルヒット最大回数に一致する 回復を受けている間はリロード速度が向上する"
 		//
 		WIDOWMAKER_NAME 		= "ウィドウメーカー"
 		WIDOWMAKER_DESC 		= "2000のメタルを使用して、敵を吹き飛ばす広範囲攻撃を発動できる"
@@ -3825,10 +3825,10 @@ if ("SetScriptVersion" in getroottable())
 		WRENCH_DESC 			= "確実なダメージを与えるための標準的な選択肢"
 		//
 		GUNSLINGER_NAME 		= "ガンスリンガー"
-		GUNSLINGER_DESC	 		= "セカンダリ・セントリーを構築可能　3連撃パンチコンボで小型の敵を瞬殺し、ジャイアントに多大なダメージを与えることができる"
+		GUNSLINGER_DESC	 		= "セカンダリ・セントリーを構築可能 3連撃パンチコンボで小型の敵を瞬殺し、ジャイアントに多大なダメージを与えることができる"
 		//
 		SOUTHERNHOS_NAME 		= "サウザンホスピタリティ"
-		SOUTHERNHOS_DESC 		= "通常のセントリーをフレイム・セントリーに置き換える　射程は短いが、ダメージは高い"
+		SOUTHERNHOS_DESC 		= "通常のセントリーをフレイム・セントリーに置き換える 射程は短いが、ダメージは高い"
 		//
 		JAG_NAME 				= "ジャグ"
 		JAG_DESC 				= "セントリーの射程距離が無制限になる"
@@ -3842,17 +3842,17 @@ if ("SetScriptVersion" in getroottable())
 		SYRINGEGUN_DESC			= "ヒットするたびに0.5%のユーバーチャージを獲得する"
 		//
 		BLUTSAUGER_NAME			= "ブルートザウガー"
-		BLUTSAUGER_DESC			= "ロボットの再プログラムには100%のユーバーチャージが必要であり、これを消費することで、ロボットを一時的に味方チームに加えた後、自爆させることができる　サブ攻撃キー：影響を受けたすべてのボットのプログラム書き換えを強制終了する"
+		BLUTSAUGER_DESC			= "ロボットの再プログラムには100%のユーバーチャージが必要であり、これを消費することで、ロボットを一時的に味方チームに加えた後、自爆させることができる サブ攻撃キー：影響を受けたすべてのボットのプログラム書き換えを強制終了する"
 		//
 		CRUSADERSCROSSBOW_NAME	= "クルセイダーズ・クロスボウ"
-		CRUSADERSCROSSBOW_DESC	= "攻撃が命中するたびに0.25%のユーバーチャージを獲得し、出血状態を付与する　さらに、出血ダメージが1回発生するごとに0.5%のユーバーチャージを獲得する"
+		CRUSADERSCROSSBOW_DESC	= "攻撃が命中するたびに0.25%のユーバーチャージを獲得し、出血状態を付与する さらに、出血ダメージが1回発生するごとに0.5%のユーバーチャージを獲得する"
 		//
 		OVERDOSE_NAME 			= "過剰摂取"
 		OVERDOSE_DESC 			= "100%のユーバーチャージを消費して発動し、周囲の小型敵を最大15秒間無力化する攻撃を放つ"
 		// TODO: Update! "Requires and consumes 50% Ubercharge to launch an EMP mortar, causing nearby enemies to be unable to move or attack for a short time."
 		///
 		MEDIGUN_NAME			= "メディガン"
-		MEDIGUN_DESC			= "オーバーヒールの上限が、対象の最大HPの10倍まで引き上げられる　持続時間の長いレベル1の「投射物シールド」を展開する"
+		MEDIGUN_DESC			= "オーバーヒールの上限が、対象の最大HPの10倍まで引き上げられる 持続時間の長いレベル1の「投射物シールド」を展開する"
 		// TODO: Update! "Overheal cap raised to x10 the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
 		//
 		KRITZKRIEG_NAME			= "クリッツクリーク"
@@ -3860,27 +3860,27 @@ if ("SetScriptVersion" in getroottable())
 		// TODO: Update! "Able to drain health from enemies, granting self-healing and building Uber. Ubercharge grants a boost to all damage output."
 		//
 		QUICKFIX_NAME			= "クイックフィックス"
-		QUICKFIX_DESC			= "非常に回復速度が速く、レベル2の「投射物シールド」を備えている　シールドへの接触ダメージからユーバーチャージを蓄積できる"
+		QUICKFIX_DESC			= "非常に回復速度が速く、レベル2の「投射物シールド」を備えている シールドへの接触ダメージからユーバーチャージを蓄積できる"
 		// TODO: Update! "Very fast healing with a level 2 Projectile Shield. Able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
 		//
 		VACCINATOR_NAME			= "ワクチネーター"
-		VACCINATOR_DESC			= "「アクティブヒーリング」を発動すると、あなたと回復対象は、選択したダメージタイプの基本ダメージに対して100%の耐性を得る　ユーバーチャージを発動すると、30秒間、選択したダメージタイプに対して完全な免疫を得る"
+		VACCINATOR_DESC			= "「アクティブヒーリング」を発動すると、あなたと回復対象は、選択したダメージタイプの基本ダメージに対して100%の耐性を得る ユーバーチャージを発動すると、30秒間、選択したダメージタイプに対して完全な免疫を得る"
 		// TODO: Update! "Active healing grants you and the patient increased mobility and 100% resistance to base damage of the selected damage type. Ubercharge grants full immunity to the selected damage type for 30 seconds."
 		///
 		BONESAW_NAME 			= "骨用電ノコ"
-		BONESAW_DESC			= "防御と機動性のための標準的な選択肢　攻撃が命中すると、ユーバーが10%上昇する"
+		BONESAW_DESC			= "防御と機動性のための標準的な選択肢 攻撃が命中すると、ユーバーが10%上昇する"
 		//
 		UBERSAW_NAME 			= "ユーバーソー"
 		UBERSAW_DESC			= "命中時に出血効果を与え、ユーバーが2%上昇する"
 		//
 		VITASAW_NAME 			= "VITA-SAW"
-		VITASAW_DESC			= "命中時にユーバーヒールの呪文チャージを1つ獲得する（魔術書が必要）　攻撃が命中すると、ユーバーが5%上昇する"
+		VITASAW_DESC			= "命中時にユーバーヒールの呪文チャージを1つ獲得する（魔術書が必要） 攻撃が命中すると、ユーバーが5%上昇する"
 		//
 		AMPUTATOR_NAME 			= "AMPUTATOR"
-		AMPUTATOR_DESC			= "命中時：メディガンがスーパーチャージ状態となり、一時的に回復量、ユーバーチャージ速度、射程が向上する　敵を倒すと、この効果の強化版が発動する"
+		AMPUTATOR_DESC			= "命中時：メディガンがスーパーチャージ状態となり、一時的に回復量、ユーバーチャージ速度、射程が向上する 敵を倒すと、この効果の強化版が発動する"
 		//
 		SOLEMNVOW_NAME 			= "厳粛な誓い"
-		SOLEMNVOW_DESC			= "射程無制限　メディガンのビームでつながっているすべての敵に命中し、メディックボットには200倍のダメージを与える　命中した敵1体につき、ユーバーメーターが5%増加する"
+		SOLEMNVOW_DESC			= "射程無制限 メディガンのビームでつながっているすべての敵に命中し、メディックボットには200倍のダメージを与える 命中した敵1体につき、ユーバーメーターが5%増加する"
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -3888,23 +3888,23 @@ if ("SetScriptVersion" in getroottable())
 		SNIPERRIFLE_DESC 		= "フルチャージしたヘッドショットは45万のダメージを与える"
 		//
 		MACHINA_NAME 			= "マキナ"
-		MACHINA_DESC 			= "チャージにかかる時間は非常に長いが、フルチャージ状態ならタンクを瞬殺できる　敵を倒すとレイジメーターが溜まり、1秒間のクリティカルブーストが発動する　このクリティカルブーストとフルチャージを組み合わせれば、遭遇するほとんどのタンクを瞬時に倒すことができる"
+		MACHINA_DESC 			= "チャージにかかる時間は非常に長いが、フルチャージ状態ならタンクを瞬殺できる 敵を倒すとレイジメーターが溜まり、1秒間のクリティカルブーストが発動する このクリティカルブーストとフルチャージを組み合わせれば、遭遇するほとんどのタンクを瞬時に倒すことができる"
 		// TODO: Update! "Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Gaints and Tanks."
 		//
 		HITMANSHEATMAKER_NAME 	= "ヒットマンズ・ヒートメーカー"
-		HITMANSHEATMAKER_DESC 	= "スコープを解除せずに連射出来る　体への攻撃はダメージを与えない"
+		HITMANSHEATMAKER_DESC 	= "スコープを解除せずに連射出来る 体への攻撃はダメージを与えない"
 		//
 		AWPERHAND_NAME 			= "ウェイパーハンド"
-		AWPERHAND_DESC 			= "爆発弾を発射し、敵を倒すたびにレイジを蓄積する　レイジが100%に達した後、リロードボタンを押すと、最大HPとHP回復量が上昇する　ライフルは、スコープに敵が捉えられている時のみチャージされる"
+		AWPERHAND_DESC 			= "爆発弾を発射し、敵を倒すたびにレイジを蓄積する レイジが100%に達した後、リロードボタンを押すと、最大HPとHP回復量が上昇する ライフルは、スコープに敵が捉えられている時のみチャージされる"
 		//
 		HUNTSMAN_NAME 			= "ハンツマン"
-		HUNTSMAN_DESC 			= "一度に5本の矢を放つ　パイロが矢に火をつけると、大ダメージを与える"
+		HUNTSMAN_DESC 			= "一度に5本の矢を放つ パイロが矢に火をつけると、大ダメージを与える"
 		//
 		SYDNEYSLEEPER_NAME 		= "SYDNEY SLEEPER"
 		SYDNEYSLEEPER_DESC 		= "特殊な矢を放ち、巨人以外の敵の移動を妨げ、メディックボットからの回復を受けられなくする"
 		//
 		BAZAARBARGAIN_NAME 		= "バザールバーゲン"
-		BAZAARBARGAIN_DESC 		= "同じクラスの敵を連続して倒すと発射速度が上がり、最大3回まで積み重なる　別のクラスの敵を倒すとコンボがリセットされます"
+		BAZAARBARGAIN_DESC 		= "同じクラスの敵を連続して倒すと発射速度が上がり、最大3回まで積み重なる 別のクラスの敵を倒すとコンボがリセットされます"
 		//
 		FORTIFIEDCOMPOUND_NAME 	= "強化コンパウンド"
 		FORTIFIEDCOMPOUND_DESC 	= "ハンツマンよりも与ダメージは低いが、発射速度が速く、濡れた敵に対しては貫通効果とクリティカルヒットが発生する"
@@ -3913,7 +3913,7 @@ if ("SetScriptVersion" in getroottable())
 		CLASSIC_DESC 			= "トリガーを引ける限り連射するか、あるいは一発に集中して、そのエリアにいる巨大ボット以外の敵をすべて吹き飛ばすほどの凄まじい爆発力を秘めたヘッドショットを放つ"
 		///
 		SMG_NAME 				= "SMG"
-		SMG_DESC 				= "ヘッドショットが可能で、ダメージが大幅に増加する　サブ攻撃キー：ズームインし、命中率が100%になりますが、発射速度は半分になる"
+		SMG_DESC 				= "ヘッドショットが可能で、ダメージが大幅に増加する サブ攻撃キー：ズームインし、命中率が100%になりますが、発射速度は半分になる"
 		//
 		RAZORBACK_NAME 			= "レイザーバック"
 		RAZORBACK_DESC 			= "非常に速くチャージされ、攻撃者にジャラテを浴びせる"
@@ -3925,13 +3925,13 @@ if ("SetScriptVersion" in getroottable())
 		DARWIN_DESC 			= "炎攻撃にはほぼ無敵だが、弾丸と爆発ダメージを50％増しで受ける"
 		//
 		COZYCAMPER_NAME 		= "コージー・キャンパー"
-		COZYCAMPER_DESC 		= "移動速度、最大HP、HP回復量がわずかに上昇する　炎上効果を受けない"
+		COZYCAMPER_DESC 		= "移動速度、最大HP、HP回復量がわずかに上昇する 炎上効果を受けない"
 		//
 		CLEANERSCARBINE_NAME 	= "クリーナーズ・カービン"
 		CLEANERSCARBINE_DESC 	= "ミニクリティカルブーストの効果は30秒間持続する"
 		//
 		BEAUTYMARK_NAME 		= "セルフアウェア・ビューティー・マーク"
-		BEAUTYMARK_DESC 		= "燃える矢で聖なる地獄の炎を降り注ぐ　サブ攻撃キー：燃える矢の束を一気に放つ"
+		BEAUTYMARK_DESC 		= "燃える矢で聖なる地獄の炎を降り注ぐ サブ攻撃キー：燃える矢の束を一気に放つ"
 		///
 		KUKRI_NAME 				= "ククリ刀"
 		KUKRI_DESC 				= "防御と機動性のための標準的な選択肢"
@@ -3943,15 +3943,15 @@ if ("SetScriptVersion" in getroottable())
 		BUSHWACKA_DESC 			= "近接攻撃範囲が無限となり、炎に包まれた敵に対しては必ずクリティカルヒットが発生する"
 		//
 		SHAHANSHAH_NAME 		= "シャハンシャー"
-		SHAHANSHAH_DESC 		= "メイン攻撃キーで上空へ飛び上がり、高い場所へ到達するのに便利　また、落下ダメージ無効化する"
+		SHAHANSHAH_DESC 		= "メイン攻撃キーで上空へ飛び上がり、高い場所へ到達するのに便利 また、落下ダメージ無効化する"
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		REVOLVER_NAME 			= "リボルバー"
-		REVOLVER_DESC 			= "命中時：複数のデバフを付与する　（短時間敵の被ダメージを増加、敵のメディックのオーバーチャージを消費、スパイのボットを偽装解除、空中の敵をスタン）"
+		REVOLVER_DESC 			= "命中時：複数のデバフを付与する （短時間敵の被ダメージを増加、敵のメディックのオーバーチャージを消費、スパイのボットを偽装解除、空中の敵をスタン）"
 		//
 		AMBASSADOR_NAME 		= "アンバサダー"
-		AMBASSADOR_DESC 		= "ヘッドショットで多大なダメージを与える　変装していない場合、ダメージは2倍になる"
+		AMBASSADOR_DESC 		= "ヘッドショットで多大なダメージを与える 変装していない場合、ダメージは2倍になる"
 		//
 		LETRANGER_NAME 			= "L'ETRANGER"
 		LETRANGER_DESC 			= "一撃でジャイアント以外の敵を倒すことができる。ただし、ジャイアントやタンクにはダメージを与えられない"
@@ -3970,34 +3970,34 @@ if ("SetScriptVersion" in getroottable())
 		REDTAPE_DESC 			= "エンジニアの建造物を即座に破壊するが、一度にサップできる敵は1体のみである"
 		///
 		KNIFE_NAME 				= "ナイフ"
-		KNIFE_DESC 				= "ナイフ発動中は、体力が減少するが、あらゆるダメージを受けなくなる　敵を倒すと体力が回復する"
+		KNIFE_DESC 				= "ナイフ発動中は、体力が減少するが、あらゆるダメージを受けなくなる 敵を倒すと体力が回復する"
 		//
 		YOURETERNALREWARD_NAME 	= "YOUR ETERNAL REWARD"
-		YOURETERNALREWARD_DESC 	= "体力が10%未満の状態でダメージを受けたりクリティカルヒットを受けたりすると、ダメージが増加するが、これは正面からの刺突攻撃にのみ適用される　ダメージの90%を軽減する"
+		YOURETERNALREWARD_DESC 	= "体力が10%未満の状態でダメージを受けたりクリティカルヒットを受けたりすると、ダメージが増加するが、これは正面からの刺突攻撃にのみ適用される ダメージの90%を軽減する"
 		// TODO: Update! "Extremely high backstab damage, able to instakill most Giants. However each attack has a high chance to miss. Grants a Teleport spell charge on kill (Requires Spellbook)."
 		//
 		KUNAI_NAME 				= "コニバーズクナイ"
-		KUNAI_DESC 				= "近接攻撃の射程は無限大に　背後から攻撃すると爆発が発生し、周囲の敵に追加ダメージを与える"
+		KUNAI_DESC 				= "近接攻撃の射程は無限大に 背後から攻撃すると爆発が発生し、周囲の敵に追加ダメージを与える"
 		//
 		BIGEARNER_NAME 			= "ビッグアーナー"
 		BIGEARNER_DESC 			= "HPが非常に高く、攻撃が外れるたびに急速に回復するが、味方からの誤射を受けることになる"
 		// TODO: Update! "You have a massive amount of health and 'missed' swings cause you to heal. Gain a short burst of massively increased heal rate on kill (which can also build overheal). Cannot heal from any other sources."
 		//
 		WANGAPRICK_NAME 		= "ワンガプリック"
-		WANGAPRICK_DESC 		= "敵を倒すと、数秒間即座に透明状態になる　この透明状態では敵を攻撃でき、連続キルを達成することで不可視状態を維持できるが変装はできない"
+		WANGAPRICK_DESC 		= "敵を倒すと、数秒間即座に透明状態になる この透明状態では敵を攻撃でき、連続キルを達成することで不可視状態を維持できるが変装はできない"
 		// TODO: Update! "Killing an enemy causes you to immediately enter stealth for a few seconds, however you cannot disguise. Grants a Cloak spell charge on kill (Requires Spellbook)."
 		//
 		SHARPDRESSER_NAME 		= "シャープドレッサー"
 		SHARPDRESSER_DESC 		= "背後から攻撃すると爆発が発生し、周囲の敵に追加ダメージを与える"
 		//
 		SPYCICLE_NAME 			= "スパイ・シクル"
-		SPYCICLE_DESC 			= "空振りしたスイングで空中に跳び上がり、自由にサーフ・スタブを繰り出せるが、変装はできない　背後から攻撃すると、巨人に対して大ダメージを与える"
+		SPYCICLE_DESC 			= "空振りしたスイングで空中に跳び上がり、自由にサーフ・スタブを繰り出せるが、変装はできない 背後から攻撃すると、巨人に対して大ダメージを与える"
 		///
 		INVISWATCH_NAME 		= "透明ウォッチ"
 		INVISWATCH_DESC 		= "無限のマント、移動速度+10%"
 		//
 		DEADRINGER_NAME 		= "デッドリンガー"
-		DEADRINGER_DESC 		= "発動すると、短時間移動速度が上昇し、任意の方向へダッシュできるようになる　ダッシュ中は受けるダメージが80%軽減される"
+		DEADRINGER_DESC 		= "発動すると、短時間移動速度が上昇し、任意の方向へダッシュできるようになる ダッシュ中は受けるダメージが80%軽減される"
 		// TODO: Update! "Activate to gain super speed for several seconds. Invulnerable while active."
 		//
 		CLOAKANDDAGGER_NAME		= "クローク&ダガー"
@@ -4031,17 +4031,17 @@ if ("SetScriptVersion" in getroottable())
 		HAMSHANK_DESC 			= "特殊能力：「バイタル・リサージェンス」 - 使用可能時にアクションスロットのキーを押すと、即座に10倍のオーバーヒール効果を得て、20秒間ノックバックを無効化する"
 		//
 		NECROSMASHER_NAME 		= "ネクロスマッシャー"
-		NECROSMASHER_DESC 		= "特殊能力：「バンパーカー・マンズローター」 - 使用可能時にアクションスロットのキーを押すと、バンパーカーモードに入る　バンパーカーモード中は無敵状態となり、体力が回復し、敵を轢き潰すことができる"
+		NECROSMASHER_DESC 		= "特殊能力：「バンパーカー・マンズローター」 - 使用可能時にアクションスロットのキーを押すと、バンパーカーモードに入る バンパーカーモード中は無敵状態となり、体力が回復し、敵を轢き潰すことができる"
 		//
 		CROSSINGGAURD_NAME 		= "クロッシングガード"
 		CROSSINGGAURD_DESC 		= "バックスタブを含む、すべての近接攻撃に対して極めて高い耐性を得る"
 		//
 		PRINNYMACHETE_NAME 		= "プリニー・マチェーテ"
-		PRINNYMACHETE_DESC 		= "便利アイテム - この近接武器をスイングして、高速で前方に突進する事ができる　落下ダメージを無効化する"
+		PRINNYMACHETE_DESC 		= "便利アイテム - この近接武器をスイングして、高速で前方に突進する事ができる 落下ダメージを無効化する"
 		//------------------------------------
 	} 
 	danish = {
-		IH_TRANSLATE_ITEM		= IH_color + "[%s]" + IH_text_color + "%s"
+		IH_TRANSLATE_ITEM		= IH_color + "[%s] " + IH_text_color + "%s"
 		IH_INCLUDES				= IH_color_header + "[►]\x0826beffBB Your loadout includes..."
 		IH_DIS_MSG_2			= IH_disable_color + "Skriv '/itemhelp 1' for at deaktivere disse beskeder under en bølge. \nSkriv '/itemhelp 0' for at deaktivere disse beskeder helt."
 		IH_DIS_MSG				= IH_disable_color + "Skriv '/itemhelp 0' for at deaktivere disse beskeder. \nSkriv '/itemhelp 2' for altid at vise denne besked."
@@ -4714,7 +4714,7 @@ if ("SetScriptVersion" in getroottable())
 		//------------------------------------
 	}
 	spanish = {
-		IH_TRANSLATE_ITEM		= IH_color + "[%s]" + IH_text_color + "%s"
+		IH_TRANSLATE_ITEM		= IH_color + "[%s] " + IH_text_color + "%s"
 		IH_INCLUDES				= IH_color_header + "[►]\x0826beffAA Tu equipamiento incluye..."
 		IH_DIS_MSG_2			= IH_disable_color + "Pon '/itemhelp 1' para desactivar estos mensajes durante una oleada. \nPon '/itemhelp 0' para desactivarlos en todo momento."
 		IH_DIS_MSG				= IH_disable_color + "Type '/itemhelp 0' para desactivar estos mensajes. \nPon '/itemhelp 2' para que se muestren siempre."
@@ -5352,7 +5352,7 @@ if ("SetScriptVersion" in getroottable())
 	}
 	// tchinese is lacking and maybe needs to be redone
 	/*tchinese = {
-		IH_TRANSLATE_ITEM		= IH_color + "[%s]" + IH_text_color + "%s"
+		IH_TRANSLATE_ITEM		= IH_color + "[%s] " + IH_text_color + "%s"
 		IH_INCLUDES				= IH_color_header + "[►]\x0826beffBB 你的裝備配置包含了..."
 		IH_DIS_MSG_2			= IH_disable_color + "輸入 '/itemhelp 1' 以在回合中隱藏訊息. \n輸入 '/itemhelp 0' 以完全隱藏此訊息."
 		IH_DIS_MSG				= IH_disable_color + "輸入 '/itemhelp 0' 以隱藏這些訊息. \n輸入 '/itemhelp 2' 以持續顯示此訊息."
