@@ -23,7 +23,7 @@ if (!("CHECKPOINT_ERROR" in getroottable()))
 	::CHECKPOINT_ERROR <- "\x07bf4137"
 
 if ("SetScriptVersion" in getroottable())
-	SetScriptVersion("Translations", "1.7.2")
+	SetScriptVersion("Translations", "1.7.3")
 
 ::TRANSLATION_TABLE <- {
 	english = {
@@ -4804,9 +4804,9 @@ if ("SetScriptVersion" in getroottable())
 		CANDYCANE_DESC 			= "Artículo de utilidad: No tendrás gravedad y podrás volar libremente."
 		//
 		BOSTONBASHSER_NAME 		= "MACHACADOR DE BOSTON"
-		BOSTONBASHSER_DESC 		= "A mayor riesgo, mejores recompensas. Mata de un golpe a todos los enemigos pequeños, otorgando 10 segundos de críticos. Golpea a ambos jugadores  conectados por un rayo de Pistola Médica. Si el portador falla un golpe, muere."
+		BOSTONBASHSER_DESC 		= "A mayor riesgo, mejores recompensas. Mata de un golpe a todos los enemigos pequeños, otorgando 10 segundos de críticos. Golpea a ambos jugadores conectados por un rayo de Pistola Médica. Si el portador falla un golpe, muere."
 		//
-		SUNONASTICK_NAME		= "SOL-EN-UN-PALO"
+		SUNONASTICK_NAME		= "SOL EN UN PALO"
 		SUNONASTICK_DESC		= "Puede aturdir u otorgar críticos durante unos segundos. Golpea a ambos jugadores  conectados por un rayo de Pistola Médica. Si el portador falla un golpe, se aturde."
 		//
 		FANOWAR_NAME 			= "ABANICO BÉLICO"
@@ -4946,7 +4946,7 @@ if ("SetScriptVersion" in getroottable())
 		SCORCHSHOT_DESC 		= "Al impactar: Causa mucho daño, apaga las llamas del enemigo y causa retroceso. El objetivo debe estar en llamas o el ataque no hará nada. Disparo secundario: Usa una bengala guiada más lenta." 
 		//
 		THERMALTHRUSTER_NAME 	= "PROPULSOR TÉRMICO" 
-		THERMALTHRUSTER_DESC 	= "Reduce el consumo de combustible sin ralentizar el lanzamiento. Se puede reutilizar en el aire y causa mucho daño a otro jugador al caer sobre él. Otorga un pequeño subidón de críticos al matar." 
+		THERMALTHRUSTER_DESC 	= "Reduce el consumo de combustible sin ralentizar el lanzamiento. Se puede reutilizar en el aire y causa mucho daño a un robot al caer sobre él. Otorga un pequeño subidón de críticos al matar." 
 		//
 		GASPASSER_NAME 			= "Lanzacombustible" 
 		GASPASSER_DESC 			= "El medidor de gasolina empieza vacío y se reinicia al morir. El medidor se llena al causar 150 000 de daño. La explosión al arder causa 105 000 de daño." 
@@ -4961,7 +4961,7 @@ if ("SetScriptVersion" in getroottable())
 		HOMEWRECKER_DESC 		= "Permite destruir al instante las construcciones de Engineers desde donde sea, con alcance cuerpo a cuerpo infinito."
 		//
 		POWERJACK_NAME 			= "BATEMARTILLO"
-		POWERJACK_DESC 			= "Gran velocidad de ataque y movimiento. Causa hemorragia y quema a los enemigos que golpea, además otorga minicríticos al matar."
+		POWERJACK_DESC 			= "Gran velocidad de ataque y movimiento. Causa hemorragia y quema a los enemigos que golpea. Otorga minicríticos al matar."
 		//
 		BACKSCRATCHER_NAME 		= "RASCAESPALDAS"
 		BACKSCRATCHER_DESC 		= "Causa daño letal por la espalda. Al matar, aumenta temporalmente tu velocidad de movimiento, resistencia y daño con todas tus armas. La mejora se indica con el ícono \x07ffc400[!] \x01 parpadeando."
@@ -5032,13 +5032,13 @@ if ("SetScriptVersion" in getroottable())
 		BOTTLE_DESC 			= "Una opción estándar para defensa y movilidad."
 		//
 		EYELANDER_NAME 			= "INTUERTAL"
-		EYELANDER_DESC 			= "Causa mucho daño, con ataques rápidos, otorgando críticos y minicríticos al matar. No puede usarse como Democaballero híbrido."
+		EYELANDER_DESC 			= "Causa mucho daño, con ataques rápidos, otorgando críticos y minicríticos al matar. No puedes recargar tu lanzagranadas ni lanzabombas lapa."
 		//
 		SKULLCUTTER_NAME 		= "CORTACRÁNEOS ESCOCÉS"
 		SKULLCUTTER_DESC 		= "Se puede utilizar contra una Supercarga y detener las funciones de una Pistola Médica. También causa mucho daño contra enemigos de la misma clase."
 		//
 		CABER_NAME 				= "CÁBER DE ULLAPOOL"
-		CABER_DESC 				= "¡Eres un petacentinelas! ¡Usa la burla de tu arma para explotar!."
+		CABER_DESC 				= "¡Eres un petacentinelas! ¡Usa la burla de tu arma para explotar!"
 		//
 		CLAIDHEAMHMOR_NAME 		= "CLAIDHEAMH MÒR"
 		CLAIDHEAMHMOR_DESC 		= "Cada 10 víctimas, otorga el hechizo Monóculus (requiere Libro de Hechizos)."
@@ -5050,21 +5050,21 @@ if ("SetScriptVersion" in getroottable())
 		NINEIRON_DESC 			= "Tiene un alcance apabullante, permite golpear a varios enemigos a la vez, en todas las direcciones. Causa daño crítico doble."
 		//
 		SCOTTISHHANDSHAKE_NAME 	= "SALUDO ESCOCÉS"
-		SCOTTISHHANDSHAKE_DESC 	= "Al activar: Resiste al 90 % de los ataques a distancia, se hace inmune al retroceso y aumenta la salud máxima. Sin embargo, no puedes recuperar munición y recibes menos PS de botiquines."
+		SCOTTISHHANDSHAKE_DESC 	= "En la mano: Resistes 90 % del daño a distancia, te hace inmune al retroceso y aumenta tu salud máxima. Sin embargo, no puedes recuperar munición y recibes menos PS de botiquines."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		MINIGUN_NAME 			= "AMETRALLADORA"
-		MINIGUN_DESC 			= "Una opción estándar para un daño contundente. Otorga un pequeño subidón de minicríticos al morir."
+		MINIGUN_DESC 			= "Una opción estándar para un daño contundente. Otorga un pequeño subidón de minicríticos al matar."
 		//
 		NATASCHA_NAME 			= "NATASCHA"
-		NATASCHA_DESC 			= "Ralentiza a los enemigos a dispararles y los marca de muerte."
+		NATASCHA_DESC 			= "Ralentiza y marca de muerte a los enemigos al dispararles."
 		//
 		BRASSBEAST_NAME 		= "TITÁN DE LATÓN"
 		BRASSBEAST_DESC 		= "Hace mucho daño, pero gira muy lentamente. La velocidad de movimiento es nula mientras está desplegada. Permite devolver proyectiles."
 		//
 		TOMISLAV_NAME 			= "TOMISLAV"
-		TOMISLAV_DESC 			= "Se llena la barra de «Temperatura» al disparar. A medida que esta aumenta, todas las estadísticas aumentan. Sin embargo, el arma tiene que enfriarse si pasas mucho tiempo sin causar daños."
+		TOMISLAV_DESC 			= "Se llena la barra de «Temperatura» al disparar. A medida que ésta aumenta, todas las estadísticas aumentan hasta duplicarse. Empieza a enfriarse si no causa daño por unos segundos."
 		//
 		HUOHEATER_NAME 			= "ACHICHARRADORA HUO-LONG"
 		HUOHEATER_DESC 			= "Lanza rayos de energía, quemando a los enemigos al impactar."
@@ -5096,17 +5096,17 @@ if ("SetScriptVersion" in getroottable())
 		FISTS_NAME 				= "PUÑOS"
 		FISTS_DESC 				= "Una opción estándar para defensa y movilidad. Eficaz en combate."
 		//
-		KILLINGGLOVES_NAME 		= "KAÑONEROS GUANTES DE BOXEO"
+		KILLINGGLOVES_NAME 		= "KAÑEROS GUANTES DE BOXEO"
 		KILLINGGLOVES_DESC 		= "Habilidad especial: «Megaimpacto». Al estar disponible, pulsa el botón de acción junto a la bomba para devolverla al principio. En otra situación, otorga velocidad, críticos y defensa temporal."
 		//
 		GLOVESRUNNING_NAME 		= "GUANTES DE RAPIDEZ ULTRATERRENA"
-		GLOVESRUNNING_DESC 		= "Otorgan la capacidad de desplegar un paracaídas. Al tenerlos fuera, la altura de los saltos será mucho mayor, la resistencia al daño aumenta y la salud se regenera."
+		GLOVESRUNNING_DESC 		= "Otorgan la capacidad de desplegar un paracaídas. Al tenerlos fuera: eres inmune al daño por caída, saltas mucho más alto, tu resistencia al daño aumenta y tu salud se regenera."
 		//
 		BREADBITE_NAME 			= "PANPUÑOS"
 		BREADBITE_DESC 			= "Los impactos críticos causan Corrosión en la víctimas, un efecto perjudicial que causa daño según los PS máximos de la víctima y hace que, al morir, explote dejando una pequeña nube de corrosión, esparciendo su efecto."
 		//
 		WARRIRORSSPIRIT_NAME 	= "ZARPAS DEL GUERRERO"
-		WARRIRORSSPIRIT_DESC 	= "Usa el ataque principal para dar un enorme salto y aterrizar con un ataque aplastante en un área pequeña. Al matar: permite realizar un aterrizaje aplastante rápido al agacharte en el aire. La mejora se indica con el ícono \x07ffc400[!] \x01 parpadeando."
+		WARRIRORSSPIRIT_DESC 	= "Atacar te eleva. Aterrizas aplastando en un área pequeña. Matar permite por unos segundos instaaplastar agachándote en el aire. Puedes instaaplastar mientras el ícono \x07ffc400[!] \x01 parpadea.."
 		//
 		FISTSOFSTEEL_NAME 		= "PUÑOS DE ACERO"
 		FISTSOFSTEEL_DESC 		= "¡Eres un Heavy Gigante de Acero! ¡Inmune al empuje y capaz de golpear a múltiples enemigos a la vez con un daño masivo!"
@@ -5150,7 +5150,7 @@ if ("SetScriptVersion" in getroottable())
 		GUNSLINGER_DESC	 		= "Permite construir una segunda arma centinela. El combo del triple puñetazo puede matar a enemigos pequeños y causar daño a gigantes."
 		//
 		SOUTHERNHOS_NAME 		= "HOSPITALIDAD SUREÑA"
-		SOUTHERNHOS_DESC 		= "Modifica el arma centinela, añadiendo un lanzallamas. Menos alcance, pero más daño."
+		SOUTHERNHOS_DESC 		= "La centinela ahora es un lanzallamas. Menos alcance, pero más daño."
 		//
 		JAG_NAME 				= "MANITAS"
 		JAG_DESC 				= "Tu arma centinela no tiene límite de alcance."
@@ -5166,7 +5166,7 @@ if ("SetScriptVersion" in getroottable())
 		BLUTSAUGER_NAME			= "BLUTSAUGER"
 		BLUTSAUGER_DESC			= "Requiere y consume una Supercarga al 100 % para reprogramar un robot para que se una a tu equipo temporalmente, hasta que se autodestruye. Disparo secundario: Anula manualmente la reprogramación de todos los bots afectados."
 		//
-		CRUSADERSCROSSBOW_NAME	= "BALLETAS DEL CRUZADO"
+		CRUSADERSCROSSBOW_NAME	= "BALLESTA DEL CRUZADO"
 		CRUSADERSCROSSBOW_DESC	= "Al impactar: Aumenta en 0,25 % la Supercarga, causa hemorragia y aumenta 0,5 % de Supercarga por daño de hemorragia."
 		//
 		OVERDOSE_NAME 			= "SOBREDOSIS"
@@ -5211,7 +5211,7 @@ if ("SetScriptVersion" in getroottable())
 		HITMANSHEATMAKER_DESC 	= "Dispara rápidamente sin apuntar. Solo hace daño a la cabeza."
 		//
 		AWPERHAND_NAME 			= "AWPA CABEZAS"
-		AWPERHAND_DESC 			= "Dispara munición explosiva y aumenta el medidor al matar. Al llenar el medidor al 100 %, pulsa «Recargar» para aumentar la salud al máximo y regenerarla. El rifle solo carga cuando tienes un enemigo en la mirilla."
+		AWPERHAND_DESC 			= "Dispara munición explosiva y aumenta el medidor al matar. Al llenar el medidor al 100 %, usa la tecla de recargar para aumentar la salud al máximo y regenerarla. El rifle solo carga cuando tienes un enemigo en la mira."
 		//
 		HUNTSMAN_NAME 			= "CAZADOR"
 		HUNTSMAN_DESC 			= "Dispara 5 flechas a la vez. Causa daño por quemaduras si un Pyro quema tu flecha."
@@ -5223,7 +5223,7 @@ if ("SetScriptVersion" in getroottable())
 		BAZAARBARGAIN_DESC 		= "Al matar enemigos de la misma clase seguidos, aumenta la velocidad de disparo, hasta 3. Al matar una clase distinta se reinicia el combo."
 		//
 		FORTIFIEDCOMPOUND_NAME 	= "COMPUESTO FORTIFICADO"
-		FORTIFIEDCOMPOUND_DESC 	= "Hace menos daño que el Cazador, pero dispara más rápido, atraviesa y causa crítico en enemigos mojados."
+		FORTIFIEDCOMPOUND_DESC 	= "Hace menos daño que el Cazador, pero dispara más rápido, atraviesa y causa daño crítico en enemigos mojados."
 		//
 		CLASSIC_NAME 			= "CLÁSICO"
 		CLASSIC_DESC 			= "Dispara a la velocidad que puedas apretar el gatillo o carga un único disparo con capacidad explosiva que daña a todos los robots no gigantes cercanos."
@@ -5276,25 +5276,25 @@ if ("SetScriptVersion" in getroottable())
 		ENFORCER_DESC 			= "Ignora la resistencia al daño y almacen críticos por cada apuñalamiento o construcción destruida con un Zapador."
 		//
 		DIAMONDBACK_NAME 		= "DIAMONDBACK"
-		DIAMONDBACK_DESC 		= "Crea un agujero negro donde mete a los enemigos."
+		DIAMONDBACK_DESC 		= "Crea un agujero negro que mantiene a los enemigos en un mismo punto durante unos segundos."
 		///
 		SAPPER_NAME 			= "ZAPADOR"
 		SAPPER_DESC 			= "Máxima duración y alcance de aturdimiento. Recarga rápida."
 		//
 		REDTAPE_NAME 			= "GRABADORA BUROCRÁTICA"
-		REDTAPE_DESC 			= "Destruye las construcciones del Engineer al instante, pero no puede sabotear más de una al mismo tiempo."
+		REDTAPE_DESC 			= "Destruye las construcciones del Engineer al instante, pero no puede sabotear más de un robot al mismo tiempo."
 		///
 		KNIFE_NAME 				= "MARIPOSA"
 		KNIFE_DESC 				= "Al empuñarla, la Mariposa consume tu salud pero da inmunidad a todos los daños. Al matar restauras tu salud."
 		//
 		YOURETERNALREWARD_NAME 	= "TU ETERNA RECOMPENSA"
-		YOURETERNALREWARD_DESC 	= "Daño extremadamente alto al apuñalar por la espalda, capaz de matar instantáneamente a la mayoría de Gigantes. Sin embargo, cada ataque tiene una alta probabilidad de fallar. Matar te otorga un hechizo de Teletransportación (requiere un Libro de Hechizos)."
+		YOURETERNALREWARD_DESC 	= "Daño bestial por la espalda, acabando de un ataque a la mayoría de Gigantes; pero los ataques suelen fallar. Matar te otorga un hechizo de Teletransporte (requiere un Libro de Hechizos)."
 		//
 		KUNAI_NAME 				= "KUNAI DEL CONSPIRADOR"
-		KUNAI_DESC 				= "Alcance cuerpo a cuerpo infinito. Al apuñalar provoca una explosión, causando daño adicional a los enemigos cercanos."
+		KUNAI_DESC 				= "Alcance cuerpo a cuerpo infinito. Al apuñalar por la espalda provoca una explosión, causando daño adicional a los enemigos cercanos."
 		//
 		BIGEARNER_NAME 			= "CABEZA DE FAMILIA"
-		BIGEARNER_DESC 			= "Tienes gran cantidad de salud y cada ataque al aire te cura. Al matar ganas un breve pero masivo effecto de regeneración que te puede sobrecurar. No puedes curarte de otras formas."
+		BIGEARNER_DESC 			= "Tienes gran cantidad de salud y cada ataque al aire te cura. Al matar ganas un breve pero masivo efecto de regeneración que te puede sobrecurar. No puedes curarte de otras formas."
 		//
 		WANGAPRICK_NAME 		= "AGUIJÓN WANGA"
 		WANGAPRICK_DESC 		= "Al matar a un enemigo entras en sigilo durante unos segundos, pero no puedes disfrazarte. Matar te otorga un hechizo de Invisibilidad (requiere un Libro de Hechizos)"
@@ -5313,26 +5313,26 @@ if ("SetScriptVersion" in getroottable())
 		//
 		CLOAKANDDAGGER_NAME		= "EMBOZADOR"
 		CLOAKANDDAGGER_DESC		= "Mientras está activo los enemigos te ignoran y no pierdes la capacidad de atacar."
-		//
+		// 
 		QUACKENBIRDT_NAME 		= "QUACKENBIRDT"
 		QUACKENBIRDT_DESC 		= "Actívalo para mostrar la posición de los enemigos. Si tienes tu zapador en la mano, muestra a los aliados en su lugar."
 		//----------------------------
 		//----------------------------
 		//----------------------------
 		FRYINGPAN_NAME 				= "SARTÉN"
-		FRYINGPAN_DESC 				= "Causa x30 de daño a enemigos de la misma clase y otorga críticos al matar."
+		FRYINGPAN_DESC 				= "Causa x30 de daño a enemigos de tu misma clase y otorga críticos al matar."
 		//
 		SAXXY_NAME 					= "SAXXY"
-		SAXXY_DESC 					= "Causa x30 de daño a enemigos de la misma clase y otorga críticos al matar."
+		SAXXY_DESC 					= "Causa x30 de daño a enemigos de tu misma clase y otorga críticos al matar."
 		//
 		MEMORYMAKER_NAME 			= "INMORTALIZADOR"
-		MEMORYMAKER_DESC			= "Causa x30 de daño a enemigos de la misma clase y otorga críticos al matar."
+		MEMORYMAKER_DESC			= "Causa x30 de daño a enemigos de tu misma clase y otorga críticos al matar."
 		//
-		CONOBJECTOR_NAME			= "OBJETOR DE CONCIENCIA"
+		CONOBJECTOR_NAME			= "MANIFESTANTE CONCIENZUDO"
 		CONOBJECTOR_DESC			= "Cada 10 víctimas, lanza un hechizo al azar (requiere Libro de Hechizos)."
 		//
 		FREEDOMSTAFF_NAME 			= "BASTÓN DE LA LIBERTAD"
-		FREEDOMSTAFF_DESC 			= "Pequeña probabilidad de recibir daño para esquivar el ataque y recibir una Supercarga durante 3 segundos."
+		FREEDOMSTAFF_DESC 			= "Pequeña probabilidad de esquivar un ataque y recibir Supercarga durante 3 segundos."
 		//
 		BATOUTTAHELL_NAME 			= "BATE DEL INFIERNO"
 		BATOUTTAHELL_DESC 			= "Al empuñarlo, eres invlunerable a cualquier daño y generas un exceso de curación, pero serás totalmente vulnerable al empuje por retroceso."
@@ -5341,10 +5341,10 @@ if ("SetScriptVersion" in getroottable())
 		HAMSHANK_DESC 				= "Habilidad especial: «Resurgimiento vital». Al empuñarlo, pulsa tu tecla de acción para ganar x10 de exceso de curación al instante y hacerte inmune al retroceso durante 20 segundos."
 		//
 		NECROSMASHER_NAME 			= "NECROMACHACADOR"
-		NECROSMASHER_DESC 			= "Habilidad especial: «Mannsacrew sobre ruedas». Al empuñarlo, pulsa tu tecla de acción para conducir un coche de choque. Mientras conduces eres invulnerable, regeneras salud y puede atropellar enemigos."
+		NECROSMASHER_DESC 			= "Habilidad especial: «Mannsacre sobre ruedas». Al empuñarlo, pulsa tu tecla de acción para conducir un coche de choque. Mientras conduces eres invulnerable, regeneras salud y puedes atropellar enemigos."
 		//
 		CROSSINGGAURD_NAME 			= "TORTAZO A NIVEL"
-		CROSSINGGAURD_DESC 			= "Otorga gran resistencia a ataques cuerpo a cuerpo, incluyendo apuñalamientos."
+		CROSSINGGAURD_DESC 			= "Otorga gran resistencia a ataques cuerpo a cuerpo, incluyendo apuñaladas por la espalda."
 		//
 		PRINNYMACHETE_NAME 			= "MACHETE PRINNY"
 		PRINNYMACHETE_DESC 			= "Artículo de utilidad: Ataca con el arma para avanzar con gran velocidad. Otorga inmunidad al daño por caída."
