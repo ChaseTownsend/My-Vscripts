@@ -248,9 +248,19 @@ class EquipWeaponData {
 function ROOT::RegisterEquipItem( idx, internal_name, name_make, data )
 {
 	if (startswith(name_make, "page"))
-		throw "Cannot make items with make names that start with page!"
+		throw "Cannot make items with make names that start with \"page\"!, this is used Internally!"
 	if (name_make == "help")
 		throw "Cannot make items with make names of \"help\""
+	// probably slower 
+	// if (DoesItemExist(idx) || DoesItemExist(name_make))
+	if (idx in RegisteredItems)
+		printf("Warning! Item with idx %d Already exists!  Overriding...", idx)
+	foreach (_, data in RegisteredItems)
+	{
+		if(data.make_name == name_make)
+			throw "Cannot make items with the same Name!"
+	}
+	
 	RegisteredItems[idx] <- EquipWeaponData(idx, internal_name, name_make, data)
 	// RegisteredItems[idx] <- {
 	// 	InternalName = internal_name
