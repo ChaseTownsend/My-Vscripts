@@ -1,23 +1,31 @@
-// Remember to use VSCode's Regex with these
+/* 
+Syntax Sugar for uploading
 
-// This will add spaces between opening and closing parentheses
-// Find: ^(?!.*\\b)(.*?\bfunction\b.*?\()(\S(?:.*?\S)?)\)
-// Replace: $1 $2 )
-//
-// As in, if it has `function` with () then add spaces inbetween parentheses if they are lacking
-// `function test(player)`
-// Into:
-// `function test( player )`
+	Replace all `if(` 		with `if (`
+	Replace all `for(`		with `for (`
+	Replace all `foreach(`	with `foreach (`
 
-// This will add spaces after commas
-// Find: ^(?!.*\\b)(.*?\bfunction\b.*?\(.+?,)(\S)
-// Replace: $1 $2
-//
-// As in, if it has `function` with () and comma's with no space after it, add a space
-// `function test( bob,joe )`
-// Into:
-// `function test( bob, joe )`
 
+More Explicit Sugar Makes use of VSCode's built in Regex
+
+	This will add spaces between opening and closing parentheses for function defenitions
+	Find: ^(?!.*\\b)(.*?\bfunction\b.*?\()(\S(?:.*?\S)?)\)
+	Replace: $1 $2 )
+
+	As in, if it has `function` with () then add spaces inbetween parentheses if they are lacking
+	`function test(player)`
+	Into:
+	`function test( player )`
+
+	This will add spaces after commas
+	Find: ^(?!.*\\b)(.*?\bfunction\b.*?\(.+?,)(\S)
+	Replace: $1 $2
+
+	As in, if it has `function` with () and comma's with no space after it, add a space
+	`function test( bob,joe )`
+	Into:
+	`function test( bob, joe )`
+ */
 
 ::CONST <- getconsttable()
 ::ROOT <- getroottable()
@@ -74,11 +82,11 @@ function ROOT::PrintGarbage()
 
 if ("GetModName" in ROOT)
 {
-	local Mod = GetModName()
-	if (Mod == MOD_TF2C)
-	{
-		// IncludeScript("TF2C Fix")
-	}
+	// local Mod = GetModName()
+	// if (Mod == MOD_TF2C)
+	// {
+	// 	IncludeScript("TF2C Fix") // not good rn
+	// }
 }
 else
 {
@@ -244,7 +252,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format) (GMT-5)
-if (!SetLibraryVersion("07.25.2026.20", 0))
+if (!SetLibraryVersion("07.27.2026.23", 0))
 	return
 
 SetLibrarySettings({})
@@ -3361,6 +3369,8 @@ function CTFPlayer::EquipItem( ItemName, swit = true, attrib_overrides = {}, IsC
 /**
  * @param {string} ItemName
  * @returns {CTFWeaponBase|[CTFWeaponBase]|null}
+ * 
+ * @throws if the weapon generated was invalid
  */
 function CTFPlayer::EquipItemBAD( ItemName )
 {
@@ -3381,7 +3391,10 @@ function CTFPlayer::EquipItemBAD( ItemName )
 			differ.append(wep)
 	}
 
-	return differ.len() == 1 ? differ[0] : differ
+	if (differ != 1)
+		throw "No Weapon Found, Shit messed up!"
+	else
+		return differ[0]
 }
 
 function CTFPlayer::GetActiveHealers()

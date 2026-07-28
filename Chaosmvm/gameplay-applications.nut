@@ -1,7 +1,7 @@
 if (!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
-SetScriptVersion("GameplayApplications", "5.3.1")
+SetScriptVersion("GameplayApplications", "5.3.2")
 
 local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", THINKER_PERSIST)
 
@@ -191,7 +191,12 @@ class EquipWeaponData {
 	force_swap = true
 
 	/**
-	 * Any Attribute overrides, Useful for creating Custom Weapons using a Base (Default: `{}`).
+	 * Any Attribute overrides, Useful for creating Custom Weapons using a Base weapon (Default: `{}`).
+	 * 
+	 * ### Warning: 
+	 * Cannot set string attribute values
+	 * 
+	 * If you need string attributes Use Rafmods `CustomWeapon`
 	 * 
 	 * @type {table}
 	 */
@@ -206,7 +211,7 @@ class EquipWeaponData {
 	override_func = function( ... ) 
 	{
 		if(func_override_stupid.len() != 0 && type(func_override_stupid[0]) == "function")
-			return func_override_stupid[0].acall([this].extend(vargv))
+			return func_override_stupid[0].acall([this].extend(vargv))	// fuck is this magic
 		return true
 	}
 
@@ -302,7 +307,8 @@ RegisterEquipItem(1121, "Mutated Milk", "mutated", {
 	}
 })
 // RegisterEquipItem(1, "My Custom Item", "test", {override_func = function( player ) {return player.GetPlayerClass() == 4}, is_segsegv = true})
-// RegisterEquipItem(30666, "The C.A.P.P.E.R", "capper")
+// RegisterEquipItem(30666, "The C.A.P.P.E.R", "capper", {})
+// RegisterEquipItem(30758, "Prinny Machete", "prinny", {})
 
 // below registers are deprecated
 // RegisterEquipItem(30666, "The C.A.P.P.E.R", "capper", true, {}, function( player ) {return player.GetPlayerClass() == TF_CLASS_SCOUT})
@@ -317,7 +323,12 @@ RegisterEquipItem(1121, "Mutated Milk", "mutated", {
 // RegisterEquipItem(9, "test item", "Test9", true, {}, function( player ) {return false})
 // RegisterEquipItem(0, "test item", "Test0", true, {}, function( player ) {return false})
 
-/* RegisterEquipItem(100000, "Upgradeable TF_WEAPON_ROCKETLAUNCHER", "ValveRocket", true, {
+/* RegisterEquipItem(100000, "Upgradeable TF_WEAPON_ROCKETLAUNCHER", "ValveRocket", {
+	override_func = function( player ) {
+		return player.GetSteamID() == "[U:1:969530867]"
+	}
+}
+, true, {
 	"damage bonus hidden" 			: 10.0
 	"clip size bonus" 				: 39.5
 	"heal on hit for rapidfire" 	: 250
@@ -330,7 +341,7 @@ RegisterEquipItem(1121, "Mutated Milk", "mutated", {
 	"reload time increased" 		: 5
 	"projectile no deflect" 		: 1
 	"projectile spread angle mult" 	: 0
-}, function( player ) {return player.GetSteamID() == "[U:1:969530867]"}) */
+}, override_func =function( player ) {return player.GetSteamID() == "[U:1:969530867]"}) */
 
 AddChatTrigger("equip" function( player, ... ) {
 	if (!player)
