@@ -1123,6 +1123,155 @@ class color32 {
 	}
 }
 
+/** @type {class} */
+class Corrosion {
+	/** @type {CTFPlayer|null} */
+	m_hOuter 		= null
+	bActive 		= false
+
+	/** @type {CTFPlayer|null} */
+	hAttacker 		= null
+	/** @type {CTFWeaponBase|null} */
+	hWeapon 		= null
+	flNextTick 		= 0.0
+	flTickDur 		= 0.0
+	flDmgPerc 		= 0.0
+	iDmgAdd 		= 0
+	bMakesPuddle 	= false
+
+	/** 
+	 * @param {CTFPlayer} outer
+	 */
+	constructor(outer)
+	{
+		if (!IsValidPlayer(m_hOuter))
+			m_hOuter = outer
+	}	
+
+	function CreateCorrosion( attacker, weapon, exdata = false )
+	{
+		this.hAttacker 		= attacker
+		this.hWeapon 		= weapon
+
+		InitVars()
+
+		if (weapon)
+		{
+			this.flNextTick 	= Time() + weapon.GetAttribute("corrosion tick duration", 1.0)
+			this.flTickDur 		= weapon.GetAttribute("corrosion tick duration", 1.0)
+			this.flDmgPerc 		= weapon.GetAttribute("corrosion damage percent", 0.25) / 100.0
+			this.iDmgAdd 		= weapon.GetAttribute("corrosion damage add", 250)
+			this.bMakesPuddle 	= weapon.GetAttribute("corrosion drop puddle", 0) != 0
+
+			if (!IsValidPlayer(this.hAttacker) && IsWeaponClass(weapon, "tf_weap") && IsValidPlayer(weapon.GetOwner()))
+				this.hAttacker = weapon.GetOwner()
+
+			Enable()
+		}
+		else if (exdata)
+		{
+			this.flNextTick		= Time() + ("tick duration" in exdata ? exdata["tick duration"] : 1.0)
+			this.flTickDur		= ("tick duration" in exdata ? exdata["tick duration"] : 1.0)
+			this.flDmgPerc		= ("damage percent" in exdata ? exdata["damage percent"] : 0.25) / 100
+			this.iDmgAdd		= ("damage add" in exdata ? exdata["damage add"] : 0.25)
+			this.bMakesPuddle	= ("drop puddle" in exdata ? true : false)
+
+			Enable()
+		}
+
+		// both a valid attacker && weapon
+		// if (IsValidPlayer(attacker) && IsWeaponClass(weapon, "tf_weap"))
+			// Enable()
+	}
+
+	function Enable()
+		bActive = true
+
+	function Disable()
+		bActive = false
+
+	function InitVars()
+	{
+		flNextTick 		= 0.0
+		flTickDur 		= 0.0
+		flDmgPerc 		= 0.0
+		iDmgAdd 		= 0
+		bMakesPuddle 	= false
+	}
+
+	function InitAllVars()
+	{
+		/** @type {CTFPlayer|null} */
+		hAttacker 		= null
+		/** @type {CTFWeaponBase|null} */
+		hWeapon 		= null
+		flNextTick 		= 0.0
+		flTickDur 		= 0.0
+		flDmgPerc 		= 0.0
+		iDmgAdd 		= 0
+		bMakesPuddle 	= false
+	}
+
+	/** 
+	 * Is this Corrosion Active
+	 * @returns {bool}
+	 */
+	function HasCorrosion()
+		return bActive
+
+	/** 
+	 * Should we remove our corrosion
+	 * @returns {bool}
+	 */
+	function ShouldRemoveCorrosion()
+		return m_hOuter.ShouldRemoveCorrosion()
+	
+	/** 
+	 * Disable and Clear our vars
+	 */
+	function RemoveCorrosion()
+	{
+		bActive = false
+		InitVars() // forget about old if we remove
+	}
+
+	/** 
+	 * Return if we should process a corrosion tick
+	 * @returns {bool}
+	 */
+	function ShouldUpdate()
+	{
+		return Time() >= flNextTick
+	}
+
+	/** 
+	 * Process a Damage Tick
+	 */
+	function Tick()
+	{
+		if (!HasCorrosion())
+			return
+		if (ShouldRemoveCorrosion())
+			return RemoveCorrosion()
+		
+		flNextTick = Time() + flTickDur
+		
+		local damage = (iDmgAdd + (m_hOuter.GetMaxHealth() * flDmgPerc)) * m_hOuter.HookMultAttributes("corrosion dmg taken mult")
+
+		// so if we suspect the defaults of 250 add and 0.25 percent, than
+		// if we have 20000 hp, we are doing ( 250 + (20000 * (0.25/100)))
+		// or ( dmg_add + ( max_hp * ( percent/100 ) ) )
+		// but no / 100 since that was handled in MakeCorrosion
+		// so the final amount would be (250 + 50) or 300
+
+		if (__CORROSION_DEBUG) printf("%s took Corrosion Damage! Attacker : %s, Weapon : %s, Damage : %f\n", 
+			tostring(), hAttacker.tostring(), hWeapon.tostring(), damage)
+		if (!CORROSION_ICON || !CORROSION_ICON.IsValid())
+			CORROSION_ICON = CreateKillIcon("infection_acid_puddle")
+		m_hOuter.TakeDamageCustom(CORROSION_ICON, hAttacker, hWeapon, Vector(), Vector(), damage, DMG_GENERIC|DMG_PREVENT_PHYSICS_FORCE, 0)
+	}
+}	
+
 
 /*
   ========================
@@ -1666,12 +1815,17 @@ CTFPlayer.GenerateAndWearItem <- CTFBot.GenerateAndWearItem
 	Multiline Functions
  */
 
+/** 
+ * @param {integer} slot
+ */
 function CTFPlayer::GetWeaponIDXInSlot( slot )
 { 
 	local weapon = GetWeaponInSlotNew(slot)
 	return weapon ? weapon.GetIDX() : -1 
 }
-
+/** 
+ * @param {integer} slot
+ */
 function CTFPlayer::GetWeaponIDXInSlotNew( slot )
 { 
 	local weapon = GetWeaponInSlotNew(slot)
@@ -1693,9 +1847,10 @@ function CTFPlayer::GetAbilityWeaponIDX()
 function CTFPlayer::GetAbilityWeaponIDXs()
 {
 	local idxs = []
-	if (GetAbilityWeapons() == null)
+	local weapons = GetAbilityWeapons()
+	if (weapons == null)
 		return null
-	foreach (weapon in GetAbilityWeapons())
+	foreach (weapon in weapons)
 		idxs.append(weapon.GetIDX())
 	
 	return idxs.len() == 0 ? null : idxs
@@ -1797,6 +1952,9 @@ function CTFPlayer::Suicide()
 	TakeUnblockableDamage(INT_MAX) 
 }
 
+/** 
+ * @param {integer} charge
+ */
 function CTFPlayer::AddThrowableCharge( charge )
 {
 	local secondary = GetWeaponInSlotNew(SLOT_SECONDARY)
@@ -1809,7 +1967,9 @@ function CTFPlayer::AddThrowableCharge( charge )
 
 	secondary.SetChargeTime(secondary.GetChargeTime() - percent_time)
 }
-
+/** 
+ * @param {integer} charge
+ */
 function CTFPlayer::SetThrowableCharge( charge )
 {
 	local secondary = GetWeaponInSlotNew(SLOT_SECONDARY)
@@ -1851,6 +2011,9 @@ function CTFPlayer::GetAbilityWeapons()
 	return weapons.len() == 0 ? null : weapons
 }
 
+/** 
+ * @param {integer} taunt_id
+ */
 function CTFPlayer::ForceTaunt( taunt_id )
 {
 	local weapon = CreateByClassname("tf_weapon_bat")
@@ -2311,6 +2474,11 @@ function CTFPlayer::GetMaximumGrenades3()
 	return grenades
 }
 
+/** 
+ * @param {integer} index
+ * @param {integer} percent
+ * @throws {string} invalid ammo type
+ */
 function CTFPlayer::GivePercentAmmo( index, percent )
 {
 	local maximum = 0
@@ -2349,7 +2517,7 @@ function CTFPlayer::ResetAmmo()
 	ResetMetal()
 }
 /**
- * @param {array} conds
+ * @param {[integer]} conds
  */
 function CTFPlayer::InMultiCond( conds )
 {
@@ -2666,154 +2834,6 @@ function CTFPlayer::KillUnknownWeapons()
 			continue
 		printf("Destroyed unknown Move Child %s\n", current.tostring())
 		current.Destroy()
-	}
-}
-
-class Corrosion {
-	/** @type {CTFPlayer|null} */
-	m_hOuter 		= null
-	bActive 		= false
-
-	/** @type {CTFPlayer|null} */
-	hAttacker 		= null
-	/** @type {CTFWeaponBase|null} */
-	hWeapon 		= null
-	flNextTick 		= 0.0
-	flTickDur 		= 0.0
-	flDmgPerc 		= 0.0
-	iDmgAdd 		= 0
-	bMakesPuddle 	= false
-
-	/** 
-	 * @param {CTFPlayer} outer
-	 */
-	constructor(outer)
-	{
-		if (!IsValidPlayer(m_hOuter))
-			m_hOuter = outer
-	}	
-
-	function CreateCorrosion( attacker, weapon, exdata = false )
-	{
-		this.hAttacker 		= attacker
-		this.hWeapon 		= weapon
-
-		InitVars()
-
-		if (weapon)
-		{
-			this.flNextTick 	= Time() + weapon.GetAttribute("corrosion tick duration", 1.0)
-			this.flTickDur 		= weapon.GetAttribute("corrosion tick duration", 1.0)
-			this.flDmgPerc 		= weapon.GetAttribute("corrosion damage percent", 0.25) / 100.0
-			this.iDmgAdd 		= weapon.GetAttribute("corrosion damage add", 250)
-			this.bMakesPuddle 	= weapon.GetAttribute("corrosion drop puddle", 0) != 0
-
-			if (IsWeaponClass(weapon, "tf_weap") && IsValidPlayer(weapon.GetOwner()))
-				this.hAttacker = weapon.GetOwner()
-
-			Enable()
-		}
-		else if (exdata)
-		{
-			this.flNextTick		= Time() + ("tick duration" in exdata ? exdata["tick duration"] : 1.0)
-			this.flTickDur		= ("tick duration" in exdata ? exdata["tick duration"] : 1.0)
-			this.flDmgPerc		= ("damage percent" in exdata ? exdata["damage percent"] : 0.25) / 100
-			this.iDmgAdd		= ("damage add" in exdata ? exdata["damage add"] : 0.25)
-			this.bMakesPuddle	= ("drop puddle" in exdata ? true : false)
-
-			Enable()
-		}
-
-		// both a valid attacker && weapon
-		// if (IsValidPlayer(attacker) && IsWeaponClass(weapon, "tf_weap"))
-			// Enable()
-	}
-
-	function Enable()
-		bActive = true
-
-	function Disable()
-		bActive = false
-
-	function InitVars()
-	{
-		flNextTick 		= 0.0
-		flTickDur 		= 0.0
-		flDmgPerc 		= 0.0
-		iDmgAdd 		= 0
-		bMakesPuddle 	= false
-	}
-
-	function InitAllVars()
-	{
-		/** @type {CTFPlayer|null} */
-		hAttacker 		= null
-		/** @type {CTFWeaponBase|null} */
-		hWeapon 		= null
-		flNextTick 		= 0.0
-		flTickDur 		= 0.0
-		flDmgPerc 		= 0.0
-		iDmgAdd 		= 0
-		bMakesPuddle 	= false
-	}
-
-	/** 
-	 * Is this Corrosion Active
-	 * @returns {bool}
-	 */
-	function HasCorrosion()
-		return bActive
-
-	/** 
-	 * Should we remove our corrosion
-	 * @returns {bool}
-	 */
-	function ShouldRemoveCorrosion()
-		return m_hOuter.ShouldRemoveCorrosion()
-	
-	/** 
-	 * Disable and Clear our vars
-	 */
-	function RemoveCorrosion()
-	{
-		bActive = false
-		InitVars() // forget about old if we remove
-	}
-
-	/** 
-	 * Return if we should process a corrosion tick
-	 * @returns {bool}
-	 */
-	function ShouldUpdate()
-	{
-		return Time() >= flNextTick
-	}
-
-	/** 
-	 * Process a Damage Tick
-	 */
-	function Tick()
-	{
-		if (!HasCorrosion())
-			return
-		if (ShouldRemoveCorrosion())
-			return RemoveCorrosion()
-		
-		flNextTick = Time() + flTickDur
-		
-		local damage = (iDmgAdd + (m_hOuter.GetMaxHealth() * flDmgPerc)) * m_hOuter.HookMultAttributes("corrosion dmg taken mult")
-
-		// so if we suspect the defaults of 250 add and 0.25 percent, than
-		// if we have 20000 hp, we are doing ( 250 + (20000 * (0.25/100)))
-		// or ( dmg_add + ( max_hp * ( percent/100 ) ) )
-		// but no / 100 since that was handled in MakeCorrosion
-		// so the final amount would be (250 + 50) or 300
-
-		if (__CORROSION_DEBUG) printf("%s took Corrosion Damage! Attacker : %s, Weapon : %s, Damage : %f\n", 
-			tostring(), hAttacker.tostring(), hWeapon.tostring(), damage)
-		if (!CORROSION_ICON || !CORROSION_ICON.IsValid())
-			CORROSION_ICON = CreateKillIcon("infection_acid_puddle")
-		m_hOuter.TakeDamageCustom(CORROSION_ICON, hAttacker, hWeapon, Vector(), Vector(), damage, DMG_GENERIC|DMG_PREVENT_PHYSICS_FORCE, 0)
 	}
 }
 
