@@ -7810,7 +7810,7 @@ function ROOT::IsNotInScope( item, scope )
 	return (!(item in scope))
 /**
  * @param {any} item
- * @deprecated this is cleaner, but uses more jump routines
+ * @deprecated this is cleaner, but slower
  */
 function ROOT::IsNotInTable( item, table )
 	return (!(item in table))
@@ -7982,14 +7982,19 @@ function ROOT::IsWeaponClass( weapon, classname, starts = false )
 /**
  * Creates a Pickup
  * 
- * @param {Vector} 		origin 		The position where to spawn the Pickup.
- * @param {Vector} 		angles 		The angles to spawn the Pickup with.
- * @param {Vector} 		velocity 	The Vecocity to spawn the Pickup with.
- * @param {integer} 	team 		Which Team can pick this up.
- * @param {string} 		model 		The Model for the Pickup.
- * @param {string} 		sound 		Optional sound to cache and play on pickup.
- * @param {float} 		lifetime 	How long the Pickup should live for.
- * @param {function} 	func	 	What function to run when the pickup is picked up
+ * @param {table} table Look at `Input table` section
+ * 
+ * # Input table
+ * ```sqDoc
+ * origin: Vector		// The position where to spawn the Pickup.
+ * angles: Vector		// The angles to spawn the Pickup with.
+ * velocity: Vector	// The velocity to spawn the Pickup with.
+ * team: integer		// Which Team can pick this up.
+ * model: string		// The Model for the Pickup.
+ * sound: string		// Optional sound to cache and play on pickup.
+ * lifetime: float		// How long the Pickup should live for.
+ * func: function		// What function to run when the pickup is picked up
+ * ```
  */
 function ROOT::CreatePickup( table )
 {
@@ -8983,33 +8988,39 @@ if (!("BUSTER_ICON" in ROOT))
   === CUSTOM EXPLOSION FUNCTIONS ===
   ==================================
 */
-
 ////
+
+// This tables fucking formatting
 /**
  * Creates a base explosion to use
  * 
- * @param {CTFPlayer} 			owner 				The player to report the damage to.
- * @param {CTFWeaponBase|null}	weapon 				The weapon to give credit to. (Default: null)
- * @param {CBaseEntity}			ignores 			The Entitys to ignore for the explosion (usually the victim). (Default: [])
- * @param {string} 				sound 				The sound to play on explosion. (Default: "")
- * @param {float} 				radius 				The radius of the explosion. (Default: 147.0)
- * @param {Vector} 				origin 				The origin of the explosion. (Default: Vector())
- * @param {float} 				damage 				The damage dealt at the center. (Default: 90.0)
- * @param {float} 				MinDamage 			The damage dealt at the edge. (Default: damage/2.0)
- * @param {float} 				DamageDeadzone		The radius from the center where zero falloff occurs. (Default: 0.0)
- * @param {string}				particle 			The explosion particle. (Default: "")
- * @param {Vector}				particle_ang		The angle of the explosion particle. (Default: QAngle(-90, 0, 0))
- * @param {Vector}				particle_offset		How much to offset the explosion particle spawn. (Default: Vector())
- * @param {integer}				DmgType 			The damage types to use (add DMG_RADIUS_MAX to ignore damage falloff). (Default: DMG_GENERIC|DMG_BLAST)
- * @param {integer}				DmgCustom 			The custom damage type to use.
- * @param {float}				SoundRadius			The radius the sound travels. (Default: radius)
- * @param {float}				SoundDelay			Cooldown between explosion sounds. (Default: 0.5)
- * @param {function}			ExplodeFunc			Callback function for players hit. ( Default: null )
- * @param {bool}				FuncBeforeDmg		If true, call ExplodeFunc before dealing damage. (Default: false)
- * @param {bool}				FuncOnIgnore		If true, call ExplodeFunc on ignored targets. (Default: false)
- * @param {bool}				OnlyPlayers			If true, only collect players to attack. (Default: false)
- * @param {bool}				FuncIgnoreObjects	If true, ignore non-players when calling ExplodeFunc. (Default: false)
- * @param {string}				kill_icon			Override the kill icon in killfeed, forces DmgCustom to 0 (Default: "")
+ * @param {table} table
+ * 
+ * # Input table
+ * ```sqDoc
+ * owner: CTFPlayer		// The player to report the damage to.
+ * weapon: CTFWeaponBase|null 	// The weapon to give credit to. (Default: null)
+ * ignores: [CBaseEntity]		// The Entitys to ignore for the explosion (usually the victim). (Default: [])
+ * sound: string			// The sound to play on explosion. (Default: "")
+ * radius: float			// The radius of the explosion. (Default: 147.0)
+ * origin: Vector			// The origin of the explosion. (Default: Vector(0, 0, 0))
+ * damage: float			// The damage dealt at the center. (Default: 90.0)
+ * MinDamage: float		// The damage dealt at the edge. (Default: damage/2.0)
+ * DamageDeadzone: float		// The radius from the center where zero falloff occurs. (Default: 0.0)
+ * particle: string		// The explosion particle. (Default: "")
+ * particle_ang: Vector		// The angle of the explosion particle. (Default: QAngle(-90, 0, 0))
+ * particle_offset: Vector		// How much to offset the explosion particle spawn. (Default: Vector(0, 0, 0))
+ * DmgType: integer		// The damage types to use (add DMG_RADIUS_MAX to ignore damage falloff). (Default: DMG_GENERIC|DMG_BLAST)
+ * DmgCustom: integer		// The custom damage type to use.
+ * SoundRadius: float		// The radius the sound travels. (Default: radius)
+ * SoundDelay: float		// Cooldown between explosion sounds. (Default: 0.5)
+ * ExplodeFunc: function		// Callback function for players hit. ( Default: null )
+ * FuncBeforeDmg: bool		// If true, call ExplodeFunc before dealing damage. (Default: false)
+ * FuncOnIgnore: bool		// If true, call ExplodeFunc on ignored targets. (Default: false)
+ * OnlyPlayers: bool		// If true, only collect players to attack. (Default: false)
+ * FuncIgnoreObjects: bool		// If true, ignore non-players when calling ExplodeFunc. (Default: false)
+ * kill_icon: string		// Override the kill icon in killfeed, forces DmgCustom to 0 (Default: "")
+ * ```
  */
 function ROOT::CreateBaseExplosion( table )
 {
@@ -9122,15 +9133,20 @@ function ROOT::CreateBaseExplosion( table )
 	}
 }
 /**
- * @param {CTFPlayer} 	owner		The owner of the damage to report it back to.
- * @param {Vector} 		center		The position to create the explosion.
- * @param {float} 		radius		How big the explosion can hit.
- * @param {float} 		maxDmg		The Maximum damage to deal.
- * @param {float} 		minDmg		The Minimum damage to deal.
- * @param {CBaseEntity}	ignore		What entitys to ignore in the explosion.
- * @param {integer}		dmg_Type	DMG_ type to mark the damage as.
- * @param {string}		sound		Sound to play on explosion.
- * @param {string}		particle	Particle to spawn on explosion.
+ * @param {table} table
+ * 
+ * # Input table
+ * ```sqDoc
+ * owner: CTFPlayer	// The owner of the damage to report it back to.
+ * center: Vector		// The position to create the explosion.
+ * radius: float		// How big the explosion can hit.
+ * maxDmg: float		// The Maximum damage to deal.
+ * minDmg: float		// The Minimum damage to deal.
+ * ignore: [CBaseEntity]	// What entitys to ignore in the explosion.
+ * dmg_Type: integer	// DMG_ type to mark the damage as.
+ * sound: string		// Sound to play on explosion.
+ * particle: string	// Particle to spawn on explosion.
+ * ```
  */
 function ROOT::CreateAoE( table )
 {
@@ -9148,14 +9164,19 @@ function ROOT::CreateAoE( table )
 }
 
 /**
- * @param {CTFPlayer} 		owner		The owner of the damage to report it back to.
- * @param {CTFWeaponBase} 	weapon		The weapon to credit for damage.
- * @param {Vector} 			center		The position to create the explosion.
- * @param {float} 			radius		How big the explosion can hit.
- * @param {float} 			damage		How much damage to deal.
- * @param {CBaseEntity}		ignore		What entitys to ignore in the explosion.
- * @param {float} 			SoundRadius	Radius in which the sound can be heard
- * @param {function}		func		Function to use on players hit
+ * @param {table} table
+ * 
+ * # Input table
+ * ```sqDoc
+ * owner: CTFPlayer	// The owner of the damage to report it back to.
+ * weapon: CTFWeaponBase	// The weapon to credit for damage.
+ * center: Vector		// The position to create the explosion.
+ * radius: float		// How big the explosion can hit.
+ * damage: float		// How much damage to deal.
+ * ignore: [CBaseEntity]	// What entitys to ignore in the explosion.
+ * SoundRadius: float	// Radius in which the sound can be heard
+ * func: function		// Function to use on players hit 
+ * ```
  */
 function ROOT::CreateKnifeAoE( table )
 {
@@ -9176,13 +9197,19 @@ function ROOT::CreateKnifeAoE( table )
 		FuncIgnoreObjects = true
 	})
 }
+
 /**
- * @param {CTFPlayer} 		owner		The owner of the damage to report it back to.
- * @param {CTFWeaponBase} 	weapon		The weapon to credit for damage.
- * @param {Vector} 			center		The position to create the explosion.
- * @param {float} 			radius		How big the explosion can hit.
- * @param {float} 			damage		How much damage to deal.
- * @param {CBaseEntity}		ignore		What entitys to ignore in the explosion.
+ * @param {table} table
+ * 
+ * # Input table
+ * ```sqDoc
+ * owner: CTFPlayer	// The owner of the damage to report it back to.
+ * weapon: CTFWeaponBase	// The weapon to credit for damage.
+ * center: Vector		// The position to create the explosion.
+ * radius: float		// How big the explosion can hit.
+ * damage: float		// How much damage to deal.
+ * ignore: [CBaseEntity]	// What entitys to ignore in the explosion.
+ * ```
  */
 function ROOT::CreateSlamAoE( table )
 {
@@ -9203,23 +9230,25 @@ function ROOT::CreateSlamAoE( table )
 	PrecacheSound("ambient/explosions/explode_1.wav")
 	EmitSoundEx({
 		channel 		= 6
-		volume 			= 1.0
-		pitch 			= 100
-		sound_level		= 150
+		sound_level		= 140
 
 		sound_name		= "ambient/explosions/explode_1.wav"
-
 		entity = table.owner
 	})
 }
 
 /** 
- * @param {CTFPlayer} 			owner			The owner of the damage to report it back to.
- * @param {CBaseEntity|null} 	inflictor		The Inflictor to use.
- * @param {Vector} 				center			The position to create the explosion at.
- * @param {float} 				damage			The Damage of the explosion.
- * @param {float} 				radius			The Radius of the explosion (Default: 200)
- * @param {function}			func			the fireball function
+ * @param {any} table
+ * 
+ * # Input table
+ * ```sqDoc
+ * owner: CTFPlayer			// The owner of the damage to report it back to.
+ * inflictor: CBaseEntity|null		// The Inflictor to use.
+ * center: Vector			// The position to create the explosion at.
+ * damage: float			// The Damage of the explosion.
+ * radius: float			// The Radius of the explosion (Default: 200)
+ * func: function			// the fireball function
+ * ```
  */
 function ROOT::CreateFireballExplosion( table )
 {
@@ -9240,8 +9269,13 @@ function ROOT::CreateFireballExplosion( table )
 }
 
 /** 
- * @param {CTFPlayer} 	owner			The owner of the damage to report it back to.
- * @param {Vector} 		center			The position to create the explosion at.
+ * @param {table} table
+ * 
+ * # Input table
+ * ```sqDoc
+ * owner: CTFPlayer	// The owner of the damage to report it back to.
+ * center: Vector		// The position to create the explosion at.
+ * ```
  */
 function ROOT::CreateSentryBusterExplosion( table )
 {
@@ -9276,6 +9310,13 @@ function ROOT::CreateSentryBusterExplosion( table )
 if (!("ChatTriggers" in ROOT))
 	::ChatTriggers <- {}
 
+/** 
+ * Registers a chat command that can be activated with `![command]` or `/[command]`
+ * 
+ * @param {string|[string]} trigger
+ * @param {function} callback
+ * @throws {string}
+ */
 function ROOT::AddChatTrigger( trigger, callback, ... )
 {
 	local errors = []
@@ -9297,6 +9338,13 @@ function ROOT::AddChatTrigger( trigger, callback, ... )
 	if (errors.len() != 0)
 		PrintArray(errors)
 }
+/** 
+ * Just `AddChatTrigger` but only allows admins to use it
+ * 
+ * @type {function}
+ * @param {string|[string]} trigger
+ * @param {function} callback
+ */
 function ROOT::RegisterAdminTrigger( trigger, callback )
 	AddChatTrigger(trigger, callback, "IsAdmin")
 
@@ -9391,6 +9439,7 @@ function ROOT::RemoveDamageCallback( entity_name, callback_name )
  * @param {table} params
  */
 function ParamsToDamageCallbackData( params )
+{
 	return {
 		victim 				= params.const_entity
 		attacker 			= params.attacker
@@ -9405,7 +9454,9 @@ function ParamsToDamageCallbackData( params )
 
 		penetration_count	= params.player_penetration_count
 		others_damaged		= params.damaged_other_players
+	}
 }
+	
 
 /*
   ========================================
@@ -9515,7 +9566,7 @@ function ROOT::ClearSpawnCallbacks()
 	::PostSpawnCallbacks <- {}
 
 /**
- * @param {string|array} entity_name
+ * @param {string|[string]} entity_name
  * @param {string} callback_name
  * @param {function} callback
  */
@@ -9539,6 +9590,11 @@ function ROOT::RegisterSpawnCallback( entity_name, callback_name, callback )
 	else throw format("Unknown Type \"%s\" in SpawnCallback ", typeof entity_name)
 }
 
+/** 
+ * @type {function}
+ * @param {string|[string]} entity_name
+ * @param {string} callback_name
+ */
 function ROOT::RemoveSpawnCallback( entity_name, callback_name )
 {
 	if (typeof entity_name == "string")
@@ -9853,10 +9909,36 @@ function ROOT::PostPlayerSpawn( player )
 	FireScriptEvent("player_postspawn", {player = player})
 }
 
+	/**
+	 * @param {table} params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * userid: integer
+	 * health: integer // if <= 0, then this will play the killsound
+	 * attacker: integer
+	 * damageamount: integer
+	 * custom: integer
+	 * showdisguisedcrit: bool // if our attribute specifically crits disguised enemies we need to show it on the client
+	 * crit: bool // legacy only, use bonuseffect
+	 * minicrit: bool // legacy only, use bonuseffect
+	 * allseecrit: bool
+	 * weaponid: integer
+	 * bonuseffect: integer // type of damage effect, see constants page.
+	 * ```
+	 * ## Warning:
+	 * A value of 4 is no damage effect. 0 is crits!
+ 	 */
+
 // Makes Custom Events to listen to
 ::ChaosCustomEvents <- {
 	/**
 	 * @param {table} params
+	 * 
+	 * # Input table
+ 	 * ```sqDoc
+	 * userid: integer
+	 * ```
 	 */
 	function OnGameEvent_post_inventory_application( params )
 	{
@@ -9938,7 +10020,49 @@ function ROOT::PostPlayerSpawn( player )
 		FireScriptEvent(eventdata.player.IsBot() ? "BotResupply" : "HumanResupply", eventdata)
 	}
 	/**
+	 * Fired when a player dies. This shows up in the kill feed.
 	 * @param {table} params
+	 * 
+	 * # Input table
+ 	 * ```sqDoc
+	 * userid: integer // user ID who died
+	 * victim_entindex: integer
+	 * inflictor_entindex: integer // ent index of inflictor (a sentry, for example)
+	 * attacker: integer // user ID who killed
+	 * weapon : string // weapon name killer used
+	 * weaponid: integer // ID of weapon killer used
+	 * damagebits: integer // bits of type of damage
+	 * customkill: integer // type of custom kill
+	 * assister: integer // user ID of assister
+	 * weapon_logclassname : string // weapon name that should be printed on the log
+	 * stun_flags: integer // victim's stun flags at the moment of death
+	 * death_flags: integer // death flags
+	 * silent_kill: bool
+	 * playerpenetratecount: integer
+	 * assister_fallback : string // contains a string to use if "assister" is -1
+	 * kill_streak_total: integer // Kill streak count (level)
+	 * kill_streak_wep: integer // Kill streak for killing weapon
+	 * kill_streak_assist: integer // Kill streak for assister count
+	 * kill_streak_victim: integer // Victims kill streak
+	 * ducks_streaked: integer // Duck streak increment from this kill
+	 * duck_streak_total: integer // Duck streak count for attacker
+	 * duck_streak_assist: integer // Duck streak count for assister
+	 * duck_streak_victim: integer // (former) duck streak count for victim
+	 * rocket_jump: bool // was the victim rocket jumping
+	 * weapon_def_index: integer // item def index of weapon killer used
+	 * crit_type: integer // Crit type of kill. 0: None 1: Mini 2: Full
+	 * ```
+	 * #Note:
+	 * 
+	 * The fields below are now unused, check death_flags instead.
+	 * ```sqDoc
+	 * dominated: integer // did killer dominate victim with this kill
+	 * assister_dominated: integer // did assister dominate victim with this kill
+	 * revenge: integer // did killer get revenge on victim with this kill
+	 * assister_revenge: integer // did assister get revenge on victim with this kill
+	 * first_blood: bool // was this a first blood kill
+	 * feign_death: bool // the victim is feign death
+	 * ```
 	 */
 	function OnGameEvent_player_death( params )
 	{
@@ -10063,6 +10187,70 @@ function ROOT::PostPlayerSpawn( player )
 	}
 	/**
 	 * @param {table} params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * const_entity: CBaseEntity	// The entity which took damage.
+	 * inflictor: CBaseEntity|null	// The entity which dealt the damage, can be null.
+	 * weapon: CBaseEntity|null	// The weapon which dealt the damage, can be null.
+	 * attacker: CBaseEntity|null	// The owner of the damage, can be null.
+	 * damage: float	// Damage amount.
+	 * max_damage: float	// Damage cap.
+	 * damage_bonus: float	 // Additional damage (e.g. from crits).
+	 * ```
+	 * ## Warning:
+	 * 
+	 * Always 0 because this hook is run before this is calculated.
+	 * ```sqDoc
+	 * damage_bonus_provider: CBaseEntity|null	// Owner of the damage bonus.
+	 * ```
+	 * ## Warning:
+	 * 
+	 * Always null because this hook is run before this is calculated.
+	 * ```sqDoc
+	 * const_base_damage: float	// Base damage.
+	 * damage_force: Vector // Damage force.
+	 * damage_for_force_calc: float
+	 * ```
+	 * ## Bug:
+	 * 
+	 * This value does not seem to do anything.
+	 * ```sqDoc
+	 * damage_position: Vector // World position of where the damage came from. E.g. end position of a bullet or a rocket.
+	 * reported_position: Vector // World position of where the damage supposedly came from.
+	 * damage_type: integer // Combination of damage types. See Constants.FDmgType
+	 * damage_custom: integer
+	 * ```
+	 * ## Bug:
+	 * 
+	 * Because of a code oversight, this value is read-only. Use damage_stats instead which can be read and written.
+	 * ```sqDoc
+	 * damage_stats: integer // Special damage type. See Constants.ETFDmgCustom. Unlike damage_type, only one custom damage type can be set.
+	 * force_friendly_fire: bool // If true, force the damage to friendlyfire, regardless of this entity's and attacker's team.
+	 * ```
+	 * ## Note:
+	 * 
+	 * Hitscan/melee will not run OnTakeDamage unless the mp_friendlyfire convar is set to 1.
+	 * ```sqDoc
+	 * ammo_type: integer // Unused.
+	 * player_penetration_count: integer // How many players the damage has penetrated so far.
+	 * damaged_other_players: integer // How many players other than the attacker has the damage been applied to. Used for rocket jump damage reduction.
+	 * crit_type: integer // Type of crit damage. 0 - None, 1 - Mini, 2 - Full. The numbers correspond to Constants.ECritType.
+	 * ```
+	 * ## Warning:
+	 * 
+	 * Always 0 because this hook is run before this is set. You can check for DMG_ACID in damage_type, which is set when the shot will be critical, however, it doesn't show ordinary hits which would be converted to critical ones like Neon Annihilator hitting a soaked target or a Bushwacka hitting with a mini-crit. Alternative would be to check whether the damage is crit in player_hurt event, which also works for mini-crits as well, the downside is that this event happens only after the damage has been dealt so no changes inside the hook are possible.
+	 * If you want to force the damage to be critical you need to set DMG_ACID to be included in damage_type:
+	 * 
+	 * params.damage_type = params.damage_type | Constants.FDmgType.DMG_ACID
+	 * For players, if you want to force the damage to be a mini-crit you can add a mini-crit cond to the attacker inside this hook and remove it in player_hurt or npc_hurt respective events afterwards. Example:
+	 * 
+	 * ## Note:
+	 * 
+	 * Setting this to 1 makes the damage act as a mini-crit, while producing full crit sounds and visuals, this can be used for cases where the attacker is not a player since only physical aspect of the damage would matter. Setting it to 2 has no effect.
+	 * ```sqDoc
+	 * early_out: bool // If set to true by the script, the game's damage routine will not run and it will simply return the currently set damage.
+	 * ```
 	 */
 	function OnScriptHook_OnTakeDamage( params )
 	{
@@ -10521,7 +10709,24 @@ function ROOT::PostPlayerSpawn( player )
 	}
 	/**
 	 * @param {table} params
-	 */
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * userid: integer
+	 * health: integer // if <= 0, then this will play the killsound
+	 * attacker: integer
+	 * damageamount: integer
+	 * custom: integer
+	 * showdisguisedcrit: bool // if our attribute specifically crits disguised enemies we need to show it on the client
+	 * crit: bool // legacy only, use bonuseffect
+	 * minicrit: bool // legacy only, use bonuseffect
+	 * allseecrit: bool
+	 * weaponid: integer
+	 * bonuseffect: integer // type of damage effect, see constants page.
+	 * ```
+	 * ## Warning:
+	 * A value of 4 is no damage effect. 0 is crits!
+ 	 */
 	function OnGameEvent_player_hurt( params )
 	{
 		local eventdata = clone params
@@ -10581,7 +10786,24 @@ function ROOT::PostPlayerSpawn( player )
 			FireScriptEvent(victim.IsBot() ? "PostBotHurt" : "PostHumanHurt", eventdata)
 	}
 	/**
+	 * This event will be sent once when the player entity is created, i.e. they joined the server or they are loading in after a map change. 
+	 * In this case, team is equal to 0 (unassigned). Each time afterwards, the event will only be fired when the player spawns alive on red or blue team. 
+	 * 
+	 * This is also fired once when SourceTV is loaded in.
+	 * 
 	 * @param {table} params
+	 * 
+	 * # Input table
+ 	 * ```sqDoc
+	 * userid: integer // user ID who spawned
+	 * team: integer // team they spawned on
+	 * class: integer // class they spawned as
+	 * ```
+	 * ## Warning!
+	 * 
+	 * Cannnot access `class` input using `table.key` syntax. use string indexing instead table["key"].
+	 * 
+	 * e.x. `params["class"]` instead of `params.class`
 	 */
 	function OnGameEvent_player_spawn( params )
 	{
@@ -10633,6 +10855,17 @@ function ROOT::PostPlayerSpawn( player )
 	}
 	/**
 	 * @param {table} params
+	 * 
+	 * # Input table
+ 	 * ```sqDoc
+	 * userid: integer // user ID on server
+	 * team: integer // team id
+	 * oldteam: integer // old team id
+	 * disconnect: bool // team change because player disconnects
+	 * autoteam: bool // true if the player was auto assigned to the team
+	 * silent: bool // if true wont print the team join messages
+	 * name: string // player's name
+	 * ```
 	 */
 	function OnGameEvent_player_team( params )
 	{
@@ -10681,6 +10914,12 @@ function ROOT::PostPlayerSpawn( player )
 	}
 	/**
 	 * @param {table} params
+	 * 
+	 * # Input table
+ 	 * ```sqDoc
+	 * userid: integer // user ID on server
+	 * text: string // the say text
+	 * ```
 	 */
 	function OnGameEvent_player_say( params )
 	{
@@ -10744,7 +10983,20 @@ function ROOT::PostPlayerSpawn( player )
 		}
 	}
 	/**
+	 * Fired when an Engineer building (obj_sentrygun, obj_dispenser, obj_teleporter), base_boss, MvM tank (tank_boss) 
+	 * or Halloween enemy (headless_hatman, eyeball_boss, merasmus, tf_zombie) is damaged.
 	 * @param {table} params
+	 * 
+	 * # Input table
+ 	 * ```sqDoc
+	 * entindex: integer // entindex of victim
+	 * health: integer // health of victim
+	 * attacker_player: integer // user ID of attacking player
+	 * weaponid: integer
+	 * damageamount: integer // damage done to victim
+	 * crit: bool
+	 * boss: integer // 1=HHH 2=Monoculus 3=Merasmus
+	 * ```
 	 */
 	function OnGameEvent_npc_hurt( params )
 	{
@@ -10822,6 +11074,13 @@ function ROOT::PostPlayerSpawn( player )
 	}
 	/**
 	 * @param {table} params
+	 * 
+	 * # Input table
+ 	 * ```sqDoc
+	 * patient: integer // user ID of patient
+	 * healer: integer // user ID of healer
+	 * amount : integer
+	 * ```
 	 */
 	function OnGameEvent_player_healed( params )
 	{
@@ -10838,6 +11097,15 @@ function ROOT::PostPlayerSpawn( player )
 	}
 	/**
 	 * @param {table} params
+	 * 
+	 * # Input table
+ 	 * ```sqDoc
+	 * userid: integer // user ID on server
+	 * reason: string // reason for disconnect e.g. "client disconnect", "[name] timed out."
+	 * name: string // player name
+	 * networkid: string // player network (i.e steam) id
+	 * bot: integer // is a bot
+	 * ```
 	 */
 	function OnGameEvent_player_disconnect( params ) 
 	{
@@ -10869,6 +11137,13 @@ function ROOT::PostPlayerSpawn( player )
 	}
 	/**
 	 * @param {table} params
+	 * 
+	 * # Input table
+ 	 * ```sqDoc
+	 * userid: integer // user ID of the builder
+	 * object integer // type of object `ObjectType_t`
+	 * index: integer // entindex of build object
+	 * ```
 	 */
 	function OnGameEvent_player_builtobject( params )
 	{
@@ -10952,6 +11227,22 @@ function ROOT::PostPlayerSpawn( player )
 
 		FireScriptEvent(event_name, eventdata)
 	}
+	/**
+	 * @param {table} params
+	 * 
+	 * # Input table
+ 	 * ```sqDoc
+	 * userid: integer // user ID who died
+	 * attacker: integer // user ID who killed
+	 * assister: integer // user ID of assister
+	 * weapon: string // weapon name killer used
+	 * weaponid: integer // id of the weapon used
+	 * objecttype: integer // type of object destroyed
+	 * index: integer // entindex of the object destroyed
+	 * was_building: bool // was object being built when it died
+	 * team: integer // building's team
+	 * ```
+	 */
 	function OnGameEvent_object_destroyed( params )
 	{
 		local owner = "userid" in params ? GetPlayerFromUserID(params.userid) : null
@@ -10994,6 +11285,16 @@ function ROOT::PostPlayerSpawn( player )
 
 		// FireScriptEvent(event_name + "")
 	}
+	/**
+	 * @param {table} params
+	 * 
+	 * # Input table
+ 	 * ```sqDoc
+	 * userid: integer // user ID of the object owner
+	 * objecttype: integer // type of object removed
+	 * index: integer // entindex of the object removed
+	 * ```
+	 */
 	function OnGameEvent_object_detonated( params )
 	{
 		// local eventdata = {}
@@ -11018,6 +11319,19 @@ function ROOT::PostPlayerSpawn( player )
 	}
 	/**
 	 * @param {table} params
+	 * 
+	 * # Input table
+ 	 * ```sqDoc
+	 * stunner: integer 
+	 * ```
+	 * ## Warning:
+	 * 
+	 * If there's no attacker, this key won't exist (such as being stunned after hitting a wall with a bumper kart)
+	 * ```sqDoc
+	 * victim: integer
+	 * victim_capping: bool
+	 * big_stun: bool
+	 * ```
 	 */
 	function OnGameEvent_player_stunned( params )
 	{
@@ -11031,6 +11345,11 @@ function ROOT::PostPlayerSpawn( player )
 	}
 	/**
 	 * @param {table} params
+	 * 
+	 * # Input table
+ 	 * ```sqDoc
+	 * userid: integer // user ID on server
+	 * ```
 	 */
 	function OnGameEvent_player_activate( params )
 	{
@@ -11049,6 +11368,14 @@ function ROOT::PostPlayerSpawn( player )
 	}
 	/**
 	 * @param {table} params
+	 * 
+	 * # Input table
+ 	 * ```sqDoc
+	 * userid: integer // user ID of player who deflected the object
+	 * ownerid: integer // user ID of the owner of the object
+	 * weaponid: integer // weapon id (0 means the player in ownerid was pushed)
+	 * object_entindex: integer // entindex of the object that got deflected
+	 * ```
 	 */
 	function OnGameEvent_object_deflected( params )
 	{
@@ -11096,6 +11423,9 @@ function ROOT::PostPlayerSpawn( player )
 		})
 	}
 
+	/**
+	 * @param {table} params
+	 */
 	function OnScriptHook_player_postspawn( params )
 	{
 		FireScriptEvent(params.player.IsBot() ? "PostBotSpawn" : "PostHumanSpawn", params)
