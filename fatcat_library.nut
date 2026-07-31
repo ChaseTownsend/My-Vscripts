@@ -9090,6 +9090,20 @@ function ROOT::CreateBaseExplosion( table )
 		targets.extend(GetAllEntitiesByClassnameWithin("obj*", origin, radius).filter(@(_, ent) ent.GetClassname() != "obj_attachment_sapper").filter(@(_, ent) ent.GetTeam() != owner.GetTeam()))
 	}
 
+	local actual_icon = null
+	local Temp_icon = false
+	if(kill_icon != "")
+	{
+		if(type(kill_icon) == "string")
+		{
+			actual_icon = CreateKillIcon(kill_icon)
+			Temp_icon = true
+		}
+	}
+
+	if(actual_icon != null)
+		EntFireNew(actual_icon, "Kill", "", 1.0)
+
 	DebugDrawClear()
 	foreach (entity in targets)
 	{
@@ -9124,7 +9138,7 @@ function ROOT::CreateBaseExplosion( table )
 		if (FuncBeforeDmg && (!FuncIgnoreObjects || entity.IsPlayer())) 
 			ExplodeFunc(entity)
 		if (kill_icon != "")
-			entity.TakeDamageCustom(kill_icon, owner, weapon, Vector(), Vector(), currentDamage, DmgType, 0)
+			entity.TakeDamageCustom(actual_icon, owner, weapon, Vector(), Vector(), currentDamage, DmgType, 0)
 		else
 			entity.TakeDamageCustom(inflictor, owner, weapon, Vector(), Vector(), currentDamage, DmgType, DmgCustom)
 		if (!FuncBeforeDmg && (!FuncIgnoreObjects || entity.IsPlayer())) 
