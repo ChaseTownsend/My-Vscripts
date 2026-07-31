@@ -62,13 +62,14 @@ RegisterDamageCallback("player", "ZapinatorPlayer" function( params ) {
 })
 
 // Vscript: 
-//		Projectile cant hit another enemy for 0.25 sec (done)
+//		Projectile cant hit an entity more than once
 //
 //		Chance to:
 //			Apply a random debuff to enemy (jarate/milk/gas/bleed/marked/slow/fire) (20%)
-//			Explode (takes priority over pierce if both are rolled) (10%)
-//			Penetrate (takes priority over pierce if both are rolled) (50%)
+//			Explode (takes priority over pierce if both are rolled) (10%) (done)
+//			Penetrate (Allow a peirce and increase dmg mult by 25%) (50%) (done)
 //			[MAYBE] Be Reflected (as in change dir and team) (3.33%)
+//			[MAYBE INTEAD] Deflect of the bot and to a different bot (3.33%)
 //			Knockback 750 look, 400 z
 
 // effects: gas > bleed > slow > jar = mark = milk > 0.5s stun
@@ -138,12 +139,61 @@ function ZapinatorHit(victim, attacker, projectile, weapon)
 	function(...) {
 	})
 
-	if (ExplodeRoll || PenetrateRoll)
+	local ReflectedRoll = 
+	// Roll( (1.0/30.0), [victim, projectile], 
+	Roll( (1.0), [victim, projectile], 
+	function(victim, projectile) {
+		printl("Projectile Got Deflected!")
+		projectile.SetForwardVector((projectile.GetForwardVector() * -1) + MATH.RandomVec(-0.1, 0.1))
+		RunWithDelay(THREE_TICKS, @() SetProjectileSpeed(projectile))
+		RunWithDelay(THREE_TICKS, @() SetProjectileOwner(projectile, victim))
+	}, 
+	function(...) {
+		// printl("Projectile failed to penetrate")
+	})
+
+	if (!ReflectedRoll && (ExplodeRoll || PenetrateRoll))
 	{
 		EntFireNew(projectile, "DispatchEffect", "ParticleEffectStop", 0)
 		EntFireNew(projectile, "Kill", "", 0.05)
 	}
 }
+
+::REFLECT_TO_ENEMY <- 1
+
+function SetProjectileOwner(projectile, owner)
+{
+	if(REFLECT_TO_ENEMY)
+	{
+		if(projectile.IsValid())
+		{
+			projectile.SetAbsOrigin(owner.GetCenter())
+			local target = GetClosestPlayer(projectile, owner.GetTeam(), 1)
+
+			projectile.SetForwardVector((target.GetCenter() - owner.GetCenter()).Normalize())
+			projectile.SetAbsVelocity(projectile.GetForwardVector() * 600)
+		}
+	}
+	else
+	{
+		if(projectile.IsValid() && IsValidPlayer(owner))
+		{
+			projectile.SetForwardVector((projectile.GetForwardVector() * -1) + MATH.RandomVec(-0.1, 0.1))
+			projectile.SetOwner(owner)
+			projectile.SetTeam(owner.GetTeam())
+			projectile.DispatchSpawn()
+			GetScope(projectile).ReflectedDmgMult <- 0.333
+		}
+	}
+	
+}
+function SetProjectileSpeed(projectile)
+{
+	if(projectile.IsValid())
+		projectile.SetAbsVelocity(projectile.GetAbsVelocity() * 0.5)
+}
+
+
 /* 
 function CreateBaseExplosion(table: table)
 Creates a base explosion to use

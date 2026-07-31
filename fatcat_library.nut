@@ -3689,11 +3689,11 @@ function CTFPlayer::DistanceTo( thing )
 /**
  * @returns {CTFPlayer|null}
  */
-function CTFPlayer::GetClosestPlayer( team = null, offset = Vector( ))
+function CTFPlayer::GetClosestPlayer( team = null, skip = 0)
 {
 	if (team == null)
 		team = GetTeam()
-	return GetClosestPlayer(this, team, offset)
+	return GetClosestPlayer(this, team, skip)
 }
 // TODO: Add to Snippets
 /**
@@ -7258,23 +7258,44 @@ function ROOT::SetPopfileName( name )
  * @param {CTFPlayer|CBaseEntity} target
  * @param {integer} team 
  */
-function ROOT::GetClosestPlayer( target, team = TF_TEAM_BLUE, offset = Vector( ))
+function ROOT::GetClosestPlayer( target, team = TF_TEAM_BLUE, skip = 0)
 {
-	local closest_dist = 100000
-	local closest = null
+	local dist_players = {}
 	foreach (player in Players)
 	{
 		if (player == target || player.IsDead())
 			continue
 		if (player.GetTeam() != team)
 			continue
-		local dist = (target.GetOrigin() + offset).DistanceTo(player.GetOrigin()+offset)
-		if (dist < closest_dist)
-		{
-			closest_dist = dist
-			closest = player
-		}
+		local dist = target.GetCenter().DistanceTo(player.GetCenter())
+		dist_players[player] <- dist
 	}
+	// PrintArray(dist_players.keys())
+	// PrintArray(dist_players.values())
+	// PrintArray(dist_players.values().sort())
+
+	local players = dist_players.keys()
+	local distances = dist_players.values()
+	local close_distances = dist_players.values().sort()
+
+	while (skip > 0)
+	{
+		local value = close_distances.remove(0)
+		local index = distances.find(value)
+		players.remove(index)
+		distances.remove(index)
+		skip--
+	}
+
+	local closest_distance = close_distances[0]
+	local player_index = distances.find(closest_distance)
+	local closest = players[player_index]
+	// printl(closest)
+
+	// PrintTable(players)
+	// PrintArray(distances)
+	// PrintArray(close_distances)
+
 	return closest
 }
 
