@@ -10,6 +10,7 @@ infection/
 .vscode/analyze_strings.py
 .vscode/settings.json
 .idea/
+*:Zone.Identifier
 
 # source engine magic
 *.cache
