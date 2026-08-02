@@ -1265,7 +1265,7 @@ class Corrosion {
 		// so the final amount would be (250 + 50) or 300
 
 		if (__CORROSION_DEBUG) printf("%s took Corrosion Damage! Attacker : %s, Weapon : %s, Damage : %f\n", 
-			tostring(), hAttacker.tostring(), hWeapon.tostring(), damage)
+			m_hOuter.tostring(), hAttacker.tostring(), hWeapon.tostring(), damage)
 		if (!CORROSION_ICON || !CORROSION_ICON.IsValid())
 			CORROSION_ICON = CreateKillIcon("infection_acid_puddle")
 		m_hOuter.TakeDamageCustom(CORROSION_ICON, hAttacker, hWeapon, Vector(), Vector(), damage, DMG_GENERIC|DMG_PREVENT_PHYSICS_FORCE, 0)
