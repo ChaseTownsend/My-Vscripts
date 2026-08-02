@@ -252,7 +252,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format) (GMT-5)
-if (!SetLibraryVersion("07.30.2026.21", 0))
+if (!SetLibraryVersion("08.02.2026.13", 0))
 	return
 
 SetLibrarySettings({})
@@ -1844,6 +1844,9 @@ function CTFPlayer::GetAbilityWeaponIDX()
 	return weapon ? weapon.GetIDX() : -1  
 }
 
+/** 
+ * @returns {[CTFWeaponBase]|CTFWeaponBase|null}
+ */
 function CTFPlayer::GetAbilityWeaponIDXs()
 {
 	local idxs = []
@@ -1992,6 +1995,9 @@ function CTFPlayer::IsUberDraining()
 	return false
 }
 
+/** 
+ * @returns {CTFWeaponBase|null}
+ */
 function CTFPlayer::GetAbilityWeapon() 
 {
 	foreach (weapon in GetAllWeapons()) { 
@@ -2001,6 +2007,9 @@ function CTFPlayer::GetAbilityWeapon()
 	return null
 }
 
+/** 
+ * @returns {[CTFWeaponBase]|CTFWeaponBase|null}
+ */
 function CTFPlayer::GetAbilityWeapons() 
 {
 	local weapons = []
@@ -2030,7 +2039,10 @@ function CTFPlayer::ForceTaunt( taunt_id )
 	SetPropEntity(this, "m_hActiveWeapon", active_weapon)
 	weapon.Kill()
 }
-
+/** 
+ * @type {function}
+ * @returns {[CTFWeaponBase|null]}
+ */
 function CTFPlayer::GetMyWeaponsArray()
 {
 	local MyWeapons = array(MAX_WEAPONS)
@@ -2087,7 +2099,9 @@ function CTFPlayer::GetWeaponInSlotNew( slot )
 
 	return null
 }
-
+/** 
+ * @returns {[CTFWeaponBase]}
+ */
 function CTFPlayer::GetAllWeapons()
 {
 	local list = []
@@ -3332,11 +3346,11 @@ function CTFPlayer::EquipItem( ItemName, swit = true, attrib_overrides = {}, IsC
 		}
 	} */
 
-	Weapon_Equip(weapon)
-	if (swit)
-		Weapon_Switch(weapon)
+	// Weapon_Equip(weapon)
+	// if (swit)
+		// Weapon_Switch(weapon)
 
-	FixAmmo()
+	// FixAmmo()
 }
 
 /* function CTFPlayer::EquipWearableItem( idx, classname_override = false, attrib_overrides = {} )
@@ -10872,6 +10886,9 @@ function ROOT::PostPlayerSpawn( player )
 
 		if (!IsValidPlayer(player))
 			return
+
+		// if you spawn in you are likely touching a spawn room
+		SetPropInt(player, "m_Shared.m_iSpawnRoomTouchCount", 1)
 
 		ClearThinks(player)
 		if (!player.IsBot())
