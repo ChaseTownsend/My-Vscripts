@@ -83,6 +83,9 @@ if ("SetScriptVersion" in getroottable())
 		PISTOL_NAME 			= "PISTOL"
 		PISTOL_DESC 			= "Fire rockets instead of bullets. Highly effective for mobility."
 		//
+		CAPPER_NAME 			= "C.A.P.P.E.R"
+		CAPPER_DESC 			= "Chance to trigger random effects and debuffs on hit."
+		//
 		BONK_NAME 				= "BONK! ATOMIC PUNCH"
 		BONK_DESC 				= "Supercharged drink, granting invulnerability that doesn't remove your ability to attack."
 		//
@@ -725,6 +728,9 @@ if ("SetScriptVersion" in getroottable())
 		///
 		PISTOL_NAME 			= "手枪"
 		PISTOL_DESC 			= "发射火箭弹. 能够进一步提升机动性."
+		//
+		CAPPER_NAME 			= "C.A.P.P.E.R"
+		CAPPER_DESC 			= "Chance to trigger random effects and debuffs on hit."
 		//
 		BONK_NAME 				= "原子能饮料"
 		BONK_DESC 				= "超充能你的饮料, 持续时间内给予无敌且仍能攻击."
@@ -1405,6 +1411,9 @@ if ("SetScriptVersion" in getroottable())
 		PISTOL_NAME 			= "PISTOL"
 		PISTOL_DESC 			= "Avfyrar raketer istället för kulor. Väldigt effekter för rörelse."
 		//
+		CAPPER_NAME 			= "C.A.P.P.E.R"
+		CAPPER_DESC 			= "Chance to trigger random effects and debuffs on hit."
+		//
 		BONK_NAME 				= "BONK! ATOMIC PUNCH"
 		BONK_DESC 				= "Superladdad dricka, ger osårbarhet som inte tar bort din förmåga att attackera."
 		//
@@ -2077,6 +2086,9 @@ if ("SetScriptVersion" in getroottable())
 		///
 		PISTOL_NAME 			= "ПИСТОЛЕТ"
 		PISTOL_DESC 			= "Стреляет ракетами вместо пуль. Чрезвычайно эффективен для мобильности."
+		//
+		CAPPER_NAME 			= "C.A.P.P.E.R"
+		CAPPER_DESC 			= "Chance to trigger random effects and debuffs on hit."
 		//
 		BONK_NAME 				= "БОНК! АТОМНЫЙ ЗАЛП"
 		BONK_DESC 				= "Сверхзаряженный напиток, дарующий неуязвимость, которая не мешает вам атаковать."
@@ -2757,6 +2769,9 @@ if ("SetScriptVersion" in getroottable())
 		PISTOL_NAME 			= "PISTOLET"
 		PISTOL_DESC 			= "Strzela rakietami zamiast pociskami. Bardzo przydatny do przemieszczania się."
 		//
+		CAPPER_NAME 			= "C.A.P.P.E.R"
+		CAPPER_DESC 			= "Chance to trigger random effects and debuffs on hit."
+		//
 		BONK_NAME 				= "BONK! ATOMOWY KOP"
 		BONK_DESC 				= "Supernaładowany napój, zapewniający niewrażliwość na obrażenia bez odbierania możliwości atakowania podczas trwania efektu."
 		//
@@ -3429,6 +3444,9 @@ if ("SetScriptVersion" in getroottable())
 		///
 		PISTOL_NAME 			= "ピストル"
 		PISTOL_DESC 			= "弾丸の代わりにロケット弾を発射する、機動力においては非常に効果的だ"
+		//
+		CAPPER_NAME 			= "C.A.P.P.E.R"
+		CAPPER_DESC 			= "Chance to trigger random effects and debuffs on hit."
 		//
 		BONK_NAME 				= "喉ごしガツン! アトミックパンチ"
 		BONK_DESC 				= "強化されたソーダ...効果中攻撃能力を失うことなく、無敵の状態を付与される"
@@ -4103,6 +4121,9 @@ if ("SetScriptVersion" in getroottable())
 		PISTOL_NAME 			= "PISTOL"
 		PISTOL_DESC 			= "Affyrer raketter i stedet for kugler. Meget effektivt, når man skal bevæge sig hurtigt."
 		//
+		CAPPER_NAME 			= "C.A.P.P.E.R"
+		CAPPER_DESC 			= "Chance to trigger random effects and debuffs on hit."
+		//
 		BONK_NAME 				= "BONK!-ATOMPUNCH"
 		BONK_DESC 				= "En kraftfuld drik, der giver usårlighed uden at forhindre dig i at angribe."
 		//
@@ -4770,6 +4791,9 @@ if ("SetScriptVersion" in getroottable())
 		PISTOL_NAME 			= "PISTOLA"
 		PISTOL_DESC 			= "Lanza cohetes en vez de balas. Muy eficaz para la movilidad."
 		//
+		CAPPER_NAME 			= "C.A.P.P.E.R"
+		CAPPER_DESC 			= "Chance to trigger random effects and debuffs on hit."
+		//
 		BONK_NAME 				= "¡BONK! LA BEBIDA SALVAVIDAS"
 		BONK_DESC 				= "Bebida radiactiva, da invulnerabilidad sin quitarte la habilidad de atacar."
 		//
@@ -5383,11 +5407,11 @@ if ("SetScriptVersion" in getroottable())
 		REPROG_BOT_MESSAGE 		= TF_TEAM_COLOR_RED+"%s\x01 已重構了 "+TF_TEAM_COLOR_REPROG_B+"%s\x01!"
 		//---------------------------------------------------------
 		CHECKPOINT_CREATED      = "\x077c8cc2Checkpoint created:\x078165cf [/%s]"
-        CHECKPOINT_WRONG_MAP    = CHECKPOINT_ERROR+"此檢查點不在此地圖."
-        CHECKPOINT_WRONG_MISS   = CHECKPOINT_ERROR+"此檢查點不在此任務."
-        CHECKPOINT_EXPIRE       = CHECKPOINT_ERROR+"檢查點已過期."
-        CHECKPOINT_RESTORE      = "\x0744CC44已恢復至最近儲存的檢查點"
-        CHECKPOINT_RESTORE_HUD  = "已恢復至最近儲存的檢查點."
+		CHECKPOINT_WRONG_MAP    = CHECKPOINT_ERROR+"此檢查點不在此地圖."
+		CHECKPOINT_WRONG_MISS   = CHECKPOINT_ERROR+"此檢查點不在此任務."
+		CHECKPOINT_EXPIRE       = CHECKPOINT_ERROR+"檢查點已過期."
+		CHECKPOINT_RESTORE      = "\x0744CC44已恢復至最近儲存的檢查點"
+		CHECKPOINT_RESTORE_HUD  = "已恢復至最近儲存的檢查點."
 		//---------------------------------------------------------	
 		SCATTERGUN_NAME 		= "雙管霰彈槍"
 		SCATTERGUN_DESC 		= "能造成不俗傷害的武器，近距離效果更強."
@@ -5409,6 +5433,9 @@ if ("SetScriptVersion" in getroottable())
 		///
 		PISTOL_NAME 			= "手槍"
 		PISTOL_DESC 			= "發射物改為火箭，大幅增加機動性."
+		//
+		CAPPER_NAME 			= "C.A.P.P.E.R"
+		CAPPER_DESC 			= "Chance to trigger random effects and debuffs on hit."
 		//
 		BONK_NAME 				= "Bonk! 原子能量飲料"
 		BONK_DESC 				= "超級充能飲料，允許你獲得無敵的同時進行攻擊."
@@ -5949,7 +5976,7 @@ if ("SetScriptVersion" in getroottable())
 		KNIFE_NAME 				= "刀子"
 		KNIFE_DESC 				= "使用時，會使你不斷流失生命但使你免疫任何傷害，擊殺可以恢復生命."
 		//
-        YOURETERNALREWARD_NAME 	= "您的永恆獎賞"
+		YOURETERNALREWARD_NAME 	= "您的永恆獎賞"
 		YOURETERNALREWARD_DESC 	= "當你受傷時增加其傷害且生命低於10%獲得暴擊，但此增益只能適用於正面擊中，獲得90%的傷害抗性."
 		// TODO: Update! "Extremely high backstab damage, able to instakill most Giants. However each attack has a high chance to miss. Grants a Teleport spell charge on kill (Requires Spellbook)."
 		//

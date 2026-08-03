@@ -68,6 +68,9 @@ english = {
 	PISTOL_NAME 			= "PISTOL"
 	PISTOL_DESC 			= "Fire rockets instead of bullets. Highly effective for mobility."
 	//
+	CAPPER_NAME 			= "C.A.P.P.E.R"
+	CAPPER_DESC 			= "Chance to trigger random effects and debuffs on hit."
+	//
 	BONK_NAME 				= "BONK! ATOMIC PUNCH"
 	BONK_DESC 				= "Supercharged drink, granting invulnerability that doesn't remove your ability to attack."
 	//

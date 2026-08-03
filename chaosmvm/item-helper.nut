@@ -8,7 +8,7 @@ const item_help_color_header = "\x0826c2ffDD"
 const text_color_header = "\x0826beffBB"
 const error_color = "\x07D43F3F"
 
-SetScriptVersion("item_helper", "3.4.3")
+SetScriptVersion("item_helper", "3.4.4")
 ::helper <- {}
 
 ::ItemTranslateTable <- {
@@ -21,7 +21,8 @@ SetScriptVersion("item_helper", "3.4.3")
 	"BABYFACEBLASTER" 	: [772]
 	"BACKSCATTER" 		: [1103]
 	/// Secondary
-	"PISTOL"			: [22, 23, 209, 160, 294, 15013, 15018, 15035, 15041, 15046, 15056, 15060, 15061, 15100, 15101, 15102, 15126, 15148, 30666, 1202]
+	"PISTOL"			: [22, 23, 209, 160, 294, 15013, 15018, 15035, 15041, 15046, 15056, 15060, 15061, 15100, 15101, 15102, 15126, 15148, 1202]
+    "CAPPER"			: [30666]	
 	"BONK"				: [46, 1145]
 	"CRITACOLA"			: [163]
 	"MADMILK"			: [222]
