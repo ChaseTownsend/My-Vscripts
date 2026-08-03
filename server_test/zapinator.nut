@@ -33,11 +33,11 @@ RegisterDamageCallback("player", "ZapinatorPlayer", function( params ) {
 	if (!attacker.HasWeapon(30666) || weapon.GetIDX() != 30666)
 		return
 
-	local function GetDebugName(plr)
-		return "( ["+plr.entindex()+"] : " + plr.GetUserName() + " )" 
+	// local function GetDebugName(plr)
+		// return "( ["+plr.entindex()+"] : " + plr.GetUserName() + " )" 
 
-	local function PrintLog(m)
-		printf("[%d] : %s\n", GetFrameCount(), m)
+	// local function PrintLog(m)
+		// printf("[%d] : %s\n", GetFrameCount(), m)
 
 	// printf("%s was hit by Laser!\n", GetDebugName(victim))
 
@@ -49,14 +49,14 @@ RegisterDamageCallback("player", "ZapinatorPlayer", function( params ) {
 
 	if(proj_scope.HitRobots.find(victim.entindex()) != null)
 	{
-		PrintLog(format("Blocking repeated Hit against %s!", GetDebugName(victim)))
+		// PrintLog(format("Blocking repeated Hit against %s!", GetDebugName(victim)))
 		params.early_out <- true
 		return
 	}
 
 	if("Penetrates" in proj_scope)
 	{
-		PrintLog(format("Multiplying dmg by %f because of %d penetrations", 1 + (0.25 * proj_scope.Penetrates), proj_scope.Penetrates))
+		// PrintLog(format("Multiplying dmg by %f because of %d penetrations", 1 + (0.25 * proj_scope.Penetrates), proj_scope.Penetrates))
 		params.damage *= 1 + (0.25 * proj_scope.Penetrates)
 	}
 
@@ -137,7 +137,7 @@ function ZapinatorHit(victim, attacker, projectile, weapon)
 	}
 
 	local DebuffRoll = 
-	Roll( 0.5, [victim, attacker, projectile, weapon], 
+	Roll( 0.25, [victim, attacker, projectile, weapon], 
 	function(victim, attacker, projectile, weapon) {
 		// "gas > bleed > slow > jar = mark = milk > 0.5s stun"
 		local Debuffs = [
@@ -179,16 +179,16 @@ function ZapinatorHit(victim, attacker, projectile, weapon)
 		local chosen_debuff = 0
 		foreach (chance in Debuff_chances)
 		{
-			printf("Do we beat chance?  %.02f%% >= %.02f%%\n", current_chance*100.0, chance*100.0)
+			// printf("Do we beat chance?  %.02f%% >= %.02f%%\n", current_chance*100.0, chance*100.0)
 			if ( current_chance > chance )
 			{
-				printf("Increasing Debuff number from %d to %d\n", chosen_debuff, chosen_debuff+1)
+				// printf("Increasing Debuff number from %d to %d\n", chosen_debuff, chosen_debuff+1)
 				chosen_debuff++
 				continue
 			}
 			break
 		}
-		printf("Applied debuff %d\n", chosen_debuff)
+		// printf("Applied debuff %d\n", chosen_debuff)
 		Debuffs[chosen_debuff].acall([this].extend([victim, attacker, weapon, projectile]))
 	},
 	function(...) {
@@ -205,16 +205,6 @@ function ZapinatorHit(victim, attacker, projectile, weapon)
 		// printl("Projectile failed to Apply KB")
 	})
 
-	local DamageRoll = 
-	Roll( 0.05, [weapon], 
-	function(weapon) {
-		weapon.AddAttribute("mult zapinator dmg", 20, 0)
-		RunWithDelay(TICK_DUR, @() weapon.AddAttribute("mult zapinator dmg", 1, 0))
-	}, 
-	function(...) {
-		// printl("Projectile failed to get extra dmg")
-	})
-
 	// local PenetrateRoll = 
 	// Roll( 0.5, [projectile], 
 	// function(projectile) {
@@ -227,7 +217,7 @@ function ZapinatorHit(victim, attacker, projectile, weapon)
 	local ExplodeRoll = 
 	Roll( 0.1, [attacker, projectile], 
 	function(attacker, projectile) {
-		printl("Projectile Detonated!")
+		// printl("Projectile Detonated!")
 		CreateBaseExplosion({
 			owner = attacker
 			weapon = null
@@ -249,7 +239,7 @@ function ZapinatorHit(victim, attacker, projectile, weapon)
 	local ReboundRoll = 
 	Roll( 0.15, [victim, projectile], 
 	function(victim, projectile) {
-		printl("Projectile Got Deflected!")
+		// printl("Projectile Got Deflected!")
 
 		HomingProjectile(projectile, victim)
 		GetScope(projectile).Penetrates++
@@ -260,9 +250,7 @@ function ZapinatorHit(victim, attacker, projectile, weapon)
 		// printl("Projectile failed to penetrate")
 	})
 
-	// if (true)
 	if (ExplodeRoll || !ReboundRoll)
-	// if (!ReboundRoll && (ExplodeRoll || PenetrateRoll))
 	{
 		EntFireNew(projectile, "DispatchEffect", "ParticleEffectStop", 0)
 		EntFireNew(projectile, "Kill", "", 0.05)
@@ -307,42 +295,4 @@ function HomingProjectile(projectile, victim)
 			GetScope(projectile).ReflectedDmgMult <- 0.333
 		}
 	}
-	
 }
-function SetProjectileSpeed(projectile)
-{
-	if(projectile.IsValid())
-		projectile.SetAbsVelocity(projectile.GetAbsVelocity() * 0.5)
-}
-
-
-/* 
-function CreateBaseExplosion(table: table)
-Creates a base explosion to use
-
-@param table —
-
-Input table
-owner: CTFPlayer		// The player to report the damage to.
-weapon: CTFWeaponBase|null 	// The weapon to give credit to. (Default: null)
-ignores: [CBaseEntity]		// The Entitys to ignore for the explosion (usually the victim). (Default: [])
-sound: string			// The sound to play on explosion. (Default: "")
-radius: float			// The radius of the explosion. (Default: 147.0)
-origin: Vector			// The origin of the explosion. (Default: Vector(0, 0, 0))
-damage: float			// The damage dealt at the center. (Default: 90.0)
-MinDamage: float		// The damage dealt at the edge. (Default: damage/2.0)
-DamageDeadzone: float		// The radius from the center where zero falloff occurs. (Default: 0.0)
-particle: string		// The explosion particle. (Default: "")
-particle_ang: Vector		// The angle of the explosion particle. (Default: QAngle(-90, 0, 0))
-particle_offset: Vector		// How much to offset the explosion particle spawn. (Default: Vector(0, 0, 0))
-DmgType: integer		// The damage types to use (add DMG_RADIUS_MAX to ignore damage falloff). (Default: DMG_GENERIC|DMG_BLAST)
-DmgCustom: integer		// The custom damage type to use.
-SoundRadius: float		// The radius the sound travels. (Default: radius)
-SoundDelay: float		// Cooldown between explosion sounds. (Default: 0.5)
-ExplodeFunc: function		// Callback function for players hit. ( Default: null )
-FuncBeforeDmg: bool		// If true, call ExplodeFunc before dealing damage. (Default: false)
-FuncOnIgnore: bool		// If true, call ExplodeFunc on ignored targets. (Default: false)
-OnlyPlayers: bool		// If true, only collect players to attack. (Default: false)
-FuncIgnoreObjects: bool		// If true, ignore non-players when calling ExplodeFunc. (Default: false)
-kill_icon: string		// Override the kill icon in killfeed, forces DmgCustom to 0 (Default: "")
- */
