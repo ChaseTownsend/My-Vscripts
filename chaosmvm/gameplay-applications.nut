@@ -210,13 +210,13 @@ class EquipWeaponData {
 	 */
 	override_func = function( ... ) 
 	{
-		if(func_override_stupid.len() != 0 && type(func_override_stupid[0]) == "function")
-			return func_override_stupid[0].acall([this].extend(vargv))	// fuck is this magic
+		if(type(function_overrides[0]) == "function")
+			return function_overrides[0].acall([this].extend(vargv))	// fuck is this magic
 		return true
 	}
 
-	// stupid
-	func_override_stupid = []
+	/** @type {[null|function]} */
+	function_overrides = [null, null]
 
 	/** 
 	 * If this weapon is going to be created from Rafmods `CustomWeapon` block
@@ -224,6 +224,17 @@ class EquipWeaponData {
 	 * @type {bool} 
 	*/
 	is_segsegv = false
+
+	/** 
+	 * Will pass in the player when successfully used
+	 * 
+	 * @type {function} 
+	*/
+	OnPlayerEquip = function( ... )
+	{
+		if(type(function_overrides[1]) == "function")
+			function_overrides[1].acall([this].extend(vargv))
+	}
 
 	constructor(ItemID, InternalName, MakingName, table)
 	{
@@ -236,7 +247,15 @@ class EquipWeaponData {
 			if (key in this && ["idx", "internal_name", "make_name"].find(key) == null)
 			{
 				if(key == "override_func")
-					func_override_stupid = [value]
+				{
+					function_overrides.remove(0)
+					function_overrides.insert(0, value)
+				}
+				else if(key == "OnPlayerEquip")
+				{
+					function_overrides.remove(1)
+					function_overrides.insert(1, value)
+				}
 				else
 					this[key] = value
 			}
@@ -309,6 +328,9 @@ RegisterEquipItem(1121, "Mutated Milk", "mutated", {
 RegisterEquipItem(30666, "The C.A.P.P.E.R", "capper", {
 	override_func = function( player ) {
 		return player.GetPlayerClass() == TF_CLASS_SCOUT || player.GetPlayerClass() == TF_CLASS_ENGINEER
+	}
+	OnPlayerEquip = function( player ) {
+		player.FixAmmo()
 	}
 	is_segsegv = true
 })
@@ -454,7 +476,7 @@ AddChatTrigger("equip" function( player, ... ) {
 		{
 			if (data.override_func(player) == false)
 				return player.PrintToChatF("\x0730C429[►] Failed to Meet Requirements for %s", data.internal_name)
-			item_data = [idx, data.internal_name, data.force_swap, data.overrides, data.is_segsegv]
+			item_data = [idx, data.internal_name, data.force_swap, data.overrides, data.is_segsegv, data.OnPlayerEquip]
 			break
 		}
 	}
@@ -476,6 +498,7 @@ AddChatTrigger("equip" function( player, ... ) {
 	}
 	
 	player.EquipItem(item_data[1], item_data[2], item_data[3], item_data[4])
+	item_data[5].call(player)
 } )
 
 AddChatTrigger("scoreboard", function( player ) {
