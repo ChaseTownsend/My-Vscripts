@@ -210,13 +210,13 @@ class EquipWeaponData {
 	 */
 	override_func = function( ... ) 
 	{
-		if(type(function_overrides[0]) == "function")
-			return function_overrides[0].acall([this].extend(vargv))	// fuck is this magic
+		if("override_func" in function_overrides && type(function_overrides["override_func"]) == "function")
+			return function_overrides["override_func"].acall([this].extend(vargv))	// fuck is this magic
 		return true
 	}
 
-	/** @type {[null|function]} */
-	function_overrides = [null, null]
+	/** @type {table} */
+	function_overrides = {}
 
 	/** 
 	 * If this weapon is going to be created from Rafmods `CustomWeapon` block
@@ -232,8 +232,8 @@ class EquipWeaponData {
 	*/
 	OnPlayerEquip = function( ... )
 	{
-		if(type(function_overrides[1]) == "function")
-			function_overrides[1].acall([this].extend(vargv))
+		if("OnPlayerEquip" in function_overrides && type(function_overrides["OnPlayerEquip"]) == "function")
+			function_overrides["OnPlayerEquip"].acall([this].extend(vargv))
 	}
 
 	constructor(ItemID, InternalName, MakingName, table)
@@ -241,21 +241,14 @@ class EquipWeaponData {
 		this.idx = ItemID
 		this.internal_name = InternalName
 		this.make_name = MakingName
+		this.function_overrides = {}
 
 		foreach (key, value in table)
 		{
 			if (key in this && ["idx", "internal_name", "make_name"].find(key) == null)
 			{
-				if(key == "override_func")
-				{
-					function_overrides.remove(0)
-					function_overrides.insert(0, value)
-				}
-				else if(key == "OnPlayerEquip")
-				{
-					function_overrides.remove(1)
-					function_overrides.insert(1, value)
-				}
+				if(key == "override_func" || key == "OnPlayerEquip")
+					function_overrides[key] <- value
 				else
 					this[key] = value
 			}
@@ -271,8 +264,8 @@ class EquipWeaponData {
  */
 function ROOT::RegisterEquipItem( idx, internal_name, name_make, data )
 {
-	if (startswith(name_make, "page"))
-		throw "Cannot make items with make names that start with \"page\"!, this is used Internally!"
+	if (startswith(name_make, "page "))
+		throw "Cannot make items with make names that start with \"page \"!, this is used Internally!"
 	if (name_make == "help")
 		throw "Cannot make items with make names of \"help\""
 	// probably slower 
@@ -314,16 +307,19 @@ RegisterEquipItem(1100, "The Bread Bite", "bread", {
 	override_func = function( player ) {
 		return player.GetPlayerClass() == TF_CLASS_HEAVYWEAPONS
 	}
+	// is_segsegv = true
 })
 RegisterEquipItem(1105, "The Self-Aware Beauty Mark", "mark", {
 	override_func = function( player ) {
 		return player.GetPlayerClass() == TF_CLASS_SNIPER
 	}
+	// is_segsegv = true
 })
 RegisterEquipItem(1121, "Mutated Milk", "mutated", {
 	override_func = function( player ) {
 		return player.GetPlayerClass() == TF_CLASS_SCOUT
 	}
+	// is_segsegv = true
 })
 RegisterEquipItem(30666, "The C.A.P.P.E.R", "capper", {
 	override_func = function( player ) {
@@ -337,7 +333,6 @@ RegisterEquipItem(30666, "The C.A.P.P.E.R", "capper", {
 
 // RegisterEquipItem(1, "My Custom Item", "test", {override_func = function( player ) {return player.GetPlayerClass() == 4}, is_segsegv = true})
 // RegisterEquipItem(30666, "The C.A.P.P.E.R", "capper", {})
-// RegisterEquipItem(30758, "Prinny Machete", "prinny", {})
 
 // below registers are deprecated
 // RegisterEquipItem(30666, "The C.A.P.P.E.R", "capper", true, {}, function( player ) {return player.GetPlayerClass() == TF_CLASS_SCOUT})
@@ -461,7 +456,7 @@ AddChatTrigger("equip" function( player, ... ) {
 	}
 
 	local item = vargv[0].tolower()
-	local item_data = []
+	local item_data = null
 
 	if (player.IsGHeavy())
 	{
@@ -476,12 +471,12 @@ AddChatTrigger("equip" function( player, ... ) {
 		{
 			if (data.override_func(player) == false)
 				return player.PrintToChatF("\x0730C429[►] Failed to Meet Requirements for %s", data.internal_name)
-			item_data = [idx, data.internal_name, data.force_swap, data.overrides, data.is_segsegv, data.OnPlayerEquip]
+			item_data = data
 			break
 		}
 	}
 
-	if (item_data.len() == 0)
+	if (item_data == null)
 		return player.PrintToChatF("\x0730C429[►] Failed to find any items using Input \"%s\", Try Again", item)
 
 	local HasItemHelper = "ItemTranslateTable" in ROOT
@@ -490,15 +485,14 @@ AddChatTrigger("equip" function( player, ... ) {
 	{
 		foreach (item, indexs in ItemTranslateTable)
 		{
-			if (!IsInArray(item_data[0], indexs))
+			if (!IsInArray(item_data.idx, indexs))
 				continue
 			player.IHTranslateToChat2(item)
 			break
 		}
 	}
-	
-	player.EquipItem(item_data[1], item_data[2], item_data[3], item_data[4])
-	item_data[5].call(player)
+	player.EquipItem(item_data.internal_name, item_data.force_swap, item_data.overrides, item_data.is_segsegv)
+	item_data.OnPlayerEquip(player)
 } )
 
 AddChatTrigger("scoreboard", function( player ) {
