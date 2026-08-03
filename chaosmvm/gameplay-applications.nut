@@ -1239,6 +1239,10 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 		else
 			scope.DelayGameplayThink = GetFrameCount()+1
 
+		// should not persist on spawn
+		if ("OnDeath" in scope)
+			delete scope.OnDeath
+
 		
 		if (FatCatLibSettings.KillWatchViewmodels)
 		{

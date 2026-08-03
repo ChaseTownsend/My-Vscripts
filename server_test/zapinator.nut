@@ -1,7 +1,7 @@
 if (!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
-SetScriptVersion("zapinator", "1.0.0")
+SetScriptVersion("zapinator", "1.0.2")
 
 IncludeScript("chaosmvm/gameplay-applications")
 
@@ -14,10 +14,6 @@ RegisterDamageCallback("player", "ZapinatorPlayer", function( params ) {
 	local attacker 	= params.attacker
 	local weapon 	= null
 	local inflictor	= params.inflictor
-	
-
-	if (!attacker)
-		return
 
 	weapon = params.weapon
 
@@ -253,7 +249,7 @@ function ZapinatorHit(victim, attacker, projectile, weapon)
 	if (ExplodeRoll || !ReboundRoll)
 	{
 		EntFireNew(projectile, "DispatchEffect", "ParticleEffectStop", 0)
-		EntFireNew(projectile, "Kill", "", 0.05)
+		EntFireNew(projectile, "Kill", "", 0.02)
 	}
 }
 
