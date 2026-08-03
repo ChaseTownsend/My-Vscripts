@@ -7292,6 +7292,9 @@ function ROOT::GetClosestPlayer( target, team = TF_TEAM_BLUE, skip = 0)
 	local distances = dist_players.values()
 	local close_distances = dist_players.values().sort()
 
+	if(dist_players.len() == 0)
+		return target
+
 	while (skip > 0)
 	{
 		local value = close_distances.remove(0)

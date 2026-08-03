@@ -192,7 +192,7 @@ function ZapinatorHit(victim, attacker, projectile, weapon)
 		Debuffs[chosen_debuff].acall([this].extend([victim, attacker, weapon, projectile]))
 	},
 	function(...) {
-		printl("Projectile failed to Apply Debuff")
+		// printl("Projectile failed to Apply Debuff")
 	})
 
 	local KnockbackRoll = 
@@ -202,7 +202,17 @@ function ZapinatorHit(victim, attacker, projectile, weapon)
 		weapon.AddAttribute("apply z velocity on damage", 400, 0)
 	}, 
 	function(...) {
-		printl("Projectile failed to Apply KB")
+		// printl("Projectile failed to Apply KB")
+	})
+
+	local DamageRoll = 
+	Roll( 0.05, [weapon], 
+	function(weapon) {
+		weapon.AddAttribute("mult zapinator dmg", 20, 0)
+		RunWithDelay(TICK_DUR, @() weapon.AddAttribute("mult zapinator dmg", 1, 0))
+	}, 
+	function(...) {
+		// printl("Projectile failed to get extra dmg")
 	})
 
 	// local PenetrateRoll = 
@@ -214,7 +224,7 @@ function ZapinatorHit(victim, attacker, projectile, weapon)
 	// 	printl("Projectile failed to penetrate")
 	// })
 
-	/* local ExplodeRoll = 
+	local ExplodeRoll = 
 	Roll( 0.1, [attacker, projectile], 
 	function(attacker, projectile) {
 		printl("Projectile Detonated!")
@@ -237,7 +247,6 @@ function ZapinatorHit(victim, attacker, projectile, weapon)
 	})
 
 	local ReboundRoll = 
-	// Roll( 1.0, [victim, projectile], 
 	Roll( 0.15, [victim, projectile], 
 	function(victim, projectile) {
 		printl("Projectile Got Deflected!")
@@ -249,10 +258,10 @@ function ZapinatorHit(victim, attacker, projectile, weapon)
 	}, 
 	function(...) {
 		// printl("Projectile failed to penetrate")
-	}) */
+	})
 
-	if (true)
-	// if (ExplodeRoll || !ReboundRoll)
+	// if (true)
+	if (ExplodeRoll || !ReboundRoll)
 	// if (!ReboundRoll && (ExplodeRoll || PenetrateRoll))
 	{
 		EntFireNew(projectile, "DispatchEffect", "ParticleEffectStop", 0)
