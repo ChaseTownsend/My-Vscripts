@@ -1,7 +1,7 @@
 if (!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
-SetScriptVersion("GameplayApplications", "5.3.2")
+SetScriptVersion("GameplayApplications", "5.3.4")
 
 local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", THINKER_PERSIST)
 
@@ -306,6 +306,13 @@ RegisterEquipItem(1121, "Mutated Milk", "mutated", {
 		return player.GetPlayerClass() == TF_CLASS_SCOUT
 	}
 })
+RegisterEquipItem(30666, "The C.A.P.P.E.R", "capper", {
+	override_func = function( player ) {
+		return player.GetPlayerClass() == TF_CLASS_SCOUT || player.GetPlayerClass() == TF_CLASS_ENGINEER
+	}
+	is_segsegv = true
+})
+
 // RegisterEquipItem(1, "My Custom Item", "test", {override_func = function( player ) {return player.GetPlayerClass() == 4}, is_segsegv = true})
 // RegisterEquipItem(30666, "The C.A.P.P.E.R", "capper", {})
 // RegisterEquipItem(30758, "Prinny Machete", "prinny", {})
