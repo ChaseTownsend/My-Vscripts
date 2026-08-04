@@ -1,21 +1,21 @@
 IncludeScript("fatcat_library")
 
 ::Armor_CallBacks <- {
-	function OnGameEvent_post_inventory_application(params)
+	function OnGameEvent_post_inventory_application( params )
 	{
 		local player = GetPlayerFromUserID(params.userid)
 		local scope = GetScope(player)
 		scope.MaxArmor <- (player.GetMaxHealth()/3).tointeger()
 		scope.Armor <- scope.MaxArmor
 	}
-	function OnGameEvent_ammo_pickup(params)
+	function OnGameEvent_ammo_pickup( params )
 	{
 		if ((params.total / params.amount).tointeger() == 1.0)
 			return
 		PrintTable(params)
 		printl("")
 	}
-	function OnScriptHook_OnTakeDamage(params)
+	function OnScriptHook_OnTakeDamage( params )
 	{
 		if (!params.const_entity.IsPlayer())
 			return

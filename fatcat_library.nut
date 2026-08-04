@@ -2579,7 +2579,7 @@ function CTFPlayer::GetPlayerClassName()
  */
 function CTFPlayer::GetTranslatedString( string )
 {
-	if(!IsValidPlayer(this))
+	if (!IsValidPlayer(this))
 		return
 	local lang = GetLanguage()
 	//hmm, mising all translations?
@@ -2609,7 +2609,7 @@ function CTFPlayer::GetTranslatedString( string )
  */
 function CTFPlayer::GetTranslatedAndFormattedString( ... )
 {
-	if(!IsValidPlayer(this))
+	if (!IsValidPlayer(this))
 		return
 	local args = vargv
 	local localized_string = args[0]
@@ -7292,7 +7292,7 @@ function ROOT::GetClosestPlayer( target, team = TF_TEAM_BLUE, skip = 0)
 	local distances = dist_players.values()
 	local close_distances = dist_players.values().sort()
 
-	if(dist_players.len() == 0)
+	if (dist_players.len() == 0)
 		return target
 
 	while (skip > 0)
@@ -7304,7 +7304,7 @@ function ROOT::GetClosestPlayer( target, team = TF_TEAM_BLUE, skip = 0)
 		skip--
 	}
 
-	if(close_distances.len() == 0)
+	if (close_distances.len() == 0)
 		return target
 
 	local closest_distance = close_distances[0]
@@ -9133,16 +9133,16 @@ function ROOT::CreateBaseExplosion( table )
 
 	local actual_icon = null
 	local Temp_icon = false
-	if(kill_icon != "")
+	if (kill_icon != "")
 	{
-		if(type(kill_icon) == "string")
+		if (type(kill_icon) == "string")
 		{
 			actual_icon = CreateKillIcon(kill_icon)
 			Temp_icon = true
 		}
 	}
 
-	if(actual_icon != null)
+	if (actual_icon != null)
 		EntFireNew(actual_icon, "Kill", "", 1.0)
 
 	DebugDrawClear()
@@ -10081,7 +10081,7 @@ function ROOT::PostPlayerSpawn( player )
 				
 			if (Override)
 				RunWithDelay(3.0, @() eventdata.player.PrintToChat(motd))
-			else if(motd != "")
+			else if (motd != "")
 				RunWithDelay(3.0, @() eventdata.player.PrintToChatF("\x01\x07E000E0► FatCatLib ◄   \x03%s", motd))
 			scope.HasSpawned <- true
 		}

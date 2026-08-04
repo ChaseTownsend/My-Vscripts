@@ -1,7 +1,7 @@
 const bhop_version = "1.0.1"
 
 ::bunnyhop <- {
-	function OnGameEvent_player_spawn(params)
+	function OnGameEvent_player_spawn( params )
 	{
 		local player = GetPlayerFromUserID(params.userid)
 		if (IsPlayerABot(player)) return
@@ -14,7 +14,7 @@ const bhop_version = "1.0.1"
 		scope.bunnyhopping <- 0
 		scope.rocketjumping <- 0
 	}
-	function OnGameEvent_player_team(params)
+	function OnGameEvent_player_team( params )
 	{
 		local player = GetPlayerFromUserID(params.userid)
 		if (IsPlayerABot(player)) return
@@ -28,7 +28,7 @@ const bhop_version = "1.0.1"
 		scope.rocketjumping <- 0
 		ClientPrint(player, 3, "\x0720BB20[Bhop]\x01 BunnyHop is Enabled By Default,\nUse \x03!bhop\x01 or \x03/bhop\x01 to toggle it!\nOr use \x03!bhop info\x01, or \x03/bhop info\x01 for more information")
 	}
-	function OnGameEvent_player_say(params)
+	function OnGameEvent_player_say( params )
 	{
 		local player = GetPlayerFromUserID(params.userid)
 		if (IsPlayerABot(player)) return
@@ -62,7 +62,7 @@ const bhop_version = "1.0.1"
 			ClientPrint(player, 3, "\x0720BB20[Bhop - Version " + bhop_version + "]\x01\n - Fixed Market Gardens & Winger jump height increase." + extra)
 		}
 	}
-	function OnGameEvent_rocket_jump(params)
+	function OnGameEvent_rocket_jump( params )
 	{
 		local player = GetPlayerFromUserID(params.userid)
 		if (IsPlayerABot(player)) return
@@ -70,7 +70,7 @@ const bhop_version = "1.0.1"
 		local scope = player.GetScriptScope()
 		scope.rocketjumping = 1
 	}
-	function OnScriptHook_OnTakeDamage(params)
+	function OnScriptHook_OnTakeDamage( params )
 	{
 		local player = params.inflictor
 		if (IsPlayerABot(player)) return
@@ -95,19 +95,19 @@ const bhop_version = "1.0.1"
 }
 __CollectGameEventCallbacks(bunnyhop)
 
-function IsPlayerOnGround(player)
+function IsPlayerOnGround( player )
 {
     return (player.GetFlags() & Constants.FPlayer.FL_ONGROUND)
 }
-function IsPlayerJumping(player)
+function IsPlayerJumping( player )
 {
     return (NetProps.GetPropInt(player, "m_nButtons") & Constants.FButtons.IN_JUMP)
 }
-function GetWeaponIDXInSlot(player, slot)
+function GetWeaponIDXInSlot( player, slot )
 {
     return NetProps.GetPropInt(NetProps.GetPropEntityArray(player, "m_hMyWeapons", slot), "m_AttributeManager.m_Item.m_iItemDefinitionIndex")
 }
-function GetActiveWeaponIDX(player)
+function GetActiveWeaponIDX( player )
 {
 	return NetProps.GetPropInt(player.GetActiveWeapon(), "m_AttributeManager.m_Item.m_iItemDefinitionIndex")
 }

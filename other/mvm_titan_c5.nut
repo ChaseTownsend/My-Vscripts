@@ -470,7 +470,7 @@ function pathreroll()
 }
 
 ::sentryhack <- {
-	function OnScriptHook_OnTakeDamage(params)
+	function OnScriptHook_OnTakeDamage( params )
 	{
 		if (!params.attacker) return
 		local attacker = params.attacker
@@ -487,7 +487,7 @@ function pathreroll()
 }
 
 ::teleporterhack <- {
-	function OnGameEvent_player_teleported(params)
+	function OnGameEvent_player_teleported( params )
 	{
 		// WARNING:
 		// This Will Be Triggered by EVERY teleporter teleport

@@ -210,7 +210,7 @@ class EquipWeaponData {
 	 */
 	override_func = function( ... ) 
 	{
-		if("override_func" in function_overrides && type(function_overrides["override_func"]) == "function")
+		if ("override_func" in function_overrides && type(function_overrides["override_func"]) == "function")
 			return function_overrides["override_func"].acall([this].extend(vargv))	// fuck is this magic
 		return true
 	}
@@ -232,7 +232,7 @@ class EquipWeaponData {
 	*/
 	OnPlayerEquip = function( ... )
 	{
-		if("OnPlayerEquip" in function_overrides && type(function_overrides["OnPlayerEquip"]) == "function")
+		if ("OnPlayerEquip" in function_overrides && type(function_overrides["OnPlayerEquip"]) == "function")
 			function_overrides["OnPlayerEquip"].acall([this].extend(vargv))
 	}
 
@@ -247,7 +247,7 @@ class EquipWeaponData {
 		{
 			if (key in this && ["idx", "internal_name", "make_name"].find(key) == null)
 			{
-				if(key == "override_func" || key == "OnPlayerEquip")
+				if (key == "override_func" || key == "OnPlayerEquip")
 					function_overrides[key] <- value
 				else
 					this[key] = value
@@ -274,7 +274,7 @@ function ROOT::RegisterEquipItem( idx, internal_name, name_make, data )
 		printf("Warning! Item with idx %d Already exists!  Overriding...", idx)
 	foreach (_, data in RegisteredItems)
 	{
-		if(data.make_name == name_make)
+		if (data.make_name == name_make)
 			throw "Cannot make items with the same Name!"
 	}
 	
@@ -331,11 +331,11 @@ RegisterEquipItem(30666, "The C.A.P.P.E.R", "capper", {
 	is_segsegv = true
 })
 
-// RegisterEquipItem(1, "My Custom Item", "test", {override_func = function( player ) {return player.GetPlayerClass() == 4}, is_segsegv = true})
+// RegisterEquipItem(1, "My Custom Item", "test", {override_func = function( player ) {return player.GetPlayerClass( ) == 4}, is_segsegv = true} )
 // RegisterEquipItem(30666, "The C.A.P.P.E.R", "capper", {})
 
 // below registers are deprecated
-// RegisterEquipItem(30666, "The C.A.P.P.E.R", "capper", true, {}, function( player ) {return player.GetPlayerClass() == TF_CLASS_SCOUT})
+// RegisterEquipItem(30666, "The C.A.P.P.E.R", "capper", true, {}, function( player ) {return player.GetPlayerClass( ) == TF_CLASS_SCOUT} )
 // RegisterEquipItem(1, "test item", "Test1", true, {}, function( player ) {return false})
 // RegisterEquipItem(2, "test item", "Test2", true, {}, function( player ) {return false})
 // RegisterEquipItem(3, "test item", "Test3", true, {}, function( player ) {return false})
@@ -365,7 +365,7 @@ RegisterEquipItem(30666, "The C.A.P.P.E.R", "capper", {
 	"reload time increased" 		: 5
 	"projectile no deflect" 		: 1
 	"projectile spread angle mult" 	: 0
-}, override_func =function( player ) {return player.GetSteamID() == "[U:1:969530867]"}) */
+}, override_func =function( player ) {return player.GetSteamID( ) == "[U:1:969530867]"} ) */
 
 AddChatTrigger("equip" function( player, ... ) {
 	if (!player)
@@ -497,8 +497,8 @@ AddChatTrigger("equip" function( player, ... ) {
 
 AddChatTrigger("scoreboard", function( player ) {
 	player.PrintToChat("[►] Scores printed to Console.")
-	local function GetKills( plrr ) {return GetPropInt(plrr, "m_Shared.tfsharedlocaldata.m_ScoreData.m_iKills")}
-	local function GetDeaths( plrr ) {return GetPropInt(plrr, "m_Shared.tfsharedlocaldata.m_ScoreData.m_iDeaths")-GetPropInt(plrr, "m_Shared.tfsharedlocaldata.m_ScoreData.m_iSuicides")}
+	local function GetKills( plrr ) {return GetPropInt( plrr, "m_Shared.tfsharedlocaldata.m_ScoreData.m_iKills" )}
+	local function GetDeaths( plrr ) {return GetPropInt( plrr, "m_Shared.tfsharedlocaldata.m_ScoreData.m_iDeaths" )-GetPropInt(plrr, "m_Shared.tfsharedlocaldata.m_ScoreData.m_iSuicides")}
 	ReCalculatePlayers() //
 	foreach (plr in m_aHumans)
 	{

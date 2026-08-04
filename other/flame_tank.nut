@@ -1,4 +1,4 @@
-function DebugDrawTrigger(trigger, r, g, b, alpha, duration)
+function DebugDrawTrigger( trigger, r, g, b, alpha, duration )
 {
 	local origin = trigger.GetOrigin()
 	local mins = NetProps.GetPropVector(trigger, "m_Collision.m_vecMins")

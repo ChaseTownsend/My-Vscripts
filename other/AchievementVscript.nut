@@ -16,14 +16,14 @@ function TagCheck()
 }
 
 ::OnSpawn <- {
-	function OnGameEvent_player_spawn(params)
+	function OnGameEvent_player_spawn( params )
 	{
 		EntFireByHandle(GetPlayerFromUserID(params.userid), "RunScriptCode", "TagCheck()", 0.1, null, null)
 		EntFireByHandle(GetPlayerFromUserID(params.userid), "RunScriptCode", "TagCheck()", 0.2, null, null)
 		EntFireByHandle(GetPlayerFromUserID(params.userid), "RunScriptCode", "TagCheck()", 0.3, null, null)
 		EntFireByHandle(GetPlayerFromUserID(params.userid), "RunScriptCode", "TagCheck()", 0.4, null, null)
 	}
-	function OnGameEvent_player_death(params)
+	function OnGameEvent_player_death( params )
 	{
 		EntFireByHandle(GetPlayerFromUserID(params.userid), "RunScriptCode", "self.ForceRegenerateAndRespawn()", 0.25, null, null)
 		EntFireByHandle(GetPlayerFromUserID(params.userid), "RunScriptCode", "TagCheck()", 0.3, null, null)

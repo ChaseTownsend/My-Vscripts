@@ -41,13 +41,13 @@ SetCvar( "tf_mvm_buybacks_per_wave", 0 )
 	"models/bots/engineer/bot_engineer.mdl",
 ]
 
-function RobotModelToGiant(model)
+function RobotModelToGiant( model )
 {
 	// local data = split(model, "/").slice(2)
 	return "models/bots/"+split(model, "/")[2]+"_boss/"+split(split(model, "/")[3], ".mdl")[0]+"_boss.mdl"
 }
 
-function RemoveBot(miniboss = false)
+function RemoveBot( miniboss = false )
 {
 	local count = GetPropInt(ObjResource, "m_nMannVsMachineWaveClassCounts")
 	if (count == 0) 
@@ -58,7 +58,7 @@ function RemoveBot(miniboss = false)
 
 if ("RougeliteEvents" in ROOT) delete ::RougeliteEvents
 ::RougeliteEvents <- {
-	function OnScriptEvent_HumanResupply(params)
+	function OnScriptEvent_HumanResupply( params )
 	{
 		local player = params.player
 		SpawnPlayer(player)
@@ -71,19 +71,19 @@ if ("RougeliteEvents" in ROOT) delete ::RougeliteEvents
 			Melee.AddAttribute("alt fire teleport to spawn", 0, 0)
 		} 
 	}
-	function OnScriptEvent_BotResupply(params)
+	function OnScriptEvent_BotResupply( params )
 	{
 		local player = params.player
 		SpawnBot(player)
 	}
-	function OnGameEvent_player_disconnect(params)
+	function OnGameEvent_player_disconnect( params )
 	{
 		local player = GetPlayerFromUserID(params.userid)
 
 		if (params.bot)
 			return
 	}
-	function OnGameEvent_mvm_begin_wave(params)
+	function OnGameEvent_mvm_begin_wave( params )
 	{
 		StartDaGame()
 		SetPropInt( ObjectiveResource, "m_nMannVsMachineWaveCount", 1 )
@@ -92,14 +92,14 @@ if ("RougeliteEvents" in ROOT) delete ::RougeliteEvents
 		SetPropInt( ObjectiveResource, "m_nMannVsMachineMaxWaveCount", 1 )
 		RunWithDelay(@() SetPropInt( ObjectiveResource, "m_nMannVsMachineMaxWaveCount", 1 ), 0.015)
 	}
-	function OnScriptEvent_BotDeath(params)
+	function OnScriptEvent_BotDeath( params )
 	{
 		local player = params.victim
 
 		if (player.IsBot())
 			RemoveBot(player.IsMiniBoss())
 	}
-	function OnGameEvent_teamplay_broadcast_audio(params)
+	function OnGameEvent_teamplay_broadcast_audio( params )
 	{
 		local sound = params.sound
 
@@ -112,12 +112,12 @@ if ("RougeliteEvents" in ROOT) delete ::RougeliteEvents
 __CollectGameEventCallbacks(RougeliteEvents)
 
 
-function SpawnPlayer(player)
+function SpawnPlayer( player )
 {
 	// do stuf
 }
 
-EnterArena <- function(self)
+EnterArena <- function( self )
 	{
 		local lumberyard = false
 		local ravine = false
@@ -177,12 +177,12 @@ EnterArena <- function(self)
 		if (roundactive) EntFireByHandle(self,"Runscriptcode","self.AddCondEx(51,5,self)",0.2,null,null);
 	}
 
-function TeleportToArena(player)
+function TeleportToArena( player )
 {
 
 }
 
-function SpawnBot(player)
+function SpawnBot( player )
 {
 	if (!player.IsAlive() || !player.IsValid())
 		return
@@ -211,7 +211,7 @@ function SpawnBot(player)
 	 */
 }
 
-function UpdateModel(bot)
+function UpdateModel( bot )
 {
 	// local model = bot.IsMiniBoss() ? RobotModelToGiant(RobotModels[bot.GetPlayerClass()]) : RobotModels[bot.GetPlayerClass()]
 	bot.SetCustomModelWithClassAnimations(bot.IsMiniBoss() ? RobotModelToGiant(RobotModels[bot.GetPlayerClass()]) : RobotModels[bot.GetPlayerClass()])
@@ -226,7 +226,7 @@ function StartDaGame()
 }
 
 
-function GetBotLoadout(player)
+function GetBotLoadout( player )
 {
 	if (GetRoundState() != 4) return
 	if (player.HasBotTag("BombHolder")) return
@@ -260,7 +260,7 @@ function GetBotLoadout(player)
 	}
 }
 
-function MoveToSpawnLocation(bot)
+function MoveToSpawnLocation( bot )
 {
 	if (GetRoundState() != 4) return
 	local spawns = GetAllEntitiesByTargetname("BotSpawn")

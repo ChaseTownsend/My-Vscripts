@@ -66,7 +66,7 @@ if (!("FoldedNetProps" in ROOT)) // make sure folding is only done once
 	}
 }
 
-function ROOT::EnableStringPurge(entity)
+function ROOT::EnableStringPurge( entity )
 {
 	if ( !entity )
 		return entity
@@ -74,7 +74,7 @@ function ROOT::EnableStringPurge(entity)
 	return entity
 }
 
-function ROOT::CreateByClassname(classname)
+function ROOT::CreateByClassname( classname )
 	return EnableStringPurge(Entities.CreateByClassname(classname))
 
 const TF_STUN_LOSER_NO_EFFECTS = 96
@@ -86,7 +86,7 @@ const BASE_JUMPER_IDX = 1101
 const SF_TRIGGER_ALLOW_CLIENTS = 0x1
 const PATTACH_ABSORIGIN_FOLLOW = 1
 
-function ROOT::CTFPlayer::ForceTaunt(taunt_id, particle = null, particle_duration = -1)
+function ROOT::CTFPlayer::ForceTaunt( taunt_id, particle = null, particle_duration = -1 )
 {
 	local weapon = CreateByClassname("tf_weapon_bat")
 	local active_weapon = GetActiveWeapon()
@@ -106,7 +106,7 @@ function ROOT::CTFPlayer::ForceTaunt(taunt_id, particle = null, particle_duratio
 		CreateParticle(particle, particle_duration, true)
 }
 
-function ROOT::CTFPlayer::CreateParticle(particle, duration = -1, used_for_taunt = false)
+function ROOT::CTFPlayer::CreateParticle( particle, duration = -1, used_for_taunt = false )
 {
 	local trigger = CreateByClassname("trigger_particle")
 	trigger.KeyValueFromString("particle_name", particle)
@@ -184,7 +184,7 @@ function ROOT::CTFPlayer::CreateWearable( idx, model, attributes = {} )
 }
 
 ::Unusual <- {
-	function OnGameEvent_player_say(params)
+	function OnGameEvent_player_say( params )
 	{
 		local player = GetPlayerFromUserID(params.userid)
 		local text = split(params.text, " ")
@@ -205,7 +205,7 @@ function ROOT::CTFPlayer::CreateWearable( idx, model, attributes = {} )
 		SendToServerConsole("bot_kick all")
 		SendToServerConsole(format("bot -team %s -class pyro -name Pyro", text.len() < 3 ? "red" : text[2]))
 	}
-	function OnGameEvent_player_spawn(params)
+	function OnGameEvent_player_spawn( params )
 	{
 		local player = GetPlayerFromUserID(params.userid)
 		if (!player.IsFakeClient())

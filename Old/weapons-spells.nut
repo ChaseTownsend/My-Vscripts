@@ -2,7 +2,7 @@
 IncludeScript("fatcat_library")
 
 ::Spells <- {
-	function OnGameEvent_player_death(params)
+	function OnGameEvent_player_death( params )
 	{
 		if (!params.attacker) return
 		local player = GetPlayerFromUserID(params.attacker)
@@ -103,7 +103,7 @@ IncludeScript("fatcat_library")
 			if (Spell_Index == Spell_to_Grant && Spell_Charges < 2) IncrementSpellCharge(spell_book, 1)
 		}
 	}
-	function OnScriptHook_OnTakeDamage(params)
+	function OnScriptHook_OnTakeDamage( params )
 	{
 		if (!params.attacker) return
 		local player = params.attacker
@@ -137,7 +137,7 @@ IncludeScript("fatcat_library")
 	}
 
 
-	function OnGameEvent_player_spawn(params)
+	function OnGameEvent_player_spawn( params )
 	{
 		if (params.team == Constants.ETFTeam.TEAM_UNASSIGNED) return
 		local player = GetPlayerFromUserID(params.userid)

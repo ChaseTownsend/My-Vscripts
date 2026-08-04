@@ -261,7 +261,7 @@ foreach (item, idxs in ItemTranslateTable)
 
 ::helper <-{
 	/////////////////
-	function OnGameEvent_HumanTeam(params)
+	function OnGameEvent_HumanTeam( params )
 	{
 		local player = params.player
 
@@ -278,7 +278,7 @@ foreach (item, idxs in ItemTranslateTable)
 			scope.SpawnHelper <- 0
 		}
 	}
-	function OnGameEvent_HumanSpawn(params)
+	function OnGameEvent_HumanSpawn( params )
 	{
 		local player = params.player
 
@@ -299,7 +299,7 @@ foreach (item, idxs in ItemTranslateTable)
 		scope.spawncount++
 	}
 	//////////////////
-	function OnGameEvent_HumanResupply(params)
+	function OnGameEvent_HumanResupply( params )
 	{
 		local player = params.player
 
@@ -847,7 +847,7 @@ foreach (item, idxs in ItemTranslateTable)
 		}
 	}
 	/////////////////////
-	function OnGameEvent_player_say(params)
+	function OnGameEvent_player_say( params )
 	{
 		local player = GetPlayerFromUserID(params.userid)
 		local text = split(params.text, " ")

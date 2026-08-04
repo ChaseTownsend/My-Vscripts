@@ -1,5 +1,5 @@
 ::cond_on_kill <- {
-    function OnGameEvent_player_death(params){
+    function OnGameEvent_player_death( params ){
 
         if (params.attacker == null) return
         local player = GetPlayerFromUserID(params.attacker)
@@ -16,7 +16,7 @@
 }
 
 ::cond_on_hit <- {
-    function OnScriptHook_OnTakeDamage(params)
+    function OnScriptHook_OnTakeDamage( params )
     {
         if (params.attacker == null) return
         local player = params.attacker

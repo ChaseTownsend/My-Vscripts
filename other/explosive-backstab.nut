@@ -5,7 +5,7 @@ local additive_range = 20
 local base_damage = 3125
 
 ::Knife_Explosion <- {
-	function OnScriptHook_OnTakeDamage(params)
+	function OnScriptHook_OnTakeDamage( params )
 	{
 		local hVictim = params.const_entity
 		local hAttacker = params.attacker

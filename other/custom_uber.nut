@@ -4,7 +4,7 @@ IncludeScript("fatcat_library")
 const CUSTOM_UBER_THINK_DELAY = -1
 
 ::spawn <- {
-	function OnScriptEvent_HumanResupply(params)
+	function OnScriptEvent_HumanResupply( params )
 	{
 		local weapon = params.player.GetWeaponInSlotNew(SLOT_SECONDARY)
 		if (weapon.GetIDX() == 29 || weapon.GetIDX() == 961)

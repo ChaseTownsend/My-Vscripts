@@ -1,7 +1,7 @@
 IncludeScript("fatcat_library")
 
 ::respawn <- {
-	function OnGameEvent_player_spawn(params)
+	function OnGameEvent_player_spawn( params )
 	{
 		local player = GetPlayerFromUserID(params.userid)
 		local scope = GetScope(player)
@@ -10,14 +10,14 @@ IncludeScript("fatcat_library")
 				owner = player
 				LastThinkTime = -1
 				delay = 0.995
-				func = function(self) {
+				func = function( self ) {
 					// self is the player, "this" is the table above
 					self.PrintToHud(Time())
 				}
 			}
 			Heal = {
 				delay = 1
-				func = function(self) {
+				func = function( self ) {
 					self.SetHealth(self.GetHealth() + (self.GetMaxHealth() /10))
 					if (self.GetHealth() > self.GetMaxHealth() * 1.5)
 						self.SetHealth(self.GetMaxHealth()*1.5)
@@ -27,7 +27,7 @@ IncludeScript("fatcat_library")
 				owner = player
 				LastThinkTime = Time()
 				delay = 0.2
-				func = function(self) {
+				func = function( self ) {
 					owner.SetHealth(owner.GetHealth() + 1)
 				}
 			} */

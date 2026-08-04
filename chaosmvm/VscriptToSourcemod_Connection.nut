@@ -10,7 +10,7 @@ class ETFCond {}
  */
 
 if (!("PrintToServer" in ROOT))
-	function ROOT::PrintToServer(m) {PrintToConsoleAll(m)}
+	function ROOT::PrintToServer( m) {PrintToConsoleAll(m )}
 
 ::SOURCEMOD_EVENT <- ""
 if (!("OnCondHooks" in ROOT))
@@ -34,7 +34,7 @@ if (!("EntitySpawnHooks" in ROOT))
  * @param {string} Eventname
  * @returns {string}
  */
-function ROOT::HookEntitySpawn(classname, func, Eventname = null)
+function ROOT::HookEntitySpawn( classname, func, Eventname = null )
 {
 	local name = Eventname == null ? "EntityHook ["+classname+"]__"+UniqueString() : Eventname
 	if (classname in EntitySpawnHooks)
@@ -54,7 +54,7 @@ function ROOT::HookEntitySpawn(classname, func, Eventname = null)
  * @param {string} classname
  * @param {string} name
  */
-function RemoveEntitySpawnHook(classname, name)
+function RemoveEntitySpawnHook( classname, name )
 {
 	if (name in EntitySpawnHooks[classname])
 		delete EntitySpawnHooks[classname][name]
@@ -72,7 +72,7 @@ function ClearCondHooks()
  * @param {ETFCond} cond
  * @param {string} name
  */
-function RemoveCondHook(cond, name)
+function RemoveCondHook( cond, name )
 {
 	if (name in OnCondHooks[cond])
 		delete OnCondHooks[cond][name]
@@ -84,7 +84,7 @@ function RemoveCondHook(cond, name)
  * @param {string} name
  * @param {function} func
  */
-function AddCondHook(cond, name, func)
+function AddCondHook( cond, name, func )
 {
 	if (name in OnCondHooks[cond])
 		PrintToServer("Already a Cond Hook with that name!")
@@ -103,7 +103,7 @@ function ClearRemoveCondHooks()
  * @param {ETFCond} cond
  * @param {string} name
  */
-function RemoveRemoveCondHook(cond, name)
+function RemoveRemoveCondHook( cond, name )
 {
 	if (name in OnRemoveCondHooks[cond])
 		delete OnRemoveCondHooks[cond][name]
@@ -115,7 +115,7 @@ function RemoveRemoveCondHook(cond, name)
  * @param {string} name
  * @param {function} func
  */
-function AddRemoveCondHook(cond, name, func)
+function AddRemoveCondHook( cond, name, func )
 {
 	if (name in OnRemoveCondHooks[cond])
 		PrintToServer("Already a Cond Hook with that name!")
@@ -123,7 +123,7 @@ function AddRemoveCondHook(cond, name, func)
 }
 /*
 	Example
-	AddCondHook(TF_COND_CRITBOOSTED, "NoCrits", function(data) {
+	AddCondHook(TF_COND_CRITBOOSTED, "NoCrits", function( data ) {
 		data.cond = -1
 	})
  */
@@ -138,7 +138,7 @@ function AddRemoveCondHook(cond, name, func)
  * @param {float} duration	
  * @param {int} provider	EntIndex of client credited
  */
-function ROOT::ProccessOnCondHooks(client, cond, duration, provider)
+function ROOT::ProccessOnCondHooks( client, cond, duration, provider )
 {
 	local Player = EntIndexToHScript(client)
 
@@ -196,7 +196,7 @@ function ROOT::ProccessOnCondHooks(client, cond, duration, provider)
  * @param {integer} client	EntIndex of client effected
  * @param {ETFCond} cond
  */
-function ROOT::ProccessOnRemoveCondHooks(client, cond)
+function ROOT::ProccessOnRemoveCondHooks( client, cond )
 {
 	local Player = EntIndexToHScript(client)
 
@@ -226,7 +226,7 @@ function ROOT::ProccessOnRemoveCondHooks(client, cond)
 }
 
 
-/* function ROOT::SendToSourcemod(...)
+/* function ROOT::SendToSourcemod( ... )
 {
 	SendGlobalGameEvent(SOURCEMOD_EVENT, {
 		data = vargv
@@ -234,7 +234,7 @@ function ROOT::ProccessOnRemoveCondHooks(client, cond)
 	})
 } */
 
-function ROOT::ProccessEntitySpawnHooks(entity_index, classname)
+function ROOT::ProccessEntitySpawnHooks( entity_index, classname )
 {
 	FireScriptEvent("PreOnEntitySpawn", {
 		entindex = entity_index
@@ -281,28 +281,28 @@ function ROOT::ProccessEntitySpawnHooks(entity_index, classname)
 	 * @param {float} duration
 	 * @param {CBaseEntity} provider
 	 */
-	function OnScriptEvent_PreOnPlayerCond(_params) 			{}
-	function OnScriptEvent_PostOnPlayerCond(_params) 			{}
+	function OnScriptEvent_PreOnPlayerCond( _params ) 			{}
+	function OnScriptEvent_PostOnPlayerCond( _params ) 			{}
 	/**
 	 * Fired when the Dynamic Hook is triggered
 	 * @param {CTFPlayer|CTFBot|null} player
 	 * @param {ETFCond} cond
 	 */
-	function OnScriptEvent_PreOnPlayerRemoveCond(_params) 		{}
-	function OnScriptEvent_PostOnPlayerRemoveCond(_params) 		{}
+	function OnScriptEvent_PreOnPlayerRemoveCond( _params ) 		{}
+	function OnScriptEvent_PostOnPlayerRemoveCond( _params ) 		{}
 	/**
 	 * Fired when the Dynamic Hook is triggered
 	 * @param {integer} entindex
 	 * @param {string} classname
 	 */
-	function OnScriptEvent_PreOnEntitySpawn(_params) 			{}
+	function OnScriptEvent_PreOnEntitySpawn( _params ) 			{}
 	/**
 	 * Fired when the Dynamic Hook is triggered
 	 * @param {integer} entindex
 	 * @param {string} classname
 	 * @param {bool}	cancel_spawn only true if entindex == -1 or classname == ""
 	 */
-	function OnScriptEvent_PostOnEntitySpawn(_params) 			{}
+	function OnScriptEvent_PostOnEntitySpawn( _params ) 			{}
 }
 
 __CollectGameEventCallbacks(CollectEvents)

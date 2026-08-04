@@ -3,7 +3,7 @@
     {
         delete ::FOLD_FUNCS
     }
-    function OnGameEvent_recalculate_holidays(_) {Cleanup()}
+    function OnGameEvent_recalculate_holidays( _) {Cleanup( )}
 
     __CTFPlayer_CTFBot__SayHi = function()
     {

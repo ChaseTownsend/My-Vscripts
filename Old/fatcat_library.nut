@@ -1,7 +1,7 @@
 ::CONST <- getconsttable()
 ::ROOT <- getroottable()
 
-function SetLibraryVersion(lib_version, subversion = 0, force_include = false)
+function SetLibraryVersion( lib_version, subversion = 0, force_include = false )
 {
 	if (force_include || ("FatCatLibForce" in ROOT))
 	{
@@ -271,7 +271,7 @@ local Invincible_Conds = [
 
 
 ///////////////////////////////////////
-::CTFPlayer.PrintToHud <- function(message)
+::CTFPlayer.PrintToHud <- function( message )
 {
 	if (message != null)
 	{
@@ -283,7 +283,7 @@ local Invincible_Conds = [
 	}
 }
 
-::CTFPlayer.PrintToChat <- function(message)
+::CTFPlayer.PrintToChat <- function( message )
 {
 	if (message != null)
 	{
@@ -313,22 +313,22 @@ local Invincible_Conds = [
 ::CTFPlayer.GetSecondaryAmmo <- function()
 	return GetPropIntArray(this, "m_iAmmo", 2)
 
-::CTFPlayer.SetPrimaryAmmo <- function(ammo)
+::CTFPlayer.SetPrimaryAmmo <- function( ammo )
 	return SetPropIntArray(this, "m_iAmmo", ammo, 1)
 
-::CTFPlayer.SetSecondaryAmmo <- function(ammo)
+::CTFPlayer.SetSecondaryAmmo <- function( ammo )
 	return SetPropIntArray(this, "m_iAmmo", ammo, 2)
 
 ::CTFPlayer.ResetHealth <- function()
 	this.SetHealth(this.GetMaxHealth())
 
-::CTFPlayer.SetScale <- function(scale)
+::CTFPlayer.SetScale <- function( scale )
 	this.SetModelScale(scale, 0)
 
 ::CTFPlayer.IsOverhealed <- function()
 	return (this.GetHealth() > this.GetMaxHealth())
 
-::CTFPlayer.ForceTaunt <- function(taunt_id)
+::CTFPlayer.ForceTaunt <- function( taunt_id )
 {
 	local weapon = CreateByClassname("tf_weapon_bat")
 	local active_weapon = this.GetActiveWeapon()
@@ -346,7 +346,7 @@ local Invincible_Conds = [
 }
 
 
-::CTFPlayer.GetWeaponInSlot <- function(slot = 0)
+::CTFPlayer.GetWeaponInSlot <- function( slot = 0 )
 {
 	if ( slot == null ) return null
 
@@ -360,7 +360,7 @@ local Invincible_Conds = [
 
 	return entity
 }
-::CTFPlayer.GetWeaponInSlotNew <- function(slot = 0)
+::CTFPlayer.GetWeaponInSlotNew <- function( slot = 0 )
 {
 	if ( slot == null ) return null
 
@@ -435,10 +435,10 @@ local Invincible_Conds = [
 	return list.filter(@(index, value) value != null)
 }
 
-::CTFPlayer.GetWeaponIDXInSlot <- function(slot = 0)
+::CTFPlayer.GetWeaponIDXInSlot <- function( slot = 0 )
 	return GetWeaponIDX(this.GetWeaponInSlot(slot))
 
-::CTFPlayer.GetWeaponIDXInSlotNew <- function(slot = 0)
+::CTFPlayer.GetWeaponIDXInSlotNew <- function( slot = 0 )
 	return GetWeaponIDX(this.GetWeaponInSlotNew(slot))
 
 ::CTFPlayer.GetActiveWeaponIDX <- function()
@@ -517,7 +517,7 @@ local Invincible_Conds = [
 	return false
 }
 
-::CTFPlayer.IsPressingButton <- function(button = null)
+::CTFPlayer.IsPressingButton <- function( button = null )
 {
 	if ( !this.IsValid() || button == null ) return false
 	if ( GetPropInt(this, "m_nButtons") & button) return true
@@ -549,7 +549,7 @@ local Invincible_Conds = [
 	return false
 }
 
-::CTFPlayer.GetEveryHumanWithin <- function(range, include_me = false)
+::CTFPlayer.GetEveryHumanWithin <- function( range, include_me = false )
 {
 	local list = []
 	for (local player; player = FindByClassnameWithin(player, "player", this.GetOrigin(), range); )
@@ -566,7 +566,7 @@ local Invincible_Conds = [
 	}
 	return list
 }
-::CTFPlayer.GetEveryPlayerWithin <- function(range, include_me = false)
+::CTFPlayer.GetEveryPlayerWithin <- function( range, include_me = false )
 {
 	local list = []
 	for (local player; player = FindByClassnameWithin(player, "player", this.GetOrigin(), range); )
@@ -583,7 +583,7 @@ local Invincible_Conds = [
 	}
 	return list
 }
-::CTFPlayer.GetEveryTankWithin <- function(range)
+::CTFPlayer.GetEveryTankWithin <- function( range )
 {
 	local list = []
 	for (local tank; tank = FindByClassnameWithin(tank, "tank", this.GetOrigin(), range); )
@@ -595,7 +595,7 @@ local Invincible_Conds = [
 	}
 	return list
 }
-::CTFPlayer.GetEveryBotWithin <- function(range)
+::CTFPlayer.GetEveryBotWithin <- function( range )
 {
 	local list = []
 	for (local bot; bot = FindByClassnameWithin(bot, "player", this.GetOrigin(), range); )
@@ -607,7 +607,7 @@ local Invincible_Conds = [
 	}
 	return list
 }
-::CTFPlayer.DamageEveryTankWithin <- function(range, damage)
+::CTFPlayer.DamageEveryTankWithin <- function( range, damage )
 {
 	for (local tank; tank = FindByClassnameWithin(tank, "tank", this.GetOrigin(), range); )
 	{
@@ -617,7 +617,7 @@ local Invincible_Conds = [
 		}
 	}
 }
-::CTFPlayer.DamageEveryBotWithin <- function(range, damage)
+::CTFPlayer.DamageEveryBotWithin <- function( range, damage )
 {
 	for (local bot; bot = FindByClassnameWithin(bot, "player", this.GetOrigin(), range); )
 	{
@@ -657,7 +657,7 @@ local Invincible_Conds = [
 	return false
 }
 
-::CTFPlayer.HasWeapon <- function(index)
+::CTFPlayer.HasWeapon <- function( index )
 {
 	for (local i = 0; i <= MAX_WEAPONS; i++)
 	{
@@ -667,7 +667,7 @@ local Invincible_Conds = [
 	}
 	return false
 }
-::CTFPlayer.HasWeaponClassname <- function(classname)
+::CTFPlayer.HasWeaponClassname <- function( classname )
 {
 	for (local i = 0; i <= MAX_WEAPONS; i++)
 	{
@@ -678,7 +678,7 @@ local Invincible_Conds = [
 	return false
 }
 
-::CTFPlayer.GetFrontOffset <- function(offset)
+::CTFPlayer.GetFrontOffset <- function( offset )
 {
 	return this.GetOrigin() + (this.EyeAngles().Forward() * offset)
 }
@@ -749,57 +749,57 @@ local Invincible_Conds = [
 ::CTFBot.GetAllValidWeapons <- CTFPlayer.GetAllValidWeapons
 ::CTFBot.GetHealers <- CTFPlayer.GetHealers
 
-::CTFBaseBoss.SetGlow <- function(bool)
+::CTFBaseBoss.SetGlow <- function( bool )
 	SetPropBool(this, "m_bGlowEnabled", bool)
 
 // Older functions, that are Deprecated, but for compatability
 // with old scripts, they use the newer versions
-::GetWeaponInSlot <- function(player = null, slot = 0)
+::GetWeaponInSlot <- function( player = null, slot = 0 )
 {
 	if ( !player ) return null
 	return player.GetWeaponInSlot(slot)
 }
-::GetWeaponIndexInSlot <- function(player = null, slot = 0)
+::GetWeaponIndexInSlot <- function( player = null, slot = 0 )
 {
 	if ( !player ) return null
 	return player.GetWeaponIDXInSlot(slot)
 }
-::GetActiveWeaponIDX <- function(player)
+::GetActiveWeaponIDX <- function( player )
 {
 	if ( !player ) return null
 	return GetWeaponIDX(player.GetActiveWeapon())
 }
-::GetPlayerSpellBook <- function(player)
+::GetPlayerSpellBook <- function( player )
 {
 	if ( !player ) return null
 	return player.GetSpellBook()
 }
-::GetAbilityWeaponIndex <- function(player)
+::GetAbilityWeaponIndex <- function( player )
 {
 	if ( !player ) return null
 	return player.GetAbilityWeaponIDX()
 }
-::ForceTaunt <- function(player, taunt_id)
+::ForceTaunt <- function( player, taunt_id )
 {
 	if ( !player ) return null
 	player.ForceTaunt(taunt_id)
 }
-::IsOnGround <- function(player)
+::IsOnGround <- function( player )
 {
 	if ( !player ) return null
 	return player.IsOnGround()
 }
-::GetPlayerName <- function(player)
+::GetPlayerName <- function( player )
 {
 	if ( !player ) return null
 	return player.GetUserName()
 }
-::GetPlayerSteamID <- function(player)
+::GetPlayerSteamID <- function( player )
 {
 	if ( !player ) return null
 	return GetPropString(player, "m_szNetworkIDString")
 }
-::IsPlayerPressingButton <- function(player = null, button = null)
+::IsPlayerPressingButton <- function( player = null, button = null )
 {
 	if ( !player || !button ) return false
 	return player.IsPressingButton(button)
@@ -807,13 +807,13 @@ local Invincible_Conds = [
 
 
 ///////// Printing functions
-::PrintToHudAll <- function(message)
+::PrintToHudAll <- function( message )
 	ClientPrint(null, 4, message.tostring())
 
-::PrintToChatAll <- function(message)
+::PrintToChatAll <- function( message )
 	ClientPrint(null, 3, message.tostring())
 
-::PrintToChatAllFilter <- function(message, filter = [])
+::PrintToChatAllFilter <- function( message, filter = [] )
 {
 	foreach (player in GetEveryPlayer())
 	{
@@ -833,7 +833,7 @@ local Invincible_Conds = [
 			ClientPrint(player, 3, message.tostring())
 	}
 }
-::PrintToHudAllFilter <- function(message, filter = [])
+::PrintToHudAllFilter <- function( message, filter = [] )
 {
 	foreach (player in GetEveryPlayer())
 	{
@@ -854,7 +854,7 @@ local Invincible_Conds = [
 	}
 }
 
-::PrintToAdmins <- function(level, message)
+::PrintToAdmins <- function( level, message )
 {
 	foreach (player in GetEveryHuman())
 	{
@@ -865,7 +865,7 @@ local Invincible_Conds = [
 	}
 }
 
-::PrintTable <- function(table, extra_indent = 0)
+::PrintTable <- function( table, extra_indent = 0 )
 {
 	if ( type(table) != "table")
 	{
@@ -890,7 +890,7 @@ local Invincible_Conds = [
 	}
 }
 
-::PrintArray <- function(array, extra_indent = 0)
+::PrintArray <- function( array, extra_indent = 0 )
 {
 	if ( type(array) != "array")
 	{
@@ -915,7 +915,7 @@ local Invincible_Conds = [
 	}
 }
 
-::PrintClass <- function(clas, filter = "")
+::PrintClass <- function( clas, filter = "" )
 {
 	if ( typeof clas != "class")
 	{
@@ -933,28 +933,28 @@ local Invincible_Conds = [
 }
 
 //// Entity Debug
-::ShowBBOX <- function(entity = null, rgba = Vector4D(255, 0, 0, 5), duration = 1)
+::ShowBBOX <- function( entity = null, rgba = Vector4D(255, 0, 0, 5 ), duration = 1)
 {
 	if ( !entity ) 
 		return
 	DebugDrawBox(entity.GetOrigin(), entity.GetBoundingMins(), entity.GetBoundingMaxs(), rgba.x, rgba.y, rgba.z, rgba.w, duration)
 }
 
-::ShowOBB <- function(entity = null, rgba = Vector4D(255, 0, 0, 5), duration = 1)
+::ShowOBB <- function( entity = null, rgba = Vector4D(255, 0, 0, 5 ), duration = 1)
 {
 	if ( !entity ) 
 		return
 	DebugDrawBoxAngles(entity.GetOrigin(), entity.GetBoundingMins(), entity.GetBoundingMaxs(), entity.GetAbsAngles(), Vector(rgba.x, rgba.y, rgba.z), rgba.w, duration)
 }
 
-::ShowAABB <- function(entity = null, rgba = Vector4D(255, 0, 0, 5), duration = 1)
+::ShowAABB <- function( entity = null, rgba = Vector4D(255, 0, 0, 5 ), duration = 1)
 {
 	if ( !entity ) 
 		return
 	DebugDrawBox(entity.GetOrigin(),entity.GetBoundingMins(), entity.GetBoundingMaxs(), rgba.x, rgba.y, rgba.z, rgba.w, duration)
 }
 
-::DebugDrawTrigger <- function(trigger = null, color = Vector4D(255, 128, 0, 1), duration = 5)
+::DebugDrawTrigger <- function( trigger = null, color = Vector4D(255, 128, 0, 1 ), duration = 5)
 {
 	if ( !trigger ) return
 
@@ -967,7 +967,7 @@ local Invincible_Conds = [
 		DebugDrawBoxAngles(origin, mins, maxs, trigger.GetAbsAngles(), Vector( color.x, color.y, color.z ), color.w, duration)
 }
 //// Entity Functions
-::EnableStringPurge <- function(entity)
+::EnableStringPurge <- function( entity )
 {
 	if ( !entity )
 		return
@@ -975,49 +975,49 @@ local Invincible_Conds = [
 }
 
 /// Credit to LizardOfOz in TF2Maps Discord
-::CreateByClassname <- function(classname)
+::CreateByClassname <- function( classname )
 {
 	local entity = Entities.CreateByClassname(classname)
 	EnableStringPurge(entity)
 	return entity
 }
 
-::FindByClassname <- function(previous, classname)
+::FindByClassname <- function( previous, classname )
 {
 	local entity = Entities.FindByClassname(previous, classname)
 	EnableStringPurge(entity)
 	return entity
 }
 
-::FindByClassnameWithin <- function(previous, classname, center, radius)
+::FindByClassnameWithin <- function( previous, classname, center, radius )
 {
 	local entity = Entities.FindByClassnameWithin(previous, classname, center, radius)
 	EnableStringPurge(entity)
 	return entity
 }
 
-::FindByClassnameNearest <- function(classname, center,radius)
+::FindByClassnameNearest <- function( classname, center,radius )
 {
 	local entity = Entities.FindByClassnameNearest(classname, center, radius)
 	EnableStringPurge(entity)
 	return entity
 }
 
-::FindByName <- function(previous, name)
+::FindByName <- function( previous, name )
 {
 	local entity = Entities.FindByName(previous, name)
 	EnableStringPurge(entity)
 	return entity
 }
 
-::FindByNameNearest <- function(targetname, center, radius)
+::FindByNameNearest <- function( targetname, center, radius )
 {
 	local entity = Entities.FindByNameNearest(targetname, center, radius)
 	EnableStringPurge(entity)
 	return entity
 }
 
-::FindByNameWithin <- function(previous, targetname, center, radius)
+::FindByNameWithin <- function( previous, targetname, center, radius )
 {
 	local entity = Entities.FindByNameWithin(previous, targetname, center, radius)
 	EnableStringPurge(entity)
@@ -1026,7 +1026,7 @@ local Invincible_Conds = [
 
 if (!("SpawnEntityFromTableOriginal" in getroottable()))
    ::SpawnEntityFromTableOriginal <- ::SpawnEntityFromTable
-::SpawnEntityFromTable <- function(name, keyvalues)
+::SpawnEntityFromTable <- function( name, keyvalues )
 {
 	local entity = SpawnEntityFromTableOriginal(name, keyvalues)
 	EnableStringPurge(entity)
@@ -1044,14 +1044,14 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	return count
 }
 
-::GetScope <- function(entity)
+::GetScope <- function( entity )
 {
 	entity.ValidateScriptScope()
 	return entity.GetScriptScope()
 }
 
 //// Get Every/All Entitys functions
-::GetAllEntitiesByClassname <- function(classname)
+::GetAllEntitiesByClassname <- function( classname )
 {
 	local list = []
 	for (local entity; entity = FindByClassname(entity, classname); )
@@ -1060,7 +1060,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	}
 	return list
 }
-::GetAllEntitiesByClassnameWithin <- function(classname, center, radius)
+::GetAllEntitiesByClassnameWithin <- function( classname, center, radius )
 {
 	local list = []
 	for (local entity; entity = FindByClassnameWithin(entity, classname, center, radius); )
@@ -1079,7 +1079,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	}
 	return list
 }
-::GetEveryPlayerWithin <- function(center, radius)
+::GetEveryPlayerWithin <- function( center, radius )
 {
 	local list = []
 	foreach (player in GetAllEntitiesByClassnameWithin("player", center, radius))
@@ -1098,7 +1098,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	}
 	return list
 }
-::GetEveryHumanWithin <- function(center, radius)
+::GetEveryHumanWithin <- function( center, radius )
 {
 	local list = []
 	foreach (player in GetAllEntitiesByClassnameWithin("player", center, radius))
@@ -1108,7 +1108,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	return list
 }
 
-::GetEveryPlayerOnTeam <- function(team)
+::GetEveryPlayerOnTeam <- function( team )
 {
 	local list = []
 	foreach (player in GetAllEntitiesByClassname("player"))
@@ -1126,7 +1126,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	}
 	return list
 }
-::GetEveryBotWithin <- function(center, radius)
+::GetEveryBotWithin <- function( center, radius )
 {
 	local list = []
 	foreach (player in GetAllEntitiesByClassnameWithin("player", center, radius))
@@ -1144,7 +1144,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	}
 	return list
 }
-::GetEveryTankWithin <- function(center, radius)
+::GetEveryTankWithin <- function( center, radius )
 {
 	local list = []
 	foreach (tank in GetAllEntitiesByClassnameWithin("tank_boss", center, radius))
@@ -1168,18 +1168,18 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 }
 
 //// Helps make code look nice
-::IsNotInScope <- function(item, scope)
+::IsNotInScope <- function( item, scope )
 {
 	return (!(item in scope))
 }
-::IsNotInTable <- function(item, table)
+::IsNotInTable <- function( item, table )
 {
 	return (!(item in table))
 }
 
 
 //// Misc player/entity Functions
-::IsPointInRespawnRoom <- function(point)
+::IsPointInRespawnRoom <- function( point )
 {
 	foreach (respawnroom in GetAllEntitiesByClassname("func_respawnroom"))
 	{
@@ -1201,7 +1201,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	}
 	return false
 }
-::IsHullInRespawnRoom <- function(start, min, max)
+::IsHullInRespawnRoom <- function( start, min, max )
 {
 	foreach (respawnroom in GetAllEntitiesByClassname("func_respawnroom"))
 	{
@@ -1226,7 +1226,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	return false
 }
 
-::IsValidEnemy <- function(entity)
+::IsValidEnemy <- function( entity )
 {
 	if (entity.GetTeam() != TF_TEAM_PVE_INVADERS) return false
 
@@ -1248,7 +1248,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	team = TF_TEAM_ANY, 
 	model = "models/weapons/c_models/c_toolbox/c_toolbox.mdl",
 	sound = "player/souls_receive2.wav",
-	func = function() {PrintToChatAll("Default Pickup Message")}
+	func = function( ) {PrintToChatAll("Default Pickup Message" )}
 	})
 {
 	PrintTable(table)
@@ -1276,53 +1276,53 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	return pickup
 }
 
-::WeaponHasAttribute <- function(weapon, attribute, default_value)
+::WeaponHasAttribute <- function( weapon, attribute, default_value )
 {
 	return weapon.GetAttribute(attribute, default_value) == default_value
 }
 
-::GetWeaponIDX <- function(weapon = null)
+::GetWeaponIDX <- function( weapon = null )
 {
 	if ( !weapon ) return null
 	if (!HasProp(weapon, "m_AttributeManager.m_Item.m_iItemDefinitionIndex")) return null
 	return GetPropInt(weapon, "m_AttributeManager.m_Item.m_iItemDefinitionIndex")
 }
 
-::SetSpellIndex <- function(spell_book, index)
+::SetSpellIndex <- function( spell_book, index )
 {
 	if ( !spell_book ) return
 	if (!HasProp(spell_book, "m_iSelectedSpellIndex")) return
 	SetPropInt(spell_book, "m_iSelectedSpellIndex", index)
 }
 
-::GetSpellIndex <- function(spell_book)
+::GetSpellIndex <- function( spell_book )
 {
 	if ( !spell_book ) return -2
 	if (!HasProp(spell_book, "m_iSelectedSpellIndex")) return -2
 	return GetPropInt(spell_book, "m_iSelectedSpellIndex")
 }
 
-::GetSpellCharges <- function(spell_book)
+::GetSpellCharges <- function( spell_book )
 {
 	if ( !spell_book ) return 0
 	if (!HasProp(spell_book, "m_iSpellCharges")) return 0
 	return GetPropInt(spell_book, "m_iSpellCharges")
 }
 
-::IncrementSpellCharge <- function(spell_book, num)
+::IncrementSpellCharge <- function( spell_book, num )
 {
 	if ( !spell_book ) return
 	if (!HasProp(spell_book, "m_iSpellCharges")) return
 	SetPropInt(spell_book, "m_iSpellCharges", GetPropInt(spell_book, "m_iSpellCharges") + num)
 }
 
-::IsHolstered <- function(weapon)
+::IsHolstered <- function( weapon )
 {
 	if (!HasProp(weapon, "m_bHolstered")) return false
 	return GetPropBool(weapon, "m_bHolstered")
 }
 
-::GetBuilder <- function(entity)
+::GetBuilder <- function( entity )
 {
 	EnableStringPurge(entity)
 	if (!HasProp(entity, "m_hBuilder")) return null
@@ -1332,7 +1332,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	return entity
 }
 
-::GetLauncher <- function(entity)
+::GetLauncher <- function( entity )
 {
 	EnableStringPurge(entity)
 	if (!HasProp(entity, "m_hLauncher")) return null
@@ -1343,7 +1343,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	return entity
 }
 
-::GetFlagStatus <- function(flag)
+::GetFlagStatus <- function( flag )
 {
 	if (!flag) return null
 	SetPropBool(flag, "m_bForcePurgeFixedupStrings", true)
@@ -1353,7 +1353,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 
 //// Developer?
 
-::SetCvar <- function(convar, value, admin_notify = false, notify_all = false)
+::SetCvar <- function( convar, value, admin_notify = false, notify_all = false )
 {
 	if (!Convars.IsConVarOnAllowList(convar))
 	{
@@ -1373,7 +1373,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	}
 }
 
-::CreateTestTank <- function(origin = Vector(0, 0, 0), angles = QAngle(0, 0, 0))
+::CreateTestTank <- function( origin = Vector(0, 0, 0 ), angles = QAngle(0, 0, 0))
 {
 	if (FindByName(null, "Test_Tank"))
 		FindByName(null, "Test_Tank").Kill()
@@ -1387,22 +1387,22 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	return tank
 }
 
-::IsNotInScope <- function(item, scope)
+::IsNotInScope <- function( item, scope )
 {
 	return (!(item in scope))
 }
-::IsNotInTable <- function(item, table)
+::IsNotInTable <- function( item, table )
 {
 	return (!(item in table))
 }
 
 //// Math
 ::MATH <- {
-	function Min(a, b)
+	function Min( a, b )
 	{
 		return (b < a) ? b : a
 	}
-	function Max(a, b)
+	function Max( a, b )
 	{
 		return (a < b) ? b : a
 	}
@@ -1417,13 +1417,13 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 		else
 			return val;
 	}
-	function RemapVal(val, A, B, C, D)
+	function RemapVal( val, A, B, C, D )
 	{
 		if ( A == B )
 			return val >= B ? D : C;
 		return C + (D - C) * (val - A) / (B - A);
 	}
-	function RemapValClamped(val, A, B, C, D)
+	function RemapValClamped( val, A, B, C, D )
 	{
 		if ( A == B )
 			return val >= B ? D : C;
@@ -1433,10 +1433,10 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 		return C + (D - C) * cVal;
 	}
 }
-::min <- function(a, b)
+::min <- function( a, b )
 	return (b < a) ? b : a;
 
-::max <- function(a, b)
+::max <- function( a, b )
 	return (a < b) ? b : a;
 
 ::clamp <- function( val, minVal, maxVal )
@@ -1450,13 +1450,13 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	else
 		return val;
 }
-::remapValue <- function(val, A, B, C, D)
+::remapValue <- function( val, A, B, C, D )
 {
 	if ( A == B )
 		return val >= B ? D : C;
 	return C + (D - C) * (val - A) / (B - A);
 }
-::remapValueClamped <- function(val, A, B, C, D)
+::remapValueClamped <- function( val, A, B, C, D )
 {
 	if ( A == B )
 		return val >= B ? D : C;
@@ -1466,7 +1466,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	return C + (D - C) * cVal;
 }
 ////
-::CreateAoE <- function(owner, center, radius, maxDmg, minDmg, ignore = [], dmg_Type = DMG_BLAST, sound = "weapons/explode" + RandomInt(1, 3) + ".wav", particle = "ExplosionCore_Wall")
+::CreateAoE <- function( owner, center, radius, maxDmg, minDmg, ignore = [], dmg_Type = DMG_BLAST, sound = "weapons/explode" + RandomInt(1, 3 ) + ".wav", particle = "ExplosionCore_Wall")
 {
 	local scope = GetScope(owner)
 	if (IsNotInScope("LastExplosionTime", scope))
@@ -1585,7 +1585,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 		}
 	}
 }
-::CreateKnifeAoE <- function(owner, weapon, center, radius, damage, ignore = [], dmg_Type = DMG_BLAST, sound = "weapons/barret_arm_fizzle.wav", particle = "drg_cow_explosioncore_charged")
+::CreateKnifeAoE <- function( owner, weapon, center, radius, damage, ignore = [], dmg_Type = DMG_BLAST, sound = "weapons/barret_arm_fizzle.wav", particle = "drg_cow_explosioncore_charged" )
 {
 	local scope = GetScope(owner)
 	if (IsNotInScope("LastExplosionTime", scope))
@@ -1706,7 +1706,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	team = TF_TEAM_ANY, 
 	model = "models/weapons/c_models/c_toolbox/c_toolbox.mdl",
 	sound = "player/souls_receive2.wav",
-	func = function() {PrintToChatAll("Default Pickup Message")}
+	func = function( ) {PrintToChatAll("Default Pickup Message" )}
 	})
 {
 	if ( type(table) != "table" )
@@ -1735,7 +1735,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 
 ::TheFatCat <- "[U:1:969530867]"
 ::ShadowBolt <- "[U:1:101345257]"
-seterrorhandler(function(e)
+seterrorhandler(function( e )
 {
 	local Chat = @(m) (printl(m), PrintToAdmins(2, m))
 	PrintToAdmins(3, format("\x07FF0000AN ERROR HAS OCCURRED [%s].\nCheck console for details", e))
@@ -1744,7 +1744,7 @@ seterrorhandler(function(e)
 	Chat("CALLSTACK")
 	local s, l = 2
 	while (s = getstackinfos(l++))
-		Chat(format("*FUNCTION [%s()] %s line [%d]", s.func, s.src, s.line))
+		Chat(format("*FUNCTION [%s( )] %s line [%d]", s.func, s.src, s.line ))
 	Chat("LOCALS")
 	if (s = getstackinfos(2))
 	{

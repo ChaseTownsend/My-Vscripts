@@ -39,7 +39,7 @@ function ROOT::CTFPlayer::ClearCorrosion()
 	ResetColor()
 	// EntFireNew(this, "Color", "255 255 255")
 }
-function ROOT::CTFPlayer::MakeCorrosion(Player, Weapon, lifetime, damage = 5, ticktime = 0.5)
+function ROOT::CTFPlayer::MakeCorrosion( Player, Weapon, lifetime, damage = 5, ticktime = 0.5 )
 {
 	if (IsInvincible())
 	{

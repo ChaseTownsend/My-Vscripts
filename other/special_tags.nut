@@ -1,5 +1,5 @@
 ::tagfunctions <- {
-	function OnScriptHook_OnTakeDamage(params)
+	function OnScriptHook_OnTakeDamage( params )
 	{
 		local victim = params.const_entity
 		local attacker = params.inflictor

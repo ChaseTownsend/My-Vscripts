@@ -54,7 +54,7 @@ function RadiationThink()
 }
 
 ::CorrosionEvents <- {
-	function OnGameEvent_player_death(params)
+	function OnGameEvent_player_death( params )
 	{
 		if (params.weapon_logclassname != "infection_acid_puddle")
 			return

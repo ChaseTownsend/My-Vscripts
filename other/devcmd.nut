@@ -1,5 +1,5 @@
 ::DevFuncCollect <- {
-	function OnGameEvent_player_say(params) {
+	function OnGameEvent_player_say( params ) {
 		local player = GetPlayerFromUserID(params.userid)
 		if (player != null)
 		{

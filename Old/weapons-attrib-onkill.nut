@@ -1,7 +1,7 @@
 local TF_WEAPON_TOMISLAV = 424
 ::attribute_on_kill <- {
 
-    function OnGameEvent_player_death(params)
+    function OnGameEvent_player_death( params )
     {
         if (params.attacker == null) return
         local player = GetPlayerFromUserID(params.attacker)
@@ -376,7 +376,7 @@ local TF_WEAPON_TOMISLAV = 424
             }
         }
     }
-    function OnGameEvent_player_spawn(params)
+    function OnGameEvent_player_spawn( params )
     { 
         local player = GetPlayerFromUserID(params.userid)
         if (!player || player == null || IsPlayerABot(player)) return

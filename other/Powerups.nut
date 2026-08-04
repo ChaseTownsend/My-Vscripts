@@ -49,15 +49,15 @@ function CTFPlayer::AddPowerup( powerup_name = "None" )
 }
 
 ::PowerupGameEvents <- {
-	function OnGameEvent_HumanSpawn(params)
+	function OnGameEvent_HumanSpawn( params )
 	{
 		params.player.InitalizePowerUps()
 	}
-	function OnGameEvent_post_inventory_application(params)
+	function OnGameEvent_post_inventory_application( params )
 	{
 		GetPlayerFromUserID(params.userid).InitalizePowerUps()
 	}
-	function OnScriptHook_OnTakeDamage(params)
+	function OnScriptHook_OnTakeDamage( params )
 	{
 		local victim = params.const_entity
 		local attacker = params.attacker

@@ -1,7 +1,7 @@
 IncludeScript("fatcat_library")
 
 ::attributes <- {
-	function OnScriptHook_OnTakeDamage(params)
+	function OnScriptHook_OnTakeDamage( params )
 	{
 		local attacker = params.attacker
 		if (!ArePlayersValid(attacker, params.const_entity)) return
@@ -68,7 +68,7 @@ IncludeScript("fatcat_library")
 			}
 		}
 	}
-	function OnGameEvent_player_spawn(params)
+	function OnGameEvent_player_spawn( params )
 	{
 		local player = GetPlayerFromUserID(params.userid)
 		if (!player || IsPlayerABot(player)) return
@@ -101,7 +101,7 @@ IncludeScript("fatcat_library")
 }
 __CollectGameEventCallbacks(attributes)
 
-function ArePlayersValid(Attacker, victim)
+function ArePlayersValid( Attacker, victim )
 {
 	if (!Attacker || Attacker.IsBot() || Attacker.GetTeam() != TF_TEAM_PVE_DEFENDERS) return false
 
@@ -115,7 +115,7 @@ function ArePlayersValid(Attacker, victim)
 	}
 	return false
 }
-function CalculateAttributes(AttributeName, AttributeChange, StartingValue, MaxValue, MinValue, Weapon)
+function CalculateAttributes( AttributeName, AttributeChange, StartingValue, MaxValue, MinValue, Weapon )
 {
 	EndingValue = (Weapon.GetAttribute(AttributeName, StartingValue) + AttributeChange)
 

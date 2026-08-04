@@ -26,7 +26,7 @@ local g_RageBuffTypes = [
 
 
 ::spawn <- {
-	function OnGameEvent_post_inventory_application(params)
+	function OnGameEvent_post_inventory_application( params )
 	{
 		local player = GetPlayerFromUserID(params.userid)
 		if (!player) return
@@ -74,7 +74,7 @@ local g_RageBuffTypes = [
 
 		}
 	}
-	function OnScriptHook_OnTakeDamage(params)
+	function OnScriptHook_OnTakeDamage( params )
 	{
 		local hVictim = params.const_entity
 		local hAttacker = params.attacker

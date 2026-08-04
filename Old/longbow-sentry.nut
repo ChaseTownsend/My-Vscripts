@@ -9,7 +9,7 @@ const TF_WEAPON_EUREKA_EFFECT = 589
 
 ///// Events! /////
 ::pickup <- {
-	function OnGameEvent_player_spawn(params)
+	function OnGameEvent_player_spawn( params )
 	{
 		if (params.team != TF_TEAM_PVE_DEFENDERS) return
 
@@ -20,7 +20,7 @@ const TF_WEAPON_EUREKA_EFFECT = 589
 
 		AddThinkToEnt(player, "LongBowSentry")
 	}
-	function OnGameEvent_player_carryobject(params)
+	function OnGameEvent_player_carryobject( params )
 	{
 		if (params.object != OBJ_SENTRY) return
 
@@ -30,7 +30,7 @@ const TF_WEAPON_EUREKA_EFFECT = 589
 
 		GetScope(player).sentry <- EntIndexToHScript(params.index)
 	}
-	function OnGameEvent_player_builtobject(params)
+	function OnGameEvent_player_builtobject( params )
 	{
 		if (params.object != OBJ_SENTRY) return
 

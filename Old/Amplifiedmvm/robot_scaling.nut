@@ -97,7 +97,7 @@ function ApplyScaling()
 }
 
 ::scaling <- {
-	function OnGameEvent_post_inventory_application(params)
+	function OnGameEvent_post_inventory_application( params )
 	{
 		local player = GetPlayerFromUserID(params.userid)
 		if (!IsPlayerABot(player)) return

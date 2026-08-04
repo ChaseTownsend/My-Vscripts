@@ -1,5 +1,5 @@
 ::damage <- {
-	function OnScriptHook_OnTakeDamage(params)
+	function OnScriptHook_OnTakeDamage( params )
 	{
 		if (!params.const_entity.IsPlayer())
 			return
@@ -23,7 +23,7 @@
 		params.damage_type = params.damage_type + Constants.FDmgType.DMG_ACID
 		// params.damage_stats = Constants.ETFDmgCustom.TF_DMG_CUSTOM_HEADSHOT
 	}
-	function OnGameEvent_player_hurt(params)
+	function OnGameEvent_player_hurt( params )
 	{
 		local player = GetPlayerFromUserID(params.attacker)
 		local weapon = player.GetActiveWeapon()

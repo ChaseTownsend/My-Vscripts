@@ -85,7 +85,7 @@ function HomingThink()
 	self.SetForwardVector(vecDirection)
 }
 
-function CalculateDistanceBetweenTwoPoints(point1, point2)
+function CalculateDistanceBetweenTwoPoints( point1, point2 )
 {
 	local xdiff = point2.x - point1.x
 	local ydiff = point2.y - point1.y
@@ -165,7 +165,7 @@ function FindClosestTarget()
 
 	return entities[lowest_index]
 }
-function IsEntityStealthed(entity)
+function IsEntityStealthed( entity )
 {
 	return entity.InCond(Constants.ETFCond.TF_COND_STEALTHED)
 }

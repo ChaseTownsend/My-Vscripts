@@ -43,7 +43,7 @@ if (true)
 	if ("SaxtadiumEvents" in getroottable()) delete ::SaxtadiumEvents // this is done to prevent hook stacking
 	::SaxtadiumEvents <- 
 	{
-		function OnGameEvent_post_inventory_application(params)
+		function OnGameEvent_post_inventory_application( params )
 		{
 			local player = GetPlayerFromUserID(params.userid);
 			if (player.GetTeam() == 2 && player.IsValid()) // set up the stuffs
@@ -76,16 +76,16 @@ if (true)
 				EnemySpawn(player);
 			}
 		} 
-		function OnGameEvent_player_changeclass(params)
+		function OnGameEvent_player_changeclass( params )
 		{
 			local player = GetPlayerFromUserID(params.userid);
 			if (player.GetTeam() == 2) EntFireByHandle(player,"RunScriptCode","ApplyPlayerAttributes(self)",0.1,null,player);
 		}
-		function OnGameEvent_mvm_begin_wave(params)
+		function OnGameEvent_mvm_begin_wave( params )
 		{
 			InitGameStart()
 		}
-		function OnGameEvent_player_builtobject(params)
+		function OnGameEvent_player_builtobject( params )
 		{
 			local object = params.object
 			local building = EntIndexToHScript(params.index)
@@ -103,7 +103,7 @@ if (true)
 				
 			}					
 		}
-		function OnScriptHook_OnTakeDamage (params)
+		function OnScriptHook_OnTakeDamage ( params )
 		{
 			local victim = params.const_entity
 			local attacker = params.attacker
@@ -125,7 +125,7 @@ if (true)
 				}
 			}
 		}
-		function OnGameEvent_player_death(params)
+		function OnGameEvent_player_death( params )
 		{
 			local deadguy = GetPlayerFromUserID(params.userid)
 			local damagebits = params.damagebits
@@ -183,7 +183,7 @@ if (true)
 				EntFireByHandle(deadguy,"runscriptcode","for (local entity; entity = Entities.FindByClassname(entity, `entity_revive_marker`);){SetPropBool(entity,`m_bGlowEnabled`,true)}",0.5,null,deadguy);
 			}
 		}
-		function OnScriptHook_OnTakeDamage(params)
+		function OnScriptHook_OnTakeDamage( params )
 		{
 			local inflictor = params.inflictor
 			local victim = params.const_entity
@@ -205,7 +205,7 @@ if (true)
 				SetPropInt(FindByClassname(null, "tf_mann_vs_machine_stats"),"m_currentWaveStats",currency)
 			}
 		}
-		function OnGameEvent_player_disconnect(params)
+		function OnGameEvent_player_disconnect( params )
 		{
 			local quitter = GetPlayerFromUserID(params.userid)
 			if (quitter == null) return
@@ -214,7 +214,7 @@ if (true)
 				EntFireByHandle(Entities.FindByName(null, "bots_win"),"runscriptcode","DoGameOverCheck()",2,null,null);	// try to check if the last guy just quits the server
 			}
 		}
-		function OnGameEvent_teamplay_round_win(params)
+		function OnGameEvent_teamplay_round_win( params )
 		{
 			if (params.team == 3) SendGlobalGameEvent("tf_game_over", {})
 		}
@@ -325,13 +325,13 @@ if (true)
 	:: SECONDARY_ONLY <- 4
 	////////////////////////////
 
-	::UpdateBotModel <- function(self)	// used to update bot model after class change roulette
+	::UpdateBotModel <- function( self )	// used to update bot model after class change roulette
 	{
 		local model = ModelTable[self.GetPlayerClass()]	
 		self.SetCustomModelWithClassAnimations(model)
 		if (self.IsMiniBoss()) self.SetCustomModelWithClassAnimations(ModelTable_Boss[self.GetPlayerClass()])
 	}
-	::RoundEnd <- function(activator)
+	::RoundEnd <- function( activator )
 	{
 		PopExtUtil.AddThinkToEnt(activator, "RoundEnd_Think")
 		for (local node; node = Entities.FindByClassname(node, "point_commentary_node");)
@@ -340,7 +340,7 @@ if (true)
 		}
 	}
 	::ClearArenaScripts <- function() {}	// obsolete
-	::EnemySpawn <- function(self) {}		// error blocker if enemyspawn happens before stagescript loads
+	::EnemySpawn <- function( self ) {}		// error blocker if enemyspawn happens before stagescript loads
 	::GetNewArena <- function()
 	{
 		if (hasrolledforarena) return
@@ -528,7 +528,7 @@ if (true)
 			}
 		}
 	}
-	::MoveToSpawnLocation <- function(self)
+	::MoveToSpawnLocation <- function( self )
 	{
 		if (GetRoundState() != 4) return
 		if (self.GetPlayerClass() == "TF_CLASS_SCOUT") return
@@ -573,7 +573,7 @@ if (true)
 		self.Teleport(true,spawnlocation.GetCenter()+offset,true,spawnlocation.GetAbsAngles(),true,spawnlocation.GetAbsVelocity());
 		self.AddCondEx(5,2,null) // hold in place to apply the stuff
 	}
-	::UnstuckEntity <- function(entity)
+	::UnstuckEntity <- function( entity )
 	{
 		if (!entity.IsAlive()) return
 		::MASK_PLAYERSOLID <- 33636363
@@ -690,7 +690,7 @@ if (true)
 			}
 		}
 	}
-	::LateStartCheck <- function(self)
+	::LateStartCheck <- function( self )
 	{
 		if (GetRoundState() != 4)	return	// don't run this yet
 		if ("gotstartmoney" in self.GetScriptScope().PRESERVED)
@@ -716,7 +716,7 @@ if (true)
 			self.GetScriptScope().PRESERVED.gotstartmoney = true
 		}
 	}
-	::PlayerSpawn <- function(self)
+	::PlayerSpawn <- function( self )
 	{
 		UpdatePlayerCurrency(self)
 		NetProps.SetPropBool(self,"m_bGlowEnabled",true)
@@ -724,7 +724,7 @@ if (true)
 		if (!"gotstartmoney" in self.GetScriptScope().PRESERVED) LateStartCheck(self)
 		if (roundactive) EnterArena(self)
 	}
-	::UpdatePlayerHUD <- function(user, hudtype)
+	::UpdatePlayerHUD <- function( user, hudtype )
 	{
 		if (GetRoundState() != 4) 
 		{
@@ -749,7 +749,7 @@ if (true)
 			if (lifecounter == 0) EntFireByHandle(Entities.FindByName(null, "respawn_override_nolives"), "StartTouch", "", -1, user, user)
 		}
 	}
-	::UpdatePowerupDurations <- function(self)		// UNUSED from Red Ridge, left here in case I want to use it later
+	::UpdatePowerupDurations <- function( self )		// UNUSED from Red Ridge, left here in case I want to use it later
 	{
 		local scope = self.GetScriptScope().PRESERVED
 		local deathmachinetext = ""
@@ -785,14 +785,14 @@ if (true)
 		if (scope.instakilltime > Time() || scope.doublepointstime > Time() || scope.miniguntime > Time()) EntFireByHandle(self,"runscriptcode","UpdatePowerupDurations(self)",1,null,self);
 	}
 
-	::UpdatePlayerCurrency <- function(self)
+	::UpdatePlayerCurrency <- function( self )
 	{
 		local currency = self.GetCurrency()
 		local PlayerManager = Entities.FindByClassname(null, "tf_player_manager")
 		SetPropIntArray(PlayerManager,"m_iCurrencyCollected",currency,self.entindex())
 	}
 
-	::ApplyTeleportEffects <- function(self)
+	::ApplyTeleportEffects <- function( self )
 	{
 		ScreenFade(self,255,255,255,255,1.5,0,2)
 		ScreenShake(self.GetCenter(),8,128,3,48,0,true)
@@ -805,7 +805,7 @@ if (true)
 		});
 	}
 
-	::EnterArena <- function(self)
+	::EnterArena <- function( self )
 	{
 		local lumberyard = false
 		local ravine = false
@@ -865,7 +865,7 @@ if (true)
 		}
 		if (roundactive) EntFireByHandle(self,"Runscriptcode","self.AddCondEx(51,5,self)",0.2,null,null);
 	}
-	::ReturnToLobby <- function(self)
+	::ReturnToLobby <- function( self )
 	{
 		ClearEngineerBuildings()
 		local spawnlocation = Entities.FindByName(null, "red_start")
@@ -883,7 +883,7 @@ if (true)
 		EntFireByHandle(Entities.FindByName(null, "notebook"),"Runscriptcode","GetNewArena()",5,null,null);
 	//	if (!player.IsAlive()) player.ForceRespawn()
 	}
-	::IsInFieldOfView <- function (user, target)
+	::IsInFieldOfView <- function ( user, target )
 	{
 		local tolerance = 0.5736 // cos(110/2)
 		local eyefwd = user.EyeAngles().Forward()
@@ -902,7 +902,7 @@ if (true)
 		delta.Norm()
 		return (eyefwd.Dot(delta) >= tolerance)
 	}
-	::IsVisible <- function (user, target)
+	::IsVisible <- function ( user, target )
 	{
 		local trace =
 		{
@@ -914,7 +914,7 @@ if (true)
 		TraceLineEx(trace)
 		return !trace.hit
 	}
-	::IsThreatVisible <- function (user, target)
+	::IsThreatVisible <- function ( user, target )
 	{
 		return IsInFieldOfView(user, target) && IsVisible(user, target)
 	}
@@ -940,7 +940,7 @@ if (true)
 		}
 	}
 
-	::ApplyPlayerAttributes <- function(self)
+	::ApplyPlayerAttributes <- function( self )
 	{
 		local playerclass = self.GetPlayerClass()
 		if (playerclass == TF_CLASS_SCOUT) EntFireByHandle(Entities.FindByName(null, "respawn_override_default"), "StartTouch", "", -1, self, self)	// override scout's respawn?
@@ -976,7 +976,7 @@ if (true)
 		}
 	}
 
-	::GivePlayerWeapon <- function(player, classname, item_id)
+	::GivePlayerWeapon <- function( player, classname, item_id )
 	{
 		if (classname == "tf_wearable" || classname == "tf_wearable_demoshield")
 		{
@@ -1010,7 +1010,7 @@ if (true)
 
 		return weapon
 	}
-	::GivePlayerCosmetic <- function(player, item_id, model_path = null)
+	::GivePlayerCosmetic <- function( player, item_id, model_path = null )
 	{
 		local weapon = Entities.CreateByClassname("tf_weapon_parachute")
 		NetProps.SetPropInt(weapon, "m_AttributeManager.m_Item.m_iItemDefinitionIndex", 1101)
@@ -1039,7 +1039,7 @@ if (true)
 
 		return wearable
 	}
-	::CalloutGiant <-function(issentrybuster)
+	::CalloutGiant <-function( issentrybuster )
 	{
 		if (issentrybuster)
 		{
@@ -1062,7 +1062,7 @@ if (true)
 			}
 		}
 	}
-	::GetRandomTarget <- function(user)	// for buster missions: run to random player and explode on them
+	::GetRandomTarget <- function( user )	// for buster missions: run to random player and explode on them
 	{
 		local targets = []
 		foreach (player in PopExtUtil.HumanArray)
@@ -1083,14 +1083,14 @@ if (true)
 		user.SetActionPoint(randompick)
 		user.SetMissionTarget(randompick)
 	}
-	::ShowMessageToPlayers <- function(text)
+	::ShowMessageToPlayers <- function( text )
 	{
 		foreach (player in PopExtUtil.HumanArray)
 		{
 			ClientPrint(self, HUD_PRINTCENTER, text)
 		}
 	}
-	::GetBossHealth <- function(user,value)	// apply bonus health to bosses, based on player count and cleared arenas
+	::GetBossHealth <- function( user,value )	// apply bonus health to bosses, based on player count and cleared arenas
 	{
 		local player_count = 0
 		local health_per_player = 2000
@@ -1327,7 +1327,7 @@ local round_number = NetProps.GetPropInt(PopExtUtil.ObjectiveResource, "m_nMannV
 [
 	TF_CLASS_HEAVYWEAPONS,
 ]
-::ExitStageLeft <- function(miniboss) // remove bot from wave counter
+::ExitStageLeft <- function( miniboss ) // remove bot from wave counter
 { 
 	local botcount = NetProps.GetPropInt(PopExtUtil.ObjectiveResource, "m_nMannVsMachineWaveClassCounts")
 	if (botcount == 0) return
@@ -1337,12 +1337,12 @@ local round_number = NetProps.GetPropInt(PopExtUtil.ObjectiveResource, "m_nMannV
 	if (miniboss) giantcount -= 1
 }
 
-::EnemySpawn <- function(self)
+::EnemySpawn <- function( self )
 {
 	EntFireByHandle(self,"runscriptcode","SelectEnemyType(self)",0.5,null,self);
 }
 	
-::SelectEnemyType <- function(self)
+::SelectEnemyType <- function( self )
 {
 	if (self.HasBotTag("Cooldude")) return
 	if (!self.IsAlive) return
@@ -1364,7 +1364,7 @@ local round_number = NetProps.GetPropInt(PopExtUtil.ObjectiveResource, "m_nMannV
 	MoveToSpawnLocation(self)
 }
 
-::BecomeGiant <- function(self)
+::BecomeGiant <- function( self )
 {
 	if (self.IsMiniBoss()) return // we don't want this running multiple times
 	local diceroll = RandomInt(0, GiantTable.len() - 1)
@@ -1401,7 +1401,7 @@ local round_number = NetProps.GetPropInt(PopExtUtil.ObjectiveResource, "m_nMannV
 	if (difficulty > 10) difficulty = 10
 	MoveToSpawnLocation(self)
 }
-::GetBotLoadout <- function(self)
+::GetBotLoadout <- function( self )
 {
 	if (GetRoundState() != 4) return
 	if (self.HasBotTag("Cooldude")) return

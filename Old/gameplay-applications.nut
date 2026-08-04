@@ -64,7 +64,7 @@ local Thinker = CreateThinker("Thinker_GlobalGameText", "GameplayThink", THINKER
 
 PrecacheSound(BlutsaugerSettings.sound)
 
-AddChatTrigger("ehp", function(player, ...) { 
+AddChatTrigger("ehp", function( player, ... ) { 
 	if (!player || vargv.len() > 1)
 		return
 	if (vargv.len() == 0)
@@ -73,7 +73,7 @@ AddChatTrigger("ehp", function(player, ...) {
 		player.PrintToChat("\x07FFFF00[Effective Hp]: \x03Calculates your Effective Health.\n\x04Just say \x03/ehp\x04 or \x03!ehp\x04 (not case sensitive)")
 } )
 
-AddChatTrigger(["shape", "class", "change", "changeclass", "switch", "shapeshift"], function(player, ...) {
+AddChatTrigger(["shape", "class", "change", "changeclass", "switch", "shapeshift"], function( player, ... ) {
 	if (!player)
 		return
 	if (vargv.len() != 1)
@@ -122,7 +122,7 @@ AddChatTrigger(["shape", "class", "change", "changeclass", "switch", "shapeshift
 	}
 } )
 
-AddChatTrigger("equip" function(player, ...) {
+AddChatTrigger("equip" function( player, ... ) {
 	if (!player)
 		return
 
@@ -288,7 +288,7 @@ function GameplayThink()
 
 if ("GameplayEvents" in ROOT) ::GameplayEvents <- {}
 ::GameplayEvents <- {
-	function OnScriptEvent_HumanDeath(params)
+	function OnScriptEvent_HumanDeath( params )
 	{
 		local human = params.victim
 		local attacker = params.attacker
@@ -303,7 +303,7 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents <- {}
 			return
 		attacker.SayChatterMessage(human)
 	}
-	function OnScriptEvent_BotDeath(params)
+	function OnScriptEvent_BotDeath( params )
 	{
 		local victim = params.victim
 		local attacker = params.attacker
@@ -353,7 +353,7 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents <- {}
 			case TF_WEAPON_CONSCIENTIOUS_OBJECTOR: { if (scope.m_iKills % 10 == 0 && spell_book.GetSpellCharges().tointeger() != SpellDefaults[spell_book.GetSpellIndex()+2].tointeger()) { attacker.RollSpell() } ; return }
 		}
 	}
-	function OnScriptHook_OnTakeDamage(params)
+	function OnScriptHook_OnTakeDamage( params )
 	{
 		if (params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT || params.damage_custom == TF_DMG_CUSTOM_IGNORE_EVENTS)
 			return;
@@ -407,7 +407,7 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents <- {}
 					ignore = [hVictim]
 					SoundRadius = (base_range + (iExplosiveBackstab * additive_range)) * 1
 					use_func_on_ignore = true
-					func = function(player){
+					func = function( player ){
 						player.StunPlayer(MATH.Clamp(iExplosiveBackstab - 1, 0, 2), 0.6, TF_STUN_MOVEMENT, hAttacker )
 					}
 				}
@@ -559,7 +559,7 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents <- {}
 			}
 		}
 	}
-	function OnScriptEvent_HumanResupply(params)
+	function OnScriptEvent_HumanResupply( params )
 	{
 		local player = params.player
 
@@ -576,7 +576,7 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents <- {}
 		else
 			RunWithDelay(@() player.UndoGHeavy(), 0.1)
 	}
-	function OnScriptEvent_HumanSpawn(params)
+	function OnScriptEvent_HumanSpawn( params )
 	{
 		local player = params.player
 		RunWithDelay(@() player.FixAmmo(), 0.1)
@@ -609,7 +609,7 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents <- {}
 			}
 		}
 	}
-	function OnScriptEvent_BotSpawn(params)
+	function OnScriptEvent_BotSpawn( params )
 	{
 		local player = params.player
 
@@ -630,7 +630,7 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents <- {}
 			}
 		}
 	}
-	function OnScriptEvent_BotTeam(params)
+	function OnScriptEvent_BotTeam( params )
 	{
 		if (params.oldteam == TF_TEAM_PVE_INVADERS) return;
 		local player = params.player

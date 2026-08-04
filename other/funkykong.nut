@@ -1,7 +1,7 @@
 ::ROOT <- getroottable()
 
 ::say_event <- {
-    function OnGameEvent_player_say(params)
+    function OnGameEvent_player_say( params )
     {
         local player = GetPlayerFromUserID(params.userid)
         local text = split(text, " ")

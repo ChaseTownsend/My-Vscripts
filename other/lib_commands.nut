@@ -3,7 +3,7 @@ IncludeScript("fatcat_library")
 const TEXT_START = "!"
 
 ::talk <- {
-	function OnGameEvent_player_say(params)
+	function OnGameEvent_player_say( params )
 	{
 		local player = GetPlayerFromUserID(params.userid)
 

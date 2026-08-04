@@ -14,11 +14,11 @@ local target = 1
 local param = 2
 
 ::main <- {
-	function OnGameEvent_post_inventory_application(params)
+	function OnGameEvent_post_inventory_application( params )
 	{
 		local player = GetPlayerFromUserID(params.userid)
 	}
-	function OnGameEvent_player_say(params)
+	function OnGameEvent_player_say( params )
 	{
 		local player = GetPlayerFromUserID(params.userid)
 		local text = split(params.text, " ")

@@ -13,7 +13,7 @@ function disp_think() {
 }
 
 ::med_events <- {
-	function OnGameEvent_post_inventory_application(params) {
+	function OnGameEvent_post_inventory_application( params ) {
 		local scope = GetScope(GetPlayerFromUserID(params.userid))
 		scope.Healers <- []
 		scope.ThinkTable <- {}

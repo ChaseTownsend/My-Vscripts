@@ -60,20 +60,20 @@ if (!("FatCatLibVersion" in getroottable()))
 		}
 	}
 
-	function ROOT::FindByClassname(previous, classname)
+	function ROOT::FindByClassname( previous, classname )
 	{
 		local ent = Entities.FindByClassname(previous, classname)
 		SetPropBool(ent, "m_bForcePurgeFixedupStrings", true)
 		return ent
 	}
-	function ROOT::FindByName(previous, targetname)
+	function ROOT::FindByName( previous, targetname )
 	{
 		local ent = Entities.FindByName(previous, targetname)
 		SetPropBool(ent, "m_bForcePurgeFixedupStrings", true)
 		return ent
 	}
 
-	function ROOT::GetAllEntitiesByClassname(classname)
+	function ROOT::GetAllEntitiesByClassname( classname )
 	{
 		local list = []
 		for (local entity; entity = FindByClassname(entity, classname); )
@@ -83,7 +83,7 @@ if (!("FatCatLibVersion" in getroottable()))
 		return list
 	}
 
-	function CTFBot::GetWeaponInSlot(slot = 0)
+	function CTFBot::GetWeaponInSlot( slot = 0 )
 	{
 		local ent = GetPropEntityArray(this, "m_hMyWeapons", slot)
 		if (ent) SetPropBool(ent, "m_bForcePurgeFixedupStrings", true)
@@ -162,7 +162,7 @@ function CollectNewDroppedCurrency()
 }
 ::MvMStats <- FindByClassname(null, "tf_mann_vs_machine_stats")
 
-function IncrementCurrency(amount = 0)
+function IncrementCurrency( amount = 0 )
 {
 	if (!MvMStats)
 		throw "MISSING \"tf_mann_vs_machine_stats\""
@@ -171,7 +171,7 @@ function IncrementCurrency(amount = 0)
 
 function GetWaveIndex()
 	return GetPropInt(MvMStats, "m_iCurrentWaveIdx")
-function SetWaveIndex(wave)
+function SetWaveIndex( wave )
 	SetPropInt(MvMStats, "m_iCurrentWaveIdx", wave)
 function IncrementWaveCounter()
 	SetWaveIndex(GetWaveIndex()+1)
@@ -228,7 +228,7 @@ function MVMThink() {
 }
 
 ::Events <- {
-	function OnScriptHook_OnTakeDamage(params)
+	function OnScriptHook_OnTakeDamage( params )
 	{
 		local victim = params.const_entity
 		local attacker = params.attacker
@@ -266,7 +266,7 @@ function MVMThink() {
 			}
 		}
 	}
-	function OnGameEvent_player_death(params)
+	function OnGameEvent_player_death( params )
 	{
 		local moneys = CollectNewDroppedCurrency()
 		if (moneys == null)
@@ -281,7 +281,7 @@ function MVMThink() {
 			})
 		}
 	}
-	function OnGameEvent_mvm_pickup_currency(params)
+	function OnGameEvent_mvm_pickup_currency( params )
 	{
 		local MvMStats = FindByClassname(null, "tf_mann_vs_machine_stats")
 		if (!MvMStats)
@@ -289,16 +289,16 @@ function MVMThink() {
 		IncrementCurrency(params.currency)
 	}
 
-	// function OnGameEvent_mvm_sniper_headshot_currency(params)
+	// function OnGameEvent_mvm_sniper_headshot_currency( params )
 	// {
 	// }
 
-	function OnGameEvent_mvm_begin_wave(params)
+	function OnGameEvent_mvm_begin_wave( params )
 	{
 		IncrementWaveCounter()
 	}
 
-	function OnGameEvent_mvm_wave_complete(params)
+	function OnGameEvent_mvm_wave_complete( params )
 	{
 		IncrementWaveCounter()
 		local collected = GetPropInt(MvMStats, "m_currentWaveStats.nCreditsAcquired")
@@ -309,7 +309,7 @@ function MVMThink() {
 	}
 
 
-	// function OnGameEvent_mvm_tank_destroyed_by_players(params)
+	// function OnGameEvent_mvm_tank_destroyed_by_players( params )
 	// {
 	// 	RunWithDelay( @() CollectNewDroppedCurrency(), 0.015)
 	// }

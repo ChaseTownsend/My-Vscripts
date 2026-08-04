@@ -3,7 +3,7 @@
 ::CPROJ_STATE_MOVE 		<- 1
 ::CPROJ_STATE_SET 		<- 2
 
-function ROOT::CreateProjectile(proj_info)
+function ROOT::CreateProjectile( proj_info )
 {
 	if (!("thinkfunc" in proj_info) || !proj_info.thinkfunc)
 		return

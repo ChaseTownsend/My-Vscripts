@@ -196,7 +196,7 @@ const UU_AMOUNT = 2
 
 
 ::upgrade <- {
-	function OnGameEvent_player_spawn(params)
+	function OnGameEvent_player_spawn( params )
 	{
 		if (params.team == TF_TEAM_UNASSIGNED)
 		{
@@ -214,7 +214,7 @@ const UU_AMOUNT = 2
 	}
 
 
-	function OnGameEvent_player_say(params)
+	function OnGameEvent_player_say( params )
 	{
 		local player = GetPlayerFromUserID(params.userid)
 		local game_scope = GetScope(Gamerules)
@@ -318,7 +318,7 @@ const UU_AMOUNT = 2
 		
 	}
 
-	function OnGameEvent_HumanDeath(params)
+	function OnGameEvent_HumanDeath( params )
 	{
 		local victim = params.victim
 		local attacker = params.attacker
@@ -326,7 +326,7 @@ const UU_AMOUNT = 2
 		local GameScope = GetScope(Gamerules)
 	}
 
-	function OnGameEvent_player_death(params)
+	function OnGameEvent_player_death( params )
 	{
 		local victim = GetPlayerFromUserID(params.userid)
 		local attacker = GetPlayerFromUserID(params.attacker)
@@ -346,7 +346,7 @@ const UU_AMOUNT = 2
 }
 __CollectGameEventCallbacks(upgrade)
 
-function GiveAllPlayerMoney(money)
+function GiveAllPlayerMoney( money )
 {
 	foreach (player in GetEveryPlayer())
 	{
@@ -356,12 +356,12 @@ function GiveAllPlayerMoney(money)
 	}
 }
 
-function DecrementPlayerCurrency(player, amount)
+function DecrementPlayerCurrency( player, amount )
 {
 	GetScope(player).currency -= amount
 }
 
-function ApplyUpgradeToWeapon(weapon, table)
+function ApplyUpgradeToWeapon( weapon, table )
 {
 	weapon.AddAttribute(table.attribute, weapon.GetAttribute(table.attribute, table.default_value) + table.increment, 0)
 	if (weapon.GetAttribute(table.attribute, table.default_value) < (table.upgrades * table.increment))
@@ -370,7 +370,7 @@ function ApplyUpgradeToWeapon(weapon, table)
 	}
 }
 
-function IsWeaponUpgradeValid(name)
+function IsWeaponUpgradeValid( name )
 {
 	switch (name)
 	{
@@ -387,7 +387,7 @@ function IsWeaponUpgradeValid(name)
 		}
 	}
 }
-function WeaponUpgadeToTableEntry(name)
+function WeaponUpgadeToTableEntry( name )
 {
 	switch (name)
 	{
@@ -418,7 +418,7 @@ function WeaponUpgadeToTableEntry(name)
 	}
 }
 
-function CanPlayerAffordUpgrade(player, table)
+function CanPlayerAffordUpgrade( player, table )
 {
 	local currency = GetScope(player).currency
 	local cost = table.cost
@@ -427,7 +427,7 @@ function CanPlayerAffordUpgrade(player, table)
 	else 
 		return false
 }
-function CanWeaponApplyUpgrade(weapon, upgrade)
+function CanWeaponApplyUpgrade( weapon, upgrade )
 {
 	if (weapon.GetAttribute(upgrade.attribute, upgrade.default_value) == (upgrade.upgrades * upgrade.increment) + upgrade.default_value)
 	{
@@ -457,7 +457,7 @@ function CanWeaponApplyUpgrade(weapon, upgrade)
 	}
 }
 
-function IsUpgradeValidForWeapon(weapon, upgrade)
+function IsUpgradeValidForWeapon( weapon, upgrade )
 {
 	if (weapon == null)
 		return false

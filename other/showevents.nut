@@ -471,7 +471,7 @@ foreach (event in ShowEventList)
 {
 	local event_base_name = event
 	local event_name = "OnGameEvent_" + event
-	ShowEventTable[event_name] <- function(params) 
+	ShowEventTable[event_name] <- function( params ) 
 	{
 		if (ShowEvents)
 		{

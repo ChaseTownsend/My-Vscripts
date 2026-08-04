@@ -120,7 +120,7 @@ function AbilityThink()
 }
 
 ::ability <- {
-	function OnGameEvent_player_spawn(params)
+	function OnGameEvent_player_spawn( params )
 	{
 		//////////////////////////////////
 		//  Reset Ability Key In Scope  //
@@ -165,7 +165,7 @@ function AbilityThink()
 			}
 		}
 	}
-	function OnGameEvent_post_inventory_application(params)
+	function OnGameEvent_post_inventory_application( params )
 	{
 		local player = GetPlayerFromUserID(params.userid)
 
@@ -182,7 +182,7 @@ function AbilityThink()
 			SetPropInt( player, "m_ArmorValue", 0x80000000)
 		}
 	}
-	function OnGameEvent_player_death(params)
+	function OnGameEvent_player_death( params )
 	{
 		/////////////////////////////////
 		//  Remove any Ability Thinks  //
@@ -219,7 +219,7 @@ function AbilityThink()
 			}
 		}
 	}
-	function OnGameEvent_player_disconnect(params)
+	function OnGameEvent_player_disconnect( params )
 	{
 		local text = FindByName(null, "User: " + params.networkid +  " Display")
 		if (!text.IsValid()) return
@@ -229,7 +229,7 @@ function AbilityThink()
 }
 __CollectGameEventCallbacks(ability)
 
-function ValidatePlayer(player)
+function ValidatePlayer( player )
 {
 	if (!player) return false
 	if (IsPlayerABot(player)) return false

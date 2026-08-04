@@ -25,7 +25,7 @@ class Player {
 
 }
 
-function InitPlayer(player, info)
+function InitPlayer( player, info )
 {
     // GetScope(player).Init <- 
 }

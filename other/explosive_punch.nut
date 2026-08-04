@@ -1,7 +1,7 @@
 IncludeScript("fatcat_library")
 
 ::bomb <- {
-	function OnScriptHook_OnTakeDamage(params)
+	function OnScriptHook_OnTakeDamage( params )
 	{
 		if (params.weapon == null) return
 		if (params.attacker == null) return

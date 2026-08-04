@@ -136,7 +136,7 @@ CreateTankPath({
 	]
 }) */
 
-/* function CreateALoopPath(data)
+/* function CreateALoopPath( data )
 {
 	local StartingData = {
 		origin = data.Starting.origin

@@ -1,7 +1,7 @@
 IncludeScript("fatcat_library")
 
 ::customdmg <- {
-    function OnScriptHook_OnTakeDamage(params)
+    function OnScriptHook_OnTakeDamage( params )
     {
         local attacker = params.attacker
         local victim = params.const_entity

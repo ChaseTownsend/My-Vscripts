@@ -42,7 +42,7 @@ function CheckWeaponFire()
 }
 
 ::Attack_events <- {
-	function OnGameEvent_post_inventory_application(params)
+	function OnGameEvent_post_inventory_application( params )
 	{
 		local player = GetPlayerFromUserID(params.userid)
 		if (!player)
@@ -58,7 +58,7 @@ function CheckWeaponFire()
 			GetScope(weapon).last_fire_time <- Time()
 		}
 	}
-	function OnGameEvent_player_attack(params)
+	function OnGameEvent_player_attack( params )
 	{
 		CreateProjectile({
 			owner = params.player
@@ -76,7 +76,7 @@ function CheckWeaponFire()
 }
 __CollectGameEventCallbacks(Attack_events)
 
-function FireAttackEvent(info)
+function FireAttackEvent( info )
 {
 	FireGameEvent("player_attack", { 
 		player = info[0], 

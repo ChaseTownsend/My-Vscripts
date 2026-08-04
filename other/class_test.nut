@@ -1,4 +1,4 @@
-function GetPropSetFunction(type)
+function GetPropSetFunction( type )
 {
 	switch (type) {
 		case "integer": 	{ return SetPropInt }
@@ -12,7 +12,7 @@ function GetPropSetFunction(type)
 	return null
 }
 
-function GetPropGetFunction(type) {
+function GetPropGetFunction( type ) {
 	switch (type) {
 		case "integer": 	{ return GetPropInt }
 		case "float":		{ return GetPropFloat }
@@ -29,7 +29,7 @@ function GetPropGetFunction(type) {
 class TestPlayer {
 	player = null
 
-	function AddPlayer(player)
+	function AddPlayer( player )
 	{
 		if (player == null)
 			return
@@ -64,7 +64,7 @@ return
 
 ::NAN <- fabs(0.0 / 0.0)
 
-function GetPropSetFunction(type)
+function GetPropSetFunction( type )
 {
 	switch (type) {
 		case "integer": 	{ return SetPropInt }
@@ -78,7 +78,7 @@ function GetPropSetFunction(type)
 	return null
 }
 
-function GetPropGetFunction(type) {
+function GetPropGetFunction( type ) {
 	switch (type) {
 		case "integer": 	{ return GetPropInt }
 		case "float":		{ return GetPropFloat }

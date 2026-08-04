@@ -2,22 +2,22 @@ IncludeScript("fatcat_library")
 
 function ROOT::CTFPlayer::SetupCAttributes()
 	GetScope(this).CustomAttributes <- {}
-function ROOT::CTFPlayer::HasCAttribute(attribute)
+function ROOT::CTFPlayer::HasCAttribute( attribute )
 	return "CustomAttributes" in GetScope(this) ? attribute in GetScope(this).CustomAttributes : false
-function ROOT::CTFPlayer::GetCAttribute(attribute)
+function ROOT::CTFPlayer::GetCAttribute( attribute )
 {
 	if (!HasCAttribute(attribute))
 		return null
 	else
 		return attribute in GetScope(this).CustomAttributes ? GetScope(this).CustomAttributes[attribute] : null
 }
-function ROOT::CTFPlayer::AddCAttribute(attribute, values, duration = 0.0)
+function ROOT::CTFPlayer::AddCAttribute( attribute, values, duration = 0.0 )
 {
 	if (duration != 0.0 && !("__duration" in values))
 		values.__duration <- duration
 	GetScope(this).CustomAttributes[attribute] <- values
 }
-function ROOT::CTFPlayer::RemoveCAttribute(attribute)
+function ROOT::CTFPlayer::RemoveCAttribute( attribute )
 {
 	if (!HasCAttribute(attribute))
 		return
@@ -44,7 +44,7 @@ function ROOT::CTFPlayer::PrintCAttributes()
 	 * @param {short}		penetration_count	How many players the damage has penetrated so far.
 	 * @param {short}		others_damaged		How many players other than the attacker has the damage been applied to.
 	 */
-	function OnGameEvent_PostTakeDamage(params)
+	function OnGameEvent_PostTakeDamage( params )
 	{
 		if (params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
 			return

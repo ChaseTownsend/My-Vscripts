@@ -4,10 +4,10 @@ if (!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && Fat
 SetScriptVersion("join_message", "1.0.1")
 
 ::info <- {
-    function OnScriptEvent_HumanTeam(params)
+    function OnScriptEvent_HumanTeam( params )
         GetScope(params.player).joined <- false
 
-    function OnScriptEvent_HumanSpawn(params)
+    function OnScriptEvent_HumanSpawn( params )
     {
         local player = params.player
         local scope = GetScope(player)

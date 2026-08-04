@@ -1,6 +1,6 @@
 local world_spawn_scope = GetScope(Worldspawn)
 
-function RunWithDelay(func, delay = 0.0)
+function RunWithDelay( func, delay = 0.0 )
 {
 	local func_name = UniqueString()
 	world_spawn_scope[func_name] <- function[this]()
@@ -13,7 +13,7 @@ function RunWithDelay(func, delay = 0.0)
 	return func_name
 }
 
-function CreateTimer(on_timer_func, first_delay = 0.0)
+function CreateTimer( on_timer_func, first_delay = 0.0 )
 {
 	local func_name = UniqueString()
 	world_spawn_scope[func_name] <- function[this]()
@@ -45,13 +45,13 @@ function CreateTimer(on_timer_func, first_delay = 0.0)
 	return func_name
 }
 
-function KillTimer(func_name)
+function KillTimer( func_name )
 {
 	if (func_name in world_spawn_scope)
 		delete world_spawn_scope[func_name]
 }
 
-function FireTimer(func_name)
+function FireTimer( func_name )
 {
 	if (func_name in world_spawn_scope)
 	{

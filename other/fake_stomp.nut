@@ -1,7 +1,7 @@
 IncludeScript("fatcat_library")
 
 ::stomp <- {
-	function OnScriptHook_OnTakeDamage(params)
+	function OnScriptHook_OnTakeDamage( params )
 	{
 		if (!MATH.BitWise(params.damage_type, DMG_FALL))
 			return;

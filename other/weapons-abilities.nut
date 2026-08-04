@@ -119,7 +119,7 @@ function AbilityThink()
 }
 
 ::ability <- {
-	function OnGameEvent_player_spawn(params)
+	function OnGameEvent_player_spawn( params )
 	{
 		//////////////////////////////////
 		//  Reset Ability Key In Scope  //
@@ -158,7 +158,7 @@ function AbilityThink()
 			}
 		}
 	}
-	function OnGameEvent_player_death(params)
+	function OnGameEvent_player_death( params )
 	{
 		local player = GetPlayerFromUserID(params.userid)
 		if (IsPlayerABot(player)) return
@@ -166,7 +166,7 @@ function AbilityThink()
 		local weapon = player.GetAbilityWeapon()
 		if (weapon) ClearThinks(weapon)
 	}
-	function OnGameEvent_player_disconnect(params)
+	function OnGameEvent_player_disconnect( params )
 	{
 		if (params.bot != 0) return
 

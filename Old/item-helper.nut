@@ -10,7 +10,7 @@ SetScriptVersion("item_helper", "1.0.0")
 
 ::helper <-{
 	/////////////////
-	function OnGameEvent_player_spawn(params)
+	function OnGameEvent_player_spawn( params )
 	{
 		local player = GetPlayerFromUserID(params.userid)
 
@@ -35,7 +35,7 @@ SetScriptVersion("item_helper", "1.0.0")
 		}
 	}
 	//////////////////
-	function OnGameEvent_post_inventory_application(params)
+	function OnGameEvent_post_inventory_application( params )
 	{
 		local player = GetPlayerFromUserID(params.userid)
 		if (IsPlayerABot(player)) return
@@ -575,7 +575,7 @@ SetScriptVersion("item_helper", "1.0.0")
 		}
 	}
 	/////////////////////
-	function OnGameEvent_player_say(params)
+	function OnGameEvent_player_say( params )
 	{
 		local player = GetPlayerFromUserID(params.userid)
 

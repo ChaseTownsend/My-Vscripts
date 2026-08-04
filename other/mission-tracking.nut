@@ -3,7 +3,7 @@ local full_completed_file = FileToString("finished.txt")
 local full_completed_ids = split(full_completed_file, ">", true)
 
 ::tracking <- {
-	function OnGameEvent_player_team(params)
+	function OnGameEvent_player_team( params )
 	{
 		if (params.team != Constants.ETFTeam.TF_TEAM_PVE_DEFENDERS) return
 		local player = GetPlayerFromUserID(params.userid)
@@ -14,7 +14,7 @@ local full_completed_ids = split(full_completed_file, ">", true)
 			player_ids.push(player_id)
 		}
 	}
-	function OnGameEvent_player_disconnect(params)
+	function OnGameEvent_player_disconnect( params )
 	{
 		if (params.bot) return
 		local player = GetPlayerFromUserID(params.userid)
@@ -26,7 +26,7 @@ local full_completed_ids = split(full_completed_file, ">", true)
 		}
 
 	}
-	function OnGameEvent_mvm_mission_complete(params)
+	function OnGameEvent_mvm_mission_complete( params )
 	{
 		ClientPrint(null, 3, "Mission Complete Event FIRED")
 		local startoffile = "Total People in mission : " + player_ids.len()
@@ -62,7 +62,7 @@ local full_completed_ids = split(full_completed_file, ">", true)
 	}
 }
 
-function GetPlayerSteamID(player)
+function GetPlayerSteamID( player )
 {
     return NetProps.GetPropString(player, "m_szNetworkIDString")
 }

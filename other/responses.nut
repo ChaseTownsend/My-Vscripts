@@ -9,7 +9,7 @@ const text_denial_color = "\x07FF0000"
 
 ::responses <-{
 
-    function OnGameEvent_player_say(params)
+    function OnGameEvent_player_say( params )
 	{
 		local player = GetPlayerFromUserID(params.userid)
 

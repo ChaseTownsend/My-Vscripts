@@ -1,14 +1,14 @@
 ::CTank <- {
-	function OnScriptHook_OnTakeDamage(params)
+	function OnScriptHook_OnTakeDamage( params )
 	{
 		if (params.const_entity.GetClassname() != "vscript_boss")
 			return
 		// PrintCollection(params)
 	}
-	function OnGameEvent_BaseBossHurt(params)
+	function OnGameEvent_BaseBossHurt( params )
 	{
 	}
-	function OnGameEvent_BaseBossKilled(params)
+	function OnGameEvent_BaseBossKilled( params )
 	{
 	}
 }
@@ -52,7 +52,7 @@ const TANK_MODEL = "models/bots/boss_bot/static_boss_tank.mdl"
 ]
 // CreatePath(tracks)
 
-function CreatePath(values)
+function CreatePath( values )
 {
 	foreach (item in values)
 	{
@@ -80,7 +80,7 @@ function DrawPathTracks()
 }
 
 
-function CreateCustomTank(params)
+function CreateCustomTank( params )
 {
 	local health 	= "health" 		in params ? params.health 		: 1000
 	local model 	= "model" 		in params ? params.model 		: TANK_MODEL

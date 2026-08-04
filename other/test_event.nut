@@ -1,4 +1,4 @@
-function CollectEventsInScope(events)
+function CollectEventsInScope( events )
 {
 	local events_id = UniqueString()
 	getroottable()[events_id] <- events
@@ -10,7 +10,7 @@ function CollectEventsInScope(events)
 	if (cleanup_event in events)
 		cleanup_user_func = events[cleanup_event]
 
-	events[cleanup_event] <- function(params)
+	events[cleanup_event] <- function( params )
 	{
 		if (cleanup_user_func)
 			cleanup_user_func(params)
@@ -48,7 +48,7 @@ function CheckWeaponFire()
 
 // event listener (see Listening for Events example)
 CollectEventsInScope({
-	OnGameEvent_player_spawn = function(params)
+	OnGameEvent_player_spawn = function( params )
 	{
 		local player = GetPlayerFromUserID(params.userid)
 		if (!player)

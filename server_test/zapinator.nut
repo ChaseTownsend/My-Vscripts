@@ -32,10 +32,10 @@ RegisterDamageCallback("player", "ZapinatorPlayer", function( params ) {
 	if (!attacker.HasWeapon(30666) || weapon.GetIDX() != 30666)
 		return
 
-	// local function GetDebugName(plr)
+	// local function GetDebugName( plr )
 		// return "( ["+plr.entindex()+"] : " + plr.GetUserName() + " )" 
 
-	// local function PrintLog(m)
+	// local function PrintLog( m )
 		// printf("[%d] : %s\n", GetFrameCount(), m)
 
 	// printf("%s was hit by Laser!\n", GetDebugName(victim))
@@ -46,27 +46,27 @@ RegisterDamageCallback("player", "ZapinatorPlayer", function( params ) {
 	if (!("HitRobots" in proj_scope))
 		proj_scope.HitRobots <- []
 
-	if(proj_scope.HitRobots.find(victim.entindex()) != null)
+	if (proj_scope.HitRobots.find(victim.entindex()) != null)
 	{
 		// PrintLog(format("Blocking repeated Hit against %s!", GetDebugName(victim)))
 		params.early_out <- true
 		return
 	}
 
-	if("Penetrates" in proj_scope)
+	if ("Penetrates" in proj_scope)
 	{
 		// PrintLog(format("Multiplying dmg by %f because of %d penetrations", 1 + (0.25 * proj_scope.Penetrates), proj_scope.Penetrates))
 		params.damage *= 1 + (0.25 * proj_scope.Penetrates)
 	}
 
-	if(weapon.GetAttribute("bleeding duration", 0) != 0)
+	if (weapon.GetAttribute("bleeding duration", 0) != 0)
 		weapon.AddAttribute("bleeding duration", 0, 0)
-	if(weapon.GetAttribute("Set DamageType Ignite", 0) != 0)
+	if (weapon.GetAttribute("Set DamageType Ignite", 0) != 0)
 		weapon.AddAttribute("Set DamageType Ignite", 0, 0)
 
-	if(weapon.GetAttribute("apply look velocity on damage", 0) != 0)
+	if (weapon.GetAttribute("apply look velocity on damage", 0) != 0)
 		weapon.AddAttribute("apply look velocity on damage", 0, 0)
-	if(weapon.GetAttribute("apply z velocity on damage", 0) != 0)
+	if (weapon.GetAttribute("apply z velocity on damage", 0) != 0)
 		weapon.AddAttribute("apply z velocity on damage", 0, 0)
 
 
@@ -97,7 +97,7 @@ RegisterDamageCallback("player", "ZapinatorPlayer", function( params ) {
 function Roll( chance, data, reward_func, fail_func )
 {
 	local rolled = MATH.RandomChance()
-	if(rolled <= chance)
+	if (rolled <= chance)
 		reward_func.acall([this].extend(data))
 	else
 		fail_func.acall([this].extend(data))
@@ -112,15 +112,15 @@ function Roll( chance, data, reward_func, fail_func )
  * @param {CBaseEntity} projectile
  * @param {CTFWeaponBase} weapon
  */
-function ZapinatorHit(victim, attacker, projectile, weapon)
+function ZapinatorHit( victim, attacker, projectile, weapon )
 {
 	local proj_scope = GetScope(projectile)
-	if(!("Penetrates" in proj_scope))
+	if (!("Penetrates" in proj_scope))
 		proj_scope.Penetrates <- 0
 
 	proj_scope.HitRobots.append(victim.entindex())
 
-	if(projectile.GetMoveType() == MOVETYPE_NOCLIP)
+	if (projectile.GetMoveType() == MOVETYPE_NOCLIP)
 	{
 		while (proj_scope.HitRobots.len() > 4)
 			proj_scope.HitRobots.remove(0)
@@ -134,32 +134,32 @@ function ZapinatorHit(victim, attacker, projectile, weapon)
 
 	local DebuffRoll = 
 	Roll( 0.25, [victim, attacker, projectile, weapon], 
-	function(victim, attacker, projectile, weapon) {
+	function( victim, attacker, projectile, weapon ) {
 		// "gas > bleed > slow > jar = mark = milk > 0.5s stun"
 		local Debuffs = [
-			function(victim, attacker, weapon, ...)
+			function( victim, attacker, weapon, ... )
 			{
 				weapon.AddAttribute("Set DamageType Ignite", 1, 0)
 				victim.AddCondEx(TF_COND_GAS, 1.0, attacker)
 			},
-			function(_1, _2, weapon, ...)
+			function( _1, _2, weapon, ... )
 			{
 				weapon.AddAttribute("bleeding duration", 12, 0)
 			},
-			function(victim, attacker, ...)
+			function( victim, attacker, ... )
 			{
 				victim.AddCondEx(TF_COND_URINE, 15, attacker)
 			},
-			function(victim, attacker, ...)
+			function( victim, attacker, ... )
 			{
 				victim.AddCondEx(TF_COND_MAD_MILK, 15, attacker)
 				victim.StunPlayer(15.0, 0.35, TF_STUN_MOVEMENT, attacker)
 			},
-			function(victim, attacker, weapon, ...)
+			function( victim, attacker, weapon, ... )
 			{
 				victim.MakeCorrosion(attacker, weapon)
 			},
-			function(victim, attacker, ...)
+			function( victim, attacker, ... )
 			{
 				victim.StunPlayer(victim.IsMiniBoss() ? 2.5 : 5.0, 1, TF_STUN_BOTH, attacker)
 			},
@@ -187,32 +187,32 @@ function ZapinatorHit(victim, attacker, projectile, weapon)
 		// printf("Applied debuff %d\n", chosen_debuff)
 		Debuffs[chosen_debuff].acall([this].extend([victim, attacker, weapon, projectile]))
 	},
-	function(...) {
+	function( ... ) {
 		// printl("Projectile failed to Apply Debuff")
 	})
 
 	local KnockbackRoll = 
 	Roll( 0.04, [weapon], 
-	function(weapon) {
+	function( weapon ) {
 		weapon.AddAttribute("apply look velocity on damage", 750, 0)
 		weapon.AddAttribute("apply z velocity on damage", 400, 0)
 	}, 
-	function(...) {
+	function( ... ) {
 		// printl("Projectile failed to Apply KB")
 	})
 
 	// local PenetrateRoll = 
 	// Roll( 0.5, [projectile], 
-	// function(projectile) {
+	// function( projectile ) {
 	// 	GetScope(projectile).Penetrates++
 	// }, 
-	// function(...) {
+	// function( ... ) {
 	// 	printl("Projectile failed to penetrate")
 	// })
 
 	local ExplodeRoll = 
 	Roll( 0.1, [attacker, projectile], 
-	function(attacker, projectile) {
+	function( attacker, projectile ) {
 		// printl("Projectile Detonated!")
 		CreateBaseExplosion({
 			owner = attacker
@@ -229,12 +229,12 @@ function ZapinatorHit(victim, attacker, projectile, weapon)
 			SoundRadius = 50
 		})
 	}, 
-	function(...) {
+	function( ... ) {
 	})
 
 	local ReboundRoll = 
 	Roll( 0.15, [victim, projectile], 
-	function(victim, projectile) {
+	function( victim, projectile ) {
 		// printl("Projectile Got Deflected!")
 
 		HomingProjectile(projectile, victim)
@@ -242,7 +242,7 @@ function ZapinatorHit(victim, attacker, projectile, weapon)
 
 		projectile.SetMoveType(MOVETYPE_NOCLIP, MOVECOLLIDE_DEFAULT)
 	}, 
-	function(...) {
+	function( ... ) {
 		// printl("Projectile failed to penetrate")
 	})
 
@@ -260,29 +260,29 @@ function ZapinatorHit(victim, attacker, projectile, weapon)
  * @param {CBaseEntity} projectile
  * @param {CTFPlayer} victim
  */
-function HomingProjectile(projectile, victim)
+function HomingProjectile( projectile, victim )
 {
-	if(REFLECT_TO_ENEMY)
+	if (REFLECT_TO_ENEMY)
 	{
 		projectile.SetAbsOrigin(victim.GetCenter())
 		local target = GetClosestPlayer(projectile, victim.GetTeam(), 1)
 
 		projectile.SetForwardVector((target.GetCenter() - victim.GetCenter()).Normalize())
 		projectile.SetAbsVelocity(projectile.GetForwardVector() * 1000)
-		if(projectile.GetMoveType() != MOVETYPE_NOCLIP)
+		if (projectile.GetMoveType() != MOVETYPE_NOCLIP)
 			GetScope(projectile).NoclipHits <- 0
 		else if (GetScope(projectile).NoclipHits < 5)
 			GetScope(projectile).NoclipHits++
 
-		for(local i = 0; i < GetScope(projectile).NoclipHits; i++)
+		for (local i = 0; i < GetScope(projectile).NoclipHits; i++)
 			projectile.SetAbsVelocity(projectile.GetAbsVelocity() * 0.75)
 
-		if(projectile.GetAbsVelocity().Length() < 500)
+		if (projectile.GetAbsVelocity().Length() < 500)
 			projectile.SetAbsVelocity(projectile.GetForwardVector() * 500)
 	}
 	else	// rebound back to you
 	{
-		if(IsValidPlayer(victim))
+		if (IsValidPlayer(victim))
 		{
 			projectile.SetForwardVector((projectile.GetForwardVector() * -1) + MATH.RandomVec(-0.1, 0.1))
 			projectile.SetOwner(victim)

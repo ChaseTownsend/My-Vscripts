@@ -9,7 +9,7 @@ local spell_ents =
     [7] = "tf_projectile_spellspawnboss",
     [8] = "tf_projectile_spellspawnhorde",
 }
-function ShootProjectile(player, projectile_type) {
+function ShootProjectile( player, projectile_type ) {
     local angles = player.EyeAngles()
 
     local projectile = SpawnEntityFromTable(spell_ents[projectile_type], {
@@ -50,7 +50,7 @@ function CheckWeaponFire()
 	return -1
 }
 ::weapon_fire <- {
-    function OnGameEvent_player_spawn(params)
+    function OnGameEvent_player_spawn( params )
     {
         local player = GetPlayerFromUserID(params.userid)
         if (!player)

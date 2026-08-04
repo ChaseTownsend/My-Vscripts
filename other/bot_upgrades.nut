@@ -36,12 +36,12 @@ class BotUpgrade {
 	{
 		foreach (key, value in data)
 		{
-			if(key in this)
+			if (key in this)
 				this[key] = value
 		}
 	}
 
-	function CanBuyUpgrade(money) {return money >= cost}
+	function CanBuyUpgrade( money ) {return money >= cost}
 }
 
 class LevelSystem {
@@ -66,15 +66,15 @@ class LevelSystem {
 		this.experience_cap_per_level = per_lvl
 		this.experience_needed = this.experience_for_level
 
-		if(lvl_func)
+		if (lvl_func)
 			this.OtherLevelFunc = lvl_func
 	}
 
-	function AddExp(amount)
+	function AddExp( amount )
 	{
 		experience_needed -= amount
 
-		if(ShouldLevelup())
+		if (ShouldLevelup())
 		{
 			while(ShouldLevelup())
 			{
@@ -95,7 +95,7 @@ class LevelSystem {
 		// should really be `=` but this should "allow" multiple levels to be givven at once
 		experience_needed += experience_for_level
 
-		if(OtherLevelFunc)
+		if (OtherLevelFunc)
 			OtherLevelFunc()
 	}
 }
@@ -139,7 +139,7 @@ class Gamerules {
 	/** 
 	 * @param {integer} amount
 	*/
-	function AddCurrency(amount)
+	function AddCurrency( amount )
 	{
 		m_iBotCurrency += amount
 	}
@@ -147,7 +147,7 @@ class Gamerules {
 	/** 
 	 * @param {integer} amount
 	*/
-	function AddExperience(amount)
+	function AddExperience( amount )
 	{
 		Leveling.AddExp(amount)
 	}
@@ -155,7 +155,7 @@ class Gamerules {
 	/** 
 	 * @param {integer} amount
 	*/
-	function SetStartingCash(amount)
+	function SetStartingCash( amount )
 	{
 		m_iStartingCurrency = amount
 		m_iBotCurrency = amount
@@ -164,7 +164,7 @@ class Gamerules {
 	/** 
 	 * @param {integer} amount
 	*/
-	function SetPerLevelCash(amount)
+	function SetPerLevelCash( amount )
 	{
 		m_iLevelUpCurrency = amount
 	}
@@ -177,7 +177,7 @@ class Gamerules {
 	 * @param {integer|float} cost
 	 * @param {integer|float} def
 	 */
-	function DefineUpgrade(name, attrib, cap, inc, cost, def)
+	function DefineUpgrade( name, attrib, cap, inc, cost, def )
 	{
 		m_Upgrades[name] <- BotUpgrade({
 			attribute = attrib,
@@ -191,7 +191,7 @@ class Gamerules {
 	/** 
 	 * @param {CTFBot} bot
 	 */
-	function OnBotDeath(bot)
+	function OnBotDeath( bot )
 	{
 		AddExperience(GetScope(bot).m_iExperience)
 	}
@@ -208,7 +208,7 @@ class Gamerules {
 	/** 
 	 * @param {CTFBot} bot
 	 */
-	function OnBotSpawn(bot)
+	function OnBotSpawn( bot )
 	{
 		bot.SetCurrency(m_iBotCurrency)
 		GrantBotUpgrades(bot)
@@ -218,7 +218,7 @@ class Gamerules {
 	/** 
 	 * @param {CTFBot} bot
 	 */
-	function GrantBotUpgrades(bot)
+	function GrantBotUpgrades( bot )
 	{
 		while (bot.GetCurrency() >= 150)
 		{
@@ -235,7 +235,7 @@ class Gamerules {
 			
 			foreach (/**@type {string} */_name, /**@type {BotUpgrade}*/upgrade in m_Upgrades)
 			{
-				if(upgrade.CanBuyUpgrade(bot.GetCurrency()))
+				if (upgrade.CanBuyUpgrade(bot.GetCurrency()))
 				{
 					GrantUpgrade(bot, upgrade)
 				}
@@ -248,7 +248,7 @@ class Gamerules {
 	 * @param {CTFBot} bot
 	 * @param {BotUpgrade} upgrade
 	 */
-	function GrantUpgrade(bot, upgrade)
+	function GrantUpgrade( bot, upgrade )
 	{
 		/* class BotUpgrade {
 			cost: float,
@@ -259,10 +259,10 @@ class Gamerules {
 
 			CanBuyUpgrade: function
 		} */
-		if(default_value == 1.0)
+		if (default_value == 1.0)
 		{
 		}
-		else if(default_value == 0)
+		else if (default_value == 0)
 		{
 
 		}

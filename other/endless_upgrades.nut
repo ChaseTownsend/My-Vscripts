@@ -214,7 +214,7 @@ function setup_levels()
 // PrecacheSound("ui/duel_challenge.wav")
 ::upgrades <- {
 
-	function OnGameEvent_mvm_begin_wave(params)
+	function OnGameEvent_mvm_begin_wave( params )
 	{
 		// TESTING ONLY
 		GetListenServerHost().AddCustomAttribute("CARD: damage bonus", 100, -1)
@@ -229,7 +229,7 @@ function setup_levels()
 		GetListenServerHost().AddCustomAttribute("ammo regen", 1, -1)
 		GetListenServerHost().AddCustomAttribute("move speed bonus", 2.5, -1)
 	}
-	function OnGameEvent_post_inventory_application(params)
+	function OnGameEvent_post_inventory_application( params )
 	{
 		local player = GetPlayerFromUserID(params.userid)
 		if (!IsPlayerABot(player))
@@ -365,7 +365,7 @@ function setup_levels()
 		}
 		player.SetHealth(player.GetMaxHealth())
 	}
-	function OnGameEvent_player_death(params)
+	function OnGameEvent_player_death( params )
 	{
 		local victim = GetPlayerFromUserID(params.userid)
 		if (!IsPlayerABot(victim))
@@ -379,7 +379,7 @@ function setup_levels()
 }
 __CollectGameEventCallbacks(upgrades)
 
-function CanWeaponBuyThisUpgrade(weapon, upgrade)
+function CanWeaponBuyThisUpgrade( weapon, upgrade )
 {
 	if (weapon == null)
 		return false

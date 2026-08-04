@@ -166,7 +166,7 @@ function GameplayThink()
 }
 
 ::GameplayEvents <- {
-	function OnGameEvent_player_death(params)
+	function OnGameEvent_player_death( params )
 	{
 		if (!params.attacker) return
 		local attacker = GetPlayerFromUserID(params.attacker)
@@ -298,7 +298,7 @@ function GameplayThink()
 			case TF_WEAPON_UNARMED_COMBAT: { spell_book.ModifySpells(TF_SPELL_SKELETON, 2, scope.m_iKills, 10) ; return }
 		}
 	}
-	function OnScriptHook_OnTakeDamage(params)
+	function OnScriptHook_OnTakeDamage( params )
 	{
 		local hVictim = params.const_entity
 		local hAttacker = params.attacker
@@ -512,7 +512,7 @@ function GameplayThink()
 			}
 		}
 	}
-	function OnGameEvent_post_inventory_application(params)
+	function OnGameEvent_post_inventory_application( params )
 	{
 		local player = GetPlayerFromUserID(params.userid)
 		if (player.GetTeam() != TF_TEAM_PVE_DEFENDERS) return
@@ -553,7 +553,7 @@ function GameplayThink()
 		if ( primary && primary.getclass() == CTFWeaponBase && primary.GetIDX() == TF_WEAPON_TOMISLAV )
 			GetScope(primary).Hits <- 0
 	}
-	function OnGameEvent_player_spawn(params)
+	function OnGameEvent_player_spawn( params )
 	{
 		if (params.team == TF_TEAM_UNASSIGNED)
 			return

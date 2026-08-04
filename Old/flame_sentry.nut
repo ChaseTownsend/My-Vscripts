@@ -37,7 +37,7 @@ function CleanUpParticles()
 PurgeString("CleanUpParticles") */
 
 ::flames <-{
-	function OnGameEvent_player_builtobject(params)
+	function OnGameEvent_player_builtobject( params )
 	{
 		if (params.object != OBJ_SENTRY) return
 		local player = GetPlayerFromUserID(params.userid)
@@ -71,18 +71,18 @@ PurgeString("CleanUpParticles") */
 		scope.m_flNextSoundEmit <- 0
 		scope.m_hParticle <- null
 	}
-	/* function OnGameEvent_object_detonated(_)
+	/* function OnGameEvent_object_detonated( _ )
 	{
 		if (params.objecttype != OBJ_SENTRY) return
 		ClearThinks(EntIndexToHScript(_.index))
 	}
-	function OnGameEvent_object_destroyed(_)
+	function OnGameEvent_object_destroyed( _ )
 	{
 		if (params.objecttype != OBJ_SENTRY) return
 		ClearThinks(EntIndexToHScript(_.index))
 	} */
-	function OnGameEvent_object_destroyed(params) {ClearThinks(EntIndexToHScript(params.index))}
-	function OnGameEvent_object_detonated(params) {ClearThinks(EntIndexToHScript(params.index))}
+	function OnGameEvent_object_destroyed( params ) {ClearThinks(EntIndexToHScript(params.index))}
+	function OnGameEvent_object_detonated( params ) {ClearThinks(EntIndexToHScript(params.index))}
 }
 __CollectGameEventCallbacks(flames)
 
@@ -121,7 +121,7 @@ function FlameSentry()
 		hullmax = Vector(12, -12, 12)
 		ignore = self,
 		mask = MASK_SHOT_HULL,
-		filter = function(entity)
+		filter = function( entity )
 		{
 			if (IsValidEnemy(entity)) return TRACE_OK_CONTINUE
 			else return TRACE_CONTINUE

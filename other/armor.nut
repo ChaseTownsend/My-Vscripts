@@ -1,6 +1,6 @@
 IncludeScript("fatcat_library")
 
-function ROOT::CTFPlayer::SetArmor(armor_num)
+function ROOT::CTFPlayer::SetArmor( armor_num )
 {
 	GetScope(this).armor <- armor_num
 }
@@ -44,7 +44,7 @@ PickupArmors[TF_CLASS_ENGINEER] 		= 25
 // Armor_reduc == 0.75, then Armor_reduc_mult should be 1
 
 ::Armor <- {
-	function OnGameEvent_post_inventory_application(params) {
+	function OnGameEvent_post_inventory_application( params ) {
 		local player = GetPlayerFromUserID(params.userid)
 		local scope = GetScope(player)
 		scope.armor <- MaxArmors[player.GetPlayerClass()]
@@ -76,7 +76,7 @@ PickupArmors[TF_CLASS_ENGINEER] 		= 25
 		AddThinkToEnt(text, "think")
 		scope.m_hText <- text
 	}
-	function OnGameEvent_player_death(params) {
+	function OnGameEvent_player_death( params ) {
 		local victim = GetPlayerFromUserID(params.userid)
 		local attacker = GetPlayerFromUserID(params.attacker)
 
@@ -106,7 +106,7 @@ PickupArmors[TF_CLASS_ENGINEER] 		= 25
 		// pickup.SetSkin(victim.GetTeam() == TF_TEAM_RED ? 0 : 1)
 	}
 
-	function OnScriptHook_OnTakeDamage(params) {
+	function OnScriptHook_OnTakeDamage( params ) {
 		local victim = params.const_entity
 		local attacker = params.attacker
 		local weapon = params.weapon

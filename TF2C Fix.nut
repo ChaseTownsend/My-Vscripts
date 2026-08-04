@@ -18,7 +18,7 @@ class CBaseEntity {
      * @returns {bool}
      * @deprecated Behaves the same as `KeyValueFromFloat`, use that instead.
      */
-    function __KeyValueFromFloat(key, value);
+    function __KeyValueFromFloat( key, value );
 
     /**
      * @type {function}
@@ -27,7 +27,7 @@ class CBaseEntity {
      * @returns {bool}
      * @deprecated Behaves the same as `KeyValueFromInt`, use that instead.
      */
-    function __KeyValueFromInt(key, value);
+    function __KeyValueFromInt( key, value );
 
     /**
      * @type {function}
@@ -36,7 +36,7 @@ class CBaseEntity {
      * @returns {bool}
      * @deprecated Behaves the same as `KeyValueFromString`, use that instead.
      */
-    function __KeyValueFromString(key, value);
+    function __KeyValueFromString( key, value );
 
     /**
      * @type {function}
@@ -45,7 +45,7 @@ class CBaseEntity {
      * @returns {bool}
      * @deprecated Behaves the same as `KeyValueFromVector`, use that instead.
      */
-    function __KeyValueFromVector(key, value);
+    function __KeyValueFromVector( key, value );
 
     /**
      * Generate a synchronous I/O event. Unlike `EntFireByHandle`, this is processed immediately.
@@ -56,7 +56,7 @@ class CBaseEntity {
      * @param {CBaseEntity|null} caller
      * @returns {bool} `false` if input is a `null`/empty string, or if the input wasn't handled.
      */
-    function AcceptInput(input, param, activator, caller);
+    function AcceptInput( input, param, activator, caller );
 
     /**
      * Adds the supplied flags to the Entity Flags in the entity. (`m_iEFlags` datamap)
@@ -65,21 +65,21 @@ class CBaseEntity {
      * @type {function}
      * @param {integer} flags See [Constants.FPlayer](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FPlayer)
      */
-    function AddEFlags(flags);
+    function AddEFlags( flags );
 
     /**
      * Adds the supplied flags to another separate player-related entity flags system in the entity. (`m_fFlags` datamap)
      * @type {function}
      * @param {integer} flags See [Constants.FPlayer](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FPlayer)
      */
-    function AddFlag(flags);
+    function AddFlag( flags );
 
     /**
      * Adds the supplied flags to the Solid Flags in the entity. (`m_Collision.m_usSolidFlags` datamap)
      * @type {function}
      * @param {integer} flags See [Constants.FSolid](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FSolid)
      */
-    function AddSolidFlags(flags);
+    function AddSolidFlags( flags );
 
     /**
      * Apply a Velocity Impulse as a world space impulse vector.
@@ -87,7 +87,7 @@ class CBaseEntity {
      * @type {function}
      * @param {Vector} impulse
      */
-    function ApplyAbsVelocityImpulse(impulse);
+    function ApplyAbsVelocityImpulse( impulse );
 
     /**
      * Apply an Angular Velocity Impulse in entity local space.
@@ -95,7 +95,7 @@ class CBaseEntity {
      * @type {function}
      * @param {Vector} impulse
      */
-    function ApplyLocalAngularVelocityImpulse(impulse);
+    function ApplyLocalAngularVelocityImpulse( impulse );
 
     /**
      * Acts like the `BecomeRagdoll` input, with the required impulse value applied as a force on the ragdoll.
@@ -106,7 +106,7 @@ class CBaseEntity {
      * @param {Vector} impulse
      * @returns {bool}
      */
-    function BecomeRagdollOnClient(impulse);
+    function BecomeRagdollOnClient( impulse );
 
     /**
      * Sets the player-related entity flags to 0 on an entity, clearing them.
@@ -126,7 +126,7 @@ class CBaseEntity {
      * @param {string} output_name
      * @param {string} function_name
      */
-    function ConnectOutput(output_name, function_name);
+    function ConnectOutput( output_name, function_name );
 
     /**
      * Removes the entity. Simply calls `UTIL_Remove`.
@@ -146,7 +146,7 @@ class CBaseEntity {
      * @param {string} output_name
      * @param {string} function_name
      */
-    function DisconnectOutput(output_name, function_name);
+    function DisconnectOutput( output_name, function_name );
 
     /**
      * Alternative dispatch spawn, same as the one in `CEntities`, for convenience.
@@ -163,7 +163,7 @@ class CBaseEntity {
      * @type {function}
      * @param {string} sound_name
      */
-    function EmitSound(sound_name);
+    function EmitSound( sound_name );
 
     /**
      * Enable drawing and transmitting the entity to clients. (removes `EF_NODRAW`)
@@ -500,7 +500,7 @@ class CBaseEntity {
      * @param {string|null} actor_model_name Optional and can be left empty.
      * @returns {float}
      */
-    function GetSoundDuration(sound_name, actor_model_name);
+    function GetSoundDuration( sound_name, actor_model_name );
 
     /**
      * @type {function}
@@ -548,7 +548,7 @@ class CBaseEntity {
      * @param {integer} flag See [Constants.FEntityEFlags](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FEntityEFlags)
      * @returns {bool}
      */
-    function IsEFlagSet(flag);
+    function IsEFlagSet( flag );
 
     /**
      * Checks whether the entity is a player or not.
@@ -568,7 +568,7 @@ class CBaseEntity {
      * @param {integer} flag See [Constants.FSolid](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FSolid)
      * @returns {bool}
      */
-    function IsSolidFlagSet(flag);
+    function IsSolidFlagSet( flag );
 
     /**
      * Checks whether the entity still exists.
@@ -587,7 +587,7 @@ class CBaseEntity {
      * @param {float} value
      * @returns {bool}
      */
-    function KeyValueFromFloat(key, value);
+    function KeyValueFromFloat( key, value );
 
     /**
      * Executes KeyValue with an int.
@@ -598,7 +598,7 @@ class CBaseEntity {
      * @param {integer} value
      * @returns {bool}
      */
-    function KeyValueFromInt(key, value);
+    function KeyValueFromInt( key, value );
 
     /**
      * Executes KeyValue with a string.
@@ -609,7 +609,7 @@ class CBaseEntity {
      * @param {string} value
      * @returns {bool}
      */
-    function KeyValueFromString(key, value);
+    function KeyValueFromString( key, value );
 
     /**
      * Executes KeyValue with a vector.
@@ -620,7 +620,7 @@ class CBaseEntity {
      * @param {Vector} value
      * @returns {bool}
      */
-    function KeyValueFromVector(key, value);
+    function KeyValueFromVector( key, value );
 
     /**
      * Removes the entity. Equivalent of firing the Kill I/O input, but instantaneous.
@@ -649,46 +649,46 @@ class CBaseEntity {
      * @type {function}
      * @param {string} model_name
      */
-    function PrecacheModel(model_name);
+    function PrecacheModel( model_name );
 
     /**
      * Precache a soundscript or raw WAV/MP3 sound. Same as `PrecacheSoundScript`.
      * @type {function}
      * @param {string} sound_script
      */
-    function PrecacheScriptSound(sound_script);
+    function PrecacheScriptSound( sound_script );
 
     /**
      * Precache a soundscript or raw WAV/MP3 sound. Same as `PrecacheScriptSound`.
      * @type {function}
      * @param {string} sound_script
      */
-    function PrecacheSoundScript(sound_script);
+    function PrecacheSoundScript( sound_script );
 
     /**
      * @type {function}
      * @param {integer} flags See [Constants.FEntityEFlags](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FEntityEFlags)
      */
-    function RemoveEFlags(flags);
+    function RemoveEFlags( flags );
 
     /**
      * @type {function}
      * @param {integer} flags See [Constants.FPlayer](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FPlayer)
      */
-    function RemoveFlag(flags);
+    function RemoveFlag( flags );
 
     /**
      * @type {function}
      * @param {integer} flags See [Constants.FSolid](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FSolid)
      */
-    function RemoveSolidFlags(flags);
+    function RemoveSolidFlags( flags );
 
     /**
      * Set entity pitch, yaw, roll as `QAngle`. Does not work on players, use `SnapEyeAngles` instead.
      * @type {function}
      * @param {QAngle} angles
      */
-    function SetAbsAngles(angles);
+    function SetAbsAngles( angles );
 
     /**
      * Sets the current absolute velocity of the entity.
@@ -696,14 +696,14 @@ class CBaseEntity {
      * @type {function}
      * @param {Vector} velocity
      */
-    function SetAbsVelocity(velocity);
+    function SetAbsVelocity( velocity );
 
     /**
      * Sets the absolute origin of the entity.
      * @type {function}
      * @param {Vector} origin
      */
-    function SetAbsOrigin(origin);
+    function SetAbsOrigin( origin );
 
     /**
      * Sets entity angles.
@@ -713,7 +713,7 @@ class CBaseEntity {
      * @param {float} roll
      * @deprecated Use `SetAbsAngles` instead
      */
-    function SetAngles(pitch, yaw, roll);
+    function SetAngles( pitch, yaw, roll );
 
     /**
      * Set the local angular velocity.
@@ -722,40 +722,40 @@ class CBaseEntity {
      * @param {float} yaw
      * @param {float} roll
      */
-    function SetAngularVelocity(pitch, yaw, roll);
+    function SetAngularVelocity( pitch, yaw, roll );
 
     /**
      * Set the current collision group of the entity.
      * @type {function}
      * @param {integer} group See [Constants.ECollisionGroup](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ECollisionGroup)
      */
-    function SetCollisionGroup(group);
+    function SetCollisionGroup( group );
 
     /**
      * Enables drawing if you pass `true`, disables drawing if you pass `false`.
      * @type {function}
      * @param {bool} toggle
      */
-    function SetDrawEnabled(toggle);
+    function SetDrawEnabled( toggle );
 
     /**
      * @type {function}
      * @param {integer} flags See [Constants.FEntityEFlags](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FEntityEFlags)
      */
-    function SetEFlags(flags);
+    function SetEFlags( flags );
 
     /**
      * Set the orientation of the entity to have this forward vector.
      * @type {function}
      * @param {Vector} forward
      */
-    function SetForwardVector(forward);
+    function SetForwardVector( forward );
 
     /**
      * @type {function}
      * @param {float} friction
      */
-    function SetFriction(friction);
+    function SetFriction( friction );
 
     /**
      * Sets a multiplier for gravity. 1 is default gravity.
@@ -764,25 +764,25 @@ class CBaseEntity {
      * @type {function}
      * @param {float} gravity
      */
-    function SetGravity(gravity);
+    function SetGravity( gravity );
 
     /**
      * @type {function}
      * @param {integer} health
      */
-    function SetHealth(health);
+    function SetHealth( health );
 
     /**
      * @type {function}
      * @param {QAngle} angles
      */
-    function SetLocalAngles(angles);
+    function SetLocalAngles( angles );
 
     /**
      * @type {function}
      * @param {Vector} origin
      */
-    function SetLocalOrigin(origin);
+    function SetLocalOrigin( origin );
 
     /**
      * Sets the maximum health this entity can have. Does not update the current health.
@@ -791,7 +791,7 @@ class CBaseEntity {
      * @type {function}
      * @param {integer} health
      */
-    function SetMaxHealth(health);
+    function SetMaxHealth( health );
 
     /**
      * Set a model for this entity.
@@ -800,21 +800,21 @@ class CBaseEntity {
      * @type {function}
      * @param {string|null} model_name
      */
-    function SetModel(model_name);
+    function SetModel( model_name );
 
     /**
      * @type {function}
      * @param {integer} movetype See [Constants.EMoveType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#EMoveType)
      * @param {integer} movecollide See [Constants.EMoveCollide](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#EMoveCollide)
      */
-    function SetMoveType(movetype, movecollide);
+    function SetMoveType( movetype, movecollide );
 
     /**
      * @type {function}
      * @param {Vector} origin
      * @deprecated Use `SetAbsOrigin` instead
      */
-    function SetOrigin(origin);
+    function SetOrigin( origin );
 
     /**
      * Sets this entity's owner.
@@ -823,19 +823,19 @@ class CBaseEntity {
      * @type {function}
      * @param {CBaseEntity|null} entity
      */
-    function SetOwner(entity);
+    function SetOwner( entity );
 
     /**
      * @type {function}
      * @param {Vector} angular_velocity
      */
-    function SetPhysAngularVelocity(angular_velocity);
+    function SetPhysAngularVelocity( angular_velocity );
 
     /**
      * @type {function}
      * @param {Vector} velocity
      */
-    function SetPhysVelocity(velocity);
+    function SetPhysVelocity( velocity );
 
     /**
      * Sets the bounding box's scale for this entity.
@@ -845,19 +845,19 @@ class CBaseEntity {
      * @param {Vector} mins
      * @param {Vector} maxs
      */
-    function SetSize(mins, maxs);
+    function SetSize( mins, maxs );
 
     /**
      * @type {function}
      * @param {integer} solid See [Constants.ESolidType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ESolidType)
      */
-    function SetSolid(solid);
+    function SetSolid( solid );
 
     /**
      * @type {function}
      * @param {integer} flags See [Constants.FSolid](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FSolid)
      */
-    function SetSolidFlags(flags);
+    function SetSolidFlags( flags );
 
     /**
      * Sets entity team.
@@ -866,14 +866,14 @@ class CBaseEntity {
      * @type {function}
      * @param {integer} team See [Constants.ETFTeam](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ETFTeam)
      */
-    function SetTeam(team);
+    function SetTeam( team );
 
     /**
      * @type {function}
      * @param {Vector} velocity
      * @deprecated Use `SetAbsVelocity` instead
      */
-    function SetVelocity(velocity);
+    function SetVelocity( velocity );
 
     /**
      * Sets how much of the entity is underwater.
@@ -881,21 +881,21 @@ class CBaseEntity {
      * @param {integer} water_level See [Constants.WATERLEVEL](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#WATERLEVEL)
      *                              (`0`=not underwater, `1`=feet, `2`=waist, `3`=head)
      */
-    function SetWaterLevel(water_level);
+    function SetWaterLevel( water_level );
 
     /**
      * Set the type of water the entity is currently submerged in.
      * @type {function}
      * @param {integer} water_type `32`=water, `16`=slime.
      */
-    function SetWaterType(water_type);
+    function SetWaterType( water_type );
 
     /**
      * Stops a sound on this entity.
      * @type {function}
      * @param {string} sound_name
      */
-    function StopSound(sound_name);
+    function StopSound( sound_name );
 
     /**
      * Deals damage to the entity.
@@ -904,7 +904,7 @@ class CBaseEntity {
      * @param {integer} damage_type See [Constants.FDmgType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FDmgType)
      * @param {CBaseEntity|null} attacker
      */
-    function TakeDamage(damage, damage_type, attacker);
+    function TakeDamage( damage, damage_type, attacker );
 
     /**
      * Extended version of TakeDamage.
@@ -919,7 +919,7 @@ class CBaseEntity {
      * @param {float} damage
      * @param {integer} damage_type See [Constants.FDmgType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FDmgType)
      */
-    function TakeDamageEx(inflictor, attacker, weapon, damage_force, damage_position, damage, damage_type);
+    function TakeDamageEx( inflictor, attacker, weapon, damage_force, damage_position, damage, damage_type );
 
     /**
      * Extended version of `TakeDamageEx` that can apply a custom damage type.
@@ -933,7 +933,7 @@ class CBaseEntity {
      * @param {integer} damage_type See [Constants.FDmgType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FDmgType)
      * @param {integer} custom_damage_type See [Constants.ETFDmgCustom](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ETFDmgCustom)
      */
-    function TakeDamageCustom(inflictor, attacker, weapon, damage_force, damage_position, damage, damage_type, custom_damage_type);
+    function TakeDamageCustom( inflictor, attacker, weapon, damage_force, damage_position, damage, damage_type, custom_damage_type );
 
     /**
      * Teleports this entity. Set bools to `false` for properties you want unchanged.
@@ -945,7 +945,7 @@ class CBaseEntity {
      * @param {bool} use_velocity
      * @param {Vector} velocity
      */
-    function Teleport(use_origin, origin, use_angles, angles, use_velocity, velocity);
+    function Teleport( use_origin, origin, use_angles, angles, use_velocity, velocity );
 
     /**
      * Clear the current script scope for this entity.
@@ -957,7 +957,7 @@ class CBaseEntity {
      * @type {function}
      * @param {integer} flags See [Constants.FPlayer](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FPlayer)
      */
-    function ToggleFlag(flags);
+    function ToggleFlag( flags );
 
     /**
      * Create a script scope for an entity if it doesn't already exist.
@@ -977,7 +977,7 @@ class CBaseAnimating extends CBaseEntity {
      * @type {function}
      * @param {CBaseAnimating} entity
      */
-    function DispatchAnimEvents(entity);
+    function DispatchAnimEvents( entity );
 
     /**
      * Find a bodygroup ID by name.
@@ -985,7 +985,7 @@ class CBaseAnimating extends CBaseEntity {
      * @param {string} name
      * @returns {integer} `-1` if the bodygroup does not exist.
      */
-    function FindBodygroupByName(name);
+    function FindBodygroupByName( name );
 
     /**
      * Get an attachment's angles as a `QAngle`, by ID.
@@ -993,7 +993,7 @@ class CBaseAnimating extends CBaseEntity {
      * @param {integer} id
      * @returns {QAngle}
      */
-    function GetAttachmentAngles(id);
+    function GetAttachmentAngles( id );
 
     /**
      * Get an attachment's parent bone index by ID.
@@ -1001,7 +1001,7 @@ class CBaseAnimating extends CBaseEntity {
      * @param {integer} id
      * @returns {integer}
      */
-    function GetAttachmentBone(id);
+    function GetAttachmentBone( id );
 
     /**
      * Get an attachment's origin as a `Vector`, by ID.
@@ -1009,7 +1009,7 @@ class CBaseAnimating extends CBaseEntity {
      * @param {integer} id
      * @returns {Vector}
      */
-    function GetAttachmentOrigin(id);
+    function GetAttachmentOrigin( id );
 
     /**
      * Get the bodygroup value by bodygroup ID.
@@ -1017,7 +1017,7 @@ class CBaseAnimating extends CBaseEntity {
      * @param {integer} id
      * @returns {integer}
      */
-    function GetBodygroup(id);
+    function GetBodygroup( id );
 
     /**
      * Get the bodygroup's name by ID.
@@ -1025,7 +1025,7 @@ class CBaseAnimating extends CBaseEntity {
      * @param {integer} id
      * @returns {string}
      */
-    function GetBodygroupName(id);
+    function GetBodygroupName( id );
 
     /**
      * Get the bodygroup's name by group and part.
@@ -1034,7 +1034,7 @@ class CBaseAnimating extends CBaseEntity {
      * @param {integer} part
      * @returns {string}
      */
-    function GetBodygroupPartName(group, part);
+    function GetBodygroupPartName( group, part );
 
     /**
      * Get the bone's angles as a `QAngle`, by ID.
@@ -1044,7 +1044,7 @@ class CBaseAnimating extends CBaseEntity {
      * @param {integer} id
      * @returns {QAngle}
      */
-    function GetBoneAngles(id);
+    function GetBoneAngles( id );
 
     /**
      * Get the bone's origin `Vector` by ID.
@@ -1053,7 +1053,7 @@ class CBaseAnimating extends CBaseEntity {
      * @param {integer} id
      * @returns {Vector}
      */
-    function GetBoneOrigin(id);
+    function GetBoneOrigin( id );
 
     /**
      * Gets the model's current animation cycle rate. Ranges from `0.0` to `1.0`.
@@ -1089,7 +1089,7 @@ class CBaseAnimating extends CBaseEntity {
      * @param {integer} id
      * @returns {string}
      */
-    function GetSequenceActivityName(id);
+    function GetSequenceActivityName( id );
 
     /**
      * Get a sequence duration in seconds by sequence ID.
@@ -1097,7 +1097,7 @@ class CBaseAnimating extends CBaseEntity {
      * @param {integer} id
      * @returns {float}
      */
-    function GetSequenceDuration(id);
+    function GetSequenceDuration( id );
 
     /**
      * Get a sequence name by sequence ID.
@@ -1105,7 +1105,7 @@ class CBaseAnimating extends CBaseEntity {
      * @param {integer} id
      * @returns {string}
      */
-    function GetSequenceName(id);
+    function GetSequenceName( id );
 
     /**
      * Gets the current skin index.
@@ -1127,7 +1127,7 @@ class CBaseAnimating extends CBaseEntity {
      * @param {string} activity
      * @returns {integer} `-1` if the activity does not exist.
      */
-    function LookupActivity(activity);
+    function LookupActivity( activity );
 
     /**
      * Get the named attachment index.
@@ -1135,7 +1135,7 @@ class CBaseAnimating extends CBaseEntity {
      * @param {string} name
      * @returns {integer} `0` if the attachment does not exist.
      */
-    function LookupAttachment(name);
+    function LookupAttachment( name );
 
     /**
      * Get the named bone index.
@@ -1143,7 +1143,7 @@ class CBaseAnimating extends CBaseEntity {
      * @param {string} bone
      * @returns {integer} `-1` if the bone does not exist.
      */
-    function LookupBone(bone);
+    function LookupBone( bone );
 
     /**
      * Gets the pose parameter's index.
@@ -1151,7 +1151,7 @@ class CBaseAnimating extends CBaseEntity {
      * @param {string} name
      * @returns {integer} `-1` if the pose parameter does not exist.
      */
-    function LookupPoseParameter(name);
+    function LookupPoseParameter( name );
 
     /**
      * Looks up a sequence by names of sequences or activities.
@@ -1159,14 +1159,14 @@ class CBaseAnimating extends CBaseEntity {
      * @param {string} name
      * @returns {integer} `-1` if not found.
      */
-    function LookupSequence(name);
+    function LookupSequence( name );
 
     /**
      * Reset a sequence by sequence ID. If the ID is different, switch to the new sequence.
      * @type {function}
      * @param {integer} id
      */
-    function ResetSequence(id);
+    function ResetSequence( id );
 
     /**
      * Set the bodygroup by ID.
@@ -1174,7 +1174,7 @@ class CBaseAnimating extends CBaseEntity {
      * @param {integer} id
      * @param {integer} value
      */
-    function SetBodygroup(id, value);
+    function SetBodygroup( id, value );
 
     /**
      * Sets the model's current animation cycle from `0` to `1`.
@@ -1183,14 +1183,14 @@ class CBaseAnimating extends CBaseEntity {
      * @type {function}
      * @param {float} cycle
      */
-    function SetCycle(cycle);
+    function SetCycle( cycle );
 
     /**
      * Set a model for this entity. Automatically precaches and maintains sequence/cycle if possible.
      * @type {function}
      * @param {string|null} model_name
      */
-    function SetModelSimple(model_name);
+    function SetModelSimple( model_name );
 
     /**
      * Changes a model's scale over time. Set `change_duration` to `0.0` to change instantly.
@@ -1198,14 +1198,14 @@ class CBaseAnimating extends CBaseEntity {
      * @param {float} scale
      * @param {float} change_duration
      */
-    function SetModelScale(scale, change_duration);
+    function SetModelScale( scale, change_duration );
 
     /**
      * Set the current animation's playback rate.
      * @type {function}
      * @param {float} rate
      */
-    function SetPlaybackRate(rate);
+    function SetPlaybackRate( rate );
 
     /**
      * Sets a pose parameter value.
@@ -1214,7 +1214,7 @@ class CBaseAnimating extends CBaseEntity {
      * @param {float} value
      * @returns {float} The effective value after clamping or looping.
      */
-    function SetPoseParameter(id, value);
+    function SetPoseParameter( id, value );
 
     /**
      * Plays a sequence by sequence ID.
@@ -1223,14 +1223,14 @@ class CBaseAnimating extends CBaseEntity {
      * @type {function}
      * @param {integer} id
      */
-    function SetSequence(id);
+    function SetSequence( id );
 
     /**
      * Sets the model's skin.
      * @type {function}
      * @param {integer} index
      */
-    function SetSkin(index);
+    function SetSkin( index );
 
     /**
      * Stop the current animation (same as `SetPlaybackRate(0.0)`).
@@ -1249,7 +1249,7 @@ class CBaseAnimating extends CBaseEntity {
      * @type {function}
      * @param {float} dt
      */
-    function StudioFrameAdvanceManual(dt);
+    function StudioFrameAdvanceManual( dt );
 }
 
 /**
@@ -1441,35 +1441,35 @@ class CBaseCombatWeapon extends CBaseAnimating {
      * @type {function}
      * @param {integer} amount
      */
-    function SetClip1(amount);
+    function SetClip1( amount );
 
     /**
      * Set current ammo in clip2.
      * @type {function}
      * @param {integer} amount
      */
-    function SetClip2(amount);
+    function SetClip2( amount );
 
     /**
      * Sets a custom view model for this weapon by model name.
      * @type {function}
      * @param {string|null} model_name
      */
-    function SetCustomViewModel(model_name);
+    function SetCustomViewModel( model_name );
 
     /**
      * Sets a custom view model for this weapon by modelindex.
      * @type {function}
      * @param {integer} model_index
      */
-    function SetCustomViewModelModelIndex(model_index);
+    function SetCustomViewModelModelIndex( model_index );
 
     /**
      * Set the weapon subtype.
      * @type {function}
      * @param {integer} subtype
      */
-    function SetSubType(subtype);
+    function SetSubType( subtype );
 
     /**
      * Do we use clips for ammo 1?
@@ -1525,7 +1525,7 @@ class CTFWeaponBase extends CBaseCombatWeapon {
      * @param {float} value
      * @param {float} duration
      */
-    function AddAttribute(name, value, duration);
+    function AddAttribute( name, value, duration );
 
     /**
      * Get an attribute float from the entity.
@@ -1534,7 +1534,7 @@ class CTFWeaponBase extends CBaseCombatWeapon {
      * @param {float} default_value
      * @returns {float} `default_value` if not found.
      */
-    function GetAttribute(name, default_value);
+    function GetAttribute( name, default_value );
 
     /**
      * Remove an attribute from the entity.
@@ -1543,7 +1543,7 @@ class CTFWeaponBase extends CBaseCombatWeapon {
      * @type {function}
      * @param {attribute} name
      */
-    function RemoveAttribute(name);
+    function RemoveAttribute( name );
 
     /**
      * Relinks attributes to provisioners.
@@ -1564,7 +1564,7 @@ class CBaseFlex extends CBaseAnimating {
      * @param {float} delay
      * @returns {float}
      */
-    function PlayScene(scene_file, delay);
+    function PlayScene( scene_file, delay );
 }
 
 /**
@@ -1625,35 +1625,35 @@ class CBasePlayer extends CBaseCombatCharacter {
      * @type {function}
      * @param {bool} toggle
      */
-    function SetForceLocalDraw(toggle);
+    function SetForceLocalDraw( toggle );
 
     /**
      * Sets the overlay material that can't be overridden by other overlays.
      * @type {function}
      * @param {string|null} material
      */
-    function SetScriptOverlayMaterial(material);
+    function SetScriptOverlayMaterial( material );
 
     /**
      * Snap the player's eye angles to this.
      * @type {function}
      * @param {QAngle} angles
      */
-    function SnapEyeAngles(angles);
+    function SnapEyeAngles( angles );
 
     /**
      * Ow! Punches the player's view.
      * @type {function}
      * @param {QAngle} angle_offset
      */
-    function ViewPunch(angle_offset);
+    function ViewPunch( angle_offset );
 
     /**
      * Resets the player's view punch if the offset stays below the given tolerance.
      * @type {function}
      * @param {float} tolerance
      */
-    function ViewPunchReset(tolerance);
+    function ViewPunchReset( tolerance );
 }
 
 /**
@@ -1670,7 +1670,7 @@ class CEconEntity extends CBaseAnimating {
      * @param {float} value
      * @param {float} duration
      */
-    function AddAttribute(name, value, duration);
+    function AddAttribute( name, value, duration );
 
     /**
      * Get an attribute float from the entity.
@@ -1679,7 +1679,7 @@ class CEconEntity extends CBaseAnimating {
      * @param {float} default_value
      * @returns {float} `default_value` if not found.
      */
-    function GetAttribute(name, default_value);
+    function GetAttribute( name, default_value );
 
     /**
      * Remove an attribute from the entity.
@@ -1688,7 +1688,7 @@ class CEconEntity extends CBaseAnimating {
      * @type {function}
      * @param {attribute} name
      */
-    function RemoveAttribute(name);
+    function RemoveAttribute( name );
 
     /**
      * Relinks attributes to provisioners.
@@ -1706,7 +1706,7 @@ class CTFPlayer extends CBasePlayer {
      * @type {function}
      * @param {integer} cond See [Constants.ETFCond](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ETFCond)
      */
-    function AddCond(cond);
+    function AddCond( cond );
 
     /**
      * @type {function}
@@ -1714,14 +1714,14 @@ class CTFPlayer extends CBasePlayer {
      * @param {float} duration
      * @param {CBaseEntity|null} provider
      */
-    function AddCondEx(cond, duration, provider);
+    function AddCondEx( cond, duration, provider );
 
     /**
      * Give the player some cash for MvM. New value is bounded between 0-30000.
      * @type {function}
      * @param {integer} amount
      */
-    function AddCurrency(amount);
+    function AddCurrency( amount );
 
     /**
      * Add a custom attribute to the player. Set duration to `0` or lower for infinite.
@@ -1732,14 +1732,14 @@ class CTFPlayer extends CBasePlayer {
      * @param {float} value
      * @param {float} duration
      */
-    function AddCustomAttribute(name, value, duration);
+    function AddCustomAttribute( name, value, duration );
 
     /**
      * Hides a HUD element(s).
      * @type {function}
      * @param {integer} flags See [Constants.FHideHUD](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FHideHUD)
      */
-    function AddHudHideFlags(flags);
+    function AddHudHideFlags( flags );
 
     /**
      * Apply a view punch along the pitch angle.
@@ -1747,14 +1747,14 @@ class CTFPlayer extends CBasePlayer {
      * @param {float} impulse
      * @returns {bool} `true` if the punch was applied.
      */
-    function ApplyPunchImpulseX(impulse);
+    function ApplyPunchImpulseX( impulse );
 
     /**
      * Make a player bleed for a set duration of time.
      * @type {function}
      * @param {float} duration
      */
-    function BleedPlayer(duration);
+    function BleedPlayer( duration );
 
     /**
      * Make a player bleed with specific damage per tick and custom damage type.
@@ -1764,7 +1764,7 @@ class CTFPlayer extends CBasePlayer {
      * @param {bool} endless
      * @param {integer} custom_damage_type See [Constants.ETFDmgCustom](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ETFDmgCustom)
      */
-    function BleedPlayerEx(duration, damage, endless, custom_damage_type);
+    function BleedPlayerEx( duration, damage, endless, custom_damage_type );
 
     /**
      * Cancels any taunt in progress.
@@ -1846,7 +1846,7 @@ class CTFPlayer extends CBasePlayer {
      * @type {function}
      * @param {bool} silent
      */
-    function DropFlag(silent);
+    function DropFlag( silent );
 
     /**
      * Force player to drop the rune.
@@ -1854,7 +1854,7 @@ class CTFPlayer extends CBasePlayer {
      * @param {bool} apply_force
      * @param {integer} team See [Constants.ETFTeam](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ETFTeam)
      */
-    function DropRune(apply_force, team);
+    function DropRune( apply_force, team );
 
     /**
      * Stops a looping taunt (obeys minimum time rules).
@@ -1867,7 +1867,7 @@ class CTFPlayer extends CBasePlayer {
      * @type {function}
      * @param {CBaseEntity} entity
      */
-    function EquipWearableViewModel(entity);
+    function EquipWearableViewModel( entity );
 
     /**
      * @type {function}
@@ -1886,7 +1886,7 @@ class CTFPlayer extends CBasePlayer {
      * @param {integer} team See [Constants.ETFTeam](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ETFTeam)
      * @param {bool} full_team_switch
      */
-    function ForceChangeTeam(team, full_team_switch);
+    function ForceChangeTeam( team, full_team_switch );
 
     /**
      * Force regenerates and respawns the player.
@@ -1950,7 +1950,7 @@ class CTFPlayer extends CBasePlayer {
      * @param {integer} cond See [Constants.ETFCond](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ETFCond)
      * @returns {float} `0` if not applied; `-1` if infinite.
      */
-    function GetCondDuration(cond);
+    function GetCondDuration( cond );
 
     /**
      * Get an attribute float from the player.
@@ -1959,7 +1959,7 @@ class CTFPlayer extends CBasePlayer {
      * @param {float} default_value
      * @returns {float} `default_value` if not found.
      */
-    function GetCustomAttribute(name, default_value);
+    function GetCustomAttribute( name, default_value );
 
     /**
      * Get player's cash for MvM.
@@ -2151,7 +2151,7 @@ class CTFPlayer extends CBasePlayer {
      * @param {bool} remove
      * @param {bool} refund
      */
-    function GrantOrRemoveAllUpgrades(remove, refund);
+    function GrantOrRemoveAllUpgrades( remove, refund );
 
     /**
      * Currently holding an item (e.g. capture flag)?
@@ -2165,7 +2165,7 @@ class CTFPlayer extends CBasePlayer {
      * @type {function}
      * @param {integer} taunt_slot
      */
-    function HandleTauntCommand(taunt_slot);
+    function HandleTauntCommand( taunt_slot );
 
     /**
      * @type {function}
@@ -2184,7 +2184,7 @@ class CTFPlayer extends CBasePlayer {
      * @param {integer} cond See [Constants.ETFCond](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ETFCond)
      * @returns {bool}
      */
-    function InCond(cond);
+    function InCond( cond );
 
     /**
      * @type {function}
@@ -2211,7 +2211,7 @@ class CTFPlayer extends CBasePlayer {
      * @param {integer} type See [Constants.EBotType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#EBotType)
      * @returns {bool}
      */
-    function IsBotOfType(type);
+    function IsBotOfType( type );
 
     /**
      * Is this player calling for medic?
@@ -2361,7 +2361,7 @@ class CTFPlayer extends CBasePlayer {
      * @type {function}
      * @param {bool} refill_health_ammo
      */
-    function Regenerate(refill_health_ammo);
+    function Regenerate( refill_health_ammo );
 
     /**
      * Remove all conditions.
@@ -2375,21 +2375,21 @@ class CTFPlayer extends CBasePlayer {
      * @type {function}
      * @param {bool} unused
      */
-    function RemoveAllItems(unused);
+    function RemoveAllItems( unused );
 
     /**
      * Remove all player objects (e.g. dispensers/sentries).
      * @type {function}
      * @param {bool} explode
      */
-    function RemoveAllObjects(explode);
+    function RemoveAllObjects( explode );
 
     /**
      * Removes a condition.
      * @type {function}
      * @param {integer} cond See [Constants.ETFCond](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ETFCond)
      */
-    function RemoveCond(cond);
+    function RemoveCond( cond );
 
     /**
      * Extended version of `RemoveCond`. Allows forcefully removing the condition.
@@ -2397,21 +2397,21 @@ class CTFPlayer extends CBasePlayer {
      * @param {integer} cond See [Constants.ETFCond](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ETFCond)
      * @param {bool} ignore_duration
      */
-    function RemoveCondEx(cond, ignore_duration);
+    function RemoveCondEx( cond, ignore_duration );
 
     /**
      * Take away money from a player. Lower bounded to `0`.
      * @type {function}
      * @param {integer} amount
      */
-    function RemoveCurrency(amount);
+    function RemoveCurrency( amount );
 
     /**
      * Remove a custom attribute from the player.
      * @type {function}
      * @param {attribute} name
      */
-    function RemoveCustomAttribute(name);
+    function RemoveCustomAttribute( name );
 
     /**
      * Undisguise a spy.
@@ -2424,7 +2424,7 @@ class CTFPlayer extends CBasePlayer {
      * @type {function}
      * @param {integer} flags See [Constants.FHideHUD](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FHideHUD)
      */
-    function RemoveHudHideFlags(flags);
+    function RemoveHudHideFlags( flags );
 
     /**
      * Un-invisible a spy.
@@ -2452,70 +2452,70 @@ class CTFPlayer extends CBasePlayer {
      * @param {integer} cond See [Constants.ETFCond](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ETFCond)
      * @param {float} duration
      */
-    function SetCondDuration(cond, duration);
+    function SetCondDuration( cond, duration );
 
     /**
      * Set player's cash for MvM. Does not have any bounds checking.
      * @type {function}
      * @param {integer} amount
      */
-    function SetCurrency(amount);
+    function SetCurrency( amount );
 
     /**
      * @type {function}
      * @param {float} speed
      */
-    function SetCurrentTauntMoveSpeed(speed);
+    function SetCurrentTauntMoveSpeed( speed );
 
     /**
      * Sets a custom player model without animations (model will T-pose).
      * @type {function}
      * @param {string|null} model_name
      */
-    function SetCustomModel(model_name);
+    function SetCustomModel( model_name );
 
     /**
      * @type {function}
      * @param {Vector} offset
      */
-    function SetCustomModelOffset(offset);
+    function SetCustomModelOffset( offset );
 
     /**
      * @type {function}
      * @param {bool} toggle
      */
-    function SetCustomModelRotates(toggle);
+    function SetCustomModelRotates( toggle );
 
     /**
      * @type {function}
      * @param {QAngle} angles
      */
-    function SetCustomModelRotation(angles);
+    function SetCustomModelRotation( angles );
 
     /**
      * @type {function}
      * @param {bool} toggle
      */
-    function SetCustomModelVisibleToSelf(toggle);
+    function SetCustomModelVisibleToSelf( toggle );
 
     /**
      * Sets a custom player model with full animations.
      * @type {function}
      * @param {string|null} model_name
      */
-    function SetCustomModelWithClassAnimations(model_name);
+    function SetCustomModelWithClassAnimations( model_name );
 
     /**
      * @type {function}
      * @param {integer} count
      */
-    function SetDisguiseAmmoCount(count);
+    function SetDisguiseAmmoCount( count );
 
     /**
      * @type {function}
      * @param {integer} toggle
      */
-    function SetForcedTauntCam(toggle);
+    function SetForcedTauntCam( toggle );
 
     /**
      * Set the player's target grapple entity.
@@ -2523,97 +2523,97 @@ class CTFPlayer extends CBasePlayer {
      * @param {CBaseEntity|null} entity
      * @param {bool} bleed
      */
-    function SetGrapplingHookTarget(entity, bleed);
+    function SetGrapplingHookTarget( entity, bleed );
 
     /**
      * Force HUD hide flags to a value.
      * @type {function}
      * @param {integer} flags See [Constants.FHideHUD](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FHideHUD)
      */
-    function SetHudHideFlags(flags);
+    function SetHudHideFlags( flags );
 
     /**
      * Make this player an MvM mini-boss.
      * @type {function}
      * @param {bool} toggle
      */
-    function SetIsMiniBoss(toggle);
+    function SetIsMiniBoss( toggle );
 
     /**
      * Set next change class time.
      * @type {function}
      * @param {float} time
      */
-    function SetNextChangeClassTime(time);
+    function SetNextChangeClassTime( time );
 
     /**
      * Set next change team time.
      * @type {function}
      * @param {float} time
      */
-    function SetNextChangeTeamTime(time);
+    function SetNextChangeTeamTime( time );
 
     /**
      * Set next available resupply time.
      * @type {function}
      * @param {float} time
      */
-    function SetNextRegenTime(time);
+    function SetNextRegenTime( time );
 
     /**
      * Sets the player class. Updates the player's visuals and model.
      * @type {function}
      * @param {integer} class_index See [Constants.ETFClass](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ETFClass)
      */
-    function SetPlayerClass(class_index);
+    function SetPlayerClass( class_index );
 
     /**
      * Sets rage meter from 0 - 100.
      * @type {function}
      * @param {float} percent
      */
-    function SetRageMeter(percent);
+    function SetRageMeter( percent );
 
     /**
      * Rig the result of Rock-Paper-Scissors.
      * @type {function}
      * @param {integer} result (`0`=rock, `1`=paper, `2`=scissors)
      */
-    function SetRPSResult(result);
+    function SetRPSResult( result );
 
     /**
      * Sets hype meter from 0 - 100.
      * @type {function}
      * @param {float} percent
      */
-    function SetScoutHypeMeter(percent);
+    function SetScoutHypeMeter( percent );
 
     /**
      * Sets cloakmeter from 0 - 100.
      * @type {function}
      * @param {float} percent
      */
-    function SetSpyCloakMeter(percent);
+    function SetSpyCloakMeter( percent );
 
     /**
      * Set the timestamp when kart was reversed.
      * @type {function}
      * @param {float} time
      */
-    function SetVehicleReverseTime(time);
+    function SetVehicleReverseTime( time );
 
     /**
      * @type {function}
      * @param {bool} toggle
      */
-    function SetUseBossHealthBar(toggle);
+    function SetUseBossHealthBar( toggle );
 
     /**
      * Stops current taunt.
      * @type {function}
      * @param {bool} remove_prop
      */
-    function StopTaunt(remove_prop);
+    function StopTaunt( remove_prop );
 
     /**
      * Stuns the player for a specified duration.
@@ -2623,7 +2623,7 @@ class CTFPlayer extends CBasePlayer {
      * @param {integer} flags See [Constants.TF_STUN](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#TF_STUN)
      * @param {CBaseEntity|null} attacker
      */
-    function StunPlayer(duration, move_speed_reduction, flags, attacker);
+    function StunPlayer( duration, move_speed_reduction, flags, attacker );
 
     /**
      * Performs a taunt if allowed.
@@ -2631,7 +2631,7 @@ class CTFPlayer extends CBasePlayer {
      * @param {integer} taunt_index See [Constants.FTaunts](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FTaunts)
      * @param {integer} taunt_concept See [Constants.MP_CONCEPT](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#MP_CONCEPT)
      */
-    function Taunt(taunt_index, taunt_concept);
+    function Taunt( taunt_index, taunt_concept );
 
     /**
      * Make the player attempt to pick up a building in front of them.
@@ -2644,34 +2644,34 @@ class CTFPlayer extends CBasePlayer {
      * @type {function}
      * @param {integer} skin
      */
-    function UpdateSkin(skin);
+    function UpdateSkin( skin );
 
     /**
      * @type {function}
      * @param {integer} cond See [Constants.ETFCond](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ETFCond)
      * @returns {bool}
      */
-    function WasInCond(cond);
+    function WasInCond( cond );
 
     /**
      * @type {function}
      * @param {CTFWeaponBase} weapon
      * @returns {bool}
      */
-    function Weapon_CanUse(weapon);
+    function Weapon_CanUse( weapon );
 
     /**
      * Equips a weapon in the player. Places it inside the `m_hMyWeapons` array.
      * @type {function}
      * @param {CTFWeaponBase} weapon
      */
-    function Weapon_Equip(weapon);
+    function Weapon_Equip( weapon );
 
     /**
      * @type {function}
      * @param {CTFWeaponBase} weapon
      */
-    function Weapon_SetLast(weapon);
+    function Weapon_SetLast( weapon );
 
     /**
      * The same as calling `EyePosition`.
@@ -2685,7 +2685,7 @@ class CTFPlayer extends CBasePlayer {
      * @type {function}
      * @param {CTFWeaponBase} weapon
      */
-    function Weapon_Switch(weapon);
+    function Weapon_Switch( weapon );
 }
 
 /**
@@ -2701,21 +2701,21 @@ class CTFBot extends CTFPlayer {
      * @type {function}
      * @param {integer} attribute See [Constants.FTFBotAttributeType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FTFBotAttributeType)
      */
-    function AddBotAttribute(attribute);
+    function AddBotAttribute( attribute );
 
     /**
      * Adds a bot tag.
      * @type {function}
      * @param {string} tag
      */
-    function AddBotTag(tag);
+    function AddBotTag( tag );
 
     /**
      * Adds weapon restriction flags.
      * @type {function}
      * @param {integer} flags See [Constants.TFBotWeaponRestrictionType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#TFBotWeaponRestrictionType)
      */
-    function AddWeaponRestriction(flags);
+    function AddWeaponRestriction( flags );
 
     /**
      * Clears all attribute flags on this TFBot.
@@ -2746,7 +2746,7 @@ class CTFBot extends CTFPlayer {
      * @type {function}
      * @param {integer} flags See [Constants.TFBOT_BEHAVIOR](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#TFBOT_BEHAVIOR)
      */
-    function ClearBehaviorFlag(flags);
+    function ClearBehaviorFlag( flags );
 
     /**
      * Notice the threat after a delay in seconds.
@@ -2754,7 +2754,7 @@ class CTFBot extends CTFPlayer {
      * @param {CBaseEntity} threat
      * @param {float} delay
      */
-    function DelayedThreatNotice(threat, delay);
+    function DelayedThreatNotice( threat, delay );
 
     /**
      * Forces the current squad to be entirely disbanded by everyone.
@@ -2768,14 +2768,14 @@ class CTFBot extends CTFPlayer {
      * @param {float} max_distance
      * @returns {CTFNavArea|null}
      */
-    function FindVantagePoint(max_distance);
+    function FindVantagePoint( max_distance );
 
     /**
      * Give me an item!
      * @type {function}
      * @param {string} item_name
      */
-    function GenerateAndWearItem(item_name);
+    function GenerateAndWearItem( item_name );
 
     /**
      * Get the given action point for this bot.
@@ -2789,7 +2789,7 @@ class CTFBot extends CTFPlayer {
      * @type {function}
      * @param {table} result
      */
-    function GetAllBotTags(result);
+    function GetAllBotTags( result );
 
     /**
      * Gets the home nav area of the bot.
@@ -2860,7 +2860,7 @@ class CTFBot extends CTFPlayer {
      * @param {integer} attribute See [Constants.FTFBotAttributeType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FTFBotAttributeType)
      * @returns {bool}
      */
-    function HasBotAttribute(attribute);
+    function HasBotAttribute( attribute );
 
     /**
      * Checks if this TFBot has the given bot tag.
@@ -2868,7 +2868,7 @@ class CTFBot extends CTFPlayer {
      * @param {string} tag
      * @returns {bool}
      */
-    function HasBotTag(tag);
+    function HasBotTag( tag );
 
     /**
      * Return `true` if the given mission is this bot's current mission.
@@ -2876,7 +2876,7 @@ class CTFBot extends CTFPlayer {
      * @param {integer} mission See [Constants.ETFBotMissionType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ETFBotMissionType)
      * @returns {bool}
      */
-    function HasMission(mission);
+    function HasMission( mission );
 
     /**
      * Checks if this TFBot has the given weapon restriction flags.
@@ -2884,7 +2884,7 @@ class CTFBot extends CTFPlayer {
      * @param {integer} flags See [Constants.TFBotWeaponRestrictionType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#TFBotWeaponRestrictionType)
      * @returns {bool}
      */
-    function HasWeaponRestriction(flags);
+    function HasWeaponRestriction( flags );
 
     /**
      * @type {function}
@@ -2911,7 +2911,7 @@ class CTFBot extends CTFPlayer {
      * @param {CBaseEntity} entity
      * @returns {bool}
      */
-    function IsAttentionFocusedOn(entity);
+    function IsAttentionFocusedOn( entity );
 
     /**
      * Return `true` if the given behavior flag(s) are set for this bot.
@@ -2919,7 +2919,7 @@ class CTFBot extends CTFPlayer {
      * @param {integer} flags See [Constants.TFBOT_BEHAVIOR](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#TFBOT_BEHAVIOR)
      * @returns {bool}
      */
-    function IsBehaviorFlagSet(flags);
+    function IsBehaviorFlagSet( flags );
 
     /**
      * Returns `true`/`false` if the bot's difficulty level matches.
@@ -2927,7 +2927,7 @@ class CTFBot extends CTFPlayer {
      * @param {integer} difficulty See [Constants.ETFBotDifficultyType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ETFBotDifficultyType)
      * @returns {bool}
      */
-    function IsDifficulty(difficulty);
+    function IsDifficulty( difficulty );
 
     /**
      * Checks if we are in a squad.
@@ -2949,7 +2949,7 @@ class CTFBot extends CTFPlayer {
      * @param {CBaseEntity} weapon
      * @returns {bool}
      */
-    function IsWeaponRestricted(weapon);
+    function IsWeaponRestricted( weapon );
 
     /**
      * Makes us leave the current squad (if any).
@@ -2961,54 +2961,54 @@ class CTFBot extends CTFPlayer {
      * @type {function}
      * @param {float} duration Defaults to `-1.0`
      */
-    function PressAltFireButton(duration = -1.0);
+    function PressAltFireButton( duration = -1.0 );
 
     /**
      * @type {function}
      * @param {float} duration Defaults to `-1.0`
      */
-    function PressFireButton(duration = -1.0);
+    function PressFireButton( duration = -1.0 );
 
     /**
      * @type {function}
      * @param {float} duration Defaults to `-1.0`
      */
-    function PressSpecialFireButton(duration = -1.0);
+    function PressSpecialFireButton( duration = -1.0 );
 
     /**
      * Removes attribute flags on this TFBot.
      * @type {function}
      * @param {integer} attribute See [Constants.FTFBotAttributeType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FTFBotAttributeType)
      */
-    function RemoveBotAttribute(attribute);
+    function RemoveBotAttribute( attribute );
 
     /**
      * Removes a bot tag.
      * @type {function}
      * @param {string} tag
      */
-    function RemoveBotTag(tag);
+    function RemoveBotTag( tag );
 
     /**
      * Removes weapon restriction flags.
      * @type {function}
      * @param {integer} flags See [Constants.TFBotWeaponRestrictionType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#TFBotWeaponRestrictionType)
      */
-    function RemoveWeaponRestriction(flags);
+    function RemoveWeaponRestriction( flags );
 
     /**
      * Set the given action point for this bot.
      * @type {function}
      * @param {CBaseEntity|null} entity
      */
-    function SetActionPoint(entity);
+    function SetActionPoint( entity );
 
     /**
      * Sets our current attention focus to this entity.
      * @type {function}
      * @param {CBaseEntity|null} entity
      */
-    function SetAttentionFocus(entity);
+    function SetAttentionFocus( entity );
 
     /**
      * Sets if the bot should automatically jump, and how often.
@@ -3016,35 +3016,35 @@ class CTFBot extends CTFPlayer {
      * @param {float} min_time
      * @param {float} max_time
      */
-    function SetAutoJump(min_time, max_time);
+    function SetAutoJump( min_time, max_time );
 
     /**
      * Set the given behavior flag(s) for this bot.
      * @type {function}
      * @param {integer} flags See [Constants.TFBOT_BEHAVIOR](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#TFBOT_BEHAVIOR)
      */
-    function SetBehaviorFlag(flags);
+    function SetBehaviorFlag( flags );
 
     /**
      * Sets the bots difficulty level.
      * @type {function}
      * @param {integer} difficulty See [Constants.ETFBotDifficultyType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ETFBotDifficultyType)
      */
-    function SetDifficulty(difficulty);
+    function SetDifficulty( difficulty );
 
     /**
      * Set the home nav area of the bot.
      * @type {function}
      * @param {CTFNavArea|null} area
      */
-    function SetHomeArea(area);
+    function SetHomeArea( area );
 
     /**
      * Sets max vision range override for the bot.
      * @type {function}
      * @param {float} range
      */
-    function SetMaxVisionRangeOverride(range);
+    function SetMaxVisionRangeOverride( range );
 
     /**
      * Set this bot's current mission to the given mission.
@@ -3052,42 +3052,42 @@ class CTFBot extends CTFPlayer {
      * @param {integer} mission See [Constants.ETFBotMissionType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ETFBotMissionType)
      * @param {bool} reset_behavior
      */
-    function SetMission(mission, reset_behavior);
+    function SetMission( mission, reset_behavior );
 
     /**
      * Set this bot's mission target to the given entity.
      * @type {function}
      * @param {CBaseEntity|null} entity
      */
-    function SetMissionTarget(entity);
+    function SetMissionTarget( entity );
 
     /**
      * Set this bot's previous mission to the given mission.
      * @type {function}
      * @param {integer} mission See [Constants.ETFBotMissionType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ETFBotMissionType)
      */
-    function SetPrevMission(mission);
+    function SetPrevMission( mission );
 
     /**
      * Sets the scale override for the bot.
      * @type {function}
      * @param {float} scale
      */
-    function SetScaleOverride(scale);
+    function SetScaleOverride( scale );
 
     /**
      * Sets if the bot should build instantly.
      * @type {function}
      * @param {bool} toggle
      */
-    function SetShouldQuickBuild(toggle);
+    function SetShouldQuickBuild( toggle );
 
     /**
      * Sets our formation error coefficient.
      * @type {function}
      * @param {float} coefficient
      */
-    function SetSquadFormationError(coefficient);
+    function SetSquadFormationError( coefficient );
 
     /**
      * Returns if the bot should automatically jump.
@@ -3123,7 +3123,7 @@ class CTFBot extends CTFPlayer {
      * @type {function}
      * @param {bool} toggle
      */
-    function FlagForUpdate(toggle);
+    function FlagForUpdate( toggle );
 
     /**
      * Get this bot's body interface.
@@ -3187,7 +3187,7 @@ class CTFBot extends CTFPlayer {
      * @param {CBaseEntity} entity
      * @returns {bool}
      */
-    function IsEnemy(entity);
+    function IsEnemy( entity );
 
     /**
      * Is this bot flagged for update.
@@ -3202,7 +3202,7 @@ class CTFBot extends CTFPlayer {
      * @param {CBaseEntity} entity
      * @returns {bool}
      */
-    function IsFriend(entity);
+    function IsFriend( entity );
 
     /**
      * Return `true` if we haven't moved in awhile.
@@ -3225,7 +3225,7 @@ class Convars {
      * @param {convar} name
      * @returns {bool|null}
      */
-    function GetBool(name);
+    function GetBool( name );
 
     /**
      * Returns the convar value for the entindex as a string. Only works on `FCVAR_USERINFO` convars.
@@ -3234,7 +3234,7 @@ class Convars {
      * @param {integer} entindex
      * @returns {string}
      */
-    function GetClientConvarValue(name, entindex);
+    function GetClientConvarValue( name, entindex );
 
     /**
      * Returns the convar as an integer. May return `null` if no such convar.
@@ -3244,7 +3244,7 @@ class Convars {
      * @param {convar} name
      * @returns {integer|null}
      */
-    function GetInt(name);
+    function GetInt( name );
 
     /**
      * Returns the convar as a string. May return `null` if no such convar.
@@ -3254,7 +3254,7 @@ class Convars {
      * @param {convar} name
      * @returns {string|null}
      */
-    function GetStr(name);
+    function GetStr( name );
 
     /**
      * Returns the convar as a float. May return `null` if no such convar.
@@ -3264,7 +3264,7 @@ class Convars {
      * @param {convar} name
      * @returns {float|null}
      */
-    function GetFloat(name);
+    function GetFloat( name );
 
     /**
      * Checks if the convar is allowed to be used (in cfg/vscript_convar_allowlist.txt).
@@ -3272,7 +3272,7 @@ class Convars {
      * @param {convar} name
      * @returns {bool}
      */
-    function IsConVarOnAllowList(name);
+    function IsConVarOnAllowList( name );
 
     /**
      * Sets the value of the convar. The convar must be in cfg/vscript_convar_allowlist.txt.
@@ -3281,7 +3281,7 @@ class Convars {
      * @param {convar} name
      * @param {any} value
      */
-    function SetValue(name, value);
+    function SetValue( name, value );
 }
 
 /**
@@ -3296,14 +3296,14 @@ class CEntities {
      * @param {classname} classname
      * @returns {CBaseEntity|null} `null` if no entity type could be inferred.
      */
-    function CreateByClassname(classname);
+    function CreateByClassname( classname );
 
     /**
      * Dispatches spawn of an entity. Use this on entities created via `CreateByClassname`.
      * @type {function}
      * @param {CBaseEntity} entity
      */
-    function DispatchSpawn(entity);
+    function DispatchSpawn( entity );
 
     /**
      * Find entities by classname. Pass `null` to start, or previous entity to continue.
@@ -3312,7 +3312,7 @@ class CEntities {
      * @param {classname_search} classname
      * @returns {CBaseEntity|null}
      */
-    function FindByClassname(previous, classname);
+    function FindByClassname( previous, classname );
 
     /**
      * Find entities by classname nearest to a point within a radius.
@@ -3322,7 +3322,7 @@ class CEntities {
      * @param {float} radius
      * @returns {CBaseEntity|null}
      */
-    function FindByClassnameNearest(classname, center, radius);
+    function FindByClassnameNearest( classname, center, radius );
 
     /**
      * Find entities by classname within a radius. Pass `null` to start, or previous to continue.
@@ -3333,7 +3333,7 @@ class CEntities {
      * @param {float} radius
      * @returns {CBaseEntity|null}
      */
-    function FindByClassnameWithin(previous, classname, center, radius);
+    function FindByClassnameWithin( previous, classname, center, radius );
 
     /**
      * Find entities by model keyvalue. Pass `null` to start, or previous to continue.
@@ -3342,7 +3342,7 @@ class CEntities {
      * @param {string} model_name
      * @returns {CBaseEntity|null}
      */
-    function FindByModel(previous, model_name);
+    function FindByModel( previous, model_name );
 
     /**
      * Find entities by targetname keyvalue. Pass `null` to start, or previous to continue.
@@ -3351,7 +3351,7 @@ class CEntities {
      * @param {string} targetname
      * @returns {CBaseEntity|null}
      */
-    function FindByName(previous, targetname);
+    function FindByName( previous, targetname );
 
     /**
      * Find entities by targetname nearest to a point within a radius.
@@ -3361,7 +3361,7 @@ class CEntities {
      * @param {float} radius
      * @returns {CBaseEntity|null}
      */
-    function FindByNameNearest(targetname, center, radius);
+    function FindByNameNearest( targetname, center, radius );
 
     /**
      * Find entities by targetname within a radius. Pass `null` to start, or previous to continue.
@@ -3372,7 +3372,7 @@ class CEntities {
      * @param {float} radius
      * @returns {CBaseEntity|null}
      */
-    function FindByNameWithin(previous, targetname, center, radius);
+    function FindByNameWithin( previous, targetname, center, radius );
 
     /**
      * Find entities by their target keyvalue. Pass `null` to start, or previous to continue.
@@ -3381,7 +3381,7 @@ class CEntities {
      * @param {string} target
      * @returns {CBaseEntity|null}
      */
-    function FindByTarget(previous, target);
+    function FindByTarget( previous, target );
 
     /**
      * Find entities within a radius. Pass `null` to start, or previous to continue.
@@ -3391,7 +3391,7 @@ class CEntities {
      * @param {float} radius
      * @returns {CBaseEntity|null}
      */
-    function FindInSphere(previous, center, radius);
+    function FindInSphere( previous, center, radius );
 
     /**
      * Begin an iteration over the list of entities. The first entity is always worldspawn.
@@ -3406,7 +3406,7 @@ class CEntities {
      * @param {CBaseEntity} previous
      * @returns {CBaseEntity|null}
      */
-    function Next(previous);
+    function Next( previous );
 }
 
 /**
@@ -3420,14 +3420,14 @@ class CTFNavArea {
      * @param {CTFNavArea} area
      * @param {integer} dir See [Constants.ENavDirType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ENavDirType)
      */
-    function AddIncomingConnection(area, dir);
+    function AddIncomingConnection( area, dir );
 
     /**
      * Clear TF-specific area attribute bits.
      * @type {function}
      * @param {integer} bits See [Constants.FTFNavAttributeType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FTFNavAttributeType)
      */
-    function ClearAttributeTF(bits);
+    function ClearAttributeTF( bits );
 
     /**
      * Compute closest point within the portal between areas.
@@ -3437,7 +3437,7 @@ class CTFNavArea {
      * @param {Vector} close_pos
      * @returns {Vector}
      */
-    function ComputeClosestPointInPortal(to, dir, close_pos);
+    function ComputeClosestPointInPortal( to, dir, close_pos );
 
     /**
      * Return direction from this area to the given point.
@@ -3445,7 +3445,7 @@ class CTFNavArea {
      * @param {Vector} point
      * @returns {integer}
      */
-    function ComputeDirection(point);
+    function ComputeDirection( point );
 
     /**
      * Connect this area to given area in given direction.
@@ -3453,7 +3453,7 @@ class CTFNavArea {
      * @param {CTFNavArea} area
      * @param {integer} dir See [Constants.ENavDirType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ENavDirType)
      */
-    function ConnectTo(area, dir);
+    function ConnectTo( area, dir );
 
     /**
      * Return `true` if other area is on or above this area, but no others.
@@ -3461,7 +3461,7 @@ class CTFNavArea {
      * @param {CTFNavArea} area
      * @returns {bool}
      */
-    function Contains(area);
+    function Contains( area );
 
     /**
      * Return `true` if given point is on or above this area, but no others.
@@ -3469,7 +3469,7 @@ class CTFNavArea {
      * @param {Vector} point
      * @returns {bool}
      */
-    function ContainsOrigin(point);
+    function ContainsOrigin( point );
 
     /**
      * Draw area as a filled rectangle of the given color.
@@ -3482,14 +3482,14 @@ class CTFNavArea {
      * @param {bool} no_depth_test
      * @param {float} margin
      */
-    function DebugDrawFilled(r, g, b, a, duration, no_depth_test, margin);
+    function DebugDrawFilled( r, g, b, a, duration, no_depth_test, margin );
 
     /**
      * Disconnect this area from given area.
      * @type {function}
      * @param {CTFNavArea} area
      */
-    function Disconnect(area);
+    function Disconnect( area );
 
     /**
      * Get random origin within extent of area.
@@ -3505,7 +3505,7 @@ class CTFNavArea {
      * @param {integer} n
      * @returns {CTFNavArea|null}
      */
-    function GetAdjacentArea(dir, n);
+    function GetAdjacentArea( dir, n );
 
     /**
      * Fills a passed in table with all adjacent areas in the given direction.
@@ -3513,7 +3513,7 @@ class CTFNavArea {
      * @param {integer} dir See [Constants.ENavDirType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ENavDirType)
      * @param {table} result
      */
-    function GetAdjacentAreas(dir, result);
+    function GetAdjacentAreas( dir, result );
 
     /**
      * Get the number of adjacent areas in the given direction.
@@ -3521,7 +3521,7 @@ class CTFNavArea {
      * @param {integer} dir See [Constants.ENavDirType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ENavDirType)
      * @returns {integer}
      */
-    function GetAdjacentCount(dir);
+    function GetAdjacentCount( dir );
 
     /**
      * Get area attribute bits.
@@ -3550,7 +3550,7 @@ class CTFNavArea {
      * @param {integer} dir See [Constants.ENavDirType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ENavDirType)
      * @returns {Vector}
      */
-    function GetCorner(dir);
+    function GetCorner( dir );
 
     /**
      * Return shortest distance between point and this area.
@@ -3558,7 +3558,7 @@ class CTFNavArea {
      * @param {Vector} pos
      * @returns {float}
      */
-    function GetDistanceSquaredToPoint(pos);
+    function GetDistanceSquaredToPoint( pos );
 
     /**
      * Returns the door entity above the area.
@@ -3579,7 +3579,7 @@ class CTFNavArea {
      * @type {function}
      * @param {table} result
      */
-    function GetElevatorAreas(result);
+    function GetElevatorAreas( result );
 
     /**
      * Get area ID.
@@ -3594,7 +3594,7 @@ class CTFNavArea {
      * @param {integer} dir See [Constants.ENavDirType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ENavDirType)
      * @param {table} result
      */
-    function GetIncomingConnections(dir, result);
+    function GetIncomingConnections( dir, result );
 
     /**
      * Returns the area just prior to this one in the search path.
@@ -3623,7 +3623,7 @@ class CTFNavArea {
      * @param {integer} team See [Constants.ETFTeam](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ETFTeam)
      * @returns {integer}
      */
-    function GetPlayerCount(team);
+    function GetPlayerCount( team );
 
     /**
      * Return a random adjacent area in the given direction.
@@ -3631,7 +3631,7 @@ class CTFNavArea {
      * @param {integer} dir See [Constants.ENavDirType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ENavDirType)
      * @returns {CTFNavArea|null}
      */
-    function GetRandomAdjacentArea(dir);
+    function GetRandomAdjacentArea( dir );
 
     /**
      * Return the area size along the X axis.
@@ -3660,7 +3660,7 @@ class CTFNavArea {
      * @param {Vector} pos
      * @returns {float}
      */
-    function GetZ(pos);
+    function GetZ( pos );
 
     /**
      * Has TF-specific area attribute bits of the given ones.
@@ -3668,7 +3668,7 @@ class CTFNavArea {
      * @param {integer} bits See [Constants.FTFNavAttributeType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FTFNavAttributeType)
      * @returns {bool}
      */
-    function HasAttributeTF(bits);
+    function HasAttributeTF( bits );
 
     /**
      * Has area attribute bits of the given ones.
@@ -3676,7 +3676,7 @@ class CTFNavArea {
      * @param {integer} bits See [Constants.FNavAttributeType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FNavAttributeType)
      * @returns {bool}
      */
-    function HasAttributes(bits);
+    function HasAttributes( bits );
 
     /**
      * Returns `true` if there's a large, immobile object obstructing this area.
@@ -3684,7 +3684,7 @@ class CTFNavArea {
      * @param {float} max_height
      * @returns {bool}
      */
-    function HasAvoidanceObstacle(max_height);
+    function HasAvoidanceObstacle( max_height );
 
     /**
      * Return `true` if team is blocked in this area.
@@ -3693,7 +3693,7 @@ class CTFNavArea {
      * @param {bool} affects_flow
      * @returns {bool}
      */
-    function IsBlocked(team, affects_flow);
+    function IsBlocked( team, affects_flow );
 
     /**
      * Returns `true` if area is a bottleneck.
@@ -3708,7 +3708,7 @@ class CTFNavArea {
      * @param {integer} team See [Constants.ETFTeam](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ETFTeam)
      * @returns {bool}
      */
-    function IsCompletelyVisibleToTeam(team);
+    function IsCompletelyVisibleToTeam( team );
 
     /**
      * Return `true` if this area is connected to other area in given direction.
@@ -3717,7 +3717,7 @@ class CTFNavArea {
      * @param {integer} dir See [Constants.ENavDirType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ENavDirType)
      * @returns {bool}
      */
-    function IsConnected(area, dir);
+    function IsConnected( area, dir );
 
     /**
      * Return `true` if this area and given area are approximately co-planar.
@@ -3725,7 +3725,7 @@ class CTFNavArea {
      * @param {CBaseEntity} area
      * @returns {bool}
      */
-    function IsCoplanar(area);
+    function IsCoplanar( area );
 
     /**
      * Return `true` if this area is marked to have continuous damage.
@@ -3747,7 +3747,7 @@ class CTFNavArea {
      * @param {integer} dir See [Constants.ENavDirType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ENavDirType)
      * @returns {bool}
      */
-    function IsEdge(dir);
+    function IsEdge( dir );
 
     /**
      * Return `true` if this area is approximately flat.
@@ -3762,7 +3762,7 @@ class CTFNavArea {
      * @param {CBaseEntity} area
      * @returns {bool}
      */
-    function IsOverlapping(area);
+    function IsOverlapping( area );
 
     /**
      * Return `true` if `pos` is within 2D extents of area.
@@ -3771,7 +3771,7 @@ class CTFNavArea {
      * @param {float} tolerance
      * @returns {bool}
      */
-    function IsOverlappingOrigin(pos, tolerance);
+    function IsOverlappingOrigin( pos, tolerance );
 
     /**
      * Return `true` if any portion of this area is visible to anyone on the given team.
@@ -3779,7 +3779,7 @@ class CTFNavArea {
      * @param {integer} team See [Constants.ETFTeam](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ETFTeam)
      * @returns {bool}
      */
-    function IsPotentiallyVisibleToTeam(team);
+    function IsPotentiallyVisibleToTeam( team );
 
     /**
      * Is this area reachable by the given team?
@@ -3787,7 +3787,7 @@ class CTFNavArea {
      * @param {integer} team See [Constants.ETFTeam](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ETFTeam)
      * @returns {bool}
      */
-    function IsReachableByTeam(team);
+    function IsReachableByTeam( team );
 
     /**
      * Return `true` if this area is approximately square.
@@ -3823,63 +3823,63 @@ class CTFNavArea {
      * @param {Vector} point
      * @returns {bool}
      */
-    function IsVisible(point);
+    function IsVisible( point );
 
     /**
      * Mark this area as blocked for team.
      * @type {function}
      * @param {integer} team See [Constants.ETFTeam](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ETFTeam)
      */
-    function MarkAsBlocked(team);
+    function MarkAsBlocked( team );
 
     /**
      * Mark this area is damaging for the next 'duration' seconds.
      * @type {function}
      * @param {float} duration
      */
-    function MarkAsDamaging(duration);
+    function MarkAsDamaging( duration );
 
     /**
      * Marks the obstructed status of the nav area.
      * @type {function}
      * @param {float} height
      */
-    function MarkObstacleToAvoid(height);
+    function MarkObstacleToAvoid( height );
 
     /**
      * Removes area attribute bits.
      * @type {function}
      * @param {integer} bits See [Constants.FNavAttributeType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FNavAttributeType)
      */
-    function RemoveAttributes(bits);
+    function RemoveAttributes( bits );
 
     /**
      * Removes all connections in directions to left and right of specified direction.
      * @type {function}
      * @param {integer} dir See [Constants.ENavDirType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ENavDirType)
      */
-    function RemoveOrthogonalConnections(dir);
+    function RemoveOrthogonalConnections( dir );
 
     /**
      * Set TF-specific area attributes.
      * @type {function}
      * @param {integer} bits See [Constants.FTFNavAttributeType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FTFNavAttributeType)
      */
-    function SetAttributeTF(bits);
+    function SetAttributeTF( bits );
 
     /**
      * Set area attribute bits.
      * @type {function}
      * @param {integer} bits See [Constants.FNavAttributeType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FNavAttributeType)
      */
-    function SetAttributes(bits);
+    function SetAttributes( bits );
 
     /**
      * Set place name. Pass `null` to clear.
      * @type {function}
      * @param {string} name
      */
-    function SetPlaceName(name);
+    function SetPlaceName( name );
 
     /**
      * Mark this nav area with the current marking scope.
@@ -3907,14 +3907,14 @@ class CNavMesh {
      * @param {CTFNavArea|null} ignore_area
      * @returns {CTFNavArea|null}
      */
-    function FindNavAreaAlongRay(start_pos, end_pos, ignore_area);
+    function FindNavAreaAlongRay( start_pos, end_pos, ignore_area );
 
     /**
      * Fills a passed in table of all nav areas.
      * @type {function}
      * @param {table} result Resulting shape: `{"area0": CTFNavArea, "area1": CTFNavArea, ...}`
      */
-    function GetAllAreas(result);
+    function GetAllAreas( result );
 
     /**
      * Fills a passed in table of all nav areas that have the specified attributes.
@@ -3922,7 +3922,7 @@ class CNavMesh {
      * @param {integer} bits See [Constants.FNavAttributeType](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FNavAttributeType)
      * @param {table} result
      */
-    function GetAreasWithAttributes(bits, result);
+    function GetAreasWithAttributes( bits, result );
 
     /**
      * Given a position in the world, return the nav area closest to or below that height.
@@ -3931,7 +3931,7 @@ class CNavMesh {
      * @param {float} beneath
      * @returns {CTFNavArea|null}
      */
-    function GetNavArea(origin, beneath);
+    function GetNavArea( origin, beneath );
 
     /**
      * Get nav area by ID.
@@ -3939,7 +3939,7 @@ class CNavMesh {
      * @param {integer} area_id
      * @returns {CTFNavArea|null}
      */
-    function GetNavAreaByID(area_id);
+    function GetNavAreaByID( area_id );
 
     /**
      * Return total number of nav areas.
@@ -3962,7 +3962,7 @@ class CNavMesh {
      * @param {table} result
      * @returns {bool} Whether a path was found.
      */
-    function GetNavAreasFromBuildPath(start_area, end_area, goal_pos, max_path_length, team, ignore_nav_blockers, result);
+    function GetNavAreasFromBuildPath( start_area, end_area, goal_pos, max_path_length, team, ignore_nav_blockers, result );
 
     /**
      * Fills a passed in table of nav areas within radius.
@@ -3971,7 +3971,7 @@ class CNavMesh {
      * @param {float} radius
      * @param {table} result
      */
-    function GetNavAreasInRadius(origin, radius, result);
+    function GetNavAreasInRadius( origin, radius, result );
 
     /**
      * Fills passed in table with areas overlapping entity's extent.
@@ -3979,7 +3979,7 @@ class CNavMesh {
      * @param {CBaseEntity} entity
      * @param {table} result
      */
-    function GetNavAreasOverlappingEntityExtent(entity, result);
+    function GetNavAreasOverlappingEntityExtent( entity, result );
 
     /**
      * Given a position in the world, return the nav area closest to or below that height.
@@ -3990,14 +3990,14 @@ class CNavMesh {
      * @param {bool} check_ground
      * @returns {CTFNavArea|null}
      */
-    function GetNearestNavArea(origin, max_distance, check_los, check_ground);
+    function GetNearestNavArea( origin, max_distance, check_los, check_ground );
 
     /**
      * Fills a passed in table of all obstructing entities.
      * @type {function}
      * @param {table} result
      */
-    function GetObstructingEntities(result);
+    function GetObstructingEntities( result );
 
     /**
      * Returns `true` if a path exists.
@@ -4010,7 +4010,7 @@ class CNavMesh {
      * @param {bool} ignore_nav_blockers
      * @returns {bool}
      */
-    function NavAreaBuildPath(start_area, end_area, goal_pos, max_path_length, team, ignore_nav_blockers);
+    function NavAreaBuildPath( start_area, end_area, goal_pos, max_path_length, team, ignore_nav_blockers );
 
     /**
      * Compute distance between two areas.
@@ -4020,21 +4020,21 @@ class CNavMesh {
      * @param {float} max_path_length
      * @returns {float} `-1.0` if can't reach `end_area` from `start_area`.
      */
-    function NavAreaTravelDistance(start_area, end_area, max_path_length);
+    function NavAreaTravelDistance( start_area, end_area, max_path_length );
 
     /**
      * Registers avoidance obstacle.
      * @type {function}
      * @param {CBaseEntity} entity
      */
-    function RegisterAvoidanceObstacle(entity);
+    function RegisterAvoidanceObstacle( entity );
 
     /**
      * Unregisters avoidance obstacle.
      * @type {function}
      * @param {CBaseEntity} entity
      */
-    function UnregisterAvoidanceObstacle(entity);
+    function UnregisterAvoidanceObstacle( entity );
 }
 
 /**
@@ -4049,7 +4049,7 @@ class CNetPropManager {
      * @param {property_array} property_name
      * @returns {integer}
      */
-    function GetPropArraySize(entity, property_name);
+    function GetPropArraySize( entity, property_name );
 
     /**
      * Reads an `EHANDLE`-valued netprop.
@@ -4058,7 +4058,7 @@ class CNetPropManager {
      * @param {entity_property} property_name
      * @returns {CBaseEntity|null} `null` if property is not found.
      */
-    function GetPropEntity(entity, property_name);
+    function GetPropEntity( entity, property_name );
 
     /**
      * Reads an `EHANDLE`-valued netprop from an array.
@@ -4068,7 +4068,7 @@ class CNetPropManager {
      * @param {integer} array_element
      * @returns {CBaseEntity|null} `null` if not found.
      */
-    function GetPropEntityArray(entity, property_name, array_element);
+    function GetPropEntityArray( entity, property_name, array_element );
 
     /**
      * Reads a boolean-valued netprop.
@@ -4077,7 +4077,7 @@ class CNetPropManager {
      * @param {bool_property} property_name
      * @returns {bool} `false` if property is not found.
      */
-    function GetPropBool(entity, property_name);
+    function GetPropBool( entity, property_name );
 
     /**
      * Reads a boolean-valued netprop from an array.
@@ -4087,7 +4087,7 @@ class CNetPropManager {
      * @param {integer} array_element
      * @returns {bool} `false` if not found.
      */
-    function GetPropBoolArray(entity, property_name, array_element);
+    function GetPropBoolArray( entity, property_name, array_element );
 
     /**
      * Reads a float-valued netprop.
@@ -4096,7 +4096,7 @@ class CNetPropManager {
      * @param {float_property} property_name
      * @returns {float} `-1.0` if property is not found.
      */
-    function GetPropFloat(entity, property_name);
+    function GetPropFloat( entity, property_name );
 
     /**
      * Reads a float-valued netprop from an array.
@@ -4106,7 +4106,7 @@ class CNetPropManager {
      * @param {integer} array_element
      * @returns {float} `-1.0` if not found.
      */
-    function GetPropFloatArray(entity, property_name, array_element);
+    function GetPropFloatArray( entity, property_name, array_element );
 
     /**
      * Fills in a passed table with property info for the provided entity.
@@ -4117,7 +4117,7 @@ class CNetPropManager {
      * @param {table} result
      * @returns {bool}
      */
-    function GetPropInfo(entity, property_name, array_element, result);
+    function GetPropInfo( entity, property_name, array_element, result );
 
     /**
      * Reads an integer-valued netprop.
@@ -4126,7 +4126,7 @@ class CNetPropManager {
      * @param {integer_property} property_name
      * @returns {integer} `-1` if property is not found.
      */
-    function GetPropInt(entity, property_name);
+    function GetPropInt( entity, property_name );
 
     /**
      * Reads an integer-valued netprop from an array.
@@ -4136,7 +4136,7 @@ class CNetPropManager {
      * @param {integer} array_element
      * @returns {integer} `-1` if not found.
      */
-    function GetPropIntArray(entity, property_name, array_element);
+    function GetPropIntArray( entity, property_name, array_element );
 
     /**
      * Reads a string-valued netprop.
@@ -4145,7 +4145,7 @@ class CNetPropManager {
      * @param {string_property} property_name
      * @returns {string} Empty string if property is not found.
      */
-    function GetPropString(entity, property_name);
+    function GetPropString( entity, property_name );
 
     /**
      * Reads a string-valued netprop from an array.
@@ -4155,7 +4155,7 @@ class CNetPropManager {
      * @param {integer} array_element
      * @returns {string} Empty string if not found.
      */
-    function GetPropStringArray(entity, property_name, array_element);
+    function GetPropStringArray( entity, property_name, array_element );
 
     /**
      * Returns the name of the netprop type as a string.
@@ -4164,7 +4164,7 @@ class CNetPropManager {
      * @param {property} property_name
      * @returns {string|null} `null` if not found.
      */
-    function GetPropType(entity, property_name);
+    function GetPropType( entity, property_name );
 
     /**
      * Reads a 3D vector-valued netprop.
@@ -4173,7 +4173,7 @@ class CNetPropManager {
      * @param {vector_property} property_name
      * @returns {Vector} `Vector(0,0,0)` if not found.
      */
-    function GetPropVector(entity, property_name);
+    function GetPropVector( entity, property_name );
 
     /**
      * Reads a 3D vector-valued netprop from an array.
@@ -4183,7 +4183,7 @@ class CNetPropManager {
      * @param {integer} array_element
      * @returns {Vector} `Vector(0,0,0)` if not found.
      */
-    function GetPropVectorArray(entity, property_name, array_element);
+    function GetPropVectorArray( entity, property_name, array_element );
 
     /**
      * Fills in a passed table with all props of a specified type.
@@ -4192,7 +4192,7 @@ class CNetPropManager {
      * @param {integer} prop_type `0` = SendTable, `1` = DataMap.
      * @param {table} result
      */
-    function GetTable(entity, prop_type, result);
+    function GetTable( entity, prop_type, result );
 
     /**
      * Checks if a netprop exists.
@@ -4201,7 +4201,7 @@ class CNetPropManager {
      * @param {property} property_name
      * @returns {bool}
      */
-    function HasProp(entity, property_name);
+    function HasProp( entity, property_name );
 
     /**
      * Sets a netprop to the specified boolean.
@@ -4210,7 +4210,7 @@ class CNetPropManager {
      * @param {bool_property} property_name
      * @param {bool} value
      */
-    function SetPropBool(entity, property_name, value);
+    function SetPropBool( entity, property_name, value );
 
     /**
      * Sets a netprop from an array to the specified boolean.
@@ -4220,7 +4220,7 @@ class CNetPropManager {
      * @param {bool} value
      * @param {integer} array_element
      */
-    function SetPropBoolArray(entity, property_name, value, array_element);
+    function SetPropBoolArray( entity, property_name, value, array_element );
 
     /**
      * Sets an `EHANDLE`-valued netprop to reference the specified entity.
@@ -4229,7 +4229,7 @@ class CNetPropManager {
      * @param {entity_property} property_name
      * @param {CBaseEntity|null} value
      */
-    function SetPropEntity(entity, property_name, value);
+    function SetPropEntity( entity, property_name, value );
 
     /**
      * Sets an `EHANDLE`-valued netprop from an array to reference the specified entity.
@@ -4239,7 +4239,7 @@ class CNetPropManager {
      * @param {CBaseEntity|null} value
      * @param {integer} array_element
      */
-    function SetPropEntityArray(entity, property_name, value, array_element);
+    function SetPropEntityArray( entity, property_name, value, array_element );
 
     /**
      * Sets a netprop to the specified float.
@@ -4248,7 +4248,7 @@ class CNetPropManager {
      * @param {float_property} property_name
      * @param {float} value
      */
-    function SetPropFloat(entity, property_name, value);
+    function SetPropFloat( entity, property_name, value );
 
     /**
      * Sets a netprop from an array to the specified float.
@@ -4258,7 +4258,7 @@ class CNetPropManager {
      * @param {float} value
      * @param {integer} array_element
      */
-    function SetPropFloatArray(entity, property_name, value, array_element);
+    function SetPropFloatArray( entity, property_name, value, array_element );
 
     /**
      * Sets a netprop to the specified integer.
@@ -4269,7 +4269,7 @@ class CNetPropManager {
      * @param {integer_property} property_name
      * @param {integer} value
      */
-    function SetPropInt(entity, property_name, value);
+    function SetPropInt( entity, property_name, value );
 
     /**
      * Sets a netprop from an array to the specified integer.
@@ -4279,7 +4279,7 @@ class CNetPropManager {
      * @param {integer} value
      * @param {integer} array_element
      */
-    function SetPropIntArray(entity, property_name, value, array_element);
+    function SetPropIntArray( entity, property_name, value, array_element );
 
     /**
      * Sets a netprop to the specified string.
@@ -4288,7 +4288,7 @@ class CNetPropManager {
      * @param {string_property} property_name
      * @param {string|null} value
      */
-    function SetPropString(entity, property_name, value);
+    function SetPropString( entity, property_name, value );
 
     /**
      * Sets a netprop from an array to the specified string.
@@ -4298,7 +4298,7 @@ class CNetPropManager {
      * @param {string|null} value
      * @param {integer} array_element
      */
-    function SetPropStringArray(entity, property_name, value, array_element);
+    function SetPropStringArray( entity, property_name, value, array_element );
 
     /**
      * Sets a netprop to the specified vector.
@@ -4307,7 +4307,7 @@ class CNetPropManager {
      * @param {vector_property} property_name
      * @param {Vector} value
      */
-    function SetPropVector(entity, property_name, value);
+    function SetPropVector( entity, property_name, value );
 
     /**
      * Sets a netprop from an array to the specified vector.
@@ -4317,7 +4317,7 @@ class CNetPropManager {
      * @param {Vector} value
      * @param {integer} array_element
      */
-    function SetPropVectorArray(entity, property_name, value, array_element);
+    function SetPropVectorArray( entity, property_name, value, array_element );
 }
 
 /**
@@ -4336,7 +4336,7 @@ class CScriptEntityOutputs {
      * @param {float} delay
      * @param {integer} times_to_fire
      */
-    function AddOutput(entity, output_name, targetname, input_name, parameter, delay, times_to_fire);
+    function AddOutput( entity, output_name, targetname, input_name, parameter, delay, times_to_fire );
 
     /**
      * Returns the number of array elements.
@@ -4345,7 +4345,7 @@ class CScriptEntityOutputs {
      * @param {output} output_name
      * @returns {integer}
      */
-    function GetNumElements(entity, output_name);
+    function GetNumElements( entity, output_name );
 
     /**
      * Fills the passed table with output information.
@@ -4355,7 +4355,7 @@ class CScriptEntityOutputs {
      * @param {table} result
      * @param {integer} array_element
      */
-    function GetOutputTable(entity, output_name, result, array_element);
+    function GetOutputTable( entity, output_name, result, array_element );
 
     /**
      * Returns `true` if an action exists for the output.
@@ -4364,7 +4364,7 @@ class CScriptEntityOutputs {
      * @param {output} output_name
      * @returns {bool}
      */
-    function HasAction(entity, output_name);
+    function HasAction( entity, output_name );
 
     /**
      * Returns `true` if the output exists.
@@ -4373,7 +4373,7 @@ class CScriptEntityOutputs {
      * @param {output} output_name
      * @returns {bool}
      */
-    function HasOutput(entity, output_name);
+    function HasOutput( entity, output_name );
 
     /**
      * Removes an output from the entity.
@@ -4384,7 +4384,7 @@ class CScriptEntityOutputs {
      * @param {output} input_name
      * @param {string|null} parameter
      */
-    function RemoveOutput(entity, output_name, targetname, input_name, parameter);
+    function RemoveOutput( entity, output_name, targetname, input_name, parameter );
 }
 
 /**
@@ -4398,7 +4398,7 @@ class CScriptKeyValues {
      * @param {string} key
      * @returns {CScriptKeyValues|null}
      */
-    function FindKey(key);
+    function FindKey( key );
 
     /**
      * Return the first sub key object.
@@ -4413,7 +4413,7 @@ class CScriptKeyValues {
      * @param {string} key
      * @returns {bool}
      */
-    function GetKeyBool(key);
+    function GetKeyBool( key );
 
     /**
      * Return the key value as a float.
@@ -4421,7 +4421,7 @@ class CScriptKeyValues {
      * @param {string} key
      * @returns {float}
      */
-    function GetKeyFloat(key);
+    function GetKeyFloat( key );
 
     /**
      * Return the key value as an integer.
@@ -4429,7 +4429,7 @@ class CScriptKeyValues {
      * @param {string} key
      * @returns {integer}
      */
-    function GetKeyInt(key);
+    function GetKeyInt( key );
 
     /**
      * Return the key value as a string.
@@ -4437,7 +4437,7 @@ class CScriptKeyValues {
      * @param {string} key
      * @returns {string}
      */
-    function GetKeyString(key);
+    function GetKeyString( key );
 
     /**
      * Return the next neighbor key object.
@@ -4452,7 +4452,7 @@ class CScriptKeyValues {
      * @param {string} key
      * @returns {bool}
      */
-    function IsKeyEmpty(key);
+    function IsKeyEmpty( key );
 
     /**
      * Whether the handle belongs to a valid key.
@@ -4479,7 +4479,7 @@ class CPlayerVoiceListener {
      * @param {integer} player_index
      * @returns {float}
      */
-    function GetPlayerSpeechDuration(player_index);
+    function GetPlayerSpeechDuration( player_index );
 
     /**
      * Returns whether the player specified is speaking.
@@ -4487,7 +4487,7 @@ class CPlayerVoiceListener {
      * @param {integer} player_index
      * @returns {bool}
      */
-    function IsPlayerSpeaking(player_index);
+    function IsPlayerSpeaking( player_index );
 }
 
 /**
@@ -4506,7 +4506,7 @@ class CEnvEntityMaker extends CBaseEntity {
      * @type {function}
      * @param {CBaseEntity} entity
      */
-    function SpawnEntityAtEntityOrigin(entity);
+    function SpawnEntityAtEntityOrigin( entity );
 
     /**
      * Create an entity at a specified location and orientation.
@@ -4514,14 +4514,14 @@ class CEnvEntityMaker extends CBaseEntity {
      * @param {Vector} origin
      * @param {Vector} orientation Euler angle in degrees (pitch, yaw, roll)
      */
-    function SpawnEntityAtLocation(origin, orientation);
+    function SpawnEntityAtLocation( origin, orientation );
 
     /**
      * Create an entity at the location of a named entity.
      * @type {function}
      * @param {string} targetname
      */
-    function SpawnEntityAtNamedEntityOrigin(targetname);
+    function SpawnEntityAtNamedEntityOrigin( targetname );
 }
 
 /**
@@ -4536,7 +4536,7 @@ class CFuncTrackTrain extends CBaseEntity {
      * @param {float} speed
      * @returns {Vector}
      */
-    function GetFuturePosition(x, speed);
+    function GetFuturePosition( x, speed );
 }
 
 /**
@@ -4549,7 +4549,7 @@ class CSceneEntity extends CBaseEntity {
      * @type {function}
      * @param {integer} index
      */
-    function AddBroadcastTeamTarget(index);
+    function AddBroadcastTeamTarget( index );
 
     /**
      * Returns length of this scene in seconds.
@@ -4564,7 +4564,7 @@ class CSceneEntity extends CBaseEntity {
      * @param {string} reference
      * @returns {CBaseEntity|null}
      */
-    function FindNamedEntity(reference);
+    function FindNamedEntity( reference );
 
     /**
      * If this scene is currently paused.
@@ -4587,14 +4587,14 @@ class CSceneEntity extends CBaseEntity {
      * @param {string} scene
      * @returns {bool}
      */
-    function LoadSceneFromString(scene_name, scene);
+    function LoadSceneFromString( scene_name, scene );
 
     /**
      * Removes a team (by index) from the broadcast list.
      * @type {function}
      * @param {integer} index
      */
-    function RemoveBroadcastTeamTarget(index);
+    function RemoveBroadcastTeamTarget( index );
 }
 
 /**
@@ -4640,7 +4640,7 @@ class CCallChainer {
      * @varargs {any}
      * @returns {bool}
      */
-    function Call(event, ...);
+    function Call( event, ... );
 }
 
 /**
@@ -4692,7 +4692,7 @@ class CSimpleCallChainer {
      * @varargs {any}
      * @returns {bool}
      */
-    function Call(...);
+    function Call( ... );
 }
 
 /**
@@ -4712,7 +4712,7 @@ class NextBotCombatCharacter extends CBaseCombatCharacter {
      * @type {function}
      * @param {bool} toggle
      */
-    function FlagForUpdate(toggle);
+    function FlagForUpdate( toggle );
 
     /**
      * Get this bot's body interface.
@@ -4776,7 +4776,7 @@ class NextBotCombatCharacter extends CBaseCombatCharacter {
      * @param {CBaseEntity} entity
      * @returns {bool}
      */
-    function IsEnemy(entity);
+    function IsEnemy( entity );
 
     /**
      * Is this bot flagged for update.
@@ -4791,7 +4791,7 @@ class NextBotCombatCharacter extends CBaseCombatCharacter {
      * @param {CBaseEntity} entity
      * @returns {bool}
      */
-    function IsFriend(entity);
+    function IsFriend( entity );
 
     /**
      * Return `true` if we haven't moved in awhile.
@@ -4811,7 +4811,7 @@ class CTFBaseBoss extends NextBotCombatCharacter {
      * @type {function}
      * @param {bool} toggle
      */
-    function SetResolvePlayerCollisions(toggle);
+    function SetResolvePlayerCollisions( toggle );
 }
 
 /**
@@ -4852,14 +4852,14 @@ class ILocomotion extends INextBotComponent {
      * @param {Vector} goal
      * @param {float} goal_weight
      */
-    function Approach(goal, goal_weight);
+    function Approach( goal, goal_weight );
 
     /**
      * Reset stuck status to un-stuck.
      * @type {function}
      * @param {string} reason
      */
-    function ClearStuckStatus(reason);
+    function ClearStuckStatus( reason );
 
     /**
      * Initiate a jump to an adjacent high ledge.
@@ -4869,7 +4869,7 @@ class ILocomotion extends INextBotComponent {
      * @param {CBaseEntity} obstacle
      * @returns {bool} `false` if climb can't start.
      */
-    function ClimbUpToLedge(goal_pos, goal_forward, obstacle);
+    function ClimbUpToLedge( goal_pos, goal_forward, obstacle );
 
     /**
      * Returns `false` if no time has elapsed.
@@ -4883,7 +4883,7 @@ class ILocomotion extends INextBotComponent {
      * @type {function}
      * @param {Vector} pos
      */
-    function DriveTo(pos);
+    function DriveTo( pos );
 
     /**
      * Rotate body to face towards target.
@@ -4891,7 +4891,7 @@ class ILocomotion extends INextBotComponent {
      * @type {function}
      * @param {Vector} target
      */
-    function FaceTowards(target);
+    function FaceTowards( target );
 
     /**
      * If the locomotor cannot jump over the gap, returns the fraction of the jumpable ray.
@@ -4900,7 +4900,7 @@ class ILocomotion extends INextBotComponent {
      * @param {Vector} to
      * @returns {float}
      */
-    function FractionPotentialGap(from, to);
+    function FractionPotentialGap( from, to );
 
     /**
      * If the locomotor could not move along the line given, returns the fraction of the walkable ray.
@@ -4910,7 +4910,7 @@ class ILocomotion extends INextBotComponent {
      * @param {bool} immediately
      * @returns {float}
      */
-    function FractionPotentiallyTraversable(from, to, immediately);
+    function FractionPotentiallyTraversable( from, to, immediately );
 
     /**
      * Distance at which we will die if we fall.
@@ -5059,7 +5059,7 @@ class ILocomotion extends INextBotComponent {
      * @param {Vector} to
      * @returns {float}
      */
-    function HasPotentialGap(from, to);
+    function HasPotentialGap( from, to );
 
     /**
      * Return `true` if this bot can climb arbitrary geometry it encounters.
@@ -5081,7 +5081,7 @@ class ILocomotion extends INextBotComponent {
      * @param {CBaseEntity} area
      * @returns {bool}
      */
-    function IsAreaTraversable(area);
+    function IsAreaTraversable( area );
 
     /**
      * Return `true` if we have tried to `Approach()` or `DriveTo()` very recently.
@@ -5111,7 +5111,7 @@ class ILocomotion extends INextBotComponent {
      * @param {bool} immediately
      * @returns {bool}
      */
-    function IsEntityTraversable(entity, immediately);
+    function IsEntityTraversable( entity, immediately );
 
     /**
      * Return `true` if there is a gap at this position.
@@ -5120,7 +5120,7 @@ class ILocomotion extends INextBotComponent {
      * @param {Vector} forward
      * @returns {bool}
      */
-    function IsGap(pos, forward);
+    function IsGap( pos, forward );
 
     /**
      * Is jumping across a gap to the far side.
@@ -5144,7 +5144,7 @@ class ILocomotion extends INextBotComponent {
      * @param {bool} immediately
      * @returns {float}
      */
-    function IsPotentiallyTraversable(from, to, immediately);
+    function IsPotentiallyTraversable( from, to, immediately );
 
     /**
      * Is running?
@@ -5179,21 +5179,21 @@ class ILocomotion extends INextBotComponent {
      * @param {Vector} goal_pos
      * @param {Vector} goal_forward
      */
-    function JumpAcrossGap(goal_pos, goal_forward);
+    function JumpAcrossGap( goal_pos, goal_forward );
 
     /**
      * Manually run the OnLandOnGround callback.
      * @type {function}
      * @param {CBaseEntity} ground
      */
-    function OnLandOnGround(ground);
+    function OnLandOnGround( ground );
 
     /**
      * Manually run the OnLeaveGround callback.
      * @type {function}
      * @param {CBaseEntity} ground
      */
-    function OnLeaveGround(ground);
+    function OnLeaveGround( ground );
 
     /**
      * Resets motion, stuck state etc.
@@ -5212,14 +5212,14 @@ class ILocomotion extends INextBotComponent {
      * @type {function}
      * @param {float} speed
      */
-    function SetDesiredSpeed(speed);
+    function SetDesiredSpeed( speed );
 
     /**
      * Set maximum speed bot can reach, regardless of desired speed.
      * @type {function}
      * @param {float} limit
      */
-    function SetSpeedLimit(limit);
+    function SetSpeedLimit( limit );
 
     /**
      * Set desired movement speed to stopped.
@@ -5273,7 +5273,7 @@ class Vector {
      * @param {Vector|QAngle} other
      * @returns {Vector}
      */
-    function _add(other);
+    function _add( other );
 
     /**
      * Returns the subtraction of both classes's members.
@@ -5281,7 +5281,7 @@ class Vector {
      * @param {Vector|QAngle} other
      * @returns {Vector}
      */
-    function _sub(other);
+    function _sub( other );
 
     /**
      * Returns the multiplication of a Vector against a scalar.
@@ -5289,7 +5289,7 @@ class Vector {
      * @param {float} other
      * @returns {Vector}
      */
-    function _mul(other);
+    function _mul( other );
 
     /**
      * The vector product of two vectors. Returns a vector orthogonal to the input vectors.
@@ -5297,7 +5297,7 @@ class Vector {
      * @param {Vector} factor
      * @returns {Vector}
      */
-    function Cross(factor);
+    function Cross( factor );
 
     /**
      * The scalar product of two vectors.
@@ -5305,7 +5305,7 @@ class Vector {
      * @param {Vector} factor
      * @returns {float}
      */
-    function Dot(factor);
+    function Dot( factor );
 
     /**
      * Magnitude of the vector.
@@ -5348,7 +5348,7 @@ class Vector {
      * @param {float} factor
      * @returns {Vector}
      */
-    function Scale(factor);
+    function Scale( factor );
 
     /**
      * Returns a string without separating commas.
@@ -5404,7 +5404,7 @@ class QAngle {
      * @param {QAngle|Vector} other
      * @returns {QAngle}
      */
-    function _add(other);
+    function _add( other );
 
     /**
      * Returns the subtraction of both classes's members.
@@ -5412,7 +5412,7 @@ class QAngle {
      * @param {QAngle|Vector} other
      * @returns {QAngle}
      */
-    function _sub(other);
+    function _sub( other );
 
     /**
      * QAngle multiplied by a number.
@@ -5420,14 +5420,14 @@ class QAngle {
      * @param {float} other
      * @returns {QAngle}
      */
-    function _mul(other);
+    function _mul( other );
 
     /**
      * @type {function}
      * @param {string|null} start
      * @returns {float}
      */
-    function _nexti(start);
+    function _nexti( start );
 
     /**
      * Returns the Forward Vector of the angles.
@@ -5512,7 +5512,7 @@ class Vector2D {
      * @param {Vector2D} other
      * @returns {Vector2D}
      */
-    function _add(other);
+    function _add( other );
 
     /**
      * Returns the subtraction of both classes's members.
@@ -5520,7 +5520,7 @@ class Vector2D {
      * @param {Vector2D} other
      * @returns {Vector2D}
      */
-    function _sub(other);
+    function _sub( other );
 
     /**
      * Returns the multiplication of a Vector against a scalar.
@@ -5528,7 +5528,7 @@ class Vector2D {
      * @param {float} other
      * @returns {Vector2D}
      */
-    function _mul(other);
+    function _mul( other );
 
     /**
      * The scalar product of two vectors.
@@ -5536,7 +5536,7 @@ class Vector2D {
      * @param {Vector2D} factor
      * @returns {float}
      */
-    function Dot(factor);
+    function Dot( factor );
 
     /**
      * Magnitude of the vector.
@@ -5599,7 +5599,7 @@ class Vector4D {
      * @param {Vector4D} other
      * @returns {Vector4D}
      */
-    function _add(other);
+    function _add( other );
 
     /**
      * Returns the subtraction of both classes's members.
@@ -5607,7 +5607,7 @@ class Vector4D {
      * @param {Vector4D} other
      * @returns {Vector4D}
      */
-    function _sub(other);
+    function _sub( other );
 
     /**
      * Returns the multiplication of a Vector against a scalar.
@@ -5615,7 +5615,7 @@ class Vector4D {
      * @param {float} other
      * @returns {Vector4D}
      */
-    function _mul(other);
+    function _mul( other );
 
     /**
      * The scalar product of two vectors.
@@ -5623,7 +5623,7 @@ class Vector4D {
      * @param {Vector4D} factor
      * @returns {float}
      */
-    function Dot(factor);
+    function Dot( factor );
 
     /**
      * Magnitude of the vector.
@@ -5699,21 +5699,21 @@ class Quaternion {
      * @param {Quaternion} other
      * @returns {Quaternion}
      */
-    function _add(other);
+    function _add( other );
 
     /**
      * @type {function}
      * @param {Quaternion} other
      * @returns {Quaternion}
      */
-    function _sub(other);
+    function _sub( other );
 
     /**
      * @type {function}
      * @param {float} other
      * @returns {Quaternion}
      */
-    function _mul(other);
+    function _mul( other );
 
     /**
      * The 4D scalar product of two quaternions.
@@ -5721,7 +5721,7 @@ class Quaternion {
      * @param {Quaternion} factor
      * @returns {float}
      */
-    function Dot(factor);
+    function Dot( factor );
 
     /**
      * Returns a quaternion with the complementary rotation.
@@ -5744,7 +5744,7 @@ class Quaternion {
      * @param {float} yaw
      * @param {float} roll
      */
-    function SetPitchYawRoll(pitch, yaw, roll);
+    function SetPitchYawRoll( pitch, yaw, roll );
 
     /**
      * Returns a string with the values separated by one space.
@@ -5773,7 +5773,7 @@ class Quaternion {
  * @param {CBaseEntity} entity
  * @param {string|null} function_name
  */
-function AddThinkToEnt(entity, function_name);
+function AddThinkToEnt( entity, function_name );
 
 /**
  * Test value and if not `true`, throws exception, optionally with message.
@@ -5782,7 +5782,7 @@ function AddThinkToEnt(entity, function_name);
  * @throws {string|null}
  * @param {string|null} optional_message Defaults to `null`
  */
-function Assert(value, optional_message = null);
+function Assert( value, optional_message = null );
 
 /**
  * Empties the tables of game event callback functions.
@@ -5800,7 +5800,7 @@ function ClearGameEventCallbacks();
  * @param {integer} activity
  * @returns {CBaseAnimating|null}
  */
-function CreateProp(classname, origin, model_name, activity);
+function CreateProp( classname, origin, model_name, activity );
 
 /**
  * Create a scene entity to play the specified scene. Can only be created during map initialization.
@@ -5808,7 +5808,7 @@ function CreateProp(classname, origin, model_name, activity);
  * @param {string} scene
  * @returns {CBaseAnimating|null}
  */
-function CreateSceneEntity(scene);
+function CreateSceneEntity( scene );
 
 /**
  * The current level of the developer console variable.
@@ -5826,7 +5826,7 @@ function developer();
  * @param {Vector} origin
  * @param {Vector} direction
  */
-function DispatchParticleEffect(name, origin, direction);
+function DispatchParticleEffect( name, origin, direction );
 
 /**
  * @type {function}
@@ -5834,7 +5834,7 @@ function DispatchParticleEffect(name, origin, direction);
  * @param {any} item_if_symbol Defaults to `null`
  * @param {string|null} description_if_symbol Defaults to `null`
  */
-function Document(symbol_or_table, item_if_symbol = null, description_if_symbol = null)
+function Document( symbol_or_table, item_if_symbol = null, description_if_symbol = null )
 
 /**
  * Generate an entity I/O event.
@@ -5846,7 +5846,7 @@ function Document(symbol_or_table, item_if_symbol = null, description_if_symbol 
  * @param {CBaseEntity|null} activator
  * @param {CBaseEntity|null} caller
  */
-function DoEntFire(target, action, value, delay, activator, caller);
+function DoEntFire( target, action, value, delay, activator, caller );
 
 /**
  * Used internally by IncludeScript
@@ -5856,7 +5856,7 @@ function DoEntFire(target, action, value, delay, activator, caller);
  * @returns {bool}
  * @hide
  */
-function DoIncludeScript(file, scope);
+function DoIncludeScript( file, scope );
 
 /**
  * Execute a script and put all its content for the argument passed to the scope parameter.
@@ -5866,7 +5866,7 @@ function DoIncludeScript(file, scope);
  * @param {table|class|instance|null} scope Defaults to `null`
  * @returns {bool}
  */
-function IncludeScript(file, scope = null);
+function IncludeScript( file, scope = null );
 
 /**
  * Play named sound on an entity using configurations similar to ambient_generic.
@@ -5877,7 +5877,7 @@ function IncludeScript(file, scope = null);
  * @param {integer} pitch
  * @param {CBaseEntity} entity
  */
-function EmitAmbientSoundOn(sound_name, volume, soundlevel, pitch, entity);
+function EmitAmbientSoundOn( sound_name, volume, soundlevel, pitch, entity );
 
 /**
  * Stop named sound on an entity using configurations similar to ambient_generic.
@@ -5885,7 +5885,7 @@ function EmitAmbientSoundOn(sound_name, volume, soundlevel, pitch, entity);
  * @param {string} sound_name
  * @param {CBaseEntity} entity
  */
-function StopAmbientSoundOn(sound_name, entity);
+function StopAmbientSoundOn( sound_name, entity );
 
 /**
  * Play a sound with extended parameters.
@@ -5911,7 +5911,7 @@ function StopAmbientSoundOn(sound_name, entity);
  * filter_param?: integer
  * ```
  */
-function EmitSoundEx(params);
+function EmitSoundEx( params );
 
 /**
  * Play named sound on given entity. The sound must be precached first.
@@ -5921,7 +5921,7 @@ function EmitSoundEx(params);
  * @param {string} sound_script
  * @param {CBaseEntity} entity
  */
-function EmitSoundOn(sound_script, entity);
+function EmitSoundOn( sound_script, entity );
 
 /**
  * Stop named sound on an entity.
@@ -5929,7 +5929,7 @@ function EmitSoundOn(sound_script, entity);
  * @param {string} sound_script
  * @param {CBaseEntity} entity
  */
-function StopSoundOn(sound_script, entity);
+function StopSoundOn( sound_script, entity );
 
 /**
  * Play named sound only on the client for the specified player.
@@ -5939,7 +5939,7 @@ function StopSoundOn(sound_script, entity);
  * @param {string} sound_script
  * @param {CBaseEntity} player
  */
-function EmitSoundOnClient(sound_script, player);
+function EmitSoundOnClient( sound_script, player );
 
 /**
  * Wrapper for `DoEntFire()` that sets activator to `null`. Negative delays are clamped to `0`.
@@ -5950,7 +5950,7 @@ function EmitSoundOnClient(sound_script, player);
  * @param {float} delay Defaults to `0.0`
  * @param {CBaseEntity|null} activator Defaults to `null`
  */
-function EntFire(target, action, value = null, delay = 0.0, activator = null);
+function EntFire( target, action, value = null, delay = 0.0, activator = null );
 
 /**
  * Generate an entity I/O event by handle. Negative delays are clamped to `0`.
@@ -5964,7 +5964,7 @@ function EntFire(target, action, value = null, delay = 0.0, activator = null);
  * @param {CBaseEntity|null} activator
  * @param {CBaseEntity|null} caller
  */
-function EntFireByHandle(entity, action, value, delay, activator, caller);
+function EntFireByHandle( entity, action, value, delay, activator, caller );
 
 
 /**
@@ -5973,7 +5973,7 @@ function EntFireByHandle(entity, action, value, delay, activator, caller);
  * @param {integer} entindex
  * @returns {CBaseEntity|null}
  */
-function EntIndexToHScript(entindex);
+function EntIndexToHScript( entindex );
 
 /**
  * Reads a string from file located in the game's scriptdata folder.
@@ -5982,7 +5982,7 @@ function EntIndexToHScript(entindex);
  * @param {string} file
  * @returns {string|null}
  */
-function FileToString(file);
+function FileToString( file );
 
 /**
  * Fire a game event to a listening callback function in script.
@@ -5993,7 +5993,7 @@ function FileToString(file);
  * @param {table} params
  * @returns {bool}
  */
-function FireGameEvent(name, params);
+function FireGameEvent( name, params );
 
 /**
  * Fire a script hook to a listening callback function in script.
@@ -6002,7 +6002,7 @@ function FireGameEvent(name, params);
  * @param {table} params
  * @returns {bool}
  */
-function FireScriptHook(name, params);
+function FireScriptHook( name, params );
 
 /**
  * Get the time spent on the server in the last frame. Usually `0.015` (default tickrate).
@@ -6032,7 +6032,7 @@ function GetFrameCount();
  * @param {string} prefix
  * @returns {string|null}
  */
-function GetFunctionSignature(func, prefix);
+function GetFunctionSignature( func, prefix );
 
 /**
  * Get the local player on a listen server.
@@ -6054,7 +6054,7 @@ function GetMapName();
  * @param {string} model_name
  * @returns {integer} `-1` if not loaded.
  */
-function GetModelIndex(model_name);
+function GetModelIndex( model_name );
 
 /**
  * Returns the angular velocity of the entity
@@ -6063,7 +6063,7 @@ function GetModelIndex(model_name);
  * @returns {Vector}
  * @deprecated Use the `GetPhysAngularVelocity` method on the entity instead.
  */
-function GetPhysAngularVelocity(entity);
+function GetPhysAngularVelocity( entity );
 
 /**
  * Returns the velocity of the entity
@@ -6072,7 +6072,7 @@ function GetPhysAngularVelocity(entity);
  * @returns {Vector}
  * @deprecated Use the `GetPhysVelocity` method on the entity instead.
  */
-function GetPhysVelocity(entity);
+function GetPhysVelocity( entity );
 
 /**
  * Given a user id, return the entity, or `null`.
@@ -6080,7 +6080,7 @@ function GetPhysVelocity(entity);
  * @param {integer} userid
  * @returns {CTFPlayer|null}
  */
-function GetPlayerFromUserID(userid);
+function GetPlayerFromUserID( userid );
 
 /**
  * Returns float duration of the sound.
@@ -6091,7 +6091,7 @@ function GetPlayerFromUserID(userid);
  * @param {string|null} actor_model_name
  * @returns {float}
  */
-function GetSoundDuration(sound_name, actor_model_name);
+function GetSoundDuration( sound_name, actor_model_name );
 
 /**
  * Returns `true` if this server is a dedicated server.
@@ -6106,7 +6106,7 @@ function IsDedicatedServer();
  * @param {string} model_name
  * @returns {bool}
  */
-function IsModelPrecached(model_name);
+function IsModelPrecached( model_name );
 
 /**
  * Checks if the `sound_name` is precached.
@@ -6114,7 +6114,7 @@ function IsModelPrecached(model_name);
  * @param {string} sound_name
  * @returns {bool}
  */
-function IsSoundPrecached(sound_name);
+function IsSoundPrecached( sound_name );
 
 /**
  * Is this player/entity a puppet or AI bot.
@@ -6122,7 +6122,7 @@ function IsSoundPrecached(sound_name);
  * @param {CTFPlayer} player
  * @returns {bool}
  */
-function IsPlayerABot(player);
+function IsPlayerABot( player );
 
 /**
  * Fills out a table with the local time.
@@ -6131,7 +6131,7 @@ function IsPlayerABot(player);
  * @type {function}
  * @param {table} result
  */
-function LocalTime(result);
+function LocalTime( result );
 
 /**
  * Get the current number of max clients set by the maxplayers command.
@@ -6146,7 +6146,7 @@ function MaxClients();
  * @param {integer} index
  * @returns {CTFPlayer|null}
  */
-function PlayerInstanceFromIndex(index);
+function PlayerInstanceFromIndex( index );
 
 /**
  * Precache an entity from KeyValues in a table.
@@ -6154,7 +6154,7 @@ function PlayerInstanceFromIndex(index);
  * @param {table} keyvalues
  * @returns {bool}
  */
-function PrecacheEntityFromTable(keyvalues);
+function PrecacheEntityFromTable( keyvalues );
 
 /**
  * Precache a studio model or sprite model and return model index.
@@ -6162,7 +6162,7 @@ function PrecacheEntityFromTable(keyvalues);
  * @param {string} model_name
  * @returns {integer}
  */
-function PrecacheModel(model_name);
+function PrecacheModel( model_name );
 
 /**
  * Precache a soundscript or raw WAV/MP3 sound.
@@ -6170,7 +6170,7 @@ function PrecacheModel(model_name);
  * @param {string} sound_name
  * @returns {bool}
  */
-function PrecacheScriptSound(sound_name);
+function PrecacheScriptSound( sound_name );
 
 /**
  * Precache a raw WAV/MP3 sound.
@@ -6178,7 +6178,7 @@ function PrecacheScriptSound(sound_name);
  * @param {string} sound_name
  * @returns {bool}
  */
-function PrecacheSound(sound_name);
+function PrecacheSound( sound_name );
 
 /**
  * Generate a random floating-point number within a range, inclusive.
@@ -6187,7 +6187,7 @@ function PrecacheSound(sound_name);
  * @param {float} max
  * @returns {float}
  */
-function RandomFloat(min, max);
+function RandomFloat( min, max );
 
 /**
  * Generate a random integer within a range, inclusive.
@@ -6196,21 +6196,21 @@ function RandomFloat(min, max);
  * @param {integer} max
  * @returns {integer}
  */
-function RandomInt(min, max);
+function RandomInt( min, max );
 
 /**
  * Register as a listener for a game event from script.
  * @type {function}
  * @param {string} event_name
  */
-function RegisterScriptGameEventListener(event_name);
+function RegisterScriptGameEventListener( event_name );
 
 /**
  * Register as a listener for a script hook from script.
  * @type {function}
  * @param {string} name
  */
-function RegisterScriptHookListener(name);
+function RegisterScriptHookListener( name );
 
 /**
  * Rotate a QAngle by another QAngle.
@@ -6219,7 +6219,7 @@ function RegisterScriptHookListener(name);
  * @param {QAngle} rotation
  * @returns {QAngle}
  */
-function RotateOrientation(initial, rotation);
+function RotateOrientation( initial, rotation );
 
 /**
  * Rotate the input Vector around an origin.
@@ -6229,7 +6229,7 @@ function RotateOrientation(initial, rotation);
  * @param {Vector} input
  * @returns {Vector}
  */
-function RotatePosition(origin, rotation, input);
+function RotatePosition( origin, rotation, input );
 
 /**
  * Start a customisable screenfade. If no player is specified, applies to all players.
@@ -6243,7 +6243,7 @@ function RotatePosition(origin, rotation, input);
  * @param {float} fade_hold
  * @param {integer} flags See [Constants.FFADE](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#FFADE)
  */
-function ScreenFade(player, red, green, blue, alpha, fade_time, fade_hold, flags);
+function ScreenFade( player, red, green, blue, alpha, fade_time, fade_hold, flags );
 
 /**
  * Start a customisable screenshake.
@@ -6257,7 +6257,7 @@ function ScreenFade(player, red, green, blue, alpha, fade_time, fade_hold, flags
  *                          (`0`=start, `1`=stop)
  * @param {bool} air_shake
  */
-function ScreenShake(center, amplitude, frequency, duration, radius, command, air_shake);
+function ScreenShake( center, amplitude, frequency, duration, radius, command, air_shake );
 
 /**
  * Returns whether script hooks are currently enabled.
@@ -6273,28 +6273,28 @@ function ScriptHooksEnabled();
  * @param {table} params
  * @returns {bool}
  */
-function SendGlobalGameEvent(event_name, params);
+function SendGlobalGameEvent( event_name, params );
 
 /**
  * Issues a command to the local client. Does nothing on dedicated servers.
  * @type {function}
  * @param {string} command
  */
-function SendToConsole(command);
+function SendToConsole( command );
 
 /**
  * Issues a command to the server, as if typed in the console.
  * @type {function}
  * @param {string} command
  */
-function SendToServerConsole(command);
+function SendToServerConsole( command );
 
 /**
  * Copy of SendToServerConsole with another name for compatibility.
  * @type {function}
  * @param {string} command
  */
-function SendToConsoleServer(command);
+function SendToConsoleServer( command );
 
 /**
  * Sets a `USERINFO` client ConVar for a fakeclient.
@@ -6303,14 +6303,14 @@ function SendToConsoleServer(command);
  * @param {client_convar} cvar
  * @param {string} value
  */
-function SetFakeClientConVarValue(bot, cvar, value);
+function SetFakeClientConVarValue( bot, cvar, value );
 
 /**
  * Sets the current skybox texture. The path is relative to `"materials/skybox/"`.
  * @type {function}
  * @param {string} texture
  */
-function SetSkyboxTexture(texture);
+function SetSkyboxTexture( texture );
 
 /**
  * Spawn entity from KeyValues in table.
@@ -6319,7 +6319,7 @@ function SetSkyboxTexture(texture);
  * @param {table} keyvalues
  * @returns {CBaseEntity|null}
  */
-function SpawnEntityFromTable(name, keyvalues);
+function SpawnEntityFromTable( name, keyvalues );
 
 /**
  * Hierarchically spawn an entity group from a set of spawn tables.
@@ -6327,7 +6327,7 @@ function SpawnEntityFromTable(name, keyvalues);
  * @param {table} groups
  * @returns {bool}
  */
-function SpawnEntityGroupFromTable(groups);
+function SpawnEntityGroupFromTable( groups );
 
 /**
  * Stores a string as a file, located in the game's scriptdata folder.
@@ -6337,7 +6337,7 @@ function SpawnEntityGroupFromTable(groups);
  * @param {string} file
  * @param {string} content
  */
-function StringToFile(file, content);
+function StringToFile( file, content );
 
 /**
  * Get the current time since map load in seconds.
@@ -6354,7 +6354,7 @@ function Time();
  * @param {CBaseEntity|null} ignore
  * @returns {float}
  */
-function TraceLine(start, end, ignore);
+function TraceLine( start, end, ignore );
 
 /**
  * Different version of `TraceLine` that also hits players and NPCs.
@@ -6364,7 +6364,7 @@ function TraceLine(start, end, ignore);
  * @param {CBaseEntity|null} ignore
  * @returns {float}
  */
-function TraceLinePlayersIncluded(start, end, ignore);
+function TraceLinePlayersIncluded( start, end, ignore );
 
 /**
  * Extended version of `TraceLine`. The passed in table requires to have parameters and will be modified to contain new ones.
@@ -6400,7 +6400,7 @@ function TraceLinePlayersIncluded(start, end, ignore);
  * @returns {bool} `false` if the user didn't specify a valid `start` or `end`, `true` otherwise.
  *                 You don't need to check this return usually.
  */
-function TraceLineEx(params);
+function TraceLineEx( params );
 
 /**
  * Trace a box (AABB). The passed in table requires to have parameters and will be modified to contain new ones.
@@ -6438,7 +6438,7 @@ function TraceLineEx(params);
  * @returns {bool} `false` if the user didn't specify a valid `start`, `end`, `hullmin` or `hullmax`, `true` otherwise.
  *                 You don't need to check this return usually.
  */
-function TraceHull(params);
+function TraceHull( params );
 
 /**
  * Generate a string guaranteed to be unique across the life of the script VM.
@@ -6446,7 +6446,7 @@ function TraceHull(params);
  * @param {string} suffix Defaults to `""`
  * @returns {string}
  */
-function UniqueString(suffix = "");
+function UniqueString( suffix = "" );
 
 /**
  * Internal function called by `UniqueString`
@@ -6455,14 +6455,14 @@ function UniqueString(suffix = "");
  * @returns {string}
  * @hide
  */
-function DoUniqueString(suffix);
+function DoUniqueString( suffix );
 
 /**
  * Wrapper that registers callbacks for `OnGameEvent_x` and `OnScriptEvent_` functions.
  * @type {function}
  * @param {table} scope
  */
-function __CollectGameEventCallbacks(scope);
+function __CollectGameEventCallbacks( scope );
 
 // ============================================================
 // GLOBAL FUNCTIONS - Team Fortress 2
@@ -6492,14 +6492,14 @@ function FlagsMayBeCapped();
  * @type {function}
  * @param {integer} state `0`=default, `1`=force off, `2`=force on
  */
-function ForceEnableUpgrades(state);
+function ForceEnableUpgrades( state );
 
 /**
  * Forces payload pushing logic.
  * @type {function}
  * @param {integer} state `0`=default, `1`=force off, `2`=force on.
  */
-function ForceEscortPushLogic(state);
+function ForceEscortPushLogic( state );
 
 /**
  * Does the current gamemode have currency?
@@ -6528,7 +6528,7 @@ function GameModeUsesUpgrades();
  * @param {integer} class_number See [Constants.ETFClass](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ETFClass)
  * @returns {integer}
  */
-function GetClassLimit(class_number);
+function GetClassLimit( class_number );
 
 /**
  * @type {function}
@@ -6622,7 +6622,7 @@ function IsDefaultGameMode();
  * @param {integer} holiday See [Constants.EHoliday](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#EHoliday)
  * @returns {bool}
  */
-function IsHolidayActive(holiday);
+function IsHolidayActive( holiday );
 
 /**
  * Playing a holiday map?
@@ -6630,7 +6630,7 @@ function IsHolidayActive(holiday);
  * @param {integer} holiday See [Constants.EHoliday](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#EHoliday)
  * @returns {bool}
  */
-function IsHolidayMap(holiday);
+function IsHolidayMap( holiday );
 
 /**
  * Playing arena mode?
@@ -6750,7 +6750,7 @@ function MatchmakingShouldUseStopwatchMode();
  * @param {integer} team See [Constants.ETFTeam](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#ETFTeam)
  * @returns {bool}
  */
-function PlayerReadyStatus_ArePlayersOnTeamReady(team);
+function PlayerReadyStatus_ArePlayersOnTeamReady( team );
 
 /**
  * @type {function}
@@ -6780,31 +6780,31 @@ function PointsMayBeCaptured();
  * @type {function}
  * @param {float} multiplier
  */
-function SetGravityMultiplier(multiplier);
+function SetGravityMultiplier( multiplier );
 
 /**
  * @type {function}
  * @param {bool} status
  */
-function SetMannVsMachineAlarmStatus(status);
+function SetMannVsMachineAlarmStatus( status );
 
 /**
  * @type {function}
  * @param {bool} state
  */
-function SetOvertimeAllowedForCTF(state);
+function SetOvertimeAllowedForCTF( state );
 
 /**
  * @type {function}
  * @param {bool} state
  */
-function SetPlayersInHell(state);
+function SetPlayersInHell( state );
 
 /**
  * @type {function}
  * @param {bool} state
  */
-function SetUsingSpells(state);
+function SetUsingSpells( state );
 
 /**
  * @type {function}
@@ -6824,7 +6824,7 @@ function UsePlayerReadyStatusMode();
  * @param {integer} destination See [Constants.EHudNotify](https://developer.valvesoftware.com/wiki/Team_Fortress_2/Scripting/Script_Functions/Constants#EHudNotify)
  * @param {string} message
  */
-function ClientPrint(player, destination, message);
+function ClientPrint( player, destination, message );
 
 /**
  * Draw a debug overlay box.
@@ -6840,7 +6840,7 @@ function ClientPrint(player, destination, message);
  * @param {integer} alpha
  * @param {float} duration
  */
-function DebugDrawBox(origin, min, max, r, g, b, alpha, duration);
+function DebugDrawBox( origin, min, max, r, g, b, alpha, duration );
 
 /**
  * Draw a debug oriented box.
@@ -6853,7 +6853,7 @@ function DebugDrawBox(origin, min, max, r, g, b, alpha, duration);
  * @param {integer} alpha
  * @param {float} duration
  */
-function DebugDrawBoxAngles(origin, min, max, direction, rgb, alpha, duration);
+function DebugDrawBoxAngles( origin, min, max, direction, rgb, alpha, duration );
 
 /**
  * Draw a debug forward box.
@@ -6866,7 +6866,7 @@ function DebugDrawBoxAngles(origin, min, max, direction, rgb, alpha, duration);
  * @param {float} alpha
  * @param {float} duration
  */
-function DebugDrawBoxDirection(center, min, max, forward, rgb, alpha, duration);
+function DebugDrawBoxDirection( center, min, max, forward, rgb, alpha, duration );
 
 /**
  * Draw a debug circle.
@@ -6878,7 +6878,7 @@ function DebugDrawBoxDirection(center, min, max, forward, rgb, alpha, duration);
  * @param {bool} ztest
  * @param {float} duration
  */
-function DebugDrawCircle(center, rgb, alpha, radius, ztest, duration);
+function DebugDrawCircle( center, rgb, alpha, radius, ztest, duration );
 
 /**
  * Try to clear all the debug overlay info.
@@ -6897,7 +6897,7 @@ function DebugDrawClear();
  * @param {bool} z_test
  * @param {float} time
  */
-function DebugDrawLine(start, end, red, green, blue, z_test, time);
+function DebugDrawLine( start, end, red, green, blue, z_test, time );
 
 /**
  * Draw a debug line using color vec.
@@ -6908,7 +6908,7 @@ function DebugDrawLine(start, end, red, green, blue, z_test, time);
  * @param {bool} ztest
  * @param {float} duration
  */
-function DebugDrawLine_vCol(start, end, rgb, ztest, duration);
+function DebugDrawLine_vCol( start, end, rgb, ztest, duration );
 
 /**
  * Draw text with a line offset.
@@ -6923,7 +6923,7 @@ function DebugDrawLine_vCol(start, end, rgb, ztest, duration);
  * @param {integer} a
  * @param {float} duration
  */
-function DebugDrawScreenTextLine(x, y, line_offset, text, r, g, b, a, duration);
+function DebugDrawScreenTextLine( x, y, line_offset, text, r, g, b, a, duration );
 
 /**
  * Draw text on the screen, starting on the position of origin.
@@ -6933,7 +6933,7 @@ function DebugDrawScreenTextLine(x, y, line_offset, text, r, g, b, a, duration);
  * @param {bool} use_view_check
  * @param {float} duration
  */
-function DebugDrawText(origin, text, use_view_check, duration);
+function DebugDrawText( origin, text, use_view_check, duration );
 
 /**
  * Dumps a scope's contents and expands all tables and arrays.
@@ -6941,21 +6941,21 @@ function DebugDrawText(origin, text, use_view_check, duration);
  * @param {integer} indentation
  * @param {table} scope
  */
-function __DumpScope(indentation, scope);
+function __DumpScope( indentation, scope );
 
 /**
  * Dumps information about a class or instance.
  * @type {function}
  * @param {any} object
  */
-function DumpObject(object);
+function DumpObject( object );
 
 /**
  * Prints message to console without any line feed after.
  * @type {function}
  * @param {any} message
  */
-function Msg(message);
+function Msg( message );
 
 /**
  * Prints message to console with C style formatting. Line feed not included.
@@ -6963,21 +6963,21 @@ function Msg(message);
  * @param {string} format
  * @varargs {any}
  */
-function printf(format, ...);
+function printf( format, ... );
 
 /**
  * Prints message to console with a line feed after.
  * @type {function}
  * @param {any} message
  */
-function printl(message);
+function printl( message );
 
 /**
  * Identical to print.
  * @type {function}
  * @param {any} message
  */
-function realPrint(message);
+function realPrint( message );
 
 /**
  * Have the specified player send a message to chat.
@@ -6986,14 +6986,14 @@ function realPrint(message);
  * @param {string} message
  * @param {bool} team_only
  */
-function Say(player, message, team_only);
+function Say( player, message, team_only );
 
 /**
  * Displays a HUD message defined in scripts/titles.txt to all clients.
  * @type {function}
  * @param {string} message
  */
-function ShowMessage(message);
+function ShowMessage( message );
 
 
 // ============================================================

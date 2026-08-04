@@ -2,7 +2,7 @@
 ::TF_WEAPON_OBJECTOR <- 0
 
 ::events <- {
-	function OnGameEvent_HumanDeath(params)
+	function OnGameEvent_HumanDeath( params )
 	{
 		local attacker = params.attacker
 		local victim = params.victim
@@ -16,6 +16,6 @@
 		attacker.CopyWeapon(victim.GetActiveWeapon(), false, true, true, 10, true, true, 2)
 
 	}
-	// function OnGameEvent_BotDeath(params)
+	// function OnGameEvent_BotDeath( params )
 }
 __CollectGameEventCallbacks(events)
