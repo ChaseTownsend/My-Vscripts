@@ -1,7 +1,7 @@
 if (!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
-SetScriptVersion("zapinator", "1.0.2")
+SetScriptVersion("zapinator", "1.0.3")
 
 IncludeScript("chaosmvm/gameplay-applications")
 
@@ -19,8 +19,11 @@ RegisterDamageCallback("player", "ZapinatorPlayer", function( params ) {
 
 	if (!attacker || !weapon || !inflictor)
 		return
+	
+	if (inflictor.GetClassname() != "tf_projectile_energy_ring")
+		return
 
-	if ( !IsWeaponClass(weapon, "tf_weap", true) )
+	if ( !IsWeaponClass(weapon, "tf_weap", true) || !IsValidPlayer(attacker) )
 		return
 
 	if (victim.IsInvincible() || IsPlayerABot(attacker))
@@ -111,9 +114,6 @@ function Roll( chance, data, reward_func, fail_func )
  */
 function ZapinatorHit(victim, attacker, projectile, weapon)
 {
-	if(projectile.GetClassname() != "tf_projectile_energy_ring")
-		return
-
 	local proj_scope = GetScope(projectile)
 	if(!("Penetrates" in proj_scope))
 		proj_scope.Penetrates <- 0
