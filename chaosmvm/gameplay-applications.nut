@@ -1,7 +1,7 @@
 if (!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
-SetScriptVersion("GameplayApplications", "5.4.0")
+SetScriptVersion("GameplayApplications", "5.5.0")
 
 local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", THINKER_PERSIST)
 
@@ -631,23 +631,6 @@ function GameplayThink()
 	if ( Players.len() < 1 || !ValidatePlayerArray() || (m_aHumans.len() + m_aRobots.len()) != Players.len())
 		ReCalculatePlayers()
 
-	foreach (plr in Players)
-	{
-		if ("Timescale" in ROOT)
-		{
-			if (Timescale == 1.0)
-			{
-				plr.SetScriptOverlayMaterial("")
-				plr.RemoveCustomAttribute("voice pitch scale")
-			}
-			else
-			{
-				plr.SetScriptOverlayMaterial("debug/yuv")
-				plr.AddCustomAttribute("voice pitch scale", Timescale, -1)
-			}
-		}
-	}
-
 	foreach (/** @type {CTFBot}*/ bot in m_aRobots)
 	{
 		local scope = GetScope(bot)
@@ -747,7 +730,7 @@ function GameplayThink()
 			{
 				Human.SetMoveType(MOVETYPE_WALK, MOVECOLLIDE_DEFAULT)
 				Human.SetAbsOrigin(Human.GetOrigin() + (Human.GetAbsVelocity() * (-1.0/60.0)))
-				Human.DisplayHudText("NO NOCLIP", "255 0 255", [-1, 0.275], 5, 1)
+				Human.DisplayHudText("No Noclip", "255 0 255", [-1, 0.275], 5, 1)
 				Human.DisplayHudText("If you are actually stuck, then you should", "255 255 255", [-1, 0.35], 5, 2)
 				Human.DisplayHudText("KILLBIND NOW!", "255 255 255", [-1, 0.385], 5, 3)
 			}
@@ -755,7 +738,8 @@ function GameplayThink()
 
 		if ("Timescale" in ROOT)
 		{
-			Human.SetScriptOverlayMaterial(Timescale == 1.0 ? "" : "debug/yuv")
+			if(!Human.HookAdditiveAttributes("do not override overlay"))
+				Human.SetScriptOverlayMaterial(Timescale == 1.0 ? "" : "debug/yuv")
 			Human.AddCustomAttribute("voice pitch scale", Timescale, -1)
 		}
 
@@ -859,27 +843,6 @@ function ROOT::ModifyCallbackDamage( params, victim, attacker, weapon, inflictor
 		return
 	switch (custom)
 	{
-		//Deprecated, use `explosive backstab` custom attribute
-	/* case TF_DMG_CUSTOM_BACKSTAB: {
-		local iExplosiveBackstab = weapon.GetAttribute("explosive sniper shot", 0)
-		if ( iExplosiveBackstab == 0 )
-			break;
-		CreateKnifeAoE({
-			owner = attacker
-			weapon = weapon
-			radius = (EBSettings.base_range + (iExplosiveBackstab * EBSettings.additive_range))
-			damage = (iExplosiveBackstab * EBSettings.base_damage / 1.25)
-			center = victim.GetOrigin() + Vector(0, 0, 16)
-			ignore = [victim]
-			SoundRadius = (EBSettings.base_range + (iExplosiveBackstab * EBSettings.additive_range)) * 3
-			func = function( player ) {
-				if (!player || !player.IsValid() || !player.IsPlayer())
-					return
-				player.StunPlayer(MATH.Clamp(iExplosiveBackstab - 1, 0, 2), 0.6, TF_STUN_MOVEMENT, attacker )
-			}
-		})
-	}
-	break; */
 	case TF_DMG_CUSTOM_KART: {	// [11/12/25] Please, dear god, why do i have to do this stupid hack
 		params.early_out <- true
 		victim.TakeDamageCustom(inflictor, attacker, attacker.GetSpellBook(), Vector(), victim.GetOrigin(), KART_DMG, params.damage_type, TF_DMG_CUSTOM_TRIGGER_HURT)
@@ -902,7 +865,7 @@ function ROOT::ModifyCallbackDamage( params, victim, attacker, weapon, inflictor
  * @param {CTFPlayer} victim
  * @param {CTFPlayer} attacker
  * @param {CTFWeaponBase} weapon
- * @param {CBaseEntity|null} _inflictor
+ * @param {CBaseEntity} _inflictor
  */
 function ROOT::ProcessChaosWeaponHit( params, victim, attacker, weapon, _inflictor )
 {
@@ -942,19 +905,29 @@ function ROOT::ProcessChaosWeaponHit( params, victim, attacker, weapon, _inflict
 		weapon.ReapplyProvision()
 	}
 	break;
-	// case TF_WEAPON_VITA_SAW:
-	// {
-	// 	if (attacker.GetWeaponIDXInSlotNew(SLOT_MELEE) != TF_WEAPON_VITA_SAW) 
-	// 		return
-	// 	if (!(params.damage_type & DMG_CLUB))
-	// 		return
+	}
+}
 
-	// 	local spell_book = attacker.GetSpellBook()
-	// 	if (!spell_book) 
-	// 		return
-	// 	spell_book.ModifySpells(TF_SPELL_HEAL, 5)
-	// }
-	// break;
+/**
+ * @param {table} params
+ * @param {CTFPlayer} victim
+ * @param {CTFBot} attacker
+ * @param {CTFWeaponBase} weapon
+ * @param {CBaseEntity} _inflictor
+ */
+function ROOT::ProcessChaosPlayerHurt( params, victim, attacker, weapon, _inflictor )
+{
+	if(victim.HookAdditiveAttributes("reflect dmg back chance") != 0)
+	{
+		local chance = victim.HookAdditiveAttributes("reflect dmg back chance")
+		local dmg_mult = victim.HookMultAttributes("reflect dmg back mult")
+		local stuntime = victim.HookAdditiveAttributes("reflect dmg back stun time")
+		if (MATH.RandomChance() <= chance)
+		{
+			attacker.TakeDamageEx(victim, victim, victim, Vector(), Vector(), params.damage * dmg_mult, params.damage_type)
+			if(stuntime)
+				attacker.StunPlayer(stuntime, 0.0, TF_STUN_BOTH, victim)
+		}
 	}
 }
 
@@ -967,14 +940,13 @@ RegisterDamageCallback("player", "GameplayPlayer" function( params ) {
 
 	local victim 	= params.victim
 	local attacker 	= params.attacker
-	local weapon 	= null
+	local weapon 	= params.weapon
 	local inflictor	= params.inflictor
 	
-
-	if (!attacker)
+	if (!attacker || !weapon || !inflictor)
 		return
 
-	if (attacker.IsPlayer() && victim.IsPlayer() && inflictor && inflictor.GetClassname() == "tf_projectile_healing_bolt")
+	if (attacker.IsPlayer() && victim.IsPlayer() && inflictor.GetClassname() == "tf_projectile_healing_bolt")
 	{
 		if (attacker.GetPlayerClass() == TF_CLASS_MEDIC && attacker.GetWeaponIDXInSlotNew(SLOT_PRIMARY) == TF_WEAPON_BLUTSAUGER)
 		{
@@ -984,11 +956,6 @@ RegisterDamageCallback("player", "GameplayPlayer" function( params ) {
 		}
 	}
 
-	weapon = params.weapon
-
-	if (!attacker || !weapon || !inflictor)
-		return
-
 	if ( !(startswith(weapon.GetClassname(), "tf_weapon") || startswith(weapon.GetClassname(), "tf_wearable")) )
 		return
 
@@ -997,6 +964,27 @@ RegisterDamageCallback("player", "GameplayPlayer" function( params ) {
 
 	ModifyCallbackDamage(params, victim, attacker, weapon, inflictor)
 	ProcessChaosWeaponHit(params, victim, attacker, weapon, inflictor)
+})
+
+RegisterDamageCallback("player", "GameplayRobotAttack" function( params ) {
+	if (HasCustomFlag(params.damage_custom, TF_DMG_CUSTOM_IGNORE_EVENTS) || params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
+		return
+
+	local victim 	= params.victim
+	local attacker 	= params.attacker
+	local weapon 	= params.weapon
+	local inflictor	= params.inflictor
+	
+	if (!attacker || !weapon || !inflictor)
+		return
+
+	if ( !(startswith(weapon.GetClassname(), "tf_weapon") || startswith(weapon.GetClassname(), "tf_wearable")) )
+		return
+
+	if (!attacker.IsBot() || victim.IsInvincible())
+		return
+	
+	ProcessChaosPlayerHurt(params, victim, attacker, weapon, inflictor)
 })
 
 RegisterDamageCallback(["obj_sentrygun", "obj_teleporter", "obj_dispenser", "tank_boss"], "GameplayOthers", function( params ) {
@@ -1124,6 +1112,31 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 		local player = params.player
 		RunWithDelay(0.1, @() player.FixAmmo())
 		local spellbook = player.GetSpellBook()
+
+		if (player.HookAdditiveAttributes("slow down aura"))
+		{	// AddThink( func, name = null, offset = 0.0 )
+			player.AddThink(function () {
+				/** @type {CTFPlayer} */
+				local self = self
+				local active = self.GetActiveWeapon()
+				if(!active)
+					return 0.2
+				if(active.GetAttribute("slow down aura", 0))
+				{
+					local slow_multiplier = active.GetAttribute("slow down aura slow mult", 1.0)
+					local giant_multiplier = active.GetAttribute("slow down aura giant mult", 1.0)
+					local slow_radius = active.GetAttribute("slow down aura", 0)
+					foreach (/**@type {CTFBot} */bot in m_aRobots)
+					{
+						if(self.DistanceTo(bot, true) > slow_radius)
+							continue
+						bot.StunPlayer(0.5, bot.IsMiniBoss() ? giant_multiplier : slow_multiplier, TF_STUN_MOVEMENT, self)
+					}
+				}
+
+				return 0.2
+			}, "SlowDownAura")
+		}
 		
 		foreach (/**@type {CTFWeaponBase} */weapon in player.GetAllWeapons())
 		{

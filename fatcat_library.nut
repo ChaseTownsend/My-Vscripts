@@ -1675,7 +1675,7 @@ function CTFPlayer::GetEveryPlayerWithin( range, include_me = false )
  * @param {float} range
  * @returns {[CTFBot]}
  * 
- * @deprecated Loop over the `m_aBots` array and filter by range
+ * @deprecated Loop over the `m_aRobots` array and filter by range
  */
 function CTFPlayer::GetEveryBotWithin( range )
 	return GetAllPlayers(TF_TEAM_PVE_INVADERS, [GetOrigin(), range], false).extend(GetAllPlayers(TF_TEAM_PVE_INVADERS_GIANTS, [GetOrigin(), range], false))
@@ -3689,15 +3689,17 @@ function CTFPlayer::GetMoveSpeed()
 // TODO: Add to Snippets
 /**
  * @param {Vector|CBaseEntity} thing
+ * @param {bool} center Use center of target instead of origin
  * @returns {float}
  */
-function CTFPlayer::DistanceTo( thing )
+function CTFPlayer::DistanceTo( thing, center = false)
 {
 	if (typeof thing == "Vector")
 		return GetOrigin().DistanceTo(thing)
+	else if (center)
+		return GetCenter().DistanceTo(thing.GetCenter())
 	else
 		return GetOrigin().DistanceTo(thing.GetOrigin())
-	
 }
 // TODO: Add to Snippets
 /**
@@ -9950,7 +9952,6 @@ function ROOT::PostPlayerSpawn( player )
 	else if ((IsMannVsMachineMode() && !player.IsBot()) || !IsMannVsMachineMode())
 		player.SetCustomModelWithClassAnimations("")
 
-	//"raise health to"
 	if (player.HookAdditiveAttributes("set max health") != 0)
 	{
 		local to_hp = player.HookAdditiveAttributes("set max health")
