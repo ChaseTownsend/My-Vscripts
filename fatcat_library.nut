@@ -252,7 +252,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format) (GMT-5)
-if (!SetLibraryVersion("08.03.2026.23", 0))
+if (!SetLibraryVersion("08.07.2026.23", 0))
 	return
 
 SetLibrarySettings({})
@@ -1094,7 +1094,7 @@ enum ProjectileType_t
 	"claidheamohmor" 					: TF_WEAPON_CLAIDHEAMH_MOR
 	"unarmed_combat" 					: TF_WEAPON_UNARMED_COMBAT
 	"nonnonviolent_protest" 			: TF_WEAPON_CONSCIENTIOUS_OBJECTOR
-	"sharp_dresser" 					: 638
+	"sharp_dresser" 							: 638
 }
 
 /** @type {class} */
@@ -1377,7 +1377,7 @@ try {
 catch (e)
 {
 	try {
-		IncludeScript("Chaosmvm/trace_filter")
+		IncludeScript("chaosmvm/trace_filter")
 	}
 	catch(_) {
 		throw "FAILED TO INCLUDE DEPENDENCY \"trace_filter\"!"
@@ -8907,7 +8907,7 @@ function Vector::DistanceTo( point2 )
   === VECTOR2D METHODS ===
   ========================
 */
-
+if("Vector2D" in ROOT) {
 /**
  * @returns {Vector2D}
  */
@@ -8917,7 +8917,7 @@ function Vector2D::Normalize()
 	new.Norm()
 	return new
 }
-
+}
 /*
   ===============================
   === END OF VECTOR2D METHODS ===
@@ -11566,13 +11566,23 @@ function ROOT::PostPlayerSpawn( player )
 	 * 
 	 * `Note:` Fired after HumanUpgraded
 	 * 
-	 * @param {CTFPlayer}	player				The player who resupplied.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+ 	 * ```sqDoc
+	 * player: CTFPlayer // The player who resupplied.
+	 * ```
 	 */
 	function OnScriptEvent_HumanResupply( _params ) 				{}
 	/**
 	 * Fired when a Human Upgrades and Before `HumanResupply`
 	 * 
-	 * @param {CTFPlayer}	player				The player who Upgraded.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+ 	 * ```sqDoc
+	 * player: CTFPlayer // The player who Upgraded.
+	 * ```
 	 */
 	function OnScriptEvent_HumanUpgraded( _params ) 				{}
 
@@ -11581,466 +11591,683 @@ function ROOT::PostPlayerSpawn( player )
 	 * 
 	 * `Note:` Fired after BotUpgraded
 	 * 
-	 * @param {CTFBot}		player				The bot who resupplied.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+ 	 * ```sqDoc
+	 * player: CTFPlayer // The bot who resupplied.
+	 * ```
 	 */
 	function OnScriptEvent_BotResupply( _params ) 				{}
 	/**
-	 * Fired when a Bot Upgrades and Before `BotResupply`
+	 * Fired when a Bot Resupplys inside a Upgrade zone. Which is Likely an upgrade.
 	 * 
 	 * `Note:` i dont think this can actually "fire"
 	 * 
-	 * @param {CTFBot}		player				The bot who Upgraded.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+ 	 * ```sqDoc
+	 * player: CTFBot // The bot who Upgraded.
+	 * ```
 	 */
 	function OnScriptEvent_BotUpgraded( _params ) 				{}
 
 	/**
 	 * Fired when a bot dies. 
 	 *
-	 * @param {CTFBot}				victim				The bot that died.
-	 * @param {CBaseEntity|null}	attacker			The player entity that killed the victim.
-	 * @param {CBaseEntity|null}	assister			The player entity that assisted the kill.
-	 * @param {CBaseEntity|null}	weapon				The weapon used to kill.
-	 * @param {CBaseEntity|null}	inflictor			The entity that dealt the damage (e.g. rocket/sentry).
-	 * @param {string}				logname				The weapon name that should be printed in console.
-	 * @param {integer}				damagebits			Damage type bits.
-	 * @param {integer}				weaponIDX			The definition index of the weapon.
-	 * @param {integer}				death_flags			See TF_DEATH (ln~ 340).
-	 * @param {integer}				custom				Custom kill type (e.g. headshot).
-	 * @param {integer}				stun_flags			The victim's stun flags at the moment of death
-	 * @param {bool}				rocket_jump			True if the attacker was rocket jumping.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+ 	 * ```sqDoc
+	 * victim: CTFBot // The bot that died.
+	 * attacker: CBaseEntity|null // The entity that killed the victim.
+	 * assister: CBaseEntity|null // The entity that assisted the kill.
+	 * weapon: CTFWeaponBase|null // The weapon used to kill.
+	 * inflictor: CBaseEntity|null // The entity that dealt the damage (e.g. rocket/sentry).
+	 * logname: string // The weapon name or inflictor name that relates to a kill-icon.
+	 * damagebits: integer // Damage type bits.
+	 * weaponIDX: integer // The definition index of the weapon.
+	 * death_flags: integer // See TF_DEATH (ln~ 340).
+	 * custom: integer // Custom kill type (e.g. headshot).
+	 * stun_flags: integer // The victim's stun flags at the moment of death
+	 * rocket_jump: bool // True if the attacker was rocket jumping.
+	 * ```
 	 */
 	function OnScriptEvent_BotDeath( _params ) 					{}
 	/**
-	 * Fired when a human dies. 
-	 *
-	 * @param {CTFPlayer}			victim				The human that died.
-	 * @param {CBaseEntity|null}	attacker			The player entity that killed the victim.
-	 * @param {CBaseEntity|null}	assister			The player entity that assisted the kill.
-	 * @param {CBaseEntity|null}	weapon				The weapon used to kill.
-	 * @param {CBaseEntity|null}	inflictor			The entity that dealt the damage (e.g. rocket/sentry).
-	 * @param {string}				logname				The weapon name that should be printed in console.
-	 * @param {integer}				damagebits			Damage type bits.
-	 * @param {integer}				weaponIDX			The definition index of the weapon.
-	 * @param {integer}				death_flags			See TF_DEATH (ln~ 340).
-	 * @param {integer}				custom				Custom kill type (e.g. headshot).
-	 * @param {integer}				stun_flags			The victim's stun flags at the moment of death
-	 * @param {bool}				rocket_jump			True if the attacker was rocket jumping.
+	 * Fired when a human dies.
+	 *  
+	 * @param {table} _params
+	 * 
+	 * # Input table
+ 	 * ```sqDoc
+	 * victim: CTFPlayer // The human that died.
+	 * attacker: CBaseEntity|null // The entity that killed the victim.
+	 * assister: CBaseEntity|null // The entity that assisted the kill.
+	 * weapon: CBaseEntity|null // The weapon used to kill.
+	 * inflictor: CBaseEntity|null // The entity that dealt the damage (e.g. rocket/sentry).
+	 * logname: string // The weapon name or inflictor name that relates to a kill-icon.
+	 * damagebits: integer // Damage type bits.
+	 * weaponIDX: integer // The definition index of the weapon.
+	 * death_flags: integer // See TF_DEATH (ln~ 340).
+	 * custom: integer // Custom kill type (e.g. headshot).
+	 * stun_flags: integer // The victim's stun flags at the moment of death
+	 * rocket_jump: bool // True if the attacker was rocket jumping.
+	 * ```
 	 */
 	function OnScriptEvent_HumanDeath( _params ) 					{}
 
 	/**
 	 * Fired when a bot is about to take damage (Script Hook).
 	 * 
-	 * @param {CTFBot}				victim				The bot taking damage.
-	 * @param {CBaseEntity|null}	attacker			The entity dealing damage.
-	 * @param {CBaseEntity|null}	inflictor			The entity inflicting damage (weapon/projectile).
-	 * @param {CBaseEntity|null}	weapon				The weapon used.
-	 * @param {Vector}				damage_position		World position of where the damage came from. E.g. end position of a bullet or a rocket.
-	 * @param {float}				damage				The actual damage amount ( Does not count number of bullets or falloff or rampup )
-	 * @param {float}				base_damage			The base damage before modifiers.
-	 * @param {integer}				damage_type			Damage type bits (e.g. DMG_GENERIC).
-	 * @param {integer}				hit_group			Hitgroup index (e.g. HITGROUP_HEAD).
-	 * @param {integer}				damage_custom		Custom damage type stats.
-	 * @param {integer}				crit_type			Crit type (0=None, 1=Mini, 2=Full).
-	 * @param {integer}				penetration_count	How many players the damage has penetrated so far.
-	 * @param {integer}				others_damaged		How many players other than the attacker has the damage been applied to.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+ 	 * ```sqDoc
+	 * victim: CTFBot // The bot taking damage.
+	 * attacker: CBaseEntity|null // The entity dealing damage.
+	 * inflictor: CBaseEntity|null // The entity inflicting damage (weapon/projectile).
+	 * weapon: CBaseEntity|null // The weapon used.
+	 * damage_position: Vector // World position of where the damage came from. E.g. end position of a bullet or a rocket.
+	 * damage: float // The actual damage amount ( Does not count number of bullets or falloff or rampup )
+	 * base_damage: float // The base damage before modifiers.
+	 * damage_type: integer // Damage type bits (e.g. DMG_GENERIC).
+	 * hit_group: integer // Hitgroup index (e.g. HITGROUP_HEAD).
+	 * damage_custom: integer // Custom damage type stats.
+	 * crit_type: integer // Crit type (0=None, 1=Mini, 2=Full).
+	 * penetration_count: integer // How many players the damage has penetrated so far.
+	 * others_damaged: integer // How many players other than the attacker has the damage been applied to.
+	 * ```
 	 */
 	function OnScriptEvent_PostTakeDamageBot( _params ) 			{}
 	/**
 	 * Fired when a human is about to take damage (Script Hook).
 	 * 
-	 * @param {CTFPlayer}			victim				The human taking damage.
-	 * @param {CBaseEntity|null}	attacker			The entity dealing damage.
-	 * @param {CBaseEntity|null}	inflictor			The entity inflicting damage (weapon/projectile).
-	 * @param {CBaseEntity|null}	weapon				The weapon used.
-	 * @param {Vector}				damage_position		World position of where the damage came from. E.g. end position of a bullet or a rocket.
-	 * @param {float}				damage				The actual damage amount ( Does not count number of bullets or falloff or rampup )
-	 * @param {float}				base_damage			The base damage before modifiers.
-	 * @param {integer}				damage_type			Damage type bits (e.g. DMG_GENERIC).
-	 * @param {integer}				hit_group			Hitgroup index (e.g. HITGROUP_HEAD).
-	 * @param {integer}				damage_custom		Custom damage type stats.
-	 * @param {integer}				crit_type			Crit type (0=None, 1=Mini, 2=Full).
-	 * @param {integer}				penetration_count	How many players the damage has penetrated so far.
-	 * @param {integer}				others_damaged		How many players other than the attacker has the damage been applied to.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+ 	 * ```sqDoc
+	 * victim: CTFPlayer // The human taking damage.
+	 * attacker: CBaseEntity|null // The entity dealing damage.
+	 * inflictor: CBaseEntity|null // The entity inflicting damage (weapon/projectile).
+	 * weapon: CBaseEntity|null // The weapon used.
+	 * damage_position: Vector // World position of where the damage came from. E.g. end position of a bullet or a rocket.
+	 * damage: float // The actual damage amount ( Does not count number of bullets or falloff or rampup )
+	 * base_damage: float // The base damage before modifiers.
+	 * damage_type: integer // Damage type bits (e.g. DMG_GENERIC).
+	 * hit_group: integer // Hitgroup index (e.g. HITGROUP_HEAD).
+	 * damage_custom: integer // Custom damage type stats.
+	 * crit_type: integer // Crit type (0=None, 1=Mini, 2=Full).
+	 * penetration_count: integer // How many players the damage has penetrated so far.
+	 * others_damaged: integer // How many players other than the attacker has the damage been applied to.
+	 * ```
 	 */
 	function OnScriptEvent_PostTakeDamageHuman( _params ) 		{}
 
 	/**
 	 * Fired when the world is about to take damage (Script Hook).
 	 * 
-	 * @param {CBaseEntity}			victim				The world taking damage.
-	 * @param {CBaseEntity|null}	attacker			The entity dealing damage.
-	 * @param {CBaseEntity|null}	inflictor			The entity inflicting damage (weapon/projectile).
-	 * @param {CBaseEntity|null}	weapon				The weapon used.
-	 * @param {Vector}				damage_position		World position of where the damage came from. E.g. end position of a bullet or a rocket.
-	 * @param {float}				damage				The actual damage amount ( Does not count number of bullets or falloff or rampup )
-	 * @param {float}				base_damage			The base damage before modifiers.
-	 * @param {integer}				damage_type			Damage type bits (e.g. DMG_GENERIC).
-	 * @param {integer}				damage_custom		Custom damage type stats.
-	 * @param {integer}				crit_type			Crit type (0=None, 1=Mini, 2=Full).
-	 * @param {integer}				penetration_count	How many players the damage has penetrated so far.
-	 * @param {integer}				others_damaged		How many players other than the attacker has the damage been applied to.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+ 	 * ```sqDoc
+	 * victim: CBaseEntity // The world taking damage.
+	 * attacker: CBaseEntity|null // The entity dealing damage.
+	 * inflictor: CBaseEntity|null // The entity inflicting damage (weapon/projectile).
+	 * weapon: CBaseEntity|null // The weapon used.
+	 * damage_position: Vector // World position of where the damage came from. E.g. end position of a bullet or a rocket.
+	 * damage: float // The actual damage amount ( Does not count number of bullets or falloff or rampup )
+	 * base_damage: float // The base damage before modifiers.
+	 * damage_type: integer // Damage type bits (e.g. DMG_GENERIC).
+	 * damage_custom: integer // Custom damage type stats.
+	 * crit_type: integer // Crit type (0=None, 1=Mini, 2=Full).
+	 * penetration_count: integer // How many players the damage has penetrated so far.
+	 * others_damaged: integer // How many players other than the attacker has the damage been applied to.
+	 * ```
 	 */
 	function OnScriptEvent_PostTakeDamageWorld( _params ) 		{}
 	/**
 	 * Fired when any other entity is about to take damage (Script Hook).
 	 * 
-	 * @param {CBaseEntity}			victim				The entity taking damage.
-	 * @param {CBaseEntity|null}	attacker			The entity dealing damage.
-	 * @param {CBaseEntity|null}	inflictor			The entity inflicting damage (weapon/projectile).
-	 * @param {CBaseEntity|null}	weapon				The weapon used.
-	 * @param {Vector}				damage_position		World position of where the damage came from. E.g. end position of a bullet or a rocket.
-	 * @param {float}				damage				The actual damage amount ( Does not count number of bullets or falloff or rampup )
-	 * @param {float}				base_damage			The base damage before modifiers.
-	 * @param {integer}				damage_type			Damage type bits (e.g. DMG_GENERIC).
-	 * @param {integer}				damage_custom		Custom damage type stats.
-	 * @param {integer}				crit_type			Crit type (0=None, 1=Mini, 2=Full).
-	 * @param {integer}				penetration_count	How many players the damage has penetrated so far.
-	 * @param {integer}				others_damaged		How many players other than the attacker has the damage been applied to.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * victim: CBaseEntity // The entity taking damage.
+	 * attacker: CBaseEntity|null // The entity dealing damage.
+	 * inflictor: CBaseEntity|null // The entity inflicting damage (weapon/projectile).
+	 * weapon: CBaseEntity|null // The weapon used.
+	 * damage_position: Vector // World position of where the damage came from. E.g. end position of a bullet or a rocket.
+	 * damage: float // The actual damage amount ( Does not count number of bullets or falloff or rampup )
+	 * base_damage: float // The base damage before modifiers.
+	 * damage_type: integer // Damage type bits (e.g. DMG_GENERIC).
+	 * damage_custom: integer // Custom damage type stats.
+	 * crit_type: integer // Crit type (0=None, 1=Mini, 2=Full).
+	 * penetration_count: integer // How many players the damage has penetrated so far.
+	 * others_damaged: integer // How many players other than the attacker has the damage been applied to.
+	 * ```
 	 */
 	function OnScriptEvent_PostTakeDamage( _params ) 				{}
 
 	/**
 	 * Fired when a bot is hurt (after damage calculation).
 	 * 
-	 * @param {CTFBot}				victim				The bot who was hurt.
-	 * @param {CBaseEntity|null}	attacker			The entity who attacked.
-	 * @param {integer}				damage				Final damage amount applied.
-	 * @param {integer}				health				Remaining health of the victim.
-	 * @param {integer}				over_damage			Overkill damage (if dead).
-	 * @param {integer}				damage_custom		Custom damage type.
-	 * @param {integer}				bonuseffect			Bonus effect (e.g. BONUS_EFFECT_CRIT).
-	 * @param {bool}				killed				True if this damage killed the victim.
-	 * @param {bool}				showdisguisedcrit 	True if crit should be shown freely.
-	 * @param {bool}				allseecrit			True if everyone sees the crit.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * victim: CTFBot // The bot who was hurt.
+	 * attacker: CBaseEntity|null // The entity who attacked.
+	 * damage: integer // Final damage amount applied.
+	 * health: integer // Remaining health of the victim.
+	 * over_damage: integer // Overkill damage (if dead).
+	 * damage_custom: integer // Custom damage type.
+	 * bonuseffect: integer // Bonus effect (e.g. BONUS_EFFECT_CRIT).
+	 * killed: bool // True if this damage killed the victim.
+	 * showdisguisedcrit: bool // True if crit should be shown freely.
+	 * allseecrit: bool // True if everyone sees the crit.
+	 * ```
 	 */
 	function OnScriptEvent_PostBotHurt( _params ) 				{}
 	/**
 	 * Fired when a human is hurt (after damage calculation).
 	 * 
-	 * @param {CTFPlayer}			victim				The human who was hurt.
-	 * @param {CBaseEntity|null}	attacker			The entity who attacked.
-	 * @param {integer}				damage				Final damage amount applied.
-	 * @param {integer}				health				Remaining health of the victim.
-	 * @param {integer}				over_damage			Overkill damage (if dead).
-	 * @param {integer}				damage_custom		Custom damage type.
-	 * @param {integer}				bonuseffect			Bonus effect (e.g. BONUS_EFFECT_CRIT).
-	 * @param {bool}				killed				True if this damage killed the victim.
-	 * @param {bool}				showdisguisedcrit 	True if crit should be shown freely.
-	 * @param {bool}				allseecrit			True if everyone sees the crit.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * victim: CTFPlayer // The human who was hurt.
+	 * attacker: CBaseEntity|null // The entity who attacked.
+	 * damage: integer // Final damage amount applied.
+	 * health: integer // Remaining health of the victim.
+	 * over_damage: integer // Overkill damage (if dead).
+	 * damage_custom: integer // Custom damage type.
+	 * bonuseffect: integer // Bonus effect (e.g. BONUS_EFFECT_CRIT).
+	 * killed: bool // True if this damage killed the victim.
+	 * showdisguisedcrit: bool // True if crit should be shown freely.
+	 * allseecrit: bool // True if everyone sees the crit.
+	 * ```
 	 */
 	function OnScriptEvent_PostHumanHurt( _params ) 				{}
 
 	/**
 	 * Fired when a bot spawns for the first time.
 	 * 
-	 * @param {CTFBot}				player				The bot who spawned.
-	 * @param {integer}				class				The class index of the player.
-	 * @param {integer}				team				The team index.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * player: CTFBot // The bot who spawned.
+	 * class: integer // The class index of the player.
+	 * team: integer // The team index.
+	 * ```
 	 */
 	function OnScriptEvent_BotInitialSpawn( _params ) 			{}
 	/**
 	 * Fired when a bot spawns.
 	 * 
-	 * @param {CTFBot}				player				The bot who spawned.
-	 * @param {integer}				class				The class index of the player.
-	 * @param {integer}				team				The team index.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * player: CTFBot // The bot who spawned.
+	 * class: integer // The class index of the player.
+	 * team: integer // The team index.
+	 * ```
 	 */
 	function OnScriptEvent_BotSpawn( _params ) 					{}
 
 	/**
 	 * Fired when a human spawns for the first time.
 	 * 
-	 * @param {CTFPlayer}			player				The human who spawned.
-	 * @param {integer}				class				The class index of the player.
-	 * @param {integer}				team				The team index.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * player: CTFPlayer // The bot who spawned.
+	 * class: integer // The class index of the player.
+	 * team: integer // The team index.
+	 * ```
 	 */
 	function OnScriptEvent_HumanInitialSpawn( _params ) 			{}
-		/**
+	/**
 	 * Fired when a human spawns.
 	 * 
-	 * @param {CTFPlayer}			player				The human who spawned.
-	 * @param {integer}				class				The class index of the player.
-	 * @param {integer}				team				The team index.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * player: CTFPlayer // The bot who spawned.
+	 * class: integer // The class index of the player.
+	 * team: integer // The team index.
+	 * ```
 	 */
 	function OnScriptEvent_HumanSpawn( _params ) 					{}
 
 	/**
 	 * Fired when a bot changes team.
 	 * 
-	 * @param {CTFBot}				player				The bot who changed team.
-	 * @param {integer}				team				The new team index.
-	 * @param {integer}				oldteam				The old team index.
-	 * @param {bool}				disconnect			True if player is disconnecting.
-	 * @param {bool}				autoteam			True if auto-assigned.
-	 * @param {bool}				silent				True if silent change.
-	 * @param {string}				username			Username of the client.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * player: CTFBot // The bot who changed team.
+	 * team: integer // The new team index.
+	 * oldteam: integer // The old team index.
+	 * disconnect: bool // True if player is disconnecting.
+	 * autoteam: bool // True if auto-assigned.
+	 * silent: bool // True if silent change.
+	 * username: string // Username of the client.
+	 * ```
 	 */
 	function OnScriptEvent_BotTeam( _params ) 					{}
 	/**
 	 * Fired when a human changes team.
 	 * 
-	 * @param {CTFPlayer}			player				The human who changed team.
-	 * @param {integer}				team				The new team index.
-	 * @param {integer}				oldteam				The old team index.
-	 * @param {bool}				disconnect			True if player is disconnecting.
-	 * @param {bool}				autoteam			True if auto-assigned.
-	 * @param {bool}				silent				True if silent change.
-	 * @param {string}				username			Username of the client.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * player: CTFPlayer // The Human who changed team.
+	 * team: integer // The new team index.
+	 * oldteam: integer // The old team index.
+	 * disconnect: bool // True if player is disconnecting.
+	 * autoteam: bool // True if auto-assigned.
+	 * silent: bool // True if silent change.
+	 * username: string // Username of the client.
+	 * ```
 	 */
 	function OnScriptEvent_HumanTeam( _params ) 					{}
 
 	/**
-	 * Fired when a bot speaks.
+	 * Fired when a bot speaks. (somehow)
 	 * 
-	 * @param {CTFBot}					player			The bot who spoke.
-	 * @param {string}					message			The text message.
-	 * @param {bool}					teamonly		True if team-only chat.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * player: CTFBot // The bot who spoke.
+	 * message: string // The text message.
+	 * teamonly: bool // True if team-only chat.
+	 * ```
 	 */
 	function OnScriptEvent_BotSay( _params ) 						{}
 	/**
 	 * Fired when a player speaks.
 	 * 
-	 * @param {CTFPlayer}				player			The human who spoke.
-	 * @param {string}					message			The text message.
-	 * @param {bool}					teamonly		True if team-only chat.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * player: CTFPlayer // The human who spoke.
+	 * message: string // The text message.
+	 * teamonly: bool // True if team-only chat.
+	 * ```
 	 */
 	function OnScriptEvent_HumanSay( _params ) 					{}
 	/**
 	 * Fired when the console speaks.
 	 * 
-	 * @param {null}					player			The entity who spoke (always null, leftover from above).
-	 * @param {string}					message			The text message.
-	 * @param {bool}					teamonly		True if team-only chat.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * player: null // The entity who spoke (always null, leftover from above).
+	 * message: string // The text message.
+	 * teamonly: bool // True if team-only chat.
+	 * ```
 	 */
 	function OnScriptEvent_ConsoleSay( _params ) 					{}
 
 	/**
 	 * Fired when a building is hurt.
 	 * 
-	 * @param {CBaseEntity}				object			The building being hurt.
-	 * @param {CBaseEntity|null}		attacker		The attacker entity.
-	 * @param {integer}					damage			Damage amount.
-	 * @param {integer}					health			How much health the object is currently at.
-	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * object: CBaseEntity // The building being hurt.
+	 * attacker: CBaseEntity|null // The attacker entity.
+	 * damage: integer // Damage amount.
+	 * health: integer // How much health the object is currently at.
+	 * crit: bool // If the attack was a Crit (minicrit or full).
+	 * ```
 	 */	
 	function OnScriptEvent_BuildingHurt( _params ) 				{}
 
 	/**
 	 * Fired when a tank is hurt.
 	 * 
-	 * @param {CTFBaseBoss}				object			The tank being hurt.
-	 * @param {CBaseEntity|null}		attacker		The attacker entity.
-	 * @param {integer}					damage			Damage amount.
-	 * @param {integer}					health			How much health the object is currently at.
-	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * object: CTFBaseBoss // The tank being hurt.
+	 * attacker: CBaseEntity|null // The attacker entity.
+	 * damage: integer // Damage amount.
+	 * health: integer // How much health the object is currently at.
+	 * crit: bool // If the attack was a Crit (minicrit or full).
+	 * ```
 	 */	
 	function OnScriptEvent_TankHurt( _params ) 					{}
 	/**
-	 * Fired when a tank is hurt.
+	 * Fired when a base boss is hurt.
 	 * 
-	 * @param {CTFBaseBoss}				object			The tank being hurt.
-	 * @param {CBaseEntity|null}		attacker		The attacker entity.
-	 * @param {integer}					damage			Damage amount.
-	 * @param {integer}					health			How much health the object is currently at.
-	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * object: CTFBaseBoss // The base boss being hurt.
+	 * attacker: CBaseEntity|null // The attacker entity.
+	 * damage: integer // Damage amount.
+	 * health: integer // How much health the object is currently at.
+	 * crit: bool // If the attack was a Crit (minicrit or full).
+	 * ```
 	 */	
 	function OnScriptEvent_BaseBossHurt( _params ) 				{}
 
 	/**
-	 * Fired when a boss is hurt.
+	 * Fired when HHH is hurt.
 	 * 
-	 * @param {CBaseEntity}				object			The boss being hurt.
-	 * @param {CBaseEntity|null}		attacker		The attacker entity.
-	 * @param {integer}					damage			Damage amount.
-	 * @param {integer}					health			How much health the object is currently at.
-	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * object: CBaseEntity // The HHH entity being hurt.
+	 * attacker: CBaseEntity|null // The attacker entity.
+	 * damage: integer // Damage amount.
+	 * health: integer // How much health the object is currently at.
+	 * crit: bool // If the attack was a Crit (minicrit or full).
+	 * ```
 	 */	
 	function OnScriptEvent_HHHHurt( _params ) 					{}
 	/**
-	 * Fired when a boss is hurt.
+	 * Fired when Monoculus is hurt.
 	 * 
-	 * @param {CBaseEntity}				object			The boss being hurt.
-	 * @param {CBaseEntity|null}		attacker		The attacker entity.
-	 * @param {integer}					damage			Damage amount.
-	 * @param {integer}					health			How much health the object is currently at.
-	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * object: CBaseEntity // The Monoculus entity being hurt.
+	 * attacker: CBaseEntity|null // The attacker entity.
+	 * damage: integer // Damage amount.
+	 * health: integer // How much health the object is currently at.
+	 * crit: bool // If the attack was a Crit (minicrit or full).
+	 * ```
 	 */	
 	function OnScriptEvent_MonoculusHurt( _params ) 				{}
 	/**
-	 * Fired when a boss is hurt.
+	 * Fired when Merasmus is hurt.
 	 * 
-	 * @param {CBaseEntity}				object			The boss being hurt.
-	 * @param {CBaseEntity|null}		attacker		The attacker entity.
-	 * @param {integer}					damage			Damage amount.
-	 * @param {integer}					health			How much health the object is currently at.
-	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * object: CBaseEntity // The Merasmus entity being hurt.
+	 * attacker: CBaseEntity|null // The attacker entity.
+	 * damage: integer // Damage amount.
+	 * health: integer // How much health the object is currently at.
+	 * crit: bool // If the attack was a Crit (minicrit or full).
+	 * ```
 	 */	
 	function OnScriptEvent_MerasmusHurt( _params ) 				{}
 
 	/**
 	 * Fired when a building is killed.
 	 * 
-	 * @param {CBaseEntity}				object			The building being killed.
-	 * @param {CBaseEntity|null}		attacker		The attacker entity.
-	 * @param {integer}					damage			Damage amount.
-	 * @param {integer}					health			How much health the object is currently at (always <= 0).
-	 * @param {integer}					over_damage		Amount of damage that exceeded the building's remaining health.
-	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * object: CBaseEntity // The building being killed.
+	 * attacker: CBaseEntity|null // The attacker entity.
+	 * damage: integer // Damage amount.
+	 * health: integer // How much health the object is currently at (always <= 0).
+	 * over_damage: integer // Amount of damage that exceeded the building's remaining health.
+	 * crit: bool // If the attack was a Crit (minicrit or full).
+	 * ```
 	 */
 	function OnScriptEvent_BuildingKilled( _params ) 				{}
 	
 	/**
 	 * Fired when a tank is killed.
 	 * 
-	 * @param {CTFBaseBoss}				object			The tank being killed.
-	 * @param {CBaseEntity|null}		attacker		The attacker entity.
-	 * @param {integer}					damage			Damage amount.
-	 * @param {integer}					health			How much health the object is currently at (always <= 0).
-	 * @param {integer}					over_damage		Amount of damage that exceeded the tank's remaining health.
-	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * object: CTFBaseBoss // The tank being killed.
+	 * attacker: CBaseEntity|null // The attacker entity.
+	 * damage: integer // Damage amount.
+	 * health: integer // How much health the object is currently at (always <= 0).
+	 * over_damage: integer // Amount of damage that exceeded the building's remaining health.
+	 * crit: bool // If the attack was a Crit (minicrit or full).
+	 * ```
 	 */
 	function OnScriptEvent_TankKilled( _params ) 					{}
 	/**
-	 * Fired when a tank is killed.
+	 * Fired when a base boss is killed.
 	 * 
-	 * @param {CTFBaseBoss}				object			The tank being killed.
-	 * @param {CBaseEntity|null}		attacker		The attacker entity.
-	 * @param {integer}					damage			Damage amount.
-	 * @param {integer}					health			How much health the object is currently at (always <= 0).
-	 * @param {integer}					over_damage		Amount of damage that exceeded the tank's remaining health.
-	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * object: CTFBaseBoss // The base boss being killed.
+	 * attacker: CBaseEntity|null // The attacker entity.
+	 * damage: integer // Damage amount.
+	 * health: integer // How much health the object is currently at (always <= 0).
+	 * over_damage: integer // Amount of damage that exceeded the building's remaining health.
+	 * crit: bool // If the attack was a Crit (minicrit or full).
+	 * ```
 	 */
 	function OnScriptEvent_BaseBossKilled( _params ) 				{}
 	
 	/**
 	 * Fired when HHH is killed.
 	 * 
-	 * @param {CBaseEntity}				object			The boss being killed.
-	 * @param {CBaseEntity|null}		attacker		The attacker entity.
-	 * @param {integer}					damage			Damage amount.
-	 * @param {integer}					health			How much health the object is currently at (always <= 0).
-	 * @param {integer}					over_damage		Amount of damage that exceeded the bosses remaining health.
-	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * object: CBaseEntity // The HHH entity being killed.
+	 * attacker: CBaseEntity|null // The attacker entity.
+	 * damage: integer // Damage amount.
+	 * health: integer // How much health the object is currently at (always <= 0).
+	 * over_damage: integer // Amount of damage that exceeded the building's remaining health.
+	 * crit: bool // If the attack was a Crit (minicrit or full).
+	 * ```
 	 */
 	function OnScriptEvent_HHHKilled( _params ) 					{}
 	/**
 	 * Fired when Monoculus is killed.
 	 * 
-	 * @param {CBaseEntity}				object			The boss being killed.
-	 * @param {CBaseEntity|null}		attacker		The attacker entity.
-	 * @param {integer}					damage			Damage amount.
-	 * @param {integer}					health			How much health the object is currently at (always <= 0).
-	 * @param {integer}					over_damage		Amount of damage that exceeded the bosses remaining health.
-	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * object: CBaseEntity // The Monoculus entity being killed.
+	 * attacker: CBaseEntity|null // The attacker entity.
+	 * damage: integer // Damage amount.
+	 * health: integer // How much health the object is currently at (always <= 0).
+	 * over_damage: integer // Amount of damage that exceeded the building's remaining health.
+	 * crit: bool // If the attack was a Crit (minicrit or full).
+	 * ```
 	 */
 	function OnScriptEvent_MonoculusKilled( _params ) 			{}
 	/**
 	 * Fired when Merasmus is killed.
 	 * 
-	 * @param {CBaseEntity}				object			The boss being killed.
-	 * @param {CBaseEntity|null}		attacker		The attacker entity.
-	 * @param {integer}					damage			Damage amount.
-	 * @param {integer}					health			How much health the object is currently at (always <= 0).
-	 * @param {integer}					over_damage		Amount of damage that exceeded the bosses remaining health.
-	 * @param {bool}					crit			If the attack was a Crit (minicrit or full).
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * object: CBaseEntity // The Merasmus entity being killed.
+	 * attacker: CBaseEntity|null // The attacker entity.
+	 * damage: integer // Damage amount.
+	 * health: integer // How much health the object is currently at (always <= 0).
+	 * over_damage: integer // Amount of damage that exceeded the building's remaining health.
+	 * crit: bool // If the attack was a Crit (minicrit or full).
+	 * ```
 	 */
 	function OnScriptEvent_MerasmusKilled( _params ) 				{}
 
 	/**
-	 * Fired when a bot/player is healed.
+	 * Fired when a bot is healed.
 	 * 
-	 * @param {CTFBot}						patient			The bot being healed.
-	 * @param {CTFPlayer|CBaseEntity|null}	healer			The healer entity (e.g. Medic/Dispenser).
-	 * @param {integer}						amount			Heal amount.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * patient: CTFBot // The bot being healed.
+	 * healer: CTFPlayer|CBaseEntity|null // The healer entity (e.g. Medic/Dispenser/Kart).
+	 * amount: integer // Heal amount.
+	 * ```
 	 */
 	function OnScriptEvent_BotHealed( _params ) 					{}
 	/**
 	 * Fired when a human is healed.
 	 * 
-	 * @param {CTFPlayer}					patient			The human being healed.
-	 * @param {CTFPlayer|CBaseEntity|null}	healer			The healer entity (e.g. Medic/Dispenser).
-	 * @param {integer}						amount			Heal amount.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * patient: CTFPlayer // The human being healed.
+	 * healer: CTFPlayer|CBaseEntity|null // The healer entity (e.g. Medic/Dispenser/Kart).
+	 * amount: integer // Heal amount.
+	 * ```
 	 */
 	function OnScriptEvent_HumanHealed( _params ) 				{}
 
 	/**
 	 * Fired when a Dispenser is Created
 	 *
-	 * @param {CTFPlayer} 				player	 		The player that created the Dispenser.
-	 * @param {CBaseEntity|null} 		object	 		The Dispenser that was Created.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * player: CTFPlayer // The player that created the Dispenser.
+	 * object: CBaseEntity|null // The Dispenser that was Created.
+	 * ```
 	 */
 	function OnScriptEvent_DispenserBuilt( _params )				{}
 	/**
 	 * Fired when a Teleporter is Created
 	 *
-	 * @param {CTFPlayer} 				player	 		The player that created the Teleporter.
-	 * @param {CBaseEntity|null} 		object	 		The Teleporter that was Created.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * player: CTFPlayer // The player that created the Teleporter.
+	 * object: CBaseEntity|null // The Teleporter that was Created.
+	 * ```
 	 */
 	function OnScriptEvent_TeleporterBuilt( _params )				{}
 	/**
 	 * Fired when a Sentry is Created
 	 *
-	 * @param {CTFPlayer} 				player	 		The player that created the Sentry.
-	 * @param {CBaseEntity|null} 		object	 		The Sentry that was Created.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * player: CTFPlayer // The player that created the Sentry.
+	 * object: CBaseEntity|null // The Sentry that was Created.
+	 * ```
 	 */
 	function OnScriptEvent_SentryBuilt( _params )					{}
 	/**
 	 * Fired when a Sapper is Created
 	 *
-	 * @param {CTFPlayer} 				player	 		The player that created the Sapper.
-	 * @param {CBaseEntity|null} 		object	 		The Sapper that was Created.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * player: CTFPlayer // The player that created the Sapper.
+	 * object: CBaseEntity|null // The Sapper that was Created.
+	 * ```
 	 */
 	function OnScriptEvent_SapperBuilt( _params )					{}
 
 	/** 
 	 * Fired when a Player is deflected
 	 * 
-	 * @param {CBaseEntity|null} 		deflector		The entity that deflected object.
-	 * @param {CBaseEntity|null} 		object			The player that was deflected.
-	 * @param {CBaseEntity|null} 		old_owner		The owner of object before deflection.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * deflector: CBaseEntity|null // The entity that deflected object.
+	 * object: CBaseEntity|null // The player that was deflected.
+	 * old_owner: CBaseEntity|null // The owner of object before deflection.
+	 * ```
 	 */
 	function OnScriptEvent_PlayerDeflected( _params ) 			{}
 	/** 
 	 * Fired when a Rocket is deflected
 	 * 
-	 * @param {CBaseEntity|null} 		deflector		The entity that deflected object.
-	 * @param {CBaseEntity|null} 		object			The rocket that was deflected.
-	 * @param {CBaseEntity|null} 		old_owner		The owner of object before deflection.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * deflector: CBaseEntity|null // The entity that deflected object.
+	 * object: CBaseEntity|null // The rocket that was deflected.
+	 * old_owner: CBaseEntity|null // The owner of object before deflection.
+	 * ```
 	 */		
 	function OnScriptEvent_RocketDeflected( _params ) 			{}
 	/** 
 	 * Fired when a Grenade is deflected
 	 * 
-	 * @param {CBaseEntity|null} 		deflector		The entity that deflected object.
-	 * @param {CBaseEntity|null} 		object			The grenade that was deflected.
-	 * @param {CBaseEntity|null} 		old_owner		The owner of object before deflection.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * deflector: CBaseEntity|null // The entity that deflected object.
+	 * object: CBaseEntity|null // The grenade that was deflected.
+	 * old_owner: CBaseEntity|null // The owner of object before deflection.
+	 * ```
 	 */
 	function OnScriptEvent_GrenadeDeflected( _params ) 			{}
 	/** 
 	 * Fired when a different Object is deflected
 	 * 
-	 * @param {CBaseEntity|null} 		deflector		The entity that deflected object.
-	 * @param {CBaseEntity|null} 		object			The entity that was deflected.
-	 * @param {CBaseEntity|null} 		old_owner		The owner of object before deflection.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * deflector: CBaseEntity|null // The entity that deflected object.
+	 * object: CBaseEntity|null // The entity that was deflected.
+	 * old_owner: CBaseEntity|null // The owner of object before deflection.
+	 * ```
 	 */
 	function OnScriptEvent_ObjectDeflected( _params ) 			{}
 
 
 	/**
-	 * @param {string}					command			The chat commmand that was triggered.
-	 * @param {CTFPlayer|null}			player			The player that triggered this chat command (null for console).
-	 * @param {table}					data			Any other data the chat command was passed.
+	 * Fired when a chat command is used
+	 * 
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * command: string // The chat commmand that was triggered.
+	 * player: CTFPlayer|null // The player that triggered this chat command (null for console).
+	 * data: table // Any other data the chat command was passed.
+	 * ```
 	 */
 	function OnScriptEvent_ChatCommand( _params )					{}
 
 	/**
 	 * Fired when a player is Stunned
 	 * 
-	 * @param {CTFPlayer|null} 			stunner 		The Player who stunned the victim.
-	 * @param {CTFPlayer|null} 			victim 			The Player who got stunned.
-	 * @param {bool} 					big_stun 		Wether the stun was a Big Stun.
-	 * @param {bool} 					victim_capping 	If the victim was attempting to cap before getting stunned.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * stunner: CTFPlayer|null // The Player who stunned the victim.
+	 * victim: CTFPlayer|null // The Player who got stunned.
+	 * big_stun: bool // Wether the stun was a Big Stun.
+	 * victim_capping: bool // If the victim was attempting to cap before getting stunned.
+	 * ```
 	 */
 	function OnScriptEvent_PlayerStunned( _params )				{}
 
@@ -12055,21 +12282,37 @@ function ROOT::PostPlayerSpawn( player )
 	 * Fired whenever a primary or secondary weapon fires
 	 * 
 	 * **Note:** Melee attacks need to be fixed
-	 * @param {CTFPlayer}				player			The Player who shot this weapon.
-	 * @param {CTFWeaponBase}			weapon			The Weapon the player fired.
+	 * 
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * player: CTFPlayer // The Player who shot this weapon.
+	 * weapon: CTFWeaponBase // The Weapon the player fired.
+	 * ```
 	 */
 	function OnScriptEvent_PlayerFireWeapon( _params )			{}
 
 	/**
 	 * Fired After we Handle our Custom Attributes
 	 * 
-	 * @param {CTFBot}					player			The bot who spawned.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * player: CTFBot // The bot who spawned.
+	 * ```
 	 */
 	function OnScriptEvent_PostBotSpawn( _params )				{}
 	/**
 	 * Fired After we Handle our Custom Attributes
 	 * 
-	 * @param {CTFPlayer}				player			The player who spawned.
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * player: CTFPlayer // The bot who spawned.
+	 * ```
 	 */
 	function OnScriptEvent_PostHumanSpawn( _params )				{}
 }

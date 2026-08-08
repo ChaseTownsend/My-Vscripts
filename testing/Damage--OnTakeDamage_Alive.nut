@@ -1,3 +1,5 @@
+// This is OnTakeDamage_Alive but with most non-damage related stuff removed
+
 /*
 	Main Damage System is this
 
@@ -937,8 +939,8 @@ function ROOT::ApplyOnDamageAliveModifyRules( info, pVictimBaseEntity, outParams
 		}
 
 		// If the damage changed at all play the resist sound
-		if ( flDamageBase != flRawDamage )
-			outParams.bPlayDamageReductionSound = true
+		// if ( flDamageBase != flRawDamage )
+			// outParams.bPlayDamageReductionSound = true
 
 		// Stomp flRealDamage with resist adjusted values
 		flRealDamage = flDamageBase + flDamageBonus
@@ -952,17 +954,17 @@ function ROOT::ApplyOnDamageAliveModifyRules( info, pVictimBaseEntity, outParams
 				if ( pVictim.GetCurrentRune() == RUNE_RESIST )
 				{
 					flRealDamage *= ( pVictim.IsDominant() ? 0.65 : 0.5 )
-					outParams.bPlayDamageReductionSound = true
+					// outParams.bPlayDamageReductionSound = true
 				}
 				else if ( ( pVictim.GetCurrentRune() == RUNE_VAMPIRE ) && !pVictim.IsDominant() )
 				{
 					flRealDamage *= 0.75
-					outParams.bPlayDamageReductionSound = true
+					// outParams.bPlayDamageReductionSound = true
 				}
 				//Plague powerup carrier is resistant to infected enemies
 				else if ( pTFAttacker && ( pVictim.GetCurrentRune() == RUNE_PLAGUE ) && pTFAttacker.InCond( TF_COND_PLAGUE ) )
 				{
-					outParams.bPlayDamageReductionSound = true
+					// outParams.bPlayDamageReductionSound = true
 					if (pVictim.IsDominant() ) //dominant plague carrying players get less resistance to infected attackers
 						flRealDamage *= 0.80
 					else
@@ -1021,7 +1023,7 @@ function ROOT::ApplyOnDamageAliveModifyRules( info, pVictimBaseEntity, outParams
 				flRealDamage *= CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pVictim.GetActiveWeapon(), "dmg from ranged reduced", 1.0 )
 		}
 
-		outParams.bSendPreFeignDamage = false
+		// outParams.bSendPreFeignDamage = false
 		if ( pVictim && pVictim.IsPlayerClass( TF_CLASS_SPY ) && ( info.GetDamageCustom() != TF_DMG_CUSTOM_TELEFRAG ) && !pVictim.IsTaunting() && !iAttackIgnoresResists )
 		{
 			// Reduce damage taken if we have recently feigned death.
@@ -1035,7 +1037,7 @@ function ROOT::ApplyOnDamageAliveModifyRules( info, pVictimBaseEntity, outParams
 				// On Activate Reduce Remaining Cloak by 50%
 				if ( pVictim.IsFeignDeathReady() )
 					flDamageReduction = IsConvarAllowed("tf_feign_death_activate_damage_scale") ? GetCvarFloat("tf_feign_death_activate_damage_scale") : 0.25
-				outParams.bSendPreFeignDamage = true
+				// outParams.bSendPreFeignDamage = true
 
 				flRealDamage *= flDamageReduction
 			}
@@ -1841,8 +1843,8 @@ function CTFPlayer::OnTakeDamage_Alive( info )
 	local outParams = {}
 	outParams.bIgniting <- false
 	outParams.bSelfBlastDmg <- false
-	outParams.bSendPreFeignDamage <- false
-	outParams.bPlayDamageReductionSound <- false
+	// outParams.bSendPreFeignDamage <- false
+	// outParams.bPlayDamageReductionSound <- false
 	local realDamage = info.GetDamage()
 	realDamage = ApplyOnDamageAliveModifyRules( info, this, outParams )
 	
