@@ -922,10 +922,11 @@ function ROOT::ProcessChaosPlayerHurt( params, victim, attacker, weapon, _inflic
 		local chance = victim.HookAdditiveAttributes("reflect dmg back chance")
 		local dmg_mult = victim.HookMultAttributes("reflect dmg back mult")
 		local stuntime = victim.HookAdditiveAttributes("reflect dmg back stun time")
+		local stun_chance = victim.HookAdditiveAttributes("reflect dmg back stun chance")
 		if (MATH.RandomChance() <= chance)
 		{
 			attacker.TakeDamageEx(victim, victim, victim, Vector(), Vector(), params.damage * dmg_mult, params.damage_type)
-			if(stuntime)
+			if(MATH.RandomChance() <= stun_chance && stuntime)
 				attacker.StunPlayer(stuntime, 0.0, TF_STUN_BOTH, victim)
 		}
 	}
@@ -981,11 +982,32 @@ RegisterDamageCallback("player", "GameplayRobotAttack" function( params ) {
 	if ( !(startswith(weapon.GetClassname(), "tf_weapon") || startswith(weapon.GetClassname(), "tf_wearable")) )
 		return
 
-	if (!attacker.IsBot() || victim.IsInvincible())
+	if (!attacker.IsPlayer() || !attacker.IsBot() || victim.IsInvincible())
 		return
 	
 	ProcessChaosPlayerHurt(params, victim, attacker, weapon, inflictor)
 })
+
+
+// RegisterDamageCallback("player", "GameplayRobotSelfBomb" function( params ) {
+// 	if (HasCustomFlag(params.damage_custom, TF_DMG_CUSTOM_IGNORE_EVENTS) || params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
+// 		return
+
+// 	local victim 	= params.victim
+// 	local attacker 	= params.attacker
+// 	local weapon 	= params.weapon
+// 	local inflictor	= params.inflictor
+
+// 	// printl(weapon == null)
+// 	// printl(attacker == victim)
+// 	// printl(victim == inflictor)
+// 	// printl(params.damage_custom == TF_DMG_CUSTOM_MERASMUS_PLAYER_BOMB)
+
+// 	if(weapon == null && victim == attacker && victim == inflictor && params.damage_custom == TF_DMG_CUSTOM_MERASMUS_PLAYER_BOMB)
+// 	{
+// 		params.damage = 1000
+// 	}
+// })
 
 RegisterDamageCallback(["obj_sentrygun", "obj_teleporter", "obj_dispenser", "tank_boss"], "GameplayOthers", function( params ) {
 	if (HasCustomFlag(params.damage_custom, TF_DMG_CUSTOM_IGNORE_EVENTS) || params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
@@ -1123,9 +1145,10 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 					return 0.2
 				if(active.GetAttribute("slow down aura", 0))
 				{
-					local slow_multiplier = active.GetAttribute("slow down aura slow mult", 1.0)
-					local giant_multiplier = active.GetAttribute("slow down aura giant mult", 1.0)
+					local slow_multiplier = active.GetAttribute("slow down aura slow mult", 0.0)
+					local giant_multiplier = active.GetAttribute("slow down aura giant mult", 0.0)
 					local slow_radius = active.GetAttribute("slow down aura", 0)
+					// DebugDrawSphereInternal( self.GetCenter(), slow_radius, 255, 255, 255, false, 0.2 true, 10)
 					foreach (/**@type {CTFBot} */bot in m_aRobots)
 					{
 						if(self.DistanceTo(bot, true) > slow_radius)

@@ -2050,6 +2050,21 @@ function CTFPlayer::GetMyWeaponsArray()
 	return MyWeapons
 }
 
+// ====== TIMESTAMP: 10329.7 ======
+// AN ERROR HAS OCCURRED [Script terminated by SQQuerySuspend]
+// CALLSTACK
+// *FUNCTION [GetWeaponInSlotNew( )] fatcat_library.nut line [2094]
+// *FUNCTION [GetAllWeapons( )] fatcat_library.nut line [2110]
+// *FUNCTION [HookMultAttributes( )] fatcat_library.nut line [3532]
+// *FUNCTION [GameplayThink( )] gameplay-applications.nut line [754]
+// LOCALS
+// [i] 0
+// [weaponSlot] 0
+// [slot] 6
+// [targetArray] NULL
+// [this] instance ([1] player)
+// [weapon] instance ([355] tf_weapon_revolver)
+
 /**
  * @param {integer} slot
  * @returns {CTFWeaponBase|null}
@@ -10741,7 +10756,7 @@ function ROOT::PostPlayerSpawn( player )
 			}
 		}
 
-		if (	(params.damage_custom == TF_DMG_CUSTOM_BLEEDING) || (params.damage_custom == TF_DMG_CUSTOM_BURNING) )
+		if ( (params.damage_custom == TF_DMG_CUSTOM_BLEEDING) || (params.damage_custom == TF_DMG_CUSTOM_BURNING) )
 			params.damage_type = params.damage_type | DMG_PREVENT_PHYSICS_FORCE
 
 		local eventdata = clone params
@@ -10772,6 +10787,11 @@ function ROOT::PostPlayerSpawn( player )
 		delete eventdata.const_base_damage
 		delete eventdata.player_penetration_count
 		delete eventdata.damaged_other_players
+
+		if ("DAMAGE_DEBUG" in ROOT && DAMAGE_DEBUG)
+		{
+			PrintTable(eventdata)
+		}
 
 		if (!HasCustomFlag(eventdata.damage_custom, TF_DMG_CUSTOM_IGNORE_EVENTS))
 		{
