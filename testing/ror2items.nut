@@ -62,8 +62,15 @@ function InitItems() {
 			weapon.AddAttribute("melee attack rate bonus", 0.8, 0)
 			return
 		}
-		// player:SetAttributeValue( tostring( upgrade.Attributes[j].attr ), math.max( player:GetAttributeValueClean( upgrade.Attributes[j].attr, upgrade.Attributes[j].default, LOADOUT_POSITION_BODY ) * upgrade.Attributes[j].increment ), cap ) 
-
+		// player:SetAttributeValue( upgrade.Attributes[j].attr, math.max( player:GetAttributeValueClean( upgrade.Attributes[j].attr, upgrade.Attributes[j].default, LOADOUT_POSITION_BODY ) * upgrade.Attributes[j].increment ), cap ) 
+		/* // totally not stolen lua code
+		if IsValid(player:GetPlayerItemBySlot(LOADOUT_POSITION_PRIMARY)) and ( WeaponAllowed( player:GetPlayerItemBySlot( 0 ), upgrade.WeaponList ) ) then
+			player:GetPlayerItemBySlot(LOADOUT_POSITION_PRIMARY):SetAttributeValue( tostring( upgrade.Attributes[j].attr ), math.max( player:GetAttributeValueClean( upgrade.Attributes[j].attr, upgrade.Attributes[j].default, LOADOUT_POSITION_PRIMARY ) * upgrade.Attributes[j].increment ), cap )
+		end
+		if ( WeaponAllowed( player:GetPlayerItemBySlot( 1 ), upgrade.WeaponList ) ) then
+			player:GetPlayerItemBySlot(LOADOUT_POSITION_SECONDARY):SetAttributeValue( tostring( upgrade.Attributes[j].attr ), math.max( player:GetAttributeValueClean( upgrade.Attributes[j].attr, upgrade.Attributes[j].default, LOADOUT_POSITION_SECONDARY ) * upgrade.Attributes[j].increment ), cap )
+		end
+		 */
 		weapon.AddAttribute("melee attack rate bonus", weapon.GetAttribute("melee attack rate bonus", 1.0) * 0.9, 0)
 					
 		// .AddAttribute()
