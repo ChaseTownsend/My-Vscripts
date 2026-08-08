@@ -8907,7 +8907,7 @@ function Vector::DistanceTo( point2 )
   === VECTOR2D METHODS ===
   ========================
 */
-
+if("Vector2D" in ROOT) {
 /**
  * @returns {Vector2D}
  */
@@ -8917,7 +8917,7 @@ function Vector2D::Normalize()
 	new.Norm()
 	return new
 }
-
+}
 /*
   ===============================
   === END OF VECTOR2D METHODS ===
