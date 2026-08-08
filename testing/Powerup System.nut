@@ -15,7 +15,7 @@ class CustomPowerupSystem {
 		player.AddThink(function() {
 			local Powerup = CustomPowerup.data
 
-			if(Powerup == null)
+			if (Powerup == null)
 				GetScope(self).CustomPowerup <- self.GiveCustomPowerup("None")
 				// could be recursive, but idgaf, all hell breaks loose
 
@@ -24,29 +24,29 @@ class CustomPowerupSystem {
 		}, "PowerupThink")
 	}
 
-	function FindPowerupFromName(name)
+	function FindPowerupFromName( name )
 	{
-		if(name in CustomPowerupData)
+		if (name in CustomPowerupData)
 			return CustomPowerupData[name]
 		else return null
 	}
 
 	function Drop()
 	{
-		if(data)
+		if (data)
 			data.OnDrop(player)
 
-		// if(player)
+		// if (player)
 			// player.RemoveThink("PowerupThink")
 	}
 }
 
-function CTFPlayer::GiveCustomPowerup(name, drop = false)
+function CTFPlayer::GiveCustomPowerup( name, drop = false )
 {
 	local scope = GetScope(this)
-	if("CustomPowerup" in scope && scope.CustomPowerup != null && drop)
+	if ("CustomPowerup" in scope && scope.CustomPowerup != null && drop)
 	{
-		if("Drop" in scope.CustomPowerup)
+		if ("Drop" in scope.CustomPowerup)
 			scope.CustomPowerup.Drop()
 	}
 
@@ -69,7 +69,7 @@ class PowerupData {
 function CTFPlayer::GetCustomPowerupData()
 {
 	local scope = GetScope(this)
-	if(!("CustomPowerup" in scope))
+	if (!("CustomPowerup" in scope))
 		GiveCustomPowerup("None")
 
 	return scope.CustomPowerup
@@ -77,7 +77,7 @@ function CTFPlayer::GetCustomPowerupData()
 function CTFPlayer::GetCustomPowerup()
 {
 	local scope = GetScope(this)
-	if(!("CustomPowerup" in scope))
+	if (!("CustomPowerup" in scope))
 		GiveCustomPowerup("None")
 
 	return scope.CustomPowerup.data_name
@@ -94,15 +94,15 @@ function CTFPlayer::UpdateWeaponStats()
 
 ::CustomPowerupData <- {}
 
-function CreateCustomPowerup(name, collect, drop)
+function CreateCustomPowerup( name, collect, drop )
 {
-	if(name in CustomPowerupData)
+	if (name in CustomPowerupData)
 		printf("There is already a powerup with the name %s\n", name)
 	CustomPowerupData[name] <- PowerupData(name, collect, drop)
 }
 
-RegisterDamageCallback("player", "CustomPowerupPlayer" function(params) {
-	if(HasCustomFlag(params.damage_custom, TF_DMG_CUSTOM_IGNORE_EVENTS) || params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
+RegisterDamageCallback("player", "CustomPowerupPlayer" function( params ) {
+	if (HasCustomFlag(params.damage_custom, TF_DMG_CUSTOM_IGNORE_EVENTS) || params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
 		return
 
 	/** @type {CTFPlayer} */
@@ -115,29 +115,29 @@ RegisterDamageCallback("player", "CustomPowerupPlayer" function(params) {
 	local inflictor	= params.inflictor
 	
 
-	if(!attacker)
+	if (!attacker)
 		return
 
 	weapon = params.weapon
 
-	if(!attacker || !weapon || !inflictor)
+	if (!attacker || !weapon || !inflictor)
 		return
 
-	if( !(startswith(weapon.GetClassname(), "tf_weapon") || startswith(weapon.GetClassname(), "tf_wearable")) )
+	if ( !(startswith(weapon.GetClassname(), "tf_weapon") || startswith(weapon.GetClassname(), "tf_wearable")) )
 		return
 
-	if(victim.IsInvincible())
+	if (victim.IsInvincible())
 		return
 
 	local vic_pow = victim.GetCustomPowerup()
 	local attack_pow = attacker.GetCustomPowerup()
 
-	if(attack_pow == "Vampire" && params.damage > 0)
+	if (attack_pow == "Vampire" && params.damage > 0)
 	{
 		local active = attacker.GetActiveWeapon()
-		if(!active)
+		if (!active)
 			attacker.HealPlayer(params.damage)
-		else if(active.IsMinigun() || active.IsFlamethrower())
+		else if (active.IsMinigun() || active.IsFlamethrower())
 			attacker.HealPlayer(params.damage * 0.6)
 		else if (active.IsMeleeWeapon() && vic_pow != "Resistance")
 			attacker.HealPlayer(params.damage * 1.25)
@@ -157,33 +157,33 @@ RegisterDamageCallback("player", "CustomPowerupPlayer" function(params) {
 			attacker.HealPlayer(params.damage)
 	}
 	
-	if(vic_pow == "Reflect" && attack_pow != "Resistance" && attack_pow != "Vampire")
+	if (vic_pow == "Reflect" && attack_pow != "Resistance" && attack_pow != "Vampire")
 	{
 		local mult_dmg = params.damage * 0.8
 		local ref_victim = attacker
 
-		if(inflictor.GetClassname() == "obj_sentrygun")
+		if (inflictor.GetClassname() == "obj_sentrygun")
 		{
 			mult_dmg = params.damage
 			ref_victim = inflictor
 		}
 
 		ref_victim.TakeDamageCustom(victim, victim, victim, Vector(), Vector(), mult_dmg, DMG_SHOCK, TF_DMG_CUSTOM_NO_CALLBACKS_IGNORE)
-		if(ref_victim.GetHealth() <= 0)
+		if (ref_victim.GetHealth() <= 0)
 			ref_victim.SetHealth(1)
 	}
 
-	if(attack_pow == "Knockout")
+	if (attack_pow == "Knockout")
 	{
 		victim.GetCustomPowerupData().Drop()
 		victim.DropFlag(true)
 	}
 
-	if(vic_pow == "Plague" && "Plaguer" in GetScope(attacker))
+	if (vic_pow == "Plague" && "Plaguer" in GetScope(attacker))
 	{
-		if(GetScope(attacker).Plaguer == victim)
+		if (GetScope(attacker).Plaguer == victim)
 		{
-			if(GetScope(attacker).PlagueTime <= Time() + 5)
+			if (GetScope(attacker).PlagueTime <= Time() + 5)
 			{
 				params.damage *= 0.5 //
 			}
@@ -192,31 +192,31 @@ RegisterDamageCallback("player", "CustomPowerupPlayer" function(params) {
 })
 
 // CreateCustomPowerup("", 
-// 	function(/**@type {CTFPlayer}*/player) {
+// 	function( /**@type {CTFPlayer}*/player ) {
 // 	},
-// 	function(/**@type {CTFPlayer}*/player) {
+// 	function( /**@type {CTFPlayer}*/player ) {
 // 	}
 // )
 
-CreateCustomPowerup("None", function(...) {}, function(...) {})
+CreateCustomPowerup("None", function( ... ) {}, function(...) {})
 
 CreateCustomPowerup("Strength", 
-	function(/**@type {CTFPlayer}*/player) {
+	function( /**@type {CTFPlayer}*/player ) {
 		player.AddCustomAttribute("dmg penalty vs players", 2, 0)
 		player.AddCustomAttribute("dmg bonus vs buildings", 2, 0)
 	},
-	function(/**@type {CTFPlayer}*/player) {
+	function( /**@type {CTFPlayer}*/player ) {
 		player.RemoveCustomAttribute("dmg penalty vs players")
 		player.RemoveCustomAttribute("dmg bonus vs buildings")
 	}
 )
 
 CreateCustomPowerup("Resistance", 
-	function(/**@type {CTFPlayer}*/player) {
+	function( /**@type {CTFPlayer}*/player ) {
 		player.AddCustomAttribute("dmg taken increased", 0.5, 0)
 		player.AddCustomAttribute("cannot be backstabbed", 1, 0)
 	},
-	function(/**@type {CTFPlayer}*/player) {
+	function( /**@type {CTFPlayer}*/player ) {
 		player.RemoveCustomAttribute("dmg taken increased")
 		player.RemoveCustomAttribute("cannot be backstabbed")
 	}
@@ -224,16 +224,16 @@ CreateCustomPowerup("Resistance",
 
 // guh, handle in custom event, but here to tell the players it exists
 CreateCustomPowerup("Vampire", 
-	function(/**@type {CTFPlayer}*/player) {
+	function( /**@type {CTFPlayer}*/player ) {
 		player.AddCustomAttribute("max health additive bonus", 80, 0)
 		player.AddCustomAttribute("dmg taken increased", 0.75, 0)
 
-		if(player.GetPlayerClass() == TF_CLASS_SOLDIER || player.GetPlayerClass() == TF_CLASS_DEMOMAN)
+		if (player.GetPlayerClass() == TF_CLASS_SOLDIER || player.GetPlayerClass() == TF_CLASS_DEMOMAN)
 		{
 			player.AddCustomAttribute("clip size upgrade atomic", 2, 0)
 		}
 	},
-	function(/**@type {CTFPlayer}*/player) {
+	function( /**@type {CTFPlayer}*/player ) {
 		player.RemoveCustomAttribute("max health additive bonus")
 		player.RemoveCustomAttribute("dmg taken increased")
 
@@ -242,20 +242,20 @@ CreateCustomPowerup("Vampire",
 )
 
 CreateCustomPowerup("Reflect", 
-	function(/**@type {CTFPlayer}*/player) {
+	function( /**@type {CTFPlayer}*/player ) {
 		local cur_hp = player.GetMaxHealth()
 		local to_add = 400 - cur_hp
 
-		if(to_add > 0)
+		if (to_add > 0)
 			player.AddCustomAttribute("max health additive bonus", to_add, 0)
 	},
-	function(/**@type {CTFPlayer}*/player) {
+	function( /**@type {CTFPlayer}*/player ) {
 		player.RemoveCustomAttribute("max health additive bonus")
 	}
 )
 
 CreateCustomPowerup("Haste", 
-	function(/**@type {CTFPlayer}*/player) {
+	function( /**@type {CTFPlayer}*/player ) {
 		player.AddCustomAttribute("fire rate bonus", 0.5, 0)
 		player.AddCustomAttribute("faster reload rate", 0.25, 0)
 		player.AddCustomAttribute("mult_item_meter_charge_rate", 0.5, 0)
@@ -269,32 +269,32 @@ CreateCustomPowerup("Haste",
 
 		// this is to not apply so many attribs
 
-		if(player.GetPlayerClass() == TF_CLASS_MEDIC)
+		if (player.GetPlayerClass() == TF_CLASS_MEDIC)
 		{
 			player.AddCustomAttribute("heal rate bonus", 2, 0)
 			player.AddCustomAttribute("ubercharge rate bonus", 2, 0)
 		}
 
-		if(player.GetPlayerClass() == TF_CLASS_PYRO)
+		if (player.GetPlayerClass() == TF_CLASS_PYRO)
 		{
 			player.AddCustomAttribute("mult airblast refire time", 0.5, 0)
-			if(player.GetWeaponInSlotNew(SLOT_SECONDARY).IsFlaregun())
+			if (player.GetWeaponInSlotNew(SLOT_SECONDARY).IsFlaregun())
 				player.AddCustomAttribute("faster reload rate", 0.2, 0)
 		}
 
-		if(player.GetPlayerClass() == TF_CLASS_SNIPER)
+		if (player.GetPlayerClass() == TF_CLASS_SNIPER)
 		{
 			player.AddCustomAttribute("SRifle Charge rate increased", 0.3333, 0)
-			if(player.GetWeaponInSlotNew(SLOT_PRIMARY).IsBow()) // would like to apply single, but idk
+			if (player.GetWeaponInSlotNew(SLOT_PRIMARY).IsBow()) // would like to apply single, but idk
 				player.AddCustomAttribute("fire rate bonus", 0.4, 0)
 		}
 
-		if(player.GetPlayerClass() == TF_CLASS_DEMOMAN)
+		if (player.GetPlayerClass() == TF_CLASS_DEMOMAN)
 		{
 			player.AddCustomAttribute("sticky arm time bonus", -0.8, 0) // need a mult version
 		}
 
-		if(player.GetPlayerClass() == TF_CLASS_ENGINEER)
+		if (player.GetPlayerClass() == TF_CLASS_ENGINEER)
 		{
 			player.AddCustomAttribute("maxammo metal increased", 2, 0)
 			player.AddCustomAttribute("engy sentry fire rate increased", 0.5, 0)
@@ -303,7 +303,7 @@ CreateCustomPowerup("Haste",
 		player.TeamFortress_SetSpeed()
 		player.UpdateWeaponStats()
 	}, 
-	function(/**@type {CTFPlayer}*/player) {
+	function( /**@type {CTFPlayer}*/player ) {
 		player.RemoveCustomAttribute("fire rate bonus")
 		player.RemoveCustomAttribute("faster reload rate")
 		player.RemoveCustomAttribute("engy sentry fire rate increased")
@@ -331,7 +331,7 @@ CreateCustomPowerup("Haste",
 )
 
 CreateCustomPowerup("Regen", 
-	function(/**@type {CTFPlayer}*/player) {
+	function( /**@type {CTFPlayer}*/player ) {
 		player.AddThink(function() {
 			// fuckass magic
 			local percent = MATH.RemapVal((player.GetHealth().tofloat() / player.GetMaxHealth()), 1.0, 0.1 player.GetMaxHealth() / 25, player.GetMaxHealth() / 10)
@@ -341,7 +341,7 @@ CreateCustomPowerup("Regen",
 			player.GivePercentMetal(20)
 
 			// heal buildings?
-			/* if(player.GetPlayerClass() == TF_CLASS_ENGINEER)
+			/* if (player.GetPlayerClass() == TF_CLASS_ENGINEER)
 			{
 				local buildings = []
 				local global_buildings
@@ -349,22 +349,22 @@ CreateCustomPowerup("Regen",
 			return 0.2
 		}, "RegenThink")
 	},
-	function(/**@type {CTFPlayer}*/player) {
+	function( /**@type {CTFPlayer}*/player ) {
 		player.RemoveThink("RegenThink")
 	}
 )
 
 CreateCustomPowerup("Precision",
-	function(/**@type {CTFPlayer}*/player) {
+	function( /**@type {CTFPlayer}*/player ) {
 		player.AddCustomAttribute("weapon spread bonus", 0.1, 0)
 
-		if(player.GetPlayerClass() == TF_CLASS_SNIPER)
+		if (player.GetPlayerClass() == TF_CLASS_SNIPER)
 		{
 			player.AddCustomAttribute("SRifle Charge rate increased", 0.3333, 0)
 			player.AddCustomAttribute("damage bonus", 2, 0) // need primary only
 		}
 
-		if(player.GetPlayerClass() == TF_CLASS_SOLDIER || player.GetPlayerClass() == TF_CLASS_DEMOMAN)
+		if (player.GetPlayerClass() == TF_CLASS_SOLDIER || player.GetPlayerClass() == TF_CLASS_DEMOMAN)
 		{
 			player.AddCustomAttribute("Projectile speed decreased", 3, 0)
 			player.AddCustomAttribute("clip size upgrade atomic", 2, 0)
@@ -373,7 +373,7 @@ CreateCustomPowerup("Precision",
 		}
 		player.UpdateWeaponStats()
 	},
-	function(/**@type {CTFPlayer}*/player) {
+	function( /**@type {CTFPlayer}*/player ) {
 		player.RemoveCustomAttribute("weapon spread bonus")
 		
 		player.RemoveCustomAttribute("SRifle Charge rate increased")
@@ -389,13 +389,13 @@ CreateCustomPowerup("Precision",
 )
 
 CreateCustomPowerup("Agility", 
-	function(/**@type {CTFPlayer}*/player) {
+	function( /**@type {CTFPlayer}*/player ) {
 		player.AddCustomAttribute("move speed bonus", 1.5, 0)
 
 		player.AddCustomAttribute("increased jump height", 1.8, 0)
 		player.AddCustomAttribute("cancel falling damage", 1, 0)
 
-		if(player.GetPlayerClass() != TF_CLASS_SPY)
+		if (player.GetPlayerClass() != TF_CLASS_SPY)
 		{
 			player.AddCustomAttribute("deploy time decreased", 0.2, 0)
 		}
@@ -403,7 +403,7 @@ CreateCustomPowerup("Agility",
 		player.TeamFortress_SetSpeed()
 		player.UpdateWeaponStats()
 	},
-	function(/**@type {CTFPlayer}*/player) {
+	function( /**@type {CTFPlayer}*/player ) {
 		player.RemoveCustomAttribute("move speed bonus")
 
 		player.RemoveCustomAttribute("increased jump height")
@@ -417,7 +417,7 @@ CreateCustomPowerup("Agility",
 )
 
 CreateCustomPowerup("Knockout", 
-	function(/**@type {CTFPlayer}*/player) {
+	function( /**@type {CTFPlayer}*/player ) {
 		// player.AddCustomAttribute("maxammo primary increased")
 		player.Weapon_Switch(player.GetWeaponInSlotNew(SLOT_MELEE))
 		player.AddCustomAttribute("disable weapon switch", 1, 0)
@@ -445,7 +445,7 @@ CreateCustomPowerup("Knockout",
 		case TF_CLASS_DEMOMAN:
 		{
 			hp_add = 150
-			if(GetPropBool(player, "m_Shared.m_bShieldEquipped"))
+			if (GetPropBool(player, "m_Shared.m_bShieldEquipped"))
 				hp_add += 30
 		}
 		break
@@ -456,7 +456,7 @@ CreateCustomPowerup("Knockout",
 		player.TeamFortress_SetSpeed()
 		player.UpdateWeaponStats()
 	},
-	function(/**@type {CTFPlayer}*/player) {
+	function( /**@type {CTFPlayer}*/player ) {
 		player.RemoveCustomAttribute("disable weapon switch")
 
 		player.RemoveCustomAttribute("dmg penalty vs players")
@@ -473,7 +473,7 @@ CreateCustomPowerup("Knockout",
 )
 
 CreateCustomPowerup("King", 
-	function(/**@type {CTFPlayer}*/player) {
+	function( /**@type {CTFPlayer}*/player ) {
 		player.AddCustomAttribute("max health additive bonus", 100, 0)
 		player.AddThink(function() {
 			player.HealPlayer(MATH.RemapVal((player.GetHealth().tofloat() / player.GetMaxHealth()), 1.0, 0.1 player.GetMaxHealth() / 25, player.GetMaxHealth() / 10) * 0.3)
@@ -486,16 +486,16 @@ CreateCustomPowerup("King",
 				plr.AddCustomAttribute("Reload time increased", 0.75, 1)
 				plr.AddCustomAttribute("mult_item_meter_charge_rate", 0.75, 1)
 
-				if(plr.GetPlayerClass() == TF_CLASS_PYRO)
+				if (plr.GetPlayerClass() == TF_CLASS_PYRO)
 					plr.AddCustomAttribute("mult airblast refire time", 0.75, 1)
 
-				if(plr.GetPlayerClass() == TF_CLASS_ENGINEER)
+				if (plr.GetPlayerClass() == TF_CLASS_ENGINEER)
 					plr.AddCustomAttribute("engy sentry fire rate increased", 0.75, 1)
 
-				if(plr.GetPlayerClass() == TF_CLASS_SNIPER)
+				if (plr.GetPlayerClass() == TF_CLASS_SNIPER)
 					plr.AddCustomAttribute("SRifle Charge rate decreased", 0.6666, 1)
 
-				if(plr.GetPlayerClass() == TF_CLASS_MEDIC)
+				if (plr.GetPlayerClass() == TF_CLASS_MEDIC)
 				{
 					plr.AddCustomAttribute("ubercharge rate penalty", 1.5, 1)
 					plr.AddCustomAttribute("heal rate penalty", 1.5, 1)
@@ -508,23 +508,23 @@ CreateCustomPowerup("King",
 			return 0.5
 		}, "KingThink")
 	},
-	function(/**@type {CTFPlayer}*/player) {
+	function( /**@type {CTFPlayer}*/player ) {
 		player.RemoveThink("KingThink")
 		player.RemoveCustomAttribute("max health additive bonus")
 	}
 )
 
 CreateCustomPowerup("Plague", 
-	function(/**@type {CTFPlayer}*/player) {
+	function( /**@type {CTFPlayer}*/player ) {
 		player.AddCustomAttribute("health from packs increased", 2.0, 0)
 		player.AddThink(function() {
 			local nearby = GetAllPlayers(player.GetTeam() == TF_TEAM_RED ? TF_TEAM_BLUE : TF_TEAM_RED, 500)
 
 			foreach (/**@type {CTFPlayer}*/plr in nearby)
 			{
-				if(plr.IsInvincible())
+				if (plr.IsInvincible())
 					continue
-				if(plr.GetCustomPowerup() == "Resistance" || plr.GetCustomPowerup() == "Vampire")
+				if (plr.GetCustomPowerup() == "Resistance" || plr.GetCustomPowerup() == "Vampire")
 				plr.TakeDamageCustom(player, player, player, Vector(), Vector(), plr.GetMaxHealth() / 30.0, DMG_GENERIC, TF_DMG_CUSTOM_NO_CALLBACKS_IGNORE)
 				GetScope(plr).Plaguer <- player
 				GetScope(plr).PlagueTime <- Time()
@@ -532,7 +532,7 @@ CreateCustomPowerup("Plague",
 			return 0.333
 		}, "PlagueThink")
 	},
-	function(/**@type {CTFPlayer}*/player) {
+	function( /**@type {CTFPlayer}*/player ) {
 		player.RemoveThink("PlagueThink")
 		player.RemoveCustomAttribute("health from packs increased")
 	}

@@ -1,4 +1,4 @@
-if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
+if (!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
 SetScriptVersion("GameplayApplications", "4.1.0")
@@ -69,19 +69,19 @@ local Thinker = CreateThinker("Thinker_GlobalGameText", "GameplayThink", THINKER
 
 PrecacheSound(BlutsaugerSettings.sound)
 
-AddChatTrigger("ehp", function(player, ...) { 
-	if(!player || vargv.len() > 1)
+AddChatTrigger("ehp", function( player, ... ) { 
+	if (!player || vargv.len() > 1)
 		return
-	if(vargv.len() == 0)
+	if (vargv.len() == 0)
 		player.CalculateEHP()
-	else if(vargv[0] == "help")
+	else if (vargv[0] == "help")
 		player.PrintToChat("\x07FFFF00[Effective Hp]: \x03Calculates your Effective Health.\n\x04Just say \x03/ehp\x04 or \x03!ehp\x04 (not case sensitive)")
 } )
 
-AddChatTrigger(["shape", "class", "change", "changeclass", "switch", "shapeshift"], function(player, ...) {
-	if(!player)
+AddChatTrigger(["shape", "class", "change", "changeclass", "switch", "shapeshift"], function( player, ... ) {
+	if (!player)
 		return
-	if(vargv.len() != 1)
+	if (vargv.len() != 1)
 	{
 		player.PrintToChat("\x07FF0000[►] No class specified. Try again.")
 		return
@@ -89,25 +89,25 @@ AddChatTrigger(["shape", "class", "change", "changeclass", "switch", "shapeshift
 
 	local name = vargv[0].tolower()
 	local class_index = TF_CLASS_UNDEFINED
-	if(		startswith(name, "sc"))
+	if (		startswith(name, "sc"))
 		class_index = TF_CLASS_SCOUT
-	else if(startswith(name, "so"))
+	else if (startswith(name, "so"))
 		class_index = TF_CLASS_SOLDIER
-	else if(startswith(name, "p"))
+	else if (startswith(name, "p"))
 		class_index = TF_CLASS_PYRO
-	else if(startswith(name, "d"))
+	else if (startswith(name, "d"))
 		class_index = TF_CLASS_DEMOMAN
-	else if(startswith(name, "h"))
+	else if (startswith(name, "h"))
 		class_index = TF_CLASS_HEAVYWEAPONS
-	else if(startswith(name, "e"))
+	else if (startswith(name, "e"))
 		class_index = TF_CLASS_ENGINEER
-	else if(startswith(name, "m"))
+	else if (startswith(name, "m"))
 		class_index = TF_CLASS_MEDIC
-	else if(startswith(name, "sn"))
+	else if (startswith(name, "sn"))
 		class_index = TF_CLASS_SNIPER
-	else if(startswith(name, "sp"))
+	else if (startswith(name, "sp"))
 		class_index = TF_CLASS_SPY
-	else if(startswith(name, "civ"))
+	else if (startswith(name, "civ"))
 	{
 		player.PrintToChat("This aint TF2Classified, And it Wont be Supported.")
 		return
@@ -118,7 +118,7 @@ AddChatTrigger(["shape", "class", "change", "changeclass", "switch", "shapeshift
 		return
 	}
 
-	if(player.InRespawnRoom())
+	if (player.InRespawnRoom())
 		player.ForceChangeClass(class_index, true)
 	else 
 	{
@@ -127,16 +127,16 @@ AddChatTrigger(["shape", "class", "change", "changeclass", "switch", "shapeshift
 	}
 } )
 
-AddChatTrigger("equip" function(player, ...) {
-	if(!player)
+AddChatTrigger("equip" function( player, ... ) {
+	if (!player)
 		return
 
-	if(!player.InRespawnRoom())
+	if (!player.InRespawnRoom())
 	{
 		player.PrintToChat("Can't Change loadout outside of Spawn Room.")
 		return
 	}
-	if(vargv.len() != 1)
+	if (vargv.len() != 1)
 	{
 		player.PrintToChat("Incorrect Arguments, Allowed arguments are . . .")
 		player.PrintToChat("\"bread\" or \"1\": Gives Bread Bite")
@@ -149,17 +149,17 @@ AddChatTrigger("equip" function(player, ...) {
 	local ret_item = null
 	local player_class = player.GetPlayerClass()
 
-	if(player.IsGHeavy())
+	if (player.IsGHeavy())
 	{
 		player.PrintToChat("This item is too dangerous to equip right now...")
 		return
 	}
 
-	if((startswith(item, "brea") || item == "1") && player_class == TF_CLASS_HEAVYWEAPONS)
+	if ((startswith(item, "brea") || item == "1") && player_class == TF_CLASS_HEAVYWEAPONS)
 		ret_item = ["tf_weapon_fists", 1100]
-	else if((item == "mark" || item == "jarate" || item == "2") && player_class == TF_CLASS_SNIPER)
+	else if ((item == "mark" || item == "jarate" || item == "2") && player_class == TF_CLASS_SNIPER)
 		ret_item = ["tf_weapon_jar", 1105]
-	else if((item == "mutated" || item == "milk" || item == "3") && player_class == TF_CLASS_SCOUT)
+	else if ((item == "mutated" || item == "milk" || item == "3") && player_class == TF_CLASS_SCOUT)
 		ret_item = ["tf_weapon_jar_milk", 1121]
 	else 
 	{
@@ -171,14 +171,14 @@ AddChatTrigger("equip" function(player, ...) {
 	}
 
 
-	if(ret_item)
+	if (ret_item)
 	{
-		if(!("ItemTranslateTable" in ROOT))
+		if (!("ItemTranslateTable" in ROOT))
 			throw "Warning! Missing ItemTranslateTable!"
 		local idx = ret_item[1]
 		foreach (item, indexs in ItemTranslateTable)
 		{
-			if(!IsInArray(idx, indexs))
+			if (!IsInArray(idx, indexs))
 				continue
 			player.IHTranslateToChat2(item)
 			break
@@ -196,21 +196,21 @@ function GameplayThink()
 	{
 		GetScope(bot).LastVel <- bot.GetAbsVelocity()
 
-		if(bot.InCond(TF_COND_REPROGRAMMED) && (!bot.IsValidReprogramTarget() || bot.GetPlayerClass() == TF_CLASS_MEDIC))
+		if (bot.InCond(TF_COND_REPROGRAMMED) && (!bot.IsValidReprogramTarget() || bot.GetPlayerClass() == TF_CLASS_MEDIC))
 		{
 			bot.RemoveCondEx(TF_COND_REPROGRAMMED, true)
-			foreach(attribute in BlutsaugerRemoveAttributes)
+			foreach (attribute in BlutsaugerRemoveAttributes)
 				bot.RemoveCustomAttribute(attribute)
 		}
 
 		local Corrosion = bot.GetCorrosion()
 
-		if(bot.HasCorrosion() && bot.CanRemoveCorrosion() || Corrosion == null)
+		if (bot.HasCorrosion() && bot.CanRemoveCorrosion() || Corrosion == null)
 		{
 			bot.RemoveCorrosion()
 			continue
 		}
-		if(Time() >= Corrosion.flNextTick)
+		if (Time() >= Corrosion.flNextTick)
 		{
 			bot.CorrosionTick()
 			continue
@@ -236,29 +236,29 @@ function GameplayThink()
 
 		foreach (item in AddCondIDS)
 		{
-			if(meleeIDX == item[0])
+			if (meleeIDX == item[0])
 				Human.SetCond(item[1], -1)
 		}
 
 		foreach (item in GravityIDS)
 		{
-			if(meleeIDX == item[0])
+			if (meleeIDX == item[0])
 				Human.MultiplyGravity(item[1])
 		}
 
-		if(activeIDX == TF_WEAPON_TOMISLAV)
+		if (activeIDX == TF_WEAPON_TOMISLAV)
 			Human.TranslateToHud("TOMISLAV_HEAT", ("Hits" in GetScope(active) ? GetScope(active).Hits/10 : -1))
 
 
-		if(primaryIDX == TF_WEAPON_TOMISLAV)
+		if (primaryIDX == TF_WEAPON_TOMISLAV)
 		{
 			local scope = GetScope(primary)
 
-			if(IsNotInScope("Hits", scope))
+			if (IsNotInScope("Hits", scope))
 				scope.Hits <- 0
-			if(IsNotInScope("m_flLastHeatHit", scope))
+			if (IsNotInScope("m_flLastHeatHit", scope))
 				scope.m_flLastHeatHit <- Time()
-			if(IsNotInScope("m_flLastHeatLoseTime", scope))
+			if (IsNotInScope("m_flLastHeatLoseTime", scope))
 				scope.m_flLastHeatLoseTime <- Time()
 
 			local HeatLoss = GetRoundState() != GR_STATE_RND_RUNNING ? TOMISLAV_SETTINGS.HeatLostPerSecond * 0.1 : TOMISLAV_SETTINGS.HeatLostPerSecond
@@ -275,10 +275,10 @@ function GameplayThink()
 				primary.AddAttribute("Set DamageType Ignite", (scope.Hits > 400).tointeger(), 0)
 				primary.AddAttribute("ragdolls become ash", (scope.Hits > 700).tointeger(), 0)
 				primary.AddAttribute("turn to gold", (scope.Hits > 1000).tointeger(), 0)
-				if(Human.GetPrimaryAmmo() > Human.GetMaximumPrimaryAmmo())
+				if (Human.GetPrimaryAmmo() > Human.GetMaximumPrimaryAmmo())
 					Human.ResetPrimaryAmmo()
 			}
-			if(scope.Hits >= 1000)
+			if (scope.Hits >= 1000)
 				scope.Hits = 1000
 			primary.ReapplyProvision()
 		}
@@ -297,9 +297,9 @@ function GameplayThink()
 	return -1
 }
 
-function ROOT::ModifyCallbackDamage(params, victim, attacker, weapon, inflictor)
+function ROOT::ModifyCallbackDamage( params, victim, attacker, weapon, inflictor )
 {
-	if(params.damage_custom > (1<<7))
+	if (params.damage_custom > (1<<7))
 		return
 	switch (params.damage_custom)
 	{
@@ -316,8 +316,8 @@ function ROOT::ModifyCallbackDamage(params, victim, attacker, weapon, inflictor)
 			ignore = [victim]
 			SoundRadius = (EBSettings.base_range + (iExplosiveShot * EBSettings.additive_range)) * 1
 			use_func_on_ignore = true
-			func = function(player) {
-				if(!player || !player.IsValid() || !player.IsPlayer())
+			func = function( player ) {
+				if (!player || !player.IsValid() || !player.IsPlayer())
 					return
 				player.StunPlayer(MATH.Clamp(iExplosiveShot - 1, 0, 2), 0.6, TF_STUN_MOVEMENT, attacker )
 			}
@@ -328,13 +328,13 @@ function ROOT::ModifyCallbackDamage(params, victim, attacker, weapon, inflictor)
 		local FallingVel = attacker.GetAbsVelocity().z
 		local PrevFallingVel = "LastVel" in GetScope(attacker) ? GetScope(attacker).LastVel.z : -1
 
-		if(FallingVel > 0 || PrevFallingVel > 0)
+		if (FallingVel > 0 || PrevFallingVel > 0)
 		{
 			params.damage = 1000
 			break;
 		}
 
-		if(FallingVel > PrevFallingVel)
+		if (FallingVel > PrevFallingVel)
 			FallingVel = PrevFallingVel
 		
 		local FALL_DMG_MULT = weapon.GetIDX() == TF_WEAPON_WARRIOR_SPIRIT ? 60 : 100
@@ -342,9 +342,9 @@ function ROOT::ModifyCallbackDamage(params, victim, attacker, weapon, inflictor)
 		//attacker.PrintToHud("Falling: "+FallingVel+"\nPrevFalling: "+PrevFallingVel)
 
 		// Minimum falling dmg is 1000
-		if(weapon.GetIDX() == TF_WEAPON_WARRIOR_SPIRIT && FallingVel < -1500)
+		if (weapon.GetIDX() == TF_WEAPON_WARRIOR_SPIRIT && FallingVel < -1500)
 		{
-			if(victim.IsPlayer())
+			if (victim.IsPlayer())
 				victim.AddCondEx(TF_COND_MARKEDFORDEATH_SILENT, TICK_DUR, attacker)
 		}
 		// SetPropFloat(victim, "m_flDamageAccumulator", 1.1) // technically adds 1 damage
@@ -362,13 +362,13 @@ function ROOT::ModifyCallbackDamage(params, victim, attacker, weapon, inflictor)
 	case TF_DMG_CUSTOM_SPELL_MIRV:
 	case TF_DMG_CUSTOM_SPELL_METEOR:
 	case TF_DMG_CUSTOM_SPELL_BLASTJUMP: 
-		if(victim.IsPlayer())
+		if (victim.IsPlayer())
 			victim.AddCondEx(TF_COND_MARKEDFORDEATH, 10, attacker)
 	break;
 	}
 }
 
-function ROOT::ProcessChaosWeaponHit(params, victim, attacker, weapon, inflictor)
+function ROOT::ProcessChaosWeaponHit( params, victim, attacker, weapon, inflictor )
 {
 	switch (weapon.GetIDX())
 	{
@@ -379,7 +379,7 @@ function ROOT::ProcessChaosWeaponHit(params, victim, attacker, weapon, inflictor
 
 		local addHits = 1
 
-		if(params.damage_type & DMG_CRITICAL)
+		if (params.damage_type & DMG_CRITICAL)
 			addHits = 3
 		else if ((victim.IsPlayer() && victim.IsMinicritDebuffed()) || attacker.IsMinicritBuffed())
 			addHits = 2
@@ -396,10 +396,10 @@ function ROOT::ProcessChaosWeaponHit(params, victim, attacker, weapon, inflictor
 		weapon.AddAttribute("Set DamageType Ignite", (scope.Hits > 400).tointeger(), 0)
 		weapon.AddAttribute("ragdolls become ash", (scope.Hits > 700).tointeger(), 0)
 		weapon.AddAttribute("turn to gold", (scope.Hits > 1000).tointeger(), 0)
-		if(attacker.GetPrimaryAmmo() > attacker.GetMaximumPrimaryAmmo())
+		if (attacker.GetPrimaryAmmo() > attacker.GetMaximumPrimaryAmmo())
 			attacker.ResetPrimaryAmmo()
 				
-		if( scope.Hits >= 1000 )
+		if ( scope.Hits >= 1000 )
 			scope.Hits = 1000
 		weapon.ReapplyProvision()
 	}
@@ -420,24 +420,24 @@ function ROOT::ProcessChaosWeaponHit(params, victim, attacker, weapon, inflictor
 	break;
 	case TF_WEAPON_BLUTSAUGER:
 	{
-		if(!victim.IsPlayer())
+		if (!victim.IsPlayer())
 			break
 
-		if(inflictor && inflictor.GetOwner() && inflictor.GetOwner() == victim)
+		if (inflictor && inflictor.GetOwner() && inflictor.GetOwner() == victim)
 			return
 
-		if( !victim.IsValidReprogramTarget() || victim.GetPlayerClass() == TF_CLASS_MEDIC || victim.GetTeam() == TF_TEAM_RED)
+		if ( !victim.IsValidReprogramTarget() || victim.GetPlayerClass() == TF_CLASS_MEDIC || victim.GetTeam() == TF_TEAM_RED)
 		{
 			attacker.GetWeaponInSlotNew(SLOT_SECONDARY).IncreaseUberChargePercent(BlutsaugerSettings.refund)
-			if(!victim.IsValidReprogramTarget())
+			if (!victim.IsValidReprogramTarget())
 				attacker.TranslateToChat("REPROG_BOT_STRONG", victim.GetUserName())
-			else if(victim.GetPlayerClass() == TF_CLASS_MEDIC)
+			else if (victim.GetPlayerClass() == TF_CLASS_MEDIC)
 				attacker.TranslateToChat("REPROG_BOT_NOT_SUIT", victim.GetUserName())
 			return
 		}
 		TranslateToChatAll("REPROG_BOT_MESSAGE", attacker.GetUserName(), victim.GetUserName())
 
-		if(!victim.HasBotAttribute(AGGRESSIVE))
+		if (!victim.HasBotAttribute(AGGRESSIVE))
 		{
 			victim.AddBotAttribute(AGGRESSIVE)
 			RunWithDelay(@() victim.UndoReprogram(), 30.0)
@@ -454,9 +454,9 @@ function ROOT::ProcessChaosWeaponHit(params, victim, attacker, weapon, inflictor
 	break;
 	case TF_WEAPON_BREAD_BITE:
 	{
-		if( !victim.IsPlayer() || !(params.damage_type & DMG_CRITICAL))
+		if ( !victim.IsPlayer() || !(params.damage_type & DMG_CRITICAL))
 			break
-		if( !victim.CanHaveCorrosion() || victim.HasCorrosion() )
+		if ( !victim.CanHaveCorrosion() || victim.HasCorrosion() )
 			break
 				
 		// attacker.PrintToHud("Made Corrosion on " + victim)
@@ -474,15 +474,15 @@ function ROOT::ProcessChaosWeaponHit(params, victim, attacker, weapon, inflictor
 // if other scripts use DamageCallbacks then Remove this!!
 ClearDamageCallbacks()
 
-// RegisterDamageCallback("player", "GameplayPlayer" function(params) {
+// RegisterDamageCallback("player", "GameplayPlayer" function( params ) {
 // 	params.damage <- 100
 // 	ModifyCallbackDamage(params, params.victim, params.attacker, params.weapon, params.inflictor)
 // 	ProcessChaosWeaponHit(params, params.victim, params.attacker, params.weapon, params.inflictor)
 // })
 
 
-RegisterDamageCallback("player", "GameplayPlayer" function(params) {
-	if((params.damage_custom & TF_DMG_CUSTOM_IGNORE_EVENTS) || params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
+RegisterDamageCallback("player", "GameplayPlayer" function( params ) {
+	if ((params.damage_custom & TF_DMG_CUSTOM_IGNORE_EVENTS) || params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
 		return
 
 	local victim 	= params.victim
@@ -490,28 +490,28 @@ RegisterDamageCallback("player", "GameplayPlayer" function(params) {
 	local weapon 	= null
 	local inflictor	= params.inflictor
 
-	if(!attacker)
+	if (!attacker)
 		return
 
 	if (attacker.IsPlayer() && params.damage_custom >= TF_DMG_CUSTOM_SPELL_TELEPORT && params.damage_custom <= TF_DMG_CUSTOM_KART)
 	{
 		local spell_book = attacker.GetSpellBook()
-		if(spell_book)
+		if (spell_book)
 			params.weapon = spell_book
 		else
 			params.weapon = attacker.GetWeaponInSlotNew(SLOT_MELEE)
 	}
 	if (attacker.IsPlayer() && params.damage_custom == TF_DMG_CUSTOM_BOOTS_STOMP)
 	{
-		if(attacker.GetWeaponInSlotNew(SLOT_SECONDARY).IsWearable())
+		if (attacker.GetWeaponInSlotNew(SLOT_SECONDARY).IsWearable())
 			params.weapon = attacker.GetWeaponInSlotNew(SLOT_SECONDARY)
 		else 
 		{
 			foreach (wep in attacker.GetAllWeapons())
 			{
-				if(wep.GetAttribute("provide on active", 0) && attacker.GetActiveWeapon() != wep)
+				if (wep.GetAttribute("provide on active", 0) && attacker.GetActiveWeapon() != wep)
 					continue
-				if(wep.GetAttribute("boots falling stomp", 0))
+				if (wep.GetAttribute("boots falling stomp", 0))
 				{
 					params.weapon = wep
 					break;
@@ -523,12 +523,12 @@ RegisterDamageCallback("player", "GameplayPlayer" function(params) {
 	local FallingVel = victim.GetAbsVelocity().z
 	local PrevFallingVel = "LastVel" in GetScope(victim) ? GetScope(victim).LastVel.z : 0
 
-	if(FallingVel > 0 || PrevFallingVel > 0) {}
+	if (FallingVel > 0 || PrevFallingVel > 0) {}
 	else if (params.damage_type & DMG_FALL && victim.GetGroundEntity())
 	{
-		if(FallingVel > PrevFallingVel)
+		if (FallingVel > PrevFallingVel)
 			FallingVel = PrevFallingVel
-		if(victim.GetActiveWeaponIDX() == TF_WEAPON_WARRIOR_SPIRIT && FallingVel < -1500)
+		if (victim.GetActiveWeaponIDX() == TF_WEAPON_WARRIOR_SPIRIT && FallingVel < -1500)
 		{
 			CreateSlamAoETable({
 				owner = victim,
@@ -544,21 +544,21 @@ RegisterDamageCallback("player", "GameplayPlayer" function(params) {
 
 	weapon = params.weapon
 
-	if(!attacker || !weapon || !inflictor)
+	if (!attacker || !weapon || !inflictor)
 		return
 
-	if( !(startswith(weapon.GetClassname(), "tf_weapon") || startswith(weapon.GetClassname(), "tf_wearable")) )
+	if ( !(startswith(weapon.GetClassname(), "tf_weapon") || startswith(weapon.GetClassname(), "tf_wearable")) )
 		return
 
-	if(victim.IsInvincible() || IsPlayerABot(attacker))
+	if (victim.IsInvincible() || IsPlayerABot(attacker))
 		return
 
 	ModifyCallbackDamage(params, victim, attacker, weapon, inflictor)
 	ProcessChaosWeaponHit(params, victim, attacker, weapon, inflictor)
 })
 
-RegisterDamageCallback(["obj_sentrygun", "obj_teleporter", "obj_dispenser", "tank_boss"], "GameplayOthers", function(params) {
-	if((params.damage_custom & TF_DMG_CUSTOM_IGNORE_EVENTS) || params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
+RegisterDamageCallback(["obj_sentrygun", "obj_teleporter", "obj_dispenser", "tank_boss"], "GameplayOthers", function( params ) {
+	if ((params.damage_custom & TF_DMG_CUSTOM_IGNORE_EVENTS) || params.damage_custom == TF_DMG_CUSTOM_TRIGGER_HURT)
 		return
 
 	local victim 	= params.victim
@@ -569,7 +569,7 @@ RegisterDamageCallback(["obj_sentrygun", "obj_teleporter", "obj_dispenser", "tan
 	if (attacker.IsPlayer() && params.damage_custom >= TF_DMG_CUSTOM_SPELL_TELEPORT && params.damage_custom <= TF_DMG_CUSTOM_KART)
 	{
 		local spell_book = attacker.GetSpellBook()
-		if(spell_book)
+		if (spell_book)
 			params.weapon = spell_book
 		else
 			params.weapon = attacker.GetWeaponInSlotNew(SLOT_MELEE)
@@ -577,18 +577,18 @@ RegisterDamageCallback(["obj_sentrygun", "obj_teleporter", "obj_dispenser", "tan
 
 	weapon = params.weapon
 
-	if(!attacker || !weapon || !inflictor || IsPlayerABot(attacker))
+	if (!attacker || !weapon || !inflictor || IsPlayerABot(attacker))
 		return
 
-	if( !(startswith(weapon.GetClassname(), "tf_weapon") || startswith(weapon.GetClassname(), "tf_wearable")) )
+	if ( !(startswith(weapon.GetClassname(), "tf_weapon") || startswith(weapon.GetClassname(), "tf_wearable")) )
 		return
 
 	ModifyCallbackDamage(params, victim, attacker, weapon, inflictor)
 	ProcessChaosWeaponHit(params, victim, attacker, weapon, inflictor)
 })
 
-RegisterDamageCallback("tf_zombie", "GameplaySkeletons", function(params) {
-	if(params.damage_custom & TF_DMG_CUSTOM_IGNORE_EVENTS)
+RegisterDamageCallback("tf_zombie", "GameplaySkeletons", function( params ) {
+	if (params.damage_custom & TF_DMG_CUSTOM_IGNORE_EVENTS)
 		return
 	params.damage = 0
 	params.victim.TakeDamageCustom(params.inflictor, params.attacker, null, Vector(), Vector(), 5.0, DMG_GENERIC, TF_DMG_CUSTOM_NO_CALLBACKS)
@@ -596,37 +596,37 @@ RegisterDamageCallback("tf_zombie", "GameplaySkeletons", function(params) {
 
 
 
-if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
+if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 ::GameplayEvents <- {
-	function OnScriptEvent_HumanDeath(params)
+	function OnScriptEvent_HumanDeath( params )
 	{
 		local human = params.victim
 		local attacker = params.attacker
 
-		if("OnDeath" in GetScope(human))
+		if ("OnDeath" in GetScope(human))
 		{
 			GetScope(human).OnDeath()
 			delete GetScope(human).OnDeath
 		}
 
-		if(!attacker || !attacker.IsBot() || !MATH.OneInChance(10))
+		if (!attacker || !attacker.IsBot() || !MATH.OneInChance(10))
 			return
 		attacker.SayChatterMessage(human)
 	}
-	function OnScriptEvent_BotDeath(params)
+	function OnScriptEvent_BotDeath( params )
 	{
 		local victim = params.victim
 		local attacker = params.attacker
-		if("OnDeath" in GetScope(victim))
+		if ("OnDeath" in GetScope(victim))
 		{
 			GetScope(victim).OnDeath()
 			delete GetScope(victim).OnDeath
 		}
-		if(!attacker)
+		if (!attacker)
 			return
-		if(attacker.IsBot())
+		if (attacker.IsBot())
 		{
-			if(!attacker.IsReprogrammed() || !MATH.OneInChance(10))
+			if (!attacker.IsReprogrammed() || !MATH.OneInChance(10))
 				return
 			attacker.SayChatterMessage(victim)
 			return
@@ -635,13 +635,13 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 		local logname = params.logname
 
 
-		if(victim.HasCorrosion())
+		if (victim.HasCorrosion())
 		{
 			victim.MakeCorrosionPuddle()
 			victim.RemoveCorrosion()
 		}
 
-		if(!IsInArray(weaponIDX, SpellWeapons) || !IsInArray(logname, SpellWeapons))
+		if (!IsInArray(weaponIDX, SpellWeapons) || !IsInArray(logname, SpellWeapons))
 			return
 
 		local spell_book = attacker.GetSpellBook()
@@ -649,7 +649,7 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 
 		local scope = GetScope(spell_book)
 
-		if(!("m_iKills" in scope))
+		if (!("m_iKills" in scope))
 			scope.m_iKills <- 0
 
 		scope.m_iKills++
@@ -660,52 +660,52 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 			case TF_WEAPON_SHORT_CIRCUT: { spell_book.ModifySpells(TF_SPELL_LIGHTNING, 2, scope.m_iKills, 10) ; return }
 			case TF_WEAPON_CLAIDHEAMH_MOR: { spell_book.ModifySpells(TF_SPELL_MONOCULUS, 2, scope.m_iKills, 10) ; return }
 			case TF_WEAPON_UNARMED_COMBAT: { spell_book.ModifySpells(TF_SPELL_SKELETON, 2, scope.m_iKills, 10) ; return }
-			case TF_WEAPON_CONSCIENTIOUS_OBJECTOR: { if(scope.m_iKills % 10 == 0 && spell_book.GetSpellCharges().tointeger() != SpellDefaults[spell_book.GetSpellIndex()+2].tointeger()) { attacker.RollSpell() } ; return }
+			case TF_WEAPON_CONSCIENTIOUS_OBJECTOR: { if (scope.m_iKills % 10 == 0 && spell_book.GetSpellCharges().tointeger() != SpellDefaults[spell_book.GetSpellIndex()+2].tointeger()) { attacker.RollSpell() } ; return }
 		}
 	}
-	function OnScriptEvent_HumanResupply(params)
+	function OnScriptEvent_HumanResupply( params )
 	{
 		local player = params.player
 
-		if("early_out" in params)
+		if ("early_out" in params)
 			return
 
-		if(player.GetEFlags() & EFL_NO_MEGAPHYSCANNON_RAGDOLL)
+		if (player.GetEFlags() & EFL_NO_MEGAPHYSCANNON_RAGDOLL)
 			return
 
-		if(!IsUsingSpells())
+		if (!IsUsingSpells())
 			SetUsingSpells(true)
 
 		if (player.GetPlayerClass() != TF_CLASS_ENGINEER)
 			player.RemoveAllObjects(true)
 
 		local meleeIDX = player.GetWeaponIDXInSlotNew(SLOT_MELEE)
-		if(meleeIDX == TF_WEAPON_FIST_OF_STEEL)
+		if (meleeIDX == TF_WEAPON_FIST_OF_STEEL)
 			RunWithDelay(@() player.TransformGHeavy(), 0.1)
 		else
 			RunWithDelay(@() player.UndoGHeavy(), 0.1)
-		if(meleeIDX == 172)
+		if (meleeIDX == 172)
 			RunWithDelay(@() player.TransformGDemoknight(), 0.1)
 		else 
 			RunWithDelay(@() player.UndoGDemoknight(), 0.1)
 	}
-	function OnScriptEvent_HumanSpawn(params)
+	function OnScriptEvent_HumanSpawn( params )
 	{
-		if(!params.player)
+		if (!params.player)
 			return
 		local player = params.player
 		RunWithDelay(@() player.FixAmmo(), 0.1)
 		local spellbook = player.GetSpellBook()
 		foreach (weapon in player.GetAllWeapons())
 		{
-			if(weapon.IsWearable())
+			if (weapon.IsWearable())
 				continue
-			if(weapon == spellbook)
+			if (weapon == spellbook)
 				GetScope(weapon).m_iKills <- 0
-			// if(weapon.getclass() == CEconEntity && weapon.getclass() != CTFWeaponBase)
+			// if (weapon.getclass() == CEconEntity && weapon.getclass() != CTFWeaponBase)
 				// continue
 			
-			if(weapon.GetIDX() == TF_WEAPON_TOMISLAV)
+			if (weapon.GetIDX() == TF_WEAPON_TOMISLAV)
 			{
 				weapon.AddAttribute("damage bonus", 1, 0)
 				weapon.AddAttribute("fire rate bonus", 1, 0)
@@ -724,7 +724,7 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 			}
 		}
 	}
-	function OnScriptEvent_BotSpawn(params)
+	function OnScriptEvent_BotSpawn( params )
 	{
 		local player = params.player
 
@@ -745,20 +745,20 @@ if("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 			}
 		}
 	}
-	function OnScriptEvent_BotTeam(params)
+	function OnScriptEvent_BotTeam( params )
 	{
-		if(params.oldteam == TF_TEAM_PVE_INVADERS) return;
+		if (params.oldteam == TF_TEAM_PVE_INVADERS) return;
 		local player = params.player
 		local scope = GetScope(player)
 
-		if("ReProgrammer" in scope && scope.ReProgrammer != null && !scope.ReProgrammer.IsBot())
+		if ("ReProgrammer" in scope && scope.ReProgrammer != null && !scope.ReProgrammer.IsBot())
 			scope.ReProgrammer.TranslateToChat("REPROG_BOT_LEAVE", player.GetUserName())
 		scope.ReProgrammer <- null
 	}
-	function OnGameEvent_mvm_begin_wave(params)
+	function OnGameEvent_mvm_begin_wave( params )
 	{
 		local ConfusionEnt = FindByName(null, "ConfusionEnt")
-		if(!ConfusionEnt) ConfusionEnt = SpawnEntityFromTable("info_target", {targetname = "ConfusionEnt"})
+		if (!ConfusionEnt) ConfusionEnt = SpawnEntityFromTable("info_target", {targetname = "ConfusionEnt"})
 		local name = split(GetMapName().slice(4), "_")[0].tolower()
 		// cuts the mvm_ and removes everything after the first _
 

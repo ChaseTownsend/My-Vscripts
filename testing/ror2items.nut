@@ -28,7 +28,7 @@ enum Rarity {
 	Genuine
 }
 
-function AddItem(items, name, data)
+function AddItem( items, name, data )
 {
 	items[name] <- data
 }
@@ -37,27 +37,27 @@ function InitItems() {
     local items = {}
     // name : data
 	// AddItem(items, "BaseItem")
-	items["BaseItem"] <- ItemData(0, "BaseItem", Rarity.Unique, function(plr, count) {
+	items["BaseItem"] <- ItemData(0, "BaseItem", Rarity.Unique, function( plr, count ) {
 		plr.AddCustomAttribute("max health additive bonus", 35+(25*count), -1)
 	}, null)
-	items["SpeedBoots"] <- ItemData(0, "SpeedBoots", Rarity.Unique, function(plr, count) {
+	items["SpeedBoots"] <- ItemData(0, "SpeedBoots", Rarity.Unique, function( plr, count ) {
 		plr.AddCustomAttribute("move speed bonus", 1+(0.1*count), -1)
 		plr.TeamFortress_SetSpeed()
 		RoR2.PlayerToPlayerData(plr).AdjustDodgeChance()
 	}, null)
-	items["Melee Specialist"] <- ItemData(0, "Melee Specialist", Rarity.Unique, function(plr, count) {
+	items["Melee Specialist"] <- ItemData(0, "Melee Specialist", Rarity.Unique, function( plr, count ) {
 		/** @type {CTFWeaponBase|null} */
 		local weapon = plr.GetWeaponInSlotNew(SLOT_MELEE)
-		if(!weapon)
+		if (!weapon)
 			return
 		weapon.AddAttribute("CARD: damage bonus", 1+(0.3 * count.tofloat()), 0)
 	}, null)
-	items["Medival Specialist"] <- ItemData(0, "Medival Specialist", Rarity.Unique, function(plr, count) {
+	items["Medival Specialist"] <- ItemData(0, "Medival Specialist", Rarity.Unique, function( plr, count ) {
 		/** @type {CTFWeaponBase|null} */
 		local weapon = plr.GetWeaponInSlotNew(SLOT_MELEE)
-		if(!weapon)
+		if (!weapon)
 			return
-		if(count == 1)
+		if (count == 1)
 		{	// TODO: MAKE IT GIVE LESS AND LESS
 			weapon.AddAttribute("melee attack rate bonus", 0.8, 0)
 			return

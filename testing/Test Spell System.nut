@@ -6,9 +6,9 @@
 
 ::SpellSelectSound <- "kaizo/spellselect_full.mp3"
 
-function CreateCustomSpell(name, data)
+function CreateCustomSpell( name, data )
 {
-	if(name in TF_CUSTOM_SPELL_DATA)
+	if (name in TF_CUSTOM_SPELL_DATA)
 	{
 		printf("Warning, Spell \"%s\" is already Defined!\n", name)
 		delete TF_CUSTOM_SPELL_DATA[name]
@@ -26,7 +26,7 @@ function GetSpellIDXS()
 	local nums = []
 	foreach (_, data in TF_CUSTOM_SPELL_DATA)
 	{
-		if(data.SpellIDX > 0)
+		if (data.SpellIDX > 0)
 			nums.append(data.SpellIDX)
 	}
 	return nums
@@ -92,19 +92,19 @@ function CTFPlayer::ApplySpellBookThink()
 
 		local scope = GetScope(self)
 
-		if(!("LastFailSound" in scope))
+		if (!("LastFailSound" in scope))
 			scope.LastFailSound <- 0.0
 
-		if(self.IsUsingActionSlot())
+		if (self.IsUsingActionSlot())
 		{
 			local CastSuccess = Spellbook.UseSpell()
-			if(CastSuccess == false && scope.LastFailSound+0.5 < Time())
+			if (CastSuccess == false && scope.LastFailSound+0.5 < Time())
 			{
 				self.EmitSoundTo("Player.DenyWeaponSelection")
 				// EmitSoundOnClient("Player.DenyWeaponSelection", self)
 				scope.LastFailSound <- Time()
 			}
-			else if(CastSuccess == true)
+			else if (CastSuccess == true)
 			{
 				scope.LastFailSound <- Time()
 			}
@@ -155,7 +155,7 @@ class CustomSpellBook {
 	 * Set the Number of charges this spell has
 	 * @param {integer} charges
 	 */
-	function SetSpellCharges(charges) {SpellCharges = charges}
+	function SetSpellCharges( charges ) {SpellCharges = charges}
 	/**
 	 * No Freeloaders here
 	 */
@@ -172,7 +172,7 @@ class CustomSpellBook {
 		local Up = -9.0
 		local Forward = 3.0
 
-		if(player.AreViewModelsFlipped())
+		if (player.AreViewModelsFlipped())
 			Right *= -1
 
 		local offset = ( Angles.Up() * Up ) + ( Angles.Left() * Right ) + ( Angles.Forward() * Forward )
@@ -185,7 +185,7 @@ class CustomSpellBook {
 	 */
 	function PlayCastSound() { 
 		local data = {}
-		if("SoundData" in SpellData)
+		if ("SoundData" in SpellData)
 			data = SpellData.SoundData
 		player.EmitSoundTo(SpellData.CastSound, data) 
 	}
@@ -194,9 +194,9 @@ class CustomSpellBook {
 	 * Roll a Random spell, if true is passed, always allow a roll, else if false, disallow if they have charges
 	 * @param {bool} bypass
 	 */
-	function RollSpell(bypass = false)
+	function RollSpell( bypass = false )
 	{
-		if(bypass == false && GetSpellCharges() != 0)
+		if (bypass == false && GetSpellCharges() != 0)
 			return
 		SetSpellIndex(-1)
 		SetSpellCharges(0)
@@ -220,7 +220,7 @@ class CustomSpellBook {
 	 * Sets the spell index and Spelldata
 	 * @param {int} index
 	 */
-	function SetSpellIndex(index)
+	function SetSpellIndex( index )
 	{
 		ActiveSpell = index
 		SpellData = FindSpellData()
@@ -234,7 +234,7 @@ class CustomSpellBook {
 	{
 		foreach (_, SpellData in TF_CUSTOM_SPELL_DATA)
 		{
-			if(SpellData.SpellIDX == ActiveSpell)
+			if (SpellData.SpellIDX == ActiveSpell)
 				return SpellData
 		}
 	}
@@ -245,10 +245,10 @@ class CustomSpellBook {
 	 */
 	function CanUseSpell()
 	{
-		if(player.InCond( TF_COND_HALLOWEEN_KART ) && !player.CanAttack())
+		if (player.InCond( TF_COND_HALLOWEEN_KART ) && !player.CanAttack())
 			return false
 
-		if(player.InCond( TF_COND_HALLOWEEN_THRILLER ))
+		if (player.InCond( TF_COND_HALLOWEEN_THRILLER ))
 			return false;
 
 		return SpellCharges > 0
@@ -262,7 +262,7 @@ class CustomSpellBook {
 	 */
 	function UseSpell()
 	{
-		if(LastUseTime + SpellData.FireDelay > Time() || CanUseSpell() == false)
+		if (LastUseTime + SpellData.FireDelay > Time() || CanUseSpell() == false)
 		{
 			return SpellData.OnFail.call(player, SpellData)
 		}
@@ -276,13 +276,13 @@ class CustomSpellBook {
 			CastingSpell = false
 			SpellData.OnCast.call(player, SpellData)
 			PlayCastSound()
-			if(SpellCharges == 0)
+			if (SpellCharges == 0)
 			{
 				SetSpellIndex(0)
 			}
 		}
 
-		if(SpellData.CastTime == 0)
+		if (SpellData.CastTime == 0)
 			return func()
 
 		RunWithDelay(SpellData.CastTime, @() func())
@@ -299,7 +299,7 @@ class CustomSpellBook {
  * @param {bool|function} explosion_callback
  * @returns {CBaseEntity|null}
  */
-function ROOT::CreateRocket(owner, origin, velocity, launcher = null, explosion_callback = false)
+function ROOT::CreateRocket( owner, origin, velocity, launcher = null, explosion_callback = false )
 {
 	local rocket = SpawnEntityFromTable("tf_projectile_rocket", {})
 
@@ -315,7 +315,7 @@ function ROOT::CreateRocket(owner, origin, velocity, launcher = null, explosion_
 	rocket.SetTeam(owner ? owner.GetTeam() : TF_TEAM_UNASSIGNED)
 	rocket.SetCollisionGroup(TFCOLLISION_GROUP_ROCKET_BUT_NOT_WITH_OTHER_ROCKETS)
 
-	if(explosion_callback)
+	if (explosion_callback)
 		SetDestroyCallback(rocket, explosion_callback)
 
 	return rocket
@@ -332,7 +332,7 @@ function ROOT::CreateRocket(owner, origin, velocity, launcher = null, explosion_
  * @param {bool|function} explosion_callback
  * @returns {CBaseEntity|null}
  */
-function ROOT::CreateGrenade(owner, origin, velocity, launcher = null, damage = 100, radius = 146, detonate_time = 0.25, explosion_callback = false)
+function ROOT::CreateGrenade( owner, origin, velocity, launcher = null, damage = 100, radius = 146, detonate_time = 0.25, explosion_callback = false )
 {
 	local grenade = SpawnEntityFromTable("tf_projectile_pipe", {})
 
@@ -351,14 +351,14 @@ function ROOT::CreateGrenade(owner, origin, velocity, launcher = null, damage = 
 	grenade.SetTeam(owner ? owner.GetTeam() : TF_TEAM_UNASSIGNED)
 	grenade.SetCollisionGroup(TFCOLLISION_GROUP_ROCKET_BUT_NOT_WITH_OTHER_ROCKETS)
 
-	if(explosion_callback)
+	if (explosion_callback)
 		SetDestroyCallback(rocket, explosion_callback)
 
 	return grenade
 }
 
 
-function ROOT::SpawnFireball(owner, _SpellData)
+function ROOT::SpawnFireball( owner, _SpellData )
 {
 	local Book = owner.GetCustomSpellBook()
 	local Source = Book.GetSpellSetupOrigin()
@@ -375,7 +375,7 @@ function ROOT::SpawnFireball(owner, _SpellData)
 
 	TraceHull(trace)
 
-	if(trace.startsolid)
+	if (trace.startsolid)
 		return
 
 	local Velocity = 1100 * owner.HookMultAttributes("mult fireball speed")
@@ -401,8 +401,8 @@ function ROOT::SpawnFireball(owner, _SpellData)
 			damage = 100
 			radius = 200 * owner.HookMultAttributes("mult fireball radius")
 
-			function func(player) {
-				if(player.GetPlayerClass() != TF_CLASS_PYRO && !player.InCond(TF_COND_GAS) && !player.InCond(TF_COND_BURNING))
+			function func( player ) {
+				if (player.GetPlayerClass() != TF_CLASS_PYRO && !player.InCond(TF_COND_GAS) && !player.InCond(TF_COND_BURNING))
 					player.AddCondEx(TF_COND_GAS, 1, owner)
 
 				local Dir = (player.WorldSpaceCenter() - self.GetOrigin()).Normalize()
@@ -416,13 +416,13 @@ function ROOT::SpawnFireball(owner, _SpellData)
 	})
 }
 
-function ROOT::SpawnBatBall(_owner, _SpellData)
+function ROOT::SpawnBatBall( _owner, _SpellData )
 {
 	// local ball = CreateGrenade()
 	//TODO: this shit
 }
 
-function ROOT::UseSelfHeal(owner, _SpellData)
+function ROOT::UseSelfHeal( owner, _SpellData )
 {
 	local origin = owner.GetOrigin()
 	owner.AttachParticle("spell_overheal_red")
@@ -431,10 +431,10 @@ function ROOT::UseSelfHeal(owner, _SpellData)
 
 	foreach (player in players)
 	{
-		if(player.IsDead())
+		if (player.IsDead())
 			continue
 
-		if(!CanPointSeePoint(origin, player.GetOrigin()))
+		if (!CanPointSeePoint(origin, player.GetOrigin()))
 			continue
 
 		local Direction = (player.WorldSpaceCenter() - origin).Normalize()
@@ -455,18 +455,18 @@ function ROOT::UseSelfHeal(owner, _SpellData)
 	}
 }
 
-function ROOT::SpawnPumpkinMirv(_owner, _SpellData)
+function ROOT::SpawnPumpkinMirv( _owner, _SpellData )
 {
 	//TODO: this shit
 }
 
-function ROOT::UseBlastJump(owner, _SpellData)
+function ROOT::UseBlastJump( owner, _SpellData )
 {
 	local BlastRadius = 100.0
 	BlastRadius *= owner.HookMultAttributes("mult blastjump radius")
 
 	local vel = owner.GetAbsVelocity()
-	if(vel.z < 0)
+	if (vel.z < 0)
 	{
 		vel.z = 0
 	}
@@ -490,10 +490,10 @@ function ROOT::UseBlastJump(owner, _SpellData)
 
 	foreach (player in players)
 	{
-		if(player.IsDead() || player.GetTeam() == owner.GetTeam())
+		if (player.IsDead() || player.GetTeam() == owner.GetTeam())
 			continue
 
-		if(!CanPointSeePoint(origin, player.GetOrigin()))
+		if (!CanPointSeePoint(origin, player.GetOrigin()))
 			continue
 
 		local Direction = (player.WorldSpaceCenter() - origin).Normalize()
@@ -512,23 +512,23 @@ function ROOT::UseBlastJump(owner, _SpellData)
 	}
 }
 
-function ROOT::UseStealthSpell(owner, _SpellData)
+function ROOT::UseStealthSpell( owner, _SpellData )
 {
 	owner.HealPlayer(MATH.Max(200, owner.GetPercentMaxHealth(15)), true)
 	owner.SetCond(TF_COND_STEALTHED_USER_BUFF, 8.0 * owner.HookMultAttributes("mult stealth duration"))
 }
 
-function ROOT::UseTeleportSpell(_owner, _SpellData)
+function ROOT::UseTeleportSpell( _owner, _SpellData )
 {
 	//TODO: this shit
 }
 
-function ROOT::UseLightningSpell(_owner, _SpellData)
+function ROOT::UseLightningSpell( _owner, _SpellData )
 {
 	//TODO: this shit
 }
 
-function ROOT::UseMinifySpell(owner, _SpellData)
+function ROOT::UseMinifySpell( owner, _SpellData )
 {
 	owner.HealPlayer(MATH.Max(500, owner.GetPercentMaxHealth(30)), true)
 
@@ -538,12 +538,12 @@ function ROOT::UseMinifySpell(owner, _SpellData)
 	owner.SetCond(TF_COND_HALLOWEEN_SPEED_BOOST, duration)
 }
 
-function ROOT::UseMeteorSpell(_owner, _SpellData)
+function ROOT::UseMeteorSpell( _owner, _SpellData )
 {
 	//TODO: this shit
 }
 
-function ROOT::UseMonoculusSpell(owner, _SpellData)
+function ROOT::UseMonoculusSpell( owner, _SpellData )
 {
 	local boss = SpawnEntityFromTable("tf_projectile_spellspawnboss" {
 		origin = owner.GetOrigin()
@@ -584,7 +584,7 @@ function ROOT::UseMonoculusSpell(owner, _SpellData)
 	//TODO: this shit
 }
 
-function ROOT::UseSkeletonSpell(_owner, _SpellData)
+function ROOT::UseSkeletonSpell( _owner, _SpellData )
 {
 	//TODO: this shit
 }
@@ -597,7 +597,7 @@ CreateCustomSpell("Rolling", { // -1
 CreateCustomSpell("None", { // 0
 	idx = 0
 	name = "None"
-	function OnFail(...) {
+	function OnFail( ... ) {
 		return false
 	}
 })
@@ -606,10 +606,10 @@ CreateCustomSpell("Fireball", { // 1
 	name = "Fireball"
 	casttime = 0.25
 	castsound = "Halloween.spell_fireball_cast"
-	function OnFail(...) {
+	function OnFail( ... ) {
 		return false
 	}
-	function OnCast(...) {
+	function OnCast( ... ) {
 		ROOT.SpawnFireball(this, vargv[0])
 		return true
 	}
@@ -619,10 +619,10 @@ CreateCustomSpell("Fireball", { // 1
 	name = "Swarm of Bats"
 	casttime = 0.25
 	castsound = "Halloween.spell_bat_cast"
-	function OnFail(...) {
+	function OnFail( ... ) {
 		return false
 	}
-	function OnCast(...) {
+	function OnCast( ... ) {
 		ROOT.SpawnBatBall(this, vargv[0])
 		return true
 	}
@@ -632,10 +632,10 @@ CreateCustomSpell("Overheal", { // 3
 	name = "Overheal"
 	casttime = 0.25
 	castsound = "Halloween.spell_overheal"
-	function OnFail(...) {
+	function OnFail( ... ) {
 		return false
 	}
-	function OnCast(...) {
+	function OnCast( ... ) {
 		ROOT.UseSelfHeal(this, vargv[0])
 		return true
 	}
@@ -645,10 +645,10 @@ CreateCustomSpell("Overheal", { // 3
 	name = "Pumpking Mirv"
 	casttime = 0.25
 	castsound = "Halloween.spell_mirv_cast"
-	function OnFail(...) {
+	function OnFail( ... ) {
 		return false
 	}
-	function OnCast(...) {
+	function OnCast( ... ) {
 		ROOT.SpawnPumpkinMirv(this, vargv[0])
 		return true
 	}
@@ -658,10 +658,10 @@ CreateCustomSpell("BlastJump", { // 5
 	name = "Blast Jump"
 	casttime = 0.25
 	castsound = "Halloween.spell_blastjump"
-	function OnFail(...) {
+	function OnFail( ... ) {
 		return false
 	}
-	function OnCast(...) {
+	function OnCast( ... ) {
 		ROOT.UseBlastJump(this, vargv[0])
 		return true
 	}
@@ -671,10 +671,10 @@ CreateCustomSpell("Stealth", { // 6
 	name = "Stealth"
 	casttime = 0.25
 	castsound = "Halloween.spell_stealth"
-	function OnFail(...) {
+	function OnFail( ... ) {
 		return false
 	}
-	function OnCast(...) {
+	function OnCast( ... ) {
 		ROOT.UseStealthSpell(this, vargv[0])
 		return true
 	}
@@ -684,10 +684,10 @@ CreateCustomSpell("Stealth", { // 6
 	name = "Teleport"
 	casttime = 0.25
 	castsound = "Halloween.spell_teleport"
-	function OnFail(...) {
+	function OnFail( ... ) {
 		return false
 	}
-	function OnCast(...) {
+	function OnCast( ... ) {
 		ROOT.UseTeleportSpell(this, vargv[0])
 		return true
 	}
@@ -697,10 +697,10 @@ CreateCustomSpell("Stealth", { // 6
 	name = "Lightning"
 	casttime = 0.25
 	castsound = "Halloween.spell_lightning_cast"
-	function OnFail(...) {
+	function OnFail( ... ) {
 		return false
 	}
-	function OnCast(...) {
+	function OnCast( ... ) {
 		ROOT.UseLightningSpell(this, vargv[0])
 		return true
 	}
@@ -710,10 +710,10 @@ CreateCustomSpell("Minify", { // 9
 	name = "Minify"
 	casttime = 0.25
 	castsound = "Halloween.spell_athletic"
-	function OnFail(...) {
+	function OnFail( ... ) {
 		return false
 	}
-	function OnCast(...) {
+	function OnCast( ... ) {
 		ROOT.UseMinifySpell(this, vargv[0])
 		return true
 	}
@@ -723,10 +723,10 @@ CreateCustomSpell("Minify", { // 9
 	name = "Meteor"
 	casttime = 0.25
 	castsound = "Halloween.spell_meteor_cast"
-	function OnFail(...) {
+	function OnFail( ... ) {
 		return false
 	}
-	function OnCast(...) {
+	function OnCast( ... ) {
 		ROOT.UseMeteorSpell(this, vargv[0])
 		return true
 	}
@@ -736,10 +736,10 @@ CreateCustomSpell("Monoculus", { // 11
 	name = "Monoculus"
 	casttime = 0.25
 	castsound = "Halloween.Merasmus_Spell"
-	function OnFail(...) {
+	function OnFail( ... ) {
 		return false
 	}
-	function OnCast(...) {
+	function OnCast( ... ) {
 		ROOT.UseMonoculusSpell(this, vargv[0])
 		return true
 	}
@@ -749,17 +749,17 @@ CreateCustomSpell("Monoculus", { // 11
 	name = "Skeletons"
 	casttime = 0.25
 	castsound = "Halloween.spell_skeleton_horde_cast"
-	function OnFail(...) {
+	function OnFail( ... ) {
 		return false
 	}
-	function OnCast(...) {
+	function OnCast( ... ) {
 		ROOT.UseSkeletonSpell(this, vargv[0])
 		return true
 	}
 }) */
 
 ::SpellEvents <- {
-	function OnScriptEvent_HumanSpawn(params)
+	function OnScriptEvent_HumanSpawn( params )
 	{
 		local player = params.player
 
@@ -769,17 +769,17 @@ CreateCustomSpell("Monoculus", { // 11
 		book.SetSpellIndex(0)
 		book.SetSpellCharges(0)
 	}
-	function OnScriptEvent_BotDeath(params)
+	function OnScriptEvent_BotDeath( params )
 	{
 		// local victim = params.victim
 		local attacker = params.attacker
 
-		if(!attacker || !attacker.IsPlayer())
+		if (!attacker || !attacker.IsPlayer())
 			return
 
 		local book = attacker.GetCustomSpellBook()
 
-		if(book.CastingSpell == false && book.RollingSpell == false)
+		if (book.CastingSpell == false && book.RollingSpell == false)
 		{
 			book.RollSpell()
 		}

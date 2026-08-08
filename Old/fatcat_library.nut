@@ -689,7 +689,7 @@ local Invincible_Conds = [
 	local ammo_mult = 1
 	local name = this.GetWeaponInSlotNew(0).GetClassname()
 	printl(name.slice(10, name.len))
-	switch (split[2])
+	switch (name[2])
 	{
 		case "minigun":
 		case "flamethrower":
@@ -698,9 +698,9 @@ local Invincible_Conds = [
 		}
 		case "rocketlauncher":
 		{
-			if (split.len() == 4)
+			if (name.len() == 4)
 			{
-				if (split[3] == "fireball")
+				if (name[3] == "fireball")
 				{
 					ammo = 40
 				}
@@ -933,28 +933,28 @@ local Invincible_Conds = [
 }
 
 //// Entity Debug
-::ShowBBOX <- function( entity = null, rgba = Vector4D(255, 0, 0, 5 ), duration = 1)
+::ShowBBOX <- function( entity = null, rgba = Vector4D( 255, 0, 0, 5 ), duration = 1 )
 {
 	if ( !entity ) 
 		return
 	DebugDrawBox(entity.GetOrigin(), entity.GetBoundingMins(), entity.GetBoundingMaxs(), rgba.x, rgba.y, rgba.z, rgba.w, duration)
 }
 
-::ShowOBB <- function( entity = null, rgba = Vector4D(255, 0, 0, 5 ), duration = 1)
+::ShowOBB <- function( entity = null, rgba = Vector4D( 255, 0, 0, 5 ), duration = 1 )
 {
 	if ( !entity ) 
 		return
 	DebugDrawBoxAngles(entity.GetOrigin(), entity.GetBoundingMins(), entity.GetBoundingMaxs(), entity.GetAbsAngles(), Vector(rgba.x, rgba.y, rgba.z), rgba.w, duration)
 }
 
-::ShowAABB <- function( entity = null, rgba = Vector4D(255, 0, 0, 5 ), duration = 1)
+::ShowAABB <- function( entity = null, rgba = Vector4D( 255, 0, 0, 5 ), duration = 1 )
 {
 	if ( !entity ) 
 		return
 	DebugDrawBox(entity.GetOrigin(),entity.GetBoundingMins(), entity.GetBoundingMaxs(), rgba.x, rgba.y, rgba.z, rgba.w, duration)
 }
 
-::DebugDrawTrigger <- function( trigger = null, color = Vector4D(255, 128, 0, 1 ), duration = 5)
+::DebugDrawTrigger <- function( trigger = null, color = Vector4D( 255, 128, 0, 1 ), duration = 5 )
 {
 	if ( !trigger ) return
 
@@ -996,7 +996,7 @@ local Invincible_Conds = [
 	return entity
 }
 
-::FindByClassnameNearest <- function( classname, center,radius )
+::FindByClassnameNearest <- function( classname, center, r )adius )
 {
 	local entity = Entities.FindByClassnameNearest(classname, center, radius)
 	EnableStringPurge(entity)
@@ -1373,7 +1373,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	}
 }
 
-::CreateTestTank <- function( origin = Vector(0, 0, 0 ), angles = QAngle(0, 0, 0))
+::CreateTestTank <- function( origin = Vector( 0, 0, 0 ), angles = QAngle(0, 0, 0 ))
 {
 	if (FindByName(null, "Test_Tank"))
 		FindByName(null, "Test_Tank").Kill()
@@ -1466,7 +1466,7 @@ if (!("SpawnEntityFromTableOriginal" in getroottable()))
 	return C + (D - C) * cVal;
 }
 ////
-::CreateAoE <- function( owner, center, radius, maxDmg, minDmg, ignore = [], dmg_Type = DMG_BLAST, sound = "weapons/explode" + RandomInt(1, 3 ) + ".wav", particle = "ExplosionCore_Wall")
+::CreateAoE <- function( owner, center, radius, maxDmg, minDmg, ignore = [], dmg_Type = DMG_BLAST, sound = "weapons/explode" + RandomInt( 1, 3 ) + ".wav", particle = "ExplosionCore_Wall" )
 {
 	local scope = GetScope(owner)
 	if (IsNotInScope("LastExplosionTime", scope))

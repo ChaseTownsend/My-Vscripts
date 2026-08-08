@@ -76,7 +76,7 @@ function CTFPlayer::GetSceneEntitys()
 
 	foreach (scene in ents)
 	{
-		if(GetPropEntity(scene, "m_hOwner") == this)
+		if (GetPropEntity(scene, "m_hOwner") == this)
 			owned.append(scene)
 	}
 
@@ -92,7 +92,7 @@ function CSceneEntity::GetOwner()
 /** 
  * @param {CBaseEntity|null} owner
  */
-function CSceneEntity::SetOwner(owner)
+function CSceneEntity::SetOwner( owner )
 	SetPropEntity(this, "m_hOwner", owner)
 
 function CSceneEntity::GetSceneName()
@@ -102,7 +102,7 @@ function CSceneEntity::GetSceneFileName()
 	return GetPropString(this, "m_szInstanceFilename")
 	
 
-function PrintSceneScenes(ents)
+function PrintSceneScenes( ents )
 {
 	foreach (scene in ents)
 	{
@@ -113,11 +113,11 @@ function PrintSceneScenes(ents)
 	}
 }
 
-function CTFPlayer::IsPlayingScene(scene)
+function CTFPlayer::IsPlayingScene( scene )
 {
 	local Classname = GetPlayerClassName()
 	local Names = []
-	if(type(scene) == "array")
+	if (type(scene) == "array")
 	{
 		foreach (str in scene)
 			Names.append(format("scenes/Player/%s/low/%s.vcd", Classname, str.tostring()))
@@ -133,7 +133,7 @@ function CTFPlayer::IsPlayingScene(scene)
 		{
 			// printf("Scene: %s is playing scene %s\n", scene_entity.tostring(), scene_entity.GetSceneFileName())
 			// printf("Playing Scene == %s? : %s\n", name, (scene_entity.GetSceneFileName() == name).tostring())
-			if(scene_entity.GetSceneFileName() == name)
+			if (scene_entity.GetSceneFileName() == name)
 				return true
 		}
 	}
@@ -149,19 +149,19 @@ function CTFPlayer::IsPlayingMedicScene()
 CreateThinker("OnCalledForMedic", function() {
 	local players = GetAllEntitiesByClassname("player")
 	foreach (player in players) {
-		if(player.IsBot() || !player.IsAlive())
+		if (player.IsBot() || !player.IsAlive())
 			continue
 		local scope = GetScope(player)
-		if(!("LastCalledMedicTime" in scope))
+		if (!("LastCalledMedicTime" in scope))
 			scope.LastCalledMedicTime <- 0.0
 		
-		if(scope.LastCalledMedicTime + 0.25 >= Time())
+		if (scope.LastCalledMedicTime + 0.25 >= Time())
 			continue
 
-		if(player.IsMedicButtonDown() || player.IsCallingForMedic()) {
+		if (player.IsMedicButtonDown() || player.IsCallingForMedic()) {
 			scope.LastCalledMedicTime = Time()
 			local result = RoR2.PlayerCallMedic(player)
-			if(result)
+			if (result)
 			{
 				player.SuppressMedicTalk()
 				RunWithDelay(TICK_DUR, @() player.SuppressMedicTalk())
@@ -174,7 +174,7 @@ CreateThinker("OnCalledForMedic", function() {
 /* CreateThinker("OnCalledForMedic", function() {
 	local players = GetAllEntitiesByClassname("player")
 	foreach (player in players) {
-		if(player.IsBot() || !player.IsAlive())
+		if (player.IsBot() || !player.IsAlive())
 			continue
 
 		local call_medic_time = player.GetTimeSinceCalledForMedic()
@@ -209,7 +209,7 @@ class PlayerData {
 	MoneyCollectionRange = 150
 
 	constructor(p, money = 50.0) {
-		if(p.IsBot())
+		if (p.IsBot())
 			return
 
 		this.Player = p
@@ -234,24 +234,24 @@ class PlayerData {
 		throw "TS aint Implemented yet"
 	}
 
-	function GetItemCount(name) { return name in Items ? Items[name] : 0 }
+	function GetItemCount( name ) { return name in Items ? Items[name] : 0 }
 
-	function GiveItem(name, amount = 1) {
-		if(name in Items)
+	function GiveItem( name, amount = 1 ) {
+		if (name in Items)
 			Items[name] += amount
 		else 
 			Items[name] <- amount
 	}
 
-	function RemoveItem(name, amount = 1) {
+	function RemoveItem( name, amount = 1 ) {
 		Assert(name in Items, format("Trying to Remove Item %s, But the player does not have any of that Item!", name))
 		Items[name] -= amount
 
-		if(Items[name] == 0)
+		if (Items[name] == 0)
 			delete Items[name]
 	}
 
-	function DropItem(name) {
+	function DropItem( name ) {
 		RoR2.CreateItemAtPos(name, Player.GetOrigin())
 	}
 
@@ -292,7 +292,7 @@ class BaseCrate {
 
 		scope.NoItem 			<- "NoItem" in data ? data.NoItem : false
 
-		if(!scope.NoItem)
+		if (!scope.NoItem)
 			scope.Item 			<- "Item" in data ? data.Item : "BaseItem"
 
 		scope.Cost 				<- "Cost" in data ? data.Cost : 50.0
@@ -312,7 +312,7 @@ class BaseCrate {
 		// !caller 		= this entity
 		scope.OnTakeDamage <- function() {
 			Assert(activator && activator.IsPlayer(), "Entity was hurt by a NON PLAYER!")
-			if(activator.GetTeam() != TF_TEAM_PVE_DEFENDERS)
+			if (activator.GetTeam() != TF_TEAM_PVE_DEFENDERS)
 				return
 
 			TestInteraction(activator)
@@ -320,10 +320,10 @@ class BaseCrate {
 
 		scope.BreakEffects <- function() {
 			self = caller
-			if(scope.BreakParticle) {
+			if (scope.BreakParticle) {
 				DispatchParticleEffect( BreakParticle, self.GetOrigin()+ParticleOffset, ParticleAngle ? ParticleAngle : self.GetAbsAngles().Forward() )
 			}
-			if(scope.BreakSound) {
+			if (scope.BreakSound) {
 				EmitSoundEx({
 					sound_name = BreakSound
 					sound_level = 75
@@ -332,16 +332,16 @@ class BaseCrate {
 			}
 		}
 
-		if(!("TestInteraction" in data)) {
-			scope.TestInteraction <- function(activator) {
+		if (!("TestInteraction" in data)) {
+			scope.TestInteraction <- function( activator ) {
 				Assert(activator && activator.IsPlayer(), "Entity was hurt by a NON PLAYER!")
 				self = caller
 
-				if(activator.GetCurrency() >= Cost) {
-					if(scope.BreakParticle) {
+				if (activator.GetCurrency() >= Cost) {
+					if (scope.BreakParticle) {
 						DispatchParticleEffect( BreakParticle, self.GetOrigin()+ParticleOffset, ParticleAngle ? ParticleAngle : self.GetAbsAngles().Forward() )
 					}
-					if(scope.BreakSound) {
+					if (scope.BreakSound) {
 						EmitSoundEx({
 							sound_name = BreakSound
 							sound_level = 75
@@ -349,7 +349,7 @@ class BaseCrate {
 						})
 					}
 					OnPassInteraction(activator)
-					if(GetScope(self).MoneyTag && GetScope(self).MoneyTag.IsValid())
+					if (GetScope(self).MoneyTag && GetScope(self).MoneyTag.IsValid())
 						GetScope(self).MoneyTag.Destroy()
 					self.AcceptInput("Break", "", activator, self)
 				}
@@ -365,12 +365,12 @@ class BaseCrate {
 
 		scope.NoTag <- "NoTag" in data ? data.NoTag : false
 
-		if(!scope.NoTag) {
+		if (!scope.NoTag) {
 			scope.MoneyTag <- null
 			scope.NextDistThink <- Time() + 0.1
 
 			scope.CrateThink <- function() {
-				if(MoneyTag == null || !MoneyTag.IsValid())
+				if (MoneyTag == null || !MoneyTag.IsValid())
 				{
 					MoneyTag = SpawnEntityFromTable("point_worldtext", {})
 					MoneyTag.KeyValueFromString("classname", "fatcat_crate_text")
@@ -382,10 +382,10 @@ class BaseCrate {
 				MoneyTag.KeyValueFromString("message", "MsgOverride" in data ? data.MsgOverride : format("Cost $%g ( Melee to Open )", Cost.tofloat()))
 				MoneyTag.SetAbsOrigin(self.GetOrigin() + Vector(0, 0, 48))
 
-				if(NextDistThink <= Time())
+				if (NextDistThink <= Time())
 				{
 					// fix this getting bots and bots in spec
-					if(FindByClassnameWithin(null, "player", self.GetOrigin(), 450))
+					if (FindByClassnameWithin(null, "player", self.GetOrigin(), 450))
 						MoneyTag.AcceptInput("SetColor", "255 255 255 255", null, null)
 					else 
 						MoneyTag.AcceptInput("SetColor", "255 255 255 0", null, null)
@@ -396,7 +396,7 @@ class BaseCrate {
 		}
 		
 		scope.ClearAndDestroy <- function() {
-			if(!NoTag)
+			if (!NoTag)
 				MoneyTag.Destroy()
 			self.Destroy()
 		}
@@ -406,7 +406,7 @@ class BaseCrate {
 		return Crate
 	}
 
-	function SetItem(name = "BaseItem")
+	function SetItem( name = "BaseItem" )
 	{
 		GetScope(Crate).Item = name
 	}
@@ -421,14 +421,14 @@ class MoneyBarrel extends BaseCrate {
 		new_data.Cost <- 25.0
 		new_data.scale <- 0.65
 		new_data.classname <- "fatcat_barrel_money"
-		new_data.TestInteraction <- function(activator) { 
+		new_data.TestInteraction <- function( activator ) { 
 			Assert(activator && activator.IsPlayer(), "Entity was hurt by a NON PLAYER!")
 			self = caller
 
 			OnPassInteraction(activator)
 			self.AcceptInput("Break", "", activator, self)
 		}
-		new_data.OnPassInteraction <- function(player) { 
+		new_data.OnPassInteraction <- function( player ) { 
 			RoR2.CreateCashAtPos(25 * RoR2.GetMoneyMultiplier(), self.GetOrigin()+Vector(0, 0, 16))
 
 			EmitSoundEx({
@@ -451,7 +451,7 @@ class BaseItem {
 		ItemEnt.KeyValueFromString("classname", "fatcat_dropped_base")
 		ItemEnt.KeyValueFromInt("rendermode", 9)
 		GetScope(ItemEnt).Item <- name
-		GetScope(ItemEnt).OnCollect <- function(player) {
+		GetScope(ItemEnt).OnCollect <- function( player ) {
 			/** @type {PlayerData} */
 			local dPlayer = RoR2.PlayerToPlayerData(player)
 
@@ -473,9 +473,9 @@ class BaseItem {
 		scope.NextDistThink <- Time() + 0.1
 
 		scope.ItemThink <- function() {
-			if(!self || !self.IsValid())
+			if (!self || !self.IsValid())
 				return
-			if(ItemTag == null || !ItemTag.IsValid())
+			if (ItemTag == null || !ItemTag.IsValid())
 			{
 				ItemTag = SpawnEntityFromTable("point_worldtext", {})
 				ItemTag.KeyValueFromString("classname", "fatcat_item_text")
@@ -487,9 +487,9 @@ class BaseItem {
 			ItemTag.KeyValueFromString("message", format("%s\nCall Medic to pick up", GetScope(self).Item))
 			ItemTag.SetAbsOrigin(self.GetOrigin() + Vector(0, 0, 48))
 
-			if(NextDistThink <= Time())
+			if (NextDistThink <= Time())
 			{
-				if(FindByClassnameWithin(null, "player", self.GetOrigin(), 300))
+				if (FindByClassnameWithin(null, "player", self.GetOrigin(), 300))
 					ItemTag.EnableDraw()
 				else 
 					ItemTag.DisableDraw()
@@ -505,7 +505,7 @@ class BaseItem {
 	}
 }
 
-/* function FindGround(start, distance = 192, custom_mask = MASK_PLAYERSOLID) {
+/* function FindGround( start, distance = 192, custom_mask = MASK_PLAYERSOLID ) {
 	local trace = {
 		start = start
 		end = start+Vector(0, 0, -distance)
@@ -550,24 +550,24 @@ class BaseItem {
 	 * @param {CTFPlayer|CTFBot} player
 	 * @returns {PlayerData}
 	 */
-	function AddPlayer(player) {
-		if(!(player.GetUserID() in players))
+	function AddPlayer( player ) {
+		if (!(player.GetUserID() in players))
 			players[player.GetUserID()] <- PlayerData(player)
 		return players[player.GetUserID()]
 	}
 
-	function PlayerToPlayerData(player)
+	function PlayerToPlayerData( player )
 		return player.IsBot() ? AddRobot(player) : AddPlayer(player)
 
-	function AddRobot(bot) {
-		if(!(bot.GetUserID() in robots))
+	function AddRobot( bot ) {
+		if (!(bot.GetUserID() in robots))
 			robots[bot.GetUserID()] <- bot
 		return robots[bot.GetUserID()]
 	}
 
-	function RemovePlayer(player) {
+	function RemovePlayer( player ) {
 		local data = null
-		if(player.GetUserID() in players) {
+		if (player.GetUserID() in players) {
 			data = players[player.GetUserID()]
 			delete players[player.GetUserID()]
 		}
@@ -577,9 +577,9 @@ class BaseItem {
 	 * @param {CTFPlayer|integer} ent
 	 * @returns {PlayerData}
 	 */
-	function GetPlayer(ent)
+	function GetPlayer( ent )
 	{
-		if(type(ent) == "integer")
+		if (type(ent) == "integer")
 			return AddPlayer(GetPlayerFromUserID(ent))
 		return AddPlayer(ent)
 	}
@@ -601,13 +601,13 @@ class BaseItem {
 		ConVars.clear()
 	}
 
-	function SetConVar(cvar, value, NoChat = false) {
+	function SetConVar( cvar, value, NoChat = false ) {
 		if (NoChat) {
 			local node = CreateCommentaryNode()
 			EntFireNew(node, "Kill", "", TICK_DUR*7)
 		}
 
-		if(!IsConvarAllowed(cvar)) {
+		if (!IsConvarAllowed(cvar)) {
 			PrintToChatAllF("\x07FF4040[RoR2 Warning]\x07FF0000 \x03\"%s\"\x07FF0000 is Not on the Cvar AllowList!", cvar)
 			return
 		}
@@ -622,9 +622,9 @@ class BaseItem {
 	CreateCommentaryNode = @() FindByName( null, "commentary" ) || 
 	SpawnEntityFromTable("point_commentary_node", {targetname = "commentary", commentaryfile = " ", commentaryfilenohdr = " "})
 
-	function LoadConvarConfig(FILE = "RoR2ConvarConfig.txt") {
+	function LoadConvarConfig( FILE = "RoR2ConvarConfig.txt" ) {
 		local config = FileToString(FILE)
-		if(!config) {
+		if (!config) {
 			PrintToChatAllF("\x07FF0000[RoR2 FATAL ERROR]\x07FF8080 Config file \"%s\" is Missing or is Too Large!.", FILE)
 			return
 		}
@@ -650,7 +650,7 @@ class BaseItem {
 		StartTime = Time()
 
 		foreach (item in PrecacheData) {
-			if(!IsModelPrecached(item))
+			if (!IsModelPrecached(item))
 				PrecacheModel(item)
 		}
 
@@ -664,7 +664,7 @@ class BaseItem {
 		LoadConvarConfig()
 
 		// add warning
-		if(MaxClients().tointeger() < 33) {
+		if (MaxClients().tointeger() < 33) {
 
 		}
 
@@ -676,14 +676,14 @@ class BaseItem {
 			func(pl)
 		}
 
-		if(Nav.len() == 0)
+		if (Nav.len() == 0)
 			NavMesh.GetAllAreas(Nav)
 
 		Assert(Nav.len() != 0, "0 NAV AREAS FOUND! did your forget to make/get nav for this map?")
 
 		LargestMesh = NavMesh.GetLargestArea(true, Nav)
 
-		if(!FindByName(null, "MeleeOnly")) {
+		if (!FindByName(null, "MeleeOnly")) {
 			local ent = SpawnEntityFromTable("filter_tf_damaged_by_weapon_in_slot", {targetname = "MeleeOnly"})
 			SetPropInt(ent, "m_iWeaponSlot", SLOT_MELEE)
 		}
@@ -711,7 +711,7 @@ class BaseItem {
 	function ClearAllBoxes() {
 		foreach (crate in Crates)
 		{
-			if(crate && crate.IsValid())
+			if (crate && crate.IsValid())
 				GetScope(crate).ClearAndDestroy()
 		}
 		Crates.clear()
@@ -731,18 +731,18 @@ class BaseItem {
 	 * @param {function} MeshFilter
 	 * @param {function} PostSpawnFunc
 	 */
-	function SpawnObjects(SpawnFunc, exData, tAttempts = 200, MinDistance = 200, ObjectLimit = 100, NoCloseEnt = "fatcat_crate*", AllowInSpawn = false, SpawnOffset = Vector(0,0,-4), ToSpawnCalc = @(...) {}, MeshFilter = @(...) {}, PostSpawnFunc = @(...) {})
+	function SpawnObjects( SpawnFunc, exData, tAttempts = 200, MinDistance = 200, ObjectLimit = 100, NoCloseEnt = "fatcat_crate*", AllowInSpawn = false, SpawnOffset = Vector(0, 0, -4 ), ToSpawnCalc = @(...) {}, MeshFilter = @(...) {}, PostSpawnFunc = @(...) {})
 	{
 		// DebugDrawClear()
 
 		local SpawnedOBJs = 0
 
 		foreach (_, Mesh in Nav) {
-			if(!MeshFilter(Mesh))
+			if (!MeshFilter(Mesh))
 				continue
 			local ToSpawn = ToSpawnCalc(Mesh)
 
-			if(ToSpawn == 0)
+			if (ToSpawn == 0)
 				continue
 			
 			// DebugDrawText(Mesh.GetCenter(), format("Area: %g   Num to Spawn: %d", Mesh.GetArea().tofloat(), ToSpawn), true, 1000)
@@ -753,20 +753,20 @@ class BaseItem {
 			{
 				attempts++
 
-				if(SpawnedOBJs > ObjectLimit)
+				if (SpawnedOBJs > ObjectLimit)
 					break
 
 				local MeshPos = Mesh.FindRandomSpot()
 
 				local pos = Vector(MeshPos.x, MeshPos.y, Mesh.GetZ(MeshPos)) + SpawnOffset
 
-				if(FindByClassnameNearest(NoCloseEnt, pos, MinDistance))
+				if (FindByClassnameNearest(NoCloseEnt, pos, MinDistance))
 					continue
 
-				if(!AllowInSpawn && IsPointInRespawnRoom(pos))
+				if (!AllowInSpawn && IsPointInRespawnRoom(pos))
 					continue
 
-				if(MATH.Distance(pos, Mesh.GetCenter()) > Mesh.GetLargestSide()) {
+				if (MATH.Distance(pos, Mesh.GetCenter()) > Mesh.GetLargestSide()) {
 					// DebugDrawText(pos, format("Distance %g Is Greater than largest Side %g!", MATH.Distance(pos, Mesh.GetCenter()), Mesh.GetLargestSide().tofloat()), false, 1000)
 					continue
 				}
@@ -786,24 +786,24 @@ class BaseItem {
 
 	function SpawnCrates() {
 		local data = {
-			OnPassInteraction = function(player) {
+			OnPassInteraction = function( player ) {
 				BaseItem(GetScope(self).Item, self.GetOrigin()+Vector(0, 0, 40))
 				player.RemoveCurrency(GetScope(self).Cost)
 			}
-			OnFailInteraction = function(player) {
+			OnFailInteraction = function( player ) {
 				player.TranslateToChat("NO_MONEY", GetScope(self).Cost, player.GetCurrency())
 			}
 			ParticleOffset = Vector(0, 0, 8)
 			// Item = GenerateRandomItem()[0] // 0 is name, 1 is data
 		}
 		SpawnObjects(BaseCrate, data, 50, 250, 25, "fatcat_*", false, Vector(0,0,-4),
-		function(/**@type {CTFNavArea} */mesh) { //spawncalc
+		function( /**@type {CTFNavArea} */mesh ) { //spawncalc
 			return MATH.Clamp(log10(mesh.GetArea()-249).tointeger() + RandomInt(-1, 1), 0, 5)
 		}, 	
-		function(/**@type {CTFNavArea} */mesh) { //meshfilter
+		function( /**@type {CTFNavArea} */mesh ) { //meshfilter
 			return !mesh.IsTFInSpawnroom() && mesh.GetArea() > 250
 		}, 
-		function(obj)  { //postspawnfunc
+		function( obj )  { //postspawnfunc
 			Crates.append(obj)
 			// PrintTable(obj)
 			obj.SetItem(GenerateRandomItem()[0])
@@ -812,7 +812,7 @@ class BaseItem {
 
 	function SpawnMoneyBarrels() {
 		SpawnObjects(MoneyBarrel, {}, 50, 350, 10, "fatcat_barrel*", false, Vector(0,0,10)
-		function(mesh) { //spawncalc
+		function( mesh ) { //spawncalc
 			local LArea = log10(LargestMesh.GetArea()-50)
 			local a = log10(mesh.GetArea()-50)
 			local b = MATH.RemapValClamped(a, 0, LArea, 0, 0.5)
@@ -821,24 +821,24 @@ class BaseItem {
 			// return (RandomFloat(-0.2, 0.8)+MATH.RemapValClamped(log10(mesh.GetArea()-50), 0, log10(LargestMesh.GetArea()-50), 0, 0.5) <= 0.3).tointeger()
 			// return 1
 		}, 	
-		function(mesh) { //meshfilter
+		function( mesh ) { //meshfilter
 			return !mesh.IsTFInSpawnroom() && mesh.GetArea() > 50
 		},
-		function(obj)  { //postspawnfunc
+		function( obj )  { //postspawnfunc
 		})
 	}
 
-	function GetSpriteFromItemName(name = "") {
+	function GetSpriteFromItemName( name = "" ) {
 		switch (name) {
 		case "BaseItem" : return "materials/backpack/crafting/ticket_large.vmt"
 		default : return "materials/backpack/crafting/ticket_large.vmt"
 		}
 	}
 
-	function PlayerCallMedic(player) {
-		if(player.IsDead())
+	function PlayerCallMedic( player ) {
+		if (player.IsDead())
 			return true
-		if(PickUpItem(player))
+		if (PickUpItem(player))
 			return true
 
 		return false
@@ -861,7 +861,7 @@ class BaseItem {
 	function GenerateRandomItem()
 	{
 		local chance = RandomFloat(0.0, 1.0)
-		if(chance < Raritys.Genuine && GetItemsofRarity(Rarity.Genuine).len() != 0)
+		if (chance < Raritys.Genuine && GetItemsofRarity(Rarity.Genuine).len() != 0)
 			return GetRandomItemFromRarity(Rarity.Genuine)
 		else return GetRandomItemFromRarity(Rarity.Unique)
 	}
@@ -870,12 +870,12 @@ class BaseItem {
 	 * @param {Rarity} rarity
 	 * @returns {array}
 	 */
-	function GetItemsofRarity(rarity)
+	function GetItemsofRarity( rarity )
 	{
 		local items = []
-		foreach( name, data in ItemsData )
+		foreach ( name, data in ItemsData )
 		{
-			if(data.Rarity == rarity)
+			if (data.Rarity == rarity)
 				items.append([name, data])
 		}
 		return items
@@ -885,7 +885,7 @@ class BaseItem {
 	 * @param {Rarity} rarity
 	 * @returns {array}
 	 */
-	function GetRandomItemFromRarity(rarity)
+	function GetRandomItemFromRarity( rarity )
 	{
 		local items = GetItemsofRarity(rarity)
 		return items[RandomInt(0, items.len()-1)]
@@ -896,12 +896,12 @@ class BaseItem {
 	 * @param {integer} idx
 	 * @returns {bool}
 	 */
-	function PickUpItem(player, idx = -1) {
+	function PickUpItem( player, idx = -1 ) {
 		local item = idx == -1 ? GetItemInRange(player) : EntIndexToHScript(idx)
 
 		// printl("Player "+player+" Is Attempting to pickup an Item")
 
-		if(!item || !item.IsValid())
+		if (!item || !item.IsValid())
 			return false
 
 		local ItemName = GetScope(item).Item
@@ -909,9 +909,9 @@ class BaseItem {
 		local plrItemCount = PlayerToPlayerData(player).GetItemCount(ItemName) + 1
 
 		local data = ItemsData[ItemName]
-		if("OnApply" in data && data["OnApply"] != null)
+		if ("OnApply" in data && data["OnApply"] != null)
 			data.OnApply(player, plrItemCount)
-		if("PlayerThink" in data && data["PlayerThink"] != null) {
+		if ("PlayerThink" in data && data["PlayerThink"] != null) {
 			local dThink = data["PlayerThink"]
 			dThink
 			player.AddThink(dThink.delay, dThink.func, 0.0, dThink.name)
@@ -919,7 +919,7 @@ class BaseItem {
 		return GetScope(item).OnCollect(player)
 	}
 
-	function GetItemInRange(player, range = 90.0)
+	function GetItemInRange( player, range = 90.0 )
 	{
 		local Trace = {
 			start = player.EyePosition()
@@ -930,7 +930,7 @@ class BaseItem {
 		TraceLineEx(Trace)
 		DebugDrawLine_vCol(Trace.start, Trace.pos, Vector(255, 0, 0), false, 10)
 		local ent = FindByClassnameNearest("fatcat_dropped*", Trace.pos, range)
-		if(ent)
+		if (ent)
 		{
 			DebugDrawLine_vCol(Trace.pos, ent.GetOrigin(), Vector(255, 0, 0), false, 10)
 			DebugDrawCircle(ent.GetOrigin(), Vector(255, 0, 0), 5, 90, false, 10)
@@ -944,7 +944,7 @@ class BaseItem {
 	function GetMoneyMultiplier()
 		return 1.0
 
-	function CreateCashAtPos(amount, origin, giveall = true)
+	function CreateCashAtPos( amount, origin, giveall = true )
 	{
 		local cash = CreateByClassname("item_currencypack_small")
 		cash.KeyValueFromInt("spawnflags", (1 << 30))
@@ -965,10 +965,10 @@ class BaseItem {
 		SetPropInt(MvMStats, "m_currentWaveStats.nCreditsDropped", 0)
 
 		GetScope(cash).OnCollect <- function() {
-			if(self == null || !self.IsValid())
+			if (self == null || !self.IsValid())
 				self = caller
 
-			if(!activator || !activator.IsValid() || !activator.IsPlayer() || activator.IsBot())
+			if (!activator || !activator.IsValid() || !activator.IsPlayer() || activator.IsBot())
 				return false
 
 			/** @type {CTFPlayer} */
@@ -985,7 +985,7 @@ class BaseItem {
 
 
 			if ( Collector.GetPlayerClass() != TF_CLASS_SCOUT ) {
-				if(Collector.GetHealth() < Collector.GetMaxHealth()) {
+				if (Collector.GetHealth() < Collector.GetMaxHealth()) {
 					Collector.HealPlayer(MATH.Clamp((Collector.GetHealth() / 20.0), 25, Collector.GetMaxHealth()), 2, true, T_HEAL_PACK)
 				}
 				else {
@@ -993,9 +993,9 @@ class BaseItem {
 				}
 			}
 
-			if(giveall) {
+			if (giveall) {
 				foreach (_, data in RoR2.players) {
-					if(!data.Player.IsValid())
+					if (!data.Player.IsValid())
 						continue
 					data.Player.AddCurrency(amount)
 				}
@@ -1026,10 +1026,10 @@ class BaseItem {
 	 * @param {integer}				stun_flags	The victim's stun flags at the moment of death
 	 * @param {bool}				rocket_jump	True if the attacker was rocket jumping.
 	 */
-	function OnScriptEvent_BotDeath(params) {
+	function OnScriptEvent_BotDeath( params ) {
 		/** @type {CTFPlayer|null} */
 		local player = params.attacker
-		if(!player)
+		if (!player)
 			return
 		CreateCashAtPos((params.victim.IsMiniBoss() ? 100 : 10) * GetMoneyMultiplier(), params.victim.GetOrigin()+Vector(0, 0, 16))
 	}
@@ -1041,14 +1041,14 @@ class BaseItem {
 	 * @param {integer}			class		The class index of the player.
 	 * @param {integer}			team		The team index.
 	 */
-	function OnScriptEvent_HumanSpawn(params) {
+	function OnScriptEvent_HumanSpawn( params ) {
 		AddPlayer(params.player)
 	}
 
 	/** 
 	 * @param {CTFPlayer}		player		The player who called for medic.
 	 */
-	function OnScriptEvent_OnCalledForMedic(params)
+	function OnScriptEvent_OnCalledForMedic( params )
 	{
 		local player = params.player
 		RoR2.PlayerCallMedic(player)
@@ -1058,9 +1058,9 @@ class BaseItem {
 	}
 
 
-	function OnGameEvent_mvm_mission_complete(_) {CleanUp()}
-	function OnGameEvent_round_end(_) {CleanUp()}
-	function OnGameEvent_game_end(_) {CleanUp()}
+	function OnGameEvent_mvm_mission_complete( _) {CleanUp( )}
+	function OnGameEvent_round_end( _) {CleanUp( )}
+	function OnGameEvent_game_end( _) {CleanUp( )}
 }
 __CollectGameEventCallbacks(RoR2)
 

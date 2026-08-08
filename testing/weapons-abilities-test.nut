@@ -1,4 +1,4 @@
-if(!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
+if (!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 SetScriptVersion("Abilities", "3.0.0")
 
@@ -68,13 +68,13 @@ KartSettings.UseTimes[TF_CLASS_SNIPER] 			= 2.2
 // - - - - - - - - - - - - - - - - - - - - -|
 
 //TODO: ADD SETTINGS FOR BAZAAR
-function AbilityValid(player, player_class, idx)
+function AbilityValid( player, player_class, idx )
 {
-	if(!player.IsAlive())
+	if (!player.IsAlive())
 		return false
-	if(!player.HasWeapon(idx))
+	if (!player.HasWeapon(idx))
 		return false
-	if(player_class > TF_CLASS_UNDEFINED && player_class < TF_CLASS_MAXNORMAL)
+	if (player_class > TF_CLASS_UNDEFINED && player_class < TF_CLASS_MAXNORMAL)
 	{
 		return player.GetPlayerClass() == player_class
 	}
@@ -93,9 +93,9 @@ function AbilityValid(player, player_class, idx)
  * @param {table}		text_parms		Table of Text parameters for the GlobalGameText.
  * @param {function}	ability_func	Function to use when the Ability is used
  */
-function CreateAbility(weapon, amount, type, name, player_class, idx, text_parms, ability_func) {
+function CreateAbility( weapon, amount, type, name, player_class, idx, text_parms, ability_func ) {
 	local scope = GetScope(weapon)
-	if(type == ABILITY_TIME)
+	if (type == ABILITY_TIME)
 		weapon.SetAbilityTime(Time() + amount)
 	else 
 		weapon.SetAbilityDamage(amount.tofloat())
@@ -109,7 +109,7 @@ function CreateAbility(weapon, amount, type, name, player_class, idx, text_parms
 
 	scope.AbilityThink <- function() 
 	{
-		if(!self.IsValid())
+		if (!self.IsValid())
 			return 500
 
 		local player = self.GetOwner()
@@ -117,9 +117,9 @@ function CreateAbility(weapon, amount, type, name, player_class, idx, text_parms
 		if ( player.IsAdmin() && Debug_Abilities)
 		{
 			local message = "Variable list:\n"
-			foreach(k, v in this)
+			foreach (k, v in this)
 			{
-				if(type(v) == "function")
+				if (type(v) == "function")
 					continue
 				if (!startswith(k, "__"))
 					message += (k + " : " + v + "\n")
@@ -127,14 +127,14 @@ function CreateAbility(weapon, amount, type, name, player_class, idx, text_parms
 			player.PrintToHud(message)
 		}
 
-		if(!AbilityValid(player, PlayerClass, WeaponIDX))
+		if (!AbilityValid(player, PlayerClass, WeaponIDX))
 			return 1.0
 
 		// Setup Text
 		local text_msg = ""
-		if(!player.IsTaunting())
+		if (!player.IsTaunting())
 		{
-			if(AbilityType == ABILITY_TIME)
+			if (AbilityType == ABILITY_TIME)
 			{
 				if (self.IsAbilityReady()) 
 					text_msg = player.GetTranslatedAndFormattedString("ABILITY_READY", "%T"+TranslationName)
@@ -156,7 +156,7 @@ function CreateAbility(weapon, amount, type, name, player_class, idx, text_parms
 		//////////
 		if (player.IsUsingActionSlot() && player.IsOnGround() && player.GetActiveWeaponIDX() == WeaponIDX && self.IsAbilityReady())
 		{
-			if(AbilityType == ABILITY_TIME)
+			if (AbilityType == ABILITY_TIME)
 				self.AddAbilityTime(10) // only if the ability fails / was not set, or if we want to run a function with a delay, I.E. the below
 			else if (AbilityType == ABILITY_DAMAGE)
 				self.ResetAbilityDamage()
@@ -168,7 +168,7 @@ function CreateAbility(weapon, amount, type, name, player_class, idx, text_parms
 }
 
 ::AbilityEvents <- {
-	function OnScriptEvent_HumanResupply(params)
+	function OnScriptEvent_HumanResupply( params )
 	{
 		local player = params.player
 
@@ -182,7 +182,7 @@ function CreateAbility(weapon, amount, type, name, player_class, idx, text_parms
 
 		local IDXS = player.GetAbilityWeaponIDXs()
 
-		if( IDXS == null )
+		if ( IDXS == null )
 			return
 
 		foreach (idx in IDXS)
@@ -236,7 +236,7 @@ function CreateAbility(weapon, amount, type, name, player_class, idx, text_parms
 						// (player, health, scale, duration, broken_shit)
 						MedShieldMakes(player, 100000, 0.666, 25.0, true)
 					})
-					if(player.DiedWithAbility() && "RetainAbilityCharge" in GetScope(player))
+					if (player.DiedWithAbility() && "RetainAbilityCharge" in GetScope(player))
 					{
 						Primary.SetAbilityDamage(GetScope(Primary).DamageNeeded, GetScope(Primary).DamageNeeded/(100.0 / GetScope(player).RetainAbilityCharge))
 						// printf("Added %f damage\n", GetScope(Primary).DamageNeeded/(100.0 / GetScope(player).RetainAbilityCharge))
@@ -248,44 +248,44 @@ function CreateAbility(weapon, amount, type, name, player_class, idx, text_parms
 			}
 		}
 	}
-	function OnScriptEvent_PostHumanHurt(params)
-	// function OnScriptEvent_PostBotHurt(params)
+	function OnScriptEvent_PostHumanHurt( params )
+	// function OnScriptEvent_PostBotHurt( params )
 	{
 		local victim = params.victim
 		local attacker = params.attacker
 
-		if(!attacker || attacker.IsBot() || attacker.IsDead())
+		if (!attacker || attacker.IsBot() || attacker.IsDead())
 			return
 
-		if(attacker.GetAbilityWeapons() == null)
+		if (attacker.GetAbilityWeapons() == null)
 			return
 
 
 		foreach (ability in attacker.GetAbilityWeapons())
 		{
-			if(ability.GetAbilityType() != ABILITY_DAMAGE)
+			if (ability.GetAbilityType() != ABILITY_DAMAGE)
 				continue
-			if(ability.IsAbilityActive())
+			if (ability.IsAbilityActive())
 				continue
 			ability.AddAbilityDamage(params.damage)
 
 			// PrintToHudAll(format("Ability is now at %.2f dmg out of %.2f\n", GetScope(ability).CurrentDamage, GetScope(ability).DamageNeeded))
 		}
 	}
-	function OnScriptEvent_HumanDeath(params)
+	function OnScriptEvent_HumanDeath( params )
 	{
 		local victim = params.victim
 		local attacker = params.attacker
 
-		if(!attacker/*  || !attacker.IsBot() */)
+		if (!attacker/*  || !attacker.IsBot() */)
 			return
 
-		if(victim.GetAbilityWeapons() == null)
+		if (victim.GetAbilityWeapons() == null)
 			return
 
 		local scope = GetScope(victim)
 
-		if("Shield" in scope && scope.Shield && scope.Shield.IsValid())
+		if ("Shield" in scope && scope.Shield && scope.Shield.IsValid())
 		{
 			scope.Shield.Destroy()
 			scope.Shield <- null
@@ -295,7 +295,7 @@ function CreateAbility(weapon, amount, type, name, player_class, idx, text_parms
 		{
 			local wep_scope = GetScope(ability)
 
-			if(ability.IsAbilityActive())
+			if (ability.IsAbilityActive())
 			{
 				wep_scope.AbilityActive <- false
 				scope.DiedWithAbility <- true
@@ -303,7 +303,7 @@ function CreateAbility(weapon, amount, type, name, player_class, idx, text_parms
 
 			scope.RetainAbilityCharge <- (MATH.Min(ability.GetAbilityDamage(), wep_scope.DamageNeeded)/2.0 / wep_scope.DamageNeeded ).tofloat() * 100.0
 			printf("Retatainted Damage %% %.0f\n", scope.RetainAbilityCharge)
-			if(scope.RetainAbilityCharge < 1.0)
+			if (scope.RetainAbilityCharge < 1.0)
 			{
 				delete scope.DiedWithAbility
 				delete scope.RetainAbilityCharge
@@ -313,7 +313,7 @@ function CreateAbility(weapon, amount, type, name, player_class, idx, text_parms
 }
 __CollectGameEventCallbacks(AbilityEvents)
 
-function HeavyGoKaboom(player)
+function HeavyGoKaboom( player )
 {
 	if (!player.IsAlive()) return
 	if (!player.IsTaunting()) return
@@ -350,7 +350,7 @@ function HeavyGoKaboom(player)
 		player.DamageEveryTankWithin(RageSettings.ExplodeRadSmall, RageSettings.ExplodeDmgSmall)
 	}
 }
-function GiveMeThyHealth(player)
+function GiveMeThyHealth( player )
 {
 	if (!player.IsAlive()) return
 	if (!player.IsTaunting()) return
@@ -358,7 +358,7 @@ function GiveMeThyHealth(player)
 	local weapon = player.GetAbilityWeapon()
 	if (weapon == null) return
 
-	if(player.GetHealth() >= player.GetMaxHealth() * CheersSettings.HealthMult)
+	if (player.GetHealth() >= player.GetMaxHealth() * CheersSettings.HealthMult)
 		return;
 	player.SetHealth(player.GetMaxHealth() * CheersSettings.HealthMult)
 	player.SetCond(TF_COND_IMMUNE_TO_PUSHBACK, CheersSettings.Duration)
@@ -366,7 +366,7 @@ function GiveMeThyHealth(player)
 
 	player.AddAbilityTime(CheersSettings.AttackCooldown + 3) // + 3 for taunt duration
 }
-function SummonLasKart(player)
+function SummonLasKart( player )
 {
 	if (!player.IsAlive()) return
 	if (!player.IsTaunting()) return
@@ -383,7 +383,7 @@ function SummonLasKart(player)
 		ignore = player
 	}
 	TraceHull(trace)
-	if(trace.allsolid == true)
+	if (trace.allsolid == true)
 	{
 		player.ForceRespawn()
 		player.TranslateToHud("STUCK_RESPAWNED")
@@ -400,10 +400,10 @@ function SummonLasKart(player)
 
 	player.AddAbilityTime(KartSettings.AttackCooldown)
 }
-function MedShieldMakes(player, health = 100000, scale = 1.0, duration = 15.0, center_cross = false, scene = false)
+function MedShieldMakes( player, health = 100000, scale = 1.0, duration = 15.0, center_cross = false, scene = false )
 {
 	//TODO: Spawn Sound
-	if(scene)
+	if (scene)
 		player.PlayScene(scene, 0.0)
 		// "scenes/Player/Heavy/low/3977.vcd"	
 	// local shield = SpawnEntityFromTable("obj_teleporter", {})
@@ -428,7 +428,7 @@ function MedShieldMakes(player, health = 100000, scale = 1.0, duration = 15.0, c
 	// shield.SetEFlags(shield.GetEFlags() | EFL_DONTBLOCKLOS)
 	SetPropInt(shield, "m_fEffects", EF_NOSHADOW|EF_NORECEIVESHADOW)
 
-	/* if(health)
+	/* if (health)
 		shield.AcceptInput("SetHealth", health.tostring(), null, null)
 	else
 		SetPropInt(shield, "m_takedamage", DAMAGE_NO) */
@@ -450,7 +450,7 @@ function MedShieldMakes(player, health = 100000, scale = 1.0, duration = 15.0, c
 function MedShieldThink()
 {
 	local player = self.GetOwner()
-	if(!self || !self.IsValid())
+	if (!self || !self.IsValid())
 	{
 		GetScope(player).Shield <- null
 		return 500
@@ -471,9 +471,9 @@ function MedShieldThink()
 	self.SetAbsAngles(angle)
 
 	// ShowOBB(self, Vector4D(255, 0, 0, 5), 0.033)
-	if(Time() >= kill_time || player.IsDead())
+	if (Time() >= kill_time || player.IsDead())
 	{
-		if(self && self.IsValid())
+		if (self && self.IsValid())
 		{
 			GetScope(player).Shield <- null
 			// This is Stupid, but i dont want to have to pass in the weapon through multiple different functions

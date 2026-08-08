@@ -447,7 +447,7 @@ function ROOT::CTFPlayer::GetGroundEntity()
 function ROOT::CTFPlayer::GetFallingVelocity()
 	return GetAbsVelocity().z
 // TODO: Add to Snippets
-function ROOT::CTFPlayer::TakeUnblockableDamage( damage, attacker = Entities.First( ), inflictor = Entities.First(), weapon = Entities.First())
+function ROOT::CTFPlayer::TakeUnblockableDamage( damage, attacker = Entities.First( ), inflictor = Entities.First( ), weapon = Entities.First( ))
 	TakeDamageCustom(inflictor, attacker, weapon, Vector(0, 0, 1), Vector(0, 0, 0), damage, DMG_GENERIC, TF_DMG_CUSTOM_TRIGGER_HURT)
 // TODO: Add to Snippets
 function ROOT::CTFPlayer::Suicide()
@@ -1508,28 +1508,28 @@ function ROOT::PrintClass( clas, filter = "" )
 }
 
 //// Entity Debug
-function ROOT::ShowBBOX( entity = null, rgba = Vector4D(255, 0, 0, 5 ), duration = 1)
+function ROOT::ShowBBOX( entity = null, rgba = Vector4D( 255, 0, 0, 5 ), duration = 1 )
 {
 	if ( !entity ) 
 		return
 	DebugDrawBox(entity.GetOrigin(), entity.GetBoundingMins(), entity.GetBoundingMaxs(), rgba.x, rgba.y, rgba.z, rgba.w, duration)
 }
 
-function ROOT::ShowOBB( entity = null, rgba = Vector4D(255, 0, 0, 5 ), duration = 1)
+function ROOT::ShowOBB( entity = null, rgba = Vector4D( 255, 0, 0, 5 ), duration = 1 )
 {
 	if ( !entity ) 
 		return
 	DebugDrawBoxAngles(entity.GetOrigin(), entity.GetBoundingMins(), entity.GetBoundingMaxs(), entity.GetAbsAngles(), Vector(rgba.x, rgba.y, rgba.z), rgba.w, duration)
 }
 
-function ROOT::ShowAABB( entity = null, rgba = Vector4D(255, 0, 0, 5 ), duration = 1)
+function ROOT::ShowAABB( entity = null, rgba = Vector4D( 255, 0, 0, 5 ), duration = 1 )
 {
 	if ( !entity ) 
 		return
 	DebugDrawBox(entity.GetOrigin(),entity.GetBoundingMins(), entity.GetBoundingMaxs(), rgba.x, rgba.y, rgba.z, rgba.w, duration)
 }
 
-function ROOT::DebugDrawTrigger( trigger = null, color = Vector4D(255, 128, 0, 1 ), duration = 5)
+function ROOT::DebugDrawTrigger( trigger = null, color = Vector4D( 255, 128, 0, 1 ), duration = 5 )
 {
 	if ( !trigger ) return
 
@@ -1571,7 +1571,7 @@ function ROOT::FindByClassname( previous, classname )
 function ROOT::FindByClassnameWithin( previous, classname, center, radius )
 	return EnableStringPurge(Entities.FindByClassnameWithin(previous, classname, center, radius))
 
-function ROOT::FindByClassnameNearest( classname, center,radius )
+function ROOT::FindByClassnameNearest( classname, center, r )adius )
 	return EnableStringPurge(Entities.FindByClassnameNearest(classname, center, radius))
 
 function ROOT::FindByName( previous, name )
@@ -1971,7 +1971,7 @@ function ROOT::GetClientConVar( cvar, entindex )
 	return Convars.GetClientConvarValue(cvar, entindex)
 
 
-function ROOT::CreateTestTank( origin = Vector(0, 0, 0 ), angles = QAngle(0, 0, 0))
+function ROOT::CreateTestTank( origin = Vector( 0, 0, 0 ), angles = QAngle(0, 0, 0 ))
 {
 	if (FindByName(null, "Test_Tank"))
 		FindByName(null, "Test_Tank").Kill()
@@ -1985,7 +1985,7 @@ function ROOT::CreateTestTank( origin = Vector(0, 0, 0 ), angles = QAngle(0, 0, 
 	return tank
 }
 // TODO: Add to Snippets
-function ROOT::DrawTraceHull( trace, starting_color = Vector(255, 0, 0 ), ending_color = Vector(0, 0, 255))
+function ROOT::DrawTraceHull( trace, starting_color = Vector( 255, 0, 0 ), ending_color = Vector(0, 0, 255 ))
 {
 	local max = "hullmax" in trace ? trace.hullmax : Vector(1, -1, 1)
 	local min = "hullmin" in trace ? trace.hullmin : Vector(-1, 1, -1)
@@ -2295,7 +2295,7 @@ function ROOT::CreatePickup(table = {
 	// EnableStringPurge(pickup)
 
 	GetScope(pickup).life_time <- Time() + table.lifetime
-	GetScope(pickup).LifeTime <- function( ) { if (Time( ) >= life_time) {self.Kill()} }
+	GetScope(pickup).LifeTime <- function( ) { if ( Time( ) >= life_time ) {self.Kill()} }
 	AddThinkToEnt(pickup, "LifeTime")
 	GetScope(pickup).OnPlayerTouch <- table.func
 	pickup.ConnectOutput( "OnPlayerTouch", "OnPlayerTouch" )

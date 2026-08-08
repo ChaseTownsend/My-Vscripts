@@ -81,8 +81,8 @@ PurgeString("CleanUpParticles") */
 		if (params.objecttype != OBJ_SENTRY) return
 		ClearThinks(EntIndexToHScript(_.index))
 	} */
-	function OnGameEvent_object_destroyed( params ) {ClearThinks(EntIndexToHScript(params.index))}
-	function OnGameEvent_object_detonated( params ) {ClearThinks(EntIndexToHScript(params.index))}
+	function OnGameEvent_object_destroyed( params ) {ClearThinks( EntIndexToHScript(params.index ))}
+	function OnGameEvent_object_detonated( params ) {ClearThinks( EntIndexToHScript(params.index ))}
 }
 __CollectGameEventCallbacks(flames)
 

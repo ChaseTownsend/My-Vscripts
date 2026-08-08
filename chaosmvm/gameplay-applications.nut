@@ -498,7 +498,7 @@ AddChatTrigger("equip" function( player, ... ) {
 AddChatTrigger("scoreboard", function( player ) {
 	player.PrintToChat("[►] Scores printed to Console.")
 	local function GetKills( plrr ) {return GetPropInt( plrr, "m_Shared.tfsharedlocaldata.m_ScoreData.m_iKills" )}
-	local function GetDeaths( plrr ) {return GetPropInt( plrr, "m_Shared.tfsharedlocaldata.m_ScoreData.m_iDeaths" )-GetPropInt(plrr, "m_Shared.tfsharedlocaldata.m_ScoreData.m_iSuicides")}
+	local function GetDeaths( plrr ) {return GetPropInt( plrr, "m_Shared.tfsharedlocaldata.m_ScoreData.m_iDeaths" )-GetPropInt( plrr, "m_Shared.tfsharedlocaldata.m_ScoreData.m_iSuicides" )}
 	ReCalculatePlayers() //
 	foreach (plr in m_aHumans)
 	{
@@ -738,7 +738,7 @@ function GameplayThink()
 
 		if ("Timescale" in ROOT)
 		{
-			if(!Human.HookAdditiveAttributes("do not override overlay"))
+			if (!Human.HookAdditiveAttributes("do not override overlay"))
 				Human.SetScriptOverlayMaterial(Timescale == 1.0 ? "" : "debug/yuv")
 			Human.AddCustomAttribute("voice pitch scale", Timescale, -1)
 		}
@@ -917,7 +917,7 @@ function ROOT::ProcessChaosWeaponHit( params, victim, attacker, weapon, _inflict
  */
 function ROOT::ProcessChaosPlayerHurt( params, victim, attacker, weapon, _inflictor )
 {
-	if(victim.HookAdditiveAttributes("reflect dmg back chance") != 0)
+	if (victim.HookAdditiveAttributes("reflect dmg back chance") != 0)
 	{
 		local chance = victim.HookAdditiveAttributes("reflect dmg back chance")
 		local dmg_mult = victim.HookMultAttributes("reflect dmg back mult")
@@ -926,7 +926,7 @@ function ROOT::ProcessChaosPlayerHurt( params, victim, attacker, weapon, _inflic
 		if (MATH.RandomChance() <= chance)
 		{
 			attacker.TakeDamageEx(victim, victim, victim, Vector(), Vector(), params.damage * dmg_mult, params.damage_type)
-			if(MATH.RandomChance() <= stun_chance && stuntime)
+			if (MATH.RandomChance() <= stun_chance && stuntime)
 				attacker.StunPlayer(stuntime, 0.0, TF_STUN_BOTH, victim)
 		}
 	}
@@ -1003,7 +1003,7 @@ RegisterDamageCallback("player", "GameplayRobotAttack" function( params ) {
 // 	// printl(victim == inflictor)
 // 	// printl(params.damage_custom == TF_DMG_CUSTOM_MERASMUS_PLAYER_BOMB)
 
-// 	if(weapon == null && victim == attacker && victim == inflictor && params.damage_custom == TF_DMG_CUSTOM_MERASMUS_PLAYER_BOMB)
+// 	if (weapon == null && victim == attacker && victim == inflictor && params.damage_custom == TF_DMG_CUSTOM_MERASMUS_PLAYER_BOMB)
 // 	{
 // 		params.damage = 1000
 // 	}
@@ -1141,9 +1141,9 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 				/** @type {CTFPlayer} */
 				local self = self
 				local active = self.GetActiveWeapon()
-				if(!active)
+				if (!active)
 					return 0.2
-				if(active.GetAttribute("slow down aura", 0))
+				if (active.GetAttribute("slow down aura", 0))
 				{
 					local slow_multiplier = active.GetAttribute("slow down aura slow mult", 0.0)
 					local giant_multiplier = active.GetAttribute("slow down aura giant mult", 0.0)
@@ -1151,7 +1151,7 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 					// DebugDrawSphereInternal( self.GetCenter(), slow_radius, 255, 255, 255, false, 0.2 true, 10)
 					foreach (/**@type {CTFBot} */bot in m_aRobots)
 					{
-						if(self.DistanceTo(bot, true) > slow_radius)
+						if (self.DistanceTo(bot, true) > slow_radius)
 							continue
 						bot.StunPlayer(0.5, bot.IsMiniBoss() ? giant_multiplier : slow_multiplier, TF_STUN_MOVEMENT, self)
 					}

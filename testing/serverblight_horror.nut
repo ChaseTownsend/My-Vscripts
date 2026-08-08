@@ -132,7 +132,7 @@ function FindLights()
 // RANDOM CREEPY SOUND
 // -----------------------------
 
-function PlayCreepySound(player)
+function PlayCreepySound( player )
 {
 	local snd = HorrorController.creepySounds[RandomInt(0, HorrorController.creepySounds.len() - 1)]
 	EmitSoundEx({
@@ -152,7 +152,7 @@ function PlayCreepySound(player)
 // RANDOM LAUGH SOUND
 // -----------------------------
 
-function PlayRandomLaugh(player)
+function PlayRandomLaugh( player )
 {
 	local snd = HorrorController.laughSounds[RandomInt(0, HorrorController.laughSounds.len() - 1 )]
 	EmitSoundEx({
@@ -172,7 +172,7 @@ function PlayRandomLaugh(player)
 // JUMPSCARE
 // -----------------------------
 
-function JumpScare(player)
+function JumpScare( player )
 {
 	EmitSoundEx({
 		sound_name = jumpScareSound,
@@ -222,7 +222,7 @@ function AmbientThink()
 
 	local player = GetRandomPlayer()
 
-	if(player == null)
+	if (player == null)
 		return RandomFloat(8, 16)
 
 	// Creepy sounds

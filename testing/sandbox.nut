@@ -17,7 +17,7 @@ foreach (_, /**@type {CTFNavArea}*/Mesh in Nav)
 		b = 255
 	}
  
-	if( IsBlue && !IsRed )
+	if ( IsBlue && !IsRed )
 	{
 		Clr.r = 0
 		Clr.g = 0

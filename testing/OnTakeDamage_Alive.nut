@@ -218,7 +218,7 @@ class CTakeDamageInfo {
 	 * @returns {CBaseEntity|null}
 	 */
 	function GetDamageBonusProvider() { return m_hDamageBonusProvider }
-	function BaseDamageIsValid() { return (m_flBaseDamage != BASEDAMAGE_NOT_SPECIFIED) }
+	function BaseDamageIsValid( ) { return (m_flBaseDamage != BASEDAMAGE_NOT_SPECIFIED ) }
 	/**
 	 * @returns {Vector}
 	 */
@@ -336,7 +336,7 @@ class CTakeDamageInfo {
 	 */
 	function GetBaseDamage() 
 	{
-		if( BaseDamageIsValid() )
+		if ( BaseDamageIsValid() )
 			return m_flBaseDamage
 
 		// No one ever specified a base damage, so just return damage.
@@ -382,18 +382,18 @@ function ROOT::IsInItemTestingMode()
  * @param {string} attrib
  * @returns {integer}
  */
-function ROOT::CALL_ATTRIB_HOOK_INT_ON_OTHER(ent, attrib, def = 0)
+function ROOT::CALL_ATTRIB_HOOK_INT_ON_OTHER( ent, attrib, def = 0 )
 {
-	if(!ent || !ent.IsValid())
+	if (!ent || !ent.IsValid())
 		return def
 
 	local base_val = ent.GetAttribute(attrib, def)
 	local wep_mult = 1.0
-	if(ent.IsPlayer())
+	if (ent.IsPlayer())
 	{
 		foreach (weapon in GetAllWeapons())
 		{
-			if(weapon.GetAttribute("provide on active", 0) && weapon != ent.GetActiveWeapon())
+			if (weapon.GetAttribute("provide on active", 0) && weapon != ent.GetActiveWeapon())
 				continue
 			wep_mult *= weapon.GetAttribute(attribute, dev)
 		}
@@ -405,18 +405,18 @@ function ROOT::CALL_ATTRIB_HOOK_INT_ON_OTHER(ent, attrib, def = 0)
  * @param {string} attrib
  * @returns {float}
  */
-function ROOT::CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(ent, attrib, def = 0.0)
+function ROOT::CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( ent, attrib, def = 0.0 )
 {
-	if(!ent || !ent.IsValid())
+	if (!ent || !ent.IsValid())
 		return def
 
 	local base_val = ent.GetAttribute(attrib, def)
 	local wep_mult = 1.0
-	if(ent.IsPlayer())
+	if (ent.IsPlayer())
 	{
 		foreach (weapon in GetAllWeapons())
 		{
-			if(weapon.GetAttribute("provide on active", 0) && weapon != ent.GetActiveWeapon())
+			if (weapon.GetAttribute("provide on active", 0) && weapon != ent.GetActiveWeapon())
 				continue
 			wep_mult *= weapon.GetAttribute(attribute, dev)
 		}
@@ -427,9 +427,9 @@ function ROOT::CALL_ATTRIB_HOOK_FLOAT_ON_OTHER(ent, attrib, def = 0.0)
  * @param {CBaseEntity|null} ent
  * @returns {int}
  */
-function ROOT::CanTakeDamage(ent)
+function ROOT::CanTakeDamage( ent )
 {
-	if(!ent || !ent.IsValid())
+	if (!ent || !ent.IsValid())
 		return DAMAGE_NO
 	return GetPropInt("m_takedamage")
 }
@@ -463,9 +463,9 @@ function ROOT::IsHeadshot( iType )
  * @param {CBaseEntity|null} ent
  * @returns {CTFPlayer|null}
  */
-function ROOT::ToTFPlayer(ent)
+function ROOT::ToTFPlayer( ent )
 {
-	if(!ent || !ent.IsValid() || !ent.IsPlayer())
+	if (!ent || !ent.IsValid() || !ent.IsPlayer())
 		return null
 	return ent
 }
@@ -473,9 +473,9 @@ function ROOT::ToTFPlayer(ent)
  * @param {CBaseEntity|null} ent
  * @returns {CTFBot|null}
  */
-function ROOT::ToTFBot(ent)
+function ROOT::ToTFBot( ent )
 {
-	if(!ent || !ent.IsValid() || !ent.IsPlayer() || !ent.IsBot())
+	if (!ent || !ent.IsValid() || !ent.IsPlayer() || !ent.IsBot())
 		return null
 	return ent
 }
@@ -485,9 +485,9 @@ function ROOT::ToTFBot(ent)
  * @param {CBaseEntity|null} ent
  * @returns {CTFWeaponBase|null}
  */
-function ROOT::ToBaseWeapon(ent)
+function ROOT::ToBaseWeapon( ent )
 {
-	if(!ent || !ent.IsValid() || !startswith(ent.GetClassname(), "tf_wea"))
+	if (!ent || !ent.IsValid() || !startswith(ent.GetClassname(), "tf_wea"))
 		return null
 	return ent
 }
@@ -497,9 +497,9 @@ function ROOT::ToBaseWeapon(ent)
  * @param {CBaseEntity|null} ent
  * @returns {CBaseEntity|null}
  */
-function ROOT::ToBaseObject(ent)
+function ROOT::ToBaseObject( ent )
 {
-	if(!ent || !ent.IsValid() || !IsBaseObject(ent))
+	if (!ent || !ent.IsValid() || !IsBaseObject(ent))
 		return null
 	return ent
 }
@@ -547,9 +547,9 @@ function ROOT::ToBaseObject(ent)
  * @param {CBaseEntity|null} ent
  * @returns {bool}
  */
-function ROOT::IsProjectile(ent)
+function ROOT::IsProjectile( ent )
 {
-	if(!ent || !ent.IsValid() || !startswith(ent.GetClassname(), "tf_proj"))
+	if (!ent || !ent.IsValid() || !startswith(ent.GetClassname(), "tf_proj"))
 		return false
 	return true
 }
@@ -557,9 +557,9 @@ function ROOT::IsProjectile(ent)
  * @param {CBaseEntity|null} ent
  * @returns {CBaseEntity|null}
  */
-function ROOT::ToBaseGrenade(ent)
+function ROOT::ToBaseGrenade( ent )
 {
-	if(!IsProjectile(ent) || !IsInArray(ent.GetClassname(), PipeBombClassnames))
+	if (!IsProjectile(ent) || !IsInArray(ent.GetClassname(), PipeBombClassnames))
 		return null
 	return ent
 }
@@ -567,9 +567,9 @@ function ROOT::ToBaseGrenade(ent)
  * @param {CBaseEntity|null} ent
  * @returns {CBaseEntity|null}
  */
-function ROOT::ToBaseRocket(ent)
+function ROOT::ToBaseRocket( ent )
 {
-	if(!IsProjectile(ent) || !IsInArray(ent.GetClassname(), RocketClassnames))
+	if (!IsProjectile(ent) || !IsInArray(ent.GetClassname(), RocketClassnames))
 		return null
 	return ent
 }
@@ -578,9 +578,9 @@ function ROOT::ToBaseRocket(ent)
  * @param {CBaseEntity|null} ent
  * @returns {bool}
  */
-function ROOT::IsBaseObject(ent)
+function ROOT::IsBaseObject( ent )
 {
-	if(!ent || !ent.IsValid())
+	if (!ent || !ent.IsValid())
 		return false
 	return startswith(ent.GetClassname(), "obj_")
 }
@@ -588,9 +588,9 @@ function ROOT::IsBaseObject(ent)
  * @param {CBaseEntity|null} ent
  * @returns {bool}
  */
-function ROOT::IsSentry(ent)
+function ROOT::IsSentry( ent )
 {
-	if(!ent || !ent.IsValid() || !IsBaseObject(ent))
+	if (!ent || !ent.IsValid() || !IsBaseObject(ent))
 		return false
 	return ent.GetClassname() == "obj_sentrygun"
 }
@@ -598,9 +598,9 @@ function ROOT::IsSentry(ent)
  * @param {CBaseEntity|null} ent
  * @returns {bool}
  */
-function ROOT::IsSentryRocket(ent)
+function ROOT::IsSentryRocket( ent )
 {
-	if(!ent || !ent.IsValid())
+	if (!ent || !ent.IsValid())
 		return false
 	return ent.GetClassname() == "tf_projectile_sentry_rocket"
 }
@@ -608,9 +608,9 @@ function ROOT::IsSentryRocket(ent)
  * @param {CBaseEntity|null} ent
  * @returns {bool}
  */
-function ROOT::IsDisposableBuilding(ent)
+function ROOT::IsDisposableBuilding( ent )
 {
-	if(!IsBaseObject(ent))
+	if (!IsBaseObject(ent))
 		return false
 	return GetPropBool(ent, "m_bDisposableBuilding")
 }
@@ -620,7 +620,7 @@ function ROOT::IsDisposableBuilding(ent)
  * @param {int} clas
  * @returns {bool}
  */
-function CTFPlayer::IsPlayerClass(clas)
+function CTFPlayer::IsPlayerClass( clas )
 	return GetPlayerClass() == clas
 
 function CTFPlayer::IsDominant()
@@ -638,13 +638,13 @@ function CTFPlayer::HasPasstimeBall()
 function CTFPlayer::IsInPurgatory()
 	return InCond( TF_COND_PURGATORY )
 
-function IsTruceValidForEnt(entity)
+function IsTruceValidForEnt( entity )
 {
-	if(!entity)
+	if (!entity)
 		return false
-	else if(entity.IsPlayer())
+	else if (entity.IsPlayer())
 		return entity.IsTruceValidForEnt()
-	else if(entity.GetClassname() == "obj_sentrygun")
+	else if (entity.GetClassname() == "obj_sentrygun")
 		return true
 	else
 		return GetPropBool(entity, "m_bTruceValidForEnt")
@@ -661,7 +661,7 @@ function CTFPlayer::CBaseCombatCharacter_CalcDamageForceVector( info )
 	local bNoPhysicsForceDamage =  ( ( iDmgType & ( DMG_FALL | DMG_BURN | DMG_PLASMA | DMG_DROWN | ( DMG_PARALYZE | DMG_NERVEGAS | DMG_POISON | DMG_RADIATION | DMG_DROWNRECOVER | DMG_ACID | DMG_SLOWBURN ) | DMG_CRUSH | DMG_PHYSGUN | DMG_PREVENT_PHYSICS_FORCE ) ) != 0 )
 	if ( info.GetDamageForce() != Vector() || bNoPhysicsForceDamage )
 	{
-		if( info.GetDamageType() & DMG_BLAST )
+		if ( info.GetDamageType() & DMG_BLAST )
 		{
 			// Fudge blast forces a little bit, so that each
 			// victim gets a slightly different trajectory. 
@@ -694,7 +694,7 @@ function CTFPlayer::CBaseCombatCharacter_CalcDamageForceVector( info )
 		local forceVector
 		// If the damage is a blast, point the force vector higher than usual, this gives 
 		// the ragdolls a bodacious "really got blowed up" look.
-		if( info.GetDamageType() & DMG_BLAST )
+		if ( info.GetDamageType() & DMG_BLAST )
 		{
 			// exaggerate the force from explosions a little (37.5%)
 			forceVector = (GetLocalOrigin() + Vector(0, 0, (GetBoundingMins() - GetBoundingMaxs()).z) ) - pForce.GetLocalOrigin();
@@ -752,7 +752,7 @@ function CTFPlayer::CBaseCombatCharacter_Event_Killed( info )
 
 	// See if there's a ragdoll magnet that should influence our force.
 	// CRagdollMagnet *pMagnet = CRagdollMagnet::FindBestMagnet( this );
-	// if( pMagnet )
+	// if ( pMagnet )
 	// {
 	// 	forceVector += pMagnet->GetForceVector( this );
 	// }
@@ -782,7 +782,7 @@ function CTFPlayer::CBaseCombatCharacter_Event_Killed( info )
 	EmitSound( "BaseCombatCharacter.StopWeaponSounds" )
 
 	// Tell my killer that he got me!
-	if( info.GetAttacker() )
+	if ( info.GetAttacker() )
 	{ 
 		// info.GetAttacker()->Event_KilledOther(this, info); // TODO:
 		// g_EventQueue.AddEvent( info.GetAttacker(), "KilledNPC", 0.3, this, this );
@@ -926,7 +926,7 @@ function CTFPlayer::CBaseCombatCharacter_OnTakeDamage_Alive( info )
 		SetPropFloat(this, "m_flDamageAccumulator", GetPropFloat(this, "m_flDamageAccumulator") + flFractionalDamage)
 		// If the accumulator is holding a full point of damage, move that point
 		// of damage into the damage we're about to inflict.
-		if( GetPropFloat(this, "m_flDamageAccumulator") >= 1.0 )
+		if ( GetPropFloat(this, "m_flDamageAccumulator") >= 1.0 )
 		{
 			flIntegerDamage += 1
 			SetPropFloat(this, "m_flDamageAccumulator", GetPropFloat(this, "m_flDamageAccumulator") - 1.0)
@@ -1089,7 +1089,7 @@ function ROOT::ApplyOnDamageAliveModifyRules( info, pVictimBaseEntity, outParams
 
 		// Proc invicibility upon being hit
 		local flUberChance = CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pVictim, "uber on damage taken", 0.0)
-		if( RandomFloat(0.0, 1.0) < flUberChance )
+		if ( RandomFloat(0.0, 1.0) < flUberChance )
 		{
 			pVictim.AddCondEx( TF_COND_INVULNERABLE_CARD_EFFECT, 3.0, pVictim)
 			// Make sure we don't take any damage
@@ -1141,7 +1141,7 @@ function ROOT::ApplyOnDamageAliveModifyRules( info, pVictimBaseEntity, outParams
 				local bReduceBlast = false
 
 				// If someone else shot us or we're in MvM
-				if( pAttacker != pVictimBaseEntity || IsMannVsMachineMode() )
+				if ( pAttacker != pVictimBaseEntity || IsMannVsMachineMode() )
 				{
 					bReduceBlast = true
 				}
@@ -1234,13 +1234,13 @@ function ROOT::ApplyOnDamageAliveModifyRules( info, pVictimBaseEntity, outParams
 		{
 			if ( IsBaseObject( info.GetInflictor() ) )
 			{
-				if( IsSentry( info.GetInflictor() ) )
+				if ( IsSentry( info.GetInflictor() ) )
 					flRealDamage *= CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pVictim, "SET BONUS: dmg from sentry reduced", 1.0 )
 			}
 			else
 			{
 				local pSentryRocket = info.GetInflictor()
-				if( IsSentryRocket( pSentryRocket ) && pSentryRocket.GetOwner() )
+				if ( IsSentryRocket( pSentryRocket ) && pSentryRocket.GetOwner() )
 				{
 					local sentry = pSentryRocket.GetOwner()
 					if ( IsSentry( sentry ) )
@@ -1253,7 +1253,7 @@ function ROOT::ApplyOnDamageAliveModifyRules( info, pVictimBaseEntity, outParams
 		{
 			if ( pTFAttacker && pTFAttacker.IsBot() && pAttacker != pVictimBaseEntity && pVictim && !pVictim.IsBot() )
 			{
-				if(IsConvarAllowed("tf_populator_damage_multiplier"))
+				if (IsConvarAllowed("tf_populator_damage_multiplier"))
 					flRealDamage *= GetCvarFloat("tf_populator_damage_multiplier")
 			}
 		}
@@ -1733,11 +1733,11 @@ function ROOT::ApplyOnDamageModifyRules( info, pVictimBaseEntity, bAllowDamage )
 					// flDamage += Max( 400.f, flDamage )
 				// }
 			}
-			else if( pTFAttacker && pWeapon && pWeapon.GetIDX() == 996 && ( info.GetDamageType() & DMG_BLAST ) )
+			else if ( pTFAttacker && pWeapon && pWeapon.GetIDX() == 996 && ( info.GetDamageType() & DMG_BLAST ) )
 			{
 				//TODO:
 				// CTFGrenadeLauncher* pGrenadeLauncher = static_cast<CTFGrenadeLauncher*>( pWeapon )
-				// if( pGrenadeLauncher->IsDoubleDonk( pVictim ) )
+				// if ( pGrenadeLauncher->IsDoubleDonk( pVictim ) )
 				// {
 				// 	info.SetCritType( CTakeDamageInfo.ECritType.CRIT_MINI )
 				// 	eBonusEffect = kBonusEffect_DoubleDonk
@@ -1914,13 +1914,13 @@ function ROOT::ApplyOnDamageModifyRules( info, pVictimBaseEntity, bAllowDamage )
 		flDamage *= CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pWeapon, "dmg penalty vs players", 1.0 )
 
 		// Check if we're to boost damage against the same class
-		if( pVictim && pTFAttacker )
+		if ( pVictim && pTFAttacker )
 		{
 			local nVictimClass		= pVictim.GetPlayerClass()
 			local nAttackerClass	= pTFAttacker.GetPlayerClass()
 
 			// Same class? Potentially boost damage
-			if( nVictimClass == nAttackerClass )
+			if ( nVictimClass == nAttackerClass )
 				flDamage *= CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pWeapon, "mult dmg vs same class", 1.0 )
 		}
 	}
@@ -1978,7 +1978,7 @@ function ROOT::ApplyOnDamageModifyRules( info, pVictimBaseEntity, bAllowDamage )
 		if ( pVictim.InCond( TF_COND_DEFENSEBUFF ) )
 		{
 			// We take no crits of any kind...
-			if( eBonusEffect == kBonusEffect_MiniCrit || eBonusEffect == kBonusEffect_Crit )
+			if ( eBonusEffect == kBonusEffect_MiniCrit || eBonusEffect == kBonusEffect_Crit )
 				eBonusEffect = kBonusEffect_None
 			info.SetCritType( CTakeDamageInfo.ECritType.CRIT_NONE )
 			bAllSeeCrit = false
@@ -2099,13 +2099,13 @@ function ROOT::ApplyOnDamageModifyRules( info, pVictimBaseEntity, bAllowDamage )
 		if ( pWeapon && pAttacker && pAttacker.IsPlayer() )
 		{
 			// Rocket launcher only has half the bonus of the other weapons at short range
-			if( pWeapon.IsRocketLauncher() && flRandomRangeVal > 0.5 )
+			if ( pWeapon.IsRocketLauncher() && flRandomRangeVal > 0.5 )
 				flRandomDamage *= 0.5
 
-			if( pWeapon.IsPipeLauncher() || pWeapon.IsStickyLauncher() || pWeapon.IsStickbomb() && !( bitsDamage & DMG_NOCLOSEDISTANCEMOD ) )
+			if ( pWeapon.IsPipeLauncher() || pWeapon.IsStickyLauncher() || pWeapon.IsStickbomb() && !( bitsDamage & DMG_NOCLOSEDISTANCEMOD ) )
 				flRandomDamage *= 0.2
 
-			if( pWeapon.IsScattergun() && flRandomRangeVal > 0.5 )
+			if ( pWeapon.IsScattergun() && flRandomRangeVal > 0.5 )
 				flRandomDamage *= 1.5
 		}
 
@@ -2901,7 +2901,7 @@ function ROOT::FPlayerCanTakeDamage( pPlayer, pAttacker, info )
 	if ( pAttacker && pPlayer.GetTeam() == pAttacker.GetTeam() && !info.IsForceFriendlyFire() )
 	{
 		// my teammate hit me.
-		if(GetIntCvar("mp_friendlyfire", 0) == 0 && (pAttacker != pPlayer))
+		if (GetIntCvar("mp_friendlyfire", 0) == 0 && (pAttacker != pPlayer))
 		{
 			// friendly fire is off, and this hit came from someone other than myself,  then don't get hurt
 			return false
@@ -2911,26 +2911,26 @@ function ROOT::FPlayerCanTakeDamage( pPlayer, pAttacker, info )
 	return true
 }
 
-function ROOT::HasSpawnFlags(entity, flag)
+function ROOT::HasSpawnFlags( entity, flag )
 	return Math.BitWise(GetPropInt(entity, "m_spawnflags"), flag)
 
-function GetIntCvar(cvar, def)
+function GetIntCvar( cvar, def )
 {
-	if(!IsCvarAllowed(cvar))
+	if (!IsCvarAllowed(cvar))
 		return def
 	return GetCvarInt(cvar)
 }
 
-function GetBoolCvar(cvar, def)
+function GetBoolCvar( cvar, def )
 {
-	if(!IsCvarAllowed(cvar))
+	if (!IsCvarAllowed(cvar))
 		return def
 	return GetCvarBool(cvar)
 }
 
-function GetFloatCvar(cvar, def)
+function GetFloatCvar( cvar, def )
 {
-	if(!IsCvarAllowed(cvar))
+	if (!IsCvarAllowed(cvar))
 		return def
 	return GetCvarFloat(cvar)
 }
@@ -2991,7 +2991,7 @@ function CTFPlayer::OnTakeDamage_Alive( info )
 	if ( info.GetInflictor() )
 	{
 		vecDir = info.GetInflictor().GetCenter() - Vector ( 0.0, 0.0, 10.0 ) - GetCenter()
-		if(info.GetInflictor().GetClassname() == "tf_projectile_arrow")
+		if (info.GetInflictor().GetClassname() == "tf_projectile_arrow")
 		{
 			vecDir = info.GetDamagePosition() - info.GetDamageForce() - GetCenter()
 		}
@@ -3166,7 +3166,7 @@ function CTFPlayer::OnTakeDamage_Alive( info )
 								if ( secondary && ammo_type > TF_AMMO_METAL )
 								{
 									local max = ammo_type == TF_AMMO_GRENADES1 ? pTFAttacker.GetMaximumGrenades1() : pTFAttacker.GetMaximumGrenades3()
-									if( pTFAttacker.GetAmmoByIndex(ammo_type) < max && secondary.GetChargeProgress() < 1.0)
+									if ( pTFAttacker.GetAmmoByIndex(ammo_type) < max && secondary.GetChargeProgress() < 1.0)
 									{
 										SetPropFloat( secondary, "m_flEffectBarRegenTime", GetPropFloat( secondary, "m_flEffectBarRegenTime" ) - 1 )
 									}
@@ -3206,8 +3206,8 @@ function CTFPlayer::OnTakeDamage_Alive( info )
 						/**
 						 * @param {CTFPlayer|CTFBot|CBaseEntity} player
 						 */
-						function func(player) {
-							if(!player || !player.IsValid() || !player.IsPlayer())
+						function func( player ) {
+							if (!player || !player.IsValid() || !player.IsPlayer())
 								return
 							player.StunPlayer(MATH.Clamp(iExplosiveBackstab - 1, 0, 2), 0.6, TF_STUN_MOVEMENT, attacker )
 						}
@@ -3389,17 +3389,17 @@ function CTFPlayer::TakeCustomDamage( info )
 	TakeDamageCustom(info.GetInflictor(), info.GetAttacker(), info.GetWeapon(), info.GetDamageForce(), info.GetDamagePosition(), info.GetDamage(), info.GetDamageType(), info.GetDamageCustom())
 }
 
-function CTFPlayer::GetInternalVar(var_name, def = 0)
+function CTFPlayer::GetInternalVar( var_name, def = 0 )
 {
-	if(!("Internal_Vars" in GetScope(this)))
+	if (!("Internal_Vars" in GetScope(this)))
 		GetScope(this).Internal_Vars <- {}
-	if(!(var_name in GetScope(this).Internal_Vars))
+	if (!(var_name in GetScope(this).Internal_Vars))
 		GetScope(this).Internal_Vars[var_name] <- def
 
 	return GetScope(this).Internal_Vars[var_name]
 }
 
-function CTFPlayer::SetInternalVar(var_name, value)
+function CTFPlayer::SetInternalVar( var_name, value )
 {
 	GetInternalVar(var_name) // cheeky to fix it up so its not missing
 	GetScope(this).Internal_Vars[var_name] <- value
@@ -3785,10 +3785,10 @@ function CTFPlayer::OnTakeDamage( inputInfo )
 						/** 
 						 * @param {CTFPlayer} player
 						 */
-						function ExplodeFunc(player) {
+						function ExplodeFunc( player ) {
 							local stun_flags = TF_STUN_CONTROLS
 
-							if(player.IsMiniBoss())
+							if (player.IsMiniBoss())
 								stun_flags = TF_STUN_MOVEMENT | TF_STUN_NO_EFFECTS
 
 							player.StunPlayer( ( bHitEnemy ) ? 5.0 : flStunTime, 0.85, stun_flags, this )
@@ -3806,7 +3806,7 @@ function CTFPlayer::OnTakeDamage( inputInfo )
 					/** 
 					 * @param {CTFPlayer} player
 					 */
-					function ExplodeFunc(player) {
+					function ExplodeFunc( player ) {
 						local toPlayer = player.EyePosition() - GetAbsOrigin()
 
 						toPlayer.z = 0.0
@@ -4013,12 +4013,12 @@ function CTFPlayer::OnTakeDamage( inputInfo )
 	else if ( pInflictor && pInflictor.IsSolidFlagSet( FSOLID_TRIGGER ) )
 	{
 		// check to see if our attacker is a trigger_hurt entity (and allow it to kill us even if we're invuln)
-		if(pInflictor.GetClassname() == "trigger_hurt")
+		if (pInflictor.GetClassname() == "trigger_hurt")
 		{
 			bAllowDamage = true
 			info.SetDamageCustom( TF_DMG_CUSTOM_TRIGGER_HURT )
 		}
-		else if(pInflictor.GetClassname() == "func_croc")
+		else if (pInflictor.GetClassname() == "func_croc")
 		{
 			bAllowDamage = true
 			info.SetDamageCustom( TF_DMG_CUSTOM_CROC )
@@ -4167,7 +4167,7 @@ function CTFPlayer::OnTakeDamage( inputInfo )
 			// Check to see if we have the cheat death attribute that makes
 			// us teleport to base rather than die
 			local flCheatDeathChance = HookAdditiveAttributes("teleport instead of die")
-			if( RandomFloat(0, 1) < flCheatDeathChance )
+			if ( RandomFloat(0, 1) < flCheatDeathChance )
 			{
 				// Send back to base
 				ForceRegenerateAndRespawn()
@@ -4206,7 +4206,7 @@ function CTFPlayer::OnTakeDamage( inputInfo )
 			return 0
 		}
 
-		if(!("gs_pRecursivePlayerCheck" in ROOT))
+		if (!("gs_pRecursivePlayerCheck" in ROOT))
 			::gs_pRecursivePlayerCheck <- null
 		// Check to see if we need to pass along the damage to other players
 		if ( pWeapon && ( gs_pRecursivePlayerCheck == null ) )
@@ -4245,7 +4245,7 @@ function CTFPlayer::OnTakeDamage( inputInfo )
 				gs_pRecursivePlayerCheck = this
 				foreach (pTFPlayer in pTempPlayerQueue)
 				{
-					if(pTFPlayer != this)
+					if (pTFPlayer != this)
 					pTFPlayer.TakeCustomDamage(inputInfo)
 				}
 				gs_pRecursivePlayerCheck = null
@@ -4354,14 +4354,14 @@ function CTFPlayer::OnTakeDamage( inputInfo )
 	local bMedicExplosiveResist		= InCond( TF_COND_MEDIGUN_UBER_BLAST_RESIST )	|| InCond( TF_COND_MEDIGUN_SMALL_BLAST_RESIST )
 	local bMedicFireResist			= InCond( TF_COND_MEDIGUN_UBER_FIRE_RESIST )	|| InCond( TF_COND_MEDIGUN_SMALL_FIRE_RESIST )
 
-	if( ( bMedicBulletResist && ( bitsDamage & DMG_BULLET ) ) )
+	if ( ( bMedicBulletResist && ( bitsDamage & DMG_BULLET ) ) )
 		pzsMedigunResistEffect = format("vaccinator_%s_buff1_burst", pzsTeam)
-	else if( bMedicExplosiveResist && ( bitsDamage & DMG_BLAST	) )
+	else if ( bMedicExplosiveResist && ( bitsDamage & DMG_BLAST	) )
 		pzsMedigunResistEffect = format("vaccinator_%s_buff2_burst", pzsTeam)
-	else if( bMedicFireResist && ( bitsDamage & DMG_BURN ) )
+	else if ( bMedicFireResist && ( bitsDamage & DMG_BURN ) )
 		pzsMedigunResistEffect = format("vaccinator_%s_buff3_burst", pzsTeam)
 
-	if( pzsMedigunResistEffect != null )
+	if ( pzsMedigunResistEffect != null )
 		CreateParticle(pzsMedigunResistEffect, GetOrigin())
 
 	// Display any effect associate with this damage type
@@ -4396,11 +4396,11 @@ function CTFPlayer::OnTakeDamage( inputInfo )
 		// PASSTIME intense flinch to make it hard to throw straight while taking damage
 
 		local tf_passtime_flinch_boost = IsCvarAllowed("tf_passtime_flinch_boost") ? GetCvarInt("tf_passtime_flinch_boost") : 0
-		if( IsPasstimeMode() && (tf_passtime_flinch_boost > 0) )
+		if ( IsPasstimeMode() && (tf_passtime_flinch_boost > 0) )
 		{
 			local iFlinch = tf_passtime_flinch_boost
 			local pMyWeapon = GetActiveWeapon()
-			if( pMyWeapon && pMyWeapon.GetIDX() == 1155 )
+			if ( pMyWeapon && pMyWeapon.GetIDX() == 1155 )
 			{
 				// QAngle punch
 				// punch.Random( -iFlinch, iFlinch )
@@ -4640,7 +4640,7 @@ function CTFPlayer::OnTakeDamage( inputInfo )
 					/** 
 					 * @param {CTFPlayer} player
 					 */
-					function ExplodeFunc(player) {
+					function ExplodeFunc( player ) {
 						DispatchParticleEffect("dragons_fury_effect", player.GetOrigin(), Vector())
 						bExploded = true
 					}

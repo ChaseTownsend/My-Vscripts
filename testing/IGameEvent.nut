@@ -32,7 +32,7 @@ class IGameEvent {
 	function GetKey( keyname )
 	{
 		local keyidx = m_Keys.find(keyname)
-		if(keyidx == null)
+		if (keyidx == null)
 			return null
 		else return m_Keys[keyidx]
 	}
@@ -42,11 +42,11 @@ class IGameEvent {
 	 */
 	function IsEmpty( keyname = null )
 	{
-		if( keyname == null )
+		if ( keyname == null )
 			return m_bEmpty
 
 		local key = GetKey(keyname)
-		if(key == null || key == IGameEventKey("", null))
+		if (key == null || key == IGameEventKey("", null))
 			return true
 		else return false
 	}
@@ -56,7 +56,7 @@ class IGameEvent {
 	 */
 	function GetBool( keyName, defaultValue = false ) 
 	{
-		if(IsEmpty(keyName))
+		if (IsEmpty(keyName))
 			return defaultValue
 		else return GetKey(keyName).m_data
 	}
@@ -66,7 +66,7 @@ class IGameEvent {
 	 */
 	function GetInt( keyName, defaultValue = 0 ) 
 	{
-		if(IsEmpty(keyName))
+		if (IsEmpty(keyName))
 			return defaultValue
 		else return GetKey(keyName).m_data
 	}
@@ -76,7 +76,7 @@ class IGameEvent {
 	 */
 	function GetFloat( keyName, defaultValue = 0.0 ) 
 	{
-		if(IsEmpty(keyName))
+		if (IsEmpty(keyName))
 			return defaultValue
 		else return GetKey(keyName).m_data
 	}
@@ -86,7 +86,7 @@ class IGameEvent {
 	 */
 	function GetString( keyName, defaultValue = "" ) 
 	{
-		if(IsEmpty(keyName))
+		if (IsEmpty(keyName))
 			return defaultValue
 		else return GetKey(keyName).m_data
 	}
@@ -96,7 +96,7 @@ class IGameEvent {
 	 */
 	function GetUint64( keyName, defaultValue = -0 )
 	{
-		if(IsEmpty(keyName))
+		if (IsEmpty(keyName))
 			return defaultValue
 		else return GetKey(keyName).m_data
 	}
@@ -106,7 +106,7 @@ class IGameEvent {
 	 */
 	function GetWString( keyName, defaultValue = "" )
 	{
-		if(IsEmpty(keyName))
+		if (IsEmpty(keyName))
 			return defaultValue
 		else return GetKey(keyName).m_data
 	}
@@ -116,7 +116,7 @@ class IGameEvent {
 	 */
 	function GetPtr( keyName, defaultValue = -0 )
 	{
-		if(IsEmpty(keyName))
+		if (IsEmpty(keyName))
 			return defaultValue
 		else return GetKey(keyName).m_data
 	}
@@ -125,7 +125,7 @@ class IGameEvent {
 	 * @param {string} keyName
 	 * @param {any} data
 	 */
-	function SetKey( keyName, data ) { m_Keys[keyName] <- IGameEventKey(keyName, data) }
+	function SetKey( keyName, data ) { m_Keys[keyName] <- IGameEventKey( keyName, data ) }
 
 	/**
 	 * @param {string} keyName
@@ -180,7 +180,7 @@ class IGameEvent {
 	function InternalFire( bDontBroadcast )
 	{
 		printl(GetDataKeys())
-		if( bDontBroadcast )
+		if ( bDontBroadcast )
 			FireGameEvent( m_szName, GetDataKeys() )
 		else SendGlobalGameEvent( m_szName, GetDataKeys() )
 	}
@@ -199,7 +199,7 @@ class IGameEventManager2 {
 		foreach (event in filename)
 		{
 			length++
-			if(m_ValidEvents.find(event) == null)
+			if (m_ValidEvents.find(event) == null)
 				m_ValidEvents.append(event)
 		}
 		return length
@@ -243,20 +243,20 @@ class IGameEventManager2 {
 	 */
 	function CreateEvent( name, bForce = false )
 	{
-		if( bForce == false )
+		if ( bForce == false )
 		{
 			local found = m_ValidEvents.find( name ) != null
-			if( found == false )
+			if ( found == false )
 			{
 				foreach ( listener, _data in m_Listensers )
 				{
-					if( FindListener( listener, name ) )
+					if ( FindListener( listener, name ) )
 					{
 						found = true
 						break
 					}
 				}
-				if( found == false )
+				if ( found == false )
 					return printf("{IGameEventManager2::CreateEvent} Failed to create an event with name %s as there are no listeners or No Registered Events\n", name)
 			}
 		}

@@ -48,9 +48,9 @@ local DMG_SENTRY_BURN = DMG_PLASMA|DMG_PREVENT_PHYSICS_FORCE
 			hullmax = Vector(12, -12, 12)
 			// ignore = self,
 			mask = MASK_SHOT_HULL,
-			filter = function(entity)
+			filter = function( entity )
 			{
-				if(IsValidEnemy(entity)) return TRACE_OK_CONTINUE
+				if (IsValidEnemy(entity)) return TRACE_OK_CONTINUE
 				else return TRACE_CONTINUE
 			}
 		}
@@ -59,7 +59,7 @@ local DMG_SENTRY_BURN = DMG_PLASMA|DMG_PREVENT_PHYSICS_FORCE
 
 		DebugDrawClear()
 		local EntitysHit = []
-		if(CanDealDamage)
+		if (CanDealDamage)
 		{
 			TraceHullGather(trace)
 			foreach (_, hit in trace.hits)
@@ -73,7 +73,7 @@ local DMG_SENTRY_BURN = DMG_PLASMA|DMG_PREVENT_PHYSICS_FORCE
 		DealDamage(EntitysHit)
 	}
 
-	function DealDamage(entitys)
+	function DealDamage( entitys )
 	{
 		////////////
 		// Damage //
@@ -81,16 +81,16 @@ local DMG_SENTRY_BURN = DMG_PLASMA|DMG_PREVENT_PHYSICS_FORCE
 		local IsWrangled = GetPropBool(self, "m_bPlayerControlled")
 		local IsFiring = false
 
-		if(IsWrangled && hOwner.IsPressingButton(IN_ATTACK) && (hOwner.GetWeaponInSlotNew(SLOT_SECONDARY) == hOwner.GetActiveWeapon()))
+		if (IsWrangled && hOwner.IsPressingButton(IN_ATTACK) && (hOwner.GetWeaponInSlotNew(SLOT_SECONDARY) == hOwner.GetActiveWeapon()))
 			IsFiring = true
-		else if(!IsWrangled && iState == 2)
+		else if (!IsWrangled && iState == 2)
 			IsFiring = true
 
-		if(iShells == 0)
+		if (iShells == 0)
 
-		if(iShells != 0 && IsFiring && flNextAttackTime <= Time())
+		if (iShells != 0 && IsFiring && flNextAttackTime <= Time())
 		{
-			if(hParticle == null)
+			if (hParticle == null)
 			{
 				hParticle = SpawnEntityFromTable("info_particle_system", {
 					targetname = "Sentry_flame"
@@ -100,7 +100,7 @@ local DMG_SENTRY_BURN = DMG_PLASMA|DMG_PREVENT_PHYSICS_FORCE
 				hParticle.SetAbsOrigin(EyePos)
 			}
 
-			if(isDebug == false && m_iShells > 0)
+			if (isDebug == false && m_iShells > 0)
 				m_iShells--
 			SetPropInt(self, "m_iAmmoShells", m_iShells)
 
@@ -110,19 +110,19 @@ local DMG_SENTRY_BURN = DMG_PLASMA|DMG_PREVENT_PHYSICS_FORCE
 
 			foreach (entity in entitys)
 			{
-				if(!hOwner || !hOwner.IsValid())
+				if (!hOwner || !hOwner.IsValid())
 					break
 
-				if(entity.IsPlayer())
+				if (entity.IsPlayer())
 					entity.AddCondEx(TF_COND_GAS, 1, hOwner)
 				entity.TakeDamageCustom(self, hOwner, hOwner.GetWeaponInSlotNew(SLOT_MELEE), Vector(), Vector(), IsWrangled ? FLAME_SENTRY_DAMAGE * FLAME_SENTRY_WRANGLE_MULT : FLAME_SENTRY_DAMAGE, DMG_SENTRY_BURN, TF_DMG_CUSTOM_BURNING)
 			}
 		}
 	}
 
-	function OnPostShoot(result)
+	function OnPostShoot( result )
 	{
-		if(!result)
+		if (!result)
 		{
 		}
 		else
@@ -136,14 +136,14 @@ const FLAME_SENTRY_SOUND = "misc/flame_engulf.wav"
 const FLAME_SENTRY_SOUND_EMIT_RATE = 0.025
 
 ::FlameSentryEvents <-{
-	function OnScriptEvent_SentryBuilt(params)
+	function OnScriptEvent_SentryBuilt( params )
 	{
 		local player = params.player
-		if(player.GetWeaponIDXInSlotNew(SLOT_MELEE) != TF_WEAPON_SOUTHERN_HOSPITALITY)
+		if (player.GetWeaponIDXInSlotNew(SLOT_MELEE) != TF_WEAPON_SOUTHERN_HOSPITALITY)
 			return
 
 		local sentry = params.object
-		if(GetPropBool(sentry, "m_bDisposableBuilding") == true)
+		if (GetPropBool(sentry, "m_bDisposableBuilding") == true)
 			return
 
 		AddThinkToEnt(sentry, "FlameSentry")
@@ -152,7 +152,7 @@ const FLAME_SENTRY_SOUND_EMIT_RATE = 0.025
 		EntFireNew(sentry, "SetModelScale", "1")
 		EntFireNew(sentry, "skin", "1")
 
-		if(IsListenServer())
+		if (IsListenServer())
 		{
 			Host.AddCustomAttribute("engy sentry damage bonus", 0.0, -1)
 			Host.AddCustomAttribute("engy sentry fire rate increased", 100000, -1)
@@ -169,7 +169,7 @@ const FLAME_SENTRY_SOUND_EMIT_RATE = 0.025
 		scope.hParticle <- null
 		scope.CustomSettings <- clone FlameSentrySettings
 
-		local function AddLoopingSound(data)
+		local function AddLoopingSound( data )
 		{
 			data.entity = self
 			Sounds.append(data)
@@ -192,7 +192,7 @@ const FLAME_SENTRY_SOUND_EMIT_RATE = 0.025
 		{
 			StopLoopingSounds()
 			ClearThinks(self)
-			if("hParticle" in this && hParticle != null && hParticle.IsValid())
+			if ("hParticle" in this && hParticle != null && hParticle.IsValid())
 			{
 				hParticle.AcceptInput("Stop", "", null, null)
 				hParticle.Destroy()
@@ -201,9 +201,9 @@ const FLAME_SENTRY_SOUND_EMIT_RATE = 0.025
 		}
 		scope.CleanUp <- CleanUp
 
-		local function CheckSetting(setting)
+		local function CheckSetting( setting )
 		{
-			if(setting in CustomSettings)
+			if (setting in CustomSettings)
 				return CustomSettings.CustomSettings
 			return null
 		}
@@ -213,7 +213,7 @@ const FLAME_SENTRY_SOUND_EMIT_RATE = 0.025
 			return QAngle((GetPropFloat(self, "m_flPoseParameter", 0) * -100 + 50) * DEG2RAD, (GetPropFloat(self, "m_flPoseParameter", 1) * -360 + 180 + self.GetAbsAngles().y) * DEG2RAD, 0)
 		scope.GetAngle <- GetAngle
 
-		local function SetNextAttack(delay)
+		local function SetNextAttack( delay )
 			flNextAttackTime = Time() + delay
 		scope.SetNextAttack <- SetNextAttack
 
@@ -224,19 +224,19 @@ const FLAME_SENTRY_SOUND_EMIT_RATE = 0.025
 		scope.SoundStartVol <- 1.0
 		scope.SoundLoopVol <- 1.0
 	}
-/* 	function OnGameEvent_object_destroyed(params) {
+/* 	function OnGameEvent_object_destroyed( params ) {
 		local building = EntIndexToHScript(params.index)
 		ClearThinks(building)
-		if(params.objecttype == OBJ_SENTRY && "hParticle" in GetScope(building) && GetScope(building).hParticle != null)
+		if (params.objecttype == OBJ_SENTRY && "hParticle" in GetScope(building) && GetScope(building).hParticle != null)
 		{
 			GetScope(building).hParticle.AcceptInput("Stop", "", null, null)
 			GetScope(building).hParticle.Destroy()
 		}
 	}
-	function OnGameEvent_object_detonated(params) {
+	function OnGameEvent_object_detonated( params ) {
 		local building = EntIndexToHScript(params.index)
 		ClearThinks(building)
-		if(params.objecttype == OBJ_SENTRY && "hParticle" in GetScope(building) && GetScope(building).hParticle != null)
+		if (params.objecttype == OBJ_SENTRY && "hParticle" in GetScope(building) && GetScope(building).hParticle != null)
 		{
 			GetScope(building).hParticle.AcceptInput("Stop", "", null, null)
 			GetScope(building).hParticle.Destroy()
@@ -247,10 +247,10 @@ __CollectGameEventCallbacks(FlameSentryEvents)
 
 function CustomSentryThink()
 {
-	if(!self || !self.IsValid())
+	if (!self || !self.IsValid())
 		return 500
 
-	if(CheckSetting("ThinkWhileBuilding") && GetPropBool(self, "m_bBuilding"))
+	if (CheckSetting("ThinkWhileBuilding") && GetPropBool(self, "m_bBuilding"))
 		return -1
 
 	this.hOwner 	<- GetBuilder(self)
@@ -263,7 +263,7 @@ function CustomSentryThink()
 
 	this.EyePos 	<- self.EyePosition()+Vector(0, 0, 6)
 
-	if(CanFire())
+	if (CanFire())
 	{
 		local result = OnShoot()
 		OnPostShoot(result)
@@ -273,9 +273,9 @@ function CustomSentryThink()
 //////////
 function FlameSentry()
 {
-	if(!self || !self.IsValid())
+	if (!self || !self.IsValid())
 		return 500
-	if(GetPropBool(self, "m_bBuilding")) 
+	if (GetPropBool(self, "m_bBuilding")) 
 		return -1
 
 	// Netprop related veriables
@@ -301,16 +301,16 @@ function FlameSentry()
 		hullmax = Vector(12, -12, 12)
 		// ignore = self,
 		mask = MASK_SHOT_HULL,
-		filter = function(entity)
+		filter = function( entity )
 		{
-			if(IsValidEnemy(entity)) return TRACE_OK_CONTINUE
+			if (IsValidEnemy(entity)) return TRACE_OK_CONTINUE
 			else return TRACE_CONTINUE
 		}
 	}
 
 	DebugDrawClear()
 	local EntitysHit = []
-	if(CanDealDamage)
+	if (CanDealDamage)
 	{
 		TraceHullGather(trace)
 		foreach (_, hit in trace.hits)
@@ -319,7 +319,7 @@ function FlameSentry()
 		}
 	}
 
-	if(CanDealDamage && IsListenServer()) DrawTraceHull(trace)
+	if (CanDealDamage && IsListenServer()) DrawTraceHull(trace)
 
 	////////////
 	// Damage //
@@ -328,14 +328,14 @@ function FlameSentry()
 	local IsFiring = false
 
 	IsWrangled = GetPropBool(self, "m_bPlayerControlled")
-	if(IsWrangled && hOwner.IsPressingButton(IN_ATTACK) && (hOwner.GetWeaponInSlotNew(SLOT_SECONDARY) == hOwner.GetActiveWeapon()))
+	if (IsWrangled && hOwner.IsPressingButton(IN_ATTACK) && (hOwner.GetWeaponInSlotNew(SLOT_SECONDARY) == hOwner.GetActiveWeapon()))
 		IsFiring = true
-	else if(!IsWrangled && m_iState == 2)
+	else if (!IsWrangled && m_iState == 2)
 		IsFiring = true
 
-	if(m_iShells != 0 && IsFiring && CanDealDamage)
+	if (m_iShells != 0 && IsFiring && CanDealDamage)
 	{
-		if(hParticle == null)
+		if (hParticle == null)
 		{
 			hParticle = SpawnEntityFromTable("info_particle_system", {
 				targetname = "Sentry_flame"
@@ -345,7 +345,7 @@ function FlameSentry()
 			hParticle.SetAbsOrigin(vecEyePos)
 		}
 
-		if(isDebug == false && m_iShells > 0)
+		if (isDebug == false && m_iShells > 0)
 			m_iShells--
 		SetPropInt(self, "m_iAmmoShells", m_iShells)
 
@@ -353,27 +353,27 @@ function FlameSentry()
 		NextDamageTime <- Time() + FLAME_SENTRY_DAMAGE_DELAY
 		foreach (entity in EntitysHit)
 		{
-			if(!hOwner || !hOwner.IsValid())
+			if (!hOwner || !hOwner.IsValid())
 				break
 
-			if(entity.IsPlayer())
+			if (entity.IsPlayer())
 				entity.AddCondEx(TF_COND_GAS, 1, hOwner)
 			entity.TakeDamageCustom(self, hOwner, hOwner.GetWeaponInSlotNew(SLOT_MELEE), Vector(), Vector(), IsWrangled ? FLAME_SENTRY_DAMAGE * FLAME_SENTRY_WRANGLE_MULT : FLAME_SENTRY_DAMAGE, DMG_SENTRY_BURN, TF_DMG_CUSTOM_BURNING)
 		}
 
-		if(m_flNextSoundEmit <= Time())
+		if (m_flNextSoundEmit <= Time())
 		{
-			if(!IsSoundPrecached(FLAME_SENTRY_SOUND))
+			if (!IsSoundPrecached(FLAME_SENTRY_SOUND))
 				PrecacheSound(FLAME_SENTRY_SOUND)
-			if(!IsSoundPrecached("weapons/flame_thrower_loop.wav"))
+			if (!IsSoundPrecached("weapons/flame_thrower_loop.wav"))
 				PrecacheSound("weapons/flame_thrower_loop.wav")
-			if(!IsSoundPrecached("weapons/flame_thrower_start.wav"))
+			if (!IsSoundPrecached("weapons/flame_thrower_start.wav"))
 				PrecacheSound("weapons/flame_thrower_start.wav")
 
-			if(!self.IsValid())
+			if (!self.IsValid())
 				return 500
 
-			if(FiredLastFrame == false)
+			if (FiredLastFrame == false)
 			{
 				SoundStartVol = 0.55
 				EmitSoundEx({
@@ -406,7 +406,7 @@ function FlameSentry()
 			// 	flag = 4
 			// })
 
-			if(SoundLoopVol == 1.01)
+			if (SoundLoopVol == 1.01)
 				SoundLoopVol = 0.01
 
 			SoundLoopVol += 0.01
@@ -421,7 +421,7 @@ function FlameSentry()
 			m_flNextSoundEmit <- Time() + FLAME_SENTRY_SOUND_EMIT_RATE
 		}
 	}
-	if(hParticle == null)
+	if (hParticle == null)
 	{
 		hParticle = SpawnEntityFromTable("info_particle_system", {
 			targetname = "Sentry_flame"
@@ -434,7 +434,7 @@ function FlameSentry()
 	DebugDrawText(self.GetOrigin() + Vector(0, 0, 32), FiredLastFrame.tostring(), false, 0.1)
 
 	hParticle.SetAbsAngles(QAngle(flPitch * RAD2DEG, flYaw * RAD2DEG, 0))
-	if(m_iShells == 0)
+	if (m_iShells == 0)
 	{
 		hParticle.AcceptInput("Stop", "", null, null)
 		EmitSoundEx({
@@ -454,7 +454,7 @@ function FlameSentry()
 		})
 		SoundLoopVol = 1.0
 	}
-	else if((IsFiring && !IsWrangled) || (IsFiring && IsWrangled))
+	else if ((IsFiring && !IsWrangled) || (IsFiring && IsWrangled))
 		hParticle.AcceptInput("Start", "", null, null)
 	else 
 	{
@@ -477,7 +477,7 @@ function FlameSentry()
 		SoundLoopVol = 1.01
 	}
 
-	if(IsFiring && m_iShells != 0)
+	if (IsFiring && m_iShells != 0)
 		FiredLastFrame = true
 	else
 		FiredLastFrame = false
