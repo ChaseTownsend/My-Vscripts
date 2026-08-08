@@ -5,7 +5,7 @@ It contains a bunch of helper functions and new functions that Make vscript just
 
 The Library currently Supports 
 
-<img src="Assets/tf2icon.png" width = 48 height = 48 title="Team Fortress 2"> , <img src="Assets/tf2cicon.png" width = 48 height = 48 title="Team Fortress 2 Classified">
+<img src="Assets/tf2icon.png" width = 48 height = 48 title="Team Fortress 2"> , <img src="Assets/tf2cicon.png" width = 48 height = 48 title="Team Fortress 2 Classified">?
 
 ## Bug Reports
 Any bugs should be reported as using Githubs Issue's
