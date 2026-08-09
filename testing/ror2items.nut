@@ -50,6 +50,7 @@ function InitItems() {
 		local weapon = plr.GetWeaponInSlotNew(SLOT_MELEE)
 		if (!weapon)
 			return
+			
 		weapon.AddAttribute("CARD: damage bonus", 1+(0.3 * count.tofloat()), 0)
 	}, null)
 	items["Medival Specialist"] <- ItemData(0, "Medival Specialist", Rarity.Unique, function( plr, count ) {
@@ -57,26 +58,8 @@ function InitItems() {
 		local weapon = plr.GetWeaponInSlotNew(SLOT_MELEE)
 		if (!weapon)
 			return
-		if (count == 1)
-		{	// TODO: MAKE IT GIVE LESS AND LESS
-			weapon.AddAttribute("melee attack rate bonus", 0.8, 0)
-			return
-		}
-		// player:SetAttributeValue( upgrade.Attributes[j].attr, math.max( player:GetAttributeValueClean( upgrade.Attributes[j].attr, upgrade.Attributes[j].default, LOADOUT_POSITION_BODY ) * upgrade.Attributes[j].increment ), cap ) 
-		/* // totally not stolen lua code
-		if IsValid(player:GetPlayerItemBySlot(LOADOUT_POSITION_PRIMARY)) and ( WeaponAllowed( player:GetPlayerItemBySlot( 0 ), upgrade.WeaponList ) ) then
-			player:GetPlayerItemBySlot(LOADOUT_POSITION_PRIMARY):SetAttributeValue( tostring( upgrade.Attributes[j].attr ), math.max( player:GetAttributeValueClean( upgrade.Attributes[j].attr, upgrade.Attributes[j].default, LOADOUT_POSITION_PRIMARY ) * upgrade.Attributes[j].increment ), cap )
-		end
-		if ( WeaponAllowed( player:GetPlayerItemBySlot( 1 ), upgrade.WeaponList ) ) then
-			player:GetPlayerItemBySlot(LOADOUT_POSITION_SECONDARY):SetAttributeValue( tostring( upgrade.Attributes[j].attr ), math.max( player:GetAttributeValueClean( upgrade.Attributes[j].attr, upgrade.Attributes[j].default, LOADOUT_POSITION_SECONDARY ) * upgrade.Attributes[j].increment ), cap )
-		end
-		 */
-		weapon.AddAttribute("melee attack rate bonus", weapon.GetAttribute("melee attack rate bonus", 1.0) * 0.9, 0)
-					
-		// .AddAttribute()
-		// plr.AddCustomAttribute("move speed bonus", 1+(0.1*count), -1)
-		// plr.TeamFortress_SetSpeed()
-		// RoR2.PlayerToPlayerData(plr).AdjustDodgeChance()
+		// inverse proportional relationship
+		weapon.AddAttribute("melee attack rate bonus", 1.0 / (1.0 + (0.15*count)), 0)
 	}, null)
 
 
