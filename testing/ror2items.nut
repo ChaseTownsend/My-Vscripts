@@ -50,6 +50,7 @@ function InitItems() {
 		local weapon = plr.GetWeaponInSlotNew(SLOT_MELEE)
 		if (!weapon)
 			return
+			
 		weapon.AddAttribute("CARD: damage bonus", 1+(0.3 * count.tofloat()), 0)
 	}, null)
 	items["Medival Specialist"] <- ItemData(0, "Medival Specialist", Rarity.Unique, function( plr, count ) {
@@ -57,18 +58,8 @@ function InitItems() {
 		local weapon = plr.GetWeaponInSlotNew(SLOT_MELEE)
 		if (!weapon)
 			return
-		if (count == 1)
-		{	// TODO: MAKE IT GIVE LESS AND LESS
-			weapon.AddAttribute("melee attack rate bonus", 0.8, 0)
-			return
-		}
-
-		weapon.AddAttribute("melee attack rate bonus", weapon.GetAttribute("melee attack rate bonus", 1.0) * 0.9, 0)
-					
-		// .AddAttribute()
-		// plr.AddCustomAttribute("move speed bonus", 1+(0.1*count), -1)
-		// plr.TeamFortress_SetSpeed()
-		// RoR2.PlayerToPlayerData(plr).AdjustDodgeChance()
+		// inverse proportional relationship
+		weapon.AddAttribute("melee attack rate bonus", 1.0 / (1.0 + (0.15*count)), 0)
 	}, null)
 
 

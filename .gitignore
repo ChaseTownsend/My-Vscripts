@@ -4,6 +4,7 @@ SDK/
 give_tf_weapon/
 vssaxtonhale/
 infection/
+testing/supertest/
 
 # 
 .vscode/analyze_strings.py
