@@ -970,6 +970,7 @@ enum ProjectileType_t
 ::TF_WEAPON_SNIPERRIFLE_DAMAGE_MAX 	<- 150
 ::WEAPON_NOCLIP <- 1
 ::TRACE_MAX <- 65536
+::VALVE_RAND_MAX <- 0x7FFF
 
 ::ITEM_FLAG_SELECTONEMPTY		<- (1<<0)
 ::ITEM_FLAG_NOAUTORELOAD		<- (1<<1)
@@ -8843,6 +8844,23 @@ function ROOT::PrecacheObject( thing )
 		cVal = MATH.Clamp( cVal, 0.0, 1.0 )
 		return C + (D - C) * SimpleSpline( cVal )
 	}
+
+	/**
+	 * Mimic's How valve generates Random Floats
+	 */
+	function Valve_RandomFloat()
+	{
+		return RandomInt(0, VALVE_RAND_MAX).tofloat() / VALVE_RAND_MAX
+	}
+
+	/** 
+	 * @param {float} min
+	 * @param {float} max
+	 */
+	function Valve_RandomInt(min, max)
+	{
+		min + Valve_RandomFloat() * (max - min)
+	}
 }
 
 /*
@@ -8874,9 +8892,9 @@ function Vector::Normalize()
  */
 function Vector::Random( min, max )
 {	//VALVE_RAND_MAX == 0x7FFF
-	this.x = min + (::RandomInt(0, 0x7FFF).tofloat() / 0x7FFF) * (max - min)
-	this.y = min + (::RandomInt(0, 0x7FFF).tofloat() / 0x7FFF) * (max - min)
-	this.z = min + (::RandomInt(0, 0x7FFF).tofloat() / 0x7FFF) * (max - min)
+	this.x = min + (::RandomInt(0, VALVE_RAND_MAX).tofloat() / VALVE_RAND_MAX) * (max - min)
+	this.y = min + (::RandomInt(0, VALVE_RAND_MAX).tofloat() / VALVE_RAND_MAX) * (max - min)
+	this.z = min + (::RandomInt(0, VALVE_RAND_MAX).tofloat() / VALVE_RAND_MAX) * (max - min)
 }
 /**
  * @param {Vector} point2
@@ -8907,7 +8925,7 @@ function Vector::DistanceTo( point2 )
   === VECTOR2D METHODS ===
   ========================
 */
-if("Vector2D" in ROOT) {
+if("Vector2D" in ROOT) { // wacky tf2c does not have it
 /**
  * @returns {Vector2D}
  */
