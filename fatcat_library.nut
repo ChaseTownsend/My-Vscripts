@@ -2102,7 +2102,7 @@ function CTFPlayer::GetWeaponInSlotNew( slot )
 	for (local i = 0; i < MAX_WEAPONS; i++) 
 	{ 
 		if (i == slot) continue
-		weapon = GetWeaponInSlot(i)
+		weapon = this.GetWeaponInSlot(i)
 		if ( weapon == null ) continue
 
 		local weaponSlot = weapon.GetSlot()
