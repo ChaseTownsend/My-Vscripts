@@ -252,7 +252,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format) (GMT-5)
-if (!SetLibraryVersion("08.07.2026.23", 0))
+if (!SetLibraryVersion("08.14.2026.23", 0))
 	return
 
 SetLibrarySettings({})
@@ -2590,6 +2590,23 @@ function CTFPlayer::GetPlayerClassName()
 	}
 }
 
+function CTFPlayer::GetPlayerModelPath()
+{
+	switch (GetPlayerClass())
+	{
+	case TF_CLASS_SCOUT:			return "scout"
+	case TF_CLASS_SOLDIER: 			return "soldier"
+	case TF_CLASS_PYRO: 			return "pyro"
+	case TF_CLASS_DEMOMAN: 			return "demo"
+	case TF_CLASS_HEAVYWEAPONS: 	return "heavy"
+	case TF_CLASS_ENGINEER: 		return "engineer"
+	case TF_CLASS_MEDIC: 			return "medic"
+	case TF_CLASS_SNIPER: 			return "sniper"
+	case TF_CLASS_SPY: 				return "spy"
+	default:						return "Unknown!"
+	}
+}
+
 /**
  * @param {string} string
  */
@@ -4087,10 +4104,7 @@ function CTFPlayer::UseGiantModel( buster = false )
 		if (pClass == TF_CLASS_SNIPER || pClass == TF_CLASS_ENGINEER || pClass == TF_CLASS_MEDIC || pClass == TF_CLASS_SPY)
 			return UseRobotModel()
 
-		local name = GetPlayerClassName().tolower()
-		if (pClass == TF_CLASS_DEMOMAN)
-			name = "demo"
-
+		local name = GetPlayerModelPath()
 		local model_name = format("models/bots/%s_boss/bot_%s_boss.mdl", name, name)
 		// printf("Trying to apply Model \"%s\" to player\n", model_name)
 
@@ -4101,7 +4115,8 @@ function CTFPlayer::UseGiantModel( buster = false )
 function CTFPlayer::UseRobotModel()
 {
 	StripItemSlot(STRIPSLOT_COSMETICS)
-	PlayerFire("SetCustomModelWithClassAnimations", format("models/bots/%s/bot_%s.mdl", GetPlayerClassName().tolower(), GetPlayerClassName().tolower()), FIVE_TICKS)
+	local name = GetPlayerModelPath()
+	PlayerFire("SetCustomModelWithClassAnimations", format("models/bots/%s/bot_%s.mdl", name, name), FIVE_TICKS)
 }
 
 function CTFPlayer::ShouldDetonate()
