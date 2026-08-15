@@ -252,7 +252,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format) (GMT-5)
-if (!SetLibraryVersion("08.14.2026.23", 0))
+if (!SetLibraryVersion("08.15.2026.16", 0))
 	return
 
 SetLibrarySettings({})
@@ -1099,7 +1099,7 @@ enum ProjectileType_t
 }
 
 /** @type {class} */
-class color32 {
+class ::color32 {
 	/** @type {integer} */
 	r = 0
 	/** @type {integer} */
@@ -1125,7 +1125,7 @@ class color32 {
 }
 
 /** @type {class} */
-class Corrosion {
+class ::Corrosion {
 	/** @type {CTFPlayer|null} */
 	m_hOuter 		= null
 	bActive 		= false
@@ -5526,14 +5526,14 @@ function CTFWeaponBase::ApplyFireDelay( flDelay )
 }
 
 if (!("CTakeDamageInfo" in ROOT))
-	class CTakeDamageInfo {}
+	class ::CTakeDamageInfo {}
 
 if (!("KeyValues" in ROOT))
-	class KeyValues {}
+	class ::KeyValues {}
 
 if (!("WeaponData_t" in ROOT))
 {
-	class WeaponData_t
+	class ::WeaponData_t
 	{
 		m_nDamage = 0
 		m_nBulletsPerShot = 0
@@ -5558,7 +5558,7 @@ if (!("WeaponData_t" in ROOT))
 
 if (!("itemFlags_t" in ROOT))
 {
-	class itemFlags_t {
+	class ::itemFlags_t {
 		m_pFlagName = ""
 		m_iFlagValue = 0
 		constructor(name, value) {
@@ -5582,7 +5582,7 @@ if (!("itemFlags_t" in ROOT))
 
 if (!("FileWeaponInfo_t" in ROOT))
 {
-	class FileWeaponInfo_t
+	class ::FileWeaponInfo_t
 	{
 		constructor() {}
 		// Each game can override this to get whatever values it wants from the script.
@@ -5720,7 +5720,7 @@ if (!("FileWeaponInfo_t" in ROOT))
 
 if (!("CTFWeaponInfo" in ROOT))
 {
-	class CTFWeaponInfo extends FileWeaponInfo_t
+	class ::CTFWeaponInfo extends FileWeaponInfo_t
 	{
 		constructor()
 		{
