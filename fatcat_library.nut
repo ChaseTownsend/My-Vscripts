@@ -425,7 +425,7 @@ function ROOT::SetPropVector( entity, prop, value, index = 0 )
  * @param {CBaseEntity} entity
  * @param {string} prop
  * @param {integer} index
- * @returns {Vector|instance} Vector(0,0,0) if not found
+ * @returns {Vector} Vector(0,0,0) if not found
  */
 function ROOT::GetPropVector( entity, prop, index = 0 )
 {
@@ -4123,7 +4123,7 @@ function CTFPlayer::ShouldDetonate()
 {
 	if (!this || !IsValid())
 		return
-	if (swap2(GetPropInt(this, "m_Shared.m_unTauntSourceItemID_Low")) != 65535)
+	if (swap2(GetPropInt(this, "m_Shared.m_unTauntSourceItemID_Low")) != 65535) // stupid fucking logic
 		return
 	RunWithDelay(1.9, @() SentryBusterExplode())
 }
@@ -4245,14 +4245,13 @@ function CTFPlayer::GetEyeTrace( overrides = {} )
 			tick = 0,
 		}
 
-	local should_override = overrides.len() != 0 && "mask" in overrides
-
-	local is_filter = overrides.len() != 0 && "filter" in overrides
+	local should_override = overrides.len() != 0
+	local is_filter = "filter" in overrides
 
 	if (should_override == false && is_filter == false)
 	{
 		if (GetFrameCount() == scope.EyeTraceDataCache.tick)
-			return scope.EyeTraceDataCache.data
+			return scope.EyeTraceDataCache.data // clone this?
 	}
 
 	local trace = {
@@ -4279,6 +4278,57 @@ function CTFPlayer::GetEyeTrace( overrides = {} )
 	
 	return trace
 }
+
+// class ::bignum {
+// 	bits = null
+// 	constructor()
+// 	{
+// 		this.bits = array(64, false)
+// 	}
+
+// 	function FlipBit(index)
+// 	{
+// 		bits[index] = !bits[index]
+// 	}
+
+// 	function GetLowBits()
+// 	{
+// 		local num = 0
+// 		for(local i = 0; i <= 31; i++)
+// 		{
+// 			if(bits[i])
+// 				num += (1 << i)
+// 		}
+// 		return num
+// 	}
+
+// 	/** 
+// 	 * @type {function}
+// 	 * @param {integer} value
+// 	 */
+// 	function SetLowBitValue(value)
+// 	{
+// 		if(value < 0)
+// 			value = -value
+// 		if(value > 0x7FFF)
+// 		{
+
+// 		}
+// 	}
+
+// 	function GetLowBitRepresentation()
+// 	{
+// 		local string = ""
+// 		for(local i = 0; i <= 31; i++)
+// 		{
+// 			if(bits[i])
+// 				string += "1"
+// 			else
+// 				string += "0"
+// 		}
+// 		return string
+// 	}
+// }
 
 // function CTFPlayer::DisplayHudHint( text, duration = 10.0, flash = true, Hide = true )
 // {
@@ -4312,7 +4362,7 @@ function CTFPlayer::GetEyeTrace( overrides = {} )
 // {
 // 	local low_index = GetPropInt(this, "m_Shared.m_unTauntSourceItemID_Low")
 // 	local high_index = GetPropInt(this, "m_Shared.m_unTauntSourceItemID_High")
-// 	local swaped = swap2(index) // somehow turns into 0 -> 65535
+// 	local swaped = swap2(low_index) // somehow turns into 0 -> 65535
 // 	//somehow 28324 == 31413
 // 	//53307 == 31348
 // 	// if (swapped )
@@ -5007,22 +5057,22 @@ function CTFWeaponBase::SetPropArray( propertyName, value, index )
 		printf("%s does not have property %s\n", GetClassname(), propertyName)
 		return
 	}
+	if(value == null || value instanceof CBaseEntity)
+		return SetPropEntity(this, propertyName, value, index)
 	switch (type(value))
 	{
-		case "string":
-		{ 	SetPropString(this, propertyName, value, index); return 	}
-		case "integer":
-		{ 	SetPropInt(this, propertyName, value, index); return 		}
-		case "float":
-		{ 	SetPropFloat(this, propertyName, value, index); return 	}
-		case "instance":
-		{ 	SetPropEntity(this, propertyName, value, index); return 	}
-		case "bool":
-		{ 	SetPropBool(this, propertyName, value, index); return 		}
-		case "vector":
-		{ 	SetPropVector(this, propertyName, value, index); return 	}
-		default:
-			printl("Hmm found " + type(value) + " for CTFWeaponBase::SetProp/SetPropArray")
+	case "string":
+		return SetPropString(this, propertyName, value, index)
+	case "integer":
+		return SetPropInt(this, propertyName, value, index)
+	case "float":
+		return SetPropFloat(this, propertyName, value, index)
+	case "bool":
+		return SetPropBool(this, propertyName, value, index)
+	case "vector":
+		return SetPropVector(this, propertyName, value, index)
+	default:
+		throw format("Unknown type %s in CTFWeaponBase::SetProp/SetPropArray", type(value))
 	}
 }
 /**
@@ -6715,7 +6765,7 @@ function ROOT::PrintInstance( inst, filter = [] )
 /**
  * @param {table|array|class|instance} collection
  */
-function ROOT::PrintCollection( collection, filter = [], indentation = 0, header_prefix = "" )
+function ROOT::PrintCollection( collection, filter = [], indentation = 0, header_prefix = "", indentation_string = "\t" )
 {
 	local type = typeof collection
 	local obj_class = null
@@ -6741,7 +6791,7 @@ function ROOT::PrintCollection( collection, filter = [], indentation = 0, header
 	// Calculate indentation
 	local indents = ""
 	for (local i = 0; i < indentation; i++) {
-		indents += "\t"
+		indents += indentation_string
 	}
 
 	local header_str = ""
@@ -6770,12 +6820,12 @@ function ROOT::PrintCollection( collection, filter = [], indentation = 0, header
 		local valType = typeof value
 		if (IsInArray(valType, filter)) continue
 		
-		local itemIndents = indents + "\t"
+		local itemIndents = indents + indentation_string
 		
 		// If it's an array, show [index] for clarity
 		local keyDisplay = (type == "array") ? "[" + key + "]" : key
 		
-		if (valType == "table" || valType == "array" || valType == "class" || (valType == "instance" && !(value instanceof CBaseEntity)))
+		if ((valType == "table" || valType == "array" || valType == "class" || (valType == "instance" && !(value instanceof CBaseEntity))) && indentation < 10)
 		{
 			local prefix = itemIndents + keyDisplay + " : "
 			PrintCollection(value, filter, indentation + 1, prefix)
@@ -12522,21 +12572,23 @@ RegisterAdminTrigger("kill_tank", function( player, ... ) {
 			return player.PrintToChat("Valid Arguments for \"/kill_tank\" : [ *, tank_name, help ], or leave blank to kill targeted Tank")
 		else if (vargv[0] == "*")
 		{
-			foreach (tank in GetAllEntitiesByClassname("tank_boss"))
-				tank.Kill()
+			EntFireNew("tank_boss", "kill")
 			return player.PrintToChat("Killed all Tanks")
 		}
 		else
 		{
-			if (FindByName(null, vargv[0]))
+			local tank = FindByName(null, vargv[0])
+			if (tank)
 			{
-				FindByName(null, vargv[0]).Kill()
-				return player.PrintToChat("Killed Tank with name \""+vargv[0]+"\"")
+				tank.Kill()
+				return player.PrintToChat("Killed Tank's with name \""+vargv[0]+"\"")
 			}
 			else
 				return player.PrintToChat("Failed to find a tank with that name!")
 		}
 	}
+
+
 	local trace = player.GetEyeTrace({
 		mask = MASK_OPAQUE_AND_NPCS,
 		function filter( entity )
@@ -12547,6 +12599,7 @@ RegisterAdminTrigger("kill_tank", function( player, ... ) {
 				return TRACE_CONTINUE
 		}
 	})
+
 	DebugDrawLine_vCol(trace.start, trace.pos, Vector(255, 0, 0), false, 100)
 
 	if (trace.hit && trace.enthit && trace.enthit.GetClassname() == "tank_boss")
