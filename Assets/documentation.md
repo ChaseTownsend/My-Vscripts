@@ -25,19 +25,23 @@ Progressivly trying to actually document the functions and stuff i make
 - [Chat Commands](#Chat-Commands)
 	- [Admin Commands](#Admin-Commands)
 
---- <!-- End of Table of Contents -->
+--- 
+<!-- End of Table of Contents -->
 
 ## Custom Functions
 
---- <!-- End of Custom Functions -->
+--- 
+<!-- End of Custom Functions -->
 
 ### Global Functions
 
---- <!-- End of Custom Functions -->
+--- 
+<!-- End of Global Functions -->
 
 ### Redefined functions
 
---- <!-- End of Custom Functions -->
+--- 
+<!-- End of Redefined Functions -->
 
 ### CTFPlayer Methods
  Custom Methods added to `CTFPlayer`
@@ -1317,31 +1321,38 @@ if (player.IsMissionMaker())
 }
 ```
 
---- <!-- End of CTFPlayer Methods -->
+--- 
+<!-- End of CTFPlayer Methods -->
 
 ### CTFBot Methods
 
---- <!-- End of CTFBot Methods -->
+--- 
+<!-- End of CTFBot Methods -->
 
 ### CTFWeaponBase Methods
 
---- <!-- End of CTFWeaponBase Methods -->
+--- 
+<!-- End of CTFWeaponBase Methods -->
 
 ### CEconEntity Methods
 
---- <!-- End of CEconEntity Methods -->
+--- 
+<!-- End of CEconEntity Methods -->
 
 ### CTFBaseBoss Methods
 
---- <!-- End of CTFBaseBoss Methods -->
+--- 
+<!-- End of CTFBaseBoss Methods -->
 
 ### CNavMesh Methods
 
---- <!-- End of CNavMesh Methods -->
+--- 
+<!-- End of CNavMesh Methods -->
 
 ### CTFNavArea Methods
 
---- <!-- End of CTFNavArea Methods -->
+--- 
+<!-- End of CTFNavArea Methods -->
 
 ## Custom Classes
 
@@ -1351,6 +1362,9 @@ Corrosion is a custom class implemented to handle most corrosion logic
 **Constructor Signature**<br>
 `void Corrosion::constructor( CTFPlayer|null hOuter )`
 
+--- 
+<!-- End of Corrosion.constructor -->
+
 #### Corrosion Methods
 
 ##### <a name="Corrosion.CreateCorrosion">Corrosion.CreateCorrosion</a>
@@ -1359,7 +1373,8 @@ Creates corrosion data, can provide a null weapon if values are passed from `exd
 **Function Signature**<br>
 `void Corrosion::CreateCorrosion( CTFPlayer|null attacker, CTFWeaponBase| nullweapon, table|bool exdata = false )`
 
---- <!-- End of Corrosion.CreateCorrosion -->
+--- 
+<!-- End of Corrosion.CreateCorrosion -->
 
 ##### <a name="Corrosion.Enable">Corrosion.Enable</a>
 Enables Corrosion
@@ -1367,7 +1382,8 @@ Enables Corrosion
 **Function Signature**<br>
 `void Corrosion::Enable()`
 
---- <!-- End of Corrosion.Enable -->
+--- 
+<!-- End of Corrosion.Enable -->
 
 ##### <a name="Corrosion.Disable">Corrosion.Disable</a>
 Disables Corrosion
@@ -1375,7 +1391,8 @@ Disables Corrosion
 **Function Signature**<br>
 `void Corrosion::Disable()`
 
---- <!-- End of Corrosion.Disable -->
+--- 
+<!-- End of Corrosion.Disable -->
 
 ##### <a name="Corrosion.InitVars">Corrosion.InitVars</a>
 Initalize some vars to 0
@@ -1383,7 +1400,8 @@ Initalize some vars to 0
 **Function Signature**<br>
 `void Corrosion::InitVars()`
 
---- <!-- End of Corrosion.InitVars -->
+--- 
+<!-- End of Corrosion.InitVars -->
 
 ##### <a name="Corrosion.InitAllVars">Corrosion.InitAllVars</a>
 Initalize all vars to 0
@@ -1391,7 +1409,8 @@ Initalize all vars to 0
 **Function Signature**<br>
 `void Corrosion::InitAllVars()`
 
---- <!-- End of Corrosion.InitAllVars -->
+--- 
+<!-- End of Corrosion.InitAllVars -->
 
 ##### <a name="Corrosion.HasCorrosion">Corrosion.HasCorrosion</a>
 Returns if the corrosion is enabled
@@ -1399,7 +1418,8 @@ Returns if the corrosion is enabled
 **Function Signature**<br>
 `bool Corrosion::HasCorrosion()`
 
---- <!-- End of Corrosion.HasCorrosion -->
+--- 
+<!-- End of Corrosion.HasCorrosion -->
 
 ##### <a name="Corrosion.ShouldRemoveCorrosion">Corrosion.ShouldRemoveCorrosion</a>
 Returns if the corrosion should be removed
@@ -1407,7 +1427,8 @@ Returns if the corrosion should be removed
 **Function Signature**<br>
 `bool Corrosion::ShouldRemoveCorrosion()`
 
---- <!-- End of Corrosion.ShouldRemoveCorrosion -->
+--- 
+<!-- End of Corrosion.ShouldRemoveCorrosion -->
 
 ##### <a name="Corrosion.RemoveCorrosion">Corrosion.RemoveCorrosion</a>
 Removes the corrosion
@@ -1415,7 +1436,8 @@ Removes the corrosion
 **Function Signature**<br>
 `void Corrosion::RemoveCorrosion()`
 
---- <!-- End of Corrosion.RemoveCorrosion -->
+--- 
+<!-- End of Corrosion.RemoveCorrosion -->
 
 ##### <a name="Corrosion.ShouldUpdate">Corrosion.ShouldUpdate</a>
 Returns if this corrosion should proccess an update
@@ -1423,7 +1445,8 @@ Returns if this corrosion should proccess an update
 **Function Signature**<br>
 `bool Corrosion::ShouldUpdate()`
 
---- <!-- End of Corrosion.ShouldUpdate -->
+--- 
+<!-- End of Corrosion.ShouldUpdate -->
 
 ##### <a name="Corrosion.Tick">Corrosion.Tick</a>
 Proccess and update and deal damage
@@ -1431,9 +1454,11 @@ Proccess and update and deal damage
 **Function Signature**<br>
 `void Corrosion::Tick()`
 
---- <!-- End of Corrosion.Tick -->
+--- 
+<!-- End of Corrosion.Tick -->
 
---- <!-- End of Corrosion Methods -->
+--- 
+<!-- End of Corrosion Methods -->
 
 #### Corrosion Members
 
@@ -1443,7 +1468,8 @@ the Victim of this corrosion
 **Signature**<br>
 `CTFPlayer|null Corrosion.m_hOuter`
 
---- <!-- End of Corrosion.m_hOuter -->
+--- 
+<!-- End of Corrosion.m_hOuter -->
 
 ##### <a name="Corrosion.bActive">Corrosion.bActive</a>
 the state of corrosion
@@ -1451,7 +1477,8 @@ the state of corrosion
 **Signature**<br>
 `bool Corrosion.bActive`
 
---- <!-- End of Corrosion.bActive -->
+--- 
+<!-- End of Corrosion.bActive -->
 
 ##### <a name="Corrosion.hAttacker">Corrosion.hAttacker</a>
 the Attacker to report damage to
@@ -1459,7 +1486,8 @@ the Attacker to report damage to
 **Signature**<br>
 `CTFPlayer|null Corrosion.hAttacker`
 
---- <!-- End of Corrosion.hAttacker -->
+--- 
+<!-- End of Corrosion.hAttacker -->
 
 ##### <a name="Corrosion.hWeapon">Corrosion.hWeapon</a>
 the weapon that deals the dmg
@@ -1467,7 +1495,8 @@ the weapon that deals the dmg
 **Signature**<br>
 `CTFWeaponBase|null Corrosion.hWeapon`
 
---- <!-- End of Corrosion.hWeapon -->
+--- 
+<!-- End of Corrosion.hWeapon -->
 
 ##### <a name="Corrosion.flNextTick">Corrosion.flNextTick</a>
 when the next tick is
@@ -1475,7 +1504,8 @@ when the next tick is
 **Signature**<br>
 `float Corrosion.flNextTick`
 
---- <!-- End of Corrosion.flNextTick -->
+--- 
+<!-- End of Corrosion.flNextTick -->
 
 ##### <a name="Corrosion.flTickDur">Corrosion.flTickDur</a>
 how long each tick is
@@ -1483,7 +1513,8 @@ how long each tick is
 **Signature**<br>
 `float Corrosion.flTickDur`
 
---- <!-- End of Corrosion.flTickDur -->
+--- 
+<!-- End of Corrosion.flTickDur -->
 
 ##### <a name="Corrosion.flDmgPerc">Corrosion.flDmgPerc</a>
 what percent of victims max hp to deal per tick
@@ -1491,7 +1522,8 @@ what percent of victims max hp to deal per tick
 **Signature**<br>
 `float Corrosion.flDmgPerc`
 
---- <!-- End of Corrosion.flDmgPerc -->
+--- 
+<!-- End of Corrosion.flDmgPerc -->
 
 ##### <a name="Corrosion.iDmgAdd">Corrosion.iDmgAdd</a>
 base dmg per tick
@@ -1499,7 +1531,8 @@ base dmg per tick
 **Signature**<br>
 `int Corrosion.iDmgAdd`
 
---- <!-- End of Corrosion.iDmgAdd -->
+--- 
+<!-- End of Corrosion.iDmgAdd -->
 
 ##### <a name="Corrosion.bMakesPuddle">Corrosion.bMakesPuddle</a>
 if we make a puddle on death
@@ -1507,9 +1540,11 @@ if we make a puddle on death
 **Signature**<br>
 `float Corrosion.bMakesPuddle`
 
---- <!-- End of Corrosion.bMakesPuddle -->
+--- 
+<!-- End of Corrosion.bMakesPuddle -->
 
---- <!-- End of Corrosion Class -->
+--- 
+<!-- End of Corrosion Class -->
 
 ### color32
 Simple implementation of Source engine class version<br>values are limited between 0 - 255
@@ -1525,7 +1560,8 @@ red value
 **Signature**<br>
 `int color32.r`
 
---- <!-- End of color32.r -->
+--- 
+<!-- End of color32.r -->
 
 ##### <a name="color32.g">color32.g</a>
 green value
@@ -1533,7 +1569,8 @@ green value
 **Signature**<br>
 `int color32.g`
 
---- <!-- End of color32.g -->
+--- 
+<!-- End of color32.g -->
 
 ##### <a name="color32.b">color32.b</a>
 blue value
@@ -1541,7 +1578,8 @@ blue value
 **Signature**<br>
 `int color32.b`
 
---- <!-- End of color32.b -->
+--- 
+<!-- End of color32.b -->
 
 ##### <a name="color32.a">color32.a</a>
 aplha value
@@ -1549,28 +1587,36 @@ aplha value
 **Signature**<br>
 `int color32.a`
 
---- <!-- End of color32.a -->
+--- 
+<!-- End of color32.a -->
 
---- <!-- End of color32 Class -->
+--- 
+<!-- End of color32 Class -->
 
---- <!-- End of Custom Classes -->
+--- 
+<!-- End of Custom Classes -->
 
 ## Custom Script Events
 
---- <!-- End of Custom Script Events -->
+--- 
+<!-- End of Custom Script Events -->
 
 ## Custom Attributes
 
---- <!-- End of Custom Attributes -->
+--- 
+<!-- End of Custom Attributes -->
 
 ## Global Constants
 
---- <!-- End of Global Constants -->
+--- 
+<!-- End of Global Constants -->
 
 ## Chat Commands
 
 ### Admin Commands
 
---- <!-- End of Admin Commands -->
+--- 
+<!-- End of Admin Commands -->
 
---- <!-- End of Chat Commands -->
+--- 
+<!-- End of Chat Commands -->
