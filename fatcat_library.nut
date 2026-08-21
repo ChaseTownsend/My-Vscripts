@@ -1271,7 +1271,7 @@ class ::Corrosion {
 			CORROSION_ICON = CreateKillIcon("infection_acid_puddle")
 		m_hOuter.TakeDamageCustom(CORROSION_ICON, hAttacker, hWeapon, Vector(), Vector(), damage, DMG_GENERIC|DMG_PREVENT_PHYSICS_FORCE, 0)
 	}
-}	
+}
 
 
 /*
@@ -1804,11 +1804,9 @@ function CTFPlayer::IsEnemy()
 
 CTFPlayer.SetJetpackCharge <- CTFPlayer.SetFoodItemCharge
 CTFPlayer.SetRazorbackCharge <- CTFPlayer.SetFoodItemCharge
-CTFPlayer.WorldSpaceCenter <- CTFPlayer.GetCenter
 
 CTFBot.SetJetpackCharge <- CTFPlayer.SetFoodItemCharge
 CTFBot.SetRazorbackCharge <- CTFPlayer.SetFoodItemCharge
-CTFBot.WorldSpaceCenter <- CTFPlayer.GetCenter
 
 CTFPlayer.GenerateAndWearItem <- CTFBot.GenerateAndWearItem
 

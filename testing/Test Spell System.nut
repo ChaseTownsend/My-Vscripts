@@ -405,10 +405,10 @@ function ROOT::SpawnFireball( owner, _SpellData )
 				if (player.GetPlayerClass() != TF_CLASS_PYRO && !player.InCond(TF_COND_GAS) && !player.InCond(TF_COND_BURNING))
 					player.AddCondEx(TF_COND_GAS, 1, owner)
 
-				local Dir = (player.WorldSpaceCenter() - self.GetOrigin()).Normalize()
+				local Dir = (player.GetCenter() - self.GetOrigin()).Normalize()
 				Dir *= 750
 				Dir.z = 500
-				// DebugDrawText(player.WorldSpaceCenter(), Dir.tostring(), false, 5)
+				// DebugDrawText(player.WorldSpaceCenGetCenterter(), Dir.tostring(), false, 5)
 
 				player.ApplyGenericPushbackImpulse( Dir , self.GetOwner() )
 			}
@@ -437,7 +437,7 @@ function ROOT::UseSelfHeal( owner, _SpellData )
 		if (!CanPointSeePoint(origin, player.GetOrigin()))
 			continue
 
-		local Direction = (player.WorldSpaceCenter() - origin).Normalize()
+		local Direction = (player.GetCenter() - origin).Normalize()
 
 		if ( player.GetTeam() == owner.GetTeam() )
 		{
@@ -496,7 +496,7 @@ function ROOT::UseBlastJump( owner, _SpellData )
 		if (!CanPointSeePoint(origin, player.GetOrigin()))
 			continue
 
-		local Direction = (player.WorldSpaceCenter() - origin).Normalize()
+		local Direction = (player.GetCenter() - origin).Normalize()
 
 		player.RemoveFlag( FL_ONGROUND )
 
