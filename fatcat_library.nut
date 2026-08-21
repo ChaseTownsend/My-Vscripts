@@ -252,7 +252,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format) (GMT-5)
-if (!SetLibraryVersion("08.15.2026.16", 0))
+if (!SetLibraryVersion("08.21.2026.02", 0))
 	return
 
 SetLibrarySettings({})
@@ -12513,30 +12513,40 @@ RegisterAdminTrigger("purge", function( _, ... ) {
 })
 
 RegisterAdminTrigger("test_tank", function( player, ... ) {
-	local targetname = "Test_Tank"
-	local tank_name = "Tank"
+	local targetname = "test_Tank"
 	local offset = Vector()
+	local IsHelicopter = false
+
 	if (vargv.len() != 0)
 	{
 		if (vargv[0] == "help")
 			return player.PrintToChat("Valid Arguments for \"/test_tank\" : [ tank_name, help ], if name has \"helicopter\" in it, a second param can be used as the height to spawn at")
 		targetname = vargv[0]
+
+		local offset_height = 0
 		if (targetname.find("helicopter") != null || targetname == "helicopter")
 		{
-			tank_name = "Helicopter"
-			if (vargv.len() > 1)
-				offset = Vector(0, 0, vargv[1].tofloat())
-			else
-				offset = Vector(0, 0, 128)
+			IsHelicopter = true
+			offset_height = 128 // default spawn height of helicopter
 		}
+
+		if(vargv.len() != 1)
+		{
+			try {
+				offset_height = vargv[1].tofloat()
+			}
+			catch(e) {}
+		}
+		offset = Vector(0, 0, offset_height)
 	}
+
 	local SpawnPosition = player.GetEyeTrace().pos+offset
 
 	local path = SpawnEntityFromTable("path_track", {})
 	path.SetAbsOrigin(SpawnPosition)
 
 	local tank = SpawnEntityFromTable("tank_boss", {
-		targetname = targetname
+		targetname = targetname.tolower()
 		health = (1<<31) - 1
 	})
 	tank.SetAbsOrigin(SpawnPosition)
@@ -12550,10 +12560,10 @@ RegisterAdminTrigger("test_tank", function( player, ... ) {
 	interface.Stop()
 
 	RunWithDelay(4.5, @() tank.SetAbsOrigin(SpawnPosition))
-	if (tank_name != "Tank") RunWithDelay(0.1, @() PostHelicopterSpawn(tank))
+	if (IsHelicopter) RunWithDelay(0.1, @() PostHelicopterSpawn(tank))
 	EntFireNew(tank, "SetSpeed", "0", 4.5)
 	EntFireNew(tank, "SetSpeed", "0", 0.1)
-	return player.PrintToChat("Created A "+tank_name+" with the name "+targetname.tolower())
+	return player.PrintToChat("Created A Tank with the targetname of \""+targetname.tolower()+"\"")
 })
 
 function PostHelicopterSpawn( self )
@@ -12570,7 +12580,14 @@ RegisterAdminTrigger("kill_tank", function( player, ... ) {
 			return player.PrintToChat("Valid Arguments for \"/kill_tank\" : [ *, tank_name, help ], or leave blank to kill targeted Tank")
 		else if (vargv[0] == "*")
 		{
-			EntFireNew("tank_boss", "kill")
+			local tanks = GetAllEntitiesByClassname("tank_boss")
+			foreach (tank in tanks)
+			{
+				if (!(tank instanceof CTFBaseBoss)) // TankExtensions main thinker uses `tank_boss` classname
+					continue
+				tank.Kill()
+			}
+			// EntFireNew("tank_boss", "kill")
 			return player.PrintToChat("Killed all Tanks")
 		}
 		else
@@ -12625,7 +12642,7 @@ RegisterAdminTrigger("setspell", function( player, ... ) {
 
 RegisterAdminTrigger("uber", function( player, ... ) {
 	if (vargv.len() > 1)
-		return player.PrintToChat("Incorrect Arguments [{uber}] ")
+		return player.PrintToChat("Incorrect Arguments [uber] ")
 	if (!player.HasWeaponClassname("tf_weapon_medigun") || !player.IsPlayerClass(TF_CLASS_MEDIC))
 		return player.PrintToChat("No Medigun Stupid!")
 
@@ -12841,9 +12858,9 @@ function ROOT::FixShittyPlayersBug()
 {
 	if (IsTF2C()) // prevent for now
 		return
-	if (GetCurrentWaveNumber() > 1)
-		return
 	if (!IsMannVsMachineMode())
+		return
+	if (GetCurrentWaveNumber() > 1)
 		return
 
 	if (m_aHumans.len() != 1)

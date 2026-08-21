@@ -1613,7 +1613,267 @@ aplha value
 
 ## Chat Commands
 
+### Lib_version
+**Command**<br>
+`lib_version`
+
+**Alias's**<br>
+`lib_versions`
+
+**Parameters**<br>
+0
+
+**Descriptions**<br>
+Print the library version and every loaded chaos script's version
+
+--- 
+<!-- End of Lib_version command -->
+
+### lib_info
+**Command**<br>
+`lib_info`
+
+**Alias's**<br>
+None
+
+**Parameters**<br>
+0
+
+**Descriptions**<br>
+Print the library version
+
+--- 
+<!-- End of lib_info command -->
+
+### Test
+**Command**<br>
+`Test`
+
+**Alias's**<br>
+None
+
+**Parameters**<br>
+0
+
+**Descriptions**<br>
+simply a test command<br>says hi :)
+
+--- 
+<!-- End of Test command -->
+
+
 ### Admin Commands
+Commands that Admins or mission makers can use
+
+#### lib_force
+**Command**<br>
+`lib_force`
+
+**Alias's**<br>
+None
+
+**Parameters**<br>
+0
+
+**Descriptions**<br>
+Inverts the force load flag
+
+--- 
+<!-- End of lib_force command -->
+
+#### noclip
+**Command**<br>
+`noclip`
+
+**Alias's**<br>
+None
+
+**Parameters**<br>
+0
+
+**Descriptions**<br>
+toggles noclip
+
+--- 
+<!-- End of noclip command -->
+
+#### disable_errors
+**Command**<br>
+`disable_errors`
+
+**Alias's**<br>
+None
+
+**Parameters**<br>
+0
+
+**Descriptions**<br>
+make errors no longer print to public chat
+
+--- 
+<!-- End of disable_errors command -->
+
+#### enable_errors
+**Command**<br>
+`enable_errors`
+
+**Alias's**<br>
+None
+
+**Parameters**<br>
+0
+
+**Descriptions**<br>
+make errors print to public chat
+
+--- 
+<!-- End of lib_reload command -->
+
+#### lib_reload
+**Command**<br>
+`lib_reload`
+
+**Alias's**<br>
+`reload_library`
+
+**Parameters**<br>
+0
+
+**Descriptions**<br>
+forcibly reload the library
+
+--- 
+<!-- End of lib_reload command -->
+
+#### vcvar
+**Command**<br>
+`vcvar`
+
+**Alias's**<br>
+None
+
+**Parameters**<br>
+Cvar_name, [Value]
+
+**Descriptions**<br>
+Query or set a Cvar
+
+--- 
+<!-- End of lib_reload command -->
+
+#### purge
+**Command**<br>
+`purge`
+
+**Alias's**<br>
+None
+
+**Parameters**<br>
+0
+
+**Descriptions**<br>
+Test the string purge fix<br>INTERNAL TESTING ONLY
+
+--- 
+<!-- End of lib_reload command -->
+
+#### test_tank
+**Command**<br>
+`test_tank`
+
+**Alias's**<br>
+None
+
+**Parameters**<br>
+[tank_name], [height]
+
+**Descriptions**<br>
+Spawn a tank, at aimed position
+
+--- 
+<!-- End of test_tank command -->
+
+#### kill_tank
+**Command**<br>
+`kill_tank`
+
+**Alias's**<br>
+None
+
+**Parameters**<br>
+[tank_name | *]
+
+**Descriptions**<br>
+If no parameters, kill aimed tank
+If specified tank_name, kills tank with that targetname<br>
+If *, kill all tanks
+
+--- 
+<!-- End of kill_tank command -->
+
+#### setspell
+**Command**<br>
+`setspell`
+
+**Alias's**<br>
+None
+
+**Parameters**<br>
+[spell_index], [charges]
+
+**Descriptions**<br>
+Sets your spell
+
+--- 
+<!-- End of setspell command -->
+
+#### uber
+**Command**<br>
+`uber`
+
+**Alias's**<br>
+None
+
+**Parameters**<br>
+[amount]
+
+**Descriptions**<br>
+Sets your uber percent to inputed value or 100%
+
+--- 
+<!-- End of uber command -->
+
+#### bot
+**Command**<br>
+`bot`
+
+**Alias's**<br>
+None
+
+**Parameters**<br>
+0
+
+**Descriptions**<br>
+Spawn a bot that you can beat to your hearts intent
+
+--- 
+<!-- End of bot command -->
+
+#### respawn
+**Command**<br>
+`respawn`
+
+**Alias's**<br>
+None
+
+**Parameters**<br>
+0
+
+**Descriptions**<br>
+Respawns you instantly
+
+--- 
+<!-- End of respawn command -->
 
 --- 
 <!-- End of Admin Commands -->
