@@ -10467,6 +10467,17 @@ function ROOT::PostPlayerSpawn( player )
 		thrower && thrower.IsValid() ? str(thrower) : "null"
 		) */
 
+		if(inflictor && inflictor.GetClassname() != "tf_projectile_sentryrocket")
+		{
+			printl("Inflictor: "+inflictor)
+			printl("\tOwner: "+inflictor.GetOwner() ? inflictor.GetOwner() : "null")
+			if(inflictor.GetOwner() && inflictor.GetOwner().GetClassname() == "obj_sentrygun")
+			{
+				local builder = GetBuilder(inflictor.GetOwner())
+				printl("\t\tBuilder: "+builder ? builder : "null")
+			}
+		}
+
 		// To fix `sentry bullet weapon` and `sentry rocket weapon`
 		// if inflictors owner is sentry and is not a sentry rocket
 		if (inflictor && inflictor.GetClassname() != "tf_projectile_sentryrocket" && inflictor.GetOwner() && inflictor.GetOwner().GetClassname() == "obj_sentrygun")
