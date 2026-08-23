@@ -59,8 +59,11 @@ function InitItems() {
 		if (!weapon)
 			return
 		// inverse proportional relationship
-		weapon.AddAttribute("melee attack rate bonus", 1.0 / (1.0 + (0.15*count)), 0)
+		weapon.AddAttribute("melee attack rate bonus", 1.0 / (1.0 + (0.2*count)), 0)
 	}, null)
+	items["Money Boots"] <- ItemData(0, "Money Boots", Rarity.Genuine, null, function() {
+		
+	})
 
 
 	foreach (k, v in items) {

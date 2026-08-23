@@ -1097,6 +1097,50 @@ enum ProjectileType_t
 	"sharp_dresser" 							: 638
 }
 
+::CallMedicScenes <- array(TF_CLASS_MAXNORMAL+1)
+CallMedicScenes[TF_CLASS_SCOUT] = [
+	438,
+	439,
+	440
+]
+CallMedicScenes[TF_CLASS_SOLDIER] = [
+	1139,
+	1140,
+	1141
+]
+CallMedicScenes[TF_CLASS_PYRO] = [
+	1489
+]
+CallMedicScenes[TF_CLASS_DEMOMAN] = [
+	957,
+	958,
+	959
+]
+CallMedicScenes[TF_CLASS_HEAVYWEAPONS] = [
+	274,
+	275,
+	276
+]
+CallMedicScenes[TF_CLASS_ENGINEER] = [
+	109,
+	107,
+	108
+]
+CallMedicScenes[TF_CLASS_MEDIC] = [
+	611,
+	612,
+	613
+]
+CallMedicScenes[TF_CLASS_SNIPER] = [
+	1678,
+	1679
+]
+CallMedicScenes[TF_CLASS_SPY] = [
+	779,
+	780,
+	781
+]
+
 /** @type {class} */
 class color32 {
 	/** @type {integer} */
@@ -4213,6 +4257,8 @@ if (!("_GetCustomAttribute" in CTFPlayer))
 /** 
  * Cache's the Eyetrace if called multiple times per frame
  * 
+ * Based off of GMod Lua version
+ * 
  * The Trace is called with the mask `MASK_SHOT` to override this
  * the input table should contain `mask = #` with # being the mask
  * 
@@ -4262,6 +4308,74 @@ function CTFPlayer::GetEyeTrace( overrides = {} )
 	}
 	
 	return trace
+}
+
+/**
+ * Suppress the Medic Calling voice-lines
+ */
+function CTFPlayer::SuppressMedicTalk() 
+{
+	local Lines = [
+		"%s.Medic0%i"
+		"%s.MedicFollow0%i"
+	]
+	local Name = GetPlayerClassName()
+
+	foreach (sound in Lines) {
+		for (local i = 1; i < 9; i++) {
+			StopSoundOn(format(sound, Name, i), this)
+		}
+	}
+}
+
+/** 
+ * @returns {[CSceneEntity]}
+ */
+function CTFPlayer::GetSceneEntitys()
+{
+	local ents = GetAllEntitiesByClassname("instanced_scripted_scene")
+	local owned = []
+
+	foreach (scene in ents)
+	{
+		if (GetPropEntity(scene, "m_hOwner") == this)
+			owned.append(scene)
+	}
+
+	return owned
+}
+
+function CTFPlayer::IsPlayingScene( scene )
+{
+	local Classname = GetPlayerClassName()
+	local Names = []
+	if (type(scene) == "array")
+	{
+		foreach (str in scene)
+			Names.append(format("scenes/Player/%s/low/%s.vcd", Classname, str.tostring()))
+	}
+	else
+		Names = [format("scenes/Player/%s/low/%s.vcd", Classname, scene)]
+
+	local SceneEntitys = GetSceneEntitys()
+
+	foreach (scene_entity in SceneEntitys)
+	{
+		foreach (name in Names)
+		{
+			// printf("Scene: %s is playing scene %s\n", scene_entity.tostring(), scene_entity.GetSceneFileName())
+			// printf("Playing Scene == %s? : %s\n", name, (scene_entity.GetSceneFileName() == name).tostring())
+			if (scene_entity.GetSceneFileName() == name)
+				return true
+		}
+	}
+
+	return false
+}
+
+function CTFPlayer::IsPlayingMedicScene()
+{
+	return IsPlayingScene(CallMedicScenes[GetPlayerClass()])
 }
 
 // function CTFPlayer::DisplayHudHint( text, duration = 10.0, flash = true, Hide = true )
@@ -6491,12 +6605,41 @@ function CTFNavArea::IsInTFSpawnroom()
 	return HasAttributeTF(TF_NAV_SPAWN_ROOM_BLUE) || HasAttributeTF(TF_NAV_SPAWN_ROOM_RED)
 
 // typo moment
-function CTFNavArea::IsTFInSpawnroom()
-	return IsInTFSpawnroom()
+CTFNavArea.IsTFInSpawnroom <- CTFNavArea.IsInTFSpawnroom
 /*
   ==============================
   === END OF NAVAREA METHODS ===
   ==============================
+*/
+
+/*
+  ============================
+  === CSceneEntity METHODS ===
+  ============================
+*/
+
+/** 
+ * @returns {CBaseEntity|null}
+ */
+function CSceneEntity::GetOwner()
+	return GetPropEntity(this, "m_hOwner")
+
+/** 
+ * @param {CBaseEntity|null} owner
+ */
+function CSceneEntity::SetOwner( owner )
+	SetPropEntity(this, "m_hOwner", owner)
+
+function CSceneEntity::GetSceneName()
+	return GetPropString(this, "m_iszSceneFile")
+
+function CSceneEntity::GetSceneFileName()
+	return GetPropString(this, "m_szInstanceFilename")
+
+/*
+  ===================================
+  === END OF CSceneEntity METHODS ===
+  ===================================
 */
 
 /*
@@ -6919,7 +7062,7 @@ if (!("_AddThinkToEnt" in ROOT))
 	 * Override the base AddThinkToEnt with a better function that does purging and allows the 
 	 * think function to be a function, by adding it into the entitys scope as __InternalThinkFunc
 	 * @param {CBaseEntity} entity
-	 * @param {string|function} think_func
+	 * @param {function|string|null} think_func
 	 */
 	function ROOT::AddThinkToEnt( entity, think_func )
 	{
@@ -6931,7 +7074,7 @@ if (!("_AddThinkToEnt" in ROOT))
 		}
 		else if (type(think_func) == "function")
 		{
-			local function __InternalThinkFunc( ) {return think_func( )}
+			local function __InternalThinkFunc() {return think_func()}
 			GetScope(entity).__InternalThinkFunc <- __InternalThinkFunc
 			_AddThinkToEnt(entity, "__InternalThinkFunc")
 		}

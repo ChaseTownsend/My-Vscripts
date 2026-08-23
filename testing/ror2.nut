@@ -1,203 +1,11 @@
 IncludeScript("fatcat_library")
 IncludeScript("chaosmvm/translations")
 
+// general Cleanup of extra entitys
 foreach (ent in GetAllEntitiesByClassname("fatcat*"))
 {
 	ent.Destroy()
 }
-
-::CallMedicScenes <- array(TF_CLASS_MAXNORMAL+1)
-CallMedicScenes[TF_CLASS_SCOUT] = [
-	438,
-	439,
-	440
-]
-CallMedicScenes[TF_CLASS_SOLDIER] = [
-	1139,
-	1140,
-	1141
-]
-CallMedicScenes[TF_CLASS_PYRO] = [
-	1489
-]
-CallMedicScenes[TF_CLASS_DEMOMAN] = [
-	957,
-	958,
-	959
-]
-CallMedicScenes[TF_CLASS_HEAVYWEAPONS] = [
-	274,
-	275,
-	276
-]
-CallMedicScenes[TF_CLASS_ENGINEER] = [
-	109,
-	107,
-	108
-]
-CallMedicScenes[TF_CLASS_MEDIC] = [
-	611,
-	612,
-	613
-]
-CallMedicScenes[TF_CLASS_SNIPER] = [
-	1678,
-	1679
-]
-CallMedicScenes[TF_CLASS_SPY] = [
-	779,
-	780,
-	781
-]
-
-enum Rarity {
-	Unique,
-	Genuine
-}
-
-function CTFPlayer::SuppressMedicTalk() {
-	local Lines = [
-		"%s.Medic0%i"
-		"%s.MedicFollow0%i"
-	]
-	local Name = GetPlayerClassName()
-
-	foreach (sound in Lines) {
-		for (local i = 1; i < 9; i++) {
-			StopSoundOn(format(sound, Name, i), this)
-		}
-	}
-}
-
-function CTFPlayer::GetSceneEntitys()
-{
-	local ents = GetAllEntitiesByClassname("instanced_scripted_scene")
-	local owned = []
-
-	foreach (scene in ents)
-	{
-		if (GetPropEntity(scene, "m_hOwner") == this)
-			owned.append(scene)
-	}
-
-	return owned
-}
-
-/** 
- * @returns {CBaseEntity|null}
- */
-function CSceneEntity::GetOwner()
-	return GetPropEntity(this, "m_hOwner")
-
-/** 
- * @param {CBaseEntity|null} owner
- */
-function CSceneEntity::SetOwner( owner )
-	SetPropEntity(this, "m_hOwner", owner)
-
-function CSceneEntity::GetSceneName()
-	return GetPropString(this, "m_iszSceneFile")
-
-function CSceneEntity::GetSceneFileName()
-	return GetPropString(this, "m_szInstanceFilename")
-	
-
-function PrintSceneScenes( ents )
-{
-	foreach (scene in ents)
-	{
-		printl(scene)
-		printl(GetPropString(scene, "m_iszSceneFile"))
-		printl(GetPropString(scene, "m_szInstanceFilename"))
-		printl(" ")
-	}
-}
-
-function CTFPlayer::IsPlayingScene( scene )
-{
-	local Classname = GetPlayerClassName()
-	local Names = []
-	if (type(scene) == "array")
-	{
-		foreach (str in scene)
-			Names.append(format("scenes/Player/%s/low/%s.vcd", Classname, str.tostring()))
-	}
-	else
-		Names = [format("scenes/Player/%s/low/%s.vcd", Classname, scene)]
-
-	local SceneEntitys = GetSceneEntitys()
-
-	foreach (scene_entity in SceneEntitys)
-	{
-		foreach (name in Names)
-		{
-			// printf("Scene: %s is playing scene %s\n", scene_entity.tostring(), scene_entity.GetSceneFileName())
-			// printf("Playing Scene == %s? : %s\n", name, (scene_entity.GetSceneFileName() == name).tostring())
-			if (scene_entity.GetSceneFileName() == name)
-				return true
-		}
-	}
-
-	return false
-}
-
-function CTFPlayer::IsPlayingMedicScene()
-{
-	return IsPlayingScene(CallMedicScenes[GetPlayerClass()])
-}
-
-CreateThinker("OnCalledForMedic", function() {
-	local players = GetAllEntitiesByClassname("player")
-	foreach (player in players) {
-		if (player.IsBot() || !player.IsAlive())
-			continue
-		local scope = GetScope(player)
-		if (!("LastCalledMedicTime" in scope))
-			scope.LastCalledMedicTime <- 0.0
-		
-		if (scope.LastCalledMedicTime + 0.25 >= Time())
-			continue
-
-		if (player.IsMedicButtonDown() || player.IsCallingForMedic()) {
-			scope.LastCalledMedicTime = Time()
-			local result = RoR2.PlayerCallMedic(player)
-			if (result)
-			{
-				player.SuppressMedicTalk()
-				RunWithDelay(TICK_DUR, @() player.SuppressMedicTalk())
-			}
-		}
-	}
-	return 0.1
-}, THINKER_PERSIST)
-
-/* CreateThinker("OnCalledForMedic", function() {
-	local players = GetAllEntitiesByClassname("player")
-	foreach (player in players) {
-		if (player.IsBot() || !player.IsAlive())
-			continue
-
-		local call_medic_time = player.GetTimeSinceCalledForMedic()
-		local scope = GetScope(player)
-
-		player.PrintToHudF("%f < %f", call_medic_time, scope.call_medic_time)
-
-		if (call_medic_time < scope.call_medic_time)
-		{
-			scope.call_medic_time = call_medic_time + 0.005
-
-			player.PrintToHud(call_medic_time)
-			
-			FireScriptEvent("OnCalledForMedic", {
-				player = player
-			})
-
-			// medic was called
-		}
-	}
-	return -1
-}, THINKER_PERSIST) */
-
 
 class PlayerData {
 	Player = null
@@ -263,6 +71,149 @@ class PlayerData {
 	// "item_name" : amount
 	Items = {}
 }
+
+class CBaseBreakable {
+	Breakable = null
+
+	Health = 0
+
+	/** 
+	 * @type {function}
+	 * @param {table} data
+	 */
+	constructor(data)
+	{
+		this.Breakable = SpawnEntityFromTable("prop_dynamic_override", {model = "models/empty.mdl", disableshadows = true})
+
+		local health = "health" in data ? data.health : INT_MAX
+		local solid = "solid" in data ? data.solid : SOLID_OBB
+		local classname = "classname" in data ? data.classname : "base_breakable"
+		local origin = "origin" in data ? data.origin : Vector()
+		local angle = "angle" in data ? data.angle : QAngle(RandomInt(-20, 20), RandomInt(-20, 20), RandomInt(-20, 20))
+		local model = "model" in data ? data.model : "models/props_hydro/barrel_crate_half.mdl"
+		local modelscale = "scale" in data ? data.scale : 1.0
+		local teamnum = "team" in data ? data.team : TF_TEAM_PVE_INVADERS
+
+		local Hits = "hits" in data ? data.Hits : 1
+
+
+		PrecacheModel(model)
+
+		Breakable.SetHealth(health)
+		Breakable.SetMaxHealth(health)
+		Breakable.SetSolid(solid) 
+
+		Breakable.KeyValueFromString("classname", classname)
+		Breakable.SetAbsOrigin(origin)
+		Breakable.SetAbsAngles(angle)
+		Breakable.SetModel(model)
+		Breakable.SetModelScale(modelscale, 0)
+
+		Breakable.SetTeam(teamnum)
+
+		if("cancel_dmg" in data)
+			SetPropInt(Breakable, "m_takedamage", DAMAGE_EVENTS_ONLY)
+
+		this.Health = Hits
+
+		local scope = GetScope(Breakable)
+
+		scope.CustomData <- this
+		local function ObjectOnTakeDamage()
+		{
+			CustomData.OnTakeDamage(activator, caller)
+		}
+		scope.OnTakeDamage <- ObjectOnTakeDamage
+		local function ObjectOnBreak()
+		{
+			CustomData.OnBreak(activator, caller)
+		}
+		scope.OnBreak <- ObjectOnBreak
+
+		Breakable.ConnectOutput("OnTakeDamage", "OnTakeDamage")
+		Breakable.ConnectOutput("OnBreak", "OnBreak")
+		// return Breakable
+	}
+
+	/** 
+	 * @type {function}
+	 * @param {CTFPlayer|CBaseEntity|null} attacker
+	 * @returns {bool}
+	 */
+	function CanTakeDamage(attacker)
+	{
+		if(!attacker || !attacker.IsValid() || !attacker.IsPlayer() || !Breakable || !Breakable.IsValid())
+			return false
+		if(Breakable.GetTeam() < TF_TEAM_RED)
+			return true
+		if(Breakable.GetTeam() == attacker.GetTeam())
+			return false
+		return true
+	}
+
+	/** 
+	 * @type {function}
+	 * @param {CTFPlayer|CBaseEntity|null} attacker
+	 * @param {CBaseAnimating} victim
+	 */
+	function OnTakeDamage(attacker, victim)
+	{
+		if(!victim || !victim.IsValid() || !CanTakeDamage(attacker))
+			return
+		Health--
+		if(Health <= 0)
+			victim.AcceptInput("Break", "", attacker, victim)
+	}
+
+	function OnBreak(attacker, victim)
+	{
+	}
+
+	function Break()
+	{
+		Breakable.AcceptInput("Break", "", Breakable, Breakable)
+	}
+}
+
+class CBaseMeleeBreakable extends CBaseBreakable {
+	/** 
+	 * @type {function}
+	 * @param {table} data
+	 */
+	constructor(data)
+	{
+		base.constructor(data)
+		// Base Stuff
+		Breakable.SetCollisionGroup(COLLISION_GROUP_WEAPON) // allow to be hit by melee
+
+		if (!FindByName(null, "MeleeOnly")) {
+			local ent = SpawnEntityFromTable("filter_tf_damaged_by_weapon_in_slot", {targetname = "MeleeOnly"})
+			SetPropInt(ent, "m_iWeaponSlot", SLOT_MELEE)
+		}
+
+		SetPropEntity(Breakable, "m_hDamageFilter", FindByName(null, "MeleeOnly"))
+		SetPropString(Breakable, "m_iszDamageFilterName", "MeleeOnly")
+	}
+}
+
+AddChatTrigger("test_custom", function(player, ...) {
+	local breakable = CBaseMeleeBreakable({
+		classname = "fatcat_breakable" // so it gets killed
+		origin = player.GetEyeTrace().pos
+		angle = QAngle()
+		scale = 0.5
+		cancel_dmg = true
+	})
+})
+AddChatTrigger("test_custom2", function(player, ...) {
+	local breakable = CBaseBreakable({
+		classname = "fatcat_breakable" // so it gets killed
+		origin = player.GetEyeTrace().pos
+		angle = QAngle()
+		scale = 0.8
+		cancel_dmg = true
+	})
+})
 
 class BaseCrate {
 	Crate = null
@@ -337,24 +288,23 @@ class BaseCrate {
 				Assert(activator && activator.IsPlayer(), "Entity was hurt by a NON PLAYER!")
 				self = caller
 
-				if (activator.GetCurrency() >= Cost) {
-					if (scope.BreakParticle) {
-						DispatchParticleEffect( BreakParticle, self.GetOrigin()+ParticleOffset, ParticleAngle ? ParticleAngle : self.GetAbsAngles().Forward() )
-					}
-					if (scope.BreakSound) {
-						EmitSoundEx({
-							sound_name = BreakSound
-							sound_level = 75
-							entity = self
-						})
-					}
-					OnPassInteraction(activator)
-					if (GetScope(self).MoneyTag && GetScope(self).MoneyTag.IsValid())
-						GetScope(self).MoneyTag.Destroy()
-					self.AcceptInput("Break", "", activator, self)
+				if (activator.GetCurrency() < Cost)
+					return OnFailInteraction(activator)
+
+				if (scope.BreakParticle) {
+					DispatchParticleEffect( BreakParticle, self.GetOrigin()+ParticleOffset, ParticleAngle ? ParticleAngle : self.GetAbsAngles().Forward() )
 				}
-				else 
-					OnFailInteraction(activator)
+				if (scope.BreakSound) {
+					EmitSoundEx({
+						sound_name = BreakSound
+						sound_level = 75
+						entity = self
+					})
+				}
+				OnPassInteraction(activator)
+				if (GetScope(self).MoneyTag && GetScope(self).MoneyTag.IsValid())
+					GetScope(self).MoneyTag.Destroy()
+				self.AcceptInput("Break", "", activator, self)
 			}
 		}
 		Crate.ConnectOutput("OnTakeDamage", "OnTakeDamage")
@@ -429,7 +379,8 @@ class MoneyBarrel extends BaseCrate {
 			self.AcceptInput("Break", "", activator, self)
 		}
 		new_data.OnPassInteraction <- function( player ) { 
-			RoR2.CreateCashAtPos(25 * RoR2.GetMoneyMultiplier(), self.GetOrigin()+Vector(0, 0, 16))
+			// RoR2.CreateCashAtPos(25 * RoR2.GetMoneyMultiplier(), self.GetOrigin()+Vector(0, 0, 16))
+			RoR2.CreateCustomCashAtPos(25 * RoR2.GetMoneyMultiplier(), self.GetOrigin()+Vector(0, 0, 16))
 
 			EmitSoundEx({
 				sound_name = "mvm/mvm_bought_upgrade.wav"
@@ -505,6 +456,66 @@ class BaseItem {
 	}
 }
 
+enum Rarity {
+	Unique,
+	Genuine
+}
+
+function PrintSceneScenes( ents )
+{
+	foreach (scene in ents)
+	{
+		printl(scene)
+		printl(GetPropString(scene, "m_iszSceneFile"))
+		printl(GetPropString(scene, "m_szInstanceFilename"))
+		printl(" ")
+	}
+}
+
+CreateThinker("OnCalledForMedic", function() {
+	local players = GetAllEntitiesByClassname("player")
+	foreach (player in players) {
+		if (player.IsBot() || !player.IsAlive())
+			continue
+		local scope = GetScope(player)
+		if (!("LastCalledMedicTime" in scope))
+			scope.LastCalledMedicTime <- 0.0
+		
+		if (scope.LastCalledMedicTime + 0.25 >= Time())
+			continue
+		
+		if ((player.IsCallingForMedic() && !player.IsMedicButtonDown()) && !("HadHelpmeWarning" in scope))
+		{
+			player.PrintToChat("\x07FF8080Warning! \x03It seems your call medic button is `voicemenu 0 0` instead of `+helpme`, this gamemode requires `+helpme`")
+			player.DisplayHudText( "Warning! It seems your call medic button is `voicemenu 0 0` instead of `+helpme`, this gamemode requires +helpme", "255 0 0", [-1, 0.75], 10, 4 )
+			// player.PrintToHud("Warning! It seems your call medic button is `voicemenu 0 0` instead of `+helpme`, this gamemode requires +helpme")
+			scope.HadHelpmeWarning <- true
+		}
+
+		if (player.IsMedicButtonDown()) {
+			scope.LastCalledMedicTime = Time()
+			scope.HadHelpmeWarning <- true
+			local result = RoR2.PlayerCallMedic(player)
+			if (result)
+			{
+				player.SuppressMedicTalk()
+				RunWithDelay(TICK_DUR, @() player.SuppressMedicTalk())
+			}
+		}
+	}
+	return 0.1
+}, THINKER_PERSIST)
+
+/** 
+ * @type {function}
+ * @returns {PlayerData}
+ */
+function CTFPlayer::ToRoR2Data()
+{
+	return RoR2.PlayerToPlayerData(this)
+}
+
+
 /* function FindGround( start, distance = 192, custom_mask = MASK_PLAYERSOLID ) {
 	local trace = {
 		start = start
@@ -556,6 +567,10 @@ class BaseItem {
 		return players[player.GetUserID()]
 	}
 
+	/** 
+	 * @param {CTFPlayer} player
+	 * @returns {PlayerData}
+	 */
 	function PlayerToPlayerData( player )
 		return player.IsBot() ? AddRobot(player) : AddPlayer(player)
 
@@ -791,7 +806,7 @@ class BaseItem {
 				player.RemoveCurrency(GetScope(self).Cost)
 			}
 			OnFailInteraction = function( player ) {
-				player.TranslateToChat("NO_MONEY", GetScope(self).Cost, player.GetCurrency())
+				player.TranslateToHud("NO_MONEY", GetScope(self).Cost, player.GetCurrency())
 			}
 			ParticleOffset = Vector(0, 0, 8)
 			// Item = GenerateRandomItem()[0] // 0 is name, 1 is data
@@ -911,11 +926,9 @@ class BaseItem {
 		local data = ItemsData[ItemName]
 		if ("OnApply" in data && data["OnApply"] != null)
 			data.OnApply(player, plrItemCount)
-		if ("PlayerThink" in data && data["PlayerThink"] != null) {
-			local dThink = data["PlayerThink"]
-			dThink
-			player.AddThink(dThink.delay, dThink.func, 0.0, dThink.name)
-		}
+		if ("PlayerThink" in data && data["PlayerThink"] != null)
+			player.AddThink(data["PlayerThink"], null, 0.5)
+
 		return GetScope(item).OnCollect(player)
 	}
 
@@ -933,10 +946,10 @@ class BaseItem {
 		if (ent)
 		{
 			DebugDrawLine_vCol(Trace.pos, ent.GetOrigin(), Vector(255, 0, 0), false, 10)
-			DebugDrawCircle(ent.GetOrigin(), Vector(255, 0, 0), 5, 90, false, 10)
+			DebugDrawSphereInternal(ent.GetOrigin(), 90, 255, 0, 0, false, 10)
 		}
 		// else
-			// DebugDrawCircle(Trace.pos, Vector(255, 0, 0), 5, 90, false, 10)
+			// DebugDrawSphereInternal(Trace.pos, 90, 255, 0, 0, false, 10)
 		
 		return ent
 	}
@@ -946,6 +959,8 @@ class BaseItem {
 
 	function CreateCashAtPos( amount, origin, giveall = true )
 	{
+		// models/items/currencypack_small.mdl
+
 		local cash = CreateByClassname("item_currencypack_small")
 		cash.KeyValueFromInt("spawnflags", (1 << 30))
 		cash.SetAbsOrigin(origin)
@@ -1009,22 +1024,102 @@ class BaseItem {
 		return cash
 	}
 
+	function CreateCustomCashAtPos( amount, origin, giveall = true )
+	{
+		// models/items/currencypack_small.mdl
+		local cash = CreateByClassname("prop_dynamic_override")
+
+		EntFire("prop_dynamic_override", "Kill")
+
+		cash.SetModelSimple("models/items/currencypack_small.mdl")
+		cash.SetModelScale(1.0, 0)
+		cash.SetAbsOrigin(origin)
+		cash.DispatchSpawn()
+		cash.SetMoveType(MOVETYPE_FLYGRAVITY, MOVECOLLIDE_FLY_BOUNCE)
+		cash.KeyValueFromString("classname", "fatcat_custom_cash")
+
+		GetScope(cash).m_nAmount <- amount
+
+		local impulse = MATH.RandomVec(-1, 1)
+		impulse.z = 1.0
+		cash.SetAbsVelocity(impulse.Normalize() * 250.0)
+		cash.SetSize(Vector(-10, -10, -10), Vector(10, 10, 10))
+
+		/**@var {CBaseAnimating} self */
+		local function CashThink() {
+			self.SetAbsAngles(self.GetAbsAngles() + QAngle(0, 1.5, 0))
+			if(self.GetAbsAngles().Yaw() > 360)
+				self.SetAbsAngles(QAngle())
+			return -1
+		}
+		AddThinkToEnt(cash, CashThink)
+
+		GetScope(cash).OnCollect <- function() {
+			if (self == null || !self.IsValid())
+				self = caller
+
+			if (!activator || !activator.IsValid() || !activator.IsPlayer() || activator.IsBot())
+				return false
+
+			/** @type {CTFPlayer} */
+			local Collector = activator
+			self.StopSound("MVM.MoneyPickup")
+
+			EmitSoundEx({
+				sound_name = "MVM.MoneyPickup"
+				channel = 0
+				sound_level = MATH.ConvertRadiusToSndLvl(2500)
+				entity = Collector
+				filter_type = RECIPIENT_FILTER_GLOBAL
+			})
+
+
+			if ( Collector.GetPlayerClass() != TF_CLASS_SCOUT ) {
+				if (Collector.GetHealth() < Collector.GetMaxHealth()) {
+					Collector.HealPlayer(MATH.Clamp((Collector.GetHealth() / 20.0), 25, Collector.GetMaxHealth()), 2, true, T_HEAL_PACK)
+				}
+				else {
+					Collector.HealPlayer(MATH.Clamp((Collector.GetHealth() / 40.0), 25, Collector.GetMaxHealth()), 2, true, T_HEAL_PACK)
+				}
+			}
+
+			if (giveall) {
+				foreach (_, data in RoR2.players) {
+					if (!data.Player.IsValid())
+						continue
+					data.Player.AddCurrency(amount)
+				}
+			}
+			else {
+				Collector.AddCurrency(amount)
+			}
+		}
+
+		// cash.ConnectOutput("OnCacheInteraction", "OnCollect")
+		return cash
+	}
+
 
 	/**
-	 * Fired when a bot/player dies. 
+	 * Fired when a bot dies. 
 	 *
-	 * @param {CTFBot}				victim		The player entity that died.
-	 * @param {CBaseEntity|null}	attacker	The player entity that killed the victim.
-	 * @param {CBaseEntity|null}	assister	The player entity that assisted the kill.
-	 * @param {CTFWeaponBase|null}	weapon		The weapon used to kill.
-	 * @param {CBaseEntity|null}	inflictor	The entity that dealt the damage (e.g. rocket/sentry).
-	 * @param {string}				logname		The weapon name that should be printed in console.
-	 * @param {integer}				damagebits	Damage type bits.
-	 * @param {integer}				weaponIDX	The definition index of the weapon.
-	 * @param {integer}				death_flags	See TF_DEATH (ln~ 320).
-	 * @param {integer}				custom		Custom kill type (e.g. headshot).
-	 * @param {integer}				stun_flags	The victim's stun flags at the moment of death
-	 * @param {bool}				rocket_jump	True if the attacker was rocket jumping.
+	 * @param {table} params
+	 * 
+	 * # Input table
+ 	 * ```sqDoc
+	 * victim: CTFBot // The bot that died.
+	 * attacker: CBaseEntity|null // The entity that killed the victim.
+	 * assister: CBaseEntity|null // The entity that assisted the kill.
+	 * weapon: CTFWeaponBase|null // The weapon used to kill.
+	 * inflictor: CBaseEntity|null // The entity that dealt the damage (e.g. rocket/sentry).
+	 * logname: string // The weapon name or inflictor name that relates to a kill-icon.
+	 * damagebits: integer // Damage type bits.
+	 * weaponIDX: integer // The definition index of the weapon.
+	 * death_flags: integer // See TF_DEATH (ln~ 340).
+	 * custom: integer // Custom kill type (e.g. headshot).
+	 * stun_flags: integer // The victim's stun flags at the moment of death
+	 * rocket_jump: bool // True if the attacker was rocket jumping.
+	 * ```
 	 */
 	function OnScriptEvent_BotDeath( params ) {
 		/** @type {CTFPlayer|null} */
@@ -1035,11 +1130,16 @@ class BaseItem {
 	}
 
 	/**
-	 * Fired when a bot/player spawns.
+	 * Fired when a human spawns.
 	 * 
-	 * @param {CTFPlayer}		player		The player who spawned.
-	 * @param {integer}			class		The class index of the player.
-	 * @param {integer}			team		The team index.
+	 * @param {table} params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * player: CTFPlayer // The bot who spawned.
+	 * class: integer // The class index of the player.
+	 * team: integer // The team index.
+	 * ```
 	 */
 	function OnScriptEvent_HumanSpawn( params ) {
 		AddPlayer(params.player)
