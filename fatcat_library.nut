@@ -252,7 +252,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format) (GMT-5)
-if (!SetLibraryVersion("08.07.2026.23", 0))
+if (!SetLibraryVersion("08.21.2026.02", 0))
 	return
 
 SetLibrarySettings({})
@@ -425,7 +425,7 @@ function ROOT::SetPropVector( entity, prop, value, index = 0 )
  * @param {CBaseEntity} entity
  * @param {string} prop
  * @param {integer} index
- * @returns {Vector|instance} Vector(0,0,0) if not found
+ * @returns {Vector} Vector(0,0,0) if not found
  */
 function ROOT::GetPropVector( entity, prop, index = 0 )
 {
@@ -970,6 +970,7 @@ enum ProjectileType_t
 ::TF_WEAPON_SNIPERRIFLE_DAMAGE_MAX 	<- 150
 ::WEAPON_NOCLIP <- 1
 ::TRACE_MAX <- 65536
+::VALVE_RAND_MAX <- 0x7FFF
 
 ::ITEM_FLAG_SELECTONEMPTY		<- (1<<0)
 ::ITEM_FLAG_NOAUTORELOAD		<- (1<<1)
@@ -1142,7 +1143,7 @@ CallMedicScenes[TF_CLASS_SPY] = [
 ]
 
 /** @type {class} */
-class color32 {
+class ::color32 {
 	/** @type {integer} */
 	r = 0
 	/** @type {integer} */
@@ -1168,7 +1169,7 @@ class color32 {
 }
 
 /** @type {class} */
-class Corrosion {
+class ::Corrosion {
 	/** @type {CTFPlayer|null} */
 	m_hOuter 		= null
 	bActive 		= false
@@ -1314,7 +1315,7 @@ class Corrosion {
 			CORROSION_ICON = CreateKillIcon("infection_acid_puddle")
 		m_hOuter.TakeDamageCustom(CORROSION_ICON, hAttacker, hWeapon, Vector(), Vector(), damage, DMG_GENERIC|DMG_PREVENT_PHYSICS_FORCE, 0)
 	}
-}	
+}
 
 
 /*
@@ -1847,11 +1848,9 @@ function CTFPlayer::IsEnemy()
 
 CTFPlayer.SetJetpackCharge <- CTFPlayer.SetFoodItemCharge
 CTFPlayer.SetRazorbackCharge <- CTFPlayer.SetFoodItemCharge
-CTFPlayer.WorldSpaceCenter <- CTFPlayer.GetCenter
 
 CTFBot.SetJetpackCharge <- CTFPlayer.SetFoodItemCharge
 CTFBot.SetRazorbackCharge <- CTFPlayer.SetFoodItemCharge
-CTFBot.WorldSpaceCenter <- CTFPlayer.GetCenter
 
 CTFPlayer.GenerateAndWearItem <- CTFBot.GenerateAndWearItem
 
@@ -2145,7 +2144,7 @@ function CTFPlayer::GetWeaponInSlotNew( slot )
 	for (local i = 0; i < MAX_WEAPONS; i++) 
 	{ 
 		if (i == slot) continue
-		weapon = GetWeaponInSlot(i)
+		weapon = this.GetWeaponInSlot(i)
 		if ( weapon == null ) continue
 
 		local weaponSlot = weapon.GetSlot()
@@ -2629,6 +2628,23 @@ function CTFPlayer::GetPlayerClassName()
 	case TF_CLASS_MEDIC: 			return "Medic"
 	case TF_CLASS_SNIPER: 			return "Sniper"
 	case TF_CLASS_SPY: 				return "Spy"
+	default:						return "Unknown!"
+	}
+}
+
+function CTFPlayer::GetPlayerModelPath()
+{
+	switch (GetPlayerClass())
+	{
+	case TF_CLASS_SCOUT:			return "scout"
+	case TF_CLASS_SOLDIER: 			return "soldier"
+	case TF_CLASS_PYRO: 			return "pyro"
+	case TF_CLASS_DEMOMAN: 			return "demo"
+	case TF_CLASS_HEAVYWEAPONS: 	return "heavy"
+	case TF_CLASS_ENGINEER: 		return "engineer"
+	case TF_CLASS_MEDIC: 			return "medic"
+	case TF_CLASS_SNIPER: 			return "sniper"
+	case TF_CLASS_SPY: 				return "spy"
 	default:						return "Unknown!"
 	}
 }
@@ -4130,10 +4146,7 @@ function CTFPlayer::UseGiantModel( buster = false )
 		if (pClass == TF_CLASS_SNIPER || pClass == TF_CLASS_ENGINEER || pClass == TF_CLASS_MEDIC || pClass == TF_CLASS_SPY)
 			return UseRobotModel()
 
-		local name = GetPlayerClassName().tolower()
-		if (pClass == TF_CLASS_DEMOMAN)
-			name = "demo"
-
+		local name = GetPlayerModelPath()
 		local model_name = format("models/bots/%s_boss/bot_%s_boss.mdl", name, name)
 		// printf("Trying to apply Model \"%s\" to player\n", model_name)
 
@@ -4144,14 +4157,15 @@ function CTFPlayer::UseGiantModel( buster = false )
 function CTFPlayer::UseRobotModel()
 {
 	StripItemSlot(STRIPSLOT_COSMETICS)
-	PlayerFire("SetCustomModelWithClassAnimations", format("models/bots/%s/bot_%s.mdl", GetPlayerClassName().tolower(), GetPlayerClassName().tolower()), FIVE_TICKS)
+	local name = GetPlayerModelPath()
+	PlayerFire("SetCustomModelWithClassAnimations", format("models/bots/%s/bot_%s.mdl", name, name), FIVE_TICKS)
 }
 
 function CTFPlayer::ShouldDetonate()
 {
 	if (!this || !IsValid())
 		return
-	if (swap2(GetPropInt(this, "m_Shared.m_unTauntSourceItemID_Low")) != 65535)
+	if (swap2(GetPropInt(this, "m_Shared.m_unTauntSourceItemID_Low")) != 65535) // stupid fucking logic
 		return
 	RunWithDelay(1.9, @() SentryBusterExplode())
 }
@@ -4275,14 +4289,13 @@ function CTFPlayer::GetEyeTrace( overrides = {} )
 			tick = 0,
 		}
 
-	local should_override = overrides.len() != 0 && "mask" in overrides
-
-	local is_filter = overrides.len() != 0 && "filter" in overrides
+	local should_override = overrides.len() != 0
+	local is_filter = "filter" in overrides
 
 	if (should_override == false && is_filter == false)
 	{
 		if (GetFrameCount() == scope.EyeTraceDataCache.tick)
-			return scope.EyeTraceDataCache.data
+			return scope.EyeTraceDataCache.data // clone this?
 	}
 
 	local trace = {
@@ -4410,7 +4423,7 @@ function CTFPlayer::IsPlayingMedicScene()
 // {
 // 	local low_index = GetPropInt(this, "m_Shared.m_unTauntSourceItemID_Low")
 // 	local high_index = GetPropInt(this, "m_Shared.m_unTauntSourceItemID_High")
-// 	local swaped = swap2(index) // somehow turns into 0 -> 65535
+// 	local swaped = swap2(low_index) // somehow turns into 0 -> 65535
 // 	//somehow 28324 == 31413
 // 	//53307 == 31348
 // 	// if (swapped )
@@ -5105,22 +5118,22 @@ function CTFWeaponBase::SetPropArray( propertyName, value, index )
 		printf("%s does not have property %s\n", GetClassname(), propertyName)
 		return
 	}
+	if(value == null || value instanceof CBaseEntity)
+		return SetPropEntity(this, propertyName, value, index)
 	switch (type(value))
 	{
-		case "string":
-		{ 	SetPropString(this, propertyName, value, index); return 	}
-		case "integer":
-		{ 	SetPropInt(this, propertyName, value, index); return 		}
-		case "float":
-		{ 	SetPropFloat(this, propertyName, value, index); return 	}
-		case "instance":
-		{ 	SetPropEntity(this, propertyName, value, index); return 	}
-		case "bool":
-		{ 	SetPropBool(this, propertyName, value, index); return 		}
-		case "vector":
-		{ 	SetPropVector(this, propertyName, value, index); return 	}
-		default:
-			printl("Hmm found " + type(value) + " for CTFWeaponBase::SetProp/SetPropArray")
+	case "string":
+		return SetPropString(this, propertyName, value, index)
+	case "integer":
+		return SetPropInt(this, propertyName, value, index)
+	case "float":
+		return SetPropFloat(this, propertyName, value, index)
+	case "bool":
+		return SetPropBool(this, propertyName, value, index)
+	case "vector":
+		return SetPropVector(this, propertyName, value, index)
+	default:
+		throw format("Unknown type %s in CTFWeaponBase::SetProp/SetPropArray", type(value))
 	}
 }
 /**
@@ -5624,14 +5637,14 @@ function CTFWeaponBase::ApplyFireDelay( flDelay )
 }
 
 if (!("CTakeDamageInfo" in ROOT))
-	class CTakeDamageInfo {}
+	class ::CTakeDamageInfo {}
 
 if (!("KeyValues" in ROOT))
-	class KeyValues {}
+	class ::KeyValues {}
 
 if (!("WeaponData_t" in ROOT))
 {
-	class WeaponData_t
+	class ::WeaponData_t
 	{
 		m_nDamage = 0
 		m_nBulletsPerShot = 0
@@ -5656,7 +5669,7 @@ if (!("WeaponData_t" in ROOT))
 
 if (!("itemFlags_t" in ROOT))
 {
-	class itemFlags_t {
+	class ::itemFlags_t {
 		m_pFlagName = ""
 		m_iFlagValue = 0
 		constructor(name, value) {
@@ -5680,7 +5693,7 @@ if (!("itemFlags_t" in ROOT))
 
 if (!("FileWeaponInfo_t" in ROOT))
 {
-	class FileWeaponInfo_t
+	class ::FileWeaponInfo_t
 	{
 		constructor() {}
 		// Each game can override this to get whatever values it wants from the script.
@@ -5818,7 +5831,7 @@ if (!("FileWeaponInfo_t" in ROOT))
 
 if (!("CTFWeaponInfo" in ROOT))
 {
-	class CTFWeaponInfo extends FileWeaponInfo_t
+	class ::CTFWeaponInfo extends FileWeaponInfo_t
 	{
 		constructor()
 		{
@@ -6842,7 +6855,7 @@ function ROOT::PrintInstance( inst, filter = [] )
 /**
  * @param {table|array|class|instance} collection
  */
-function ROOT::PrintCollection( collection, filter = [], indentation = 0, header_prefix = "" )
+function ROOT::PrintCollection( collection, filter = [], indentation = 0, header_prefix = "", indentation_string = "\t" )
 {
 	local type = typeof collection
 	local obj_class = null
@@ -6868,7 +6881,7 @@ function ROOT::PrintCollection( collection, filter = [], indentation = 0, header
 	// Calculate indentation
 	local indents = ""
 	for (local i = 0; i < indentation; i++) {
-		indents += "\t"
+		indents += indentation_string
 	}
 
 	local header_str = ""
@@ -6897,12 +6910,12 @@ function ROOT::PrintCollection( collection, filter = [], indentation = 0, header
 		local valType = typeof value
 		if (IsInArray(valType, filter)) continue
 		
-		local itemIndents = indents + "\t"
+		local itemIndents = indents + indentation_string
 		
 		// If it's an array, show [index] for clarity
 		local keyDisplay = (type == "array") ? "[" + key + "]" : key
 		
-		if (valType == "table" || valType == "array" || valType == "class" || (valType == "instance" && !(value instanceof CBaseEntity)))
+		if ((valType == "table" || valType == "array" || valType == "class" || (valType == "instance" && !(value instanceof CBaseEntity))) && indentation < 10)
 		{
 			local prefix = itemIndents + keyDisplay + " : "
 			PrintCollection(value, filter, indentation + 1, prefix)
@@ -8986,6 +8999,23 @@ function ROOT::PrecacheObject( thing )
 		cVal = MATH.Clamp( cVal, 0.0, 1.0 )
 		return C + (D - C) * SimpleSpline( cVal )
 	}
+
+	/**
+	 * Mimic's How valve generates Random Floats
+	 */
+	function Valve_RandomFloat()
+	{
+		return RandomInt(0, VALVE_RAND_MAX).tofloat() / VALVE_RAND_MAX
+	}
+
+	/** 
+	 * @param {float} min
+	 * @param {float} max
+	 */
+	function Valve_RandomInt(min, max)
+	{
+		min + Valve_RandomFloat() * (max - min)
+	}
 }
 
 /*
@@ -9017,9 +9047,9 @@ function Vector::Normalize()
  */
 function Vector::Random( min, max )
 {	//VALVE_RAND_MAX == 0x7FFF
-	this.x = min + (::RandomInt(0, 0x7FFF).tofloat() / 0x7FFF) * (max - min)
-	this.y = min + (::RandomInt(0, 0x7FFF).tofloat() / 0x7FFF) * (max - min)
-	this.z = min + (::RandomInt(0, 0x7FFF).tofloat() / 0x7FFF) * (max - min)
+	this.x = min + (::RandomInt(0, VALVE_RAND_MAX).tofloat() / VALVE_RAND_MAX) * (max - min)
+	this.y = min + (::RandomInt(0, VALVE_RAND_MAX).tofloat() / VALVE_RAND_MAX) * (max - min)
+	this.z = min + (::RandomInt(0, VALVE_RAND_MAX).tofloat() / VALVE_RAND_MAX) * (max - min)
 }
 /**
  * @param {Vector} point2
@@ -9050,7 +9080,7 @@ function Vector::DistanceTo( point2 )
   === VECTOR2D METHODS ===
   ========================
 */
-if("Vector2D" in ROOT) {
+if("Vector2D" in ROOT) { // wacky tf2c does not have it
 /**
  * @returns {Vector2D}
  */
@@ -12575,30 +12605,40 @@ RegisterAdminTrigger("purge", function( _, ... ) {
 })
 
 RegisterAdminTrigger("test_tank", function( player, ... ) {
-	local targetname = "Test_Tank"
-	local tank_name = "Tank"
+	local targetname = "test_Tank"
 	local offset = Vector()
+	local IsHelicopter = false
+
 	if (vargv.len() != 0)
 	{
 		if (vargv[0] == "help")
 			return player.PrintToChat("Valid Arguments for \"/test_tank\" : [ tank_name, help ], if name has \"helicopter\" in it, a second param can be used as the height to spawn at")
 		targetname = vargv[0]
+
+		local offset_height = 0
 		if (targetname.find("helicopter") != null || targetname == "helicopter")
 		{
-			tank_name = "Helicopter"
-			if (vargv.len() > 1)
-				offset = Vector(0, 0, vargv[1].tofloat())
-			else
-				offset = Vector(0, 0, 128)
+			IsHelicopter = true
+			offset_height = 128 // default spawn height of helicopter
 		}
+
+		if(vargv.len() != 1)
+		{
+			try {
+				offset_height = vargv[1].tofloat()
+			}
+			catch(e) {}
+		}
+		offset = Vector(0, 0, offset_height)
 	}
+
 	local SpawnPosition = player.GetEyeTrace().pos+offset
 
 	local path = SpawnEntityFromTable("path_track", {})
 	path.SetAbsOrigin(SpawnPosition)
 
 	local tank = SpawnEntityFromTable("tank_boss", {
-		targetname = targetname
+		targetname = targetname.tolower()
 		health = (1<<31) - 1
 	})
 	tank.SetAbsOrigin(SpawnPosition)
@@ -12612,10 +12652,10 @@ RegisterAdminTrigger("test_tank", function( player, ... ) {
 	interface.Stop()
 
 	RunWithDelay(4.5, @() tank.SetAbsOrigin(SpawnPosition))
-	if (tank_name != "Tank") RunWithDelay(0.1, @() PostHelicopterSpawn(tank))
+	if (IsHelicopter) RunWithDelay(0.1, @() PostHelicopterSpawn(tank))
 	EntFireNew(tank, "SetSpeed", "0", 4.5)
 	EntFireNew(tank, "SetSpeed", "0", 0.1)
-	return player.PrintToChat("Created A "+tank_name+" with the name "+targetname.tolower())
+	return player.PrintToChat("Created A Tank with the targetname of \""+targetname.tolower()+"\"")
 })
 
 function PostHelicopterSpawn( self )
@@ -12632,21 +12672,30 @@ RegisterAdminTrigger("kill_tank", function( player, ... ) {
 			return player.PrintToChat("Valid Arguments for \"/kill_tank\" : [ *, tank_name, help ], or leave blank to kill targeted Tank")
 		else if (vargv[0] == "*")
 		{
-			foreach (tank in GetAllEntitiesByClassname("tank_boss"))
+			local tanks = GetAllEntitiesByClassname("tank_boss")
+			foreach (tank in tanks)
+			{
+				if (!(tank instanceof CTFBaseBoss)) // TankExtensions main thinker uses `tank_boss` classname
+					continue
 				tank.Kill()
+			}
+			// EntFireNew("tank_boss", "kill")
 			return player.PrintToChat("Killed all Tanks")
 		}
 		else
 		{
-			if (FindByName(null, vargv[0]))
+			local tank = FindByName(null, vargv[0])
+			if (tank)
 			{
-				FindByName(null, vargv[0]).Kill()
-				return player.PrintToChat("Killed Tank with name \""+vargv[0]+"\"")
+				tank.Kill()
+				return player.PrintToChat("Killed Tank's with name \""+vargv[0]+"\"")
 			}
 			else
 				return player.PrintToChat("Failed to find a tank with that name!")
 		}
 	}
+
+
 	local trace = player.GetEyeTrace({
 		mask = MASK_OPAQUE_AND_NPCS,
 		function filter( entity )
@@ -12657,6 +12706,7 @@ RegisterAdminTrigger("kill_tank", function( player, ... ) {
 				return TRACE_CONTINUE
 		}
 	})
+
 	DebugDrawLine_vCol(trace.start, trace.pos, Vector(255, 0, 0), false, 100)
 
 	if (trace.hit && trace.enthit && trace.enthit.GetClassname() == "tank_boss")
@@ -12684,7 +12734,7 @@ RegisterAdminTrigger("setspell", function( player, ... ) {
 
 RegisterAdminTrigger("uber", function( player, ... ) {
 	if (vargv.len() > 1)
-		return player.PrintToChat("Incorrect Arguments [{uber}] ")
+		return player.PrintToChat("Incorrect Arguments [uber] ")
 	if (!player.HasWeaponClassname("tf_weapon_medigun") || !player.IsPlayerClass(TF_CLASS_MEDIC))
 		return player.PrintToChat("No Medigun Stupid!")
 
@@ -12900,9 +12950,9 @@ function ROOT::FixShittyPlayersBug()
 {
 	if (IsTF2C()) // prevent for now
 		return
-	if (GetCurrentWaveNumber() > 1)
-		return
 	if (!IsMannVsMachineMode())
+		return
+	if (GetCurrentWaveNumber() > 1)
 		return
 
 	if (m_aHumans.len() != 1)
