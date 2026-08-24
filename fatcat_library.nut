@@ -10433,13 +10433,15 @@ function ROOT::PostPlayerSpawn( player )
 		local IsFall = MATH.HasBitFlag(params.damage_type, DMG_FALL)
 		local IsCrush = MATH.HasBitFlag(params.damage_type, DMG_CRUSH)
 		local IsMelee = MATH.HasBitFlag(params.damage_type, DMG_CLUB)
-		
+
 		/** @type {CBaseEntity} */
 		local victim = params.const_entity
 		/** @type {CBaseEntity|null} */
 		local attacker = params.attacker
 		/** @type {CBaseEntity|null} */
 		local inflictor = params.inflictor
+
+		// printl(victim + " Is taking damage from " + attacker + " and " + inflictor)
 
 		if (victim == null || !victim.IsValid())
 			return
@@ -10467,34 +10469,98 @@ function ROOT::PostPlayerSpawn( player )
 		thrower && thrower.IsValid() ? str(thrower) : "null"
 		) */
 
-		if(inflictor && inflictor.GetClassname() != "tf_projectile_sentryrocket")
-		{
-			printl("Inflictor: "+inflictor)
-			printl("\tOwner: "+inflictor.GetOwner() ? inflictor.GetOwner() : "null")
-			if(inflictor.GetOwner() && inflictor.GetOwner().GetClassname() == "obj_sentrygun")
-			{
-				local builder = GetBuilder(inflictor.GetOwner())
-				printl("\t\tBuilder: "+builder ? builder : "null")
-			}
-		}
+		// if(IsValidEnemy(victim) && inflictor && inflictor.GetClassname() != "tf_projectile_sentryrocket")
+		// {
+		// 	printl(victim)
+		// 	local string = inflictor.GetOwner() ? inflictor.GetOwner() : "null"
+		// 	printl("Inflictor: "+inflictor)
+		// 	printl("\tInflictor_Owner: "+string)
+
+		// 	local IsSentry = inflictor.GetOwner() && inflictor.GetOwner().GetClassname() == "obj_sentrygun"
+		// 	local IsLauncher = inflictor.GetOwner() && HasProp(inflictor, "m_hLauncher")
+		// 	// GetLauncher
+		// 	if(IsSentry)
+		// 	{
+		// 		local builder = GetBuilder(inflictor.GetOwner())
+		// 		string = builder ? builder : "null"
+		// 		printl("\t\tBuilder: "+string)
+		// 	}
+		// 	else if (IsLauncher)
+		// 	{
+		// 		local owner = GetLauncher(inflictor.GetOwner())
+		// 		string = owner ? owner : "null"
+		// 		printl("\tLauncher: "+string)
+		// 	}
+		// 	printl(" ")
+		// }
 
 		// To fix `sentry bullet weapon` and `sentry rocket weapon`
 		// if inflictors owner is sentry and is not a sentry rocket
-		if (inflictor && inflictor.GetClassname() != "tf_projectile_sentryrocket" && inflictor.GetOwner() && inflictor.GetOwner().GetClassname() == "obj_sentrygun")
+		if (inflictor && inflictor.GetClassname() != "tf_projectile_sentryrocket" && inflictor.GetClassname() != "obj_sentrygun" && IsValidEnemy(victim))
 		{
-			local builder = GetBuilder(inflictor.GetOwner())
-			if (builder && builder.IsValid() && builder.IsPlayer())
+			local owner = inflictor.GetOwner() || GetLauncher(inflictor)
+			local IsSentry = owner && owner.GetClassname() == "obj_sentrygun"
+			if(IsSentry)
 			{
-				inflictor.SetOwner(builder)
-				params.damage *= builder.HookMultAttributes("engy sentry damage bonus")
-				if (attacker != builder)
-				{
-					attacker = builder
-					params.attacker = builder
-				}
-				// builder.PrintToHudF("Inflictor: %s  Inflictor_Owner: %s", inflictor.tostring(), inflictor.GetOwner().tostring())
+				owner = GetBuilder(owner)
+				GetScope(inflictor).IsFromSentry <- true
 			}
+
+			local function tostr(ent) {return ent ? ent.tostring() : "null"}
+
+			printf("Do Owner Match? %s\n", (owner == inflictor.GetOwner()).tostring())
+
+			if(owner && inflictor.GetOwner() != owner)
+			{
+				printf("Setting %s's Owner to %s\n", tostr(inflictor), tostr(owner))
+				inflictor.SetOwner(owner)
+				if(HasProp(inflictor, "m_hLauncher"))
+				{
+					SetPropEntity(inflictor, "m_hLauncher", owner)
+					printf("Setting %s's launcher to %s\n", tostr(inflictor), tostr(owner))
+				}
+			}
+				
+
+			printf("Got %s for %s's owner\n", inflictor.GetOwner().tostring(), inflictor.tostring())
+			printf("Is %s from a sentry? %s\n", inflictor.tostring(), ("IsFromSentry" in GetScope(inflictor)).tostring())
+			// local IsSentry = inflictor.GetOwner() && inflictor.GetOwner().GetClassname() == "obj_sentrygun"
+			// local IsLauncher = HasProp(inflictor, "m_hLauncher") && IsValidPlayer(GetLauncher(inflictor))
+			// if(IsSentry)
+			// {
+			// 	local builder = GetBuilder(inflictor.GetOwner())
+			// 	SetPropEntity(inflictor, "m_hLauncher", inflictor.GetOwner())
+			// 	inflictor.SetOwner(builder)
+			// 	printf("Setting %s's owner to %s\n", inflictor.tostring(), builder.tostring())
+			// }
+			// else if (IsLauncher)
+			// {
+			// 	local owner = GetLauncher(inflictor)
+			// 	printf("Got %s for %s's launcher\n", owner.tostring(), inflictor.tostring())
+			// }
+			// else
+			// {
+			// 	printf("Got %s for %s's owner\n", inflictor.GetOwner().tostring(), inflictor.tostring())
+			// }
 		}
+
+		// if (inflictor && inflictor.GetClassname() != "tf_projectile_sentryrocket" && inflictor.GetOwner() && inflictor.GetOwner().GetClassname() == "obj_sentrygun")
+		// {
+		// 	local builder = GetBuilder(inflictor.GetOwner())
+		// 	if (builder && builder.IsValid() && builder.IsPlayer())
+		// 	{
+		// 		SetPropEntity(inflictor, "m_hLauncher", inflictor.GetOwner())
+		// 		inflictor.SetOwner(builder)
+		// 		printf("Setting %s's owner to %s\n", inflictor.tostring(), builder.tostring())
+		// 		params.damage *= builder.HookMultAttributes("engy sentry damage bonus")
+		// 		if (attacker != builder)
+		// 		{
+		// 			attacker = builder
+		// 			params.attacker = builder
+		// 		}
+		// 		// builder.PrintToHudF("Inflictor: %s  Inflictor_Owner: %s", inflictor.tostring(), inflictor.GetOwner().tostring())
+		// 	}
+		// }
 
 		// is_suicide_counter
 		if (params.damage_custom == TF_DMG_CUSTOM_TELEFRAG && attacker == inflictor && attacker == victim)
