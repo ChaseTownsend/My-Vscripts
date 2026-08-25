@@ -19,16 +19,9 @@ PrecacheScriptSound("MVM.SentryBusterStep")
 PrecacheModel("models/props_mvm/mvm_revive_tombstone.mdl")
 PrecacheModel("models/weapons/w_models/w_rocketbeta.mdl")
 
-// for (local i = 1; i < 19; i++) {
-	// PrecacheSound(format("mvm/player/footsteps/robostep_%s.wav", i < 10 ? "0"+i : i.tostring()))
-// }
-// for (local i = 1; i < 9; i++) {
-	// PrecacheSound(format("^mvm/giant_common/giant_common_step_0%s.wav", i.tostring()))
-// }
-
 // EntFire("tf_gamerules", "SetCustomUpgradesFile", "scripts/items/mvm_upgrades-test.txt")
 
-if (!("FatCatLibVersion" in getroottable()))
+/* if (!("FatCatLibVersion" in getroottable()))
 {
 	::ROOT <- getroottable()
 	::CONST <- getconsttable()
@@ -182,27 +175,27 @@ if (!Thinker) Thinker = SpawnEntityFromTable("info_target", { targetname = "Thin
 AddThinkToEnt(Thinker, "MVMThink")
 
 function MVMThink() {
-	/* if (GetListenServerHost())
-	{
-		local R_Acquired = GetPropInt(MvMStats, "m_runningTotalWaveStats.nCreditsAcquired")
-		local R_Dropped = GetPropInt(MvMStats, "m_runningTotalWaveStats.nCreditsDropped")
-		local R_Bonus = GetPropInt(MvMStats, "m_runningTotalWaveStats.nCreditsBonus")
+	// if (GetListenServerHost())
+	// {
+	// 	local R_Acquired = GetPropInt(MvMStats, "m_runningTotalWaveStats.nCreditsAcquired")
+	// 	local R_Dropped = GetPropInt(MvMStats, "m_runningTotalWaveStats.nCreditsDropped")
+	// 	local R_Bonus = GetPropInt(MvMStats, "m_runningTotalWaveStats.nCreditsBonus")
 
-		local P_Acquired = GetPropInt(MvMStats, "m_previousWaveStats.nCreditsAcquired")
-		local P_Dropped = GetPropInt(MvMStats, "m_previousWaveStats.nCreditsDropped")
-		local P_Bonus = GetPropInt(MvMStats, "m_previousWaveStats.nCreditsBonus")
+	// 	local P_Acquired = GetPropInt(MvMStats, "m_previousWaveStats.nCreditsAcquired")
+	// 	local P_Dropped = GetPropInt(MvMStats, "m_previousWaveStats.nCreditsDropped")
+	// 	local P_Bonus = GetPropInt(MvMStats, "m_previousWaveStats.nCreditsBonus")
 
-		local C_Acquired = GetPropInt(MvMStats, "m_currentWaveStats.nCreditsAcquired")
-		local C_Dropped = GetPropInt(MvMStats, "m_currentWaveStats.nCreditsDropped")
-		local C_Bonus = GetPropInt(MvMStats, "m_currentWaveStats.nCreditsBonus")
+	// 	local C_Acquired = GetPropInt(MvMStats, "m_currentWaveStats.nCreditsAcquired")
+	// 	local C_Dropped = GetPropInt(MvMStats, "m_currentWaveStats.nCreditsDropped")
+	// 	local C_Bonus = GetPropInt(MvMStats, "m_currentWaveStats.nCreditsBonus")
 
-		local message = "Wave "+GetWaveIndex()+" Stats: \n"
-		message += "Running: ( "+R_Acquired+" / " +(R_Dropped+R_Acquired)+" ) (+"+R_Bonus+")\n"
-		message += "Previous: ( "+P_Acquired+" / " +(P_Dropped+P_Acquired)+" ) (+"+P_Bonus+")\n"
-		message += "Current: ( "+C_Acquired+" / " +(C_Dropped+C_Acquired)+" ) (+"+C_Bonus+")\n"
-		if ("Host" in ROOT)
-			Host.PrintToHud(message)
-	} */
+	// 	local message = "Wave "+GetWaveIndex()+" Stats: \n"
+	// 	message += "Running: ( "+R_Acquired+" / " +(R_Dropped+R_Acquired)+" ) (+"+R_Bonus+")\n"
+	// 	message += "Previous: ( "+P_Acquired+" / " +(P_Dropped+P_Acquired)+" ) (+"+P_Bonus+")\n"
+	// 	message += "Current: ( "+C_Acquired+" / " +(C_Dropped+C_Acquired)+" ) (+"+C_Bonus+")\n"
+	// 	if ("Host" in ROOT)
+	// 		Host.PrintToHud(message)
+	// }
 
 
 	for (local player = FindByClassname(null, "player"); player; player = FindByClassname(player, "player"))
@@ -314,4 +307,4 @@ function MVMThink() {
 	// 	RunWithDelay( @() CollectNewDroppedCurrency(), 0.015)
 	// }
 }
-__CollectGameEventCallbacks(Events)
+__CollectGameEventCallbacks(Events) */
