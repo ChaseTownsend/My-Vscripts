@@ -10779,7 +10779,7 @@ function ROOT::PostPlayerSpawn( player )
 					}
 				}
 
-				if (weapon.IsSniperRifle() && weapon.GetChargePercent() != 0.0)
+				if (weapon.IsSniperRifle() && weapon.GetChargePercent() != 0.0 && weapon.GetAttribute("mult damage from rifle charge", 1 ) != 1.0)
 				{
 					params.damage *= (weapon.GetChargePercent() + 1) * weapon.GetAttribute("mult damage from rifle charge", 1.0)
 				}
