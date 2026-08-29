@@ -71,11 +71,5 @@ RegisterSpawnCallback("tf_projectile_rocket", "Shooting_star", function( entity 
 		}, 
 		"ShootingStarThink")
 	}
-
-	function OnScriptEvent_PostTakeDamageBot(params)
-	{
-		PrintTable(params)
-		printl(params.weapon.GetChargePercent())
-	}
 }
 __CollectGameEventCallbacks(Shooting_star)
