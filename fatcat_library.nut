@@ -5438,6 +5438,7 @@ function CTFWeaponBase::ShootPosition()
 			eye_angles.Left() * offset.y +
 			eye_angles.Forward() * offset.x
 }
+
 /**
  * @returns {bool}
  */
@@ -5495,6 +5496,26 @@ function CTFWeaponBase::IsFlaregun()
 
 function CTFWeaponBase::IsFish()
 	return startswith(GetWeaponClass(), "bat_fish") || startswith(GetWeaponClass(), "slap")
+
+
+function CTFWeaponBase::GetChargePercent()
+{
+	if(!IsSniperRifle())
+		return 0.0
+	return GetPropFloat(this, "m_flChargedDamage") / 150.0
+}
+
+/** 
+ * @param {float} time
+ */
+function CTFWeaponBase::SetNextAttack(time)
+{
+	SetPropFloat(this, "LocalActiveWeaponData.m_flNextPrimaryAttack", time)
+}
+function CTFWeaponBase::GetNextAttack()
+{
+	return GetPropFloat(this, "LocalActiveWeaponData.m_flNextPrimaryAttack")
+}
 
 function CTFWeaponBase::CanChargeCrit()
 {
@@ -10577,6 +10598,11 @@ function ROOT::PostPlayerSpawn( player )
 			}
 		}
 
+		if(inflictor && "DamageMultiplier" in GetScope(inflictor))
+		{
+			params.damage *= GetScope(inflictor).DamageMultiplier
+		}
+
 		// is_suicide_counter
 		if (params.damage_custom == TF_DMG_CUSTOM_TELEFRAG && attacker == inflictor && attacker == victim)
 		{
@@ -10751,6 +10777,11 @@ function ROOT::PostPlayerSpawn( player )
 						params.early_out <- true
 						CreateParticle("miss_text", victim.GetCenter() + Vector(0,0,32))
 					}
+				}
+
+				if (weapon.IsSniperRifle() && weapon.GetChargePercent() != 0.0)
+				{
+					params.damage *= (weapon.GetChargePercent() + 1) * weapon.GetAttribute("mult damage from rifle charge", 1.0)
 				}
 			}
 
