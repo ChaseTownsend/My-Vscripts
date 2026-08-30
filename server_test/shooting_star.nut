@@ -17,11 +17,7 @@ RegisterSpawnCallback("tf_projectile_rocket", "Shooting_star", function( entity 
 		return
 
 	GetScope(entity).DamageMultiplier <- GetScope(owner.GetActiveWeapon()).WeaponDamageMult
-	// local angle = entity.GetAbsAngles()
-	// local new_ang = QAngle(angle.x, angle.y, RandomInt(-180, 180))
-	// entity.SetAbsAngles(new_ang)
-	// DebugDrawLine_vCol(entity.GetOrigin(), entity.GetOrigin() + (rand_ang.Forward() * 30), Vector(255), false, 15)
-
+	GetScope(entity).ShouldIgnite <- GetScope(entity).DamageMultiplier > 8.0
 	// printf("Set entity \"%s\"'s dmg Mult to %f", entity.tostring(), GetScope(entity).DamageMultiplier)
 })
 
@@ -42,33 +38,48 @@ RegisterSpawnCallback("tf_projectile_rocket", "Shooting_star", function( entity 
 				return
 
 			local weapon = self.GetActiveWeapon()
-			local percentage = weapon.GetChargePercent()
+			local scope = GetScope(weapon)
 
 			// will update even when not zommed
-			weapon.AddAttribute("Projectile speed increased", 1 + (percentage * 1.5), 0)
+			weapon.RemoveAttribute("Projectile speed increased HIDDEN")
+			scope.WeaponDamageMult <- 1..0
 
 			if(!self.InCond(TF_COND_ZOOMED))
+			{
+				SetPropFloat(weapon, "m_flChargedDamage", 0.0)
 				return 0.1
+			}
 
-			local scope = GetScope(weapon)
+			local percentage = weapon.GetChargePercent()
 			scope.WeaponDamageMult <- MATH.Max(pow(1 + (percentage * 2), 3) / 2, 1.0)
 
 			local pitch = self.EyeAngles().x
 			local adjustment = 11.0/6.0
 			local grav_scale = MATH.Max(( 0.35 * log(abs(pitch) + adjustment) ) + (1 - (0.35 * log(adjustment)) ), 1.0)
+			if(pitch > 0)
+				grav_scale = 1.0
 
-			weapon.AddAttribute("projectile gravity",  (600 + (percentage * 600.0)) * grav_scale, 0)
+
+			weapon.AddAttribute("projectile gravity",  (500 + (percentage * 500.0)) * grav_scale, 0)
+			weapon.AddAttribute("Projectile speed increased HIDDEN", 1 + (percentage * 1.5), 0)
 
 			self.PrintToHudF("Gravity Scale: %0.4f\nDamage Mult: %0.2f", grav_scale, scope.WeaponDamageMult)
+
+			if (weapon.GetNextAttack() < Time() && self.IsPressingButton(IN_ATTACK) )
+			{
+				self.PrintToChat("Delayed because you attacked")
+				return 0.1
+			}
+				
 
 			if(!("NextShootTime" in scope))
 				scope.NextShootTime <- GetFrameCount()
 
-			if(scope.NextShootTime >= GetFrameCount() || percentage <= 0.1)
+			if(scope.NextShootTime >= GetFrameCount() || percentage <= 0.05)
 				weapon.SetNextAttack(Time() + 0.1)
 			else 
 			{
-				scope.NextShootTime = GetFrameCount() + 1
+				scope.NextShootTime = GetFrameCount() + 2
 				if(weapon.GetNextAttack() < Time())
 					return 0.1
 				

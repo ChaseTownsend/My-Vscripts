@@ -7958,7 +7958,10 @@ function ROOT::RunWithDelay( delay, func )
 	GetScope(dummy)["Run"] <- function()
 	{
 		dummy.Kill()
-		func()
+		try {
+			func()
+		}
+		catch(e) {printf("RunWithDelay: Function failed with %s\n", e)}
 	}.bindenv(this == null ? ROOT : this)
 
 	EntFireByHandle(dummy, "CallScriptFunction", "Run", delay, null, null)
@@ -10633,6 +10636,20 @@ function ROOT::PostPlayerSpawn( player )
 				printf("\tBringing Dmg from %0.2f to %0.2f\n", params.damage.tofloat(), params.damage * GetScope(inflictor).DamageMultiplier)
 			}
 			params.damage *= GetScope(inflictor).DamageMultiplier
+		}
+
+		if(inflictor && "ShouldIgnite" in GetScope(inflictor) && GetScope(inflictor).ShouldIgnite == true && IsValidEnemy(victim))
+		{
+			local weapon = params.weapon == GetPropEntity(inflictor, "m_hLauncher") ? params.weapon : GetPropEntity(inflictor, "m_hLauncher")
+			if(weapon && weapon.IsValid() && weapon.GetOwner() != victim)
+			{
+				local old_val = weapon.GetAttribute("Set DamageType Ignite", 0)
+				weapon.AddAttribute("Set DamageType Ignite", 1, 0)
+				if(old_val == 0)
+					RunWithDelay(TICK_DUR, @() weapon.RemoveAttribute("Set DamageType Ignite"))
+				else
+					RunWithDelay(TICK_DUR, @() weapon.AddAttribute("Set DamageType Ignite", old_val, 0))
+			}
 		}
 
 		// is_suicide_counter

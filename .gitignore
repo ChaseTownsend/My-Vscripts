@@ -5,6 +5,8 @@ give_tf_weapon/
 vssaxtonhale/
 infection/
 testing/supertest/
+tankextensions/
+tankextensions*.nut
 
 # 
 .vscode/analyze_strings.py
