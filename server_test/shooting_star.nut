@@ -17,6 +17,12 @@ RegisterSpawnCallback("tf_projectile_rocket", "Shooting_star", function( entity 
 		return
 
 	GetScope(entity).DamageMultiplier <- GetScope(owner.GetActiveWeapon()).WeaponDamageMult
+	// local angle = entity.GetAbsAngles()
+	// local new_ang = QAngle(angle.x, angle.y, RandomInt(-180, 180))
+	// entity.SetAbsAngles(new_ang)
+	// DebugDrawLine_vCol(entity.GetOrigin(), entity.GetOrigin() + (rand_ang.Forward() * 30), Vector(255), false, 15)
+
+	// printf("Set entity \"%s\"'s dmg Mult to %f", entity.tostring(), GetScope(entity).DamageMultiplier)
 })
 
 
@@ -39,15 +45,21 @@ RegisterSpawnCallback("tf_projectile_rocket", "Shooting_star", function( entity 
 			local percentage = weapon.GetChargePercent()
 
 			// will update even when not zommed
-			weapon.AddAttribute("Projectile speed increased", 2 + percentage, 0)
+			weapon.AddAttribute("Projectile speed increased", 1 + (percentage * 1.5), 0)
 
 			if(!self.InCond(TF_COND_ZOOMED))
 				return 0.1
 
 			local scope = GetScope(weapon)
-			scope.WeaponDamageMult <- pow(percentage+1, 3)
+			scope.WeaponDamageMult <- MATH.Max(pow(1 + (percentage * 2), 3) / 2, 1.0)
 
-			weapon.AddAttribute("projectile gravity",  800 + (percentage * 800.0), 0)
+			local pitch = self.EyeAngles().x
+			local adjustment = 11.0/6.0
+			local grav_scale = MATH.Max(( 0.35 * log(abs(pitch) + adjustment) ) + (1 - (0.35 * log(adjustment)) ), 1.0)
+
+			weapon.AddAttribute("projectile gravity",  (600 + (percentage * 600.0)) * grav_scale, 0)
+
+			self.PrintToHudF("Gravity Scale: %0.4f\nDamage Mult: %0.2f", grav_scale, scope.WeaponDamageMult)
 
 			if(!("NextShootTime" in scope))
 				scope.NextShootTime <- GetFrameCount()
@@ -62,10 +74,30 @@ RegisterSpawnCallback("tf_projectile_rocket", "Shooting_star", function( entity 
 				
 				if(!self.IsPressingButton(IN_ATTACK))
 					weapon.SetNextAttack(0.0)
-				return 0.5
+					
+				return 0.1
 			}
 
 			return -1
+
+			/* 
+			if(percentage <= 0.1)
+				weapon.SetNextAttack(Time() + 0.1)
+			else 
+			{
+				if(weapon.GetNextAttack() < Time())
+					weapon.SetNextAttack(Time() + 0.1)
+
+				if(!self.IsPressingButton(IN_ATTACK)) {
+					weapon.SetNextAttack(Time())
+					return 0.03
+				}
+				else {
+					return 0.03
+				}
+			}
+
+			return -1 */
 
 			// self.PrintToHudF("Charging %%: %f %%", weapon.GetChargePercent() * 100.0)
 		}, 

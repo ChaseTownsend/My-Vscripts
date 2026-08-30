@@ -8912,6 +8912,16 @@ function ROOT::PrecacheObject( thing )
 		return v
 	}
 	/**
+	 * @param {integer|float} min
+	 * @param {integer|float} max
+	 */
+	function RandomQAngle( min, max )
+	{
+		local q = QAngle()
+		q.Random(min, max)
+		return q
+	}
+	/**
 	 * @param {Vector} point1
 	 * @param {Vector} point2
 	 */
@@ -9116,6 +9126,23 @@ function Vector2D::Normalize()
   ===============================
   === END OF VECTOR2D METHODS ===
   ===============================
+*/
+
+/*
+  ======================
+  === QANGLE METHODS ===
+  ======================
+*/
+function QAngle::Random( min, max )
+{	//VALVE_RAND_MAX == 0x7FFF
+	this.x = min + (::RandomInt(0, VALVE_RAND_MAX).tofloat() / VALVE_RAND_MAX) * (max - min)
+	this.y = min + (::RandomInt(0, VALVE_RAND_MAX).tofloat() / VALVE_RAND_MAX) * (max - min)
+	this.z = min + (::RandomInt(0, VALVE_RAND_MAX).tofloat() / VALVE_RAND_MAX) * (max - min)
+}
+/*
+  =============================
+  === END OF QANGLE METHODS ===
+  =============================
 */
 
 /*
@@ -10600,6 +10627,11 @@ function ROOT::PostPlayerSpawn( player )
 
 		if(inflictor && "DamageMultiplier" in GetScope(inflictor))
 		{
+			if("DAMAGE_MULT_DEBUG" in ROOT && DAMAGE_MULT_DEBUG == true)
+			{
+				printf("Inflictor \"%s\" is giving a dmg mult of %0.3f against \"%s\"\n", inflictor.tostring(), GetScope(inflictor).DamageMultiplier, victim.tostring())
+				printf("\tBringing Dmg from %0.2f to %0.2f\n", params.damage.tofloat(), params.damage * GetScope(inflictor).DamageMultiplier)
+			}
 			params.damage *= GetScope(inflictor).DamageMultiplier
 		}
 
