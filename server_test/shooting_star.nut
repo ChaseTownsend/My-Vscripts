@@ -61,7 +61,7 @@ RegisterSpawnCallback("tf_projectile_rocket", "Shooting_star", function( entity 
 
 
 			weapon.AddAttribute("projectile gravity",  (500 + (percentage * 500.0)) * grav_scale, 0)
-			weapon.AddAttribute("Projectile speed increased HIDDEN", 1 + (percentage * 1.5), 0)
+			weapon.AddAttribute("Projectile speed increased HIDDEN", 30 + (percentage * 45), 0)
 
 			self.PrintToHudF("Gravity Scale: %0.4f\nDamage Mult: %0.2f", grav_scale, scope.WeaponDamageMult)
 

@@ -1317,6 +1317,56 @@ class ::Corrosion {
 	}
 }
 
+class ::AmmoRegenData {
+	m_hOuter = null
+	HasIndexs = null
+	RegenAmounts = null
+	RegenDelays = null
+	CurrentDelays = null
+
+	constructor(hOuter)
+	{
+		this.m_hOuter = hOuter
+		this.HasIndexs = array(TF_AMMO_COUNT-1, false)
+		this.RegenAmounts = array(TF_AMMO_COUNT-1, 0.0)
+		this.RegenDelays = array(TF_AMMO_COUNT-1, 5.0)
+		this.CurrentDelays = array(TF_AMMO_COUNT-1, 0.0)
+	}
+
+	function VALID_OTHER(other)
+	{
+		return IsValidPlayer(other)
+	}
+
+	function RegenAmmoIndex(index)
+	{
+		if(!HasIndexs[index] || RegenAmounts[index] == 0.0)
+			return false
+
+		if(CurrentDelays[index] < Time())
+			return
+
+		if(!VALID_OTHER(m_hOuter))
+			return false
+
+		m_hOuter.GivePercentAmmo(index, RegenAmounts[index])
+		CurrentDelays[index] = Time() + RegenDelays[index]
+	}
+
+	function SetAmmoData(index, amount, delay = 5.0)
+	{
+		HasIndexs[index] = amount != 0.0
+		RegenAmounts[index] = amount
+		RegenDelays[index] = delay
+	}
+
+	function CheckAllAmmo()
+	{
+		for(local i = 0; i <= HasIndexs.len(); i++)
+			RegenAmmoIndex(i)
+	}
+}
+
 
 /*
   ========================
@@ -10164,6 +10214,17 @@ function SwapWeaponThink()
 	return -1
 }
 
+/** 
+ * @var {CTFPlayer} self
+ */
+function AmmoRegenThink()
+{
+	local scope = GetScope(self)
+	scope.AmmoRegenData <- AmmoRegenData
+
+	return 0.1
+}
+
 /*
   =============================
   === CUSTOM EVENT HANDLING ===
@@ -11183,6 +11244,7 @@ function ROOT::PostPlayerSpawn( player )
 			SetPropInt(player, "m_Shared.m_iNextMeleeCrit", -2)
 			player.AddThink(FireWeaponCheck, "FireWeaponCheck")
 			player.AddThink(SwapWeaponThink, "SwapWeaponThink")
+			player.AddThink(AmmoRegenThink, "AmmoRegenThink")
 		}
 
 		// Better func
