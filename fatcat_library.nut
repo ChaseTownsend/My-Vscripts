@@ -10220,7 +10220,9 @@ function SwapWeaponThink()
 function AmmoRegenThink()
 {
 	local scope = GetScope(self)
-	scope.AmmoRegenData <- AmmoRegenData
+
+	if (!("AmmoRegenData" in scope))
+		scope.AmmoRegenData <- AmmoRegenData(self)
 
 	return 0.1
 }
