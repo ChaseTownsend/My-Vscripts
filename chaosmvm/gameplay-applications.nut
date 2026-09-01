@@ -196,7 +196,7 @@ function BlutsuagerHit( owner, victim )
 		return owner.TranslateToChat("REPROG_BOT_MICRO", victim.GetUserName())
 	}
 
-	CreateParticle("blut_reprogram_explosion", victim.GetOrigin()+Vector(0, 0, 32))
+	CreateParticle("blut_reprogram_explosion", victim.GetCenter())
 
 	owner.AddCustomAttribute("ubercharge rate penalty", 0, 10)
 
@@ -302,7 +302,7 @@ function GameplayThink()
 		if (!("LastVels" in scope))
 			scope.LastVels <- []
 		if (type(scope.LastVels) != "array")
-			scope.LastVels <- []
+			scope.LastVels = []
 
 		scope.LastVels.append(bot.GetAbsVelocity())
 		if (scope.LastVels.len() > 6)

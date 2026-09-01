@@ -191,7 +191,7 @@ function ROOT::SetScriptVersion( item, version )
 	"BetterStatTracking" : true
 
 	// Prevent Non Admins from using Noclip
-	"NoclipAntiCheat" : true
+	"NoclipAntiCheat" : false
 
 	// Allows Callbacks for after a cond is applied (maximum delay 1-3 frame)
 	// reload library after setting this
@@ -8094,8 +8094,8 @@ local timer = CreateTimer(function()
 }, 1.0)
 
 // Fire and kill the timer after 7 seconds
-RunWithDelay(@() printl("Firing and killing a timer..."), 7.0)
-RunWithDelay(@() FireTimer(timer), 7.0)
+RunWithDelay(7.0, @() printl("Firing and killing a timer..."))
+RunWithDelay(7.0, @() FireTimer(timer))
  */
 
 /*
@@ -8112,7 +8112,7 @@ RunWithDelay(@() FireTimer(timer), 7.0)
 
 /**
  * @param {table} scope
- * @deprecated this is cleaner, but uses more jump routines
+ * @deprecated this is cleaner, but is slower
  */
 function ROOT::IsNotInScope( item, scope )
 	return (!(item in scope))

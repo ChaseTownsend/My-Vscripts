@@ -200,7 +200,7 @@ AddChatTrigger("equip" function( player, ... ) {
 
 	if (!player.InRespawnRoom())
 	{
-		player.PrintToChat("\x0730C429[►] Can't Change loadout outside of Spawn Room.")
+		player.PrintToChat("\x07ff4444[►] Can't Change loadout outside of Spawn Room.")
 		return
 	}
 
@@ -220,7 +220,7 @@ AddChatTrigger("equip" function( player, ... ) {
 		local max_pages = ceil(RegisteredItems.len() / items_per_page.tofloat()).tointeger()
 		if (vargv.len() == 0 && RegisteredItems.len() > items_per_page)
 		{
-			player.PrintToChat("\x0730C429[►] Incorrect Arguments")
+			player.PrintToChat("\x07ff4444[►] Incorrect Arguments")
 			player.PrintToChatF("\x0730C429[►] Total Pages: %d", max_pages)
 			player.PrintToChat("\x0730C429[►] Use \"!equip page #\" to navigate the pages")
 			return
@@ -271,7 +271,7 @@ AddChatTrigger("equip" function( player, ... ) {
 		}
 		else
 		{
-			player.PrintToChat("\x0730C429[►] Incorrect Arguments")
+			player.PrintToChat("\x07ff4444[►] Incorrect Arguments")
 			foreach (/**@type {integer} */idx, /**@type {EquipWeaponData} */data in RegisteredItems)
 			{
 				player.PrintToChatF("\x0730C429[►] \x01\"\x03%s\x01\" or \"\x03%d\x01\": Gives \x04%s", data.make_name, idx, data.internal_name)
@@ -285,7 +285,7 @@ AddChatTrigger("equip" function( player, ... ) {
 
 	if (player.IsGHeavy())
 	{
-		player.PrintToChat("\x0730C429[►] Fist of Steel Blocks Item Creation!")
+		player.PrintToChat("\x07ff4444[►] Fist of Steel Blocks Item Creation!")
 		return
 	}
 
@@ -295,14 +295,14 @@ AddChatTrigger("equip" function( player, ... ) {
 		if (item == idx.tostring() || item == data.make_name)
 		{
 			if (data.override_func(player) == false)
-				return player.PrintToChatF("\x0730C429[►] Failed to Meet Requirements for %s", data.internal_name)
+				return player.PrintToChatF("\x07ff4444[►] Failed to Meet Requirements for %s", data.internal_name)
 			item_data = data
 			break
 		}
 	}
 
 	if (item_data == null)
-		return player.PrintToChatF("\x0730C429[►] Failed to find any items using Input \"%s\", Try Again", item)
+		return player.PrintToChatF("\x07ff4444[►] Failed to find any items using Input \"%s\", Try Again", item)
 
 	local HasItemHelper = "ItemTranslateTable" in ROOT
 
