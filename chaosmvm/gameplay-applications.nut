@@ -1,7 +1,7 @@
 if (!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
-SetScriptVersion("GameplayApplications", "5.5.0")
+SetScriptVersion("GameplayApplications", "5.5.1")
 
 local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", THINKER_PERSIST)
 
@@ -307,19 +307,29 @@ RegisterEquipItem(1100, "The Bread Bite", "bread", {
 	override_func = function( player ) {
 		return player.GetPlayerClass() == TF_CLASS_HEAVYWEAPONS
 	}
-	// is_segsegv = true
+	OnPlayerEquip = function( player ) {
+		player.FixAmmo()
+		RunWithDelay(0.1, @() player.SetHealth(player.GetMaxHealth()) )
+	}
+	is_segsegv = true
 })
 RegisterEquipItem(1105, "The Self-Aware Beauty Mark", "mark", {
 	override_func = function( player ) {
 		return player.GetPlayerClass() == TF_CLASS_SNIPER
 	}
-	// is_segsegv = true
+	OnPlayerEquip = function( player ) {
+		player.FixAmmo()
+	}
+	is_segsegv = true
 })
 RegisterEquipItem(1121, "Mutated Milk", "mutated", {
 	override_func = function( player ) {
 		return player.GetPlayerClass() == TF_CLASS_SCOUT
 	}
-	// is_segsegv = true
+	OnPlayerEquip = function( player ) {
+		player.FixAmmo()
+	}
+	is_segsegv = true
 })
 RegisterEquipItem(30666, "The C.A.P.P.E.R", "capper", {
 	override_func = function( player ) {
