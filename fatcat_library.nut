@@ -2236,6 +2236,11 @@ function CTFPlayer::InRespawnRoom( any = false )
 {	
 	// does not solve if touching any though ....
 	return GetPropInt(this, "m_Shared.m_iSpawnRoomTouchCount")
+}
+
+// This is Bad! LEAKY
+function CTFPlayer::IsTruelyInSpawn(any = false)
+{
 	foreach (respawnroom in GetAllEntitiesByClassname("func_respawnroom"))
 	{
 		if (!any) { if (respawnroom.GetTeam() != GetTeam()) continue }

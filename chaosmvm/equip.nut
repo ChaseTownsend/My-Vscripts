@@ -151,7 +151,7 @@ RegisterEquipItem(1100, "The Bread Bite", "bread", {
 		return player.GetPlayerClass() == TF_CLASS_HEAVYWEAPONS
 	}
 	OnPlayerEquip = function( player ) {
-		player.FixAmmo()
+		// player.FixAmmo()
 		RunWithDelay(0.1, @() player.SetHealth(player.GetMaxHealth()) )
 	}
 	is_segsegv = true
@@ -198,7 +198,7 @@ AddChatTrigger("equip" function( player, ... ) {
 
 	local items_per_page = 5
 
-	if (!player.InRespawnRoom())
+	if (!player.IsTruelyInSpawn())
 	{
 		player.PrintToChat("\x07ff4444[►] Can't Change loadout outside of Spawn Room.")
 		return

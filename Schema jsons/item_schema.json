@@ -1,0 +1,1979 @@
+{
+	"items": [
+		{
+			"name": "TF_WEAPON_BAT",
+			"defindex": 0,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout"
+			]
+		},
+		{
+			"name": "TF_WEAPON_BOTTLE",
+			"defindex": 1,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Demoman"
+			]
+		},
+		{
+			"name": "TF_WEAPON_FIREAXE",
+			"defindex": 2,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Pyro"
+			]
+		},
+		{
+			"name": "TF_WEAPON_CLUB",
+			"defindex": 3,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Sniper"
+			]
+		},
+		{
+			"name": "TF_WEAPON_KNIFE",
+			"defindex": 4,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Spy"
+			]
+		},
+		{
+			"name": "TF_WEAPON_FISTS",
+			"defindex": 5,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Heavy"
+			]
+		},
+		{
+			"name": "TF_WEAPON_SHOVEL",
+			"defindex": 6,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Soldier"
+			]
+		},
+		{
+			"name": "TF_WEAPON_WRENCH",
+			"defindex": 7,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Engineer"
+			]
+		},
+		{
+			"name": "TF_WEAPON_BONESAW",
+			"defindex": 8,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Medic"
+			]
+		},
+		{
+			"name": "TF_WEAPON_SHOTGUN_PRIMARY",
+			"defindex": 9,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Engineer"
+			]
+		},
+		{
+			"name": "TF_WEAPON_SHOTGUN_SOLDIER",
+			"defindex": 10,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Soldier"
+			]
+		},
+		{
+			"name": "TF_WEAPON_SHOTGUN_HWG",
+			"defindex": 11,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Heavy"
+			]
+		},
+		{
+			"name": "TF_WEAPON_SHOTGUN_PYRO",
+			"defindex": 12,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Pyro"
+			]
+		},
+		{
+			"name": "TF_WEAPON_SCATTERGUN",
+			"defindex": 13,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout"
+			]
+		},
+		{
+			"name": "TF_WEAPON_SNIPERRIFLE",
+			"defindex": 14,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Sniper"
+			]
+		},
+		{
+			"name": "TF_WEAPON_MINIGUN",
+			"defindex": 15,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Heavy"
+			]
+		},
+		{
+			"name": "TF_WEAPON_SMG",
+			"defindex": 16,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Sniper"
+			]
+		},
+		{
+			"name": "TF_WEAPON_SYRINGEGUN_MEDIC",
+			"defindex": 17,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Medic"
+			]
+		},
+		{
+			"name": "TF_WEAPON_ROCKETLAUNCHER",
+			"defindex": 18,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Soldier"
+			]
+		},
+		{
+			"name": "TF_WEAPON_GRENADELAUNCHER",
+			"defindex": 19,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Demoman"
+			]
+		},
+		{
+			"name": "TF_WEAPON_PIPEBOMBLAUNCHER",
+			"defindex": 20,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Demoman"
+			]
+		},
+		{
+			"name": "TF_WEAPON_FLAMETHROWER",
+			"defindex": 21,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Pyro"
+			]
+		},
+		{
+			"name": "TF_WEAPON_PISTOL",
+			"defindex": 22,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout",
+				"Engineer"
+			]
+		},
+		{
+			"name": "TF_WEAPON_PISTOL_SCOUT",
+			"defindex": 23,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout",
+				"Engineer"
+			]
+		},
+		{
+			"name": "TF_WEAPON_REVOLVER",
+			"defindex": 24,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Spy"
+			]
+		},
+		{
+			"name": "TF_WEAPON_PDA_ENGINEER_BUILD",
+			"defindex": 25,
+			"item_slot": "pda",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Engineer"
+			]
+		},
+		{
+			"name": "TF_WEAPON_PDA_ENGINEER_DESTROY",
+			"defindex": 26,
+			"item_slot": "pda2",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Engineer"
+			]
+		},
+		{
+			"name": "TF_WEAPON_PDA_SPY",
+			"defindex": 27,
+			"item_slot": "pda",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Spy"
+			]
+		},
+		{
+			"name": "TF_WEAPON_BUILDER",
+			"defindex": 28,
+			"item_slot": "building",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Engineer"
+			]
+		},
+		{
+			"name": "TF_WEAPON_MEDIGUN",
+			"defindex": 29,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Medic"
+			]
+		},
+		{
+			"name": "TF_WEAPON_INVIS",
+			"defindex": 30,
+			"item_slot": "pda2",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Spy"
+			]
+		},
+		{
+			"name": "The Kritzkrieg",
+			"defindex": 35,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Medic"
+			]
+		},
+		{
+			"name": "The Blutsauger",
+			"defindex": 36,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Medic"
+			]
+		},
+		{
+			"name": "The Ubersaw",
+			"defindex": 37,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Medic"
+			]
+		},
+		{
+			"name": "The Axtinguisher",
+			"defindex": 38,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Pyro"
+			]
+		},
+		{
+			"name": "The Flare Gun",
+			"defindex": 39,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Pyro"
+			]
+		},
+		{
+			"name": "The Backburner",
+			"defindex": 40,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Pyro"
+			]
+		},
+		{
+			"name": "Natascha",
+			"defindex": 41,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Heavy"
+			]
+		},
+		{
+			"name": "The Sandvich",
+			"defindex": 42,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Heavy"
+			]
+		},
+		{
+			"name": "The Killing Gloves of Boxing",
+			"defindex": 43,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Heavy"
+			]
+		},
+		{
+			"name": "The Sandman",
+			"defindex": 44,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout"
+			]
+		},
+		{
+			"name": "The Force-a-Nature",
+			"defindex": 45,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout"
+			]
+		},
+		{
+			"name": "Bonk! Atomic Punch",
+			"defindex": 46,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout"
+			]
+		},
+		{
+			"name": "The Huntsman",
+			"defindex": 56,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Sniper"
+			]
+		},
+		{
+			"name": "The Razorback",
+			"defindex": 57,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Sniper"
+			]
+		},
+		{
+			"name": "Jarate",
+			"defindex": 58,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Sniper"
+			]
+		},
+		{
+			"name": "The Dead Ringer",
+			"defindex": 59,
+			"item_slot": "pda2",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Spy"
+			]
+		},
+		{
+			"name": "The Cloak and Dagger",
+			"defindex": 60,
+			"item_slot": "pda2",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Spy"
+			]
+		},
+		{
+			"name": "The Ambassador",
+			"defindex": 61,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Spy"
+			]
+		},
+		{
+			"name": "The Direct Hit",
+			"defindex": 127,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Soldier"
+			]
+		},
+		{
+			"name": "The Equalizer",
+			"defindex": 128,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Soldier"
+			]
+		},
+		{
+			"name": "The Buff Banner",
+			"defindex": 129,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Soldier"
+			]
+		},
+		{
+			"name": "The Scottish Resistance",
+			"defindex": 130,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Demoman"
+			]
+		},
+		{
+			"name": "The Chargin' Targe",
+			"defindex": 131,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Demoman"
+			]
+		},
+		{
+			"name": "The Eyelander",
+			"defindex": 132,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Demoman"
+			]
+		},
+		{
+			"name": "The Gunboats",
+			"defindex": 133,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Soldier"
+			]
+		},
+		{
+			"name": "The Wrangler",
+			"defindex": 140,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Engineer"
+			]
+		},
+		{
+			"name": "The Frontier Justice",
+			"defindex": 141,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Engineer"
+			]
+		},
+		{
+			"name": "The Gunslinger",
+			"defindex": 142,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Engineer"
+			]
+		},
+		{
+			"name": "The Homewrecker",
+			"defindex": 153,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Pyro"
+			]
+		},
+		{
+			"name": "The Pain Train",
+			"defindex": 154,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Soldier",
+				"Demoman"
+			]
+		},
+		{
+			"name": "The Southern Hospitality",
+			"defindex": 155,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Engineer"
+			]
+		},
+		{
+			"name": "The Dalokohs Bar",
+			"defindex": 159,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Heavy"
+			]
+		},
+		{
+			"name": "TTG Max Pistol",
+			"defindex": 160,
+			"item_slot": "secondary",
+			"used_by_classes": [
+				"Scout",
+				"Engineer"
+			]
+		},
+		{
+			"name": "TTG Sam Revolver",
+			"defindex": 161,
+			"item_slot": "secondary",
+			"used_by_classes": [
+				"Spy"
+			]
+		},
+		{
+			"name": "Crit-a-Cola",
+			"defindex": 163,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout"
+			]
+		},
+		{
+			"name": "Golden Wrench",
+			"defindex": 169,
+			"item_slot": "melee",
+			"used_by_classes": [
+				"Engineer"
+			]
+		},
+		{
+			"name": "The Tribalman's Shiv",
+			"defindex": 171,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Sniper"
+			]
+		},
+		{
+			"name": "The Scotsman's Skullcutter",
+			"defindex": 172,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Demoman"
+			]
+		},
+		{
+			"name": "The Vita-Saw",
+			"defindex": 173,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Medic"
+			]
+		},
+		{
+			"name": "The Powerjack",
+			"defindex": 214,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Pyro"
+			]
+		},
+		{
+			"name": "The Degreaser",
+			"defindex": 215,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Pyro"
+			]
+		},
+		{
+			"name": "The Shortstop",
+			"defindex": 220,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout"
+			]
+		},
+		{
+			"name": "The Holy Mackerel",
+			"defindex": 221,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout"
+			]
+		},
+		{
+			"name": "Mad Milk",
+			"defindex": 222,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout"
+			]
+		},
+		{
+			"name": "L'Etranger",
+			"defindex": 224,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Spy"
+			]
+		},
+		{
+			"name": "Your Eternal Reward",
+			"defindex": 225,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Spy"
+			]
+		},
+		{
+			"name": "The Battalion's Backup",
+			"defindex": 226,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Soldier"
+			]
+		},
+		{
+			"name": "The Black Box",
+			"defindex": 228,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Soldier"
+			]
+		},
+		{
+			"name": "The Sydney Sleeper",
+			"defindex": 230,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Sniper"
+			]
+		},
+		{
+			"name": "Darwin's Danger Shield",
+			"defindex": 231,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Sniper"
+			]
+		},
+		{
+			"name": "The Bushwacka",
+			"defindex": 232,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Sniper"
+			]
+		},
+		{
+			"name": "Rocket Jumper",
+			"defindex": 237,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Soldier"
+			]
+		},
+		{
+			"name": "Gloves of Running Urgently",
+			"defindex": 239,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Heavy"
+			]
+		},
+		{
+			"name": "Frying Pan",
+			"defindex": 264,
+			"item_slot": "melee",
+			"used_by_classes": [
+				"Scout",
+				"Sniper",
+				"Soldier",
+				"Demoman",
+				"Medic",
+				"Heavy",
+				"Pyro"
+			]
+		},
+		{
+			"name": "Stickybomb Jumper",
+			"defindex": 265,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Demoman"
+			]
+		},
+		{
+			"name": "The Horseless Headless Horseman's Headtaker",
+			"defindex": 266,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Demoman"
+			]
+		},
+		{
+			"name": "TTG Max Pistol - Poker Night",
+			"defindex": 294,
+			"item_slot": "secondary",
+			"used_by_classes": [
+				"Scout",
+				"Engineer"
+			]
+		},
+		{
+			"name": "TTG Watch",
+			"defindex": 297,
+			"item_slot": "pda2",
+			"used_by_classes": [
+				"Spy"
+			]
+		},
+		{
+			"name": "Iron Curtain",
+			"defindex": 298,
+			"item_slot": "primary",
+			"used_by_classes": [
+				"Heavy"
+			]
+		},
+		{
+			"name": "The Amputator",
+			"defindex": 304,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Medic"
+			]
+		},
+		{
+			"name": "The Crusader's Crossbow",
+			"defindex": 305,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Medic"
+			]
+		},
+		{
+			"name": "The Ullapool Caber",
+			"defindex": 307,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Demoman"
+			]
+		},
+		{
+			"name": "The Loch-n-Load",
+			"defindex": 308,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Demoman"
+			]
+		},
+		{
+			"name": "Warrior's Spirit",
+			"defindex": 310,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Heavy"
+			]
+		},
+		{
+			"name": "The Buffalo Steak Sandvich",
+			"defindex": 311,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Heavy"
+			]
+		},
+		{
+			"name": "The Brass Beast",
+			"defindex": 312,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Heavy"
+			]
+		},
+		{
+			"name": "The Candy Cane",
+			"defindex": 317,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout"
+			]
+		},
+		{
+			"name": "The Boston Basher",
+			"defindex": 325,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout"
+			]
+		},
+		{
+			"name": "The Back Scratcher",
+			"defindex": 326,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Pyro"
+			]
+		},
+		{
+			"name": "The Claidheamohmor",
+			"defindex": 327,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Demoman"
+			]
+		},
+		{
+			"name": "The Jag",
+			"defindex": 329,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Engineer"
+			]
+		},
+		{
+			"name": "Fists of Steel",
+			"defindex": 331,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Heavy"
+			]
+		},
+		{
+			"name": "Sharpened Volcano Fragment",
+			"defindex": 348,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Pyro"
+			]
+		},
+		{
+			"name": "Sun-on-a-Stick",
+			"defindex": 349,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout"
+			]
+		},
+		{
+			"name": "The Detonator",
+			"defindex": 351,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Pyro"
+			]
+		},
+		{
+			"name": "The Concheror",
+			"defindex": 354,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Soldier"
+			]
+		},
+		{
+			"name": "The Fan O'War",
+			"defindex": 355,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout"
+			]
+		},
+		{
+			"name": "Conniver's Kunai",
+			"defindex": 356,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Spy"
+			]
+		},
+		{
+			"name": "The Half-Zatoichi",
+			"defindex": 357,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Soldier",
+				"Demoman"
+			]
+		},
+		{
+			"name": "The Shahanshah",
+			"defindex": 401,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Sniper"
+			]
+		},
+		{
+			"name": "The Bazaar Bargain",
+			"defindex": 402,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Sniper"
+			]
+		},
+		{
+			"name": "The Persian Persuader",
+			"defindex": 404,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Demoman"
+			]
+		},
+		{
+			"name": "Ali Baba's Wee Booties",
+			"defindex": 405,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Demoman"
+			]
+		},
+		{
+			"name": "The Splendid Screen",
+			"defindex": 406,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Demoman"
+			]
+		},
+		{
+			"name": "The Quick-Fix",
+			"defindex": 411,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Medic"
+			]
+		},
+		{
+			"name": "The Overdose",
+			"defindex": 412,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Medic"
+			]
+		},
+		{
+			"name": "The Solemn Vow",
+			"defindex": 413,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Medic"
+			]
+		},
+		{
+			"name": "The Liberty Launcher",
+			"defindex": 414,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Soldier"
+			]
+		},
+		{
+			"name": "The Reserve Shooter",
+			"defindex": 415,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Soldier",
+				"Pyro"
+			]
+		},
+		{
+			"name": "The Market Gardener",
+			"defindex": 416,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Soldier"
+			]
+		},
+		{
+			"name": "Saxxy",
+			"defindex": 423,
+			"item_slot": "melee"
+		},
+		{
+			"name": "Tomislav",
+			"defindex": 424,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Heavy"
+			]
+		},
+		{
+			"name": "The Family Business",
+			"defindex": 425,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Heavy"
+			]
+		},
+		{
+			"name": "The Eviction Notice",
+			"defindex": 426,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Heavy"
+			]
+		},
+		{
+			"name": "Fishcake",
+			"defindex": 433,
+			"item_slot": "secondary",
+			"used_by_classes": [
+				"Heavy"
+			]
+		},
+		{
+			"name": "The Cow Mangler 5000",
+			"defindex": 441,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Soldier"
+			]
+		},
+		{
+			"name": "The Righteous Bison",
+			"defindex": 442,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Soldier"
+			]
+		},
+		{
+			"name": "The Mantreads",
+			"defindex": 444,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Soldier"
+			]
+		},
+		{
+			"name": "The Disciplinary Action",
+			"defindex": 447,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Soldier"
+			]
+		},
+		{
+			"name": "The Soda Popper",
+			"defindex": 448,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout"
+			]
+		},
+		{
+			"name": "The Winger",
+			"defindex": 449,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout"
+			]
+		},
+		{
+			"name": "The Atomizer",
+			"defindex": 450,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout"
+			]
+		},
+		{
+			"name": "Three-Rune Blade",
+			"defindex": 452,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout"
+			]
+		},
+		{
+			"name": "The Postal Pummeler",
+			"defindex": 457,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Pyro"
+			]
+		},
+		{
+			"name": "The Enforcer",
+			"defindex": 460,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Spy"
+			]
+		},
+		{
+			"name": "The Big Earner",
+			"defindex": 461,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Spy"
+			]
+		},
+		{
+			"name": "The Maul",
+			"defindex": 466,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Pyro"
+			]
+		},
+		{
+			"name": "The Conscientious Objector",
+			"defindex": 474,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout",
+				"Sniper",
+				"Soldier",
+				"Demoman",
+				"Medic",
+				"Heavy",
+				"Pyro"
+			]
+		},
+		{
+			"name": "Nessie's Nine Iron",
+			"defindex": 482,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Demoman"
+			]
+		},
+		{
+			"name": "The Original",
+			"defindex": 513,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Soldier"
+			]
+		},
+		{
+			"name": "The Diamondback",
+			"defindex": 525,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Spy"
+			]
+		},
+		{
+			"name": "The Machina",
+			"defindex": 526,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Sniper"
+			]
+		},
+		{
+			"name": "The Widowmaker",
+			"defindex": 527,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Engineer"
+			]
+		},
+		{
+			"name": "The Short Circuit",
+			"defindex": 528,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Engineer"
+			]
+		},
+		{
+			"name": "Unarmed Combat",
+			"defindex": 572,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout"
+			]
+		},
+		{
+			"name": "The Wanga Prick",
+			"defindex": 574,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Spy"
+			]
+		},
+		{
+			"name": "Apoco-Fists",
+			"defindex": 587,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Heavy"
+			]
+		},
+		{
+			"name": "The Pomson 6000",
+			"defindex": 588,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Engineer"
+			]
+		},
+		{
+			"name": "The Eureka Effect",
+			"defindex": 589,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Engineer"
+			]
+		},
+		{
+			"name": "The Third Degree",
+			"defindex": 593,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Pyro"
+			]
+		},
+		{
+			"name": "The Phlogistinator",
+			"defindex": 594,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Pyro"
+			]
+		},
+		{
+			"name": "The Manmelter",
+			"defindex": 595,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Pyro"
+			]
+		},
+		{
+			"name": "The Bootlegger",
+			"defindex": 608,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Demoman"
+			]
+		},
+		{
+			"name": "The Scottish Handshake",
+			"defindex": 609,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Demoman"
+			]
+		},
+		{
+			"name": "The Sharp Dresser",
+			"defindex": 638,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Spy"
+			]
+		},
+		{
+			"name": "The Cozy Camper",
+			"defindex": 642,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Sniper"
+			]
+		},
+		{
+			"name": "The Wrap Assassin",
+			"defindex": 648,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout"
+			]
+		},
+		{
+			"name": "The Spy-cicle",
+			"defindex": 649,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Spy"
+			]
+		},
+		{
+			"name": "The Holiday Punch",
+			"defindex": 656,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Heavy"
+			]
+		},
+		{
+			"name": "The Black Rose",
+			"defindex": 727,
+			"item_slot": "melee",
+			"used_by_classes": [
+				"Spy"
+			]
+		},
+		{
+			"name": "The Beggar's Bazooka",
+			"defindex": 730,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Soldier"
+			]
+		},
+		{
+			"name": "TF_WEAPON_BUILDER_SPY",
+			"defindex": 735,
+			"item_slot": "building",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Spy"
+			]
+		},
+		{
+			"name": "The Lollichop",
+			"defindex": 739,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Pyro"
+			]
+		},
+		{
+			"name": "The Scorch Shot",
+			"defindex": 740,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Pyro"
+			]
+		},
+		{
+			"name": "The Rainblower",
+			"defindex": 741,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Pyro"
+			]
+		},
+		{
+			"name": "The Cleaner's Carbine",
+			"defindex": 751,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Sniper"
+			]
+		},
+		{
+			"name": "The Hitman's Heatmaker",
+			"defindex": 752,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Sniper"
+			]
+		},
+		{
+			"name": "Baby Face's Blaster",
+			"defindex": 772,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout"
+			]
+		},
+		{
+			"name": "Pretty Boy's Pocket Pistol",
+			"defindex": 773,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout"
+			]
+		},
+		{
+			"name": "The Escape Plan",
+			"defindex": 775,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Soldier"
+			]
+		},
+		{
+			"name": "The Red-Tape Recorder",
+			"defindex": 810,
+			"item_slot": "building",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Spy"
+			]
+		},
+		{
+			"name": "The Huo Long Heatmaker",
+			"defindex": 811,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Heavy"
+			]
+		},
+		{
+			"name": "The Flying Guillotine",
+			"defindex": 812,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout"
+			]
+		},
+		{
+			"name": "The Neon Annihilator",
+			"defindex": 813,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Pyro"
+			]
+		},
+		{
+			"name": "Promo Red-Tape Recorder",
+			"defindex": 831,
+			"item_slot": "building",
+			"used_by_classes": [
+				"Spy"
+			]
+		},
+		{
+			"name": "Promo Huo Long Heatmaker",
+			"defindex": 832,
+			"item_slot": "primary",
+			"used_by_classes": [
+				"Heavy"
+			]
+		},
+		{
+			"name": "Promo Flying Guillotine",
+			"defindex": 833,
+			"item_slot": "secondary",
+			"used_by_classes": [
+				"Scout"
+			]
+		},
+		{
+			"name": "Promo Neon Annihilator",
+			"defindex": 834,
+			"item_slot": "melee",
+			"used_by_classes": [
+				"Pyro"
+			]
+		},
+		{
+			"name": "The AWPer Hand",
+			"defindex": 851,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Sniper"
+			]
+		},
+		{
+			"name": "The Freedom Staff",
+			"defindex": 880,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout",
+				"Sniper",
+				"Soldier",
+				"Demoman",
+				"Medic",
+				"Heavy",
+				"Pyro"
+			]
+		},
+		{
+			"name": "The Ap-Sap",
+			"defindex": 933,
+			"item_slot": "building",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Spy"
+			]
+		},
+		{
+			"name": "The Bat Outta Hell",
+			"defindex": 939,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout",
+				"Sniper",
+				"Soldier",
+				"Demoman",
+				"Medic",
+				"Heavy",
+				"Pyro"
+			]
+		},
+		{
+			"name": "The Quackenbirdt",
+			"defindex": 947,
+			"item_slot": "pda2",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Spy"
+			]
+		},
+		{
+			"name": "The Loose Cannon",
+			"defindex": 996,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Demoman"
+			]
+		},
+		{
+			"name": "The Rescue Ranger",
+			"defindex": 997,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Engineer"
+			]
+		},
+		{
+			"name": "The Vaccinator",
+			"defindex": 998,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Medic"
+			]
+		},
+		{
+			"name": "The Ham Shank",
+			"defindex": 1013,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout",
+				"Sniper",
+				"Soldier",
+				"Demoman",
+				"Medic",
+				"Heavy",
+				"Pyro"
+			]
+		},
+		{
+			"name": "The Fortified Compound",
+			"defindex": 1092,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Sniper"
+			]
+		},
+		{
+			"name": "The Classic",
+			"defindex": 1098,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Sniper"
+			]
+		},
+		{
+			"name": "The Tide Turner",
+			"defindex": 1099,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Demoman"
+			]
+		},
+		{
+			"name": "The Bread Bite",
+			"defindex": 1100,
+			"item_slot": "melee",
+			"used_by_classes": [
+				"Heavy"
+			]
+		},
+		{
+			"name": "The B.A.S.E. Jumper",
+			"defindex": 1101,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Soldier",
+				"Demoman"
+			]
+		},
+		{
+			"name": "The Snack Attack",
+			"defindex": 1102,
+			"item_slot": "building",
+			"used_by_classes": [
+				"Spy"
+			]
+		},
+		{
+			"name": "The Back Scatter",
+			"defindex": 1103,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Scout"
+			]
+		},
+		{
+			"name": "The Air Strike",
+			"defindex": 1104,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Soldier"
+			]
+		},
+		{
+			"name": "The Self-Aware Beauty Mark",
+			"defindex": 1105,
+			"item_slot": "secondary",
+			"used_by_classes": [
+				"Sniper"
+			]
+		},
+		{
+			"name": "Mutated Milk",
+			"defindex": 1121,
+			"item_slot": "secondary",
+			"used_by_classes": [
+				"Scout"
+			]
+		},
+		{
+			"name": "Necro Smasher",
+			"defindex": 1123,
+			"item_slot": "melee",
+			"used_by_classes": [
+				"Scout",
+				"Sniper",
+				"Soldier",
+				"Demoman",
+				"Medic",
+				"Heavy",
+				"Pyro",
+				"Engineer"
+			]
+		},
+		{
+			"name": "The Crossing Guard",
+			"defindex": 1127,
+			"item_slot": "melee",
+			"used_by_classes": [
+				"Scout",
+				"Sniper",
+				"Soldier",
+				"Demoman",
+				"Medic",
+				"Heavy",
+				"Pyro"
+			]
+		},
+		{
+			"name": "The Quickiebomb Launcher",
+			"defindex": 1150,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Demoman"
+			]
+		},
+		{
+			"name": "The Iron Bomber",
+			"defindex": 1151,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Demoman"
+			]
+		},
+		{
+			"name": "Panic Attack Shotgun",
+			"defindex": 1153,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Soldier",
+				"Heavy",
+				"Pyro",
+				"Engineer"
+			]
+		},
+		{
+			"name": "The Dragon's Fury",
+			"defindex": 1178,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Pyro"
+			]
+		},
+		{
+			"name": "The Thermal Thruster",
+			"defindex": 1179,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Pyro"
+			]
+		},
+		{
+			"name": "The Gas Passer",
+			"defindex": 1180,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Pyro"
+			]
+		},
+		{
+			"name": "The Hot Hand",
+			"defindex": 1181,
+			"item_slot": "melee",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Pyro"
+			]
+		},
+		{
+			"name": "The Second Banana",
+			"defindex": 1190,
+			"item_slot": "secondary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Heavy"
+			]
+		},
+		{
+			"name": "TTG Max Pistol - Poker Night 2026",
+			"defindex": 1202,
+			"item_slot": "secondary",
+			"used_by_classes": [
+				"Scout",
+				"Engineer"
+			]
+		},
+		{
+			"name": "TTG Watch 2026",
+			"defindex": 1205,
+			"item_slot": "pda2",
+			"used_by_classes": [
+				"Spy"
+			]
+		},
+		{
+			"name": "Iron Curtain 2026",
+			"defindex": 1206,
+			"item_slot": "primary",
+			"used_by_classes": [
+				"Heavy"
+			]
+		},
+		{
+			"name": "The Nostromo Napalmer",
+			"defindex": 30474,
+			"item_slot": "primary",
+			"craft_class": "weapon",
+			"used_by_classes": [
+				"Pyro"
+			]
+		},
+		{
+			"name": "Shooting Star",
+			"defindex": 30665,
+			"item_slot": "primary",
+			"used_by_classes": [
+				"Sniper"
+			]
+		},
+		{
+			"name": "The C.A.P.P.E.R",
+			"defindex": 30666,
+			"item_slot": "secondary",
+			"used_by_classes": [
+				"Scout",
+				"Engineer"
+			]
+		},
+		{
+			"name": "Batsaber",
+			"defindex": 30667,
+			"item_slot": "melee",
+			"used_by_classes": [
+				"Scout"
+			]
+		},
+		{
+			"name": "The Giger Counter",
+			"defindex": 30668,
+			"item_slot": "secondary",
+			"used_by_classes": [
+				"Engineer"
+			]
+		},
+		{
+			"name": "Prinny Machete",
+			"defindex": 30758,
+			"item_slot": "melee"
+		}
+	]
+}
