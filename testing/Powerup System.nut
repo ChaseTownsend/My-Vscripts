@@ -198,7 +198,7 @@ RegisterDamageCallback("player", "CustomPowerupPlayer" function( params ) {
 // 	}
 // )
 
-CreateCustomPowerup("None", function( ... ) {}, function(...) {})
+CreateCustomPowerup("None", function( ... ) {}, function( ... ) {})
 
 CreateCustomPowerup("Strength", 
 	function( /**@type {CTFPlayer}*/player ) {

@@ -638,7 +638,7 @@ TF2C ETFTeam constants
 ::OBJ_TELEPORTER				<- 1
 ::OBJ_SENTRY 					<- 2
 ::OBJ_SAPPER 					<- 3
-if( IsTF2C() ) {
+if ( IsTF2C() ) {
 	::OBJ_JUMPPAD 				<- 4
 	::OBJ_COUNT					<- 5
 }
@@ -1342,27 +1342,27 @@ class ::AmmoRegenData {
 		this.CurrentDelays = array(TF_AMMO_COUNT-1, 0.0)
 	}
 
-	function VALID_OTHER(other)
+	function VALID_OTHER( other )
 	{
 		return IsValidPlayer(other)
 	}
 
-	function RegenAmmoIndex(index)
+	function RegenAmmoIndex( index )
 	{
-		if(!HasIndexs[index] || RegenAmounts[index] == 0.0)
+		if (!HasIndexs[index] || RegenAmounts[index] == 0.0)
 			return false
 
-		if(CurrentDelays[index] < Time())
+		if (CurrentDelays[index] < Time())
 			return
 
-		if(!VALID_OTHER(m_hOuter))
+		if (!VALID_OTHER(m_hOuter))
 			return false
 
 		m_hOuter.GivePercentAmmo(index, RegenAmounts[index])
 		CurrentDelays[index] = Time() + RegenDelays[index]
 	}
 
-	function SetAmmoData(index, amount, delay = 5.0)
+	function SetAmmoData( index, amount, delay = 5.0 )
 	{
 		HasIndexs[index] = amount != 0.0
 		RegenAmounts[index] = amount
@@ -1371,7 +1371,7 @@ class ::AmmoRegenData {
 
 	function CheckAllAmmo()
 	{
-		for(local i = 0; i <= HasIndexs.len(); i++)
+		for (local i = 0; i <= HasIndexs.len(); i++)
 			RegenAmmoIndex(i)
 	}
 }
@@ -1444,7 +1444,7 @@ function ROOT::GetCvarStr( cvar )
 }
 ROOT.GetCvarString <- ROOT.GetCvarStr
 
-if( IsTF2C() ) {
+if ( IsTF2C() ) {
 	function ROOT::GetClientConVar( cvar, entindex )
 		return Convars.GetClientConvarValue(entindex, cvar)
 } else {
@@ -2222,7 +2222,7 @@ function CTFPlayer::GetWeaponInSlotNew( slot )
 	return null
 }
 
-if( !IsTF2C() ) {
+if ( !IsTF2C() ) {
 
 	/** 
 	 * @returns {[CTFWeaponBase]}
@@ -2258,7 +2258,7 @@ function CTFPlayer::InRespawnRoom()
 }
 
 // This is Bad! LEAKY
-function CTFPlayer::IsTruelyInSpawn(any = false)
+function CTFPlayer::IsTruelyInSpawn( any = false )
 {
 	foreach (respawnroom in GetAllEntitiesByClassname("func_respawnroom"))
 	{
@@ -3671,19 +3671,15 @@ function CTFPlayer::HealPlayer( amount, overheal = false, display = true, type =
  * @param {string} attribute
  * @returns {float}
  */
-function CTFPlayer::HookMultAttributes( attribute, Mode = 3, def_plr = 1.0, def_wep = 1.0 )
+function CTFPlayer::HookMultAttributes( attribute, def_plr = 1.0, def_wep = 1.0 )
 {
 	local amount = 1.0
-	if (MATH.HasBitFlag(Mode, 1))
-		amount *= GetCustomAttribute(attribute, def_plr)
-	if (MATH.HasBitFlag(Mode, 2))
+	amount *= GetCustomAttribute(attribute, def_plr)
+	foreach (weapon in GetAllWeapons())
 	{
-		foreach (weapon in GetAllWeapons())
-		{
-			if (weapon.GetAttribute("provide on active", 0) && weapon != GetActiveWeapon())
-				continue
-			amount *= weapon.GetAttribute(attribute, def_wep)
-		}
+		if (weapon.GetAttribute("provide on active", 0) && weapon != GetActiveWeapon())
+			continue
+		amount *= weapon.GetAttribute(attribute, def_wep)
 	}
 
 	return amount
@@ -3692,19 +3688,15 @@ function CTFPlayer::HookMultAttributes( attribute, Mode = 3, def_plr = 1.0, def_
  * @param {string} attribute
  * @returns {float}
  */
-function CTFPlayer::HookAdditiveAttributes( attribute, Mode = 3, def_plr = 0, def_wep = 0 )
+function CTFPlayer::HookAdditiveAttributes( attribute, def_plr = 0, def_wep = 0 )
 {
 	local amount = 0.0
-	if (MATH.HasBitFlag(Mode, 1))
-		amount += GetCustomAttribute(attribute, def_plr)
-	if (MATH.HasBitFlag(Mode, 2))
+	amount += GetCustomAttribute(attribute, def_plr)
+	foreach (weapon in GetAllWeapons())
 	{
-		foreach (weapon in GetAllWeapons())
-		{
-			if (weapon.GetAttribute("provide on active", 0) && weapon != GetActiveWeapon())
-				continue
-			amount += weapon.GetAttribute(attribute, def_wep)
-		}
+		if (weapon.GetAttribute("provide on active", 0) && weapon != GetActiveWeapon())
+			continue
+		amount += weapon.GetAttribute(attribute, def_wep)
 	}
 
 	return amount
@@ -4569,7 +4561,7 @@ function CTFPlayer::IsPlayingMedicScene()
 // somewhat stolen from ZI
 foreach ( key, value in CTFPlayer )
 {
-	if ( typeof( value ) == "function" && !( key in CTFBot ) )
+	if ( typeof( value ) == "function" && ( !( key in CTFBot ) || CTFBot[key] != value ) )
 	{
 		if (NoFormatToBot.find(key) != null)
 			continue
@@ -5192,7 +5184,7 @@ function CTFWeaponBase::SetPropArray( propertyName, value, index )
 		printf("%s does not have property %s\n", GetClassname(), propertyName)
 		return
 	}
-	if(value == null || value instanceof CBaseEntity)
+	if (value == null || value instanceof CBaseEntity)
 		return SetPropEntity(this, propertyName, value, index)
 	switch (type(value))
 	{
@@ -5574,7 +5566,7 @@ function CTFWeaponBase::IsFish()
 
 function CTFWeaponBase::GetChargePercent()
 {
-	if(!IsSniperRifle())
+	if (!IsSniperRifle())
 		return 0.0
 	return GetPropFloat(this, "m_flChargedDamage") / 150.0
 }
@@ -5582,7 +5574,7 @@ function CTFWeaponBase::GetChargePercent()
 /** 
  * @param {float} time
  */
-function CTFWeaponBase::SetNextAttack(time)
+function CTFWeaponBase::SetNextAttack( time )
 {
 	SetPropFloat(this, "LocalActiveWeaponData.m_flNextPrimaryAttack", time)
 }
@@ -7182,7 +7174,7 @@ if (!("_AddThinkToEnt" in ROOT))
 		}
 		else if (type(think_func) == "function")
 		{
-			local function __InternalThinkFunc() {return think_func()}
+			local function __InternalThinkFunc( ) {return think_func( )}
 			GetScope(entity).__InternalThinkFunc <- __InternalThinkFunc
 			_AddThinkToEnt(entity, "__InternalThinkFunc")
 		}
@@ -8028,14 +8020,22 @@ function ROOT::RunWithDelay( delay, func )
 		delay = func
 		func = actual_func
 	}
+	// printf("Calling function %s in %0.4f seconds\n", func.getinfos( ).name ? func.getinfos( ).name : "null", delay)
+
 	local dummy = dummy_ent()
 	GetScope(dummy)["Run"] <- function()
 	{
 		dummy.Kill()
 		try {
+			// printl(func)
 			func()
 		}
-		catch(e) {printf("RunWithDelay: Function failed with %s\n", e)}
+		catch(e) 
+		{
+			// PrintTable(func.getinfos())
+			// ErrorFunction(e)
+			printf("RunWithDelay: Function failed with \"%s\"\n", e)
+		}
 	}.bindenv(this == null ? ROOT : this)
 
 	EntFireByHandle(dummy, "CallScriptFunction", "Run", delay, null, null)
@@ -9120,7 +9120,7 @@ function ROOT::PrecacheObject( thing )
 	 * @param {float} min
 	 * @param {float} max
 	 */
-	function Valve_RandomInt(min, max)
+	function Valve_RandomInt( min, max )
 	{
 		min + Valve_RandomFloat() * (max - min)
 	}
@@ -9188,7 +9188,7 @@ function Vector::DistanceTo( point2 )
   === VECTOR2D METHODS ===
   ========================
 */
-if("Vector2D" in ROOT) { // wacky tf2c does not have it
+if ("Vector2D" in ROOT) { // wacky tf2c does not have it
 /**
  * @returns {Vector2D}
  */
@@ -10715,9 +10715,9 @@ function ROOT::PostPlayerSpawn( player )
 			}
 		}
 
-		if(inflictor && "DamageMultiplier" in GetScope(inflictor))
+		if (inflictor && "DamageMultiplier" in GetScope(inflictor))
 		{
-			if("DAMAGE_MULT_DEBUG" in ROOT && DAMAGE_MULT_DEBUG == true)
+			if ("DAMAGE_MULT_DEBUG" in ROOT && DAMAGE_MULT_DEBUG == true)
 			{
 				printf("Inflictor \"%s\" is giving a dmg mult of %0.3f against \"%s\"\n", inflictor.tostring(), GetScope(inflictor).DamageMultiplier, victim.tostring())
 				printf("\tBringing Dmg from %0.2f to %0.2f\n", params.damage.tofloat(), params.damage * GetScope(inflictor).DamageMultiplier)
@@ -10725,14 +10725,14 @@ function ROOT::PostPlayerSpawn( player )
 			params.damage *= GetScope(inflictor).DamageMultiplier
 		}
 
-		if(inflictor && "ShouldIgnite" in GetScope(inflictor) && GetScope(inflictor).ShouldIgnite == true && IsValidEnemy(victim))
+		if (inflictor && "ShouldIgnite" in GetScope(inflictor) && GetScope(inflictor).ShouldIgnite == true && IsValidEnemy(victim))
 		{
 			local weapon = params.weapon == GetPropEntity(inflictor, "m_hLauncher") ? params.weapon : GetPropEntity(inflictor, "m_hLauncher")
-			if(weapon && weapon.IsValid() && weapon.GetOwner() != victim)
+			if (weapon && weapon.IsValid() && weapon.GetOwner() != victim)
 			{
 				local old_val = weapon.GetAttribute("Set DamageType Ignite", 0)
 				weapon.AddAttribute("Set DamageType Ignite", 1, 0)
-				if(old_val == 0)
+				if (old_val == 0)
 					RunWithDelay(TICK_DUR, @() weapon.RemoveAttribute("Set DamageType Ignite"))
 				else
 					RunWithDelay(TICK_DUR, @() weapon.AddAttribute("Set DamageType Ignite", old_val, 0))
@@ -11601,7 +11601,7 @@ function ROOT::PostPlayerSpawn( player )
 		typetable[OBJ_TELEPORTER] = "Teleporter"
 		typetable[OBJ_SENTRY] = "Sentry"
 		typetable[OBJ_SAPPER] = "Sapper"
-		if( IsTF2C() )
+		if ( IsTF2C() )
 			typetable[OBJ_JUMPPAD] = "JumpPad"
 		local event_name = typetable[params.object]
 		event_name += "Built"
@@ -11697,7 +11697,7 @@ function ROOT::PostPlayerSpawn( player )
 		typetable[OBJ_TELEPORTER] = "Teleporter"
 		typetable[OBJ_SENTRY] = "Sentry"
 		typetable[OBJ_SAPPER] = "Sapper"
-		if( IsTF2C() )
+		if ( IsTF2C() )
 			typetable[OBJ_JUMPPAD] = "JumpPad"
 		local event_name = typetable[params.objecttype]
 
@@ -11749,7 +11749,7 @@ function ROOT::PostPlayerSpawn( player )
 		typetable[OBJ_TELEPORTER] = "Teleporter"
 		typetable[OBJ_SENTRY] = "Sentry"
 		typetable[OBJ_SAPPER] = "Sapper"
-		if( IsTF2C() )
+		if ( IsTF2C() )
 			typetable[OBJ_JUMPPAD] = "JumpPad"
 		local event_name = typetable[params.objecttype]
 
@@ -12785,7 +12785,7 @@ owner = owner
 	function OnScriptEvent_PostHumanSpawn( _params )				{}
 }
 
-if( IsTF2C() ) {
+if ( IsTF2C() ) {
 	/**
 	 * Fired when a JumpPad is Created
 	 *
@@ -12964,7 +12964,7 @@ RegisterAdminTrigger("test_tank", function( player, ... ) {
 			offset_height = 128 // default spawn height of helicopter
 		}
 
-		if(vargv.len() != 1)
+		if (vargv.len() != 1)
 		{
 			try {
 				offset_height = vargv[1].tofloat()
@@ -13202,7 +13202,11 @@ RegisterAdminTrigger("respawn", function( player, ... ) { player.ForceRegenerate
 // the admins wowow
 ::TheFatCat		<- "[U:1:969530867]"
 ::ShadowBolt 	<- "[U:1:101345257]"
-seterrorhandler(function( e )
+
+/** 
+ * @param {string} e
+ */
+function ROOT::ErrorFunction( e ) 
 {
 	if (e in Errors)
 	{
@@ -13291,12 +13295,49 @@ seterrorhandler(function( e )
 		foreach (n, v in s.locals)
 		{
 			local t = type(v)
-			t ==    "null" ? Chat(format("[%s] NULL"  , n))    :
-			t == "integer" ? Chat(format("[%s] %d"    , n, v)) :
-			t ==   "float" ? Chat(format("[%s] %.14g" , n, v)) :
-			t ==  "string" ? Chat(format("[%s] \"%s\"", n, v)) :
-			t ==  "vector" ? Chat(format("[%s] vector (%s)" , n, v.ToKVString())) :
-							 Chat(format("[%s] %s %s" , n, t, v.tostring()))
+			switch(t)
+			{
+			case "null":
+				Chat(format("[%s] NULL"  , n))
+			break
+
+			case "integer":
+				Chat(format("[%s] %d"    , n, v))
+			break
+
+			case "float":
+				Chat(format("[%s] %.14g" , n, v))
+			break
+
+			case "string":
+				Chat(format("[%s] \"%s\"", n, v))
+			break
+
+			case "vector":
+				Chat(format("[%s] vector (%s)" , n, v.ToKVString()))
+			break
+
+			case "instance":
+				Chat(format("[%s] instance " , n) + v)
+			break
+
+			case "function":
+				local info = v.getinfos()
+				// PrintTable(info)
+				Chat(format("[%s] function %s ( from: \"%s\", %d params )" , n, info.name ? info.name : "null", info.src != "<run>" ? info.src : "Unknown", info.parameters.len() - 1))
+			break
+
+			default:
+				Chat(format("[%s] %s %s" , n, t, v.tostring()))
+			break
+			}
+			// t ==    "null" 		? Chat(format("[%s] NULL"  , n))    :
+			// t == "integer" 		? Chat(format("[%s] %d"    , n, v)) :
+			// t ==   "float" 		? Chat(format("[%s] %.14g" , n, v)) :
+			// t ==  "string" 		? Chat(format("[%s] \"%s\"", n, v)) :
+			// t ==  "vector" 		? Chat(format("[%s] vector (%s)" , n, v.ToKVString())) :
+			// t ==  "instance" 	? Chat(format("[%s] instance (" , n) + v + ")") :
+			// 				 	  Chat(format("[%s] %s %s" , n, t, v.tostring()))
 		}
 	}
 
@@ -13304,7 +13345,9 @@ seterrorhandler(function( e )
 		Discord_SendError(temp_stack)
 
 	return
-})
+}
+
+seterrorhandler(ErrorFunction)
 PrintToConsoleAll("Included Library Successfully")
 
 function ROOT::FixShittyPlayersBug()

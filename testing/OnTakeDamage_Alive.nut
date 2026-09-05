@@ -431,7 +431,7 @@ function ROOT::CanTakeDamage( ent )
 {
 	if (!ent || !ent.IsValid())
 		return DAMAGE_NO
-	return GetPropInt("m_takedamage")
+	return GetPropInt(ent, "m_takedamage")
 }
 
 /**
@@ -851,7 +851,7 @@ function CTFPlayer::CBaseCombatCharacter_OnTakeDamage( info )
 
 		SetInternalVar("m_hasBeenInjured", GetInternalVar("m_hasBeenInjured", 0) | ( 1 << attackerTeam ))
 
-		// for( int i=0; i<MAX_DAMAGE_TEAMS; ++i )
+		// for ( int i=0; i<MAX_DAMAGE_TEAMS; ++i )
 		// {
 		// 	if ( m_damageHistory[i].team == attackerTeam )
 		// 	{
@@ -870,7 +870,7 @@ function CTFPlayer::CBaseCombatCharacter_OnTakeDamage( info )
 		// }
 	}
 
-	switch( GetPropInt("m_lifeState") )
+	switch( GetPropInt(this, "m_lifeState") )
 	{
 	case LIFE_ALIVE:
 		retVal = CBaseCombatCharacter_OnTakeDamage_Alive( info );
@@ -3000,10 +3000,10 @@ function CTFPlayer::OnTakeDamage_Alive( info )
 	// g_vecAttackDir = vecDir // werid global
 
 	// Do the damage.
-	SetPropFloat( this, "m_bitsDamageType", GetPropFloat( this, "m_bitsDamageType" ) | info.GetDamageType() )
+	SetPropInt( this, "m_bitsDamageType", GetPropInt( this, "m_bitsDamageType" ) | info.GetDamageType() )
 
 	// Check to see if the Wheatley sapper item is equipped and should react
-	if ( GetPropFloat( this, "m_bitsDamageType" ) & DMG_BULLET && IsPlayerClass( TF_CLASS_SPY ) )
+	if ( GetPropInt( this, "m_bitsDamageType" ) & DMG_BULLET && IsPlayerClass( TF_CLASS_SPY ) )
 	{
 		// VScript could fake this, but, not important 
 
@@ -4368,8 +4368,8 @@ function CTFPlayer::OnTakeDamage( inputInfo )
 	// DamageEffect( info.GetDamage(),bitsDamage ) // TODO:
 
 	// // Save this so we can report it to the client
-	SetPropFloat( this, "m_bitsDamageType", GetPropFloat( this, "m_bitsDamageType" ) | bitsDamage )
-	SetPropFloat( this, "m_bitsHUDDamage", -1 ) // make sure the damage bits get reset
+	SetPropInt( this, "m_bitsDamageType", GetPropInt( this, "m_bitsDamageType" ) | bitsDamage )
+	SetPropInt( this, "m_bitsHUDDamage", -1 ) // make sure the damage bits get reset
 
 	// Flinch
 	local bFlinch = true
@@ -4377,7 +4377,7 @@ function CTFPlayer::OnTakeDamage( inputInfo )
 	{
 		if ( IsPlayerClass( TF_CLASS_SNIPER ) && InCond( TF_COND_AIMING ) )
 		{
-			if ( pTFAttacker && pWeapon && pWeapon.IsMinigun() )
+			if ( pTFAttacker && pWeapon && pWeapon.IsSniperRifle() )
 			{
 				local flDistSqr = ( pTFAttacker.GetOrigin() - GetOrigin() ).LengthSqr()
 				if ( flDistSqr > 750 * 750 )

@@ -111,7 +111,7 @@ class CBaseBreakable {
 
 		Breakable.SetTeam(teamnum)
 
-		if("cancel_dmg" in data)
+		if ("cancel_dmg" in data)
 			SetPropInt(Breakable, "m_takedamage", DAMAGE_EVENTS_ONLY)
 
 		this.Health = Hits
@@ -140,13 +140,13 @@ class CBaseBreakable {
 	 * @param {CTFPlayer|CBaseEntity|null} attacker
 	 * @returns {bool}
 	 */
-	function CanTakeDamage(attacker)
+	function CanTakeDamage( attacker )
 	{
-		if(!attacker || !attacker.IsValid() || !attacker.IsPlayer() || !Breakable || !Breakable.IsValid())
+		if (!attacker || !attacker.IsValid() || !attacker.IsPlayer() || !Breakable || !Breakable.IsValid())
 			return false
-		if(Breakable.GetTeam() < TF_TEAM_RED)
+		if (Breakable.GetTeam() < TF_TEAM_RED)
 			return true
-		if(Breakable.GetTeam() == attacker.GetTeam())
+		if (Breakable.GetTeam() == attacker.GetTeam())
 			return false
 		return true
 	}
@@ -156,16 +156,16 @@ class CBaseBreakable {
 	 * @param {CTFPlayer|CBaseEntity|null} attacker
 	 * @param {CBaseAnimating} victim
 	 */
-	function OnTakeDamage(attacker, victim)
+	function OnTakeDamage( attacker, victim )
 	{
-		if(!victim || !victim.IsValid() || !CanTakeDamage(attacker))
+		if (!victim || !victim.IsValid() || !CanTakeDamage(attacker))
 			return
 		Health--
-		if(Health <= 0)
+		if (Health <= 0)
 			victim.AcceptInput("Break", "", attacker, victim)
 	}
 
-	function OnBreak(attacker, victim)
+	function OnBreak( attacker, victim )
 	{
 	}
 
@@ -196,7 +196,7 @@ class CBaseMeleeBreakable extends CBaseBreakable {
 	}
 }
 
-AddChatTrigger("test_custom", function(player, ...) {
+AddChatTrigger("test_custom", function( player, ... ) {
 	local breakable = CBaseMeleeBreakable({
 		classname = "fatcat_breakable" // so it gets killed
 		origin = player.GetEyeTrace().pos
@@ -205,7 +205,7 @@ AddChatTrigger("test_custom", function(player, ...) {
 		cancel_dmg = true
 	})
 })
-AddChatTrigger("test_custom2", function(player, ...) {
+AddChatTrigger("test_custom2", function( player, ... ) {
 	local breakable = CBaseBreakable({
 		classname = "fatcat_breakable" // so it gets killed
 		origin = player.GetEyeTrace().pos
@@ -746,7 +746,7 @@ function CTFPlayer::ToRoR2Data()
 	 * @param {function} MeshFilter
 	 * @param {function} PostSpawnFunc
 	 */
-	function SpawnObjects( SpawnFunc, exData, tAttempts = 200, MinDistance = 200, ObjectLimit = 100, NoCloseEnt = "fatcat_crate*", AllowInSpawn = false, SpawnOffset = Vector(0, 0, -4 ), ToSpawnCalc = @(...) {}, MeshFilter = @(...) {}, PostSpawnFunc = @(...) {})
+	function SpawnObjects( SpawnFunc, exData, tAttempts = 200, MinDistance = 200, ObjectLimit = 100, NoCloseEnt = "fatcat_crate*", AllowInSpawn = false, SpawnOffset = Vector( 0, 0, -4 ), ToSpawnCalc = @(... ) {}, MeshFilter = @(...) {}, PostSpawnFunc = @(...) {})
 	{
 		// DebugDrawClear()
 
@@ -1048,7 +1048,7 @@ function CTFPlayer::ToRoR2Data()
 		/**@var {CBaseAnimating} self */
 		local function CashThink() {
 			self.SetAbsAngles(self.GetAbsAngles() + QAngle(0, 1.5, 0))
-			if(self.GetAbsAngles().Yaw() > 360)
+			if (self.GetAbsAngles().Yaw() > 360)
 				self.SetAbsAngles(QAngle())
 			return -1
 		}
