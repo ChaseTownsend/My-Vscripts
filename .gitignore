@@ -5,6 +5,8 @@ give_tf_weapon/
 vssaxtonhale/
 infection/
 testing/supertest/
+tankextensions/
+tankextensions*.nut
 
 # 
 .vscode/analyze_strings.py
@@ -16,5 +18,7 @@ testing/supertest/
 *.cache
 
 # typescript stuff
-*.json
 node_modules/
+package.json
+package-lock.json
+tsconfig.json

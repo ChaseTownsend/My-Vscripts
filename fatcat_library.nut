@@ -192,7 +192,7 @@ function ROOT::SetScriptVersion( item, version )
 	"BetterStatTracking" : true
 
 	// Prevent Non Admins from using Noclip
-	"NoclipAntiCheat" : true
+	"NoclipAntiCheat" : false
 
 	// Allows Callbacks for after a cond is applied (maximum delay 1-3 frame)
 	// reload library after setting this
@@ -253,7 +253,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format) (GMT-5)
-if (!SetLibraryVersion("08.21.2026.02", 0))
+if (!SetLibraryVersion("09.01.2026.17", 0))
 	return
 
 SetLibrarySettings({})
@@ -1318,6 +1318,56 @@ class ::Corrosion {
 	}
 }
 
+class ::AmmoRegenData {
+	m_hOuter = null
+	HasIndexs = null
+	RegenAmounts = null
+	RegenDelays = null
+	CurrentDelays = null
+
+	constructor(hOuter)
+	{
+		this.m_hOuter = hOuter
+		this.HasIndexs = array(TF_AMMO_COUNT-1, false)
+		this.RegenAmounts = array(TF_AMMO_COUNT-1, 0.0)
+		this.RegenDelays = array(TF_AMMO_COUNT-1, 5.0)
+		this.CurrentDelays = array(TF_AMMO_COUNT-1, 0.0)
+	}
+
+	function VALID_OTHER(other)
+	{
+		return IsValidPlayer(other)
+	}
+
+	function RegenAmmoIndex(index)
+	{
+		if(!HasIndexs[index] || RegenAmounts[index] == 0.0)
+			return false
+
+		if(CurrentDelays[index] < Time())
+			return
+
+		if(!VALID_OTHER(m_hOuter))
+			return false
+
+		m_hOuter.GivePercentAmmo(index, RegenAmounts[index])
+		CurrentDelays[index] = Time() + RegenDelays[index]
+	}
+
+	function SetAmmoData(index, amount, delay = 5.0)
+	{
+		HasIndexs[index] = amount != 0.0
+		RegenAmounts[index] = amount
+		RegenDelays[index] = delay
+	}
+
+	function CheckAllAmmo()
+	{
+		for(local i = 0; i <= HasIndexs.len(); i++)
+			RegenAmmoIndex(i)
+	}
+}
+
 
 /*
   ========================
@@ -2192,6 +2242,11 @@ function CTFPlayer::InRespawnRoom( any = false )
 {	
 	// does not solve if touching any though ....
 	return GetPropInt(this, "m_Shared.m_iSpawnRoomTouchCount")
+}
+
+// This is Bad! LEAKY
+function CTFPlayer::IsTruelyInSpawn(any = false)
+{
 	foreach (respawnroom in GetAllEntitiesByClassname("func_respawnroom"))
 	{
 		if (!any) { if (respawnroom.GetTeam() != GetTeam()) continue }
@@ -5444,6 +5499,7 @@ function CTFWeaponBase::ShootPosition()
 			eye_angles.Left() * offset.y +
 			eye_angles.Forward() * offset.x
 }
+
 /**
  * @returns {bool}
  */
@@ -5501,6 +5557,26 @@ function CTFWeaponBase::IsFlaregun()
 
 function CTFWeaponBase::IsFish()
 	return startswith(GetWeaponClass(), "bat_fish") || startswith(GetWeaponClass(), "slap")
+
+
+function CTFWeaponBase::GetChargePercent()
+{
+	if(!IsSniperRifle())
+		return 0.0
+	return GetPropFloat(this, "m_flChargedDamage") / 150.0
+}
+
+/** 
+ * @param {float} time
+ */
+function CTFWeaponBase::SetNextAttack(time)
+{
+	SetPropFloat(this, "LocalActiveWeaponData.m_flNextPrimaryAttack", time)
+}
+function CTFWeaponBase::GetNextAttack()
+{
+	return GetPropFloat(this, "LocalActiveWeaponData.m_flNextPrimaryAttack")
+}
 
 function CTFWeaponBase::CanChargeCrit()
 {
@@ -7943,7 +8019,10 @@ function ROOT::RunWithDelay( delay, func )
 	GetScope(dummy)["Run"] <- function()
 	{
 		dummy.Kill()
-		func()
+		try {
+			func()
+		}
+		catch(e) {printf("RunWithDelay: Function failed with %s\n", e)}
 	}.bindenv(this == null ? ROOT : this)
 
 	EntFireByHandle(dummy, "CallScriptFunction", "Run", delay, null, null)
@@ -8026,8 +8105,8 @@ local timer = CreateTimer(function()
 }, 1.0)
 
 // Fire and kill the timer after 7 seconds
-RunWithDelay(@() printl("Firing and killing a timer..."), 7.0)
-RunWithDelay(@() FireTimer(timer), 7.0)
+RunWithDelay(7.0, @() printl("Firing and killing a timer..."))
+RunWithDelay(7.0, @() FireTimer(timer))
  */
 
 /*
@@ -8044,7 +8123,7 @@ RunWithDelay(@() FireTimer(timer), 7.0)
 
 /**
  * @param {table} scope
- * @deprecated this is cleaner, but uses more jump routines
+ * @deprecated this is cleaner, but is slower
  */
 function ROOT::IsNotInScope( item, scope )
 	return (!(item in scope))
@@ -8897,6 +8976,16 @@ function ROOT::PrecacheObject( thing )
 		return v
 	}
 	/**
+	 * @param {integer|float} min
+	 * @param {integer|float} max
+	 */
+	function RandomQAngle( min, max )
+	{
+		local q = QAngle()
+		q.Random(min, max)
+		return q
+	}
+	/**
 	 * @param {Vector} point1
 	 * @param {Vector} point2
 	 */
@@ -9101,6 +9190,23 @@ function Vector2D::Normalize()
   ===============================
   === END OF VECTOR2D METHODS ===
   ===============================
+*/
+
+/*
+  ======================
+  === QANGLE METHODS ===
+  ======================
+*/
+function QAngle::Random( min, max )
+{	//VALVE_RAND_MAX == 0x7FFF
+	this.x = min + (::RandomInt(0, VALVE_RAND_MAX).tofloat() / VALVE_RAND_MAX) * (max - min)
+	this.y = min + (::RandomInt(0, VALVE_RAND_MAX).tofloat() / VALVE_RAND_MAX) * (max - min)
+	this.z = min + (::RandomInt(0, VALVE_RAND_MAX).tofloat() / VALVE_RAND_MAX) * (max - min)
+}
+/*
+  =============================
+  === END OF QANGLE METHODS ===
+  =============================
 */
 
 /*
@@ -10119,6 +10225,19 @@ function SwapWeaponThink()
 	return -1
 }
 
+/** 
+ * @var {CTFPlayer} self
+ */
+function AmmoRegenThink()
+{
+	local scope = GetScope(self)
+
+	if (!("AmmoRegenData" in scope))
+		scope.AmmoRegenData <- AmmoRegenData(self)
+
+	return 0.1
+}
+
 /*
   =============================
   === CUSTOM EVENT HANDLING ===
@@ -10583,6 +10702,30 @@ function ROOT::PostPlayerSpawn( player )
 			}
 		}
 
+		if(inflictor && "DamageMultiplier" in GetScope(inflictor))
+		{
+			if("DAMAGE_MULT_DEBUG" in ROOT && DAMAGE_MULT_DEBUG == true)
+			{
+				printf("Inflictor \"%s\" is giving a dmg mult of %0.3f against \"%s\"\n", inflictor.tostring(), GetScope(inflictor).DamageMultiplier, victim.tostring())
+				printf("\tBringing Dmg from %0.2f to %0.2f\n", params.damage.tofloat(), params.damage * GetScope(inflictor).DamageMultiplier)
+			}
+			params.damage *= GetScope(inflictor).DamageMultiplier
+		}
+
+		if(inflictor && "ShouldIgnite" in GetScope(inflictor) && GetScope(inflictor).ShouldIgnite == true && IsValidEnemy(victim))
+		{
+			local weapon = params.weapon == GetPropEntity(inflictor, "m_hLauncher") ? params.weapon : GetPropEntity(inflictor, "m_hLauncher")
+			if(weapon && weapon.IsValid() && weapon.GetOwner() != victim)
+			{
+				local old_val = weapon.GetAttribute("Set DamageType Ignite", 0)
+				weapon.AddAttribute("Set DamageType Ignite", 1, 0)
+				if(old_val == 0)
+					RunWithDelay(TICK_DUR, @() weapon.RemoveAttribute("Set DamageType Ignite"))
+				else
+					RunWithDelay(TICK_DUR, @() weapon.AddAttribute("Set DamageType Ignite", old_val, 0))
+			}
+		}
+
 		// is_suicide_counter
 		if (params.damage_custom == TF_DMG_CUSTOM_TELEFRAG && attacker == inflictor && attacker == victim)
 		{
@@ -10757,6 +10900,11 @@ function ROOT::PostPlayerSpawn( player )
 						params.early_out <- true
 						CreateParticle("miss_text", victim.GetCenter() + Vector(0,0,32))
 					}
+				}
+
+				if (weapon.IsSniperRifle() && weapon.GetChargePercent() != 0.0 && weapon.GetAttribute("mult damage from rifle charge", 1 ) != 1.0)
+				{
+					params.damage *= (weapon.GetChargePercent() + 1) * weapon.GetAttribute("mult damage from rifle charge", 1.0)
 				}
 			}
 
@@ -11109,6 +11257,7 @@ function ROOT::PostPlayerSpawn( player )
 			SetPropInt(player, "m_Shared.m_iNextMeleeCrit", -2)
 			player.AddThink(FireWeaponCheck, "FireWeaponCheck")
 			player.AddThink(SwapWeaponThink, "SwapWeaponThink")
+			player.AddThink(AmmoRegenThink, "AmmoRegenThink")
 		}
 
 		// Better func
