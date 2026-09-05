@@ -82,11 +82,12 @@ function ROOT::PrintGarbage()
 
 if ("GetModName" in ROOT)
 {
-	// local Mod = GetModName()
-	// if (Mod == MOD_TF2C)
-	// {
-	// 	IncludeScript("TF2C Fix") // not good rn
-	// }
+	local Mod = GetModName()
+	if (Mod == MOD_TF2C)
+	{
+		// IncludeScript("TF2C Fix") // not good rn
+		IncludeScript("TF2C/MVM_fix")
+	}
 }
 else
 {
@@ -1385,8 +1386,13 @@ function ROOT::GetCvarStr( cvar )
 }
 ROOT.GetCvarString <- ROOT.GetCvarStr
 
-function ROOT::GetClientConVar( cvar, entindex )
+if( IsTF2C() ) {
+	function ROOT::GetClientConVar( cvar, entindex )
+		return Convars.GetClientConvarValue(entindex, cvar)
+} else {
+	function ROOT::GetClientConVar( cvar, entindex )
 	return Convars.GetClientConvarValue(cvar, entindex)
+}
 
 
 /**
