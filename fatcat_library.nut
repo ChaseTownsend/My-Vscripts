@@ -638,6 +638,14 @@ TF2C ETFTeam constants
 ::OBJ_TELEPORTER				<- 1
 ::OBJ_SENTRY 					<- 2
 ::OBJ_SAPPER 					<- 3
+if( IsTF2C() ) {
+	::OBJ_JUMPPAD 				<- 4
+	::OBJ_COUNT					<- 5
+}
+else {
+	::OBJ_COUNT					<- 4
+}
+	
 
 ///////// kBonusEffect
 ::kBonusEffect_Crit 				<- 0
@@ -2213,17 +2221,22 @@ function CTFPlayer::GetWeaponInSlotNew( slot )
 
 	return null
 }
-/** 
- * @returns {[CTFWeaponBase]}
- */
-function CTFPlayer::GetAllWeapons()
-{
-	local list = []
-	for (local i = 0; i < MAX_WEAPONS; i++)
+
+if( !IsTF2C() ) {
+
+	/** 
+	 * @returns {[CTFWeaponBase]}
+	 */
+	function CTFPlayer::GetAllWeapons()
 	{
-		list.append(GetWeaponInSlotNew(i))
+		local list = []
+		for (local i = 0; i < MAX_WEAPONS; i++)
+		{
+			list.append(GetWeaponInSlotNew(i))
+		}
+		return list.filter(@(_, value) value != null)
 	}
-	return list.filter(@(_, value) value != null)
+
 }
 /**
  * @returns {CTFWeaponBase|null}
@@ -2238,7 +2251,7 @@ function CTFPlayer::GetSpellBook()
 	return null
 }
 
-function CTFPlayer::InRespawnRoom( any = false )
+function CTFPlayer::InRespawnRoom()
 {	
 	// does not solve if touching any though ....
 	return GetPropInt(this, "m_Shared.m_iSpawnRoomTouchCount")
@@ -5526,7 +5539,7 @@ function CTFWeaponBase::IsFlamethrower()
 	return startswith(GetWeaponClass(), "flamethrower")
 
 function CTFWeaponBase::IsMedigun()
-	return startswith(GetWeaponClass(), "medigun")
+	return startswith(GetWeaponClass(), "medigun") || startswith(GetClassname().slice(12), "heallauncher")
 
 function CTFWeaponBase::IsKnife()
 	return startswith(GetWeaponClass(), "knife")
@@ -11583,11 +11596,13 @@ function ROOT::PostPlayerSpawn( player )
 			return
 		// Assert(player && player.IsPlayer(), "player_builtobject Received a NULL/Non player")
 
-		local typetable = array(4, "")
+		local typetable = array(OBJ_COUNT, "")
 		typetable[OBJ_DISPENSER] = "Dispenser"
 		typetable[OBJ_TELEPORTER] = "Teleporter"
 		typetable[OBJ_SENTRY] = "Sentry"
 		typetable[OBJ_SAPPER] = "Sapper"
+		if( IsTF2C() )
+			typetable[OBJ_JUMPPAD] = "JumpPad"
 		local event_name = typetable[params.object]
 		event_name += "Built"
 
@@ -11677,11 +11692,13 @@ function ROOT::PostPlayerSpawn( player )
 		local assister = "assister" in params ? GetPlayerFromUserID(params.assister) : null
 		local object = EntIndexToHScript(params.index)
 
-		local typetable = array(4, "")
+		local typetable = array(OBJ_COUNT, "")
 		typetable[OBJ_DISPENSER] = "Dispenser"
 		typetable[OBJ_TELEPORTER] = "Teleporter"
 		typetable[OBJ_SENTRY] = "Sentry"
 		typetable[OBJ_SAPPER] = "Sapper"
+		if( IsTF2C() )
+			typetable[OBJ_JUMPPAD] = "JumpPad"
 		local event_name = typetable[params.objecttype]
 
 		FireScriptEvent(event_name + "Destroyed", {
@@ -11724,24 +11741,21 @@ function ROOT::PostPlayerSpawn( player )
 	 */
 	function OnGameEvent_object_detonated( params )
 	{
-		// local eventdata = {}
-		// PrintTable(params)
 		local owner = "userid" in params ? GetPlayerFromUserID(params.userid) : null
-		local type = params.objecttype
 		local object = EntIndexToHScript(params.index)
 
-		local typetable = array(4, "")
+		local typetable = array(OBJ_COUNT, "")
 		typetable[OBJ_DISPENSER] = "Dispenser"
 		typetable[OBJ_TELEPORTER] = "Teleporter"
 		typetable[OBJ_SENTRY] = "Sentry"
 		typetable[OBJ_SAPPER] = "Sapper"
+		if( IsTF2C() )
+			typetable[OBJ_JUMPPAD] = "JumpPad"
 		local event_name = typetable[params.objecttype]
 
 		FireScriptEvent(event_name + "Detonated", {
 			owner = owner
-			type = type
 			object = object
-			detonated = false
 		})
 	}
 	/**
@@ -12490,7 +12504,7 @@ function ROOT::PostPlayerSpawn( player )
 	 * object: CBaseEntity|null // The Teleporter that was Created.
 	 * ```
 	 */
-	function OnScriptEvent_TeleporterBuilt( _params )				{}
+	function OnScriptEvent_TeleporterBuilt( _params )			{}
 	/**
 	 * Fired when a Sentry is Created
 	 *
@@ -12502,7 +12516,7 @@ function ROOT::PostPlayerSpawn( player )
 	 * object: CBaseEntity|null // The Sentry that was Created.
 	 * ```
 	 */
-	function OnScriptEvent_SentryBuilt( _params )					{}
+	function OnScriptEvent_SentryBuilt( _params )				{}
 	/**
 	 * Fired when a Sapper is Created
 	 *
@@ -12515,6 +12529,132 @@ function ROOT::PostPlayerSpawn( player )
 	 * ```
 	 */
 	function OnScriptEvent_SapperBuilt( _params )					{}
+
+	/**
+	 * Fired when a Dispenser is Destroyed
+	 *
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * owner: CTFPlayer // The owner of the Dispenser.
+	 * attacker: CTFPlayer // The player who Destroyed this Dispenser.
+	 * assister: CTFPlayer|null // The player who assisted in Destroying this Dispenser.
+	 * object: CBaseEntity|null // The Dispenser that was Destroyed.
+	 * 
+	 * weapon_name: string // the weapon logname that killed this Dispenser.
+	 * building: bool // was the Dispenser Building?
+	 * ```
+	 */
+	function OnScriptEvent_DispenserDestroyed( _params )			{}
+	/**
+	 * Fired when a Teleporter is Destroyed
+	 *
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * owner: CTFPlayer // The owner of the Teleporter.
+	 * attacker: CTFPlayer // The player who Destroyed this Teleporter.
+	 * assister: CTFPlayer|null // The player who assisted in Destroying this Teleporter.
+	 * object: CBaseEntity|null // The Teleporter that was Destroyed.
+	 * 
+	 * weapon_name: string // the weapon logname that killed this Teleporter.
+	 * building: bool // was the Teleporter Building?
+	 * ```
+	 */
+	function OnScriptEvent_TeleporterDestroyed( _params )		{}
+	/**
+	 * Fired when a Sentry is Destroyed
+	 *
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * owner: CTFPlayer // The owner of the Sentry.
+	 * attacker: CTFPlayer // The player who Destroyed this Sentry.
+	 * assister: CTFPlayer|null // The player who assisted in Destroying this Sentry.
+	 * object: CBaseEntity|null // The Sentry that was Destroyed.
+	 * 
+	 * weapon_name: string // the weapon logname that killed this Sentry.
+	 * building: bool // was the Sentry Building?
+	 * ```
+	 */
+	function OnScriptEvent_SentryDestroyed( _params )			{}
+	/**
+	 * Fired when a Sapper is Destroyed
+	 *
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * owner: CTFPlayer // The owner of the Sapper.
+	 * attacker: CTFPlayer // The player who Destroyed this Sapper.
+	 * assister: CTFPlayer|null // The player who assisted in Destroying this Sapper.
+	 * object: CBaseEntity|null // The Sapper that was Destroyed.
+	 * 
+	 * weapon_name: string // the weapon logname that killed this Sapper.
+	 * building: bool // was the Sapper Building?
+	 * ```
+	 */
+	function OnScriptEvent_SapperDestroyed( _params )			{}
+
+
+/* 
+owner = owner
+			object = object
+ */
+
+	/**
+	 * Fired when a Dispenser is Detonated
+	 *
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * owner: CTFPlayer|null // The owner of the Dispenser.
+	 * object: CBaseEntity|null // The Dispenser that was Detonated.
+	 * ```
+	 */
+	function OnScriptEvent_DispenserDetonated( _params )			{}
+	/**
+	 * Fired when a Teleporter is Detonated
+	 *
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * owner: CTFPlayer|null // The owner of the Teleporter.
+	 * object: CBaseEntity|null // The Teleporter that was Detonated.
+	 * ```
+	 */
+	function OnScriptEvent_TeleporterDetonated( _params )		{}
+	/**
+	 * Fired when a Sentry is Detonated
+	 *
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * owner: CTFPlayer|null // The owner of the Sentry.
+	 * object: CBaseEntity|null // The Sentry that was Detonated.
+	 * ```
+	 */
+	function OnScriptEvent_SentryDetonated( _params )			{}
+	/**
+	 * Fired when a Sapper is Detonated
+	 * 
+	 * ## Will this Ever Fire?
+	 *
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * owner: CTFPlayer|null // The owner of the Sapper.
+	 * object: CBaseEntity|null // The Sapper that was Detonated.
+	 * ```
+	 */
+	function OnScriptEvent_SapperDetonated( _params )			{}
 
 	/** 
 	 * Fired when a Player is deflected
@@ -12644,7 +12784,54 @@ function ROOT::PostPlayerSpawn( player )
 	 */
 	function OnScriptEvent_PostHumanSpawn( _params )				{}
 }
+
+if( IsTF2C() ) {
+	/**
+	 * Fired when a JumpPad is Created
+	 *
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * player: CTFPlayer // The player that created the JumpPad.
+	 * object: CBaseEntity|null // The JumpPad that was Created.
+	 * ```
+	 */
+	function ChaosCustomEvents::OnScriptEvent_JumpPadBuilt( _params )	{}
+	/**
+	 * Fired when a JumpPad is Destroyed
+	 *
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * owner: CTFPlayer // The owner of the JumpPad.
+	 * attacker: CTFPlayer // The player who Destroyed this JumpPad.
+	 * assister: CTFPlayer|null // The player who assisted in Destroying this JumpPad.
+	 * object: CBaseEntity|null // The JumpPad that was Destroyed.
+	 * 
+	 * weapon_name: string // the weapon logname that killed this JumpPad.
+	 * building: bool // was the JumpPad Building?
+	 * ```
+	 */
+	function ChaosCustomEvents::OnScriptEvent_JumpPadDestroyed( _params )	{}
+
+	/**
+	 * Fired when a JumpPad is Detonated
+	 *
+	 * @param {table} _params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * owner: CTFPlayer|null // The owner of the JumpPad.
+	 * object: CBaseEntity|null // The JumpPad that was Detonated.
+	 * ```
+	 */
+	function ChaosCustomEvents::OnScriptEvent_JumpPadDetonated( _params )	{}
+}
+
 __CollectGameEventCallbacks(ChaosCustomEvents)
+
 
 /*
   ====================================
@@ -12887,15 +13074,34 @@ RegisterAdminTrigger("setspell", function( player, ... ) {
 	book.SetSpellCharges(charges)
 })
 
+RegisterAdminTrigger("sethealth", function( player, ... ) {
+	if (vargv.len() != 1)
+		return player.PrintToChat("Incorrect Arguments [health] ")
+
+	local hp = 50
+	try {
+		hp = vargv[0].tointeger()
+	} catch(e) {}
+
+	player.SetHealth(hp)
+
+	return player.PrintToChatF("Set your Health to %d", player.GetHealth())
+})
+
 RegisterAdminTrigger("uber", function( player, ... ) {
 	if (vargv.len() > 1)
 		return player.PrintToChat("Incorrect Arguments [uber] ")
-	if (!player.HasWeaponClassname("tf_weapon_medigun") || !player.IsPlayerClass(TF_CLASS_MEDIC))
+
+	local has_gun = player.HasWeaponClassname("tf_weapon_medigun") || player.HasWeaponClassname("tf2c_weapon_heallauncher")
+
+	if (!has_gun || !player.IsPlayerClass(TF_CLASS_MEDIC))
 		return player.PrintToChat("No Medigun Stupid!")
 
 	local uber = vargv.len() == 0 ? 100.0 : vargv[0].tofloat()
 
-	player.GetWeaponClassname("tf_weapon_medigun").SetUberChargePercent(uber)
+	local gun = player.GetWeaponClassname("tf_weapon_medigun") || player.GetWeaponClassname("tf2c_weapon_heallauncher")
+
+	gun.SetUberChargePercent(uber)
 
 	return player.PrintToChat("Set your uber to "+uber+"%")
 })
