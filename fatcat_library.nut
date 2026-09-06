@@ -1384,25 +1384,30 @@ class ::AmmoRegenData {
 */
 
 /*
-  ======================
-  === MISSION MAKERS ===
-  ======================
+  ===================
+  === TEMP ADMINS ===
+  ===================
 */
-if (!("MissionMakers" in ROOT))
-	::MissionMakers <- []
+if (!("TempAdmins" in ROOT))
+	::TempAdmins <- []
 
-function ROOT::AddMissionMaker( id )
-	MissionMakers.append(id)
+/**
+ * Takes in a SteamID string
+ * 
+ * Which ID? . . .    i forgot
+ */
+function ROOT::AddTempAdmin( id )
+	TempAdmins.append(id)
 
-function ROOT::RemoveMissionMaker( id )
+function ROOT::RemoveTempAdmin( id )
 {
-	if (MissionMakers.find(id))
-		MissionMakers.remove(MissionMakers.find(id))
+	if (TempAdmins.find(id))
+		TempAdmins.remove(TempAdmins.find(id))
 }
 /*
-  =============================
-  === END OF MISSION MAKERS ===
-  =============================
+  ==========================
+  === END OF TEMP ADMINS ===
+  ==========================
 */
 
 /*
@@ -1792,8 +1797,8 @@ function CTFPlayer::GetEveryBotWithin( range )
 /**
  * @returns {bool}
  */
-function CTFPlayer::IsMissionMaker()
-	return IsInArray(GetPropString(this, PROP_PLAYER_STEAMID), MissionMakers)
+function CTFPlayer::IsTempAdmin()
+	return IsInArray(GetPropString(this, PROP_PLAYER_STEAMID), TempAdmins)
 
 function CTFPlayer::ResetPrimaryAmmo()
 	SetPrimaryAmmo(GetMaximumPrimaryAmmo())
@@ -2393,7 +2398,7 @@ function CTFPlayer::IsEventJudge()
 
 function CTFPlayer::IsAdmin()
 {
-	return IsMissionMaker() || IsInArray(GetPropString(this, PROP_PLAYER_STEAMID), [
+	return IsTempAdmin() || IsInArray(GetPropString(this, PROP_PLAYER_STEAMID), [
 		"[U:1:969530867]"	// Fatcat
 		"[U:1:101345257]"	// ShadowBolt
 		"[U:1:1768280682]"	// MiirioKing
