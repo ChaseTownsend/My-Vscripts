@@ -1,7 +1,7 @@
 if (!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
-SetScriptVersion("GameplayApplications", "5.5.1")
+SetScriptVersion("GameplayApplications", "5.5.2")
 
 local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", THINKER_PERSIST)
 
@@ -737,7 +737,7 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 		}
 		if (!attacker)
 			return
-		if (attacker.IsBot())
+		if (attacker.IsBot() && attacker != victim)
 		{
 			if (attacker.HasBotTag("NoChatter"))
 				return

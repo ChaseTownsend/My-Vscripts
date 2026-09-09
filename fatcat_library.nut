@@ -253,7 +253,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format) (GMT-5)
-if (!SetLibraryVersion("09.01.2026.17", 0))
+if (!SetLibraryVersion("09.08.2026.17", 0))
 	return
 
 SetLibrarySettings({})
@@ -4230,6 +4230,11 @@ function CTFPlayer::UseRobotModel()
 	StripItemSlot(STRIPSLOT_COSMETICS)
 	local name = GetPlayerModelPath()
 	PlayerFire("SetCustomModelWithClassAnimations", format("models/bots/%s/bot_%s.mdl", name, name), FIVE_TICKS)
+}
+
+function CTFPlayer::UseHumanModel()
+{
+	PlayerFire("SetCustomModelWithClassAnimations", format("models/player/%s.mdl", GetPlayerModelPath()), FIVE_TICKS)
 }
 
 function CTFPlayer::ShouldDetonate()
