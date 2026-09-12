@@ -7041,19 +7041,19 @@ function ROOT::PrintCollection( collection, filter = [], indentation = 0, header
 function ROOT::ShowBBOX( entity, rgb = Vector( 255, 0, 0 ), alpha = 5, duration = 5 )
 {
 	Assert(entity, "ROOT::ShowBBOX Missing Entity")
-	DebugDrawBox(entity.GetOrigin(), entity.GetBoundingMins(), entity.GetBoundingMaxs(), rgb.x.tointeger(), rgb.y.tointeger(), rgb.z.tointeger(), alpha,  duration)
+	DebugDrawBox(entity.GetCenter(), entity.GetBoundingMins(), entity.GetBoundingMaxs(), rgb.x.tointeger(), rgb.y.tointeger(), rgb.z.tointeger(), alpha,  duration)
 }
 
 function ROOT::ShowOBB( entity, rgb = Vector( 255, 0, 0 ), alpha = 5, duration = 5 )
 {
 	Assert(entity, "ROOT::ShowOBB Missing Entity")
-	DebugDrawBoxAngles(entity.GetOrigin(), entity.GetBoundingMins(), entity.GetBoundingMaxs(), entity.GetAbsAngles(), Vector(rgb.x, rgb.y, rgb.z), alpha, duration)
+	DebugDrawBoxAngles(entity.GetCenter(), entity.GetBoundingMins(), entity.GetBoundingMaxs(), entity.GetAbsAngles(), Vector(rgb.x, rgb.y, rgb.z), alpha, duration)
 }
 
 function ROOT::ShowAABB( entity, rgb = Vector( 255, 0, 0 ), alpha = 5, duration = 5 )
 {
 	Assert(entity, "ROOT::ShowAABB Missing Entity")
-	DebugDrawBox(entity.GetOrigin(),entity.GetBoundingMins(), entity.GetBoundingMaxs(), rgb.x.tointeger(), rgb.y.tointeger(), rgb.z.tointeger(), alpha, duration)
+	DebugDrawBox(entity.GetCenter(),entity.GetBoundingMins(), entity.GetBoundingMaxs(), rgb.x.tointeger(), rgb.y.tointeger(), rgb.z.tointeger(), alpha, duration)
 }
 
 function ROOT::DebugDrawTrigger( trigger, color = Vector( 255, 128, 0 ), alpha = 5, duration = 5 )
