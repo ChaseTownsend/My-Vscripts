@@ -2100,7 +2100,7 @@ function CTFPlayer::SetThrowableCharge( charge )
 
 function CTFPlayer::IsUberDraining() 
 {
-	foreach (weapon in GetAllWeapons()) { 
+	foreach (weapon in GetAllItems()) { 
 		if (HasProp(weapon, "m_bChargeRelease"))
 			return GetPropBool(weapon, "m_bChargeRelease")
 	}
@@ -2112,7 +2112,7 @@ function CTFPlayer::IsUberDraining()
  */
 function CTFPlayer::GetAbilityWeapon() 
 {
-	foreach (weapon in GetAllWeapons()) { 
+	foreach (weapon in GetAllItems()) { 
 		if (TF_ABILITYS.values().find(weapon.GetIDX()) != null)
 			return weapon
 	}
@@ -2125,7 +2125,7 @@ function CTFPlayer::GetAbilityWeapon()
 function CTFPlayer::GetAbilityWeapons() 
 {
 	local weapons = []
-	foreach (weapon in GetAllWeapons()) {
+	foreach (weapon in GetAllItems()) {
 		if (TF_ABILITYS.values().find(weapon.GetIDX()) != null)
 			weapons.append(weapon)
 	}
@@ -2166,7 +2166,7 @@ function CTFPlayer::GetMyWeaponsArray()
 // AN ERROR HAS OCCURRED [Script terminated by SQQuerySuspend]
 // CALLSTACK
 // *FUNCTION [GetWeaponInSlotNew( )] fatcat_library.nut line [2094]
-// *FUNCTION [GetAllWeapons( )] fatcat_library.nut line [2110]
+// *FUNCTION [GetAllItems( )] fatcat_library.nut line [2110]
 // *FUNCTION [HookMultAttributes( )] fatcat_library.nut line [3532]
 // *FUNCTION [GameplayThink( )] gameplay-applications.nut line [754]
 // LOCALS
@@ -2227,28 +2227,24 @@ function CTFPlayer::GetWeaponInSlotNew( slot )
 	return null
 }
 
-if ( !IsTF2C() ) {
-
-	/** 
-	 * @returns {[CTFWeaponBase]}
-	 */
-	function CTFPlayer::GetAllWeapons()
+/** 
+ * @returns {[CTFWeaponBase]}
+ */
+function CTFPlayer::GetAllItems()
+{
+	local list = []
+	for (local i = 0; i < MAX_WEAPONS; i++)
 	{
-		local list = []
-		for (local i = 0; i < MAX_WEAPONS; i++)
-		{
-			list.append(GetWeaponInSlotNew(i))
-		}
-		return list.filter(@(_, value) value != null)
+		list.append(GetWeaponInSlotNew(i))
 	}
-
+	return list.filter(@(_, value) value != null)
 }
 /**
  * @returns {CTFWeaponBase|null}
  */
 function CTFPlayer::GetSpellBook()
 {
-	foreach (weapon in GetAllWeapons())
+	foreach (weapon in GetAllItems())
 	{
 		if ( weapon.GetClassname() == "tf_weapon_spellbook" )
 			return weapon
@@ -2411,7 +2407,7 @@ function CTFPlayer::IsAdmin()
  */
 function CTFPlayer::HasWeapon( index )
 {
-	foreach (weapon in GetAllWeapons())
+	foreach (weapon in GetAllItems())
 		if (weapon.GetIDX() == index) return true
 	return false
 }
@@ -2420,7 +2416,7 @@ function CTFPlayer::HasWeapon( index )
  */
 function CTFPlayer::HasWeaponClassname( classname )
 {
-	foreach (weapon in GetAllWeapons())
+	foreach (weapon in GetAllItems())
 		if (weapon.GetClassname() == classname) return true
 	return false
 }
@@ -2430,7 +2426,7 @@ function CTFPlayer::HasWeaponClassname( classname )
  */
 function CTFPlayer::GetWeapon( index )
 {
-	foreach (weapon in GetAllWeapons())
+	foreach (weapon in GetAllItems())
 		if (weapon.GetIDX() == index) return weapon
 	return null
 }
@@ -2440,7 +2436,7 @@ function CTFPlayer::GetWeapon( index )
  */
 function CTFPlayer::GetWeaponClassname( classname )
 {
-	foreach (weapon in GetAllWeapons())
+	foreach (weapon in GetAllItems())
 		if (weapon.GetClassname() == classname) return weapon
 	return null
 }
@@ -2491,7 +2487,7 @@ function CTFPlayer::GetMaximumPrimaryAmmo()
 	if (name == "crossbow")
 		round = true
 
-	local weapons = GetAllWeapons()
+	local weapons = GetAllItems()
 	foreach (weapon in weapons)
 	{
 		if (weapon.GetAttribute("provide on active", 0) == 1)
@@ -2542,7 +2538,7 @@ function CTFPlayer::GetMaximumSecondaryAmmo()
 	if (name == "builder") // sapper
 		ammo = GetMaximumPrimaryAmmo()
 
-	local weapons = GetAllWeapons()
+	local weapons = GetAllItems()
 	foreach (weapon in weapons)
 	{
 		if (weapon.GetAttribute("provide on active", 0) == 1)
@@ -2572,7 +2568,7 @@ function CTFPlayer::GetMaximumMetal()
 		return 0
 	local metal = 200
 	local metal_mult = 1
-	local weapons = GetAllWeapons()
+	local weapons = GetAllItems()
 	foreach (weapon in weapons)
 	{
 		if (weapon.HasAdditiveAttribute("provide on active"))
@@ -2598,7 +2594,7 @@ function CTFPlayer::GetMaximumGrenades1()
 {
 	local grenades = 1
 	local grenades_mult = 1
-	foreach (weapon in GetAllWeapons())
+	foreach (weapon in GetAllItems())
 	{
 		if (weapon.HasAdditiveAttribute("provide on active"))
 		{
@@ -3313,7 +3309,7 @@ function CTFPlayer::FixAmmo()
 	if (!this||!IsValid())
 		return
 	ResetAmmo()
-	foreach (weapon in GetAllWeapons())
+	foreach (weapon in GetAllItems())
 	{
 		if (weapon.IsWearable())
 			continue
@@ -3680,7 +3676,7 @@ function CTFPlayer::HookMultAttributes( attribute, def_plr = 1.0, def_wep = 1.0 
 {
 	local amount = 1.0
 	amount *= GetCustomAttribute(attribute, def_plr)
-	foreach (weapon in GetAllWeapons())
+	foreach (weapon in GetAllItems())
 	{
 		if (weapon.GetAttribute("provide on active", 0) && weapon != GetActiveWeapon())
 			continue
@@ -3697,7 +3693,7 @@ function CTFPlayer::HookAdditiveAttributes( attribute, def_plr = 0, def_wep = 0 
 {
 	local amount = 0.0
 	amount += GetCustomAttribute(attribute, def_plr)
-	foreach (weapon in GetAllWeapons())
+	foreach (weapon in GetAllItems())
 	{
 		if (weapon.GetAttribute("provide on active", 0) && weapon != GetActiveWeapon())
 			continue
@@ -3959,7 +3955,7 @@ function CTFPlayer::StripItemSlot( slot )
 
 function CTFPlayer::CanStomp()
 {
-	foreach (wep in GetAllWeapons())
+	foreach (wep in GetAllItems())
 	{
 		if (wep.CanStomp())
 			return true
@@ -3972,7 +3968,7 @@ function CTFPlayer::CanStomp()
 function CTFPlayer::GetStompWeapon()
 {
 	local weps = []
-	foreach (wep in GetAllWeapons())
+	foreach (wep in GetAllItems())
 	{
 		if (wep.CanStomp())
 			weps.append(wep)
@@ -4149,7 +4145,7 @@ function CTFPlayer::CheckBlockBackstab( pTFAttacker )
 
 	local iBackStabShield = 0
 	local ValidWeapon = null
-	foreach (/**@type {CTFWeaponBase} */weapon in GetAllWeapons())
+	foreach (/**@type {CTFWeaponBase} */weapon in GetAllItems())
 	{
 		if (weapon.GetAttribute("backstab shield", 0))
 		{
@@ -8516,7 +8512,7 @@ function ROOT::ProccessItemSets( client )
 		if (set.ApplyTo.find("PLAYER") != null)
 			targets.append(client)
 
-		foreach (weapon in client.GetAllWeapons())
+		foreach (weapon in client.GetAllItems())
 		{
 			if (set.ApplyTo.find(weapon.GetClassname()) != null || set.ApplyTo.find(weapon.GetIDX()) != null)
 				targets.append(weapon)
@@ -10166,7 +10162,7 @@ function FireWeaponCheck()
 	if (self.IsDead())
 		return 0.1
 
-	foreach (/**@type {CTFWeaponBase} */wep in self.GetAllWeapons())
+	foreach (/**@type {CTFWeaponBase} */wep in self.GetAllItems())
 	{
 		if (wep.GetClassname() == "tf_weapon_flamethrower")
 		{	// TF2Classified turns it into a int with -1, 0, and 1
@@ -10301,7 +10297,7 @@ function ROOT::PostPlayerSpawn( player )
 		player.SetForcedTauntCam(1)
 
 	local slot = -1
-	foreach (wep in player.GetAllWeapons())
+	foreach (wep in player.GetAllItems())
 	{
 		if (wep.GetAttribute("force slot on spawn", -1) != -1)
 			slot = wep.GetAttribute("force slot on spawn", -1)
@@ -10313,7 +10309,7 @@ function ROOT::PostPlayerSpawn( player )
 			RunWithDelay(0.1, @() player.Weapon_Switch(wep))
 	}
 	
-	foreach (wep in player.GetAllWeapons())
+	foreach (wep in player.GetAllItems())
 		player.SetCond(wep.GetAttribute("cond on spawn", -1), wep.GetAttribute("cond on spawn duration", -1))
 
 	player.SetCond(player.GetCustomAttribute("cond on spawn", -1), player.GetCustomAttribute("cond on spawn duration", -1))
@@ -10813,7 +10809,7 @@ function ROOT::PostPlayerSpawn( player )
 				if (secondary && secondary.IsWearable() && secondary.CanStomp())
 					stomping_weapon = secondary
 
-				foreach (weapon in attacker.GetAllWeapons())
+				foreach (weapon in attacker.GetAllItems())
 				{
 					if (weapon.GetAttribute("perfer as stomping weapon", 0))
 					{

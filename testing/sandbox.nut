@@ -10,38 +10,28 @@ if(!IsValidPlayer(Host)) {
 	}
 }
 
+
 /** 
  * @var {CTFPlayer} self
  */
 function fuck() {
-	local wep = self.GetActiveWeapon()
-
-	local scope = GetScope(wep)
-	if(!("Last_Attack" in scope))
-		scope.Last_Attack <- 0.0
-
-	if(wep.GetNextAttack() != scope.Last_Attack) {
-		local message = "Next Attack : %.04f\n%s Last attack Delta  :  %.04f"
-
-		// message += "\n Reloading : " + GetPropBool(self.GetWeaponInSlotNew(0), "m_bInReload")
-		// message += "\nPlayback Rate : " + GetPropInt(wep, "m_nSequence")
-		message += "\nButtons : " + GetPropInt(self, "m_nButtons")
-
-		// foreach (weapon in self.GetAllWeapons()) {
-			// message += "\n" + GetPropFloat(weapon, "LocalWeaponData.m_flAnimTime")
-		// }
-
-		self.PrintToHudF(message, GetPropFloat(self, "m_flNextAttack")-Time(), wep.tostring(), (wep.GetNextAttack() - scope.Last_Attack))
+	local scope = GetScope(self)
+	// local message = ""
+	for(local i = 0; i <= 149; i++) {
+		if((scope.CondDurs[i] == 0.0 || self.GetCondDuration(i) > scope.CondDurs[i]) && self.GetCondDuration(i) != 0.0) 
+			printf("Condition %d was applied for %.03f seconds\n", i, (self.GetCondDuration(i) != -1 ? self.GetCondDuration(i) + TICK_DUR : self.GetCondDuration(i)))
+		scope.CondDurs[i] = self.GetCondDuration(i)
+		// message += i+": " + (self.GetCondDuration(i) != 0.0 ? self.GetCondDuration(i) : "false") + "\n"
 	}
-	
-	scope.Last_Attack <- wep.GetNextAttack()
-
-	// local Viewmodel = GetPropEntityArray(self, "m_hViewModel", 0)
-	// self.PrintToHud(GetPropFloat(Viewmodel, "m_flPlaybackRate"))
-
-	// m_flPlaybackRate
-
+	// PrintToHudAll(message)
+	self.SetHealth(1)
 	return -1
 }
 
-Host.AddThink(fuck, "fuck")
+foreach (player in Players) {
+	if(player == Host)
+		continue
+	player.RemoveThink("fuck")
+	player.AddThink(fuck, "fuck")
+	GetScope(player).CondDurs <- array(150, 0.0)
+}

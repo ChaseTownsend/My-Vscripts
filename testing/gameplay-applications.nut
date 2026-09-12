@@ -693,7 +693,7 @@ RegisterDamageCallback("player", "GameplayPlayer" function( params ) {
 			params.weapon = attacker.GetWeaponInSlotNew(SLOT_SECONDARY)
 		else 
 		{
-			foreach (wep in attacker.GetAllWeapons())
+			foreach (wep in attacker.GetAllItems())
 			{
 				if (wep.CanStomp())
 				{
@@ -887,7 +887,7 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 		
 		local spellbook = player.GetSpellBook()
 
-		foreach (weapon in player.GetAllWeapons())
+		foreach (weapon in player.GetAllItems())
 		{
 			if (weapon.IsWearable())
 				continue

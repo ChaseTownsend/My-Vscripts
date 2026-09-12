@@ -463,7 +463,7 @@ function GameplayThink()
 		if (Human.HookAdditiveAttributes("infinite ammo"))
 		{
 			Human.ResetAmmo()
-			foreach (wep in Human.GetAllWeapons())
+			foreach (wep in Human.GetAllItems())
 			{
 				if (wep.GetAttribute("infinite ammo", 0) && "GetMaxClip1" in wep)
 					wep.SetClip1(wep.GetMaxClip1())
@@ -822,7 +822,7 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 			}, "SlowDownAura")
 		}
 		
-		foreach (/**@type {CTFWeaponBase} */weapon in player.GetAllWeapons())
+		foreach (/**@type {CTFWeaponBase} */weapon in player.GetAllItems())
 		{
 			if (weapon.IsWearable())
 				continue

@@ -354,7 +354,7 @@ function DisplayItemHelps( player, scope )
 {
 	player.TranslateToChat("IH_INCLUDES")
 
-	local weapons = player.GetAllWeapons()
+	local weapons = player.GetAllItems()
 	foreach (weapon in weapons)
 	{
 		foreach (item, indexs in ItemTranslateTable)

@@ -85,7 +85,7 @@ function CTFPlayer::GetCustomPowerup()
 
 function CTFPlayer::UpdateWeaponStats()
 {
-	foreach (/**@type {CTFWeaponBase} */weapon in GetAllWeapons())
+	foreach (/**@type {CTFWeaponBase} */weapon in GetAllItems())
 	{
 		weapon.AddAttribute("cannot delete", 1.0, 0) // force an update on the weapon
 		weapon.RemoveAttribute("cannot delete")

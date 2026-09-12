@@ -482,7 +482,7 @@ function ROOT::CALL_ATTRIB_HOOK_INT_ON_OTHER( ent, attrib, def = 0 )
 	local wep_mult = 1.0
 	if (ent.IsPlayer())
 	{
-		foreach (weapon in GetAllWeapons())
+		foreach (weapon in GetAllItems())
 		{
 			if (weapon.GetAttribute("provide on active", 0) && weapon != ent.GetActiveWeapon())
 				continue
@@ -509,7 +509,7 @@ function ROOT::CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( ent, attrib, def = 0.0 )
 	local wep_mult = 1.0
 	if (ent.IsPlayer())
 	{
-		foreach (weapon in GetAllWeapons())
+		foreach (weapon in GetAllItems())
 		{
 			if (weapon.GetAttribute("provide on active", 0) && weapon != ent.GetActiveWeapon())
 				continue
