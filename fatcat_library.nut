@@ -27,6 +27,13 @@ More Explicit Sugar Makes use of VSCode's built in Regex
 	`function test( bob, joe )`
  */
 
+/* 
+	General TODO stuff
+	TF2Classified stuff movespeed stuff
+
+
+ */
+
 ::CONST <- getconsttable()
 ::ROOT <- getroottable()
 
@@ -198,8 +205,8 @@ function ROOT::SetScriptVersion( item, version )
 	// reload library after setting this
 	"OnCondPostHooks" : false
 
-	// test
-	"TestPurgeString" : false
+	// test the string purge system
+	"TestPurgeString" : true
 }
 
 function IsValidSetting( setting )
@@ -253,7 +260,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format) (GMT-5)
-if (!SetLibraryVersion("09.08.2026.17", 0))
+if (!SetLibraryVersion("09.16.2026.21", 0))
 	return
 
 SetLibrarySettings({})
@@ -1150,6 +1157,15 @@ CallMedicScenes[TF_CLASS_SPY] = [
 	780,
 	781
 ]
+::BaseMovespeed <- array(TF_CLASS_COUNT_ALL, 300)
+BaseMovespeed[TF_CLASS_SCOUT] = 400
+BaseMovespeed[TF_CLASS_SOLDIER] = 240
+BaseMovespeed[TF_CLASS_DEMOMAN] = 280
+BaseMovespeed[TF_CLASS_HEAVYWEAPONS] = 230
+BaseMovespeed[TF_CLASS_MEDIC] = 320
+BaseMovespeed[TF_CLASS_SPY] = 320
+if (IsTF2C())
+	BaseMovespeed[TF_CLASS_CIVILIAN] = 280
 
 /** @type {class} */
 class ::color32 {
@@ -1373,6 +1389,105 @@ class ::AmmoRegenData {
 	{
 		for (local i = 0; i <= HasIndexs.len(); i++)
 			RegenAmmoIndex(i)
+	}
+}
+
+class ::DamageCallback {
+	/** @type {CBaseEntity} */
+	victim = null
+	/** @type {CBaseEntity} */
+	attacker = null
+	/** @type {CBaseEntity} */
+	inflictor = null
+	/** @type {CBaseEntity} */
+	weapon = null
+
+	crit_type = kBonusEffect_None
+	damage_type 		= DMG_GENERIC
+	/** @type {Vector} */
+	damage_position 	= null
+
+	damage = 0.0
+	damage_custom = TF_DMG_CUSTOM_NONE
+	penetration_count	= 0
+	others_damaged		= 0
+
+	/** 
+	 * @type {function}
+	 * @param {table} data
+	 */
+	constructor(data)
+	{
+		this.victim 			= data.victim
+		this.attacker 			= data.attacker
+		this.inflictor 			= data.inflictor
+		this.weapon 			= data.weapon
+		this.crit_type 			= data.crit_type
+		this.damage_type 		= data.damage_type
+		this.damage_position 	= data.damage_position
+		this.damage 			= data.damage
+		this.damage_custom 		= data.damage_custom
+		this.penetration_count 	= data.penetration_count
+		this.others_damaged 	= data.others_damaged
+	}
+}
+
+class ::PlayerDamageCallback {
+	/** @type {CBaseEntity} */
+	victim = null
+	/** @type {CBaseEntity} */
+	attacker = null
+
+	damage = 0
+	over_damage = 0
+	damage_custom = TF_DMG_CUSTOM_NONE
+	bonuseffect = kBonusEffect_None
+
+	showdisguisedcrit = false
+	allseecrit = false
+	killed = false
+
+	/** 
+	 * @type {function}
+	 * @param {table} data
+	 */
+	constructor(data)
+	{
+		this.victim 			= data.victim
+		this.attacker 			= data.attacker
+
+		this.over_damage 		= data.over_damage
+		this.damage 			= data.damage
+		this.damage_custom 		= data.damage_custom
+		this.bonuseffect		= data.bonuseffect
+
+		this.showdisguisedcrit	= data.showdisguisedcrit
+		this.allseecrit			= data.allseecrit
+		this.killed				= data.killed
+	}
+}
+
+class ::NPCDamageCallback {
+	/** @type {CBaseEntity} */
+	victim = null
+	/** @type {CBaseEntity} */
+	attacker = null
+
+	crit = false
+	damage = 0.0
+	health = 0.0
+
+	/** 
+	 * @type {function}
+	 * @param {table} data
+	 */
+	constructor(data)
+	{
+		this.victim 			= data.object
+		this.attacker 			= data.attacker
+		this.crit 				= data.crit
+		this.damage 			= data.damage
+		this.health 			= data.health
 	}
 }
 
@@ -3675,12 +3790,12 @@ function CTFPlayer::HealPlayer( amount, overheal = false, display = true, type =
 function CTFPlayer::HookMultAttributes( attribute, def_plr = 1.0, def_wep = 1.0 )
 {
 	local amount = 1.0
-	amount *= GetCustomAttribute(attribute, def_plr)
+	amount *= GetScriptAttribute(attribute, def_plr)
 	foreach (weapon in GetAllItems())
 	{
 		if (weapon.GetAttribute("provide on active", 0) && weapon != GetActiveWeapon())
 			continue
-		amount *= weapon.GetAttribute(attribute, def_wep)
+		amount *= weapon.GetScriptAttribute(attribute, def_wep)
 	}
 
 	return amount
@@ -3692,12 +3807,12 @@ function CTFPlayer::HookMultAttributes( attribute, def_plr = 1.0, def_wep = 1.0 
 function CTFPlayer::HookAdditiveAttributes( attribute, def_plr = 0, def_wep = 0 )
 {
 	local amount = 0.0
-	amount += GetCustomAttribute(attribute, def_plr)
+	amount += GetScriptAttribute(attribute, def_plr)
 	foreach (weapon in GetAllItems())
 	{
 		if (weapon.GetAttribute("provide on active", 0) && weapon != GetActiveWeapon())
 			continue
-		amount += weapon.GetAttribute(attribute, def_wep)
+		amount += weapon.GetScriptAttribute(attribute, def_wep)
 	}
 
 	return amount
@@ -4293,52 +4408,78 @@ function CTFPlayer::DisplayHudHint( text, duration = 10.0, flash = true, Hide = 
 		RunWithDelay(10, @() DisplayHudHint(text, duration-10, flash, false))
 }
 
-if (!("_GetCustomAttribute" in CTFPlayer))
+/**
+ * Used for telling when an attribute exist
+ * @param {string} attrib
+ * @param {float} def
+ * @returns {bool}
+ */
+function CTFPlayer::AttributeExist( attrib, def )
 {
-	CTFPlayer._GetCustomAttribute <- CTFPlayer.GetCustomAttribute
-	CTFBot._GetCustomAttribute <- CTFBot.GetCustomAttribute
-	/**
-	 * Modified version that can hook our custom attributes
-	 * @param {string} attrib
-	 * @param {float} def
-	 * @returns {float}
-	 */
-	function CTFPlayer::GetCustomAttribute( attrib, def )
-	{
-		if (!this || !this.IsValid())
-			return 0
-		if (GET_CUSTOM_ATTRIBUTE(attrib))
-		{
-			local ret_value = _GetCustomAttribute(attrib, def)
-			local attrib_exist = ret_value == _GetCustomAttribute(attrib, RandomInt(0-0x7FFF, 0x7FFF))
-			if (attrib_exist)
-				return ret_value
-			return GET_CUSTOM_PLAYER_ATTRIBUTE_VALUE(this, attrib, def)
-		}
-		
-		return _GetCustomAttribute(attrib, def)
-	}
-	/**
-	 * 
-	 * @param {string} attrib
-	 * @param {float} def
-	 * @returns {float}
-	 */
-	function CTFBot::GetCustomAttribute( attrib, def )
-	{
-		if (!this || !this.IsValid())
-			return 0
-		if (GET_CUSTOM_ATTRIBUTE(attrib))
-		{
-			local ret_value = _GetCustomAttribute(attrib, def)
-			local attrib_exist = ret_value == _GetCustomAttribute(attrib, RandomInt(def.tointeger()+1, def.tointeger()+0x7FFF))
-			if (attrib_exist)
-				return ret_value
-			return GET_CUSTOM_PLAYER_ATTRIBUTE_VALUE(this, attrib, def)
-		}
+	if (type(def) == "string")
+		return false
+	return GetCustomAttribute(attrib, def) == GetCustomAttribute(attrib, def + RandomInt(0x4000, 0x7FFF))
+}
 
-		return _GetCustomAttribute(attrib, def)
+/**
+ * Used for Getting custom attributes
+ * @param {string} attrib
+ * @param {float|string} def
+ * @returns {float|string}
+ */
+function CTFPlayer::GetScriptAttribute( attrib, def = 0.0 )
+{
+	if (!this || !this.IsValid())
+		return 0.0
+
+	local isString = type(def) == "string" 
+
+	if (!GET_CUSTOM_ATTRIBUTE(attrib)) 
+	{
+		if (isString)
+			return ""
+		else
+			return GetCustomAttribute(attrib, def)
 	}
+
+	if (!isString && AttributeExist(attrib, def))
+		return GetCustomAttribute(attrib, def)
+
+	local scope = GetScope(this)
+
+	if (!("CUSTOM_ATTRIBUTES" in scope))
+		scope.CUSTOM_ATTRIBUTES <- {}
+
+	if (!(attrib in scope.CUSTOM_ATTRIBUTES))
+		return def
+
+	return scope.CUSTOM_ATTRIBUTES[attrib]
+}
+/** 
+ * Used for setting Custom attributes.
+ * @param {string} attrib
+ * @param {integer|float|string} value
+ * @param {integer|float} def		Used for detecting if an attrib actually exists
+ * @param {integer|float} duration 	Only used for if the attribute actually exists, does nothing otherwise
+ */
+function CTFPlayer::SetScriptAttribute( attrib, value, def = 0.0, duration = -1 )
+{
+	local isString = type(value) == "string"
+	if (!isString && AttributeExist(attrib, def))
+		return AddCustomAttribute(attrib, value, duration)
+
+	if (!GET_CUSTOM_ATTRIBUTE(attrib))
+		return
+
+	local scope = GetScope(this)
+
+	if (!("CUSTOM_ATTRIBUTES" in scope))
+		scope.CUSTOM_ATTRIBUTES <- {}
+
+	if (!(attrib in scope.CUSTOM_ATTRIBUTES))
+		scope.CUSTOM_ATTRIBUTES[attrib] <- value
+	else
+		scope.CUSTOM_ATTRIBUTES[attrib] = value
 }
 /** 
  * Cache's the Eyetrace if called multiple times per frame
@@ -4761,84 +4902,16 @@ function ROOT::REMOVE_CUSTOM_WEAPON_ATTRIBUTE( idx, attrib )
 
 function ROOT::GET_CUSTOM_ATTRIBUTE( attrib )
 	return CUSTOM_ATTRIBUTES_DEFINES.find(attrib) != null
-/**
- * @param {integer} idx
- * @param {string} attrib
- */
-function ROOT::GET_CUSTOM_WEAPON_ATTRIBUTE( idx, attrib )
-{
-	if (!(idx in CUSTOM_ATTRIBUTE_WEAPONS))
-		return false
 
-	return attrib in CUSTOM_ATTRIBUTE_WEAPONS[idx]
-}
-/**
- * @param {integer} idx
- * @param {string} attrib
- * 
- * @returns {integer|float} Will return def if not found
- */
-function ROOT::GET_CUSTOM_ATTRIBUTE_VALUE( idx, attrib, def = 0 )
-{
-	if (GET_CUSTOM_ATTRIBUTE(attrib) == null)
-		return def
+// function ROOT::GET_CUSTOM_WEAPON_ATTRIBUTE( idx, attrib )
 
-	if (!GET_CUSTOM_WEAPON_ATTRIBUTE(idx, attrib))
-		return def
-	
-	return CUSTOM_ATTRIBUTE_WEAPONS[idx][attrib]
-}
-/**
- * @param {integer} idx
- * @param {string} attrib
- */
+// function ROOT::GET_CUSTOM_ATTRIBUTE_VALUE( idx, attrib, def = 0 )
+
 // function ROOT::SET_CUSTOM_ATTRIBUTE_VALUE( idx, attrib, def = 0 )
-// {
-// 	if (GET_CUSTOM_ATTRIBUTE(attrib) == null)
-// 		return def
 
-// 	if (!GET_CUSTOM_WEAPON_ATTRIBUTE(idx, attrib))
-// 		return def
-	
-// 	return CUSTOM_ATTRIBUTE_WEAPONS[idx][attrib]
-// }
-/**
- * @param {CTFPlayer|CTFBot} player
- * @param {string} attrib
- * 
- * @returns {integer|float} Will return def if not found
- */
-function ROOT::GET_CUSTOM_PLAYER_ATTRIBUTE_VALUE( player, attrib, def = 0 )
-{
-	if (GET_CUSTOM_ATTRIBUTE(attrib) == null)
-		return def
+// function ROOT::GET_CUSTOM_PLAYER_ATTRIBUTE_VALUE( player, attrib, def = 0 )
 
-	if (!("CUSTOM_ATTRIBUTES" in GetScope(player)))
-	{
-		GetScope(player).CUSTOM_ATTRIBUTES <- {}
-		return def
-	}
-
-	if (!(attrib in GetScope(player).CUSTOM_ATTRIBUTES))
-		return def
-
-	return GetScope(player).CUSTOM_ATTRIBUTES[attrib]
-}
-/**
- * @param {CTFPlayer|CTFBot} player
- * @param {string} attrib
- * @param {float|integer} value
- */
-function ROOT::SET_CUSTOM_PLAYER_ATTRIBUTE_VALUE( player, attrib, value )
-{
-	if (GET_CUSTOM_ATTRIBUTE(attrib) == null)
-		return
-
-	if (!("CUSTOM_ATTRIBUTES" in GetScope(player)))
-		GetScope(player).CUSTOM_ATTRIBUTES <- {}
-
-	GetScope(player).CUSTOM_ATTRIBUTES[attrib] <- value
-}
+// function ROOT::SET_CUSTOM_PLAYER_ATTRIBUTE_VALUE( player, attrib, value )
 
 // To Use these custom attributes Un-Comment the below function calls
 
@@ -4847,8 +4920,6 @@ function ROOT::SET_CUSTOM_PLAYER_ATTRIBUTE_VALUE( player, attrib, value )
  *
  * Inflicts a Infinite duration Damaging effect
  * Can also drop a puddle when killed
- * 
- * Note: Cannot apply Corrosion to Players
  * 
  * **Note: Requires Gameplay-Applications**
  */
@@ -4986,104 +5057,107 @@ function ROOT::SET_CUSTOM_PLAYER_ATTRIBUTE_VALUE( player, attrib, value )
   ======================
 */
 
-/////////
-if (!("_GetAttribute" in CTFWeaponBase))
+/**
+ * Used for telling when an attribute exist
+ * @param {string} attrib
+ * @param {float} def
+ * @returns {bool}
+ */
+function CTFWeaponBase::AttributeExist( attrib, def )
 {
-	CTFWeaponBase._GetAttribute <- CTFWeaponBase.GetAttribute
-	CTFWeaponBase._AddAttribute <- CTFWeaponBase.AddAttribute
-	CEconEntity._GetAttribute <- CEconEntity.GetAttribute
-	CEconEntity._AddAttribute <- CEconEntity.AddAttribute
-	/**
-	 * Modified version that can hook our custom attributes
-	 * @param {string} attrib
-	 * @param {float} def
-	 * @returns {float}
-	 */
-	function CTFWeaponBase::GetAttribute( attrib, def )
-	{
-		if (!this || !this.IsValid())
-			return 0
-		if (GET_CUSTOM_ATTRIBUTE(attrib))
-			return GET_CUSTOM_ATTRIBUTE_VALUE(GetIDX(), attrib, def)
-		
-		return _GetAttribute(attrib, def)
-	}
-	/**
-	 * 
-	 * @param {string} attrib
-	 * @param {float} def
-	 * @returns {float}
-	 */
-	function CEconEntity::GetAttribute( attrib, def )
-	{
-		if (!this || !this.IsValid())
-			return 0
-		if (GET_CUSTOM_ATTRIBUTE(attrib))
-			return GET_CUSTOM_ATTRIBUTE_VALUE(GetIDX(), attrib, def)
-
-		return _GetAttribute(attrib, def)
-	}
-	/**
-	 * Modified version that can hook our custom attributes
-	 * @param {string} attrib
-	 * @param {float} value
-	 * @param {float} _duration
-	 */
-	function CTFWeaponBase::AddAttribute( attrib, value, _duration )
-	{
-		if (!this || !this.IsValid())
-			return
-		return _AddAttribute(attrib, value _duration)
-		// if (GET_CUSTOM_ATTRIBUTE(attrib))
-		// 	return GET_CUSTOM_ATTRIBUTE_VALUE(GetIDX(), attrib, def)
-		
-		// return _GetAttribute(attrib, def)
-	}
-	/**
-	 * Modified version that can hook our custom attributes
-	 * @param {string} attrib
-	 * @param {float} value
-	 * @param {float} _duration
-	 */
-	function CEconEntity::AddAttribute( attrib, value, _duration )
-	{
-		if (!this || !this.IsValid())
-			return 
-		return _AddAttribute(attrib, value _duration)
-		// if (GET_CUSTOM_ATTRIBUTE(attrib))
-		// 	return GET_CUSTOM_ATTRIBUTE_VALUE(GetIDX(), attrib, def)
-
-		// return _GetAttribute(attrib, def)
-	}
+	if (type(def) == "string")
+		return false
+	return GetAttribute(attrib, def) == GetAttribute(attrib, def + RandomInt(0x4000, 0x7FFF))
 }
 
+/**
+ * Used for Getting custom attributes
+ * @param {string} attrib
+ * @param {float|string} def
+ * @returns {float|string}
+ */
+function CTFWeaponBase::GetScriptAttribute( attrib, def = 0.0 )
+{
+	if (!this || !this.IsValid())
+		return 0.0
+
+	local isString = type(def) == "string" 
+
+	if (!GET_CUSTOM_ATTRIBUTE(attrib)) 
+	{
+		if (isString)
+			return def
+		else
+			return GetAttribute(attrib, def)
+	}
+
+	if (!isString && AttributeExist(attrib, def))
+		return GetAttribute(attrib, def)
+
+	local scope = GetScope(this)
+
+	if (!("CUSTOM_ATTRIBUTES" in scope))
+		scope.CUSTOM_ATTRIBUTES <- {}
+
+	if (!(attrib in scope.CUSTOM_ATTRIBUTES))
+		return def
+
+	return scope.CUSTOM_ATTRIBUTES[attrib]
+}
+/** 
+ * Used for setting Custom attributes.
+ * @param {string} attrib
+ * @param {integer|float|string} value
+ * @param {integer|float} def		Used for detecting if an attrib actually exists
+ */
+function CTFPlayer::SetScriptAttribute( attrib, value, def = 0.0 )
+{
+	local isString = type(value) == "string"
+	if (!isString && AttributeExist(attrib, def))
+		return AddAttribute(attrib, value, 0)
+
+	if (!GET_CUSTOM_ATTRIBUTE(attrib))
+		return
+
+	local scope = GetScope(this)
+
+	if (!("CUSTOM_ATTRIBUTES" in scope))
+		scope.CUSTOM_ATTRIBUTES <- {}
+
+	if (!(attrib in scope.CUSTOM_ATTRIBUTES))
+		scope.CUSTOM_ATTRIBUTES[attrib] <- value
+	else
+		scope.CUSTOM_ATTRIBUTES[attrib] = value
+}
+
+/////////
 /**
  * @param {string} attrib
  * @param {float|integer} def_val
  * @deprecated Use HasAdditiveAttribute or HasMultAttribute instead
  */
 function CTFWeaponBase::HasAttribute( attrib, def_val )
-	return GetAttribute(attrib, def_val) != def_val
+	return GetScriptAttribute(attrib, def_val) != def_val
 /**
  * @param {string} attrib
  */
 function CTFWeaponBase::HasAdditiveAttribute( attrib, def = 0 )
-	return GetAttribute(attrib, def) != def
+	return GetScriptAttribute(attrib, def) != def
 /**
  * @param {string} attrib
  */
 function CTFWeaponBase::HasMultAttribute( attrib, def = 1.0 )
-	return GetAttribute(attrib, def) != def
+	return GetScriptAttribute(attrib, def) != def
 /**
  * @param {string} attrib
  */
 function CTFWeaponBase::GetAdditiveAttribute( attrib, def = 0 )
-	return GetAttribute(attrib, def)
+	return GetScriptAttribute(attrib, def)
 /**
  * @param {string} attrib
  */
 function CTFWeaponBase::GetMultAttribute( attrib, def = 1.0 )
-	return GetAttribute(attrib, def)
+	return GetScriptAttribute(attrib, def)
 /**
  * @returns {integer}
  */
@@ -6936,7 +7010,7 @@ function ROOT::PrintTable( table, filter = [] )
 function ROOT::PrintArray( array, filter = [] )
 	PrintCollection(array, filter)
 /**
- * @param {class} clas
+ * @param {class|instance} clas
  */
 function ROOT::PrintClass( clas, filter = [] )
 	PrintCollection(clas, filter)
@@ -9852,7 +9926,6 @@ function ParamsToDamageCallbackData( params )
 		others_damaged		= params.damaged_other_players
 	}
 }
-	
 
 /*
   ========================================
@@ -10154,6 +10227,12 @@ else if (FindByName(null, "OnCondition"))
   === END OF ONCOND HOOK FUNCTIONS ===
   ====================================
 */
+
+/*
+  =====================
+  === PLAYER THINKS ===
+  =====================
+*/
 /** 
  * @var {CTFPlayer} self
  */
@@ -10258,6 +10337,12 @@ function AmmoRegenThink()
 }
 
 /*
+  ===========================
+  === END OFPLAYER THINKS ===
+  ===========================
+*/
+
+/*
   =============================
   === CUSTOM EVENT HANDLING ===
   =============================
@@ -10316,27 +10401,6 @@ function ROOT::PostPlayerSpawn( player )
 
 	FireScriptEvent("player_postspawn", {player = player})
 }
-
-	/**
-	 * @param {table} params
-	 * 
-	 * # Input table
-	 * ```sqDoc
-	 * userid: integer
-	 * health: integer // if <= 0, then this will play the killsound
-	 * attacker: integer
-	 * damageamount: integer
-	 * custom: integer
-	 * showdisguisedcrit: bool // if our attribute specifically crits disguised enemies we need to show it on the client
-	 * crit: bool // legacy only, use bonuseffect
-	 * minicrit: bool // legacy only, use bonuseffect
-	 * allseecrit: bool
-	 * weaponid: integer
-	 * bonuseffect: integer // type of damage effect, see constants page.
-	 * ```
-	 * ## Warning:
-	 * A value of 4 is no damage effect. 0 is crits!
- 	 */
 
 // Makes Custom Events to listen to
 ::ChaosCustomEvents <- {
@@ -11067,7 +11131,7 @@ function ROOT::PostPlayerSpawn( player )
 
 		if (victim.GetClassname() in RegisteredDmgCallbacks && !HasCustomFlag(params.damage_custom, TF_DMG_CUSTOM_NO_CALLBACKS))
 		{
-			foreach (_callback_name, callback in RegisteredDmgCallbacks[victim.GetClassname()])
+			foreach (_callback_name, /**@type {function} */callback in RegisteredDmgCallbacks[victim.GetClassname( )] )
 			{
 				local ReturningData = ParamsToDamageCallbackData(clone params)
 
@@ -11148,6 +11212,11 @@ function ROOT::PostPlayerSpawn( player )
 			else
 				FireScriptEvent("PostTakeDamage", eventdata)
 		}
+
+		if ("OnTakeDamage" in GetScope(victim) && type(GetScope(victim).OnTakeDamage) == "function")
+		{
+			GetScope(victim).OnTakeDamage(DamageCallback(ParamsToDamageCallbackData(clone params)))
+		}
 	}
 	/**
 	 * @param {table} params
@@ -11171,23 +11240,30 @@ function ROOT::PostPlayerSpawn( player )
  	 */
 	function OnGameEvent_player_hurt( params )
 	{
-		local eventdata = clone params
+		local eventdata = {}
+		// local eventdata = clone params
 
 		local victim 	= GetPlayerFromUserID(params.userid)
 		local attacker 	= GetPlayerFromUserID(params.attacker)
-		if (!attacker || !attacker.IsPlayer()) return // only player vs player
+
+		if (!("custom" in params)) params.custom <- TF_DMG_CUSTOM_NONE
+		if (!("bonuseffect" in params)) params.bonuseffect <- kBonusEffect_None
+
 		eventdata.victim 		<- victim
 		eventdata.attacker 		<- attacker
 		eventdata.damage 		<- params.damageamount
 		eventdata.damage_custom <- params.custom
 		eventdata.killed 		<- params.health <= 0 || params.health == null
-		if (eventdata.bonuseffect in BONUS_EFFECT_REMAP) eventdata.bonuseffect <- BONUS_EFFECT_REMAP[eventdata.bonuseffect]
+		if (params.bonuseffect in BONUS_EFFECT_REMAP) 
+			eventdata.bonuseffect <- BONUS_EFFECT_REMAP[params.bonuseffect]
+		else
+			eventdata.bonuseffect <- kBonusEffect_None
 
-		if ("showdisguisedcrit" in eventdata) 	eventdata.showdisguisedcrit <- eventdata.showdisguisedcrit != 0
-		else 									eventdata.showdisguisedcrit <- false
+		if ("showdisguisedcrit" in params) 	eventdata.showdisguisedcrit <- params.showdisguisedcrit != 0
+		else 								eventdata.showdisguisedcrit <- false
 
-		if ("allseecrit" in eventdata) 			eventdata.allseecrit <- eventdata.allseecrit != 0
-		else 									eventdata.allseecrit <- false
+		if ("allseecrit" in params) 		eventdata.allseecrit <- params.allseecrit != 0
+		else 								eventdata.allseecrit <- false
 
 		/// sdk thing
 		// if ("weapon_entindex" in eventdata)
@@ -11204,9 +11280,10 @@ function ROOT::PostPlayerSpawn( player )
 			eventdata.damage += victim.GetHealth()
 			eventdata.over_damage <- abs(victim.GetHealth())
 		}
-		else eventdata.over_damage <- 0
+		else 
+			eventdata.over_damage <- 0
 
-		if (!attacker.IsBot() && attacker != victim && eventdata.damage > 0 && attacker.GetTeam() != victim.GetTeam())
+		if (IsValidPlayer(attacker) && !attacker.IsBot() && attacker != victim && eventdata.damage > 0 && attacker.GetTeam() != victim.GetTeam())
 		{
 			if (eventdata.damage > victim.GetMaxHealth())
 				attacker.AddTrackedDamage(victim.GetMaxHealth())
@@ -11214,18 +11291,14 @@ function ROOT::PostPlayerSpawn( player )
 				attacker.AddTrackedDamage(eventdata.damage)
 		}
 
-		// overridden
-		delete eventdata.userid
-		delete eventdata.damageamount
-		delete eventdata.custom
-		// useless
-		if ("priority" 	in eventdata) delete eventdata.priority
-		if ("weaponid" 	in eventdata) delete eventdata.weaponid
-		if ("crit" 		in eventdata) delete eventdata.crit
-		if ("minicrit" 	in eventdata) delete eventdata.minicrit
-
 		if (!HasCustomFlag(eventdata.damage_custom, TF_DMG_CUSTOM_IGNORE_EVENTS))
 			FireScriptEvent(victim.IsBot() ? "PostBotHurt" : "PostHumanHurt", eventdata)
+
+		if ("OnPostTakeDamage" in GetScope(victim) && type(GetScope(victim).OnPostTakeDamage) == "function")
+		{
+			// PrintTable(eventdata)
+			GetScope(victim).OnPostTakeDamage(PlayerDamageCallback(eventdata))
+		}
 	}
 	/**
 	 * This event will be sent once when the player entity is created, i.e. they joined the server or they are loading in after a map change. 
@@ -11516,6 +11589,11 @@ function ROOT::PostPlayerSpawn( player )
 			{
 				FireScriptEvent(event_type+"Killed", eventdata)
 			}
+		}
+
+		if ("OnPostTakeDamage" in GetScope(object) && type(GetScope(object).OnPostTakeDamage) == "function")
+		{
+			GetScope(object).OnPostTakeDamage(NPCDamageCallback(eventdata))
 		}
 	}
 	/**
@@ -12605,12 +12683,6 @@ function ROOT::PostPlayerSpawn( player )
 	 */
 	function OnScriptEvent_SapperDestroyed( _params )			{}
 
-
-/* 
-owner = owner
-			object = object
- */
-
 	/**
 	 * Fired when a Dispenser is Detonated
 	 *
@@ -12838,6 +12910,137 @@ if ( IsTF2C() ) {
 
 __CollectGameEventCallbacks(ChaosCustomEvents)
 
+/*
+  ============================
+  === TESTING TANK COMMAND ===
+  ============================
+*/
+// tank_path_1
+function ROOT::PracticeTank( node_name = "" )
+{
+	if (FindByName(null, "practice tank"))
+		return
+	if (node_name == "" || FindByName(null, node_name) == null)
+		return PrintToConsoleAllF("Failed to Spawn Tank At Node \"%s\"", node_name)
+
+	local start = FindByName(null, node_name)
+
+	local tank = SpawnEntityFromTable("tank_boss", {
+		targetname = "practice tank"
+		health = (1<<31) - 1
+		origin = start.GetOrigin()
+		angles = start.GetAbsAngles()
+	})
+
+	local scope = GetScope(tank)
+	scope.Damages <- {}
+
+	/** 
+	 * @var {CBaseAnimating} self
+	 * @var {table} this
+	 * @param {NPCDamageCallback} info
+	 */
+	local function OnPostTakeDamage( info ) {
+		// PrintClass(info)
+		local index = -1
+		if (info.attacker)
+			index = info.attacker.entindex()
+
+		if (!(index in Damages))
+			Damages[index] <- info.damage
+		else
+			Damages[index] += info.damage
+	}
+
+	local function callback() {
+		// PrintTable(Damages)
+		local invalid_index = 2049
+
+		Damages[invalid_index] <- 0
+		local toRemove = []
+		foreach (/**@type {integer} */index, /**@type {float} */damage in Damages) {
+			local entity = EntIndexToHScript(index)
+			local old_entity = entity
+			if (entity && !entity.IsPlayer()) {
+				if (entity.GetOwner() && entity.GetOwner().IsPlayer())
+					entity = entity.GetOwner()
+				else if (GetLauncher(entity) && GetLauncher(entity).IsPlayer())
+					entity = GetLauncher(entity)
+				else if (GetBuilder(entity) && GetBuilder(entity).IsPlayer())
+					entity = GetBuilder(entity)
+				else {
+					// printf("failed to get actual player for entity %s\n", entity.tostring())
+					Damages[invalid_index] += damage
+					if (index != invalid_index)
+						toRemove.append(index)
+				}
+			}
+			if (entity && entity.IsPlayer()) {
+				if (old_entity != entity) {
+					if (entity.entindex() in Damages)
+						Damages[entity.entindex()] += damage
+					else
+						Damages[entity.entindex()] <- damage
+				}
+			}
+			else {
+				Damages[invalid_index] += damage
+				if (index != invalid_index)
+					toRemove.append(index)
+			}
+		}
+
+		foreach (id in toRemove) {
+			if (id == invalid_index)
+				continue
+			// printf("Removing %d from Damages!\n",id)
+			delete Damages[id]
+		}
+		local entity_names = {}
+
+		// PrintTable(Damages)
+		foreach (id, damage in Damages) {
+			local entity = EntIndexToHScript(id)
+			// printl("Found entity "+entity+" with index "+id+" on the list")
+			if (id == invalid_index) {
+				entity_names["Unknown"] <- damage
+				// printl("Added Unknown into entity_names because id was invalid")
+			}
+			else if (entity && entity.IsPlayer()) {
+				entity_names[entity.GetUserName()] <- damage
+				// printl("Added "+entity.GetUserName()+" into entity_names")
+			}
+			// else
+				// printl("Found unknown entity "+entity+" on Entity list")
+		}
+
+		// PrintTable(entity_names)
+
+		local total_damage = 0
+
+		PrintToChatAll("\x076fc8e3Practice Tank Result:")
+		foreach (name, damage in entity_names) {
+			if (name == "Unknown" && damage == 0)
+				continue
+			total_damage += damage
+			PrintToChatAllF("\x075186db- %s : %.0f \n", name, damage)
+		}
+
+		PrintToChatAllF("\x076fc8e3Total Damage: %.0f\n", total_damage)
+	}
+
+	SetDestroyCallback(tank, callback)
+
+	scope.OnPostTakeDamage <- OnPostTakeDamage
+	// AddThinkToEnt(tank, TestTankThink)
+}
+
+
+/*
+  ===================================
+  === END OF TESTING TANK COMMAND ===
+  ===================================
+*/
 
 /*
   ====================================
@@ -12872,7 +13075,7 @@ AddChatTrigger("lib_info", function( _player, ... ) {
 	PrintToChatAllF("\x07D000D0► FatCatLib ◄\x03 Version\x01: \x04%s\x01 - \x03sub_version\x01: \x04%s\x01", FatCatLibVersion.version, FatCatLibVersion.sub_version.tostring())
 })
 
-AddChatTrigger("Test", function( player, ... ) {
+AddChatTrigger("test", function( player, ... ) {
 	player.PrintToChat("hi")
 })
 
@@ -13094,56 +13297,55 @@ RegisterAdminTrigger("sethealth", function( player, ... ) {
 	return player.PrintToChatF("Set your Health to %d", player.GetHealth())
 })
 
-RegisterAdminTrigger("uber", function( player, ... ) {
+RegisterAdminTrigger("uber",  /**@param {CTFPlayer} player*/function( player, ... ) {
 	if (vargv.len() > 1)
-		return player.PrintToChat("Incorrect Arguments [uber] ")
+		return player.PrintToChat("Incorrect Arguments Expected Atmost 1, \"!uber [uber]\". Defaults to 100%")
 
-	local has_gun = player.HasWeaponClassname("tf_weapon_medigun") || player.HasWeaponClassname("tf2c_weapon_heallauncher")
-
-	if (!has_gun || !player.IsPlayerClass(TF_CLASS_MEDIC))
+	local medigun = player.GetWeaponClassname("tf_weapon_medigun") || player.GetWeaponClassname("tf2c_weapon_heallauncher")
+	if (!medigun)
 		return player.PrintToChat("No Medigun Stupid!")
 
-	local uber = vargv.len() == 0 ? 100.0 : vargv[0].tofloat()
-
-	local gun = player.GetWeaponClassname("tf_weapon_medigun") || player.GetWeaponClassname("tf2c_weapon_heallauncher")
-
-	gun.SetUberChargePercent(uber)
+	local uber = 100.0
+	try {
+		uber = vargv[0].tofloat()
+	} 
+	catch(e) {}
+	medigun.SetUberChargePercent(uber)
 
 	return player.PrintToChat("Set your uber to "+uber+"%")
 })
 
 RegisterAdminTrigger("bot", function( player, ... ) {
-	foreach (bot in GetAllPlayers(TF_TEAM_BLUE, false, false))
+
+	if (vargv.find("many") == null)
 	{
-		if (GetClientConVar("name", bot.entindex()) == "Johnny Silverhand" && bot.IsAlive())
-			return player.PrintToChat("Johnny Silverhand is already Alive!")
+		foreach (bot in GetAllPlayers(TF_TEAM_BLUE, false, false))
+		{
+			if (GetClientConVar("name", bot.entindex()) == "Johnny Silverhand" && bot.IsAlive())
+				return player.PrintToChat("Johnny Silverhand is already Alive!")
+		}
 	}
 
-	local Giant = (vargv.len() != 0 && vargv[0] == "giant")
-	local trace = player.GetEyeTrace()
-
 	local bots = GetAllPlayers(TF_TEAM_SPECTATOR, false, false)
-	local rand = bots[RandomInt(0, bots.len()-1)]
-	if (rand.IsAlive())
+	local bot = bots[RandomInt(0, bots.len()-1)]
+	if (bot.IsAlive())
 	{
 		for (local i = 0; i < 20; i++)
 		{
-			rand = bots[RandomInt(0, bots.len()-1)]
-			if (rand.IsDead())
+			bot = bots[RandomInt(0, bots.len()-1)]
+			if (bot.IsDead())
 				break
 
 			Assert(i <= 19, "Failed Finding a suitiable bot for Johhny")
 		}
 	}
 
-	local bot = rand
-
 	bot.ForceChangeClass(TF_CLASS_HEAVYWEAPONS, true)
 	bot.SetTeam(TF_TEAM_BLUE)
-	RunWithDelay(THREE_TICKS, @() SpawnJohhny(bot, trace.pos + Vector(0, 0, 16), Giant))
+	RunWithDelay(THREE_TICKS, @() SpawnJohhny(bot, player.GetEyeTrace().pos + Vector(0, 0, 16), vargv.find("giant") != null))
 })
 
-function SpawnJohhny( bot, pos, Giant = false )
+function SpawnJohhny( bot, pos, Giant )
 {
 	bot.SetTeam(TF_TEAM_BLUE)
 	bot.SetAbsOrigin(pos)
@@ -13330,7 +13532,7 @@ function ROOT::ErrorFunction( e )
 			case "function":
 				local info = v.getinfos()
 				// PrintTable(info)
-				Chat(format("[%s] function %s ( from: \"%s\", %d params )" , n, info.name ? info.name : "null", info.src != "<run>" ? info.src : "Unknown", info.parameters.len() - 1))
+				Chat(format("[%s] function %s ( from: \"%s\", %d params )" , n, info.name ? info.name : "null", info.src != "<run>" ? info.src : "Unknown", info.parameters.len( ) - 1 ))
 			break
 
 			default:

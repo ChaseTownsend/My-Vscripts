@@ -251,7 +251,14 @@ Progressivly trying to actually document the functions and stuff i make
 - [`SentryBusterExplode`](#CTFPlayerSentryBusterExplode)
 - [`MakeBleed`](#CTFPlayerMakeBleed) <!-- Wont work without Sourcemod plugin-->
 - [`DisplayHudHint`](#CTFPlayerDisplayHudHint)
+- [`AttributeExist`](#CTFPlayerAttributeExist)
+- [`GetScriptAttribute`](#CTFPlayerGetScriptAttribute)
+- [`SetScriptAttribute`](#CTFPlayerSetScriptAttribute)
 - [`GetEyeTrace`](#CTFPlayerGetEyeTrace) <!-- Implementation of GLua's GetEyeTrace where it caches the result for if you call it multiple times per frame -->
+- [`SuppressMedicTalk`](#CTFPlayerSuppressMedicTalk)
+- [`GetSceneEntitys`](#CTFPlayerGetSceneEntitys)
+- [`IsPlayingScene`](#CTFPlayerIsPlayingScene)
+- [`IsPlayingMedicScene`](#CTFPlayerIsPlayingMedicScene)
 
 <!-- 
 - [``](#CTFPlayer)
@@ -1122,7 +1129,7 @@ Set the percent of our Supernova rune percent
 ```js
 player.SetRuneCharge(player.GetRuneCharge() - 25.0)
 ```
-- [`IsMissionMaker`](#CTFPlayerIsMissionMaker)
+
 ---
 
 #### <a name="CTFPlayer.IsPlayerClass">CTFPlayer.IsPlayerClass</a>
@@ -1308,15 +1315,15 @@ foreach (bot in bots)
 
 ---
 
-#### <a name="CTFPlayer.IsMissionMaker">CTFPlayer.IsMissionMaker</a>
-Returns if the player is Added to the MissionMakers array
+#### <a name="CTFPlayer.IsTempAdmin">CTFPlayer.IsTempAdmin</a>
+Returns if the player is a temporary admin
 
 **Function Signature**<br>
-`bool CTFPlayer::IsMissionMaker()`
+`bool CTFPlayer::IsTempAdmin()`
 
 **Example Usage**
 ```js
-if (player.IsMissionMaker())
+if (player.IsTempAdmin())
 {
 	// ...
 }

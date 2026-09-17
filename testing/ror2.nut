@@ -7,7 +7,7 @@ foreach (ent in GetAllEntitiesByClassname("fatcat*"))
 	ent.Destroy()
 }
 
-class PlayerData {
+class ::PlayerData {
 	Player = null
 	Kills = 0
 	Deaths = 0
@@ -72,7 +72,7 @@ class PlayerData {
 	Items = {}
 }
 
-class CBaseBreakable {
+class ::CBaseBreakable {
 	Breakable = null
 
 	Health = 0
@@ -175,7 +175,7 @@ class CBaseBreakable {
 	}
 }
 
-class CBaseMeleeBreakable extends CBaseBreakable {
+class ::CBaseMeleeBreakable extends CBaseBreakable {
 	/** 
 	 * @type {function}
 	 * @param {table} data
@@ -215,7 +215,7 @@ AddChatTrigger("test_custom2", function( player, ... ) {
 	})
 })
 
-class BaseCrate {
+class ::BaseCrate {
 	Crate = null
 
 	/** 
@@ -362,7 +362,7 @@ class BaseCrate {
 	}
 }
 
-class MoneyBarrel extends BaseCrate {
+class ::MoneyBarrel extends BaseCrate {
 	constructor(data) {
 		local new_data = clone data
 		new_data.NoTag <- true
@@ -392,7 +392,7 @@ class MoneyBarrel extends BaseCrate {
 	}
 }
 
-class BaseItem {
+class ::BaseItem {
 	ItemEnt = null
 
 	constructor(name, pos) {
@@ -734,7 +734,7 @@ function CTFPlayer::ToRoR2Data()
 
 	/** 
 	 * @type {function}
-	 * @param {function} SpawnFunc
+	 * @param {function|class} SpawnFunc
 	 * @param {table} exData
 	 * @param {integer} tAttempts
 	 * @param {integer} MinDistance
@@ -746,7 +746,7 @@ function CTFPlayer::ToRoR2Data()
 	 * @param {function} MeshFilter
 	 * @param {function} PostSpawnFunc
 	 */
-	function SpawnObjects( SpawnFunc, exData, tAttempts = 200, MinDistance = 200, ObjectLimit = 100, NoCloseEnt = "fatcat_crate*", AllowInSpawn = false, SpawnOffset = Vector( 0, 0, -4 ), ToSpawnCalc = @(... ) {}, MeshFilter = @(...) {}, PostSpawnFunc = @(...) {})
+	function SpawnObjects( SpawnFunc, exData, tAttempts = 200, MinDistance = 200, ObjectLimit = 100, NoCloseEnt = "fatcat_crate*", AllowInSpawn = false, SpawnOffset = Vector( 0, 0, -4 ), ToSpawnCalc = @( ... ) {}, MeshFilter = @(... ) {}, PostSpawnFunc = @(...) {})
 	{
 		// DebugDrawClear()
 
@@ -1136,7 +1136,7 @@ function CTFPlayer::ToRoR2Data()
 	 * 
 	 * # Input table
 	 * ```sqDoc
-	 * player: CTFPlayer // The bot who spawned.
+	 * player: CTFPlayer // The human who spawned.
 	 * class: integer // The class index of the player.
 	 * team: integer // The team index.
 	 * ```
@@ -1145,8 +1145,16 @@ function CTFPlayer::ToRoR2Data()
 		AddPlayer(params.player)
 	}
 
-	/** 
-	 * @param {CTFPlayer}		player		The player who called for medic.
+
+	/**
+	 * Fired when a human spawns.
+	 * 
+	 * @param {table} params
+	 * 
+	 * # Input table
+	 * ```sqDoc
+	 * player: CTFPlayer // The player who called for medic.
+	 * ```
 	 */
 	function OnScriptEvent_OnCalledForMedic( params )
 	{

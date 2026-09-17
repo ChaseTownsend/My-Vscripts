@@ -292,6 +292,11 @@ function GameplayThink()
 	if ( Players.len() < 1 || !ValidatePlayerArray() || (m_aHumans.len() + m_aRobots.len()) != Players.len())
 		ReCalculatePlayers()
 
+	if (!("BetterStatTracking" in FatCatLibSettings))
+		SetLibrarySettings()
+	if (!("NoclipAntiCheat" in FatCatLibSettings))
+		SetLibrarySettings()
+
 	foreach (/** @type {CTFBot}*/ bot in m_aRobots)
 	{
 		local scope = GetScope(bot)
@@ -299,19 +304,19 @@ function GameplayThink()
 		if ("DelayGameplayThink" in scope && scope.DelayGameplayThink >= GetFrameCount())
 			continue
 
+		if (bot.IsDead())
+			continue
+
 		if (!("LastVels" in scope))
 			scope.LastVels <- []
-		if (type(scope.LastVels) != "array")
-			scope.LastVels = []
 
 		scope.LastVels.append(bot.GetAbsVelocity())
 		if (scope.LastVels.len() > 6)
 			scope.LastVels.remove(0)
 
-		bot.SetGravity(1.0)
-
 		local active = bot.GetActiveWeapon()
-		
+
+		bot.SetGravity(1.0)
 		bot.MultiplyGravity(bot.HookMultAttributes("mult gravity"))
 
 		if (active)
@@ -324,10 +329,7 @@ function GameplayThink()
 				bot.MultiplyGravity(active.GetMultAttribute("mult gravity crouching active"))
 		}
 
-		if (bot.IsDead())
-			continue
-
-		if (bot.IsAlive() && !bot.IsReprogrammed())
+		if (!bot.IsReprogrammed())
 			AliveBots += 1
 
 		if ("EndReprogramTime" in scope && scope.EndReprogramTime <= Time())
@@ -364,19 +366,13 @@ function GameplayThink()
 	foreach (/** @type {CTFPlayer} */Human in m_aHumans)
 	{
 		local scope = GetScope(Human)
+
 		if (!("LastVels" in scope))
 			scope.LastVels <- []
-		if (type(scope.LastVels) != "array")
-			scope.LastVels <- []
-			
 		scope.LastVels.append(Human.GetAbsVelocity())
+
 		if (scope.LastVels.len() > 6)
 			scope.LastVels.remove(0)
-
-		if (!("BetterStatTracking" in FatCatLibSettings))
-			SetLibrarySettings()
-		if (!("NoclipAntiCheat" in FatCatLibSettings))
-			SetLibrarySettings()
 
 		if (FatCatLibSettings["BetterStatTracking"] == true)
 		{
@@ -465,7 +461,7 @@ function GameplayThink()
 			Human.ResetAmmo()
 			foreach (wep in Human.GetAllItems())
 			{
-				if (wep.GetAttribute("infinite ammo", 0) && "GetMaxClip1" in wep)
+				if (wep.GetScriptAttribute("infinite ammo", 0) && "GetMaxClip1" in wep)
 					wep.SetClip1(wep.GetMaxClip1())
 			}
 		}
@@ -787,7 +783,7 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 		else
 			RunWithDelay(0.1, @() player.UndoGHeavy())
 	}
-	function OnScriptEvent_HumanSpawn( params )
+	function OnScriptEvent_HumanResupply( params )
 	{
 		if (!params.player)
 			return
@@ -809,7 +805,7 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 					local slow_multiplier = active.GetAttribute("slow down aura slow mult", 0.0)
 					local giant_multiplier = active.GetAttribute("slow down aura giant mult", 0.0)
 					local slow_radius = active.GetAttribute("slow down aura", 0)
-					// DebugDrawSphereInternal( self.GetCenter(), slow_radius, 255, 255, 255, false, 0.2 true, 10)
+					DebugDrawSphereInternal( self.GetCenter(), slow_radius, 255, 255, 255, false, 0.2 true, 10)
 					foreach (/**@type {CTFBot} */bot in m_aRobots)
 					{
 						if (self.DistanceTo(bot, true) > slow_radius)
@@ -913,26 +909,6 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 					return -1
 				}, "BlutsaugerDisrupt", 0.15)
 			}
-
-			if (weapon.GetIDX() == 947) // TODO: add constant for [Quackenbirdt]
-			{
-				player.AddThink(function() {
-					/** @type {CTFPlayer} */
-					local self = self
-
-					if (self.GetTeam() != TF_TEAM_BLUE || !self.InCond(43))
-						return -1
-
-					if (self.InRespawnRoom())
-					{
-						self.ForceRegenerateAndRespawn()
-						self.PrintToHud("ERROR - Cannot enter enemy spawn zones.")
-						self.EmitSoundTo("vo/halloween_merasmus/sf14_merasmus_necrosmasher_08.mp3")
-					}
-
-					return -1
-				}, "NoSpawnSpies")
-			}
 		}
 	}
 	function OnScriptEvent_BotSpawn( params )
@@ -957,8 +933,7 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 		if ("OnDeath" in scope)
 			delete scope.OnDeath
 
-		
-		if (FatCatLibSettings.KillWatchViewmodels)
+		if (FatCatLibSettings["KillWatchViewmodels"])
 		{
 			local viewmodel_watch = GetPropEntityArray(player, "m_hViewModel", 1)
 			if (viewmodel_watch != null)
@@ -1130,7 +1105,7 @@ __CollectGameEventCallbacks(GameplayEvents)
 		"Common64" 	: { "message" : "FRAIL." }
 		"Common65" 	: { "message" : "WHERE IS YOUR GOD NOW?" }
 		"Common66" 	: { "message" : "TARGET DESTROYED." }
-		"Common67" 	: { "message" : "TRY AGAIN." }	// Fuck this number
+		"Common67" 	: { "message" : "TRY AGAIN." }
 		"Common68" 	: { "message" : "NOT SO FUN NOW, IS IT?" }
 		"Common69" 	: { "message" : "IS THIS SOME KIND OF JOKE?" }
 		"Common70" 	: { "message" : "YOU SCRATCHED MY PAINT." }
@@ -1197,7 +1172,7 @@ __CollectGameEventCallbacks(GameplayEvents)
 			"format" : "victim|⤒"
 			"message" : "%s SHOULD HAVE PLAYED OIL SPILL INSTEAD"
 		}
-		"Common506" 	: { // From MiirioKing
+		"Common507" 	: { // From MiirioKing
 			"format" : "victim|⤒"
 			"message" : "YOU KNOW WHAT REALLY GRINDS MY GEARS? %s"
 		}
