@@ -31,7 +31,6 @@ More Explicit Sugar Makes use of VSCode's built in Regex
 	General TODO stuff
 	TF2Classified stuff movespeed stuff
 
-
  */
 
 ::CONST <- getconsttable()
@@ -260,7 +259,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format) (GMT-5)
-if (!SetLibraryVersion("09.16.2026.21", 0))
+if (!SetLibraryVersion("09.17.2026.17", 0))
 	return
 
 SetLibrarySettings({})
@@ -1878,10 +1877,10 @@ function CTFPlayer::SetThrowableAmmo( ammo )
 
 /**
  * @returns {bool}
- * @deprecated Use InRespawnRoom(true) instead
+ * @deprecated Use IsTruelyInSpawn(true) instead
  */
 function CTFPlayer::InAnyRespawnRoom()
-	return InRespawnRoom(true)
+	return InRespawnRoom()
 
 /**
  * @param {float} range
@@ -4318,9 +4317,11 @@ function CTFPlayer::UseGiantModel( buster = false )
 	if (buster)
 	{
 		if (GetTeam() == TF_TEAM_RED)
-			PlayerFire("SetCustomModelWithClassAnimations", "models/bots/demo/red_sentry_buster_v2.mdl", FIVE_TICKS)
+			// PlayerFire("SetCustomModelWithClassAnimations", "models/bots/demo/red_sentry_buster_v2.mdl", FIVE_TICKS)
+			SetCustomModelWithClassAnimations("models/bots/demo/red_sentry_buster_v2.mdl")
 		else
-			PlayerFire("SetCustomModelWithClassAnimations", "models/bots/demo/bot_sentry_buster.mdl", FIVE_TICKS)
+			// PlayerFire("SetCustomModelWithClassAnimations", "models/bots/demo/bot_sentry_buster.mdl", FIVE_TICKS)
+			SetCustomModelWithClassAnimations("models/bots/demo/bot_sentry_buster.mdl")
 	}
 	else
 	{
@@ -4332,7 +4333,8 @@ function CTFPlayer::UseGiantModel( buster = false )
 		local model_name = format("models/bots/%s_boss/bot_%s_boss.mdl", name, name)
 		// printf("Trying to apply Model \"%s\" to player\n", model_name)
 
-		PlayerFire("SetCustomModelWithClassAnimations", model_name, FIVE_TICKS)
+		SetCustomModelWithClassAnimations(model_name)
+		// PlayerFire("SetCustomModelWithClassAnimations", model_name, FIVE_TICKS)
 	}
 }
 
@@ -4340,12 +4342,14 @@ function CTFPlayer::UseRobotModel()
 {
 	StripItemSlot(STRIPSLOT_COSMETICS)
 	local name = GetPlayerModelPath()
-	PlayerFire("SetCustomModelWithClassAnimations", format("models/bots/%s/bot_%s.mdl", name, name), FIVE_TICKS)
+	SetCustomModelWithClassAnimations(format("models/bots/%s/bot_%s.mdl", name, name))
+	// PlayerFire("SetCustomModelWithClassAnimations", format("models/bots/%s/bot_%s.mdl", name, name), FIVE_TICKS)
 }
 
 function CTFPlayer::UseHumanModel()
 {
-	PlayerFire("SetCustomModelWithClassAnimations", format("models/player/%s.mdl", GetPlayerModelPath()), FIVE_TICKS)
+	SetCustomModelWithClassAnimations(format("models/player/%s.mdl", GetPlayerModelPath()))
+	// PlayerFire("SetCustomModelWithClassAnimations", format("models/player/%s.mdl", GetPlayerModelPath()), FIVE_TICKS)
 }
 
 function CTFPlayer::ShouldDetonate()
@@ -4859,7 +4863,7 @@ if (!("CUSTOM_ATTRIBUTE_WEAPONS" in ROOT))
  */
 function ROOT::DEFINE_CUSTOM_ATTRIBUTE( attrib )
 {
-	if (GET_CUSTOM_ATTRIBUTE(attrib) == null)
+	if (!GET_CUSTOM_ATTRIBUTE(attrib))
 		CUSTOM_ATTRIBUTES_DEFINES.append(attrib)
 }
 /**
@@ -4867,7 +4871,7 @@ function ROOT::DEFINE_CUSTOM_ATTRIBUTE( attrib )
  */
 function ROOT::REMOVE_CUSTOM_ATTRIBUTE( attrib )
 {
-	if (GET_CUSTOM_ATTRIBUTE(attrib) != null)
+	if (GET_CUSTOM_ATTRIBUTE(attrib))
 		CUSTOM_ATTRIBUTES_DEFINES.remove(CUSTOM_ATTRIBUTES_DEFINES.find(attrib))
 }
 /**
@@ -5110,7 +5114,7 @@ function CTFWeaponBase::GetScriptAttribute( attrib, def = 0.0 )
  * @param {integer|float|string} value
  * @param {integer|float} def		Used for detecting if an attrib actually exists
  */
-function CTFPlayer::SetScriptAttribute( attrib, value, def = 0.0 )
+function CTFWeaponBase::SetScriptAttribute( attrib, value, def = 0.0 )
 {
 	local isString = type(value) == "string"
 	if (!isString && AttributeExist(attrib, def))
@@ -11361,10 +11365,12 @@ function ROOT::PostPlayerSpawn( player )
 		// overridden
 		delete eventdata.userid
 
+		if (eventdata.team != TF_TEAM_PVE_INVADERS)
+			ReCalculatePlayers()
+
 		if (eventdata.team == TF_TEAM_UNASSIGNED)
 		{
 			ReCalculatePlayers()
-			RunWithDelay(0.1, @() (ReCalculatePlayers()))
 			RunWithDelay(1.0, @() (ReCalculatePlayers()))
 			RunWithDelay(5.0, @() (ReCalculatePlayers()))
 			FireScriptEvent( player.IsBot() ? "BotInitialSpawn" : "HumanInitialSpawn", eventdata)
@@ -12857,7 +12863,7 @@ function ROOT::PostPlayerSpawn( player )
 	 * 
 	 * # Input table
 	 * ```sqDoc
-	 * player: CTFPlayer // The bot who spawned.
+	 * player: CTFPlayer // The human who spawned.
 	 * ```
 	 */
 	function OnScriptEvent_PostHumanSpawn( _params )				{}

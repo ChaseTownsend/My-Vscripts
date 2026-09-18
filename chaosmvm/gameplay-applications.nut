@@ -1,7 +1,7 @@
 if (!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
-SetScriptVersion("GameplayApplications", "5.5.2")
+SetScriptVersion("GameplayApplications", "5.5.4")
 
 local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", THINKER_PERSIST)
 
@@ -77,7 +77,6 @@ AddChatTrigger("ehp", function( player, ... ) {
 	else if (vargv[0] == "help")
 		player.PrintToChat("\x07FFFF00[Effective Hp]: \x03Calculates your Effective Health.\n\x04Just say \x03/ehp\x04 or \x03!ehp\x04 (not case sensitive)")
 } )
-
 AddChatTrigger(["shape", "class", "change", "changeclass", "switch", "shapeshift"], function( player, ... ) {
 	if (!player)
 		return
@@ -115,6 +114,9 @@ AddChatTrigger(["shape", "class", "change", "changeclass", "switch", "shapeshift
 		case 9: class_index = TF_CLASS_SPY
 		break
 		} //
+		
+		if(given_id == TF_CLASS_CIVILIAN && IsTF2C())
+			class_index = TF_CLASS_CIVILIAN
 	}
 	else if (startswith(name, "sc"))
 		class_index = TF_CLASS_SCOUT
@@ -134,7 +136,7 @@ AddChatTrigger(["shape", "class", "change", "changeclass", "switch", "shapeshift
 		class_index = TF_CLASS_SNIPER
 	else if (startswith(name, "sp"))
 		class_index = TF_CLASS_SPY
-	else if (startswith(name, "civ"))
+	else if (startswith(name, "civ") && !IsTF2C())
 		return player.PrintToChat("\x07FF0000[►] This is not TF2Classified.") // [►] Did you forget what game you're playing...?
 	else
 		return player.PrintToChat("\x07FF0000[►] Failed to determine desired class. Try again.")
@@ -145,7 +147,7 @@ AddChatTrigger(["shape", "class", "change", "changeclass", "switch", "shapeshift
 	if (player.IsDead()/*  && player.GetWeaponIDXInSlotNew(SLOT_MELEE) ==  */)
 		return player.PrintToChat("\x07FF4040[►] Can only change class while alive.")
 
-	if (player.InRespawnRoom())
+	if (player.IsTruelyInSpawn())
 		player.ForceChangeClass(class_index, true)
 	else 
 	{
@@ -240,7 +242,7 @@ function BlutsuagerHit( owner, victim )
 	local MedicSpeed = owner.GetMoveSpeed()
 	local BotSpeed = victim.GetMoveSpeed()
 
-	if (BotSpeed > MedicSpeed * 1.3)
+	if ( BotSpeed > MedicSpeed )
 	{
 		owner.AddCustomAttribute("move speed bonus blutsauger", 1.3, duration)
 		owner.TeamFortress_SetSpeed()
@@ -340,7 +342,7 @@ function GameplayThink()
 
 		if (bot.IsReprogrammed() && !bot.HasBotTag("RedSupport"))
 		{
-			if (bot.InRespawnRoom(true))
+			if (bot.InRespawnRoom())
 				bot.UndoReprogram()
 			else 
 				ReprogrammedBots.append(bot)
@@ -456,14 +458,16 @@ function GameplayThink()
 			primary.ReapplyProvision()
 		}
 
-		if (Human.HookAdditiveAttributes("infinite ammo"))
+		foreach (wep in Human.GetAllItems())
 		{
-			Human.ResetAmmo()
-			foreach (wep in Human.GetAllItems())
+			if (wep.GetScriptAttribute("infinite ammo", 0) && "GetMaxClip1" in wep)
 			{
-				if (wep.GetScriptAttribute("infinite ammo", 0) && "GetMaxClip1" in wep)
-					wep.SetClip1(wep.GetMaxClip1())
+				wep.SetClip1(wep.GetMaxClip1())
+				SetPropInt(wep, "NonLocalTFWeaponData.m_flEnergy", 100)
 			}
+
+			if (wep.GetScriptAttribute("infinite reserve ammo", 0))
+				Human.GivePercentAmmo(GetPropInt(wep, "m_iPrimaryAmmoType"), 100)
 		}
 	}
 
@@ -793,8 +797,9 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 		local spellbook = player.GetSpellBook()
 
 		if (player.HookAdditiveAttributes("slow down aura"))
-		{	// AddThink( func, name = null, offset = 0.0 )
-			player.AddThink(function () {
+		{
+			local function SlowDownThink()
+			{
 				/** @type {CTFPlayer} */
 				local self = self
 				local active = self.GetActiveWeapon()
@@ -815,13 +820,15 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 				}
 
 				return 0.2
-			}, "SlowDownAura")
+			}
+			player.AddThink(SlowDownThink(), "SlowDownAura", 0.5)
 		}
 		
 		foreach (/**@type {CTFWeaponBase} */weapon in player.GetAllItems())
 		{
 			if (weapon.IsWearable())
 				continue
+
 			local wep_scope = GetScope(weapon)
 			if (weapon == spellbook)
 			{
@@ -856,11 +863,9 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 
 			if (weapon.GetIDX() == TF_WEAPON_BLUTSAUGER)
 			{
-				player.AddThink(function() {
-
-					/**@type {CTFPlayer} */
-					local self = self
-
+				/**@var {CTFPlayer} self */
+				local function BlutsaugerThink()
+				{
 					if (self.GetWeaponIDXInSlotNew(SLOT_PRIMARY) != TF_WEAPON_BLUTSAUGER)
 					{
 						self.RemoveThink("BlutsaugerDisrupt")
@@ -907,7 +912,8 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 							robot.UndoReprogram()
 					}
 					return -1
-				}, "BlutsaugerDisrupt", 0.15)
+				}
+				RunWithDelay(0.1, @() player.AddThink(BlutsaugerThink, "BlutsaugerDisrupt", 0.15))
 			}
 		}
 	}
