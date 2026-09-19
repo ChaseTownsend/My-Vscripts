@@ -1166,6 +1166,32 @@ BaseMovespeed[TF_CLASS_SPY] = 320
 if (IsTF2C())
 	BaseMovespeed[TF_CLASS_CIVILIAN] = 280
 
+::PlayerClassNames <- array(TF_CLASS_COUNT_ALL, "unknown")
+PlayerClassNames[TF_CLASS_SCOUT] 		= "Scout"
+PlayerClassNames[TF_CLASS_SOLDIER] 		= "Soldier"
+PlayerClassNames[TF_CLASS_PYRO] 		= "Pyro"
+PlayerClassNames[TF_CLASS_DEMOMAN] 		= "Demoman"
+PlayerClassNames[TF_CLASS_HEAVYWEAPONS] = "Heavy"
+PlayerClassNames[TF_CLASS_ENGINEER] 	= "Engineer"
+PlayerClassNames[TF_CLASS_MEDIC] 		= "Medic"
+PlayerClassNames[TF_CLASS_SNIPER] 		= "Sniper"
+PlayerClassNames[TF_CLASS_SPY] 			= "Spy"
+if (IsTF2C())
+	PlayerClassNames[TF_CLASS_CIVILIAN] = "Civilian"
+
+::PlayerModelName <- array(TF_CLASS_COUNT_ALL, "unknown")
+PlayerModelName[TF_CLASS_SCOUT] 		= "scout"
+PlayerModelName[TF_CLASS_SOLDIER] 		= "solider"
+PlayerModelName[TF_CLASS_PYRO] 			= "pyro"
+PlayerModelName[TF_CLASS_DEMOMAN] 		= "demo"
+PlayerModelName[TF_CLASS_HEAVYWEAPONS] 	= "heavy"
+PlayerModelName[TF_CLASS_ENGINEER] 		= "engineer"
+PlayerModelName[TF_CLASS_MEDIC] 		= "medic"
+PlayerModelName[TF_CLASS_SNIPER] 		= "sniper"
+PlayerModelName[TF_CLASS_SPY] 			= "spy"
+if (IsTF2C())
+	PlayerModelName[TF_CLASS_CIVILIAN] = "civilian"
+
 /** @type {class} */
 class ::color32 {
 	/** @type {integer} */
@@ -2022,8 +2048,40 @@ function CTFPlayer::IsFeignDeathReady()
  * Returns if we are an Enemy
  * @returns {bool}
  */
-function CTFPlayer::IsEnemy()
+function CTFPlayer::IsMVMEnemy()
 	return GetTeam() == TF_TEAM_PVE_INVADERS
+
+function CTFPlayer::GetPlayerClassName()
+	return PlayerClassNames[GetPlayerClass()]
+	/* switch (GetPlayerClass())
+	{
+	case TF_CLASS_SCOUT:			return "Scout"
+	case TF_CLASS_SOLDIER: 			return "Soldier"
+	case TF_CLASS_PYRO: 			return "Pyro"
+	case TF_CLASS_DEMOMAN: 			return "Demoman"
+	case TF_CLASS_HEAVYWEAPONS: 	return "Heavy"
+	case TF_CLASS_ENGINEER: 		return "Engineer"
+	case TF_CLASS_MEDIC: 			return "Medic"
+	case TF_CLASS_SNIPER: 			return "Sniper"
+	case TF_CLASS_SPY: 				return "Spy"
+	default:						return "Unknown!"
+	} */
+
+function CTFPlayer::GetPlayerModelPath()
+	return PlayerModelName[GetPlayerClass()]
+	/* switch (GetPlayerClass())
+	{
+	case TF_CLASS_SCOUT:			return "scout"
+	case TF_CLASS_SOLDIER: 			return "soldier"
+	case TF_CLASS_PYRO: 			return "pyro"
+	case TF_CLASS_DEMOMAN: 			return "demo"
+	case TF_CLASS_HEAVYWEAPONS: 	return "heavy"
+	case TF_CLASS_ENGINEER: 		return "engineer"
+	case TF_CLASS_MEDIC: 			return "medic"
+	case TF_CLASS_SNIPER: 			return "sniper"
+	case TF_CLASS_SPY: 				return "spy"
+	default:						return "Unknown!"
+	} */
 
 /*
 	Some Funcs can use a different name
@@ -2753,11 +2811,7 @@ function CTFPlayer::GivePercentAmmo( index, percent )
 	else if (index == TF_AMMO_GRENADES1)
 		maximum = GetMaximumGrenades1()
 	else if (index == TF_AMMO_GRENADES2)
-	{
-		maximum = 1
-		if (InCond(TF_COND_RUNE_HASTE))
-			maximum = 2
-	}
+		maximum = InCond(TF_COND_RUNE_HASTE) ? 2 : 1
 	else if (index == TF_AMMO_GRENADES3)
 		maximum = GetMaximumGrenades3()
 	else
@@ -2802,40 +2856,6 @@ function CTFPlayer::ForceChangeClass( index, respawn = false )
 		ForceRegenerateAndRespawn()
 	else
 		Regenerate(true)
-}
-
-function CTFPlayer::GetPlayerClassName()
-{
-	switch (GetPlayerClass())
-	{
-	case TF_CLASS_SCOUT:			return "Scout"
-	case TF_CLASS_SOLDIER: 			return "Soldier"
-	case TF_CLASS_PYRO: 			return "Pyro"
-	case TF_CLASS_DEMOMAN: 			return "Demoman"
-	case TF_CLASS_HEAVYWEAPONS: 	return "Heavy"
-	case TF_CLASS_ENGINEER: 		return "Engineer"
-	case TF_CLASS_MEDIC: 			return "Medic"
-	case TF_CLASS_SNIPER: 			return "Sniper"
-	case TF_CLASS_SPY: 				return "Spy"
-	default:						return "Unknown!"
-	}
-}
-
-function CTFPlayer::GetPlayerModelPath()
-{
-	switch (GetPlayerClass())
-	{
-	case TF_CLASS_SCOUT:			return "scout"
-	case TF_CLASS_SOLDIER: 			return "soldier"
-	case TF_CLASS_PYRO: 			return "pyro"
-	case TF_CLASS_DEMOMAN: 			return "demo"
-	case TF_CLASS_HEAVYWEAPONS: 	return "heavy"
-	case TF_CLASS_ENGINEER: 		return "engineer"
-	case TF_CLASS_MEDIC: 			return "medic"
-	case TF_CLASS_SNIPER: 			return "sniper"
-	case TF_CLASS_SPY: 				return "spy"
-	default:						return "Unknown!"
-	}
 }
 
 /**
@@ -4827,7 +4847,7 @@ function CTFBot::UndoReprogram( kill = true )
 	if (!this||!IsValid()||IsDead())
 		return
 
-	CreateParticle("drg_cow_explosioncore_charged", GetOrigin()+Vector(0, 0, 8))
+	CreateParticle("drg_cow_explosioncore_charged", GetCenter())
 
 	if ("EndReprogramTime" in GetScope(this)) 
 		delete GetScope(this).EndReprogramTime

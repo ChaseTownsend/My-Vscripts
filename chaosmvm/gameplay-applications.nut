@@ -256,7 +256,7 @@ function BlutsuagerHit( owner, victim )
 		local owner = ("ReProgrammer" in scope) ? scope.ReProgrammer : null
 		if (owner && owner.IsValid())
 			owner.RemoveCustomAttribute("move speed bonus blutsauger")
-		self.UndoReprogram(false)
+		self.UndoReprogram()
 	}
 	GetScope(victim).OnDeath <- OnDeath
 
@@ -331,22 +331,23 @@ function GameplayThink()
 				bot.MultiplyGravity(active.GetMultAttribute("mult gravity crouching active"))
 		}
 
-		if (!bot.IsReprogrammed())
-			AliveBots += 1
-
-		if ("EndReprogramTime" in scope && scope.EndReprogramTime <= Time())
-			bot.UndoReprogram()
-
 		if ("Timescale" in ROOT)
 			bot.AddCustomAttribute("voice pitch scale", Timescale, -1)
 
-		if (bot.IsReprogrammed() && !bot.HasBotTag("RedSupport"))
+		if (bot.IsReprogrammed())
 		{
-			if (bot.InRespawnRoom())
+			if ("EndReprogramTime" in scope && scope.EndReprogramTime <= Time())
 				bot.UndoReprogram()
-			else 
-				ReprogrammedBots.append(bot)
+			if (!bot.HasBotTag("RedSupport"))
+			{
+				if (bot.InRespawnRoom())
+					bot.UndoReprogram()
+				else 
+					ReprogrammedBots.append(bot)
+			}
 		}
+		else
+			AliveBots += 1
 
 		if (bot.HasCorrosion())
 		{
@@ -405,9 +406,13 @@ function GameplayThink()
 		// 
 		Human.SetGravity(1.0)
 
+		/**@type {CTFWeaponBase|null} */
 		local primary 		= Human.GetWeaponInSlotNew(SLOT_PRIMARY)
+		/**@type {integer} */
 		local primaryIDX 	= Human.GetWeaponIDXInSlotNew(SLOT_PRIMARY)
+		/**@type {CTFWeaponBase|null} */
 		local active 		= Human.GetActiveWeapon()
+		/**@type {integer} */
 		local activeIDX 	= Human.GetActiveWeaponIDX()
 		
 		Human.MultiplyGravity(Human.HookMultAttributes("mult gravity"))
@@ -447,9 +452,17 @@ function GameplayThink()
 				foreach (attribs in TOMISLAV_SETTINGS.Attributes)
 					primary.CalculateAttributeChange(WeaponScope.Hits, attribs[0], attribs[1], attribs[2], attribs[3], attribs[4])
 
-				primary.AddAttribute("Set DamageType Ignite", (WeaponScope.Hits > 400).tointeger(), 0)
-				primary.AddAttribute("ragdolls become ash", (WeaponScope.Hits > 700).tointeger(), 0)
-				primary.AddAttribute("turn to gold", (WeaponScope.Hits > 1000).tointeger(), 0)
+				if (WeaponScope.Hits > 400) primary.AddAttribute("Set DamageType Ignite", 1, 0)
+				else 						primary.RemoveAttribute("Set DamageType Ignite")
+
+				if (WeaponScope.Hits > 700) primary.AddAttribute("ragdolls become ash", 1, 0)
+				else 						primary.RemoveAttribute("ragdolls become ash")
+
+				if (WeaponScope.Hits > 1000) primary.AddAttribute("turn to gold", 1, 0)
+				else 						 primary.RemoveAttribute("turn to gold")
+				// primary.AddAttribute("Set DamageType Ignite", (WeaponScope.Hits > 400).tointeger(), 0)
+				// primary.AddAttribute("ragdolls become ash", (WeaponScope.Hits > 700).tointeger(), 0)
+				// primary.AddAttribute("turn to gold", (WeaponScope.Hits > 1000).tointeger(), 0)
 				if (Human.GetPrimaryAmmo() > Human.GetMaximumPrimaryAmmo())
 					Human.ResetPrimaryAmmo()
 			}
@@ -695,16 +708,16 @@ RegisterDamageCallback("tf_zombie", "GameplaySkeletons", function( params ) {
 	local victim = params.victim
 	local attacker = params.attacker
 	params.early_out <- true
-	if (victim.IsValid())
-		SendGlobalGameEvent("npc_hurt", {
-			entindex = victim.entindex()
-			health = victim.GetHealth()
-			attacker_player = attacker.IsPlayer() ? attacker.GetUserID() : -1
-			weaponid = -1
-			damageamount = 5
-			crit = false
-			boss = 0
-		})
+	// if (victim.IsValid())
+	// 	SendGlobalGameEvent("npc_hurt", {
+	// 		entindex = victim.entindex()
+	// 		health = victim.GetHealth()
+	// 		attacker_player = attacker.IsPlayer() ? attacker.GetUserID() : -1
+	// 		weaponid = -1
+	// 		damageamount = 5
+	// 		crit = false
+	// 		boss = 0
+	// 	})
 	victim.TakeDamageCustom(null, attacker, null, Vector(), Vector(), 5.0, DMG_GENERIC, TF_DMG_CUSTOM_NO_CALLBACKS)
 })
 
@@ -735,8 +748,10 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 			GetScope(victim).OnDeath()
 			delete GetScope(victim).OnDeath
 		}
+
 		if (!attacker)
 			return
+
 		if (attacker.IsBot() && attacker != victim)
 		{
 			if (attacker.HasBotTag("NoChatter"))
@@ -793,6 +808,7 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 			return
 		/** @type {CTFPlayer} */
 		local player = params.player
+
 		RunWithDelay(0.1, @() player.FixAmmo())
 		local spellbook = player.GetSpellBook()
 
@@ -805,11 +821,11 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 				local active = self.GetActiveWeapon()
 				if (!active)
 					return 0.2
-				if (active.GetAttribute("slow down aura", 0))
+				if (active.GetScriptAttribute("slow down aura", 0))
 				{
-					local slow_multiplier = active.GetAttribute("slow down aura slow mult", 0.0)
-					local giant_multiplier = active.GetAttribute("slow down aura giant mult", 0.0)
-					local slow_radius = active.GetAttribute("slow down aura", 0)
+					local slow_multiplier = active.GetScriptAttribute("slow down aura slow mult", 0.0)
+					local giant_multiplier = active.GetScriptAttribute("slow down aura giant mult", 0.0)
+					local slow_radius = active.GetScriptAttribute("slow down aura", 0)
 					DebugDrawSphereInternal( self.GetCenter(), slow_radius, 255, 255, 255, false, 0.2 true, 10)
 					foreach (/**@type {CTFBot} */bot in m_aRobots)
 					{
@@ -821,7 +837,7 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 
 				return 0.2
 			}
-			player.AddThink(SlowDownThink(), "SlowDownAura", 0.5)
+			player.AddThink(SlowDownThink, "SlowDownAura", 0.5)
 		}
 		
 		foreach (/**@type {CTFWeaponBase} */weapon in player.GetAllItems())

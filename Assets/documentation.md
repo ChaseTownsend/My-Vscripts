@@ -116,7 +116,7 @@ Progressivly trying to actually document the functions and stuff i make
 - [`GetEveryHumanWithin`](#CTFPlayerGetEveryHumanWithin)
 - [`GetEveryPlayerWithin`](#CTFPlayerGetEveryPlayerWithin)
 - [`GetEveryBotWithin`](#CTFPlayerGetEveryBotWithin)
-- [`IsMissionMaker`](#CTFPlayerIsMissionMaker)
+- [`IsTempAdmin`](#CTFPlayerIsTempAdmin)
 
 - TODO: Below are ones not done
 
@@ -140,7 +140,9 @@ Progressivly trying to actually document the functions and stuff i make
 - [`HasPasstimeBall`](#CTFPlayerHasPasstimeBall)
 - [`GetStealthNoAttackExpireTime`](#CTFPlayerGetStealthNoAttackExpireTime)
 - [`IsFeignDeathReady`](#CTFPlayerIsFeignDeathReady)
-- [`IsEnemy`](#CTFPlayerIsEnemy)
+- [`IsMVMEnemy`](#CTFPlayerIsIsMVMEnemy)
+- [`GetPlayerClassName`](#CTFPlayerGetPlayerClassName)
+- [`GetPlayerModelPath`](#CTFPlayerGetPlayerModelPath)
 - [`SetJetpackCharge`](#CTFPlayerSetJetpackCharge) <!-- Redefine of SetFoodItemCharge -->
 - [`SetRazorbackCharge`](#CTFPlayerSetRazorbackCharge) <!-- Redefine of SetFoodItemCharge -->
 - [`GenerateAndWearItem`](#CTFPlayerGenerateAndWearItem) <!-- Redefine from CTFBot onto CTFPlayer -->
@@ -188,7 +190,6 @@ Progressivly trying to actually document the functions and stuff i make
 - [`ResetAmmo`](#CTFPlayerResetAmmo)
 - [`InMultiCond`](#CTFPlayerInMultiCond)
 - [`ForceChangeClass`](#CTFPlayerForceChangeClass)
-- [`GetPlayerClassName`](#CTFPlayerGetPlayerClassName)
 - [`GetTranslatedString`](#CTFPlayerGetTranslatedString)
 - [`GetTranslatedAndFormattedString`](#CTFPlayerGetTranslatedAndFormattedString)
 - [`SetAbilityTime`](#CTFPlayerSetAbilityTime)
@@ -307,7 +308,7 @@ player.PrintToConsole("Debug: 15% charged")
 ---
 
 #### <a name="CTFPlayer.PrintToHudF">CTFPlayer.PrintToHudF</a>
-Prints a Message to the players Hud with 
+Prints a Message to the players Hud with formatting
 
 **Function Signature**<br>
 `void CTFPlayer::PrintToHudF(string format, any ...)`
@@ -397,7 +398,7 @@ if (player.GetSteamID() == "[U:1:969530867]")
 Returns the players UserID to be used with `GetPlayerFromUserID()`
 
 **Function Signature**<br>
-`string CTFPlayer::GetUserID()`
+`integer CTFPlayer::GetUserID()`
 
 **Example Usage**
 ```js
@@ -430,7 +431,7 @@ Returns the amount of ammo we have for this ammo type.
 
 **Example Usage**
 ```js
-printl("player: "+player+" Has "+player.GetAmmoByIndex(1)+" Primary ammo") // Primary ammo
+printf("Player: %s Has %d Primary ammo\n", player.tostring(), player.GetAmmoByIndex(1)) // Primary ammo is index 1
 ```
 
 ---
