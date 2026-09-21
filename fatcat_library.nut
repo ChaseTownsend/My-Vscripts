@@ -259,7 +259,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format) (GMT-5)
-if (!SetLibraryVersion("09.17.2026.17", 0))
+if (!SetLibraryVersion("09.20.2026.23", 0))
 	return
 
 SetLibrarySettings({})
@@ -7687,6 +7687,13 @@ function ROOT::GetClosestPlayer( target, team = TF_TEAM_BLUE, skip = 0)
 ::THINKER_PERSIST <- 0
 ::THINKER_NO_PERSIST <- 1
 
+/** 
+ * @type {function}
+ * @param {string} name
+ * @param {function|string} think_func
+ * @param {integer} type
+ * @returns {CBaseEntity|null}
+ */
 function ROOT::CreateThinker( name, think_func, type = THINKER_NO_PERSIST )
 {
 	local Thinker = FindByName(null, name)
@@ -10352,12 +10359,17 @@ function SwapWeaponThink()
  */
 function AmmoRegenThink()
 {
-	local scope = GetScope(self)
+	foreach (wep in self.GetAllItems())
+	{
+		if (wep.GetScriptAttribute("infinite ammo", 0) && "GetMaxClip1" in wep)
+		{
+			wep.SetClip1(wep.GetMaxClip1())
+			SetPropInt(wep, "NonLocalTFWeaponData.m_flEnergy", 100)
+		}
 
-	if (!("AmmoRegenData" in scope))
-		scope.AmmoRegenData <- AmmoRegenData(self)
-
-	return 0.1
+		if (wep.GetScriptAttribute("infinite reserve ammo", 0))
+			self.GivePercentAmmo(GetPropInt(wep, "m_iPrimaryAmmoType"), 100)
+	}
 }
 
 /*

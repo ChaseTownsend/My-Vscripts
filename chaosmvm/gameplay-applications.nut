@@ -1,7 +1,7 @@
 if (!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
-SetScriptVersion("GameplayApplications", "5.5.4")
+SetScriptVersion("GameplayApplications", "5.5.6")
 
 local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", THINKER_PERSIST)
 
@@ -9,7 +9,7 @@ local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", 
 	TimeBeforeHeatLost = 5.0
 	HeatLostPerSecond = 15
 	Attributes = [
-		//	[	AttributeName, 					AttributeChange, 	StartingValue, 	MaxValue, 	MinValue]
+	//	[	AttributeName, 						AttributeChange, 	StartingValue, 	MaxValue, 	MinValue]
 		[	"damage bonus", 					0.008, 				1, 				9, 			1		],
 		[	"fire rate bonus", 					-0.00025, 			1, 				1, 			0.75	],
 		[	"max health additive bonus", 		1, 					0, 				1000, 		0		],
@@ -469,18 +469,6 @@ function GameplayThink()
 			if (WeaponScope.Hits >= 1000)
 				WeaponScope.Hits = 1000
 			primary.ReapplyProvision()
-		}
-
-		foreach (wep in Human.GetAllItems())
-		{
-			if (wep.GetScriptAttribute("infinite ammo", 0) && "GetMaxClip1" in wep)
-			{
-				wep.SetClip1(wep.GetMaxClip1())
-				SetPropInt(wep, "NonLocalTFWeaponData.m_flEnergy", 100)
-			}
-
-			if (wep.GetScriptAttribute("infinite reserve ammo", 0))
-				Human.GivePercentAmmo(GetPropInt(wep, "m_iPrimaryAmmoType"), 100)
 		}
 	}
 
@@ -1009,6 +997,24 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 		break;
 		default: throw format("Unknown Map Name \"%s\"", GetMapName())
 		}
+	}
+	function OnScriptEvent_WaveFailed( _ )
+	{
+		if(_Thinker && _Thinker.IsValid())
+		{
+			_Thinker.Kill()
+			_Thinker = null
+		}
+		RunWithDelay(0.1, @() _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", THINKER_PERSIST))
+	}
+	function OnScriptEvent_WaveComplete( _ )
+	{
+		if(_Thinker && _Thinker.IsValid())
+		{
+			_Thinker.Kill()
+			_Thinker = null
+		}
+		RunWithDelay(0.1, @() _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", THINKER_PERSIST))
 	}
 }
 __CollectGameEventCallbacks(GameplayEvents)
