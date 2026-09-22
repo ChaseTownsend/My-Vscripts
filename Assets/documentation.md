@@ -250,7 +250,7 @@ Progressivly trying to actually document the functions and stuff i make
 - [`UseHumanModel`](#CTFPlayerUseHumanModel)
 - [`ShouldDetonate`](#CTFPlayerShouldDetonate) <!-- Used with Rafmod `fire input on taunt` for custom sentry buster -->
 - [`SentryBusterExplode`](#CTFPlayerSentryBusterExplode)
-- [`MakeBleed`](#CTFPlayerMakeBleed) <!-- Wont work without Sourcemod plugin-->
+<!-- - [`MakeBleed`](#CTFPlayerMakeBleed) Wont work without Sourcemod plugin -->
 - [`DisplayHudHint`](#CTFPlayerDisplayHudHint)
 - [`AttributeExist`](#CTFPlayerAttributeExist)
 - [`GetScriptAttribute`](#CTFPlayerGetScriptAttribute)

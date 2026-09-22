@@ -262,7 +262,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format) (GMT-5)
-if (!SetLibraryVersion("09.21.2026.20", 0))
+if (!SetLibraryVersion("09.22.2026.17", 0))
 	return
 
 SetLibrarySettings({})
@@ -4406,14 +4406,14 @@ function CTFPlayer::SentryBusterExplode()
 	Suicide()
 }
 
-function CTFPlayer::MakeBleed( attacker, weapon, duration = -1.0, damage = 4, permanent = false, dmg_type = 34 )
+/* function CTFPlayer::MakeBleed( attacker, weapon, duration = -1.0, damage = 4, permanent = false, dmg_type = 34 )
 {
 	if (!("MakeBleedInternal" in CTFPlayer))
 		throw "Cant use CTFPlayer::MakeBleed without CTFPlayer::MakeBleedInternal"
 	if (duration == -1.0 && permanent == false)
 		permanent = true
 	MakeBleedInternal(attacker, weapon, duration, damage, permanent, dmg_type)
-}
+} */
 
 /** 
  * @returns {CBaseEntity|null}
@@ -7586,6 +7586,7 @@ function ROOT::CreateKillIcon( icon )
 
 function ROOT::PurgeString( string )
 {
+	return
 	if ( !string || !( 0 in string ) )
 		return
 
@@ -10373,6 +10374,8 @@ function InfiniteAmmoThink()
 		if (wep.GetScriptAttribute("infinite reserve ammo", 0))
 			self.GivePercentAmmo(GetPropInt(wep, "m_iPrimaryAmmoType"), 100)
 	}
+
+	return -1
 }
 
 /** 
@@ -11161,19 +11164,19 @@ function ROOT::PostPlayerSpawn( player )
 			}
 
 			// only available with Sourcemod
-			if ("MakeBleedInternal" in CTFPlayer)
-			{
-				if (IsWeaponClass(weapon, "tf_weapon", true))
-				{
-					if (weapon.GetAttribute("stackable bleed", 0) != 0)
-					{
-						local duration = weapon.GetAttribute("stackable bleed duration", 5)
+			// if ("MakeBleedInternal" in CTFPlayer)
+			// {
+			// 	if (IsWeaponClass(weapon, "tf_weapon", true))
+			// 	{
+			// 		if (weapon.GetAttribute("stackable bleed", 0) != 0)
+			// 		{
+			// 			local duration = weapon.GetAttribute("stackable bleed duration", 5)
 
-						victim.MakeBleed(attacker, null, duration, weapon.GetAttribute("stackable bleed", 4))
-						// victim.MakeBleedInternal(attacker, null, duration, weapon.GetAttribute("stackable bleed", 4), infinite ,TF_DMG_CUSTOM_BLEED)
-					}
-				}
-			}
+			// 			victim.MakeBleed(attacker, null, duration, weapon.GetAttribute("stackable bleed", 4))
+			// 			// victim.MakeBleedInternal(attacker, null, duration, weapon.GetAttribute("stackable bleed", 4), infinite ,TF_DMG_CUSTOM_BLEED)
+			// 		}
+			// 	}
+			// }
 
 			switch(params.damage_custom)
 			{
