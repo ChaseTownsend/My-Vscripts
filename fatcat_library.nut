@@ -204,9 +204,12 @@ function ROOT::SetScriptVersion( item, version )
 	// reload library after setting this
 	"OnCondPostHooks" : false
 
-	// test the string purge system
-	"TestPurgeString" : true
+	// Teams that get the corrosion think
+	"TeamsWithCorrosion" : [TF_TEAM_RED, TF_TEAM_BLUE]
 }
+
+if("__chaosmvm" in ROOT && IsMannVsMachineMode())
+	ValidLibrarySettings["TeamsWithCorrosion"] <- [TF_TEAM_BLUE]
 
 function IsValidSetting( setting )
 	return setting in ValidLibrarySettings
@@ -1243,6 +1246,12 @@ class ::Corrosion {
 			m_hOuter = outer
 	}	
 
+	/** 
+	 * @type {function}
+	 * @param {CTFPlayer} attacker
+	 * @param {CTFWeaponBase} weapon
+	 * @param {table|bool} exdata
+	 */
 	function CreateCorrosion( attacker, weapon, exdata = false )
 	{
 		this.hAttacker 		= attacker
@@ -1252,11 +1261,11 @@ class ::Corrosion {
 
 		if (weapon)
 		{
-			this.flNextTick 	= Time() + weapon.GetAttribute("corrosion tick duration", 1.0)
-			this.flTickDur 		= weapon.GetAttribute("corrosion tick duration", 1.0)
-			this.flDmgPerc 		= weapon.GetAttribute("corrosion damage percent", 0.25) / 100.0
-			this.iDmgAdd 		= weapon.GetAttribute("corrosion damage add", 250)
-			this.bMakesPuddle 	= weapon.GetAttribute("corrosion drop puddle", 0) != 0
+			this.flNextTick 	= Time() + weapon.GetScriptAttribute("corrosion tick duration", 1.0)
+			this.flTickDur 		= weapon.GetScriptAttribute("corrosion tick duration", 1.0)
+			this.flDmgPerc 		= weapon.GetScriptAttribute("corrosion damage percent", 0.25) / 100.0
+			this.iDmgAdd 		= weapon.GetScriptAttribute("corrosion damage add", 250)
+			this.bMakesPuddle 	= weapon.GetScriptAttribute("corrosion drop puddle", 0) != 0
 
 			if (!IsValidPlayer(this.hAttacker) && IsWeaponClass(weapon, "tf_weap") && IsValidPlayer(weapon.GetOwner()))
 				this.hAttacker = weapon.GetOwner()
@@ -1341,6 +1350,8 @@ class ::Corrosion {
 
 	/** 
 	 * Process a Damage Tick
+	 * 
+	 * @returns {float} when the next tick will happen
 	 */
 	function Tick()
 	{
@@ -1364,6 +1375,8 @@ class ::Corrosion {
 		if (!CORROSION_ICON || !CORROSION_ICON.IsValid())
 			CORROSION_ICON = CreateKillIcon("infection_acid_puddle")
 		m_hOuter.TakeDamageCustom(CORROSION_ICON, hAttacker, hWeapon, Vector(), Vector(), damage, DMG_GENERIC|DMG_PREVENT_PHYSICS_FORCE, 0)
+
+		return flTickDur
 	}
 }
 
@@ -7578,11 +7591,6 @@ function ROOT::CreateKillIcon( icon )
 
 function ROOT::PurgeString( string )
 {
-	if (!("TestPurgeString" in FatCatLibSettings))
-		SetLibrarySettings()
-	if (FatCatLibSettings["TestPurgeString"] == false)
-		return
-
 	if ( !string || !( 0 in string ) )
 		return
 
@@ -10357,7 +10365,7 @@ function SwapWeaponThink()
 /** 
  * @var {CTFPlayer} self
  */
-function AmmoRegenThink()
+function InfiniteAmmoThink()
 {
 	foreach (wep in self.GetAllItems())
 	{
@@ -10370,6 +10378,28 @@ function AmmoRegenThink()
 		if (wep.GetScriptAttribute("infinite reserve ammo", 0))
 			self.GivePercentAmmo(GetPropInt(wep, "m_iPrimaryAmmoType"), 100)
 	}
+}
+
+/** 
+ * @var {CTFPlayer} self
+ */
+function CorrosionThink()
+{
+	if (!self.HasCorrosion())
+		return 0.25
+	
+	if (self.ShouldRemoveCorrosion())
+	{
+		self.RemoveCorrosion()
+		return 0.25
+	}
+
+	/** @type {Corrosion} */
+	local Corrosion = self.GetCorrosion()
+	if (Corrosion.ShouldUpdate())
+		return Corrosion.Tick()
+
+	return 0.25
 }
 
 /*
@@ -11385,8 +11415,13 @@ function ROOT::PostPlayerSpawn( player )
 			SetPropInt(player, "m_Shared.m_iNextMeleeCrit", -2)
 			player.AddThink(FireWeaponCheck, "FireWeaponCheck")
 			player.AddThink(SwapWeaponThink, "SwapWeaponThink")
-			player.AddThink(AmmoRegenThink, "AmmoRegenThink")
+			player.AddThink(InfiniteAmmoThink, "InfiniteAmmoThink")
 		}
+		if (!("TeamsWithCorrosion" in FatCatLibSettings))
+			SetLibrarySettings()
+
+		if (FatCatLibSettings["TeamsWithCorrosion"].find(player.GetTeam()) != null)
+			player.AddThink(CorrosionThink, "CorrosionThink")
 
 		// Better func
 		RunWithDelay(THREE_TICKS, @() PostPlayerSpawn(player))
@@ -13182,15 +13217,6 @@ RegisterAdminTrigger("vcvar", function( player, ... ) {
 
 	SetCvar(cvar, vargv[1])
 	return player.PrintToChat(format(FATCATLIB_PREFIX+" Set Cvar \"%s\": \"%s\"", cvar, vargv[1]))
-})
-
-RegisterAdminTrigger("purge", function( _, ... ) {
-	if (!("TestPurgeString" in FatCatLibSettings))
-		SetLibrarySettings()
-	local value = FatCatLibSettings["TestPurgeString"]
-	SetLibrarySettings({
-		"TestPurgeString" : !value
-	})
 })
 
 RegisterAdminTrigger("test_tank", function( player, ... ) {

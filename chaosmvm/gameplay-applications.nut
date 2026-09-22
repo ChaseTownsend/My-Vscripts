@@ -349,21 +349,21 @@ function GameplayThink()
 		else
 			AliveBots += 1
 
-		if (bot.HasCorrosion())
-		{
-			if (bot.ShouldRemoveCorrosion())
-			{
-				bot.RemoveCorrosion()
-				continue
-			}
-			/** @type {Corrosion} */
-			local Corrosion = bot.GetCorrosion()
-			if (Corrosion.ShouldUpdate())
-			{
-				Corrosion.Tick()
-				continue
-			}
-		}
+		// if (bot.HasCorrosion())
+		// {
+		// 	if (bot.ShouldRemoveCorrosion())
+		// 	{
+		// 		bot.RemoveCorrosion()
+		// 		continue
+		// 	}
+		// 	/** @type {Corrosion} */
+		// 	local Corrosion = bot.GetCorrosion()
+		// 	if (Corrosion.ShouldUpdate())
+		// 	{
+		// 		Corrosion.Tick()
+		// 		continue
+		// 	}
+		// }
 	}
 
 	foreach (/** @type {CTFPlayer} */Human in m_aHumans)
