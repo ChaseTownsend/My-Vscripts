@@ -43,6 +43,34 @@ More Explicit Sugar Makes use of VSCode's built in Regex
 ::MOD_TF2C <- "Team Fortress 2 Classified"
 ::MOD_L4D2 <- "Left 4 Dead 2"
 
+if (!("ConstantNamingConvention" in ROOT)) // make sure folding is only done once
+{
+	foreach (enum_table in Constants)
+	{
+		foreach (name, value in enum_table)
+		{
+			if (value == null)
+				value = 0
+
+			CONST[name] <- value
+			ROOT[name] <- value
+		}
+	}
+}
+
+if (!("FoldedNetProps" in ROOT)) // make sure folding is only done once
+{
+	ROOT["FoldedNetProps"] <- "Folds all NetProps to Not require 'NetProps.'"
+	foreach (name, method in ::NetProps.getclass())
+	{
+		// Every 'class' has this
+		if (name != "IsValid")
+		{
+			ROOT[name] <- method.bindenv(::NetProps)
+		}
+	}
+}
+
 /* if (!("__DoIncludeScript" in ROOT))
 {
 	ROOT.__DoIncludeScript <- DoIncludeScript
@@ -266,34 +294,6 @@ if (!SetLibraryVersion("09.22.2026.17", 0))
 	return
 
 SetLibrarySettings({})
-
-if (!("ConstantNamingConvention" in ROOT)) // make sure folding is only done once
-{
-	foreach (enum_table in Constants)
-	{
-		foreach (name, value in enum_table)
-		{
-			if (value == null)
-				value = 0
-
-			CONST[name] <- value
-			ROOT[name] <- value
-		}
-	}
-}
-
-if (!("FoldedNetProps" in ROOT)) // make sure folding is only done once
-{
-	ROOT["FoldedNetProps"] <- "Folds all NetProps to Not require 'NetProps.'"
-	foreach (name, method in ::NetProps.getclass())
-	{
-		// Every 'class' has this
-		if (name != "IsValid")
-		{
-			ROOT[name] <- method.bindenv(::NetProps)
-		}
-	}
-}
 
 /** 
  * @param {CBaseEntity} entity
