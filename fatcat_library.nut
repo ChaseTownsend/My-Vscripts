@@ -4940,16 +4940,6 @@ function ROOT::REMOVE_CUSTOM_WEAPON_ATTRIBUTE( idx, attrib )
 function ROOT::GET_CUSTOM_ATTRIBUTE( attrib )
 	return CUSTOM_ATTRIBUTES_DEFINES.find(attrib) != null
 
-// function ROOT::GET_CUSTOM_WEAPON_ATTRIBUTE( idx, attrib )
-
-// function ROOT::GET_CUSTOM_ATTRIBUTE_VALUE( idx, attrib, def = 0 )
-
-// function ROOT::SET_CUSTOM_ATTRIBUTE_VALUE( idx, attrib, def = 0 )
-
-// function ROOT::GET_CUSTOM_PLAYER_ATTRIBUTE_VALUE( player, attrib, def = 0 )
-
-// function ROOT::SET_CUSTOM_PLAYER_ATTRIBUTE_VALUE( player, attrib, value )
-
 // To Use these custom attributes Un-Comment the below function calls
 
 /* 
@@ -4957,8 +4947,6 @@ function ROOT::GET_CUSTOM_ATTRIBUTE( attrib )
  *
  * Inflicts a Infinite duration Damaging effect
  * Can also drop a puddle when killed
- * 
- * **Note: Requires Gameplay-Applications**
  */
 //
 
