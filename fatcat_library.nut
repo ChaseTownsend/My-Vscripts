@@ -262,7 +262,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format) (GMT-5)
-if (!SetLibraryVersion("09.20.2026.23", 0))
+if (!SetLibraryVersion("09.21.2026.20", 0))
 	return
 
 SetLibrarySettings({})
@@ -5068,6 +5068,13 @@ function ROOT::GET_CUSTOM_ATTRIBUTE( attrib )
 // DEFINE_CUSTOM_ATTRIBUTE("give spell on hit")
 // DEFINE_CUSTOM_ATTRIBUTE("give spell on hit max")
 
+/**
+ * Infinite Ammo
+ * 
+ * Always Refill either reserve or clip
+ */
+// DEFINE_CUSTOM_ATTRIBUTE("infinite ammo")
+// DEFINE_CUSTOM_ATTRIBUTE("infinite reserve ammo")
 
 /*
   =====================================
