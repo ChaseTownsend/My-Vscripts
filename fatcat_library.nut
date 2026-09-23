@@ -290,7 +290,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format) (GMT-5)
-if (!SetLibraryVersion("09.22.2026.17", 0))
+if (!SetLibraryVersion("09.23.2026.00", 0))
 	return
 
 SetLibrarySettings({})
@@ -11401,9 +11401,14 @@ function ROOT::PostPlayerSpawn( player )
 		SetPropInt(player, "m_Shared.m_iSpawnRoomTouchCount", 1)
 
 		ClearThinks(player)
+		player.SetUpThinkTable()
+		
+		SetPropInt(player, "m_Shared.m_iNextMeleeCrit", -2)
+		player.AddThink(FireWeaponCheck, "FireWeaponCheck")
+		player.AddThink(SwapWeaponThink, "SwapWeaponThink")
+		player.AddThink(InfiniteAmmoThink, "InfiniteAmmoThink")
 		if (!player.IsBot())
 		{
-			player.SetUpThinkTable()
 			if ("PreservedThinks" in GetScope(player) && GetScope(player).PreservedThinks.len() != 0)
 			{
 				foreach (name, data in GetScope(player).PreservedThinks)
@@ -11411,9 +11416,6 @@ function ROOT::PostPlayerSpawn( player )
 			}
 
 			SetPropInt(player, "m_Shared.m_iNextMeleeCrit", -2)
-			player.AddThink(FireWeaponCheck, "FireWeaponCheck")
-			player.AddThink(SwapWeaponThink, "SwapWeaponThink")
-			player.AddThink(InfiniteAmmoThink, "InfiniteAmmoThink")
 		}
 		if (!("TeamsWithCorrosion" in FatCatLibSettings))
 			SetLibrarySettings()
@@ -13377,16 +13379,93 @@ RegisterAdminTrigger("uber",  /**@param {CTFPlayer} player*/function( player, ..
 	return player.PrintToChat("Set your uber to "+uber+"%")
 })
 
+::JohhnyPresets <- {
+	[0] = {
+		teamnum = TF_TEAM_BLUE
+		robot = true
+		giant = false
+		no_move = true
+		no_attack = true
+		no_taunt = true
+		ignore_enemy = true
+		ignore_flag = true
+		health = 1000000
+		regen = 50000
+		attributes = {
+			"addcond immunity" : "15"
+		}
+	},
+	[1] = {
+		teamnum = TF_TEAM_BLUE
+		robot = true
+		giant = false
+		no_move = true
+		no_attack = true
+		no_taunt = true
+		ignore_enemy = true
+		ignore_flag = true
+		health = 100000
+		regen = 10000
+		attributes = {
+			"addcond immunity" : "15"
+		}
+	},
+	[2] = {
+		teamnum = TF_TEAM_RED
+		no_taunt = true
+		mobber = true
+		health = 1000000
+		regen = 50000
+		hat_color = 15212576
+		attributes = {
+			"addcond immunity" : "15"
+		}
+		weapon_attributes = {
+			"damage bonus" : 45
+			"spread penalty" : 2.5
+			"bullets per shot bonus" : 3
+			"restore health on kill" : 8
+			"projectile penetration heavy" : 5
+			"add cond on kill" : 16
+			"add cond on kill duration" : 3
+			"move speed bonus" : 1.35
+			"damage force reduction" : 0.0
+			"halloween increased jump height" :  2.25
+
+			"ragdolls become ash" : 1
+
+			"infinite reserve ammo" : 1
+		}
+	},
+	[99] = {
+
+	},
+	[100] = {
+		name = "Robin"
+		playerclass = TF_CLASS_SOLDIER
+		// weapon = "Upgradeable TF_WEAPON_ROCKETLAUNCHER"
+		// stripslots = STRIPSLOT_SECONDARY|STRIPSLOT_MELEE
+		custom_weapon = "Robin Launcher"
+		teamnum = TF_TEAM_RED
+		
+		no_taunt = true
+		mobber = true
+		health = 1000000
+		regen = 50000
+		hat_color = 15212576
+	}
+}
+
 RegisterAdminTrigger("bot", function( player, ... ) {
 
-	if (vargv.find("many") == null)
-	{
-		foreach (bot in GetAllPlayers(TF_TEAM_BLUE, false, false))
-		{
-			if (GetClientConVar("name", bot.entindex()) == "Johnny Silverhand" && bot.IsAlive())
-				return player.PrintToChat("Johnny Silverhand is already Alive!")
-		}
-	}
+	// if (vargv.find("many") == null)
+	// {
+	// 	foreach (bot in GetAllPlayers(TF_TEAM_BLUE, false, false))
+	// 	{
+	// 		if (GetClientConVar("name", bot.entindex()) == "Johnny Silverhand" && bot.IsAlive())
+	// 			return player.PrintToChat("Johnny Silverhand is already Alive!")
+	// 	}
+	// }
 
 	local bots = GetAllPlayers(TF_TEAM_SPECTATOR, false, false)
 	local bot = bots[RandomInt(0, bots.len()-1)]
@@ -13402,61 +13481,172 @@ RegisterAdminTrigger("bot", function( player, ... ) {
 		}
 	}
 
-	bot.ForceChangeClass(TF_CLASS_HEAVYWEAPONS, true)
-	bot.SetTeam(TF_TEAM_BLUE)
-	RunWithDelay(THREE_TICKS, @() SpawnJohhny(bot, player.GetEyeTrace().pos + Vector(0, 0, 16), vargv.find("giant") != null))
+	local presetnum = 0
+	foreach(/**@type {string} */arg in vargv) {
+		if(startswith(arg, "preset_"))
+		{
+			try {
+				presetnum = arg.slice(7).tointeger()
+			}
+			catch(e){}
+		}
+	}
+
+	/**@type {table} */
+	local preset = JohhnyPresets[0]
+	if(presetnum in JohhnyPresets)
+		preset = JohhnyPresets[presetnum]
+
+	if("name" in preset)
+		SetFakeClientConVarValue(bot, "name", preset.name)
+	else
+		SetFakeClientConVarValue(bot, "name", "Johnny Silverhand")
+
+	if("teamnum" in preset)
+		bot.SetTeam(preset.teamnum)
+	else
+		bot.SetTeam(TF_TEAM_BLUE)
+
+	if("playerclass" in preset)
+		bot.ForceChangeClass(preset.playerclass, true)
+	else
+		bot.ForceChangeClass(TF_CLASS_HEAVYWEAPONS, true)
+
+	local function func() {
+		SpawnJohhny(bot, player.GetEyeTrace().pos + Vector(0, 0, 16), vargv.find("giant") != null, preset)
+	}
+
+	RunWithDelay(THREE_TICKS, func)
 })
 
-function SpawnJohhny( bot, pos, Giant )
+/** 
+ * @type {function}
+ * @param {CTFBot} bot
+ * @param {Vector} pos
+ * @param {bool} Giant
+ * @param {table} preset
+ */
+function SpawnJohhny( bot, pos, Giant, preset)
 {
-	bot.SetTeam(TF_TEAM_BLUE)
 	bot.SetAbsOrigin(pos)
 
-	bot.AddCustomAttribute("damage force reduction", 0, -1)
-	bot.AddCustomAttribute("cannot taunt", 1, -1)
-	bot.AddCustomAttribute("use robot voice", 1, -1)
-	bot.AddCustomAttribute("no_attack", 1, -1)
-	bot.AddCustomAttribute("no_jump", 1, -1)
-	bot.AddCustomAttribute("move speed penalty", 0.01, -1)
-	if (!Giant) bot.AddCustomAttribute("cannot be backstabbed", 1, -1)
-	if (Giant) bot.AddCustomAttribute("is miniboss", 1, -1)
-	bot.AddCustomAttribute("max health additive bonus", 999700, -1)
-	bot.AddCustomAttribute("health regen", 50000, -1)
-	bot.AddCustomAttribute("cancel falling damage", 1, -1)
-	bot.AddCustomAttribute("airblast vulnerability multiplier", 0.001, -1)
-	bot.AddCustomAttribute("airblast vertical vulnerability multiplier", 0.001, -1)
-	bot.AddCustomAttribute("cannot pick up intelligence", 1, -1)
-	bot.UseRobotModel()
-	bot.StripItemSlot(STRIPSLOT_SECONDARY|STRIPSLOT_MELEE)
-	bot.SetHealth(1000000)
-	bot.SetCond(TF_COND_HALLOWEEN_THRILLER)
+	if("giant" in preset && preset.giant == true)
+		Giant = true
 
-	bot.GenerateAndWearItem("Upgradeable TF_WEAPON_MINIGUN")
-	bot.GetWeaponInSlotNew(SLOT_PRIMARY).AddAttribute("item style override", 1, 0)
+	bot.AddCustomAttribute("cannot pick up intelligence", 1, -1)
+
+	if("no_move" in preset && preset.no_move == true) {
+		bot.AddCustomAttribute("damage force reduction", 0, -1)
+		bot.AddCustomAttribute("cannot taunt", 1, -1)
+		bot.AddCustomAttribute("move speed penalty", 0.01, -1)
+		bot.AddCustomAttribute("no_jump", 1, -1)
+		bot.AddCustomAttribute("cancel falling damage", 1, -1)
+		bot.AddCustomAttribute("airblast vulnerability multiplier", 0.001, -1)
+		bot.AddCustomAttribute("airblast vertical vulnerability multiplier", 0.001, -1)
+		bot.SetCond(TF_COND_HALLOWEEN_THRILLER)
+	}
+
+	if("no_taunt" in preset && preset.no_taunt == true)
+		bot.AddCustomAttribute("cannot taunt", 1, -1)
+
+	if("robot" in preset && preset.robot == true) {
+		bot.AddCustomAttribute("use robot voice", 1, -1)
+		bot.UseRobotModel()
+	}
+
+	if("no_attack" in preset && preset.no_attack == true)
+		bot.AddCustomAttribute("no_attack", 1, -1)
+
+	if(Giant)	bot.AddCustomAttribute("is miniboss", 1, -1)
+	else		bot.AddCustomAttribute("cannot be backstabbed", 1, -1)
+
+	if("health" in preset) {
+		bot.AddCustomAttribute("max health additive bonus", preset.health - 300, -1)
+		bot.SetHealth(preset.health)
+	}
+	else {
+		bot.AddCustomAttribute("max health additive bonus", 999700, -1)
+		bot.SetHealth(1000000)
+	}
+
+	if("regen" in preset)	bot.AddCustomAttribute("health regen", preset.regen, -1)
+	else					bot.AddCustomAttribute("health regen", 50000, -1)
+
+	if("attributes" in preset) {
+		foreach (attribute, value in preset.attributes) {
+			if(type(value) == "string") {
+				bot.AcceptInput("$AddPlayerAttribute", format("%s|%s", attribute, value), null, null)
+				continue
+			}
+			bot.AddCustomAttribute(attribute, value, -1)
+		}
+	}
+
+	bot.AddBotTag("HardWired")
+	if("name" in preset)	SetFakeClientConVarValue(bot, "name", preset.name)
+	else					SetFakeClientConVarValue(bot, "name", "Johnny Silverhand")
+
+	if("stripslots" in preset)	bot.StripItemSlot(preset.stripslots)
+	else						bot.StripItemSlot(STRIPSLOT_SECONDARY|STRIPSLOT_MELEE)
+
+	if(!("custom_weapon" in preset)) {
+		if("weapon" in preset)	bot.GenerateAndWearItem(preset.weapon)
+		else					bot.GenerateAndWearItem("Upgradeable TF_WEAPON_MINIGUN")
+	}
+	else {
+		bot.AcceptInput("$GiveItem", preset.custom_weapon, null, null)
+	}
+
+
+	local slot = SLOT_PRIMARY
+	if("weapon_slot" in preset)
+		slot = preset.weapon_slot
+
+	local weapon = bot.GetWeaponInSlotNew(slot)
+	weapon.AddAttribute("item style override", 1, 0)
+	if("weapon_attributes" in preset) {
+		foreach (attribute, value in preset.weapon_attributes) {
+			weapon.AddAttribute(attribute, value, -1)
+		}
+	}
+	RunWithDelay(FIVE_TICKS, @() bot.Weapon_Switch(weapon))
+
 	bot.GenerateAndWearItem("Security Shades")
 	bot.GenerateAndWearItem("The Purity Fist")
 	bot.GenerateAndWearItem("Unusual Cap")
-
-	RunWithDelay(FIVE_TICKS, @() bot.Weapon_Switch(bot.GetWeaponInSlotNew(SLOT_PRIMARY)))
-
-	SetFakeClientConVarValue(bot, "name", "Johnny Silverhand")
-
 	local Cap = bot.GetWearableByIDX(1173)
 	if (Cap)
 	{
-		Cap.AddAttribute("set item tint rgb", 826111, 0)
+		if("hat_color" in preset)
+			Cap.AddAttribute("set item tint rgb", preset.hat_color, 0)
+		else
+			Cap.AddAttribute("set item tint rgb", 826111, 0)
 		Cap.AddAttribute("attach particle effect", 4, 0)
 	}
 
 	local function OnDeath() {
 		self.SetTeam(TF_TEAM_SPECTATOR)
 	}
-
 	GetScope(bot).OnDeath <- OnDeath
-	
-	bot.AddBotTag("HardWired")
-	bot.AddBotAttribute(IGNORE_ENEMIES)
-	bot.AddBotAttribute(IGNORE_FLAG)
+
+	RunWithDelay(FIVE_TICKS, @() bot.Weapon_Switch(bot.GetWeaponInSlotNew(SLOT_PRIMARY)))
+
+	// PrintToChatAllF("Johnny Silverhand has joined %s", bot.GetTeam() == TF_TEAM_RED ? "MANNCO" : "THE ROBOTS")
+
+	bot.AddThink
+
+
+	if("mobber" in preset && preset.mobber == true) {
+		bot.AddBotAttribute(AGGRESSIVE)
+		bot.AcceptInput("$BotCommand", "switch_action mobber", null, null)
+	}
+
+	bot.SetDifficulty(3)
+
+	if("ignore_enemy" in preset && preset.ignore_enemy == true)
+		bot.AddBotAttribute(IGNORE_ENEMIES)
+	if("ignore_flag" in preset && preset.ignore_flag == true)
+		bot.AddBotAttribute(IGNORE_FLAG)
 }
 
 RegisterAdminTrigger("respawn", function( player, ... ) { player.ForceRegenerateAndRespawn( ) } )
@@ -13473,11 +13663,8 @@ RegisterAdminTrigger("respawn", function( player, ... ) { player.ForceRegenerate
 ::TheFatCat		<- "[U:1:969530867]"
 ::ShadowBolt 	<- "[U:1:101345257]"
 
-/** 
- * @param {string} e
- */
-function ROOT::ErrorFunction( e ) 
-{
+
+seterrorhandler(function (e) {
 	if (e in Errors)
 	{
 		if (Errors[e] >= Time())
@@ -13615,9 +13802,7 @@ function ROOT::ErrorFunction( e )
 		Discord_SendError(temp_stack)
 
 	return
-}
-
-seterrorhandler(ErrorFunction)
+})
 PrintToConsoleAll("Included Library Successfully")
 
 function ROOT::FixShittyPlayersBug()

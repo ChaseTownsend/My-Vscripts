@@ -406,9 +406,9 @@ function MedShieldMakes( player, health = 100000, scale = 1.0, duration = 15.0, 
 	if (scene)
 		player.PlayScene(scene, 0.0)
 		// "scenes/Player/Heavy/low/3977.vcd"	
-	// local shield = SpawnEntityFromTable("obj_teleporter", {})
+	local shield = SpawnEntityFromTable("obj_teleporter", {})
 	// local shield = CreateByClassname("entity_medigun_shield")
-	local shield = SpawnEntityFromTable("entity_medigun_shield", { spawnflags = 1 })
+	// local shield = SpawnEntityFromTable("entity_medigun_shield", { spawnflags = 1 })
 	local shield_scope = GetScope(shield)
 	local player_scope = GetScope(player)
 
@@ -424,9 +424,10 @@ function MedShieldMakes( player, health = 100000, scale = 1.0, duration = 15.0, 
 	shield_scope.kill_time <- Time() + duration
 	shield_scope.UseCrosshairHeight <- center_cross
 
-	// shield.SetCollisionGroup(TFCOLLISION_GROUP_COMBATOBJECT)
-	// shield.SetEFlags(shield.GetEFlags() | EFL_DONTBLOCKLOS)
+	shield.SetCollisionGroup(TFCOLLISION_GROUP_COMBATOBJECT)
+	shield.SetEFlags(shield.GetEFlags() | EFL_DONTBLOCKLOS)
 	SetPropInt(shield, "m_fEffects", EF_NOSHADOW|EF_NORECEIVESHADOW)
+	// SetPropInt(shield, `m_fEffects`, EF_NOSHADOW|EF_NORECEIVESHADOW)
 
 	/* if (health)
 		shield.AcceptInput("SetHealth", health.tostring(), null, null)
