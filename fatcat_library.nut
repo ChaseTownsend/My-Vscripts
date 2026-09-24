@@ -1184,7 +1184,7 @@ if (IsTF2C())
 
 ::PlayerModelName <- array(TF_CLASS_COUNT_ALL, "unknown")
 PlayerModelName[TF_CLASS_SCOUT] 		= "scout"
-PlayerModelName[TF_CLASS_SOLDIER] 		= "solider"
+PlayerModelName[TF_CLASS_SOLDIER] 		= "soldier"
 PlayerModelName[TF_CLASS_PYRO] 			= "pyro"
 PlayerModelName[TF_CLASS_DEMOMAN] 		= "demo"
 PlayerModelName[TF_CLASS_HEAVYWEAPONS] 	= "heavy"
@@ -3472,7 +3472,7 @@ function CTFPlayer::FixAmmo()
 		if (weapon.HasAdditiveAttribute("throwable starts empty"))
 			SetThrowableAmmo(0)
 		if (weapon.HasAdditiveAttribute("throwable start charge"))
-			SetThrowableCharge(weapon.GetAttribute("throwable start charge", 0))
+			SetThrowableCharge(weapon.GetScriptAttribute("throwable start charge", 0))
 			
 
 		// Deprecated soon
@@ -10283,7 +10283,7 @@ function FireWeaponCheck()
 			if (GetPropInt(GetPropEntity(wep, "LocalFlameThrowerData.m_hFlameManager"), "m_bIsFiring") == 1)
 			{
 				FireScriptEvent("PlayerFireWeapon", {player = self, weapon = wep})
-				self.AddCondEx(wep.GetAttribute("add cond on attack", -1).tointeger(), wep.GetAttribute("add cond on attack duration", 1), self)
+				self.AddCondEx(wep.GetScriptAttribute("add cond on attack", -1), wep.GetScriptAttribute("add cond on attack duration", 1), self)
 			}
 			continue
 		}
@@ -10294,7 +10294,7 @@ function FireWeaponCheck()
 				FireScriptEvent("PlayerFireWeapon", {player = self, weapon = wep})
 				SetPropInt(self, "m_Shared.m_iNextMeleeCrit", -2)
 
-				self.AddCondEx(wep.GetAttribute("add cond on attack", -1).tointeger(), wep.GetAttribute("add cond on attack duration", 1), self)
+				self.AddCondEx(wep.GetScriptAttribute("add cond on attack", -1), wep.GetScriptAttribute("add cond on attack duration", 1), self)
 			}
 			continue
 		}
@@ -10308,7 +10308,7 @@ function FireWeaponCheck()
 		if (FireTime > scope.LastFireTime)
 		{
 			FireScriptEvent("PlayerFireWeapon", {player = self, weapon = wep})
-			self.AddCondEx(wep.GetAttribute("add cond on attack", -1).tointeger(), wep.GetAttribute("add cond on attack duration", 1), self)
+			self.AddCondEx(wep.GetScriptAttribute("add cond on attack", -1), wep.GetScriptAttribute("add cond on attack duration", 1), self)
 			scope.LastFireTime = FireTime
 		}
 	}
@@ -10340,7 +10340,7 @@ function SwapWeaponThink()
 	// Swapped Weapons
 	if (old != current)
 	{
-		local cannot_deploy = old.GetAttribute("cannot deploy slot # when active", -1)
+		local cannot_deploy = old.GetScriptAttribute("cannot deploy slot # when active", -1)
 
 		if (current.GetSlot() == cannot_deploy)
 		{
@@ -10448,8 +10448,8 @@ function ROOT::PostPlayerSpawn( player )
 	local slot = -1
 	foreach (wep in player.GetAllItems())
 	{
-		if (wep.GetAttribute("force slot on spawn", -1) != -1)
-			slot = wep.GetAttribute("force slot on spawn", -1)
+		if (wep.GetScriptAttribute("force slot on spawn", -1) != -1)
+			slot = wep.GetScriptAttribute("force slot on spawn", -1)
 	}
 	if (slot > -1)
 	{
@@ -10459,9 +10459,9 @@ function ROOT::PostPlayerSpawn( player )
 	}
 	
 	foreach (wep in player.GetAllItems())
-		player.SetCond(wep.GetAttribute("cond on spawn", -1), wep.GetAttribute("cond on spawn duration", -1))
+		player.SetCond(wep.GetScriptAttribute("cond on spawn", -1), wep.GetScriptAttribute("cond on spawn duration", -1))
 
-	player.SetCond(player.GetCustomAttribute("cond on spawn", -1), player.GetCustomAttribute("cond on spawn duration", -1))
+	player.SetCond(player.GetScriptAttribute("cond on spawn", -1), player.GetScriptAttribute("cond on spawn duration", -1))
 
 	FireScriptEvent("player_postspawn", {player = player})
 }
@@ -10648,9 +10648,9 @@ function ROOT::PostPlayerSpawn( player )
 			local spellbook = owner.GetSpellBook()
 			local spellscope = GetScope(spellbook)
 
-			if (weapon.GetAttribute("draw temp hud alert on kill", 0) && IsValidPlayer(owner))
+			if (weapon.GetScriptAttribute("draw temp hud alert on kill", 0) && IsValidPlayer(owner))
 			{	// fucking 2 line tall chars
-				owner.DisplayHudHint("██░░█░░██\n█░░░█░░░█\n█░░░█░░░█\n█░░░█░░░█\n█░░░░░░░█\n██░░█░░██", weapon.GetAttribute("draw temp hud alert on kill", 0))
+				owner.DisplayHudHint("██░░█░░██\n█░░░█░░░█\n█░░░█░░░█\n█░░░█░░░█\n█░░░░░░░█\n██░░█░░██", weapon.GetScriptAttribute("draw temp hud alert on kill", 0))
 			}
 
 			// local weaponIDX = params.weapon_def_index
@@ -10672,9 +10672,9 @@ function ROOT::PostPlayerSpawn( player )
 					allowed = false
 			}
 
-			local grant_spells = weapon.GetAttribute("give spell on kill", -1)
-			local grant_spells_max = weapon.GetAttribute("give spell on kill max", 1)
-			local grant_spells_kills = weapon.GetAttribute("give spell on kills needed", 0)
+			local grant_spells = weapon.GetScriptAttribute("give spell on kill", -1)
+			local grant_spells_max = weapon.GetScriptAttribute("give spell on kill max", 1)
+			local grant_spells_kills = weapon.GetScriptAttribute("give spell on kills needed", 0)
 			
 			if (grant_spells != -1 && allowed && spellbook)
 			{
@@ -10925,7 +10925,7 @@ function ROOT::PostPlayerSpawn( player )
 			case TF_DMG_CUSTOM_BLEEDING:
 				if (!IsWeaponClass(params.weapon, "tf_weapon", true))
 					break
-				if (IsCrit || attacker.IsCritBoosted() && params.weapon.GetAdditiveAttribute("allow crit bleed"))
+				if (IsCrit || attacker.IsCritBoosted() && params.weapon.GetScriptAttribute("allow crit bleed", 0))
 				{
 					params.damage_type = params.damage_type | DMG_CRITICAL
 				}
@@ -10939,14 +10939,14 @@ function ROOT::PostPlayerSpawn( player )
 
 				foreach (weapon in attacker.GetAllItems())
 				{
-					if (weapon.GetAttribute("perfer as stomping weapon", 0))
+					if (weapon.GetScriptAttribute("perfer as stomping weapon", 0))
 					{
 						stomping_weapon = weapon
 						break
 					}
 				}
 
-				if (stomping_weapon && stomping_weapon.GetAttribute("stomp uses velocity", 0))
+				if (stomping_weapon && stomping_weapon.GetScriptAttribute("stomp uses velocity", 0))
 				{
 					local FallingVel = attacker.GetAbsVelocity().z
 					if (!("LastVels" in GetScope(victim)))
@@ -10960,7 +10960,7 @@ function ROOT::PostPlayerSpawn( player )
 					if (FallingVel >= 0)
 						FallingVel = -600
 
-					params.damage = -1 * (FallingVel * stomping_weapon.GetMultAttribute("stomp dmg mult"))
+					params.damage = -1 * (FallingVel * stomping_weapon.GetScriptAttribute("stomp dmg mult", 1.0))
 				}
 				else
 					params.damage *= attacker.HookMultAttributes("stomp dmg mult")
@@ -10979,12 +10979,12 @@ function ROOT::PostPlayerSpawn( player )
 
 				/**@type {CTFWeaponBase} */
 				local weapon = params.weapon
-				local iExplosiveBackstab = weapon.GetAttribute("explosive backstab", 0)
+				local iExplosiveBackstab = weapon.GetScriptAttribute("explosive backstab", 0)
 				if ( iExplosiveBackstab == 0 )
 					break;
 
-				local radius = weapon.GetAttribute("explosive backstab base radius", 250) + (iExplosiveBackstab * weapon.GetAttribute("explosive backstab radius add", 0))
-				local damage = weapon.GetAttribute("explosive backstab base damage", 3125) + (iExplosiveBackstab * weapon.GetAttribute("explosive backstab damage add", 0))
+				local radius = weapon.GetScriptAttribute("explosive backstab base radius", 250) + (iExplosiveBackstab * weapon.GetScriptAttribute("explosive backstab radius add", 0))
+				local damage = weapon.GetScriptAttribute("explosive backstab base damage", 3125) + (iExplosiveBackstab * weapon.GetScriptAttribute("explosive backstab damage add", 0))
 				CreateKnifeAoE({
 					owner = attacker
 					weapon = params.weapon
@@ -11008,7 +11008,7 @@ function ROOT::PostPlayerSpawn( player )
 			{
 				params.damage *= attacker.HookMultAttributes("taunt dmg mult")
 				if (attacker.GetActiveWeapon())
-					params.damage *= attacker.GetActiveWeapon().GetMultAttribute("taunt dmg mult active")
+					params.damage *= attacker.GetActiveWeapon().GetScriptAttribute("taunt dmg mult active", 1.0)
 			}
 
 			if (IsWeaponClass(params.weapon, "tf_weapon", true) && IsValidPlayer(params.weapon.GetOwner()))
@@ -11022,26 +11022,26 @@ function ROOT::PostPlayerSpawn( player )
 				{
 					if (IsValidPlayer(owner) && spellbook)
 					{
-						local grant_spells = weapon.GetAttribute("give spell on hit", -1)
+						local grant_spells = weapon.GetScriptAttribute("give spell on hit", -1)
 
 						if (grant_spells != -1)
-							spellbook.ModifySpells(grant_spells, weapon.GetAttribute("give spell on hit max", 2))
+							spellbook.ModifySpells(grant_spells, weapon.GetScriptAttribute("give spell on hit max", 2))
 					}
 				}
 				else if ( !IsMelee && ("IsMeleeWeapon" in weapon && weapon.IsMeleeWeapon()) == false )
 				{
 					if (IsValidPlayer(owner) && spellbook)
 					{
-						local grant_spells = weapon.GetAttribute("give spell on hit", -1)
+						local grant_spells = weapon.GetScriptAttribute("give spell on hit", -1)
 
 						if (grant_spells != -1)
-							spellbook.ModifySpells(grant_spells, weapon.GetAttribute("give spell on hit max", 2))
+							spellbook.ModifySpells(grant_spells, weapon.GetScriptAttribute("give spell on hit max", 2))
 					}
 				}
 
-				if (weapon.GetAttribute("chance to miss", 0) != 0)
+				if (weapon.GetScriptAttribute("chance to miss", 0) != 0)
 				{
-					local chance = weapon.GetAttribute("chance to miss", 0)
+					local chance = weapon.GetScriptAttribute("chance to miss", 0)
 					if (MATH.RandomChance() <= chance) // missed
 					{
 						params.early_out <- true
@@ -11049,17 +11049,17 @@ function ROOT::PostPlayerSpawn( player )
 					}
 				}
 
-				if (weapon.IsSniperRifle() && weapon.GetChargePercent() != 0.0 && weapon.GetAttribute("mult damage from rifle charge", 1 ) != 1.0)
+				if (weapon.IsSniperRifle() && weapon.GetChargePercent() != 0.0 && weapon.GetScriptAttribute("mult damage from rifle charge", 1 ) != 1.0)
 				{
-					params.damage *= (weapon.GetChargePercent() + 1) * weapon.GetAttribute("mult damage from rifle charge", 1.0)
+					params.damage *= (weapon.GetChargePercent() + 1) * weapon.GetScriptAttribute("mult damage from rifle charge", 1.0)
 				}
 			}
 
 			if (attacker.InAirDueToExplosion() && attacker.GetActiveWeapon() && attacker.GetActiveWeapon() == params.weapon)
-				params.damage *= attacker.GetActiveWeapon().GetMultAttribute("mult dmg while blast jumping")
+				params.damage *= attacker.GetActiveWeapon().GetScriptAttribute("mult dmg while blast jumping", 1.0)
 
 			if (!attacker.IsOnGround() && attacker.GetActiveWeapon() && attacker.GetActiveWeapon() == params.weapon)
-				params.damage *= attacker.GetActiveWeapon().GetMultAttribute("mult dmg while airborne")
+				params.damage *= attacker.GetActiveWeapon().GetScriptAttribute("mult dmg while airborne", 1.0)
 		}
 
 		local weapon = params.weapon
@@ -11127,13 +11127,13 @@ function ROOT::PostPlayerSpawn( player )
 					if (weapon == null)
 						weapon = victim.GetWeaponInSlotNew(SLOT_MELEE)
 
-					local MIN_FallingVel = weapon.GetAttribute("fall damage causes aoe min speed", 0)
+					local MIN_FallingVel = weapon.GetScriptAttribute("fall damage causes aoe min speed", 0)
 
-					local AOE_Radius = weapon.GetAttribute("fall damage causes aoe radius", 0)
+					local AOE_Radius = weapon.GetScriptAttribute("fall damage causes aoe radius", 0)
 					if (AOE_Radius == 0)
 						AOE_Radius = 300
 
-					local AOE_damage = weapon.GetAttribute("fall damage causes aoe dmg mult", 1)
+					local AOE_damage = weapon.GetScriptAttribute("fall damage causes aoe dmg mult", 1)
 
 					// victim.PrintToHud("Falling at: "+FallingVel+"\nWe need less than this: "+MIN_FallingVel)
 
@@ -11156,9 +11156,9 @@ function ROOT::PostPlayerSpawn( player )
 		{
 			if (victim.CanHaveCorrosion() && IsWeaponClass(weapon, "tf_weapon", true))
 			{
-				if (weapon.GetAdditiveAttribute("corrosion on hit") != 0)
+				if (weapon.GetScriptAttribute("corrosion on hit", 0) != 0)
 					victim.MakeCorrosion(attacker, weapon)
-				else if (weapon.GetAdditiveAttribute("corrosion on crit") != 0 && MATH.HasBitFlag(params.damage_type, DMG_CRITICAL))
+				else if (weapon.GetScriptAttribute("corrosion on crit", 0) != 0 && MATH.HasBitFlag(params.damage_type, DMG_CRITICAL))
 					victim.MakeCorrosion(attacker, weapon)
 				// attacker.PrintToHud("Made Corrosion on " + victim)
 			}
@@ -11168,12 +11168,12 @@ function ROOT::PostPlayerSpawn( player )
 			// {
 			// 	if (IsWeaponClass(weapon, "tf_weapon", true))
 			// 	{
-			// 		if (weapon.GetAttribute("stackable bleed", 0) != 0)
+			// 		if (weapon.GetScriptAttribute("stackable bleed", 0) != 0)
 			// 		{
-			// 			local duration = weapon.GetAttribute("stackable bleed duration", 5)
+			// 			local duration = weapon.GetScriptAttribute("stackable bleed duration", 5)
 
-			// 			victim.MakeBleed(attacker, null, duration, weapon.GetAttribute("stackable bleed", 4))
-			// 			// victim.MakeBleedInternal(attacker, null, duration, weapon.GetAttribute("stackable bleed", 4), infinite ,TF_DMG_CUSTOM_BLEED)
+			// 			victim.MakeBleed(attacker, null, duration, weapon.GetScriptAttribute("stackable bleed", 4))
+			// 			// victim.MakeBleedInternal(attacker, null, duration, weapon.GetScriptAttribute("stackable bleed", 4), infinite ,TF_DMG_CUSTOM_BLEED)
 			// 		}
 			// 	}
 			// }
@@ -11184,11 +11184,11 @@ function ROOT::PostPlayerSpawn( player )
 				if (!IsWeaponClass(weapon, "tf_weapon", true))
 					break
 
-				if (weapon.GetAdditiveAttribute("cond on stomped"))
-					victim.AddCondEx(weapon.GetAdditiveAttribute("cond on stomped", -1), weapon.GetAdditiveAttribute("cond on stomped duration", 1), attacker)
+				if (weapon.GetScriptAttribute("cond on stomped", -1) != -1)
+					victim.AddCondEx(weapon.GetScriptAttribute("cond on stomped", -1), weapon.GetScriptAttribute("cond on stomped duration", 1), attacker)
 
-				if (weapon.GetAdditiveAttribute("cond on stomp"))
-					attacker.AddCondEx(weapon.GetAdditiveAttribute("cond on stomp", -1), weapon.GetAdditiveAttribute("cond on stomp duration", 1), attacker)
+				if (weapon.GetScriptAttribute("cond on stomp", -1) != -1)
+					attacker.AddCondEx(weapon.GetScriptAttribute("cond on stomp", -1), weapon.GetScriptAttribute("cond on stomp duration", 1), attacker)
 			break
 			}
 		}
@@ -13380,10 +13380,44 @@ RegisterAdminTrigger("uber",  /**@param {CTFPlayer} player*/function( player, ..
 })
 
 ::JohhnyPresets <- {
+	/* 
+	[0] = {
+		// string values
+		name = ""
+		// custom_weapon = "" // name in CustomWeapons block
+		weapon = "" // name in schema
+
+		// Constants can be used here
+		weapon_slot = SLOT_PRIMARY
+		playerclass = TF_CLASS_HEAVYWEAPONS
+		teamnum = TF_TEAM_BLUE
+		stripslots = STRIPSLOT_SECONDARY|STRIPSLOT_MELEE
+
+		// bool's
+		robot = true
+		giant = false
+		no_move = true
+		no_attack = true
+		no_taunt = true
+		ignore_enemy = true
+		ignore_flag = true
+		mobber = true
+
+		// integers
+		health = 1000000
+		regen = 50000
+		hat_color = 826111
+
+		// floats
+		scale = 1.0
+
+		// tables
+		attributes = {}
+		weapon_attributes = {}
+	}, */
 	[0] = {
 		teamnum = TF_TEAM_BLUE
 		robot = true
-		giant = false
 		no_move = true
 		no_attack = true
 		no_taunt = true
@@ -13398,7 +13432,6 @@ RegisterAdminTrigger("uber",  /**@param {CTFPlayer} player*/function( player, ..
 	[1] = {
 		teamnum = TF_TEAM_BLUE
 		robot = true
-		giant = false
 		no_move = true
 		no_attack = true
 		no_taunt = true
@@ -13420,7 +13453,7 @@ RegisterAdminTrigger("uber",  /**@param {CTFPlayer} player*/function( player, ..
 		attributes = {
 			"addcond immunity" : "15"
 		}
-		weapon_attributes = {
+		weapon_attributes = { // stock chaos minigun
 			"damage bonus" : 45
 			"spread penalty" : 2.5
 			"bullets per shot bonus" : 3
@@ -13437,14 +13470,12 @@ RegisterAdminTrigger("uber",  /**@param {CTFPlayer} player*/function( player, ..
 			"infinite reserve ammo" : 1
 		}
 	},
-	[99] = {
+	[99] = { // blank
 
 	},
 	[100] = {
 		name = "Robin"
 		playerclass = TF_CLASS_SOLDIER
-		// weapon = "Upgradeable TF_WEAPON_ROCKETLAUNCHER"
-		// stripslots = STRIPSLOT_SECONDARY|STRIPSLOT_MELEE
 		custom_weapon = "Robin Launcher"
 		teamnum = TF_TEAM_RED
 		
@@ -13453,6 +13484,35 @@ RegisterAdminTrigger("uber",  /**@param {CTFPlayer} player*/function( player, ..
 		health = 1000000
 		regen = 50000
 		hat_color = 15212576
+	},
+	[101] = {
+		name = "Small fuck"
+		playerclass = TF_CLASS_SCOUT
+
+		weapon = "TF_WEAPON_BAT"
+		weapon_slot = SLOT_MELEE
+		stripslots = STRIPSLOT_PRIMARY|STRIPSLOT_SECONDARY
+
+		mobber = true
+		health = 5000
+		regen = 5000
+
+		scale = 0.2
+
+		attributes = {
+			"move speed bonus" : 1.5
+			"halloween increased jump height" : 2.5
+			"cancel falling damage" : 1
+			"increased air control" : 3
+		}
+
+		weapon_attributes = {
+			"damage penalty" : 0.286
+			"fire rate bonus" : 0.3
+			"melee range multiplier" : 10
+			"melee bounds multiplier" : 3
+			"turn to gold" : 1
+		}
 	}
 }
 
@@ -13597,6 +13657,8 @@ function SpawnJohhny( bot, pos, Giant, preset)
 		bot.AcceptInput("$GiveItem", preset.custom_weapon, null, null)
 	}
 
+	if("scale" in preset)	bot.SetModelScale(preset.scale, 0)
+
 
 	local slot = SLOT_PRIMARY
 	if("weapon_slot" in preset)
@@ -13632,9 +13694,6 @@ function SpawnJohhny( bot, pos, Giant, preset)
 	RunWithDelay(FIVE_TICKS, @() bot.Weapon_Switch(bot.GetWeaponInSlotNew(SLOT_PRIMARY)))
 
 	// PrintToChatAllF("Johnny Silverhand has joined %s", bot.GetTeam() == TF_TEAM_RED ? "MANNCO" : "THE ROBOTS")
-
-	bot.AddThink
-
 
 	if("mobber" in preset && preset.mobber == true) {
 		bot.AddBotAttribute(AGGRESSIVE)
