@@ -34,10 +34,10 @@ function LongbowBuildings()
 	local AllowedTypes = 0
 	if (PDA)
 	{
-		if (PDA.GetAttribute("longbow buildings", 0).tointeger() != 0)
-			AllowedTypes = PDA.GetAttribute("longbow buildings", 0).tointeger()
-		else if (Wrench && Wrench.GetAttribute("longbow buildings", 0).tointeger() != 0)
-			AllowedTypes = Wrench.GetAttribute("longbow buildings", 0).tointeger()
+		if (PDA.GetScriptAttribute("longbow buildings", 0).tointeger() != 0)
+			AllowedTypes = PDA.GetScriptAttribute("longbow buildings", 0).tointeger()
+		else if (Wrench && Wrench.GetScriptAttribute("longbow buildings", 0).tointeger() != 0)
+			AllowedTypes = Wrench.GetScriptAttribute("longbow buildings", 0).tointeger()
 	}
 	else
 	{
