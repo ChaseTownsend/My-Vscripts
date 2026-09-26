@@ -8,11 +8,11 @@ testing/supertest/
 testing/dont_commit
 tankextensions/
 tankextensions*.nut
+Shenanigans-Inc/*
 
 # 
 .vscode/analyze_strings.py
 .vscode/settings.json
-.idea/
 *:Zone.Identifier
 
 # source engine magic
