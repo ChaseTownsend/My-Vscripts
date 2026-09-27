@@ -290,7 +290,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format) (GMT-5)
-if (!SetLibraryVersion("09.23.2026.00", 0))
+if (!SetLibraryVersion("09.26.2026.22", 0))
 	return
 
 SetLibrarySettings({})
@@ -4869,7 +4869,7 @@ function CTFBot::UndoReprogram( kill = true )
 
 	if (kill)
 	{
-		Suicide()
+		// Suicide()
 		SetHealth(0)
 		TakeDamage(GetMaxHealth()*100, DMG_GENERIC, FirstEntity())
 	}
@@ -11200,7 +11200,7 @@ function ROOT::PostPlayerSpawn( player )
 
 		if (victim.GetClassname() in RegisteredDmgCallbacks && !HasCustomFlag(params.damage_custom, TF_DMG_CUSTOM_NO_CALLBACKS))
 		{
-			foreach (_callback_name, /**@type {function} */callback in RegisteredDmgCallbacks[victim.GetClassname( )] )
+			foreach (_callback_name, /**@type {function} */callback in RegisteredDmgCallbacks[victim.GetClassname()])
 			{
 				local ReturningData = ParamsToDamageCallbackData(clone params)
 
@@ -13008,7 +13008,9 @@ function ROOT::PracticeTank( node_name = "" )
 		health = (1<<31) - 1
 		origin = start.GetOrigin()
 		angles = start.GetAbsAngles()
+		speed = 90
 	})
+	PrintToChatAll("\x07ffff45Initiating Tank Simulation.")
 
 	local scope = GetScope(tank)
 	scope.Damages <- {}
@@ -13096,15 +13098,15 @@ function ROOT::PracticeTank( node_name = "" )
 
 		local total_damage = 0
 
-		PrintToChatAll("\x076fc8e3Practice Tank Result:")
+		PrintToChatAll("\x07ffff45Tank Simulation Result:")
 		foreach (name, damage in entity_names) {
 			if (name == "Unknown" && damage == 0)
 				continue
 			total_damage += damage
-			PrintToChatAllF("\x075186db- %s : %.0f \n", name, damage)
+			PrintToChatAllF("\x0780ff45- %s : %.0f \n", name, damage)
 		}
 
-		PrintToChatAllF("\x076fc8e3Total Damage: %.0f\n", total_damage)
+		PrintToChatAllF("\x07ffff45Total Damage: %.0f\n", total_damage)
 	}
 
 	SetDestroyCallback(tank, callback)
@@ -13457,6 +13459,7 @@ RegisterAdminTrigger("uber",  /**@param {CTFPlayer} player*/function( player, ..
 		hat_color = 15212576
 		attributes = {
 			"addcond immunity" : "15"
+			"collect currency on kill" : 1
 		}
 		weapon_attributes = { // stock chaos minigun
 			"damage bonus" : 45
@@ -13845,7 +13848,7 @@ seterrorhandler(function (e) {
 			case "function":
 				local info = v.getinfos()
 				// PrintTable(info)
-				Chat(format("[%s] function %s ( from: \"%s\", %d params )" , n, info.name ? info.name : "null", info.src != "<run>" ? info.src : "Unknown", info.parameters.len( ) - 1 ))
+				Chat(format("[%s] function %s ( from: \"%s\", %d params )" , n, info.name ? info.name : "null", info.src != "<run>" ? info.src : "Unknown", info.parameters.len() - 1))
 			break
 
 			default:
