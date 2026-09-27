@@ -1,0 +1,1 @@
+::SentThink <- function() {self.SetAbsOrigin(GetBuilder(self).EyePosition()+Vector(0,0,16))}

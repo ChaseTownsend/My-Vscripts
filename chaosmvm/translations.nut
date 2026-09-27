@@ -158,7 +158,7 @@ if ("SetScriptVersion" in getroottable())
 		LIBERTYLAUNCHER_DESC	= "Fires a slow-moving rocket that deals massive damage in large area. Very slow reload and low ammo. This weapon automatically fires when loaded."
 		//
 		COWMANGLER_NAME			= "COW MANGLER 5000"
-		COWMANGLER_DESC			= "Immobilize small enemies on hit. Charged shot freezes enemies for longer. Hold Alt-Fire to supercharge the weapon for a multishot, resulting in even longer freeze."
+		COWMANGLER_DESC			= "Gain a short burst of invulnerability on hit. Gain knockback immunity on kill. Hold Alt-Fire to supercharge the weapon and fire a teleportation projectile."
 		//
 		ORIGINAL_NAME			= "ORIGINAL"
 		ORIGINAL_DESC			= "Hold fire to load a burst-shot of up to 5 rockets. This weapon automatically fires when loaded."
@@ -200,7 +200,7 @@ if ("SetScriptVersion" in getroottable())
 		BASEJUMPER_DESC 		= "Able to toggle parachute. Increases resistance to knockback and bullet damage, reducing your vulnerability in the air." 
 		//
 		PANICATTACK_NAME 		= "PANIC ATTACK" 
-		PANICATTACK_DESC 		= "For when you need emergency healing. Immediately restores up to 10,000 health on hit. Taking damage with this weapon active has a chance to trigger a brief self-uber." 
+		PANICATTACK_DESC 		= "Immediately restores up to 10,000 health on hit. Taking damage with this weapon active has a chance to trigger a brief self-uber. Damage increases as you become injured." 
 		///
 		SHOVEL_NAME 			= "SHOVEL"
 		SHOVEL_DESC 			= "Standard option for defense and mobility."
@@ -215,7 +215,7 @@ if ("SetScriptVersion" in getroottable())
 		HALFZATOICHI_DESC 		= "Average damage with high health mobility, and increased range."
 		//
 		MARKETGARDENER_NAME 	= "MARKET GARDENER"
-		MARKETGARDENER_DESC 	= "Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
+		MARKETGARDENER_DESC 	= "Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks."
 		//
 		DISCIPLINARYACTION_NAME = "DISCIPLINARY ACTION"
 		DISCIPLINARYACTION_DESC	= "Standard option for defense and mobility. Instantly gain 1/3 Rage meter on hit."
@@ -280,7 +280,7 @@ if ("SetScriptVersion" in getroottable())
 		POWERJACK_DESC 			= "Fast attacks and move speed. Inflict bleed & ignite enemies on hit and gain mini-crits on kill."
 		//
 		BACKSCRATCHER_NAME 		= "BACK SCRATCHER"
-		BACKSCRATCHER_DESC 		= "Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
+		BACKSCRATCHER_DESC 		= "Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks."
 		//
 		VOLCANOFRAGMENT_NAME 	= "SHARPENED VOLCANO FRAGMENT"
 		VOLCANOFRAGMENT_DESC 	= "Chance to stun enemies on hit. Also able to burn enemy Pyros"
@@ -324,10 +324,10 @@ if ("SetScriptVersion" in getroottable())
 		IRONBOMBER_DESC			= "Ignores enemy resistances and gains a short critboost on kill. Does not require ammo and has an endless clip. Projectiles can bounce off of walls."
 		///
 		STICKYBOMB_NAME 		= "STICKYBOMB LAUNCHER"
-		STICKYBOMB_DESC 		= "Standard option for reliable damage. Able to place 50 bombs."
+		STICKYBOMB_DESC 		= "Standard option for reliable damage. Able to place 30 bombs. Damage increases based on charge level."
 		//
 		SCOTTISHRES_NAME 		= "SCOTTISH RESISTANCE"
-		SCOTTISHRES_DESC 		= "Bomb takes 5 seconds to arm and fizzles after 10 seconds, but can deal overwhelming damage with good timing and a full charge."
+		SCOTTISHRES_DESC 		= "Bomb takes 3 seconds to arm and detonates itself after 12 seconds, but can deal overwhelming damage with good timing and a full charge."
 		//
 		STICKYJUMPER_NAME 		= "STICKY JUMPER"
 		STICKYJUMPER_DESC 		= "Creates a shutdown field, stunning all enemies hit by the pulse. (Minibosses are immune to stun)"
@@ -422,7 +422,7 @@ if ("SetScriptVersion" in getroottable())
 		BREADBITE_DESC 			= "Critical hits infect your victim with Corrosion, a permanent debuff that deals damage based on max health and causes the victim to explode into a small corrosive cloud on death, spreading the effect to other enemies."
 		//
 		WARRIRORSSPIRIT_NAME 	= "WARRIOR'S SPIRIT"
-		WARRIRORSSPIRIT_DESC 	= "Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air. Active buff indicated by flashing \x07ffc400[!] \x01icon."
+		WARRIRORSSPIRIT_DESC 	= "Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air."
 		//
 		FISTSOFSTEEL_NAME 		= "FISTS OF STEEL"
 		FISTSOFSTEEL_DESC 		= "You are a Giant Heavy Gauntlet - Immune to push forces and able to hit multiple enemies at once for massive damage."
@@ -463,13 +463,13 @@ if ("SetScriptVersion" in getroottable())
 		WRENCH_DESC 			= "Standard option for reliable damage."
 		//
 		GUNSLINGER_NAME 		= "GUNSLINGER"
-		GUNSLINGER_DESC	 		= "Able to build a secondary Sentry. Triple-punch combo can execute small enemies and deal heavy damage to Giants."
+		GUNSLINGER_DESC	 		= "Replaces normal Sentry with a long-range Railgun Sentry. Triple-punch combo can execute small enemies and deal heavy damage to Giants."
 		//
 		SOUTHERNHOS_NAME 		= "SOUTHERN HOSPITALITY"
-		SOUTHERNHOS_DESC 		= "Replaces normal Sentry with a Flame Sentry. Short ranged, but high damage."
+		SOUTHERNHOS_DESC 		= "Replaces normal Sentry with a short-ranged, high damage Flame Sentry."
 		//
 		JAG_NAME 				= "JAG"
-		JAG_DESC 				= "Your Sentry has unlimited range."
+		JAG_DESC 				= "Replaces normal Sentry with a high-tech Support Sentry that weakens enemies, making them more vulnerable to damage. On Wrench Hit: Mark an enemy for death."
 		//
 		EUREKAEFFECT_NAME 		= "EUREKA EFFECT"
 		EUREKAEFFECT_DESC 		= "While carrying your Sentry Gun, press 'Reload' key to remotely place it on any wall or ceiling within range."
@@ -521,7 +521,7 @@ if ("SetScriptVersion" in getroottable())
 		SNIPERRIFLE_DESC 		= "Fully charged headshot deals 450,000 damage."
 		//
 		MACHINA_NAME 			= "MACHINA"
-		MACHINA_DESC 			= "Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Gaints and Tanks."
+		MACHINA_DESC 			= "Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Giants and Tanks."
 		//
 		HITMANSHEATMAKER_NAME 	= "HITMAN'S HEATMAKER"
 		HITMANSHEATMAKER_DESC 	= "Rapidfire without unscoping. No damage on bodyshot."
@@ -536,7 +536,7 @@ if ("SetScriptVersion" in getroottable())
 		SYDNEYSLEEPER_DESC 		= "Fire a special dart that cripples the movement of non-giants and makes enemies unable to receive healing from Medic bots."
 		//
 		BAZAARBARGAIN_NAME 		= "BAZAAR BARGAIN"
-		BAZAARBARGAIN_DESC 		= "Killing enemies of the same class in a row increases fire rate, stacking up to 3. Killing another class resets the combo."
+		BAZAARBARGAIN_DESC 		= "On Kill: Your next shot is reloaded significantly faster and instantly receives a full power charge."
 		//
 		FORTIFIEDCOMPOUND_NAME 	= "FORTIFIED COMPOUND"
 		FORTIFIEDCOMPOUND_DESC 	= "Reduced damage over Huntsman, but fires faster, penetrates and crits wet enemies."
@@ -807,6 +807,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		COWMANGLER_NAME			= "绞牛机 5000"
 		COWMANGLER_DESC			= "攻击能使小型机器人停顿. 蓄力攻击的停顿效果提升. 继续按住次要攻击键能够多次发射蓄力飞弹, 造成的更强停顿效果."
+		// TODO: Update! "Gain a short burst of invulnerability on hit. Gain knockback immunity on kill. Hold Alt-Fire to supercharge the weapon and fire a teleportation projectile."
 		//
 		ORIGINAL_NAME			= "正宗雷神之锤火箭发射器"
 		ORIGINAL_DESC			= "乞丐式装填. 按住开火键可连射最多四发火箭."
@@ -851,6 +852,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		PANICATTACK_NAME 		= "恐慌打击" 
 		PANICATTACK_DESC 		= "紧急时候的回复手段. 命中时立刻恢复 10000 点生命值. 手持此武器时受到伤害时会有几率获得无敌." 
+		// TODO: Update! "Immediately restores up to 10,000 health on hit. Taking damage with this weapon active has a chance to trigger a brief self-uber. Damage increases as you become injured." 
 		///
 		SHOVEL_NAME 			= "铁锹"
 		SHOVEL_DESC 			= "标准选择, 提升移动速度与防御."
@@ -867,7 +869,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		MARKETGARDENER_NAME 	= "市场花园铁锹"
 		MARKETGARDENER_DESC 	= "大幅提升暴击伤害. 造成击杀后, 提升生命值, 伤害抗性以及所有武器的伤害. 挥空后会杀死自己."
-		// TODO: Update! "Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
+		// TODO: Update! "Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks."
 		//
 		DISCIPLINARYACTION_NAME = "指挥官的军鞭"
 		DISCIPLINARYACTION_DESC	= "标准选择, 提升移动速度与防御."
@@ -935,7 +937,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BACKSCRATCHER_NAME 		= "不求人"
 		BACKSCRATCHER_DESC 		= "攻击敌人后背时大幅提升伤害. 杀敌后提升移动速度, 伤害抗性以及所有武器的伤害."
-		// TODO: Update! "Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
+		// TODO: Update! "Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks."
 		//
 		VOLCANOFRAGMENT_NAME 	= "熔岩战斧"
 		VOLCANOFRAGMENT_DESC 	= "攻击有几率击晕敌人."
@@ -983,9 +985,11 @@ if ("SetScriptVersion" in getroottable())
 		///
 		STICKYBOMB_NAME 		= "黏性炸弹发射器"
 		STICKYBOMB_DESC 		= "标准的输出选择. 可以放置最多 50 枚粘弹."
+		// TODO: Update! "Standard option for reliable damage. Able to place 30 bombs. Damage increases based on charge level."
 		//
 		SCOTTISHRES_NAME 		= "苏格兰防御者"
 		SCOTTISHRES_DESC 		= "粘弹需要 5 秒就绪并在 10 秒后自毁, 但极大幅度提升伤害."
+		// TODO: Update! "Bomb takes 3 seconds to arm and detonates itself after 12 seconds, but can deal overwhelming damage with good timing and a full charge."
 		//
 		STICKYJUMPER_NAME 		= "黏弹跳跃者"
 		STICKYJUMPER_DESC 		= "放置一个眩晕力场, 发射能够击晕敌人的冲击波. (首领单位免疫击晕)"
@@ -1091,7 +1095,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		WARRIRORSSPIRIT_NAME 	= "勇士之魂"
 		WARRIRORSSPIRIT_DESC 	= "按下左键可以向上推动自己. 攻击能够踩踏敌人造成高额伤害. 无法使用机枪与霰弹枪."
-		// TODO: Update! "Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air. Active buff indicated by flashing \x07ffc400[!] \x01icon."
+		// TODO: Update! "Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air."
 		//
 		FISTSOFSTEEL_NAME 		= "钢铁手套"
 		FISTSOFSTEEL_DESC 		= "变成拥有 250,000 点生命值的巨型机器人. 免疫击退并能造成较高的近战伤害. 无法使用机枪与霰弹枪. 只能使用副武器的食物恢复生命值."
@@ -1134,12 +1138,15 @@ if ("SetScriptVersion" in getroottable())
 		//
 		GUNSLINGER_NAME 		= "枪炮工之臂"
 		GUNSLINGER_DESC	 		= "允许建造两座步哨枪. 近战三连击能够秒杀小型机器人或对巨型机器人造成高伤害."
+		// TODO: Update! "Replaces normal Sentry with a long-range Railgun Sentry. Triple-punch combo can execute small enemies and deal heavy damage to Giants."
 		//
 		SOUTHERNHOS_NAME 		= "南部的款待"
 		SOUTHERNHOS_DESC 		= "将普通步哨枪替换为火焰步哨枪. 攻击范围缩小, 但伤害提升."
+		// TODO: Update! "Replaces normal Sentry with a short-ranged, high damage Flame Sentry."
 		//
 		JAG_NAME 				= "尖齿扳手"
 		JAG_DESC 				= "大幅提升步哨攻击范围."
+		// TODO: Update! "Replaces normal Sentry with a high-tech Support Sentry that weakens enemies, making them more vulnerable to damage. On Wrench Hit: Mark an enemy for death."
 		//
 		EUREKAEFFECT_NAME 		= "传送扳手"
 		EUREKAEFFECT_DESC 		= "当携带步哨枪时, 按下 '装填' 键将其远程放置在有效范围内的任何墙壁或天花板上."
@@ -1197,7 +1204,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		MACHINA_NAME 			= "鬼械神狙"
 		MACHINA_DESC 			= "充能速度极慢, 满充能时大幅提升对坦克的伤害. 消灭敌人会获得持续 1 秒的暴击充能. 在满充能时激活暴击充能能够重创坦克."
-		// TODO: Update! "Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Gaints and Tanks."
+		// TODO: Update! "Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Giants and Tanks."
 		//
 		HITMANSHEATMAKER_NAME 	= "职业杀手的手感"
 		HITMANSHEATMAKER_DESC 	= "连射不受开镜与否的限制. 射击身体时无法造成伤害."
@@ -1213,6 +1220,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BAZAARBARGAIN_NAME 		= "市场还价者"
 		BAZAARBARGAIN_DESC 		= "消灭同一职业的机器人会提升开火速度, 最多叠加 3 层. 消灭其他职业的机器人会重置层数."
+		// TODO: Update! "On Kill: Your next shot is reloaded significantly faster and instantly receives a full power charge."
 		//
 		FORTIFIEDCOMPOUND_NAME 	= "强化复合弓"
 		FORTIFIEDCOMPOUND_DESC 	= "降低造成的伤害但开火速度提升, 弓箭能够穿透敌人并在攻击湿身的敌人时必定暴击."
@@ -1489,6 +1497,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		COWMANGLER_NAME			= "KOMANGLAREN 5000"
 		COWMANGLER_DESC			= "Immobiliserar små fiender vid träff. Laddade skott stopper fiender längre. Håll ner Alternativattack för att superladda vapnet för ett multiskott, som stoppar de mycket längre."
+		// TODO: Update! "Gain a short burst of invulnerability on hit. Gain knockback immunity on kill. Hold Alt-Fire to supercharge the weapon and fire a teleportation projectile."
 		//
 		ORIGINAL_NAME			= "ORIGINALET"
 		ORIGINAL_DESC			= "Håll ner eldgivning till att ladda ett uttrbottsskott med upp till 5 raketer. Detta vapen avfyras automatiskt när den är laddad."
@@ -1533,6 +1542,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		PANICATTACK_NAME 		= "PANIKATTACKEN" 
 		PANICATTACK_DESC 		= "För när du behöver helande i nöden. Omedelbart återställer upp till 10,000 hälsa vid träff. Att ta skada med detta vapen aktiv har en chans att sätta på en kort själv-uber." 
+		// TODO: Update! "Immediately restores up to 10,000 health on hit. Taking damage with this weapon active has a chance to trigger a brief self-uber. Damage increases as you become injured."
 		///
 		SHOVEL_NAME 			= "SKYFFEL"
 		SHOVEL_DESC 			= "Standardval för försvar och rörelse."
@@ -1549,7 +1559,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		MARKETGARDENER_NAME 	= "TRÄGÅRDSMÄSTAREN"
 		MARKETGARDENER_DESC 	= "Utdelar massivt ökad kritisk skada. Efter man får en döende träff, ge dig in i ett argt tillstånd och få extra hälsa, motstånd och ökad skada på alla attacker. Dock alla missar är en omedelbar död."
-		// TODO: Update! "Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
+		// TODO: Update! "Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks."
 		//
 		DISCIPLINARYACTION_NAME = "DISCIPLINSÅTGÄRDEN"
 		DISCIPLINARYACTION_DESC	= "Standardval för försvar och rörelse."
@@ -1617,7 +1627,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BACKSCRATCHER_NAME 		= "RYGGKLIAREN"
 		BACKSCRATCHER_DESC 		= "Utdelar dödlig skada bakifrån. Efter man får en döende träff, ge dig in ett argt tillstånd och få extra rörelsehastighet, motstånd och ökad skada på alla attacker."
-		// TODO: Update! "Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
+		// TODO: Update! "Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks."
 		//
 		VOLCANOFRAGMENT_NAME 	= "VÄSSAD VULKANBIT"
 		VOLCANOFRAGMENT_DESC 	= "Chans till att bedöva fiender vid träff. Kan också bränna fiende Pyros"
@@ -1663,9 +1673,11 @@ if ("SetScriptVersion" in getroottable())
 		///
 		STICKYBOMB_NAME 		= "KLISTERBOMBKASTARE"
 		STICKYBOMB_DESC 		= "Standardval för pålitig skada. Kan lägga ut 50 bomber."
+		// TODO: Update! "Standard option for reliable damage. Able to place 30 bombs. Damage increases based on charge level."
 		//
 		SCOTTISHRES_NAME 		= "SKOTSKA MOTSTÅNDET"
 		SCOTTISHRES_DESC 		= "Bomber tar 5 sekunder till att armera och fräser efter 10 sekunder, men kan utdela överväldlig skada med bra tajming och en full laddning."
+		// TODO: Update! "Bomb takes 3 seconds to arm and detonates itself after 12 seconds, but can deal overwhelming damage with good timing and a full charge."
 		//
 		STICKYJUMPER_NAME 		= "KLISTERBOMBSHOPPAREN"
 		STICKYJUMPER_DESC 		= "Skaparen ett avstängningsfält, som bedövar alla fiender träffar av pulsen. (Minibossar är immuna till denna bedövning)"
@@ -1767,7 +1779,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		WARRIRORSSPIRIT_NAME 	= "KRIGARENS ANDA"
 		WARRIRORSSPIRIT_DESC 	= "Vänsterklicka för att hoppa högt upp i luften. Landar man på fiender så utdelas massiv stampskada. Tar bort all primär och sekundär ammunition."
-		// TODO: Update! "Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air. Active buff indicated by flashing \x07ffc400[!] \x01icon."
+		// TODO: Update! "Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air."
 		//
 		FISTSOFSTEEL_NAME 		= "STÅLNÄVARNA"
 		FISTSOFSTEEL_DESC 		= "Bli en stor Tung Artillerist järnhandske med 250,000 hälsa. Du är immun mot knuff och kan utdela stor skada. Tar bort all primär och sekundär ammunition. Du kan bära läkas från lunchlådor."
@@ -1810,12 +1822,15 @@ if ("SetScriptVersion" in getroottable())
 		//
 		GUNSLINGER_NAME 		= "REVOLVERMANNEN"
 		GUNSLINGER_DESC	 		= "Kan bygga ett sekundärt Vaktgevär. Trippelslag kombo kan förgöra små fiender och utdela stor skada mot Jättar."
+		// TODO: Update! "Replaces normal Sentry with a long-range Railgun Sentry. Triple-punch combo can execute small enemies and deal heavy damage to Giants."
 		//
 		SOUTHERNHOS_NAME 		= "SÖDERNS GÄSTFRIHET"
 		SOUTHERNHOS_DESC 		= "Ersätter det normala Vaktgeväret med ett Eld Vaktgevär. Kort avstånd, men hög skada."
+		// TODO: Update! "Replaces normal Sentry with a short-ranged, high damage Flame Sentry."
 		//
 		JAG_NAME 				= "JACKEN"
 		JAG_DESC 				= "Ditt Vaktgevär har oändligt med räckvidd."
+		// TODO: Update! "Replaces normal Sentry with a high-tech Support Sentry that weakens enemies, making them more vulnerable to damage. On Wrench Hit: Mark an enemy for death."
 		//
 		EUREKAEFFECT_NAME 		= "AHA-UPPLEVELSEN"
 		EUREKAEFFECT_DESC 		= "Medans du bär ditt Vaktgevär, tryck 'Omladdning' tangenten till att avlägset lägga den på en vägg eller ett tak inom räckvidd ey to remotely place it on any wall or ceiling within range."
@@ -1873,7 +1888,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		MACHINA_NAME 			= "MACHINA"
 		MACHINA_DESC 			= "Tar lång tid att ladda, men kan riva Pansarvagnar vid full laddning. Dödar man fiender så laddas en vrede mätare som ger en 1-sekund kritisk laddning. Para ihop den kritiska laddningen med en full laddning för att omedelbart förstöra de flesta Pansarvagnar som du kommer möta."
-		// TODO: Update! "Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Gaints and Tanks."
+		// TODO: Update! "Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Giants and Tanks."
 		//
 		HITMANSHEATMAKER_NAME 	= "TORPEDENS TRONGA"
 		HITMANSHEATMAKER_DESC 	= "Snabb eldgivning utan att sikta ut. Ingen skada på kroppskott."
@@ -1889,6 +1904,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BAZAARBARGAIN_NAME 		= "BASARSFYNDET"
 		BAZAARBARGAIN_DESC 		= "Dödar man fiender med samma klass på rad så ökas eldgivningshastigheten, staplas upp till 3. Dödar man en annan klass så återställs kombon."
+		// TODO: Update! "On Kill: Your next shot is reloaded significantly faster and instantly receives a full power charge."
 		//
 		FORTIFIEDCOMPOUND_NAME 	= "FÖRSTÄRKTA FÖRENINGEN"
 		FORTIFIEDCOMPOUND_DESC 	= "Minskade skadan över Jägaren, men avfyrar snabbare, penetrerar och utdelar kritiska träffar på våta fiender."
@@ -2165,6 +2181,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		COWMANGLER_NAME			= "ЛИНЧЕВАТЕЛЬ СКОТА 5000"
 		COWMANGLER_DESC			= "Обездвиживает мелких роботов при попадании. Заряженный выстрел оглушает роботов дольше обычного. Удерживайте клавишу альтернативной атаки, чтобы перезарядить оружие для многоснарядного выстрела, что приводит к ещё более длительному оглушению."
+		// TODO: Update! "Gain a short burst of invulnerability on hit. Gain knockback immunity on kill. Hold Alt-Fire to supercharge the weapon and fire a teleportation projectile."
 		//
 		ORIGINAL_NAME			= "ПРАРОДИТЕЛЬ"
 		ORIGINAL_DESC			= "Удерживайте клавишу атаки, чтобы зарядить очередь до 5 ракет. Стреляет автоматически при полной обойме."
@@ -2209,6 +2226,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		PANICATTACK_NAME 		= "ПАНИЧЕСКАЯ АТАКА" 
 		PANICATTACK_DESC 		= "Срочное лечение. Мгновенно восстанавливает до 10 000 здоровья при попадании. Получение урона с оружием в руках имеет шанс вызвать кратковременный убер-заряд." 
+		// TODO: Update! "Immediately restores up to 10,000 health on hit. Taking damage with this weapon active has a chance to trigger a brief self-uber. Damage increases as you become injured."
 		///
 		SHOVEL_NAME 			= "ЛОПАТА"
 		SHOVEL_DESC 			= "Стандартный вариант для защиты и мобильности."
@@ -2225,7 +2243,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		MARKETGARDENER_NAME 	= "ЗЕМЛЕКОП"
 		MARKETGARDENER_DESC 	= "Наносит значительно увеличенный критический урон. После убийства Вы впадаете в состояние ярости и получаете дополнительные ОЗ, сопротивляемость и увеличенный урон от всех атак. Однако любой промах — мгновенная смерть."
-		// TODO: Update! "Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
+		// TODO: Update! "Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks."
 		//
 		DISCIPLINARYACTION_NAME = "ДИСЦИПЛИНАРНОЕ ВЗЫСКАНИЕ"
 		DISCIPLINARYACTION_DESC	= "Стандартный вариант для защиты и мобильности."
@@ -2293,7 +2311,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BACKSCRATCHER_NAME 		= "СПИНОЧЁС"
 		BACKSCRATCHER_DESC 		= "Наносит смертельный урон, атакуя со спины. После убийства Вы впадаете в состояние ярости и получаете дополнительную скорость передвижения, сопротивляемость к урону и увеличенный урон от всех атак."
-		// TODO: Update! "Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
+		// TODO: Update! "Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks."
 		//
 		VOLCANOFRAGMENT_NAME 	= "ЗАОСТРЕННЫЙ ОСКОЛОК ВУЛКАНА"
 		VOLCANOFRAGMENT_DESC 	= "Шанс оглушить роботов при попадании. Поджигает роботов-поджигателей."
@@ -2341,9 +2359,11 @@ if ("SetScriptVersion" in getroottable())
 		///
 		STICKYBOMB_NAME 		= "ЛИПУЧКОМЁТ"
 		STICKYBOMB_DESC 		= "Стандартный вариант для надёжного урона. Позволяет разместить до 50 бомб-липучек."
+		// TODO: Update! "Standard option for reliable damage. Able to place 30 bombs. Damage increases based on charge level."
 		//
 		SCOTTISHRES_NAME 		= "ШОТЛАНДСКОЕ СОПРОТИВЛЕНИЕ"
 		SCOTTISHRES_DESC 		= "Снаряд взводится 5 секунд и затухает через 10 секунд, но при хорошем расчёте времени и полной зарядке может нанести сокрушительный урон."
+		// TODO: Update! "Bomb takes 3 seconds to arm and detonates itself after 12 seconds, but can deal overwhelming damage with good timing and a full charge."
 		//
 		STICKYJUMPER_NAME 		= "ТРЕНИРОВОЧНЫЙ ЛИПУЧКОМЁТ"
 		STICKYJUMPER_DESC 		= "Создаёт поле отключения роботов задетых импульсом, оглушая их. (Мини-боссы невосприимчивы к оглушению)."
@@ -2449,7 +2469,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		WARRIRORSSPIRIT_NAME 	= "ВОИНСКИЙ ДУХ"
 		WARRIRORSSPIRIT_DESC 	= "Альтернативная атака подбрасывает вас в воздух. При приземлении на роботов наносит огромный урон. Убирает все боеприпасы для основного и дополнительного оружия."
-		// TODO: Update! "Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air. Active buff indicated by flashing \x07ffc400[!] \x01icon."
+		// TODO: Update! "Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air."
 		//
 		FISTSOFSTEEL_NAME 		= "СТАЛЬНЫЕ КУЛАКИ"
 		FISTSOFSTEEL_DESC 		= "Превращает вас в гигантского робота-пулемётчика с 250 000 здоровья. Иммунитет к отталкиванию и способность наносить огромный урон. Удаляет все боеприпасы для основного и дополнительного оружия. Лечиться можно только при помощи лакомства."
@@ -2492,12 +2512,15 @@ if ("SetScriptVersion" in getroottable())
 		//
 		GUNSLINGER_NAME 		= "ОРУЖЕЙНИК"
 		GUNSLINGER_DESC	 		= "Позволяет построить вторую Турель. Серия из трёх ударов может уничтожить мелких роботов и нанести большой урон гигантским роботам."
+		// TODO: Update! "Replaces normal Sentry with a long-range Railgun Sentry. Triple-punch combo can execute small enemies and deal heavy damage to Giants."
 		//
 		SOUTHERNHOS_NAME 		= "ЮЖНОЕ ГОСТЕПРИИМСТВО"
 		SOUTHERNHOS_DESC 		= "Заменяет обычную Турель на Огненную Турель. Малая дальность, но высокий урон."
+		// TODO: Update! "Replaces normal Sentry with a short-ranged, high damage Flame Sentry."
 		//
 		JAG_NAME 				= "ОСТРОЗУБ"
 		JAG_DESC 				= "Ваша Турель имеет бесконечную дальность."
+		// TODO: Update! "Replaces normal Sentry with a high-tech Support Sentry that weakens enemies, making them more vulnerable to damage. On Wrench Hit: Mark an enemy for death."
 		//
 		EUREKAEFFECT_NAME 		= "ОЗАРЕНИЕ"
 		EUREKAEFFECT_DESC 		= "Пока вы переносите Турель, нажмите клавишу перезарядки', чтобы установить её дистанционно на любую стену или потолок в пределах досягаемости."
@@ -2555,7 +2578,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		MACHINA_NAME 			= "МАХИНА"
 		MACHINA_DESC 			= "Очень медленная зарядка, но на полном заряде может уничтожать Танки. Убийства роботов заполняют шкалу ярости, которая даёт 1-секундное усиление критами. Совместите усиление критов с полным зарядом, чтобы мгновенно уничтожать большинство Танков."
-		// TODO: Update! "Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Gaints and Tanks."
+		// TODO: Update! "Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Giants and Tanks."
 		//
 		HITMANSHEATMAKER_NAME 	= "РАЗЖИГАТЕЛЬ РАЗБОЙНИКА"
 		HITMANSHEATMAKER_DESC 	= "Быстрая стрельба без выхода из прицеливания. Отсутствие урона при попадании в тело."
@@ -2571,6 +2594,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BAZAARBARGAIN_NAME 		= "БАЗАРНАЯ БЕЗДЕЛУШКА"
 		BAZAARBARGAIN_DESC 		= "Убийства роботов одного класса подряд увеличивают скорострельность, накапливая эффект до 3 раз. Убийство другого класса сбрасывает эффект."
+		// TODO: Update! "On Kill: Your next shot is reloaded significantly faster and instantly receives a full power charge."
 		//
 		FORTIFIEDCOMPOUND_NAME 	= "УКРЕПЛЕННЫЙ СОСТАВНОЙ ЛУК"
 		FORTIFIEDCOMPOUND_DESC 	= "Урон ниже, чем у Охотника, но стреляет быстрее, пронзает и наносит криты по мокрым роботам."
@@ -2847,6 +2871,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		COWMANGLER_NAME			= "WYŻYMACZKA KRÓW 5000"
 		COWMANGLER_DESC			= "Unieruchamia słabszych wrogów przy trafieniu. Naładowany strzał unieruchamia wrogów na dłużej. Przytrzymaj atak alternatywny, by supernaładować broń i oddać serię strzałów, co skutkuje jeszcze dłuższym efektem unieruchomienia."
+		// TODO: Update! "Gain a short burst of invulnerability on hit. Gain knockback immunity on kill. Hold Alt-Fire to supercharge the weapon and fire a teleportation projectile."
 		//
 		ORIGINAL_NAME			= "PIERWOWZÓR"
 		ORIGINAL_DESC			= "Przytrzymaj przycisk strzału, by załadować serię aż do 5 rakiet. Strzela automatycznie po załadowaniu."
@@ -2891,6 +2916,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		PANICATTACK_NAME 		= "ATAK PANIKI" 
 		PANICATTACK_DESC 		= "Gdy potrzebujesz natychmiastowego leczenia. Natychmiast odnawia do 10 000 pkt. zdrowia przy trafieniu we wroga. Otrzymywanie obrażeń, gdy broń jest dobyta, ma szansę na aktywowanie krótkiego ładunku ÜberCharge." 
+		// TODO: Update! "Immediately restores up to 10,000 health on hit. Taking damage with this weapon active has a chance to trigger a brief self-uber. Damage increases as you become injured."
 		///
 		SHOVEL_NAME 			= "SAPERKA"
 		SHOVEL_DESC 			= "Standardowa opcja zapewniająca ochronę i mobilność."
@@ -2907,7 +2933,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		MARKETGARDENER_NAME 	= "OGRODNIK Z ARNHEM"
 		MARKETGARDENER_DESC 	= "Znacznie zwiększone obrażenia krytyczne. Po zabiciu wroga wchodzisz w stan furii, otrzymując dodatkowe zdrowie, odporność i zwiększone obrażenia do wszystkich ataków. Chybienie kończy się natychmiastową śmiercią."
-		// TODO: Update! "Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
+		// TODO: Update! "Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks."
 		//
 		DISCIPLINARYACTION_NAME = "POSTĘPOWANIE DYSCYPLINARNE"
 		DISCIPLINARYACTION_DESC	= "Standardowa opcja zapewniająca ochronę i mobilność."
@@ -2975,7 +3001,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BACKSCRATCHER_NAME 		= "DRAPACZKA"
 		BACKSCRATCHER_DESC 		= "Zadaje śmiertelne obrażenia z tyłu. Po zabiciu wroga wchodzisz w stan furii, zyskując dodatkową szybkość ruchu, odporność i zwiększone obrażenia do wszystkich ataków."
-		// TODO: Update! "Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
+		// TODO: Update! "Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks."
 		//
 		VOLCANOFRAGMENT_NAME 	= "NAOSTRZONY FRAGMENT WULKANU"
 		VOLCANOFRAGMENT_DESC 	= "Szansa na ogłuszenie wrogów przy trafieniu. Może podpalać wrogich Pyro."
@@ -3021,9 +3047,11 @@ if ("SetScriptVersion" in getroottable())
 		///
 		STICKYBOMB_NAME 		= "WYRZUTNIA BOMB SAMOPRZYLEPNYCH"
 		STICKYBOMB_DESC 		= "Standardowa opcja zapewniająca solidne obrażenia. Można rozmieścić do 50 bomb samoprzylepnych."
+		// TODO: Update! "Standard option for reliable damage. Able to place 30 bombs. Damage increases based on charge level."
 		//
 		SCOTTISHRES_NAME 		= "SZKOCKI OPÓR"
 		SCOTTISHRES_DESC 		= "Bomba uzbraja się po 5 sekundach i wygasa po 10 sekundach, ale przy dobrym wyczuciu czasu i pełnym naładowaniu może zadawać ogromne obrażenia."
+		// TODO: Update! "Bomb takes 3 seconds to arm and detonates itself after 12 seconds, but can deal overwhelming damage with good timing and a full charge."
 		//
 		STICKYJUMPER_NAME 		= "BOMBOWY SKOCZEK"
 		STICKYJUMPER_DESC 		= "Tworzy wyłączające pole, ogłuszając wszystkich wrogów trafionych impulsem (minibossowie są odporni na ogłuszenie)."
@@ -3125,7 +3153,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		WARRIRORSSPIRIT_NAME 	= "DUSZA WOJOWNIKA"
 		WARRIRORSSPIRIT_DESC 	= "Naciśnij lewy przycisk myszy, by wykonać wysoki skok. Wylądowanie na wrogach zadaje im ogromne obrażenia. Usuwa całą amunicję broni podstawowej i pomocniczej."
-		// TODO: Update! "Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air. Active buff indicated by flashing \x07ffc400[!] \x01icon."
+		// TODO: Update! "Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air."
 		//
 		FISTSOFSTEEL_NAME 		= "PIĘŚCI ZE STALI"
 		FISTSOFSTEEL_DESC 		= "Przekształca cię w gigantycznego pięściarza z 250 000 pkt. zdrowia. Jesteś odporny na odrzut i możesz zadawać duże obrażenia. Usuwa całą amunicję broni podstawowej i pomocniczej. Możesz leczyć się wyłącznie za pomocą własnych artykułów spożywczych."
@@ -3168,12 +3196,15 @@ if ("SetScriptVersion" in getroottable())
 		//
 		GUNSLINGER_NAME 		= "JEDNORĘKI BANDYTA"
 		GUNSLINGER_DESC	 		= "Umożliwia budowanie dodatkowego działka strażniczego. Trzy kolejne trafienia pod rząd mogą natychmiast zabijać słabszych wrogów i zadają ogromne obrażenia gigantom."
+		// TODO: Update! "Replaces normal Sentry with a long-range Railgun Sentry. Triple-punch combo can execute small enemies and deal heavy damage to Giants."
 		//
 		SOUTHERNHOS_NAME 		= "POŁUDNIOWA GOŚCINNOŚĆ"
 		SOUTHERNHOS_DESC 		= "Zamienia normalne działko strażnicze na ogniste działko. Krótki zasięg, ale duże obrażenia."
+		// TODO: Update! "Replaces normal Sentry with a short-ranged, high damage Flame Sentry."
 		//
 		JAG_NAME 				= "KIEŁ"
 		JAG_DESC 				= "Działko strażnicze ma nieograniczony zasięg ataku."
+		// TODO: Update! "Replaces normal Sentry with a high-tech Support Sentry that weakens enemies, making them more vulnerable to damage. On Wrench Hit: Mark an enemy for death."
 		//
 		EUREKAEFFECT_NAME 		= "EFEKT EUREKI"
 		EUREKAEFFECT_DESC 		= "Podczas przenoszenia działka strażniczego wciśnij klawisz przeładowania, by zdalnie umieścić je na dowolnej ścianie lub suficie w twoim zasięgu."
@@ -3231,7 +3262,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		MACHINA_NAME 			= "MACHINA"
 		MACHINA_DESC 			= "Bardzo wolne tempo ładowania strzału, ale przy pełnym naładowaniu zadaje duże obrażenia czołgom. Zabijanie wrogów wypełnia pasek furii, który przyznaje 1 sekundę trafień krytycznych. Połączenie trafień krytycznych z pełnym naładowaniem strzału pozwala natychmiast niszczyć większość napotkanych czołgów."
-		// TODO: Update! "Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Gaints and Tanks."
+		// TODO: Update! "Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Giants and Tanks."
 		//
 		HITMANSHEATMAKER_NAME 	= "ZABAWKA ZAWODOWCA"
 		HITMANSHEATMAKER_DESC 	= "Duża szybkostrzelność bez oddalenia widoku przy celowaniu przez lunetę. Nie zadaje obrażeń przy trafieniu w ciało."
@@ -3247,6 +3278,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BAZAARBARGAIN_NAME 		= "DALEKOSIĘŻNY DŻEZAIL"
 		BAZAARBARGAIN_DESC 		= "Zabijanie z rzędu wrogów tej samej klasy zwiększa szybkostrzelność (maks. 3). Zabicie innej klasy resetuje kombo."
+		// TODO: Update! "On Kill: Your next shot is reloaded significantly faster and instantly receives a full power charge."
 		//
 		FORTIFIEDCOMPOUND_NAME 	= "BOJOWY ŁUK BLOCZKOWY"
 		FORTIFIEDCOMPOUND_DESC 	= "Zmniejszone obrażenia w porównaniu do Łowcy, ale strzela szybciej, penetruje wrogów i zadaje obrażenia krytyczne mokrym przeciwnikom."
@@ -3523,6 +3555,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		COWMANGLER_NAME			= "カウ・マングラー 5000"
 		COWMANGLER_DESC			= "命中すると小型の敵を動けなくする チャージショットは敵の動きをより長く停止させる サブ攻撃キーを押しながら発射すると武器がオーバーチャージされ、連射が可能になり、停止時間がさらに長くなる"
+		// TODO: Update! "Gain a short burst of invulnerability on hit. Gain knockback immunity on kill. Hold Alt-Fire to supercharge the weapon and fire a teleportation projectile."
 		//
 		ORIGINAL_NAME			= "オリジナル"
 		ORIGINAL_DESC			= "メイン攻撃キーを長押しすると、最大4発のロケット弾を装填できます 装填が完了すると、この武器は自動的に発射される"
@@ -3567,6 +3600,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		PANICATTACK_NAME 		= "パニック・アタック" 
 		PANICATTACK_DESC 		= "緊急で回復が必要な時に命中すると、最大10,000のHPを即座に回復する この武器が有効な状態でダメージを受けると、短時間のセルフ・ユーバーが発動する可能性がある" 
+		// TODO: Update! "Immediately restores up to 10,000 health on hit. Taking damage with this weapon active has a chance to trigger a brief self-uber. Damage increases as you become injured."
 		///
 		SHOVEL_NAME 			= "シャベル"
 		SHOVEL_DESC 			= "防御と機動性のための標準的な選択肢"
@@ -3583,7 +3617,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		MARKETGARDENER_NAME 	= "マーケットガーデナー"
 		MARKETGARDENER_DESC 	= "クリティカルダメージが大幅に上昇する 敵を倒すとレイジ状態となり、HPと耐性が上昇し、すべての攻撃のダメージが増加する ただし、攻撃が外れると即死する"
-		// TODO: Update! "Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
+		// TODO: Update! "Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks."
 		//
 		DISCIPLINARYACTION_NAME = "懲戒ムチ"
 		DISCIPLINARYACTION_DESC	= "防御と機動性のための標準的な選択肢"
@@ -3651,7 +3685,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BACKSCRATCHER_NAME 		= "バックスクラッチャー"
 		BACKSCRATCHER_DESC 		= "背後から致命的なダメージを与える 敵を倒すとレイジ状態となり、移動速度と耐性が上昇し、すべての攻撃のダメージが増加する"
-		// TODO: Update! "Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
+		// TODO: Update! "Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks."
 		//
 		VOLCANOFRAGMENT_NAME 	= "研ぎ澄まされた火山の破片"
 		VOLCANOFRAGMENT_DESC 	= "攻撃が命中した際に敵をスタンさせる可能性がある また、敵のパイロに炎上効果を与えることもできる"
@@ -3697,9 +3731,11 @@ if ("SetScriptVersion" in getroottable())
 		///
 		STICKYBOMB_NAME 		= "粘着爆弾ランチャー"
 		STICKYBOMB_DESC 		= "安定したダメージを与えられる頼もしい選択肢 50個の爆弾を設置可能"
+		// TODO: Update! "Standard option for reliable damage. Able to place 30 bombs. Damage increases based on charge level."
 		//
 		SCOTTISHRES_NAME 		= "スコットランドレジスタンス"
 		SCOTTISHRES_DESC 		= "爆弾は起爆までに5秒かかり、10秒後に不発となるが、タイミングをうまく合わせ、フルチャージすれば圧倒的なダメージを与えることができる"
+		// TODO: Update! "Bomb takes 3 seconds to arm and detonates itself after 12 seconds, but can deal overwhelming damage with good timing and a full charge."
 		//
 		STICKYJUMPER_NAME 		= "スティッキージャンパー"
 		STICKYJUMPER_DESC 		= "停止フィールドを生成し、衝撃波が当たったすべての敵をスタン状態にする（ミニボスにはスタン効果が効きません）"
@@ -3801,7 +3837,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		WARRIRORSSPIRIT_NAME 	= "ウォリアーズスピリット"
 		WARRIRORSSPIRIT_DESC 	= "左クリックで高く跳び上がり、敵の上に着地すると、強力な踏みつけダメージを与えます メインとサブの弾薬をすべて消費します"
-		// TODO: Update! "Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air. Active buff indicated by flashing \x07ffc400[!] \x01icon."
+		// TODO: Update! "Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air."
 		//
 		FISTSOFSTEEL_NAME 		= "フィスト・オブ・スティール"
 		FISTSOFSTEEL_DESC 		= "HP25万の巨大なヘビーガントレットに変身する ノックバック効果を受けなくなり、大ダメージを与えることができる すべてのメインおよびサブの弾薬が消費される 回復はランチボックスのアイテムからのみ可能となる"
@@ -3844,12 +3880,15 @@ if ("SetScriptVersion" in getroottable())
 		//
 		GUNSLINGER_NAME 		= "ガンスリンガー"
 		GUNSLINGER_DESC	 		= "セカンダリ・セントリーを構築可能 3連撃パンチコンボで小型の敵を瞬殺し、ジャイアントに多大なダメージを与えることができる"
+		// TODO: Update! "Replaces normal Sentry with a long-range Railgun Sentry. Triple-punch combo can execute small enemies and deal heavy damage to Giants."
 		//
 		SOUTHERNHOS_NAME 		= "サウザンホスピタリティ"
 		SOUTHERNHOS_DESC 		= "通常のセントリーをフレイム・セントリーに置き換える 射程は短いが、ダメージは高い"
+		// TODO: Update! "Replaces normal Sentry with a short-ranged, high damage Flame Sentry."
 		//
 		JAG_NAME 				= "ジャグ"
 		JAG_DESC 				= "セントリーの射程距離が無制限になる"
+		// TODO: Update! "Replaces normal Sentry with a high-tech Support Sentry that weakens enemies, making them more vulnerable to damage. On Wrench Hit: Mark an enemy for death."
 		//
 		EUREKAEFFECT_NAME 		= "ユーレカエフェクト"
 		EUREKAEFFECT_DESC 		= "セントリーガンを運んでいる状態で、リロードキーを押すと、射程内の壁や天井に遠隔で設置できる"
@@ -3907,7 +3946,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		MACHINA_NAME 			= "マキナ"
 		MACHINA_DESC 			= "チャージにかかる時間は非常に長いが、フルチャージ状態ならタンクを瞬殺できる 敵を倒すとレイジメーターが溜まり、1秒間のクリティカルブーストが発動する このクリティカルブーストとフルチャージを組み合わせれば、遭遇するほとんどのタンクを瞬時に倒すことができる"
-		// TODO: Update! "Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Gaints and Tanks."
+		// TODO: Update! "Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Giants and Tanks."
 		//
 		HITMANSHEATMAKER_NAME 	= "ヒットマンズ・ヒートメーカー"
 		HITMANSHEATMAKER_DESC 	= "スコープを解除せずに連射出来る 体への攻撃はダメージを与えない"
@@ -3923,6 +3962,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BAZAARBARGAIN_NAME 		= "バザールバーゲン"
 		BAZAARBARGAIN_DESC 		= "同じクラスの敵を連続して倒すと発射速度が上がり、最大3回まで積み重なる 別のクラスの敵を倒すとコンボがリセットされます"
+		// TODO: Update! "On Kill: Your next shot is reloaded significantly faster and instantly receives a full power charge."
 		//
 		FORTIFIEDCOMPOUND_NAME 	= "強化コンパウンド"
 		FORTIFIEDCOMPOUND_DESC 	= "ハンツマンよりも与ダメージは低いが、発射速度が速く、濡れた敵に対しては貫通効果とクリティカルヒットが発生する"
@@ -4199,6 +4239,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		COWMANGLER_NAME			= "KOKVÆSTER 5000"
 		COWMANGLER_DESC			= "Lammer små fjender ved træf. Et opladet skud lammer fjender i længere tid. Hold Alt-Skyd nede for at oplade våbnet til et multiskud, hvilket resulterer i endnu længere lammelse."
+		// TODO: Update! "Gain a short burst of invulnerability on hit. Gain knockback immunity on kill. Hold Alt-Fire to supercharge the weapon and fire a teleportation projectile."
 		//
 		ORIGINAL_NAME			= "ORIGINALEN"
 		ORIGINAL_DESC			= "Hold skudknappen nede for at lade en salve på op til 5 raketter. Våbnet affyres automatisk, når det er ladt."
@@ -4243,6 +4284,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		PANICATTACK_NAME 		= "PANIKANFALDET" 
 		PANICATTACK_DESC 		= "Når du har brug for akut helbredelse. Gendanner straks op til 10.000 livspoint ved træf. Hvis du tager skade, mens dette våben er aktivt, er der en chance for, at det udløser en kortvarig selv-über." 
+		// TODO: Update! "Immediately restores up to 10,000 health on hit. Taking damage with this weapon active has a chance to trigger a brief self-uber. Damage increases as you become injured."
 		///
 		SHOVEL_NAME 			= "SKOVL"
 		SHOVEL_DESC 			= "Standard valg for pålidelig skade."
@@ -4259,7 +4301,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		MARKETGARDENER_NAME 	= "KRIGERENS KAMPSKOVL"
 		MARKETGARDENER_DESC 	= "Markant øget kritisk skade. Efter at have dræbt en fjende går du ind i en rasende tilstand og får ekstra liv, modstand og øget skade på alle angreb. Men hvis du rammer forbi, dør du med det samme."
-		// TODO: Update! "Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
+		// TODO: Update! "Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks."
 		//
 		DISCIPLINARYACTION_NAME = "DISCIPLINÆRSAGEN"
 		DISCIPLINARYACTION_DESC	= "Standardvalg til forsvar og mobilitet."
@@ -4327,7 +4369,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BACKSCRATCHER_NAME 		= "RYGKRADSEREN"
 		BACKSCRATCHER_DESC 		= "Gør dødelig skade bagfra. Efter et drab går du i en rasende tilstand og opnår ekstra bevægelseshastighed, modstand og øget skade på alle angreb."
-		// TODO: Update! "Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
+		// TODO: Update! "Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks."
 		//
 		VOLCANOFRAGMENT_NAME 	= "SKÆRPET VULKANFRAGMENT"
 		VOLCANOFRAGMENT_DESC 	= "Chance for at lamme fjender ved træf. Er også i stand til at brænde fjendtlige Pyros."
@@ -4373,9 +4415,11 @@ if ("SetScriptVersion" in getroottable())
 		///
 		STICKYBOMB_NAME 		= "KLÆBEBOMBEKASTER"
 		STICKYBOMB_DESC 		= "Standard valg for pålidelig skade. Kan placerer op til 50 bomber."
+		// TODO: Update! "Standard option for reliable damage. Able to place 30 bombs. Damage increases based on charge level."
 		//
 		SCOTTISHRES_NAME 		= "SKOTSKE MODSTAND"
 		SCOTTISHRES_DESC 		= "Bomben tager 5 sekunder om at blive armeret og fiser ud efter 10 sekunder, men kan gøre overvældende skade med god timing og en fuld opladning."
+		// TODO: Update! "Bomb takes 3 seconds to arm and detonates itself after 12 seconds, but can deal overwhelming damage with good timing and a full charge."
 		//
 		STICKYJUMPER_NAME 		= "KLÆBEHOPPEREN"
 		STICKYJUMPER_DESC 		= "Skaber et deaktiveringsfelt, der lammer alle fjender, som rammes af impulsen. (Minibosser er immune over for lammelse)."
@@ -4477,7 +4521,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		WARRIRORSSPIRIT_NAME 	= "KRIGERENS ÅND"
 		WARRIRORSSPIRIT_DESC 	= "Venstreklik for at springe højt op i luften. Land på fjender for at give massiv stomp skade. Fjerner al primær og sekundær ammunition."
-		// TODO: Update! "Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air. Active buff indicated by flashing \x07ffc400[!] \x01icon."
+		// TODO: Update! "Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air."
 		//
 		FISTSOFSTEEL_NAME 		= "STÅLNÆVERNE"
 		FISTSOFSTEEL_DESC 		= "Bliv til en gigantisk Heavy-handske med 250.000 helbred. Du er immun over for skubbekræfter og kan gøre massiv skade. Fjerner al primær og sekundær ammunition. Du kan kun modtage helbredelse fra madkasse genstande."
@@ -4520,12 +4564,15 @@ if ("SetScriptVersion" in getroottable())
 		//
 		GUNSLINGER_NAME 		= "ROPROTESEN"
 		GUNSLINGER_DESC	 		= "Kan bygge en sekundær Sentry. En tredobbelt slag-kombination kan henrette små fjender og gør massiv skade på giganter."
+		// TODO: Update! "Replaces normal Sentry with a long-range Railgun Sentry. Triple-punch combo can execute small enemies and deal heavy damage to Giants."
 		//
 		SOUTHERNHOS_NAME 		= "SYDENS GÆSTFRIHED"
 		SOUTHERNHOS_DESC 		= "Erstatter den normale Sentry med en Flamme Sentry. Kort rækkevidde, men høj skade."
+		// TODO: Update! "Replaces normal Sentry with a short-ranged, high damage Flame Sentry."
 		//
 		JAG_NAME 				= "JAGUAREN"
 		JAG_DESC 				= "Din Sentry har uendelig rækkevidde."
+		// TODO: Update! "Replaces normal Sentry with a high-tech Support Sentry that weakens enemies, making them more vulnerable to damage. On Wrench Hit: Mark an enemy for death."
 		//
 		EUREKAEFFECT_NAME 		= "EUREKA-EFFEKTEN"
 		EUREKAEFFECT_DESC 		= "Mens du bærer din Sentry Gun, kan du trykke på 'Genlad'-tasten for at placere den på en hvilken som helst væg eller loft inden for rækkevidde."
@@ -4583,7 +4630,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		MACHINA_NAME 			= "MACHINA"
 		MACHINA_DESC 			= "Meget langsom at lade op, men kan flænse Tanks ved fuld opladning. Drab på fjender fylder en raserimåler, der giver et 1-sekunds kritisk boost. Kombiner det kritiske boost med en fuld opladning for øjeblikkeligt at destruere de fleste Tanks, du møder."
-		// TODO: Update! "Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Gaints and Tanks."
+		// TODO: Update! "Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Giants and Tanks."
 		//
 		HITMANSHEATMAKER_NAME 	= "SNIGMORDERENS SAGSLUTTER"
 		HITMANSHEATMAKER_DESC 	= "Hurtigskydende uden at gå ud af sigtet. Ingen skade ved kropsskud."
@@ -4599,6 +4646,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BAZAARBARGAIN_NAME 		= "RØVERKØBET"
 		BAZAARBARGAIN_DESC 		= "Drab på fjender af samme klasse i træk øger din skudrate og kan stackes op til 3 gange. Drab på en anden klasse nulstiller din combo."
+		// TODO: Update! "On Kill: Your next shot is reloaded significantly faster and instantly receives a full power charge."
 		//
 		FORTIFIEDCOMPOUND_NAME 	= "SAMMENSATTE BEFÆSTNING"
 		FORTIFIEDCOMPOUND_DESC 	= "Reduceret skade i forhold til Jægeren, men skyder hurtigere, penetrerer fjender og gør kritiske slag på våde fjender."
@@ -4867,6 +4915,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		COWMANGLER_NAME			= "EXPRIMEVACAS 5000"
 		COWMANGLER_DESC			= "Inmoviliza a enemigos pequeños al impactar. Los disparos cargados inmovilizan durante más tiempo. Al mantener el disparo secundario se sorbecarga el arma, lanzando un multidisparo más inmovilizador."
+		// TODO: Update! "Gain a short burst of invulnerability on hit. Gain knockback immunity on kill. Hold Alt-Fire to supercharge the weapon and fire a teleportation projectile."
 		//
 		ORIGINAL_NAME			= "ORIGINAL"
 		ORIGINAL_DESC			= "Al mantener el botón de disparo se carga una ráfaga de 5 cohetes. Esta arma dispara automáticamente al recargarse."
@@ -4909,6 +4958,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		PANICATTACK_NAME 		= "ATAQUE DE PÁNICO" 
 		PANICATTACK_DESC 		= "Para cuando se necesita un botiquín de emergencia. Restaura 10 000 PS al instante al impactar. Recibir daño empuñando esta arma, puede otorgar invlunerabilidad temporal." 
+		// TODO: Update! "Immediately restores up to 10,000 health on hit. Taking damage with this weapon active has a chance to trigger a brief self-uber. Damage increases as you become injured."
 		///
 		SHOVEL_NAME 			= "PALA"
 		SHOVEL_DESC 			= "Una opción estándar para defensa y movilidad."
@@ -5033,9 +5083,11 @@ if ("SetScriptVersion" in getroottable())
 		///
 		STICKYBOMB_NAME 		= "LANZABOMBAS LAPA"
 		STICKYBOMB_DESC 		= "Una opción estándar para un daño contundente. Permite colocar hasta 50 bombas."
+		// TODO: Update! "Standard option for reliable damage. Able to place 30 bombs. Damage increases based on charge level."
 		//
 		SCOTTISHRES_NAME 		= "RESISTENCIA ESCOCESA"
 		SCOTTISHRES_DESC 		= "Cada bomba tarda 5 segundos en armarse y empieza a chisporrotear pasados 10 segundos, pero puede causar buena cantidad de daño con buena precisión y una carga completa."
+		// TODO: Update! "Bomb takes 3 seconds to arm and detonates itself after 12 seconds, but can deal overwhelming damage with good timing and a full charge."
 		//
 		STICKYJUMPER_NAME 		= "SALTALAPAS"
 		STICKYJUMPER_DESC 		= "Crea un campo inhibidor, aturdiendo a todos los enemigos que lo pisen (los minijefes son inmunes a esto)."
@@ -5172,12 +5224,15 @@ if ("SetScriptVersion" in getroottable())
 		//
 		GUNSLINGER_NAME 		= "FORAJIDO"
 		GUNSLINGER_DESC	 		= "Permite construir una segunda arma centinela. El combo del triple puñetazo puede matar a enemigos pequeños y causar daño a gigantes."
+		// TODO: Update! "Replaces normal Sentry with a long-range Railgun Sentry. Triple-punch combo can execute small enemies and deal heavy damage to Giants."
 		//
 		SOUTHERNHOS_NAME 		= "HOSPITALIDAD SUREÑA"
 		SOUTHERNHOS_DESC 		= "La centinela ahora es un lanzallamas. Menos alcance, pero más daño."
+		// TODO: Update! "Replaces normal Sentry with a short-ranged, high damage Flame Sentry."
 		//
 		JAG_NAME 				= "MANITAS"
 		JAG_DESC 				= "Tu arma centinela no tiene límite de alcance."
+		// TODO: Update! "Replaces normal Sentry with a high-tech Support Sentry that weakens enemies, making them more vulnerable to damage. On Wrench Hit: Mark an enemy for death."
 		//
 		EUREKAEFFECT_NAME 		= "EFECTO EUREKA"
 		EUREKAEFFECT_DESC 		= "Al transportar tu arma centinela, pulsa la tecla de «Recargar» para colocarla de forma remota en cualquier muro o techo a tu alcance."
@@ -5245,6 +5300,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BAZAARBARGAIN_NAME 		= "GANGA DEL BAZAR"
 		BAZAARBARGAIN_DESC 		= "Al matar enemigos de la misma clase seguidos, aumenta la velocidad de disparo, hasta 3. Al matar una clase distinta se reinicia el combo."
+		// TODO: Update! "On Kill: Your next shot is reloaded significantly faster and instantly receives a full power charge."
 		//
 		FORTIFIEDCOMPOUND_NAME 	= "COMPUESTO FORTIFICADO"
 		FORTIFIEDCOMPOUND_DESC 	= "Hace menos daño que el Cazador, pero dispara más rápido, atraviesa y causa daño crítico en enemigos mojados."
@@ -5511,6 +5567,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		COWMANGLER_NAME			= "要牛命5000"
 		COWMANGLER_DESC			= "擊中能使目標動彈不得,蓄力攻擊能控制更長時間，按住次要開火鍵來發射多重攻擊，並額外加長控制時間."
+		// TODO: Update! "Gain a short burst of invulnerability on hit. Gain knockback immunity on kill. Hold Alt-Fire to supercharge the weapon and fire a teleportation projectile."
 		//
 		ORIGINAL_NAME			= "原型雷神火砲"
 		ORIGINAL_DESC			= "按住開火鍵以進行一次最多4發火箭的速射. 此武器在已裝填的情況下會自動開火."
@@ -5555,6 +5612,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		PANICATTACK_NAME 		= "背水散彈槍" 
 		PANICATTACK_DESC 		= "需要瞬間治療的選擇，擊中時最多能恢復10000點生命，使用此武器時受傷有機會短暫進入uber." 
+		// TODO: Update! "Immediately restores up to 10,000 health on hit. Taking damage with this weapon active has a chance to trigger a brief self-uber. Damage increases as you become injured."
 		///
 		SHOVEL_NAME 			= "鐵鍬"
 		SHOVEL_DESC 			= "防禦和機動性的標準選擇."
@@ -5571,7 +5629,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		MARKETGARDENER_NAME 	= "市場花園園丁"
 		MARKETGARDENER_DESC 	= "造成高額加成的暴擊傷害，殺死敵人可進入狂暴，獲得額外生命，抗性和傷害加成，但揮空會殺死你."
-		// TODO: Update! "Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
+		// TODO: Update! "Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks."
 		//
 		DISCIPLINARYACTION_NAME = "紀律行動"
 		DISCIPLINARYACTION_DESC	= "防禦和機動性的標準選擇."
@@ -5638,7 +5696,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BACKSCRATCHER_NAME 		= "不求人"
 		BACKSCRATCHER_DESC 		= "背後攻擊能造成致命傷害，擊殺可進入狂暴，獲得額外速度，抗性和傷害."
-		// TODO: Update! "Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks. Active buffs indicated by flashing \x07ffc400[!] \x01icon."
+		// TODO: Update! "Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks."
 		//
 		VOLCANOFRAGMENT_NAME 	= "熔岩巨斧"
 		VOLCANOFRAGMENT_DESC 	= "有機會擊暈敵人."
@@ -5684,9 +5742,11 @@ if ("SetScriptVersion" in getroottable())
 		///
 		STICKYBOMB_NAME 		= "黏性炸彈發射器"
 		STICKYBOMB_DESC 		= "能造成不俗傷害的武器. 可以放置50發黏彈."
+		// TODO: Update! "Standard option for reliable damage. Able to place 30 bombs. Damage increases based on charge level."
 		//
 		SCOTTISHRES_NAME 		= "蘇格蘭式防禦黏彈"
 		SCOTTISHRES_DESC 		= "黏彈需要5秒鐘準備且10秒後自毀，但擊中能造成巨額傷害."
+		// TODO: Update! "Bomb takes 3 seconds to arm and detonates itself after 12 seconds, but can deal overwhelming damage with good timing and a full charge."
 		//
 		STICKYJUMPER_NAME 		= "黏彈跳躍者"
 		STICKYJUMPER_DESC 		= "製造一個靜止力場，擊暈範圍內所有敵人（小領袖敵人免疫此效果）"
@@ -5788,7 +5848,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		WARRIRORSSPIRIT_NAME 	= "戰士之魂"
 		WARRIRORSSPIRIT_DESC 	= "左鍵可以躍至高空，落到目標時造成巨額摔傷. 移除所有主武器和副武器的彈藥."
-		// TODO: Update! "Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air. Active buff indicated by flashing \x07ffc400[!] \x01icon."
+		// TODO: Update! "Left-click to leap high into the air. Causes a slam attack in a small area when landing. On Kill: Temporarily able to Quick-Slam by crouching in air."
 		//
 		FISTSOFSTEEL_NAME 		= "鐵拳"
 		FISTSOFSTEEL_DESC 		= "變成一個擁有250000生命的巨型重裝拳擊手，獲得免疫擊退且能造成高額傷害，移除所有主武器和副武器彈藥，只能從午餐盒類物品來回血."
@@ -5831,12 +5891,15 @@ if ("SetScriptVersion" in getroottable())
 		//
 		GUNSLINGER_NAME 		= "機械槍手"
 		GUNSLINGER_DESC	 		= "允許建造第二台步哨，三拳連擊可以處決小型機器人和對巨型機器人造成高額傷害."
+		// TODO: Update! "Replaces normal Sentry with a long-range Railgun Sentry. Triple-punch combo can execute small enemies and deal heavy damage to Giants."
 		//
 		SOUTHERNHOS_NAME 		= "南方盛情"
 		SOUTHERNHOS_DESC 		= "步哨改為火焰步哨，射程短但傷害高."
+		// TODO: Update! "Replaces normal Sentry with a short-ranged, high damage Flame Sentry."
 		//
 		JAG_NAME 				= "鉤爪扳手"
 		JAG_DESC 				= "步哨擁有無限範圍."
+		// TODO: Update! "Replaces normal Sentry with a high-tech Support Sentry that weakens enemies, making them more vulnerable to damage. On Wrench Hit: Mark an enemy for death."
 		//
 		EUREKAEFFECT_NAME 		= "靈光乍現"
 		EUREKAEFFECT_DESC 		= "當你搬運你的步哨時，按下裝填鍵以在任何牆壁或天花板放置步哨."
@@ -5893,7 +5956,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		MACHINA_NAME 			= "神授貫殺獵槍"
 		MACHINA_DESC 			= "充能速度很慢，但滿充能可對坦克造成高額傷害，擊殺獲得1秒暴擊加成，在暴擊加成下滿充能射擊能重創坦克."
-		// TODO: Update! "Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Gaints and Tanks."
+		// TODO: Update! "Build Focus by killing enemies. Activate Focus with 'Reload' key to gain critboost and drastically increased damage against Giants and Tanks."
 		//
 		HITMANSHEATMAKER_NAME 	= "全面狙殺令"
 		HITMANSHEATMAKER_DESC 	= "高速連射且不用開鏡，命中身體沒有傷害."
@@ -5909,6 +5972,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BAZAARBARGAIN_NAME 		= "巴剎長槍"
 		BAZAARBARGAIN_DESC 		= "擊殺相同職業的敵人能加快開火速度，最多疊加3次，擊殺其他兵種會重置."
+		// TODO: Update! "On Kill: Your next shot is reloaded significantly faster and instantly receives a full power charge."
 		//
 		FORTIFIEDCOMPOUND_NAME 	= "強化組合弓"
 		FORTIFIEDCOMPOUND_DESC 	= "傷害低於獵人長弓, 但開火速度更快，能穿透和對打濕的敵人暴擊."
