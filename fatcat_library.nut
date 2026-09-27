@@ -4869,7 +4869,7 @@ function CTFBot::UndoReprogram( kill = true )
 
 	if (kill)
 	{
-		Suicide()
+		// Suicide()
 		SetHealth(0)
 		TakeDamage(GetMaxHealth()*100, DMG_GENERIC, FirstEntity())
 	}

@@ -204,11 +204,11 @@ function BlutsuagerHit( owner, victim )
 
 	local duration = BlutsaugerSettings.duration
 
-	foreach (attrib, value in BlutsaugerAttributes)
-		victim.AddCustomAttribute(attrib, value, duration)
-
 	victim.AddCondEx(TF_COND_CRITBOOSTED_PUMPKIN, duration, owner)
 	victim.AddCondEx(TF_COND_REPROGRAMMED, duration, owner)
+
+	foreach (attrib, value in BlutsaugerAttributes)
+		victim.AddCustomAttribute(attrib, value, duration)
 
 	TranslateToChatAll("REPROG_BOT_MESSAGE", owner.GetUserName(), victim.GetUserName())
 
@@ -259,6 +259,8 @@ function BlutsuagerHit( owner, victim )
 		self.UndoReprogram()
 	}
 	GetScope(victim).OnDeath <- OnDeath
+
+	victim.AddThink(ReprogrammedThink, "ReprogrammedThink", 0.25)
 
 	EmitSoundEx({
 		sound_name = BlutsaugerSettings.sound
@@ -336,8 +338,8 @@ function GameplayThink()
 
 		if (bot.IsReprogrammed())
 		{
-			if ("EndReprogramTime" in scope && scope.EndReprogramTime <= Time())
-				bot.UndoReprogram()
+			// if ("EndReprogramTime" in scope && scope.EndReprogramTime <= Time())
+				// bot.UndoReprogram()
 			if (!bot.HasBotTag("RedSupport"))
 			{
 				if (bot.InRespawnRoom())
@@ -696,18 +698,25 @@ RegisterDamageCallback("tf_zombie", "GameplaySkeletons", function( params ) {
 	local victim = params.victim
 	local attacker = params.attacker
 	params.early_out <- true
-	// if (victim.IsValid())
-	// 	SendGlobalGameEvent("npc_hurt", {
-	// 		entindex = victim.entindex()
-	// 		health = victim.GetHealth()
-	// 		attacker_player = attacker.IsPlayer() ? attacker.GetUserID() : -1
-	// 		weaponid = -1
-	// 		damageamount = 5
-	// 		crit = false
-	// 		boss = 0
-	// 	})
 	victim.TakeDamageCustom(null, attacker, null, Vector(), Vector(), 5.0, DMG_GENERIC, TF_DMG_CUSTOM_NO_CALLBACKS)
 })
+
+/** 
+ * @var {CTFPlayer} self
+ * @var {table} this
+ */
+function ROOT::ReprogrammedThink()
+{
+	if(!IsValidPlayer(self))
+		return
+
+	local scope = GetScope(self)
+
+	if(!("EndReprogramTime" in scope) || scope.EndReprogramTime <= Time())
+		self.UndoReprogram()
+
+	return 0.25
+}
 
 
 if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
