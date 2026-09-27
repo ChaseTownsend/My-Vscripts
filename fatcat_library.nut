@@ -6910,7 +6910,7 @@ function ROOT::PrintBetter( player, message, level = HUD_PRINTTALK )
 		message = "null"
 	if (typeof message != "string")
 	{
-		message = message
+		message = "" + message
 		if(message && "tostring" in message)
 			message = message.tostring()
 	}
