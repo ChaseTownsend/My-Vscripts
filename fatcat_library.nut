@@ -6914,7 +6914,6 @@ function ROOT::PrintBetter( player, message, level = HUD_PRINTTALK )
 		if(message && "tostring" in message)
 			message = message.tostring()
 	}
-		message = message.tostring()
 	local PRINT = function( m ) {
 		if (m.len() > MAX_CLIENT_PRINT_DATA)
 		{
