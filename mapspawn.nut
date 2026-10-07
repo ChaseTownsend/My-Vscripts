@@ -1,1 +1,3 @@
-IncludeScript("custom_weapons_loader.nut")
+
+if(IsServer())
+    IncludeScript("custom_weapons_loader.nut")
