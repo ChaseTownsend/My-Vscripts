@@ -1,7 +1,7 @@
 if (!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && FatCatLibForce == true))
 	IncludeScript("fatcat_library")
 
-SetScriptVersion("GameplayApplications", "5.5.6")
+SetScriptVersion("GameplayApplications", "5.6.0")
 
 local _Thinker = CreateThinker("Thinker_GameplayApplications", "GameplayThink", THINKER_PERSIST)
 
@@ -318,21 +318,6 @@ function GameplayThink()
 		if (scope.LastVels.len() > 6)
 			scope.LastVels.remove(0)
 
-		local active = bot.GetActiveWeapon()
-
-		bot.SetGravity(1.0)
-		bot.MultiplyGravity(bot.HookMultAttributes("mult gravity"))
-
-		if (active)
-			bot.MultiplyGravity(active.GetMultAttribute("mult gravity active"))
-
-		if (bot.IsCrouching())
-		{
-			bot.MultiplyGravity(bot.HookMultAttributes("mult gravity crouching"))
-			if (active)
-				bot.MultiplyGravity(active.GetMultAttribute("mult gravity crouching active"))
-		}
-
 		if ("Timescale" in ROOT)
 			bot.AddCustomAttribute("voice pitch scale", Timescale, -1)
 
@@ -405,9 +390,6 @@ function GameplayThink()
 			Human.AddCustomAttribute("voice pitch scale", Timescale, -1)
 		}
 
-		// 
-		Human.SetGravity(1.0)
-
 		/**@type {CTFWeaponBase|null} */
 		local primary 		= Human.GetWeaponInSlotNew(SLOT_PRIMARY)
 		/**@type {integer} */
@@ -417,18 +399,6 @@ function GameplayThink()
 		/**@type {integer} */
 		local activeIDX 	= Human.GetActiveWeaponIDX()
 		
-		Human.MultiplyGravity(Human.HookMultAttributes("mult gravity"))
-
-		if (active)
-			Human.MultiplyGravity(active.GetMultAttribute("mult gravity active"))
-
-		if (Human.IsCrouching())
-		{
-			Human.MultiplyGravity(Human.HookMultAttributes("mult gravity crouching"))
-			if (active)
-				Human.MultiplyGravity(active.GetMultAttribute("mult gravity crouching active"))
-		}
-			
 		if (activeIDX == TF_WEAPON_TOMISLAV)
 			Human.TranslateToHud("TOMISLAV_HEAT", ("Hits" in GetScope(active) ? GetScope(active).Hits/10 : -1))
 
@@ -718,7 +688,6 @@ function ROOT::ReprogrammedThink()
 	return 0.25
 }
 
-
 if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 ::GameplayEvents <- {
 	function OnScriptEvent_HumanDeath( params )
@@ -758,33 +727,10 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 			attacker.SayChatterMessage(victim)
 			return
 		}
-		/* local weaponIDX = params.weaponIDX
-		local logname = params.logname
-
-		if (!IsInArray(weaponIDX, SpellWeapons) || !IsInArray(logname, SpellWeapons))
-			return
-
-		local spell_book = attacker.GetSpellBook()
-		if (!spell_book) return
-
-		local scope = GetScope(spell_book)
-
-		if (!("m_iKills" in scope))
-			scope.m_iKills <- 0
-
-		scope.m_iKills++
-
-		switch (weaponIDX)
-		{
-			case TF_WEAPON_LOLLICHOP: { spell_book.ModifySpells(TF_SPELL_METEOR, 2, scope.m_iKills, 10) ; return }
-			case TF_WEAPON_SHORT_CIRCUT: { spell_book.ModifySpells(TF_SPELL_LIGHTNING, 2, scope.m_iKills, 10) ; return }
-			case TF_WEAPON_CLAIDHEAMH_MOR: { spell_book.ModifySpells(TF_SPELL_MONOCULUS, 2, scope.m_iKills, 10) ; return }
-			case TF_WEAPON_UNARMED_COMBAT: { spell_book.ModifySpells(TF_SPELL_SKELETON, 2, scope.m_iKills, 10) ; return }
-			case TF_WEAPON_CONSCIENTIOUS_OBJECTOR: { if (scope.m_iKills % 10 == 0 && spell_book.GetSpellCharges().tointeger() != SpellDefaults[spell_book.GetSpellIndex()+2].tointeger()) { attacker.RollSpell() } ; return }
-		} */
 	}
 	function OnScriptEvent_HumanResupply( params )
 	{
+		/** @type {CTFPlayer} */
 		local player = params.player
 
 		if (!IsUsingSpells())
@@ -792,19 +738,6 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 
 		if (player.GetPlayerClass() != TF_CLASS_ENGINEER)
 			player.RemoveAllObjects(true)
-
-		local meleeIDX = player.GetWeaponIDXInSlotNew(SLOT_MELEE)
-		if (meleeIDX == TF_WEAPON_FIST_OF_STEEL)
-			RunWithDelay(0.1, @() player.TransformGHeavy())
-		else
-			RunWithDelay(0.1, @() player.UndoGHeavy())
-	}
-	function OnScriptEvent_HumanResupply( params )
-	{
-		if (!params.player)
-			return
-		/** @type {CTFPlayer} */
-		local player = params.player
 
 		RunWithDelay(0.1, @() player.FixAmmo())
 		local spellbook = player.GetSpellBook()
@@ -837,6 +770,8 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 			player.AddThink(SlowDownThink, "SlowDownAura", 0.5)
 		}
 		
+		local GHeavy = false
+
 		foreach (/**@type {CTFWeaponBase} */weapon in player.GetAllItems())
 		{
 			if (weapon.IsWearable())
@@ -872,6 +807,18 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 					wep_scope.Hits = 0
 
 				player.ResetHealth()
+
+				local function TomislavThink()
+				{
+					local active = self.GetActiveWeapon()
+					if(!active)
+						return 0.5
+					if(active.GetIDX() != TF_WEAPON_TOMISLAV)
+						return 0.25
+					self.TranslateToHud("TOMISLAV_HEAT", ("Hits" in GetScope(active) ? GetScope(active).Hits/10 : -1))
+				}
+
+				player.AddThink(TomislavThink, "TomislavThink")
 			}
 
 			if (weapon.GetIDX() == TF_WEAPON_BLUTSAUGER)
@@ -928,7 +875,16 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 				}
 				RunWithDelay(0.1, @() player.AddThink(BlutsaugerThink, "BlutsaugerDisrupt", 0.15))
 			}
+
+			if (weapon.GetIDX() == TF_WEAPON_FIST_OF_STEEL) 
+			{
+				GHeavy = true
+				RunWithDelay(0.1, @() player.TransformGHeavy())
+			}
 		}
+
+		if (GHeavy == false)
+			RunWithDelay(0.1, @() player.UndoGHeavy())
 	}
 	function OnScriptEvent_BotSpawn( params )
 	{
@@ -988,21 +944,29 @@ if ("GameplayEvents" in ROOT) ::GameplayEvents.clear()
 		switch (name)
 		{
 		case "coaltown":
-		case "ghost": 		{ ConfusionEnt.SetAbsOrigin(Vector(50, 		2850, 	250) ) 	}
+		case "ghost": 		
+			ConfusionEnt.SetAbsOrigin(Vector(50, 2850, 250))
 		break;
-		case "rottenburg": 	{ ConfusionEnt.SetAbsOrigin(Vector(220, 	-2250, 	-500) ) }
+		case "rottenburg": 	
+			ConfusionEnt.SetAbsOrigin(Vector(220, -2250, -500))
 		break;
-		case "mannhattan": 	{ ConfusionEnt.SetAbsOrigin(Vector(-1200, 	-3000, 	-280) ) }
+		case "mannhattan": 	
+			ConfusionEnt.SetAbsOrigin(Vector(-1200, -3000, -280))
 		break;
-		case "mannworks": 	{ ConfusionEnt.SetAbsOrigin(Vector(600, 	2200, 	330) ) 	}
+		case "mannworks": 	
+			ConfusionEnt.SetAbsOrigin(Vector(600, 2200, 330))
 		break;
-		case "decoy": 		{ ConfusionEnt.SetAbsOrigin(Vector(0, 		2300, 	420) ) 	}
+		case "decoy": 		
+			ConfusionEnt.SetAbsOrigin(Vector(0, 2300, 420))
 		break;
-		case "bigrock": 	{ ConfusionEnt.SetAbsOrigin(Vector(-1500, 	4600,	130) ) 	}
+		case "bigrock": 	
+			ConfusionEnt.SetAbsOrigin(Vector(-1500, 4600, 130))
 		break;
-		case "redstone": 	{ ConfusionEnt.SetAbsOrigin(Vector(420, 	5400, 	-380) ) 	}
+		case "redstone": 	
+			ConfusionEnt.SetAbsOrigin(Vector(420, 5400, -380))
 		break;
-		case "titan": 		{ ConfusionEnt.SetAbsOrigin(Vector(-9700, 	-250, 	200) ) 	}
+		case "titan": 		
+			ConfusionEnt.SetAbsOrigin(Vector(-9700, -250, 200)) 
 		break;
 		default: throw format("Unknown Map Name \"%s\"", GetMapName())
 		}
