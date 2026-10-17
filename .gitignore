@@ -14,6 +14,7 @@ attribs/
 lib/
 modules/
 fixes/
+vscript_io/
 custom_weapons_loader.nut
 mapspawn.nut
 

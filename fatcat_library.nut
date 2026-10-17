@@ -290,7 +290,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format) (GMT-5)
-if (!SetLibraryVersion("09.26.2026.22", 0))
+if (!SetLibraryVersion("10.16.2026.22", 0))
 	return
 
 SetLibrarySettings({})
@@ -12028,7 +12028,7 @@ function ROOT::PostPlayerSpawn( player )
 	/**
 	 * @param {table} params
 	 */
-	function OnScriptHook_player_postspawn( params )
+	function OnScriptEvent_player_postspawn( params )
 	{
 		FireScriptEvent(params.player.IsBot() ? "PostBotSpawn" : "PostHumanSpawn", params)
 	}
