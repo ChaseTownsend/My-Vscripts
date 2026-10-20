@@ -8,7 +8,15 @@ testing/supertest/
 testing/dont_commit
 tankextensions/
 tankextensions*.nut
-Shenanigans-Inc/*
+
+# Shenanigans Inc
+attribs/
+lib/
+modules/
+fixes/
+vscript_io/
+custom_weapons_loader.nut
+mapspawn.nut
 
 # 
 .vscode/analyze_strings.py

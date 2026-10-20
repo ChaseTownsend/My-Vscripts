@@ -290,7 +290,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format) (GMT-5)
-if (!SetLibraryVersion("10.08.2026.24", 0))
+if (!SetLibraryVersion("10.16.2026.22", 0))
 	return
 
 SetLibrarySettings({})
@@ -6909,7 +6909,11 @@ function ROOT::PrintBetter( player, message, level = HUD_PRINTTALK )
 	if (message == null)
 		message = "null"
 	if (typeof message != "string")
-		message = message.tostring()
+	{
+		message = "" + message
+		if(message && "tostring" in message)
+			message = message.tostring()
+	}
 	local PRINT = function( m ) {
 		if (m.len() > MAX_CLIENT_PRINT_DATA)
 		{
@@ -12048,7 +12052,7 @@ function ROOT::PostPlayerSpawn( player )
 	/**
 	 * @param {table} params
 	 */
-	function OnScriptHook_player_postspawn( params )
+	function OnScriptEvent_player_postspawn( params )
 	{
 		FireScriptEvent(params.player.IsBot() ? "PostBotSpawn" : "PostHumanSpawn", params)
 	}
