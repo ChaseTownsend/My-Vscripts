@@ -10385,6 +10385,29 @@ function InfiniteAmmoThink()
 /** 
  * @var {CTFPlayer} self
  */
+function GravityThink()
+{
+	local active = self.GetActiveWeapon()
+
+	self.SetGravity(1.0)
+	self.MultiplyGravity(self.HookMultAttributes("mult gravity"))
+
+	if (active)
+		self.MultiplyGravity(active.GetScriptAttribute("mult gravity active", 1.0))
+
+	if (self.IsCrouching())
+	{
+		self.MultiplyGravity(self.HookMultAttributes("mult gravity crouching"))
+		if (active)
+			self.MultiplyGravity(active.GetScriptAttribute("mult gravity crouching active", 1.0))
+	}
+
+	return 0.05
+}
+
+/** 
+ * @var {CTFPlayer} self
+ */
 function CorrosionThink()
 {
 	if (!self.HasCorrosion())
@@ -11411,6 +11434,7 @@ function ROOT::PostPlayerSpawn( player )
 		player.AddThink(FireWeaponCheck, "FireWeaponCheck")
 		player.AddThink(SwapWeaponThink, "SwapWeaponThink")
 		player.AddThink(InfiniteAmmoThink, "InfiniteAmmoThink")
+		player.AddThink(GravityThink, "GravityThink")
 		if (!player.IsBot())
 		{
 			if ("PreservedThinks" in GetScope(player) && GetScope(player).PreservedThinks.len() != 0)
@@ -13544,7 +13568,7 @@ RegisterAdminTrigger("bot", function( player, ... ) {
 			if (bot.IsDead())
 				break
 
-			Assert(i <= 19, "Failed Finding a suitiable bot for Johhny")
+			Assert(i <= 19, "Failed Finding a suitiable bot for Custom Bot")
 		}
 	}
 
@@ -13569,15 +13593,17 @@ RegisterAdminTrigger("bot", function( player, ... ) {
 	else
 		SetFakeClientConVarValue(bot, "name", "Johnny Silverhand")
 
-	if("teamnum" in preset)
-		bot.SetTeam(preset.teamnum)
-	else
-		bot.SetTeam(TF_TEAM_BLUE)
+	RunWithDelay(TICK_DUR, function() {
+		if("teamnum" in preset)
+			bot.SetTeam(preset.teamnum)
+		else
+			bot.SetTeam(TF_TEAM_BLUE)
 
-	if("playerclass" in preset)
-		bot.ForceChangeClass(preset.playerclass, true)
-	else
-		bot.ForceChangeClass(TF_CLASS_HEAVYWEAPONS, true)
+		if("playerclass" in preset)
+			bot.ForceChangeClass(preset.playerclass, true)
+		else
+			bot.ForceChangeClass(TF_CLASS_HEAVYWEAPONS, true)
+	})
 
 	local function func() {
 		SpawnJohhny(bot, player.GetEyeTrace().pos + Vector(0, 0, 16), vargv.find("giant") != null, preset)
