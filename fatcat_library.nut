@@ -3461,17 +3461,17 @@ function CTFPlayer::FixAmmo()
 		if (weapon.IsWearable())
 			continue
 		weapon.SetClip1(0)
-		if (weapon.HasAdditiveAttribute("auto fires full clip penalty") || weapon.HasAdditiveAttribute("auto fires full clip"))
+		if (weapon.GetAttribute("auto fires full clip penalty", 0) || weapon.GetAttribute("auto fires full clip", 0))
 			weapon.SetClip1(0)
 		else 
 			weapon.SetClip1(weapon.GetMaxClip1())
 
-		if (weapon.HasAdditiveAttribute("mod use metal ammo type"))
+		if (weapon.GetAttribute("mod use metal ammo type", 0))
 			SetPropInt(weapon, "m_iPrimaryAmmoType", TF_AMMO_METAL)
 
-		if (weapon.HasAdditiveAttribute("throwable starts empty"))
+		if (weapon.GetScriptAttribute("throwable starts empty", 0))
 			SetThrowableAmmo(0)
-		if (weapon.HasAdditiveAttribute("throwable start charge"))
+		if (weapon.GetScriptAttribute("throwable start charge", 0))
 			SetThrowableCharge(weapon.GetScriptAttribute("throwable start charge", 0))
 			
 
@@ -5075,6 +5075,46 @@ function ROOT::GET_CUSTOM_ATTRIBUTE( attrib )
  */
 // DEFINE_CUSTOM_ATTRIBUTE("infinite ammo")
 // DEFINE_CUSTOM_ATTRIBUTE("infinite reserve ammo")
+
+
+/**
+ * Prevent swaping to a weapon
+ */
+// DEFINE_CUSTOM_ATTRIBUTE("cannot deploy slot # when active")
+
+/**
+ * Force a specific slot on spawn
+ */
+// DEFINE_CUSTOM_ATTRIBUTE("force slot on spawn")
+
+/**
+ * Chance to just whiff an attack
+ */
+// DEFINE_CUSTOM_ATTRIBUTE("chance to miss")
+
+/**
+ * Apply Conditions on spawn
+ */
+// DEFINE_CUSTOM_ATTRIBUTE("cond on spawn")
+// DEFINE_CUSTOM_ATTRIBUTE("cond on spawn duration")
+
+/**
+ * Gravity Attributes
+ */
+// DEFINE_CUSTOM_ATTRIBUTE("mult gravity")
+// DEFINE_CUSTOM_ATTRIBUTE("mult gravity active")
+// DEFINE_CUSTOM_ATTRIBUTE("mult gravity crouching")
+// DEFINE_CUSTOM_ATTRIBUTE("mult gravity crouching active")
+
+/**
+ * Slam Attributes
+ */
+// DEFINE_CUSTOM_ATTRIBUTE("fall damage causes aoe")
+// DEFINE_CUSTOM_ATTRIBUTE("fall damage causes aoe min speed")
+// DEFINE_CUSTOM_ATTRIBUTE("fall damage causes aoe radius")
+// DEFINE_CUSTOM_ATTRIBUTE("fall damage causes aoe dmg mult")
+
+
 
 /*
   =====================================
