@@ -290,7 +290,7 @@ function ROOT::ToggleForceFlag( bool )
 	::FatCatLibForce <- bool
 
 // month.day.year.hour(24format) (GMT-5)
-if (!SetLibraryVersion("10.16.2026.22", 0))
+if (!SetLibraryVersion("10.24.2026.20", 0))
 	return
 
 SetLibrarySettings({})
