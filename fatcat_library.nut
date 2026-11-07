@@ -893,6 +893,7 @@ function ROOT::GetRuneCondition( rune )
 ::TF_WPN_TYPE_ITEM4				<- 14
 
 // i aint remaking this shit
+// so i "copied" from valve
 enum ProjectileType_t
 {
 	TF_PROJECTILE_NONE,
@@ -6657,6 +6658,108 @@ function CTFWeaponBase::ApplyOnHitAttributes( pVictimBaseEntity, pAttacker, info
   === END OF WEAPON METHODS ===
   =============================
 */
+
+
+/*
+  ===================================
+  === START OF ALL ENTITY METHODS ===
+  ===================================
+*/
+
+// if(IsTF2()) {
+if(false) {
+
+class ::ThinkData {
+	/** @type {function} */
+	func = null
+	/** @type {float} */
+	last_call = null
+
+	constructor(_func, delay = 0.0) {
+		this.func = _func
+		if(delay)
+			this.last_call = Time() + delay
+		else
+			this.last_call = Time() + TICK_DUR
+	}
+	
+	function Ready()
+		return last_call <= Time()
+}
+
+function CBaseEntity::SetupContextThinks() {
+	local scope = GetScope(this)
+	if(!("__ContextThinks__" in scope))
+		scope.__ContextThinks__ <- {}
+	else
+		scope.__ContextThinks__.clear()
+	
+	if(!("__ContextThink__" in scope)) {
+		/** 
+		 * @var {CBaseEntity} self
+		 */
+		local function ContextThink() {
+			local toremove = []
+			foreach(/** @type {string} */key, /** @type {ThinkData} */data in __ContextThinks__) {
+				if(data.Ready()) {
+					local ret = data.func.call(scope, self)
+					if(ret = null || ret < 0)
+						toremove.append(key)
+				}
+			}
+
+			foreach(key in toremove) {
+				delete __ContextThinks__[key]
+			}
+			return -1
+		}
+		scope.__ContextThink__ <- ContextThink
+		AddThinkToEnt(this, "__ContextThink__")
+	}
+}
+/** 
+ * @type {function}
+ * @param {string} name
+ * @param {function} func
+ * @param {float} delay
+ */
+function CBaseEntity::SetContextThink(name, func, delay) {
+	local scope = GetScope(this)
+	if(!("__ContextThinks__" in scope))
+		SetupContextThinks()
+}
+/** 
+ * @type {function}
+ * @param {string} name
+ * @param {function} func
+ * @param {float} delay
+ */
+function CBaseEntity::RemoveContextThink(name, func, delay) {
+	local scope = GetScope(this)
+	if(!("__ContextThinks__" in scope))
+		SetupContextThinks()
+}
+
+foreach ( key, value in CBaseEntity )
+{
+	if ( typeof( value ) == "function" )
+	{
+		foreach(clas in [CBaseAnimating, CBaseCombatWeapon, CTFWeaponBase, CBaseFlex, CBaseCombatCharacter, CBasePlayer, CEconEntity, /* CTFPlayer, CTFBot, */ CEnvEntityMaker, CFuncTrackTrain, CSceneEntity, NextBotCombatCharacter, CTFBaseBoss, ]) {
+			if(key in clas && clas[key] == value)
+				continue
+			clas[key] <- value
+			printf("Formatted Function %s to %s\n", key, clas.tostring())
+		}
+	}
+}
+
+}
+/*
+  =================================
+  === END OF ALL ENTITY METHODS ===
+  =================================
+*/
+
 
 /**
  * @param {integer} ItemID

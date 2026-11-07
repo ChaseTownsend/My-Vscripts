@@ -93,7 +93,7 @@ enum MissionType
 	MISSION_REPROGRAMMED,			// MvM: robot has been hacked and will do bad things to their team
 }
 
-class CTakeDamageInfo {
+class ::CTakeDamageInfo {
 	m_vecDamageForce			= Vector()
 	m_vecDamagePosition	 		= Vector()
 	m_vecReportedPosition   	= Vector()	// Position players are told damage is coming from
@@ -3275,7 +3275,7 @@ function CTFPlayer::OnTakeDamage_Alive( info )
 	/**
 	 * @type {integer}
 	 */
-	local bBleed = ( ( InCond( TF_COND_DISGUISED ) == false || GetDisguiseTeam() != pAttacker.GetTeam() ) && !IsInvulnerable() )
+	local bBleed = ( ( InCond( TF_COND_DISGUISED ) == false || GetDisguiseTeam() != pAttacker.GetTeam() ) && !IsInvulnerable() ).tointeger()
 
 	// No bleed effects for DMG_GENERIC
 	if ( info.GetDamageType() == DMG_GENERIC )
@@ -4658,5 +4658,5 @@ function CTFPlayer::OnTakeDamage( inputInfo )
 		// g_pPasstimeLogic->OnBallCarrierDamaged( this, pTFAttacker, info ) // TODO
 	}
 
-	return info.GetDamage()
+	return info.GetDamage().tointeger()
 }
