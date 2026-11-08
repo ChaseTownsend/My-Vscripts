@@ -368,7 +368,7 @@ if ("SetScriptVersion" in getroottable())
 		NINEIRON_DESC 			= "Has a massive swing arc, able to hit multiple enemies at once in all directions. Deals double crit damage."
 		//
 		SCOTTISHHANDSHAKE_NAME 	= "SCOTTISH HANDSHAKE"
-		SCOTTISHHANDSHAKE_DESC 	= "On Hit: Victim repeatedly explodes every few seconds. On Kill: Gain a bomb head. Right-click to detonate."
+		SCOTTISHHANDSHAKE_DESC 	= "On Hit: Victim repeatedly explodes for a few seconds. On Kill: Gain a bomb head. Right-click to detonate."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -491,13 +491,13 @@ if ("SetScriptVersion" in getroottable())
 		OVERDOSE_DESC 			= "Requires and consumes 50% Ubercharge to launch an EMP mortar, causing nearby enemies to be unable to move or attack for a short time."
 		///
 		MEDIGUN_NAME			= "MEDI GUN"
-		MEDIGUN_DESC			= "Overheal cap raised to x10 the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
+		MEDIGUN_DESC			= "Overheal cap raised to 5x the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
 		//
 		KRITZKRIEG_NAME			= "KRITZKRIEG"
 		KRITZKRIEG_DESC			= "Able to drain health from enemies, granting self-healing and building Uber. Ubercharge grants a boost to all damage output."
 		//
 		QUICKFIX_NAME			= "QUICK-FIX"
-		QUICKFIX_DESC			= "Very fast healing with a level 2 Projectile Shield. Able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
+		QUICKFIX_DESC			= "Fast healing with a level 2 Projectile Shield. Able to repair Engineer buildings. Also able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
 		//
 		VACCINATOR_NAME			= "VACCINATOR"
 		VACCINATOR_DESC			= "Active healing grants you and the patient increased mobility and 100% resistance to base damage of the selected damage type. Ubercharge grants full immunity to the selected damage type for 30 seconds."
@@ -1048,7 +1048,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		SCOTTISHHANDSHAKE_NAME 	= "苏格兰式握手"
 		SCOTTISHHANDSHAKE_DESC 	= "手持时: 获得90%非近战伤害抗性, 获得击退免疫并大幅度提升生命上限. 无法获得弹药且从医疗包获得的生命值降低."
-		// TODO: Update! "On Hit: Victim repeatedly explodes every few seconds. On Kill: Gain a bomb head. Right-click to detonate."
+		// TODO: Update! "On Hit: Victim repeatedly explodes for a few seconds. On Kill: Gain a bomb head. Right-click to detonate."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -1184,7 +1184,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		MEDIGUN_NAME			= "医疗枪"
 		MEDIGUN_DESC			= "能够为治疗对象提供其 10 倍最大生命值的超量治疗. 获得持续时间较长的 1 级能量护盾."
-		// TODO: Update! "Overheal cap raised to x10 the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
+		// TODO: Update! "Overheal cap raised to 5x the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
 		//
 		KRITZKRIEG_NAME			= "闪电战医疗枪"
 		KRITZKRIEG_DESC			= "可以吸取敌人的生命值, 恢复自身生命值与Ubercharge充能."
@@ -1192,7 +1192,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		QUICKFIX_NAME			= "快速医疗枪"
 		QUICKFIX_DESC			= "提供较快的治疗速度并获得 2 级能量护盾. 能量护盾造成伤害会提供Ubercharge充能."
-		// TODO: Update! "Very fast healing with a level 2 Projectile Shield. Able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
+		// TODO: Update! "Fast healing with a level 2 Projectile Shield. Able to repair Engineer buildings. Also able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
 		//
 		VACCINATOR_NAME			= "疫苗注射枪"
 		VACCINATOR_DESC			= "治疗时会为你与治疗对象提供 100% 所选伤害类型的抗性. Ubercharge能够完全免疫所选伤害类型的伤害, 持续 30 秒."
@@ -1753,7 +1753,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		SCOTTISHHANDSHAKE_NAME 	= "SKOTSKA HANDSLAGET"
 		SCOTTISHHANDSHAKE_DESC 	= "Medans den är aktiv: Motstå 90% skada från avstånd, bli immun mot knuff och öka din maxhälsa stort. Dock du kan inte fylla på din ammunition och får mindre hälsa från kit."
-		// TODO: Update! "On Hit: Victim repeatedly explodes every few seconds. On Kill: Gain a bomb head. Right-click to detonate."
+		// TODO: Update! "On Hit: Victim repeatedly explodes for a few seconds. On Kill: Gain a bomb head. Right-click to detonate."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -1889,7 +1889,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		MEDIGUN_NAME			= "HÄLSOVAPEN"
 		MEDIGUN_DESC			= "Överhälsa ökad till x10 av patientens max hälsa. Lägg ut en långvarande nivå 1 Projektilsköld."
-		// TODO: Update! "Overheal cap raised to x10 the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
+		// TODO: Update! "Overheal cap raised to 5x the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
 		//
 		KRITZKRIEG_NAME			= "KRITZKRIEG"
 		KRITZKRIEG_DESC			= "Kan tömma hälsa från fiender, och ger själv-läkande och bygger Uber."
@@ -1897,7 +1897,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		QUICKFIX_NAME			= "SNABBFIXAREN"
 		QUICKFIX_DESC			= "Väldigt snabbt läkande med nivå 2 Projektilsköld. Kan bygga Uber från sköld kontaktskada."
-		// TODO: Update! "Very fast healing with a level 2 Projectile Shield. Able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
+		// TODO: Update! "Fast healing with a level 2 Projectile Shield. Able to repair Engineer buildings. Also able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
 		//
 		VACCINATOR_NAME			= "VACCINATÖREN"
 		VACCINATOR_DESC			= "Aktiva läkningar ger dig och patienten 100% motstånd mot grundskadan av den valda typen. Uberladdning ger full immunitet mot den valda skadetypen i 30 sekunder."
@@ -2464,7 +2464,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		SCOTTISHHANDSHAKE_NAME 	= "ШОТЛАНДСКОЕ РУКОБИТИЕ"
 		SCOTTISHHANDSHAKE_DESC 	= "Пока активно в руках: сопротивление 90 % урона с дальних дистанций, иммунитет к отбрасыванию и большое увеличение максимального здоровья. Однако вы не можете пополнять боезапас и получаете меньше здоровья от аптечек."
-		// TODO: Update! "On Hit: Victim repeatedly explodes every few seconds. On Kill: Gain a bomb head. Right-click to detonate."
+		// TODO: Update! "On Hit: Victim repeatedly explodes for a few seconds. On Kill: Gain a bomb head. Right-click to detonate."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -2600,7 +2600,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		MEDIGUN_NAME			= "ЛЕЧЕБНАЯ ПУШКА"
 		MEDIGUN_DESC			= "Максимальный избыточный запас здоровья увеличен до 10-тикратного от максимального здоровья пациента. Разворачивает долгодействующий щит от снарядов 1-го уровня."
-		// TODO: Update! "Overheal cap raised to x10 the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
+		// TODO: Update! "Overheal cap raised to 5x the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
 		//
 		KRITZKRIEG_NAME			= "КРИЦКРИГ"
 		KRITZKRIEG_DESC			= "Позволяет высасывать здоровье из роботов, обеспечивая самолечение и накопление убер-заряда."
@@ -2608,7 +2608,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		QUICKFIX_NAME			= "БЫСТРОПРАВ"
 		QUICKFIX_DESC			= "Очень быстрое лечение и щит от снарядов 2-го уровня. Позволяет накапливать убер-заряд за счёт урона от соприкосновения роботов со щитом."
-		// TODO: Update! "Very fast healing with a level 2 Projectile Shield. Able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
+		// TODO: Update! "Fast healing with a level 2 Projectile Shield. Able to repair Engineer buildings. Also able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
 		//
 		VACCINATOR_NAME			= "ВАКЦИНАТОР"
 		VACCINATOR_DESC			= "Активное лечение дарует вам и пациенту 100 % сопротивляемость базовому урону выбранного типа. Убер-заряд дарует полную невосприимчивость к выбранному типу урона на 30 секунд."
@@ -3169,7 +3169,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		SCOTTISHHANDSHAKE_NAME 	= "SZKOCKI UŚCISK DŁONI"
 		SCOTTISHHANDSHAKE_DESC 	= "Gdy broń jest dobyta, 90% odporności na obrażenia z dystansu, odporność na odrzut i znaczny wzrost maksymalnego zdrowia. Nie możesz jednak odzyskiwać amunicji i otrzymujesz mniej zdrowia z apteczek."
-		// TODO: Update! "On Hit: Victim repeatedly explodes every few seconds. On Kill: Gain a bomb head. Right-click to detonate."
+		// TODO: Update! "On Hit: Victim repeatedly explodes for a few seconds. On Kill: Gain a bomb head. Right-click to detonate."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -3305,7 +3305,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		MEDIGUN_NAME			= "MEDIGUN"
 		MEDIGUN_DESC			= "Limit nadleczenia zwiększony do 10x maksymalnego zdrowia pacjenta. Aktywuje długotrwałą tarczę przeciw pociskom poziomu 1."
-		// TODO: Update! "Overheal cap raised to x10 the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
+		// TODO: Update! "Overheal cap raised to 5x the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
 		//
 		KRITZKRIEG_NAME			= "KRITZKRIEG"
 		KRITZKRIEG_DESC			= "Może wysysać zdrowie z wrogów, przyznając samoleczenie i budując ładunek ÜberCharge."
@@ -3313,7 +3313,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		QUICKFIX_NAME			= "QUICK-FIX"
 		QUICKFIX_DESC			= "Bardzo szybkie leczenie oraz tarcza przeciw pociskom poziomu 2. Może budować ładunek ÜberCharge poprzez zadawanie obrażeń za pomocą tarczy."
-		// TODO: Update! "Very fast healing with a level 2 Projectile Shield. Able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
+		// TODO: Update! "Fast healing with a level 2 Projectile Shield. Able to repair Engineer buildings. Also able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
 		//
 		VACCINATOR_NAME			= "ZASZCZEPIACZ"
 		VACCINATOR_DESC			= "Podczas leczenia ty i twój pacjent zyskujecie 100% odporności na podstawowe obrażenia wybranego rodzaju. ÜberCharge zapewnia pełną odporność na obrażenia wybranego rodzaju na 30 sekund."
@@ -3874,7 +3874,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		SCOTTISHHANDSHAKE_NAME 	= "スコティッシュ・ハンドシェイク"
 		SCOTTISHHANDSHAKE_DESC 	= "発動中：遠距離攻撃のダメージを90%軽減し、ノックバックを無効化し、最大HPを大幅に増加させる ただし、弾薬を回復できず、敵グループから得られるHP回復量も減少する"
-		// TODO: Update! "On Hit: Victim repeatedly explodes every few seconds. On Kill: Gain a bomb head. Right-click to detonate."
+		// TODO: Update! "On Hit: Victim repeatedly explodes for a few seconds. On Kill: Gain a bomb head. Right-click to detonate."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -4010,7 +4010,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		MEDIGUN_NAME			= "メディガン"
 		MEDIGUN_DESC			= "オーバーヒールの上限が、対象の最大HPの10倍まで引き上げられる 持続時間の長いレベル1の「投射物シールド」を展開する"
-		// TODO: Update! "Overheal cap raised to x10 the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
+		// TODO: Update! "Overheal cap raised to 5x the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
 		//
 		KRITZKRIEG_NAME			= "クリッツクリーク"
 		KRITZKRIEG_DESC			= "敵から体力を奪い、自己回復効果を得て、ユーバーチャージを蓄積できる"
@@ -4018,7 +4018,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		QUICKFIX_NAME			= "クイックフィックス"
 		QUICKFIX_DESC			= "非常に回復速度が速く、レベル2の「投射物シールド」を備えている シールドへの接触ダメージからユーバーチャージを蓄積できる"
-		// TODO: Update! "Very fast healing with a level 2 Projectile Shield. Able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
+		// TODO: Update! "Fast healing with a level 2 Projectile Shield. Able to repair Engineer buildings. Also able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
 		//
 		VACCINATOR_NAME			= "ワクチネーター"
 		VACCINATOR_DESC			= "「アクティブヒーリング」を発動すると、あなたと回復対象は、選択したダメージタイプの基本ダメージに対して100%の耐性を得る ユーバーチャージを発動すると、30秒間、選択したダメージタイプに対して完全な免疫を得る"
@@ -4579,7 +4579,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		SCOTTISHHANDSHAKE_NAME 	= "SKOTSKE HÅNDTRYK"
 		SCOTTISHHANDSHAKE_DESC 	= "Mens aktiv: Modstå 90% afstandsskade, bliv immun over for tilbageslag og øg dit maksimale helbred betydeligt. Du kan dog ikke genforsyne dig med ammunition og modtager mindre helbred fra pakker."
-		// TODO: Update! "On Hit: Victim repeatedly explodes every few seconds. On Kill: Gain a bomb head. Right-click to detonate."
+		// TODO: Update! "On Hit: Victim repeatedly explodes for a few seconds. On Kill: Gain a bomb head. Right-click to detonate."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -4715,7 +4715,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		MEDIGUN_NAME			= "MEDI-GEVÆR"
 		MEDIGUN_DESC			= "Maksimumgrænsen for Overheal er øget til x10 af patientens maksimale helbred. Brug et langvarigt niveau 1 Projektilskjold."
-		// TODO: Update! "Overheal cap raised to x10 the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
+		// TODO: Update! "Overheal cap raised to 5x the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
 		//
 		KRITZKRIEG_NAME			= "KRITZKRIEG"
 		KRITZKRIEG_DESC			= "I stand til at dræne helbred fra fjender, hvilket giver selv-heling og opbygger Uber."
@@ -4723,7 +4723,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		QUICKFIX_NAME			= "HURTIGE FIKS"
 		QUICKFIX_DESC			= "Meget hurtig helbredelse med et niveau 2 Projektilskjold. I stand til at opbygge Uber fra skjoldets kontaktskade."
-		// TODO: Update! "Very fast healing with a level 2 Projectile Shield. Able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
+		// TODO: Update! "Fast healing with a level 2 Projectile Shield. Able to repair Engineer buildings. Also able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
 		//
 		VACCINATOR_NAME			= "VACCINATOR"
 		VACCINATOR_DESC			= "Aktiv helbredelse giver dig og patienten 100 % modstand mod basisskade fra den valgte skadetype. UberLadning giver fuld immunitet over for den valgte skadetype i 30 sekunder."
@@ -5268,7 +5268,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		SCOTTISHHANDSHAKE_NAME 	= "SALUDO ESCOCÉS"
 		SCOTTISHHANDSHAKE_DESC 	= "En la mano: Resistes 90 % del daño a distancia, te hace inmune al retroceso y aumenta tu salud máxima. Sin embargo, no puedes recuperar munición y recibes menos PS de botiquines."
-		// TODO: Update! "On Hit: Victim repeatedly explodes every few seconds. On Kill: Gain a bomb head. Right-click to detonate."
+		// TODO: Update! "On Hit: Victim repeatedly explodes for a few seconds. On Kill: Gain a bomb head. Right-click to detonate."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -5396,12 +5396,14 @@ if ("SetScriptVersion" in getroottable())
 		///
 		MEDIGUN_NAME			= "PISTOLA MÉDICA"
 		MEDIGUN_DESC			= "Se aumenta el límite de exceso de curación hasta x10 la salud máxima del paciente. Despliega un duradero escudo de proyectiles de nivel 1. La Supercarga ofrece inmunidad al retroceso."
+		// TODO: Update! "Overheal cap raised to 5x the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
 		//
 		KRITZKRIEG_NAME			= "KRITZKRIEG"
 		KRITZKRIEG_DESC			= "Permite consumir los PS de los enemigos, curándote y generando Supercarga. La Supercarga potencia cualquier tipo de daño."
 		//
 		QUICKFIX_NAME			= "APAÑADOR"
 		QUICKFIX_DESC			= "Cura a gran velocidad y despliega un duradero escudo para proyectiles de nivel 2. Permite aumentar la Supercarga al infligir daño con el escudo. La Supercarga aumenta la velocidad de disparo y recarga."
+		// TODO: Update! "Fast healing with a level 2 Projectile Shield. Able to repair Engineer buildings. Also able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
 		//
 		VACCINATOR_NAME			= "VACUNADOR"
 		VACCINATOR_DESC			= "Al curar otorga a tu paciente y a tí mayor movilidad, además de resistencia del 100 % al daño base seleccionado. La Supercarga otorga inmunidad total al daño seleccinoado durante 30 segundos."
@@ -5951,7 +5953,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		SCOTTISHHANDSHAKE_NAME 	= "蘇格蘭式握手禮"
 		SCOTTISHHANDSHAKE_DESC 	= "使用時，獲得90%遠程傷害抗性，免疫擊退且獲得高額最大生命，但你無法補充彈藥且補血包提供的生命減少."
-		// TODO: Update! "On Hit: Victim repeatedly explodes every few seconds. On Kill: Gain a bomb head. Right-click to detonate."
+		// TODO: Update! "On Hit: Victim repeatedly explodes for a few seconds. On Kill: Gain a bomb head. Right-click to detonate."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -6086,7 +6088,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		MEDIGUN_NAME			= "醫療槍"
 		MEDIGUN_DESC			= "超量治療上限改為10倍，可部署長時間持續的等級1能量護盾."
-		// TODO: Update! "Overheal cap raised to x10 the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
+		// TODO: Update! "Overheal cap raised to 5x the patient's max health. Deploy a long-lasting level 1 Projectile Shield. Ubercharge grants knockback immunity."
 		//
 		KRITZKRIEG_NAME			= "爆擊製造者"
 		KRITZKRIEG_DESC			= "允許吸取敵人的生命值，為自己治療和獲得Uber."
@@ -6094,7 +6096,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		QUICKFIX_NAME			= "快速治療者"
 		QUICKFIX_DESC			= "治療速度極快且有等級2的能量護盾，能從護盾接觸傷害獲得Uber."
-		// TODO: Update! "Very fast healing with a level 2 Projectile Shield. Able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
+		// TODO: Update! "Fast healing with a level 2 Projectile Shield. Able to repair Engineer buildings. Also able to build Uber from shield contact damage. Ubercharge grants a boost to fire rate and reload rate."
 		//
 		VACCINATOR_NAME			= "疫苗接種者"
 		VACCINATOR_DESC			= "治療給你和目標獲得100%所選種類的傷害抗性，Ubercharge則能在30秒內完全免疫該種傷害."
