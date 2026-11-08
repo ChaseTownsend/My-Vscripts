@@ -11,32 +11,34 @@ if (!("SetLibraryVersion" in getroottable()) || ("FatCatLibForce" in ROOT && Fat
 // Spanish  			--		Ryo				(steamcommunity.com/id/ryo567)
 // Spanish  			--		deltat101		(deltat101 on Discord)
 
-::IH_color <- "\x08FFD700DD"
-::IH_text_color <- "\x01"
-::IH_color_header <- "\x0826c2ffDD"
-::IH_text_color_header <- "\x0826beffBB"
-::IH_disable_color <- "\x0826beff66"
+//::IH_color <- "\x08FFD700DD"
+::IH_color <- "\x0872FF72DD"
+::IH_text_color <- "\x08E6E6E6DD"
+//::IH_color_header <- "\x0826C2FFDD"
+::IH_color_header <- "\x084AA84ADD"
+//::IH_disable_color <- "\x0826BEFF66"
+::IH_disable_color <- "\x084AA84A66"
 ::IH_error_color <- "\x07D43F3F"
-::IH_highlight_color <- "\x07FF3D24"
+// ::IH_highlight_color <- "\x07FF3D24"
 
 if (!("CHECKPOINT_ERROR" in getroottable()))
 	::CHECKPOINT_ERROR <- "\x07bf4137"
 
 if ("SetScriptVersion" in getroottable())
-	SetScriptVersion("Translations", "1.7.3")
+	SetScriptVersion("Translations", "1.8.0")
 
 ::TRANSLATION_TABLE <- {
 	english = {
 		IH_TRANSLATE_ITEM		= IH_color + "[%s] " + IH_text_color + "%s"
-		IH_INCLUDES				= IH_color_header + "[►]\x0826beffAA Your loadout includes..."
+		IH_INCLUDES				= IH_color_header + "[►] Your loadout includes..."
 		IH_DIS_MSG_2			= IH_disable_color + "Type '/itemhelp 1' to disable item descriptions during a wave. \nType '/itemhelp 0' to disable them entirely."
 		IH_DIS_MSG				= IH_disable_color + "Type '/itemhelp 0' to disable item descriptions. \nType '/itemhelp 2' to always display them."
 		IH_BAD_ARGS				= IH_color_header + "[Item Helper]" + IH_error_color + " {Error}\x01 Incorrect arguments!\n/itemhelp 2 - Enable\n/itemhelp 1 - Enable during Wave Setup only\n/itemhelp 0 - Disable"
 		IH_OOB_ARG				= IH_color_header + "[Item Helper]" + IH_error_color + " {Error}\x01 Out Of Bounds Value Set! : %s"
 		IH_HELP_MSG				= IH_color_header + "[Item Helper]\x01 Item helper provides simple descriptions for each \x03Chaos\x01 Item!" 
-		IH_DISABLE				= IH_color_header + "[►]\x01 Item Helper disabled."
-		IH_WAVE_SETUP			= IH_color_header + "[►]\x01 Item Helper enabled on Wave Setup only."
-		IH_ENABLE 				= IH_color_header + "[►]\x01 Item Helper enabled."
+		IH_DISABLE				= IH_color_header + "[►] Item Helper disabled."
+		IH_WAVE_SETUP			= IH_color_header + "[►] Item Helper enabled on Wave Setup only."
+		IH_ENABLE 				= IH_color_header + "[►] Item Helper enabled."
 		LOW_METAL 				= "Not enough Metal"
 		TOMISLAV_HEAT			= "Tomislav Heat: %s%%"
 		STUCK_RESPAWNED 		= "You were respawned to avoid getting stuck."
@@ -66,7 +68,7 @@ if ("SetScriptVersion" in getroottable())
 		SCATTERGUN_DESC 		= "Standard option for reliable damage. Highly effective at close range."
 		//
 		FORCENATURE_NAME		= "FORCE-A-NATURE"
-		FORCENATURE_DESC		= "Enhanced knockback on hit. Slightly lower DPS than Scattergun."
+		FORCENATURE_DESC		= "Enhanced knockback on hit."
 		//
 		SHORTSTOP_NAME 			= "SHORTSTOP"
 		SHORTSTOP_DESC 			= "Insane fire rate and guaranteed crits to wet enemies, but slow reload."
@@ -87,7 +89,7 @@ if ("SetScriptVersion" in getroottable())
 		CAPPER_DESC 			= "Chance to trigger random effects and debuffs on hit."
 		//
 		BONK_NAME 				= "BONK! ATOMIC PUNCH"
-		BONK_DESC 				= "Supercharged drink, granting invulnerability that doesn't remove your ability to attack."
+		BONK_DESC 				= "Supercharged drink, granting invulnerability and a minor boost to all stats."
 		//
 		CRITACOLA_NAME 			= "CRIT-A-COLA"
 		CRITACOLA_DESC 			= "Supercharged drink, giving full crits."
@@ -108,7 +110,7 @@ if ("SetScriptVersion" in getroottable())
 		MATATEDMILK_DESC 		= "Rapidfire explosive milk jars, dealing damage to enemies. Alt-Fire: Throw a cluster of milk jars at once."
 		///
 		BAT_NAME 				= "BAT"
-		BAT_DESC 				= "Chance to ignore death and teleport to spawn with 1hp."
+		BAT_DESC 				= "Able to ignore death and teleport to spawn with 1hp."
 		//
 		SANDMAN_NAME			= "SANDMAN"
 		SANDMAN_DESC 			= "Able to rapidfire baseballs with high capacity and fast recharge, dealing significant burst damage to single targets."
@@ -149,7 +151,7 @@ if ("SetScriptVersion" in getroottable())
 		DIRECTHIT_DESC			= "Alt-Fire: Launch a small enemy into the air for an easy minicrit follow-up. Rockets have a small amount of aim assist."
 		//
 		BLACKBOX_NAME			= "BLACK BOX"
-		BLACKBOX_DESC			= "Slow down enemies and inflict bleed."
+		BLACKBOX_DESC			= "Fires 3 rockets at once in a straight line, inflicting bleed on hit. Enemies are marked for death for the duration of bleed."
 		//
 		ROCKETJUMPER_NAME		= "ROCKET JUMPER"
 		ROCKETJUMPER_DESC		= "Slow fire and reload rate, but high damage and large blast radius. Excellent choice for crowd control."
@@ -188,7 +190,7 @@ if ("SetScriptVersion" in getroottable())
 		CONCHEROR_DESC 			= "Unlimited range and significantly increased duration." 
 		//
 		RESERVESHOOTER_NAME 	= "RESERVE SHOOTER" 
-		RESERVESHOOTER_DESC 	= "Deals a flat 10,000 damage per shot no matter the range with 3s mini-crits on kill. However this weapon cannot be crit boosted, and cannot damage Tanks. Hold Alt-Fire to zoom in." 
+		RESERVESHOOTER_DESC 	= "Deals a fixed amount of damage per shot no matter the range with 3s mini-crits on kill. However this weapon cannot be crit boosted, and cannot damage Tanks. Hold Alt-Fire to zoom in." 
 		//
 		BISON_NAME 				= "RIGHTEOUS BISON" 
 		BISON_DESC 				= "Fires a continuous beam of penetrating damage with full auto-aim." 
@@ -203,7 +205,7 @@ if ("SetScriptVersion" in getroottable())
 		PANICATTACK_DESC 		= "Immediately restores up to 10,000 health on hit. Taking damage with this weapon active has a chance to trigger a brief self-uber. Damage increases as you become injured." 
 		///
 		SHOVEL_NAME 			= "SHOVEL"
-		SHOVEL_DESC 			= "Standard option for defense and mobility."
+		SHOVEL_DESC 			= "Standard option. 4x Damage vs Soldier bots. Gain crits on kill."
 		//
 		EQUALIZER_NAME 			= "EQUALIZER"
 		EQUALIZER_DESC 			= "Damage massively increases as you become injured."
@@ -212,7 +214,7 @@ if ("SetScriptVersion" in getroottable())
 		PAINTRAIN_DESC 			= "Inflict bleed and slowdown on hit. Grants immunity to fall damage."
 		//
 		HALFZATOICHI_NAME 		= "HALF-ZATOICHI"
-		HALFZATOICHI_DESC 		= "Average damage with high health mobility, and increased range."
+		HALFZATOICHI_DESC 		= "High damage and health."
 		//
 		MARKETGARDENER_NAME 	= "MARKET GARDENER"
 		MARKETGARDENER_DESC 	= "Massive damage bonus while rocket jumping. After getting a kill, gain a temporary boost to health, resistance and increased damage on all attacks."
@@ -229,13 +231,13 @@ if ("SetScriptVersion" in getroottable())
 		FLAMETHROWER_DESC		= "Standard option for reliable damage. Gain a short mini-crit boost on kill."
 		//
 		BACKBURNER_NAME 		= "BACKBURNER"
-		BACKBURNER_DESC			= "Green Fire - Marks enemies for death and stuns airborne enemies for a short time. This weapon deals x2 damage against Pyro bots."
+		BACKBURNER_DESC			= "Green Fire - Stuns airborne enemies for a short time. This weapon deals x2 damage against Pyro bots."
 		//
 		DEGREASER_NAME 			= "DEGREASER"
 		DEGREASER_DESC			= "Long-range flamethrower dealing high direct damage, but 0 afterburn damage. This flamethrower cannot airblast."
 		//
 		PHLOGISTINATOR_NAME 	= "PHLOGISTINATOR"
-		PHLOGISTINATOR_DESC		= "Green Fire - Marks enemies for death and stuns airborne enemies for a short time. Strong against Tanks, but your move speed is reduced."
+		PHLOGISTINATOR_DESC		= "Green Fire - Stuns airborne enemies for a short time. Strong against Tanks."
 		//
 		RAINBLOWER_NAME 		= "RAINBLOWER"
 		RAINBLOWER_DESC			= "Long-range flamethrower dealing low direct damage, but high afterburn damage. Also able to instantly destroy Engineer buildings and burn enemy Pyros. Airblast is weak, but very fast."
@@ -268,7 +270,7 @@ if ("SetScriptVersion" in getroottable())
 		GASPASSER_DESC 			= "Gas meter starts empty and resets on death. Deal 150,000 damage to fill the meter. Explode-on-Ignite deals 105,000 damage." 
 		///
 		FIREAXE_NAME 			= "FIRE AXE"
-		FIREAXE_DESC 			= "Standard option for defense and mobility."
+		FIREAXE_DESC 			= "Standard option. 4x Damage vs Pyro bots. Gain crits on kill."
 		//	
 		AXTINGUISHER_NAME 		= "AXTINGUISHER"
 		AXTINGUISHER_DESC		= "Significantly increased damage against burning enemies."
@@ -277,7 +279,7 @@ if ("SetScriptVersion" in getroottable())
 		HOMEWRECKER_DESC 		= "Able to instantly destroy Engineer buildings from anywhere with infinite melee range."
 		//
 		POWERJACK_NAME 			= "POWERJACK"
-		POWERJACK_DESC 			= "Fast attacks and move speed. Inflict bleed & ignite enemies on hit and gain mini-crits on kill."
+		POWERJACK_DESC 			= "Fast move speed when active. Inflict bleed & ignite enemies on hit and gain mini-crits on kill."
 		//
 		BACKSCRATCHER_NAME 		= "BACK SCRATCHER"
 		BACKSCRATCHER_DESC 		= "Deals lethal damage from behind. After getting a kill, gain a temporary boost to move speed, resistance and increased damage on all attacks."
@@ -298,7 +300,7 @@ if ("SetScriptVersion" in getroottable())
 		LOLLICHOP_DESC 			= "Every 10 kills, gain a Meteor Storm spell charge (Requires Spellbook)."
 		//
 		NEONANNIHILATOR_NAME 	= "NEON ANNIHILATOR"
-		NEONANNIHILATOR_DESC 	= "Your gravity is reduced."
+		NEONANNIHILATOR_DESC 	= "Your gravity is reduced. Holding this weapon active reduces gravity more. Holding crouch with this weapon active reverses gravity."
 		//
 		HOTHAND_NAME 			= "HOT HAND"
 		HOTHAND_DESC 			= "Launch enemies into the air on hit."
@@ -345,7 +347,7 @@ if ("SetScriptVersion" in getroottable())
 		QUICKIEBOMB_DESC 		= "Auto-fires stickybombs at an insane rate with very fast arm time. Gain mini-crits on kill."
 		///
 		BOTTLE_NAME 			= "BOTTLE"
-		BOTTLE_DESC 			= "Standard option for defense and mobility."
+		BOTTLE_DESC 			= "Standard option. 4x Damage vs Demoman bots. Gain crits on kill."
 		//
 		EYELANDER_NAME 			= "EYELANDER"
 		EYELANDER_DESC 			= "High damage with quick attacks gaining crits and mini-crits on kill, but cannot be used as hybrid-knight."
@@ -366,7 +368,7 @@ if ("SetScriptVersion" in getroottable())
 		NINEIRON_DESC 			= "Has a massive swing arc, able to hit multiple enemies at once in all directions. Deals double crit damage."
 		//
 		SCOTTISHHANDSHAKE_NAME 	= "SCOTTISH HANDSHAKE"
-		SCOTTISHHANDSHAKE_DESC 	= "While active: Resist 90% ranged damage, become immune to knockback and greatly increase max health. However you cannot recover ammo and receive less health from packs."
+		SCOTTISHHANDSHAKE_DESC 	= "On Hit: Victim repeatedly explodes every few seconds. On Kill: Gain a bomb head. Right-click to detonate."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -410,7 +412,7 @@ if ("SetScriptVersion" in getroottable())
 		SECONDBANANA_DESC 		= "Consume to gain explosive melee power for 30 seconds (You are restricted to melee for the duration)."
 		///
 		FISTS_NAME 				= "FISTS"
-		FISTS_DESC 				= "Standard option for defense and mobility. Effective in combat."
+		FISTS_DESC 				= "Standard option. Gain crits on kill. Able to taunt attack for massive damage."
 		//
 		KILLINGGLOVES_NAME 		= "KILLING GLOVES OF BOXING"
 		KILLINGGLOVES_DESC 		= "Special Ability: 'Mega-Crush' -  When available, press your action slot key while standing on the bomb to instantly send it back to start. Otherwise, gain temporary move speed buff, defense and crits."
@@ -501,7 +503,7 @@ if ("SetScriptVersion" in getroottable())
 		VACCINATOR_DESC			= "Active healing grants you and the patient increased mobility and 100% resistance to base damage of the selected damage type. Ubercharge grants full immunity to the selected damage type for 30 seconds."
 		///
 		BONESAW_NAME 			= "BONESAW"
-		BONESAW_DESC			= "Standard option for defense and mobility. Gain 10% Uber on hit."
+		BONESAW_DESC			= "Standard option. Gain 10% Uber on hit."
 		//
 		UBERSAW_NAME 			= "UBERSAW"
 		UBERSAW_DESC			= "Inflict bleed on hit. Gain 2% Uber on hit."
@@ -554,10 +556,10 @@ if ("SetScriptVersion" in getroottable())
 		JARATE_DESC 			= "Instant recharge, slows enemies down."
 		//
 		DARWIN_NAME 			= "DARWIN'S DANGER SHIELD"
-		DARWIN_DESC 			= "Nearly immune to FIRE damage, but take 50% more damage from BULLET and BLAST."
+		DARWIN_DESC 			= "High resistance to FIRE damage, but take 50% more damage from BULLET and BLAST."
 		//
 		COZYCAMPER_NAME 		= "COZY CAMPER"
-		COZYCAMPER_DESC 		= "Minor increase in move speed, max health and health regen. Immune to afterburn."
+		COZYCAMPER_DESC 		= "Increased move speed, max health and health regen. Immune to afterburn."
 		//
 		CLEANERSCARBINE_NAME 	= "CLEANER'S CARBINE"
 		CLEANERSCARBINE_DESC 	= "Mini-crit boost lasts 30 seconds."
@@ -566,7 +568,7 @@ if ("SetScriptVersion" in getroottable())
 		BEAUTYMARK_DESC 		= "Rain down holy hellfire with flaming arrows. Alt-Fire: Throw a cluster of flaming arrows at once."
 		///
 		KUKRI_NAME 				= "KUKRI"
-		KUKRI_DESC 				= "Standard option for defense and mobility."
+		KUKRI_DESC 				= "Standard option. 4x Damage vs Sniper bots. Gain crits on kill."
 		//
 		TRIBALMANSSHIV_NAME 	= "TRIBALMAN'S SHIV"
 		TRIBALMANSSHIV_DESC 	= "Utility Item - You have no gravity and can freely fly."
@@ -610,7 +612,7 @@ if ("SetScriptVersion" in getroottable())
 		KUNAI_DESC 				= "Infinite melee range. Backstabs trigger an explosion, dealing extra damage to nearby targets."
 		//
 		BIGEARNER_NAME 			= "BIG EARNER"
-		BIGEARNER_DESC 			= "You have a massive amount of health and 'missed' swings cause you to heal. Gain a short burst of massively increased heal rate on kill (which can also build overheal). Cannot heal from any other sources."
+		BIGEARNER_DESC 			= "On Kill: Gain a full stack of overheal. Able to gain multiple stacks."
 		//
 		WANGAPRICK_NAME 		= "WANGA PRICK"
 		WANGAPRICK_DESC 		= "Killing an enemy causes you to immediately enter stealth for a few seconds, however you cannot disguise. Grants a Cloak spell charge on kill (Requires Spellbook)."
@@ -636,13 +638,13 @@ if ("SetScriptVersion" in getroottable())
 		//----------------------------
 		//----------------------------
 		FRYINGPAN_NAME 				= "FRYING PAN"
-		FRYINGPAN_DESC 				= "Deal x30 damage to enemies of the same class as you and gain crits on kill."
+		FRYINGPAN_DESC 				= "Deal x30 damage to enemies of the same class as you and gain mini-crits on kill."
 		//
 		SAXXY_NAME 					= "SAXXY"
-		SAXXY_DESC 					= "Deal x30 damage to enemies of the same class as you and gain crits on kill."
+		SAXXY_DESC 					= "Deal x30 damage to enemies of the same class as you and gain mini-crits on kill."
 		//
 		MEMORYMAKER_NAME 			= "MEMORY MAKER"
-		MEMORYMAKER_DESC			= "Deal x30 damage to enemies of the same class as you and gain crits on kill."
+		MEMORYMAKER_DESC			= "Deal x30 damage to enemies of the same class as you and gain mini-crits on kill."
 		//
 		CONOBJECTOR_NAME			= "CONSCIENTIOUS OBJECTOR"
 		CONOBJECTOR_DESC			= "Every 10 kills, roll a random spell (Requires Spellbook)."
@@ -668,21 +670,21 @@ if ("SetScriptVersion" in getroottable())
 	}
 	schinese = {
 		IH_TRANSLATE_ITEM		= IH_color + "[%s] " + IH_text_color + "%s"
-		IH_INCLUDES				= IH_color_header + "[►]\x0826beffBB 你的武器配置包括了..."
+		IH_INCLUDES				= IH_color_header + "[►] 你的武器配置包括了..."
 		IH_DIS_MSG_2			= IH_disable_color + "输入 '/itemhelp 1' 可在回合中隐藏武器配置信息. \n输入 '/itemhelp 0' 可隐藏武器配置信息."
 		IH_DIS_MSG				= IH_disable_color + "输入 '/itemhelp 0' 可隐藏武器配置信息. \n输入 '/itemhelp 2' 可持续显示武器配置信息."
 		// TODO: Update!
 		/* 
-		IH_INCLUDES				= IH_color_header + "[►]\x0826beffAA Your loadout includes..."
+		IH_INCLUDES				= IH_color_header + "[►] Your loadout includes..."
 		IH_DIS_MSG_2			= IH_disable_color + "Type '/itemhelp 1' to disable item descriptions during a wave. \nType '/itemhelp 0' to disable them entirely."
 		IH_DIS_MSG				= IH_disable_color + "Type '/itemhelp 0' to disable item descriptions. \nType '/itemhelp 2' to always display them."
 		 */
 		IH_BAD_ARGS				= IH_color_header + "[武器配置]" + IH_error_color + " {错误}\x01 参数错误!\n/itemhelp 2 - 显示\n/itemhelp 1 - 仅在准备阶段显示\n/itemhelp 0 - 隐藏e"
 		IH_OOB_ARG				= IH_color_header + "[武器配置]" + IH_error_color + " {错误}\x01 设置超出范围值! : %s"
 		IH_HELP_MSG				= IH_color_header + "[武器配置]\x01 武器配置信息会显示 \x03每一把 \x01 武器的特殊改动!" 
-		IH_DISABLE				= IH_color_header + "[►]\x01 已隐藏武器配置信息."
-		IH_WAVE_SETUP			= IH_color_header + "[►]\x01 武器配置信息仅在准备阶段显示."
-		IH_ENABLE 				= IH_color_header + "[►]\x01 已显示武器配置信息."
+		IH_DISABLE				= IH_color_header + "[►] 已隐藏武器配置信息."
+		IH_WAVE_SETUP			= IH_color_header + "[►] 武器配置信息仅在准备阶段显示."
+		IH_ENABLE 				= IH_color_header + "[►] 已显示武器配置信息."
 		LOW_METAL 				= "金属不足"
 		TOMISLAV_HEAT			= "汤姆斯拉夫 热量: %s%%"
 		STUCK_RESPAWNED 		= "为避免卡住, 已将你重生至其他区域."
@@ -713,6 +715,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		FORCENATURE_NAME		= "自然之力"
 		FORCENATURE_DESC		= "提升击退效果. 但输出能力比猎枪稍低."
+		// TODO: Update! "Enhanced knockback on hit."
 		//
 		SHORTSTOP_NAME 			= "游击手"
 		SHORTSTOP_DESC 			= "大幅度提升开火速度并在命中湿身的敌人时必定暴击, 但装填速度降低."
@@ -734,6 +737,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BONK_NAME 				= "原子能饮料"
 		BONK_DESC 				= "超充能你的饮料, 持续时间内给予无敌且仍能攻击."
+		// TODO: Update! "Supercharged drink, granting invulnerability and a minor boost to all stats."
 		//
 		CRITACOLA_NAME 			= "爆击可乐"
 		CRITACOLA_DESC 			= "超充能你的饮料, 持续时间内给予暴击."
@@ -755,6 +759,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		BAT_NAME 				= "球棒"
 		BAT_DESC 				= "在死亡时有几率以1点生命值立刻重生."
+		// TODO: Update! "Able to ignore death and teleport to spawn with 1hp.
 		//
 		SANDMAN_NAME			= "睡魔"
 		SANDMAN_DESC 			= "能连续发射多枚冷却速度大幅度提升的棒球, 对单一敌人造成爆发伤害."
@@ -797,7 +802,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BLACKBOX_NAME			= "黑匣子"
 		BLACKBOX_DESC			= "攻击可以减速敌人并施加流血效果. 此武器对士兵机器人造成 2 倍伤害."
-		// TODO: Update! "Slow down enemies and inflict bleed."
+		// TODO: Update! "Fires 3 rockets at once in a straight line, inflicting bleed on hit. Enemies are marked for death for the duration of bleed."
 		//
 		ROCKETJUMPER_NAME		= "火箭伞兵"
 		ROCKETJUMPER_DESC		= "降低开火速度与装填速度, 大幅提升伤害与爆炸范围. 对集群的敌人更加有效."
@@ -839,6 +844,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		RESERVESHOOTER_NAME 	= "预备役射手" 
 		RESERVESHOOTER_DESC 	= "按住次要攻击键可以缩放. 造成不受距离影响影响的高额伤害并在击杀时候获得 3 秒迷你暴击. 无法暴击, 无法对坦克造成伤害." 
+		// TODO: Update! "Deals a fixed amount of damage per shot no matter the range with 3s mini-crits on kill. However this weapon cannot be crit boosted, and cannot damage Tanks. Hold Alt-Fire to zoom in." 
 		//
 		BISON_NAME 				= "正义野牛" 
 		BISON_DESC 				= "能够连射并能够追踪敌人的穿透光束." 
@@ -856,6 +862,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		SHOVEL_NAME 			= "铁锹"
 		SHOVEL_DESC 			= "标准选择, 提升移动速度与防御."
+		// TODO: Update! "Standard option. 4x Damage vs Soldier bots. Gain crits on kill."
 		//
 		EQUALIZER_NAME 			= "十字镐"
 		EQUALIZER_DESC 			= "嘲讽攻击会造成极大伤害并将敌人击飞至空中."
@@ -866,6 +873,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		HALFZATOICHI_NAME 		= "座头市之刀"
 		HALFZATOICHI_DESC 		= "造成基础伤害并提升基础生命值与移动速度, 提升攻击范围."
+		// TODO: Update: "High damage and health."
 		//
 		MARKETGARDENER_NAME 	= "市场花园铁锹"
 		MARKETGARDENER_DESC 	= "大幅提升暴击伤害. 造成击杀后, 提升生命值, 伤害抗性以及所有武器的伤害. 挥空后会杀死自己."
@@ -886,12 +894,14 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BACKBURNER_NAME 		= "偷袭烈焰喷射器"
 		BACKBURNER_DESC			= "绿焰 - 攻击能够标记敌人且能短暂击晕空中的敌人. 此武器对火焰兵机器人造成 2 倍伤害."
+		// TODO: Update!  "Green Fire - Stuns airborne enemies for a short time. This weapon deals x2 damage against Pyro bots."
 		//
 		DEGREASER_NAME 			= "脱油剂"
 		DEGREASER_DESC			= "提升攻击距离以及直接命中的伤害, 无法造成后续燃烧伤害. 无法气爆."
 		//
 		PHLOGISTINATOR_NAME 	= "燃素喷射器"
 		PHLOGISTINATOR_DESC		= "绿焰 - 攻击能够标记敌人且能短暂击晕空中的敌人. 提升对坦克的伤害, 但降低自身移动速度."
+		// TODO: Update! "Green Fire - Stuns airborne enemies for a short time. Strong against Tanks."
 		//
 		RAINBLOWER_NAME 		= "彩虹喷灯"
 		RAINBLOWER_DESC			= "提升攻击距离但降低直接命中的伤害, 提升后续燃烧伤害. 大幅度提升对建筑的伤害并能点燃火焰兵机器人. 降低气爆能力但提升气爆冷却速度."
@@ -925,6 +935,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		FIREAXE_NAME 			= "消防斧"
 		FIREAXE_DESC 			= "标准选择, 提升移动速度与防御."
+		// TODO: Update! "Standard option. 4x Damage vs Pyro bots. Gain crits on kill."
 		//	
 		AXTINGUISHER_NAME 		= "火焰战斧"
 		AXTINGUISHER_DESC		= "大幅提升对燃烧敌人的伤害."
@@ -934,6 +945,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		POWERJACK_NAME 			= "强力千斤顶"
 		POWERJACK_DESC 			= "提升移动速度与攻击速度. 攻击可以施加流血与点燃效果. 击杀时获得一段时间的迷你暴击."
+		// TODO: Update! "Fast move speed when active. Inflict bleed & ignite enemies on hit and gain mini-crits on kill."
 		//
 		BACKSCRATCHER_NAME 		= "不求人"
 		BACKSCRATCHER_DESC 		= "攻击敌人后背时大幅提升伤害. 杀敌后提升移动速度, 伤害抗性以及所有武器的伤害."
@@ -957,6 +969,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		NEONANNIHILATOR_NAME 	= "霓虹杀手"
 		NEONANNIHILATOR_DESC 	= "降低自身重力."
+		// TODO: Update! "Your gravity is reduced. Holding this weapon active reduces gravity more. Holding crouch with this weapon active reverses gravity."
 		//
 		HOTHAND_NAME 			= "灼热之手"
 		HOTHAND_DESC 			= "命中敌人时会使其击飞."
@@ -1011,6 +1024,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		BOTTLE_NAME 			= "瓶子"
 		BOTTLE_DESC 			= "标准选择, 提升移动速度与防御."
+		// TODO: Update! "Standard option. 4x Damage vs Demoman bots. Gain crits on kill."
 		//
 		EYELANDER_NAME 			= "苏格兰长剑"
 		EYELANDER_DESC 			= "提升伤害与攻击速度并在击杀时获得一段时间的暴击, 无法使用榴弹."
@@ -1034,6 +1048,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		SCOTTISHHANDSHAKE_NAME 	= "苏格兰式握手"
 		SCOTTISHHANDSHAKE_DESC 	= "手持时: 获得90%非近战伤害抗性, 获得击退免疫并大幅度提升生命上限. 无法获得弹药且从医疗包获得的生命值降低."
+		// TODO: Update! "On Hit: Victim repeatedly explodes every few seconds. On Kill: Gain a bomb head. Right-click to detonate."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -1083,6 +1098,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		FISTS_NAME 				= "拳头"
 		FISTS_DESC 				= "标准选择, 提升移动速度与防御."
+		// TODO: Update! "Standard option. Gain crits on kill. Able to taunt attack for massive damage."
 		//
 		KILLINGGLOVES_NAME 		= "杀戮拳击手套"
 		KILLINGGLOVES_DESC 		= "特殊能力: '粉碎之拳' -  当可用时, 站在炸弹上按下动作键会立刻重置炸弹. 不站在炸弹上时会给予自身临时的移动速度, 伤害抗性与暴击."
@@ -1184,6 +1200,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		BONESAW_NAME 			= "骨锯"
 		BONESAW_DESC			= "标准选择, 提升移动速度与防御. 攻击命中会获得 10% Ubercharge充能."
+		// TODO: Update! "Standard option. Gain 10% Uber on hit."
 		//
 		UBERSAW_NAME 			= "过载充能锯"
 		UBERSAW_DESC			= "攻击能够施加流血效果. 攻击命中会获得 2% Ubercharge充能."
@@ -1239,9 +1256,11 @@ if ("SetScriptVersion" in getroottable())
 		//
 		DARWIN_NAME 			= "达尔文的危险之盾"
 		DARWIN_DESC 			= "大幅提升火焰伤害抗性, 但会受到 +50% 的子弹伤害和爆炸焰伤害."
+		// TODO: Update! "High resistance to FIRE damage, but take 50% more damage from BULLET and BLAST."
 		//
 		COZYCAMPER_NAME 		= "惬意蹲坑汉"
 		COZYCAMPER_DESC 		= "穿戴时提升移动速度, 最大生命值与生命恢复. 免疫后续燃烧伤害."
+		// TODO: Update! "Increased move speed, max health and health regen. Immune to afterburn."
 		//
 		CLEANERSCARBINE_NAME 	= "扫荡者卡宾"
 		CLEANERSCARBINE_DESC 	= "迷你暴击持续时间延长至 30 秒."
@@ -1251,6 +1270,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		KUKRI_NAME 				= "反曲刀"
 		KUKRI_DESC 				= "标准选择, 提升移动速度与防御."
+		// TODO: Update! "Standard option. 4x Damage vs Sniper bots. Gain crits on kill."
 		//
 		TRIBALMANSSHIV_NAME 	= "部落砍刀"
 		TRIBALMANSSHIV_DESC 	= "功能物品 - 可以无限飞行且不受重力影响."
@@ -1297,7 +1317,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BIGEARNER_NAME 			= "暴利杀手"
 		BIGEARNER_DESC 			= "大幅提升生命上限且在挥空后持续恢复生命值. 会受到友方火力的伤害."
-		// TODO: Update! "You have a massive amount of health and 'missed' swings cause you to heal. Gain a short burst of massively increased heal rate on kill (which can also build overheal). Cannot heal from any other sources."
+		// TODO: Update! "On Kill: Gain a full stack of overheal. Able to gain multiple stacks."
 		//
 		WANGAPRICK_NAME 		= "巫毒刺钉"
 		WANGAPRICK_DESC 		= "击杀敌人会使你立刻隐形. 可以在隐身时攻击. 无法伪装."
@@ -1327,12 +1347,15 @@ if ("SetScriptVersion" in getroottable())
 		//----------------------------
 		FRYINGPAN_NAME 				= "平底煎锅"
 		FRYINGPAN_DESC 				= "对与你同职业的敌人造成 30 倍伤害并在击杀时获得一段时间的暴击."
+		// TODO: Update! "Deal x30 damage to enemies of the same class as you and gain mini-crits on kill."
 		//
 		SAXXY_NAME 					= "萨氏金像奖小金人"
 		SAXXY_DESC 					= "对与你同职业的敌人造成 30 倍伤害并在击杀时获得一段时间的暴击."
+		// TODO: Update! "Deal x30 damage to enemies of the same class as you and gain mini-crits on kill."
 		//
 		MEMORYMAKER_NAME 			= "回忆制造者"
 		MEMORYMAKER_DESC			= "对与你同职业的敌人造成 30 倍伤害并在击杀时获得一段时间的暴击."
+		// TODO: Update! "Deal x30 damage to enemies of the same class as you and gain mini-crits on kill."
 		//
 		CONOBJECTOR_NAME			= "和平示威牌"
 		CONOBJECTOR_DESC			= "每 10 次击杀会为你生成随机的魔法书(需要装备法术书)."
@@ -1358,21 +1381,21 @@ if ("SetScriptVersion" in getroottable())
 	}
 	swedish = {
 		IH_TRANSLATE_ITEM		= IH_color + "[%s] " + IH_text_color + "%s"
-		IH_INCLUDES				= IH_color_header + "[►]\x0826beffBB Din utrustning inkluderar..."
+		IH_INCLUDES				= IH_color_header + "[►] Din utrustning inkluderar..."
 		IH_DIS_MSG_2			= IH_disable_color + "Skriv '/itemhelp 1' för att avaktivera dessa meddelanden under en våg. \nSkriv '/itemhelp 0' för att avaktivera dessa meddelanden helt."
 		IH_DIS_MSG				= IH_disable_color + "Skriv '/itemhelp 0' för att avaktivera dessa meddelanden. \nSkriv '/itemhelp 2' för att Alltid visa detta meddelande."
 		// TODO: Update!
 		/* 
-		IH_INCLUDES				= IH_color_header + "[►]\x0826beffAA Your loadout includes..."
+		IH_INCLUDES				= IH_color_header + "[►] Your loadout includes..."
 		IH_DIS_MSG_2			= IH_disable_color + "Type '/itemhelp 1' to disable item descriptions during a wave. \nType '/itemhelp 0' to disable them entirely."
 		IH_DIS_MSG				= IH_disable_color + "Type '/itemhelp 0' to disable item descriptions. \nType '/itemhelp 2' to always display them."
 		 */
 		IH_BAD_ARGS				= IH_color_header + "[Föremålshjälpare]" + IH_error_color + " {Fel}\x01 Fel argument!\n/itemhelp 2 - Aktivera\n/föremålshjälp 1 - Sätt på under Våg Förberedelse endast\n/itemhelp 0 - Avaktivera"
 		IH_OOB_ARG				= IH_color_header + "[Föremålshjälpare]" + IH_error_color + " {Fel}\x01 Värde Utanför Gränsen Inställd! : %s"
 		IH_HELP_MSG				= IH_color_header + "[Föremålshjälpare]\x01 Föremålshjälpare ger en enkel beskrivning för vajre \x03Chaos\x01 Föremål!" 
-		IH_DISABLE				= IH_color_header + "[►]\x01 Föremålshjälpare avaktiverad."
-		IH_WAVE_SETUP			= IH_color_header + "[►]\x01 Föremålshjälpare aktiverad på Våg Förberedelse endast."
-		IH_ENABLE 				= IH_color_header + "[►]\x01 Föremålshjälpare aktiverad."
+		IH_DISABLE				= IH_color_header + "[►] Föremålshjälpare avaktiverad."
+		IH_WAVE_SETUP			= IH_color_header + "[►] Föremålshjälpare aktiverad på Våg Förberedelse endast."
+		IH_ENABLE 				= IH_color_header + "[►] Föremålshjälpare aktiverad."
 		LOW_METAL 				= "Inte tillräckligt med Metall"
 		TOMISLAV_HEAT			= "Tomislav Värme: %s%%"
 		STUCK_RESPAWNED 		= "Du återskapades till för undvika att fastna."
@@ -1403,6 +1426,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		FORCENATURE_NAME		= "NATURKRAFT"
 		FORCENATURE_DESC		= "Förbättrad knuff vid träff. Lite mindre Skada Per Sekund än Hagelbösan."
+		// TODO: Update! "Enhanced knockback on hit."
 		//
 		SHORTSTOP_NAME 			= "SHORTSTOP"
 		SHORTSTOP_DESC 			= "Sjuk eldgivningshastighet och garanderade kritiska träffar på blöta fiender, men en långsam omladdning."
@@ -1424,6 +1448,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BONK_NAME 				= "BONK! ATOMIC PUNCH"
 		BONK_DESC 				= "Superladdad dricka, ger osårbarhet som inte tar bort din förmåga att attackera."
+		// TODO: Update! "Supercharged drink, granting invulnerability and a minor boost to all stats."
 		//
 		CRITACOLA_NAME 			= "CRIT-A-COLA"
 		CRITACOLA_DESC 			= "Superladdad dricka, ger fulla kritiska träffar."
@@ -1445,6 +1470,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		BAT_NAME 				= "SLAGTRÄ"
 		BAT_DESC 				= "Chans att ignorera döden och teleportera till återskapning med 1 hälsa."
+		// TODO: Update! "Able to ignore death and teleport to spawn with 1hp.
 		//
 		SANDMAN_NAME			= "JOHN BLUND"
 		SANDMAN_DESC 			= "Kan avfyra basebollar snabbt med hög kompetens och snabb omladdning, som utdelar ett stort utbrott skada till ett enda mål."
@@ -1487,7 +1513,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BLACKBOX_NAME			= "SVARTA LÅDAN"
 		BLACKBOX_DESC			= "Sakta ner fiender och utdela blöd. Detta vapen utdelar x2 skada mot Soldatbotar."
-		// TODO: Update! "Slow down enemies and inflict bleed."
+		// TODO: Update! "Fires 3 rockets at once in a straight line, inflicting bleed on hit. Enemies are marked for death for the duration of bleed."
 		//
 		ROCKETJUMPER_NAME		= "RAKETHOPPAREN"
 		ROCKETJUMPER_DESC		= "Långsam eldgivning och omladdningshastighet, men hög skada och stor explosionsradie. Utmärkt val för gruppkontroll."
@@ -1529,6 +1555,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		RESERVESHOOTER_NAME 	= "RESERVSKJUTAREN" 
 		RESERVESHOOTER_DESC 	= "Utdelar en stadig 10,000 skada per skott oavsett avståndet med 3s mini-kritiska träffar vid döende träff. Dock detta vapen kan inte laddas med kritiska träffar, och kan inte skada Pansarvagnar. Håll ner Alternativattack för att zooma in." 
+		// TODO: Update! "Deals a fixed amount of damage per shot no matter the range with 3s mini-crits on kill. However this weapon cannot be crit boosted, and cannot damage Tanks. Hold Alt-Fire to zoom in." 
 		//
 		BISON_NAME 				= "RÄTTSKAFFENS BISONOXE" 
 		BISON_DESC 				= "Avfyrar en konstant stråle av penetrerande skada med fulla auto-träffsäkning." 
@@ -1546,6 +1573,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		SHOVEL_NAME 			= "SKYFFEL"
 		SHOVEL_DESC 			= "Standardval för försvar och rörelse."
+		// TODO: Update! "Standard option. 4x Damage vs Soldier bots. Gain crits on kill."
 		//
 		EQUALIZER_NAME 			= "UTJÄMNAREN"
 		EQUALIZER_DESC 			= "Hånattacker utdelar massiv skada och knuffar fiender upp i luften."
@@ -1556,6 +1584,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		HALFZATOICHI_NAME 		= "HALF-ZATOICHI"
 		HALFZATOICHI_DESC 		= "Vanlig skada med en hög hälsomobilitet, och ökad räckvidd."
+		// TODO: Update: "High damage and health."
 		//
 		MARKETGARDENER_NAME 	= "TRÄGÅRDSMÄSTAREN"
 		MARKETGARDENER_DESC 	= "Utdelar massivt ökad kritisk skada. Efter man får en döende träff, ge dig in i ett argt tillstånd och få extra hälsa, motstånd och ökad skada på alla attacker. Dock alla missar är en omedelbar död."
@@ -1576,12 +1605,14 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BACKBURNER_NAME 		= "RYGGBRÄNNAREN"
 		BACKBURNER_DESC			= "Grön Eld - Markerar fiender för döden och bedövar fiender i luften en kort stund. Detta vpane utdelar x2 skada mot Pyrobotar."
+		// TODO: Update!  "Green Fire - Stuns airborne enemies for a short time. This weapon deals x2 damage against Pyro bots."
 		//
 		DEGREASER_NAME 			= "AVFETTAREN"
 		DEGREASER_DESC			= "Lång-avstånd eldkastare som utdelar hög direkt skada, med 0 efterbrand. Denna kastare kan inte utföra luftstötar."
 		//
 		PHLOGISTINATOR_NAME 	= "FLOGISTONERAREN"
 		PHLOGISTINATOR_DESC		= "Grön Eld - Markerar fiender för döden och bedövar fiender i luften en kort stund. Stark mot Pansarvagnar, men din rörelsehastighet är minskad."
+		// TODO: Update! "Green Fire - Stuns airborne enemies for a short time. Strong against Tanks."
 		//
 		RAINBLOWER_NAME 		= "RAINBLOWER"
 		RAINBLOWER_DESC			= "Lång-avstånd eldkastare som utdelar låg direkt skada, men med hög efterbrand skada. Kan också omedelbart förstöra Ingenjörbyggnader och bränna fiende Pyros. Luftstöten är svag, men väldigt snabb."
@@ -1615,6 +1646,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		FIREAXE_NAME 			= "BRANDYXA"
 		FIREAXE_DESC 			= "Standardval för försvar och rörelse."
+		// TODO: Update! "Standard option. 4x Damage vs Pyro bots. Gain crits on kill."
 		//	
 		AXTINGUISHER_NAME 		= "BRANDSLAKTAREN"
 		AXTINGUISHER_DESC		= "Mycket ökad skada mot fiender som brinner."
@@ -1624,6 +1656,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		POWERJACK_NAME 			= "ELDOMKRAFTEN"
 		POWERJACK_DESC 			= "Snabba attacker och rörelsehastighet. Utdelar blöd & tänder fiender vid träff och ger en mini-kritisk laddning vid döende träff."
+		// TODO: Update! "Fast move speed when active. Inflict bleed & ignite enemies on hit and gain mini-crits on kill."
 		//
 		BACKSCRATCHER_NAME 		= "RYGGKLIAREN"
 		BACKSCRATCHER_DESC 		= "Utdelar dödlig skada bakifrån. Efter man får en döende träff, ge dig in ett argt tillstånd och få extra rörelsehastighet, motstånd och ökad skada på alla attacker."
@@ -1647,6 +1680,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		NEONANNIHILATOR_NAME 	= "NEONFÖRINTAREN"
 		NEONANNIHILATOR_DESC 	= "Din gravitation är minskad."
+		// TODO: Update! "Your gravity is reduced. Holding this weapon active reduces gravity more. Holding crouch with this weapon active reverses gravity."
 		//
 		HOTHAND_NAME 			= "ÖRFILEN"
 		HOTHAND_DESC 			= "Kasta fiender upp i luften vid träff."
@@ -1696,6 +1730,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		BOTTLE_NAME 			= "FLASKA"
 		BOTTLE_DESC 			= "Standardval för försvar och rörelse."
+		// TODO: Update! "Standard option. 4x Damage vs Demoman bots. Gain crits on kill."
 		//
 		EYELANDER_NAME 			= "ÖGLÄNDAREN"
 		EYELANDER_DESC 			= "Hög skada med snabba attacker som ger kritiska och mini-kritiska träffar vid döende träff, men kan inte användas som en hybrid-riddare."
@@ -1718,6 +1753,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		SCOTTISHHANDSHAKE_NAME 	= "SKOTSKA HANDSLAGET"
 		SCOTTISHHANDSHAKE_DESC 	= "Medans den är aktiv: Motstå 90% skada från avstånd, bli immun mot knuff och öka din maxhälsa stort. Dock du kan inte fylla på din ammunition och får mindre hälsa från kit."
+		// TODO: Update! "On Hit: Victim repeatedly explodes every few seconds. On Kill: Gain a bomb head. Right-click to detonate."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -1767,6 +1803,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		FISTS_NAME 				= "KNYTNÄVAR"
 		FISTS_DESC 				= "Standardval för försvar och rörelse. Effektiv i strid."
+		// TODO: Update! "Standard option. Gain crits on kill. Able to taunt attack for massive damage."
 		//
 		KILLINGGLOVES_NAME 		= "KALINIS GRYMMA BOXNINGSHANDSKAR"
 		KILLINGGLOVES_DESC 		= "Specialförmåga: 'Mega-Kross' -  När den är tillgänglig, tryck din åtgärdstangent medans du står på bomben för att omedelbart skciak tillbaks den till starten. Annars, få en temporör rörelsehastighet förstärkning, skydd och kritiska träffar."
@@ -1868,6 +1905,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		BONESAW_NAME 			= "BENSÅG"
 		BONESAW_DESC			= "Standardval för försvar och rörelse. Ger 10% Uber vid träff."
+		// TODO: Update! "Standard option. Gain 10% Uber on hit."
 		//
 		UBERSAW_NAME 			= "UBERSÅGEN"
 		UBERSAW_DESC			= "Utdela blöd vid träff. Få 2% Uber vid träff."
@@ -1923,9 +1961,11 @@ if ("SetScriptVersion" in getroottable())
 		//
 		DARWIN_NAME 			= "DARWINS FAROSKÖLD"
 		DARWIN_DESC 			= "Nästan immun mot ELD, men tar 50% mer skada från KULOR och EXPLOSIONER."
+		// TODO: Update! "High resistance to FIRE damage, but take 50% more damage from BULLET and BLAST."
 		//
 		COZYCAMPER_NAME 		= "KRYPSKYTTENS KRYPIN"
 		COZYCAMPER_DESC 		= "Små ökningar i din rörelsehastighet, max hälsa och hälsoåterställning. Immun mot efterbrand."
+		// TODO: Update! "Increased move speed, max health and health regen. Immune to afterburn."
 		//
 		CLEANERSCARBINE_NAME 	= "UNDANRÖJARENS UMGÄNGE"
 		CLEANERSCARBINE_DESC 	= "Mini-kritisk laddning varar i 30 sekunder."
@@ -1935,6 +1975,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		KUKRI_NAME 				= "KUKRI"
 		KUKRI_DESC 				= "Standardval för försvar och rörelse."
+		// TODO: Update! "Standard option. 4x Damage vs Sniper bots. Gain crits on kill."
 		//
 		TRIBALMANSSHIV_NAME 	= "STAMHERRENS HANDGJORDA KNIV"
 		TRIBALMANSSHIV_DESC 	= "Utilitetsföremål - Du har ingen gravitation och kan flyga fritt."
@@ -1981,7 +2022,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BIGEARNER_NAME 			= "STÖRA LÖNTAGAREN"
 		BIGEARNER_DESC 			= "Du har en massiv mängd hälsa och 'missade' svingar gör att du läks snabbt, dock du tar skada från dina lagkamrater."
-		// TODO: Update! "You have a massive amount of health and 'missed' swings cause you to heal. Gain a short burst of massively increased heal rate on kill (which can also build overheal). Cannot heal from any other sources."
+		// TODO: Update! "On Kill: Gain a full stack of overheal. Able to gain multiple stacks."
 		//
 		WANGAPRICK_NAME 		= "WANGASTICKET"
 		WANGAPRICK_DESC 		= "Dödar man en fiende så gör den att du döljs omedelbart i några sekunder. Du kan attackera fiender medans du är dold och döende träffar i rad kommer hålla dig osynlig. Inga förklädnad."
@@ -2011,12 +2052,15 @@ if ("SetScriptVersion" in getroottable())
 		//----------------------------
 		FRYINGPAN_NAME 				= "STEKPANNA"
 		FRYINGPAN_DESC 				= "Utdelar x30 skada mot fiender som är samma klass som dig och få kritiska träffar vid en döende träff."
+		// TODO: Update! "Deal x30 damage to enemies of the same class as you and gain mini-crits on kill."
 		//
 		SAXXY_NAME 					= "SAXXYN"
 		SAXXY_DESC 					= "Utdelar x30 skada mot fiender som är samma klass som dig och få kritiska träffar vid en döende träff."
+		// TODO: Update! "Deal x30 damage to enemies of the same class as you and gain mini-crits on kill."
 		//
 		MEMORYMAKER_NAME 			= "MINNESSSKAPARE"
 		MEMORYMAKER_DESC			= "Utdelar x30 skada mot fiender som är samma klass som dig och få kritiska träffar vid en döende träff."
+		// TODO: Update! "Deal x30 damage to enemies of the same class as you and gain mini-crits on kill."
 		//
 		CONOBJECTOR_NAME			= "VAPENVÄGRAREN"
 		CONOBJECTOR_DESC			= "Varje 10 döende träffar, rulla en slumpmässig förtrollning (Kräver Trolleribok)."
@@ -2042,21 +2086,21 @@ if ("SetScriptVersion" in getroottable())
 	}
 	russian = {
 		IH_TRANSLATE_ITEM		= IH_color + "[%s] " + IH_text_color + "%s"
-		IH_INCLUDES				= IH_color_header + "[►]\x0826beffBB Ваше снаряжение включает в себя..."
+		IH_INCLUDES				= IH_color_header + "[►] Ваше снаряжение включает в себя..."
 		IH_DIS_MSG_2			= IH_disable_color + "Введите '/itemhelp 1' чтобы отключить данные сообщения во время волны. \nType '/itemhelp 0' чтобы полностью отключить данные сообщения"
 		IH_DIS_MSG				= IH_disable_color + "Введите '/itemhelp 0' чтобы отключить данные сообщения. \nType '/itemhelp 2' чтобы эти сообщения показывались вновь."
 		// TODO: Update!
 		/* 
-		IH_INCLUDES				= IH_color_header + "[►]\x0826beffAA Your loadout includes..."
+		IH_INCLUDES				= IH_color_header + "[►] Your loadout includes..."
 		IH_DIS_MSG_2			= IH_disable_color + "Type '/itemhelp 1' to disable item descriptions during a wave. \nType '/itemhelp 0' to disable them entirely."
 		IH_DIS_MSG				= IH_disable_color + "Type '/itemhelp 0' to disable item descriptions. \nType '/itemhelp 2' to always display them."
 		 */
 		IH_BAD_ARGS				= IH_color_header + "[Item Helper]" + IH_error_color + " {Error}\x01 Incorrect arguments!\n/itemhelp 2 - Enable\n/itemhelp 1 - Enable during Wave Setup only\n/itemhelp 0 - Disable"
 		IH_OOB_ARG				= IH_color_header + "[Item Helper]" + IH_error_color + " {Error}\x01 Out Of Bounds Value Set! : %s"
 		IH_HELP_MSG				= IH_color_header + "[Item Helper]\x01 Помощник по предметам показывает краткое описание каждого \x03Chaos\x01 предмета!" 
-		IH_DISABLE				= IH_color_header + "[►]\x01 Помощник по предметам отключён."
-		IH_WAVE_SETUP			= IH_color_header + "[►]\x01 Помощник по предметам включён только во время подготовки."
-		IH_ENABLE 				= IH_color_header + "[►]\x01 Помощник по предметам включён."
+		IH_DISABLE				= IH_color_header + "[►] Помощник по предметам отключён."
+		IH_WAVE_SETUP			= IH_color_header + "[►] Помощник по предметам включён только во время подготовки."
+		IH_ENABLE 				= IH_color_header + "[►] Помощник по предметам включён."
 		LOW_METAL 				= "Недостаточно металла"
 		TOMISLAV_HEAT			= "Нагрев Томислава: %s%%"
 		STUCK_RESPAWNED 		= "Вы были возрождены, чтобы избежать застревания."
@@ -2087,6 +2131,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		FORCENATURE_NAME		= "НЕУМОЛИМАЯ СИЛА"
 		FORCENATURE_DESC		= "Усиленное отбрасывание при попадании. Слегка ниже урон в секунду, чем у Обреза."
+		// TODO: Update! "Enhanced knockback on hit."
 		//
 		SHORTSTOP_NAME 			= "ПРЕРЫВАТЕЛЬ"
 		SHORTSTOP_DESC 			= "Бешеная скорострельность и гарантированные криты по мокрым роботам, но медленная перезарядка."
@@ -2108,6 +2153,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BONK_NAME 				= "БОНК! АТОМНЫЙ ЗАЛП"
 		BONK_DESC 				= "Сверхзаряженный напиток, дарующий неуязвимость, которая не мешает вам атаковать."
+		// TODO: Update! "Supercharged drink, granting invulnerability and a minor boost to all stats."
 		//
 		CRITACOLA_NAME 			= "КРИТОКОЛА"
 		CRITACOLA_DESC 			= "Сверхзаряженный напиток, дающий криты."
@@ -2129,6 +2175,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		BAT_NAME 				= "BAT"
 		BAT_DESC 				= "Шанс игнорировать смерть и телепортироваться к месту возрождения с 1 ОЗ."
+		// TODO: Update! "Able to ignore death and teleport to spawn with 1hp.
 		//
 		SANDMAN_NAME			= "ДРЁМА"
 		SANDMAN_DESC 			= "Позволяет быстро метать большие бейсбольные мячи, нанося значительный взрывной урон по одиночным целям."
@@ -2171,7 +2218,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BLACKBOX_NAME			= "ЧЁРНЫЙ ЯЩИК"
 		BLACKBOX_DESC			= "Замедляет роботов и наносит эффект кровотечения. Наносит удвоенный урон по роботам-солдатам."
-		// TODO: Update! "Slow down enemies and inflict bleed."
+		// TODO: Update! "Fires 3 rockets at once in a straight line, inflicting bleed on hit. Enemies are marked for death for the duration of bleed."
 		//
 		ROCKETJUMPER_NAME		= "ТРЕНИРОВОЧНЫЙ РАКЕТОМЁТ"
 		ROCKETJUMPER_DESC		= "Медленная скорость стрельбы и перезарядки, но высокий урон и большой радиус взрыва. Эффективен против толпы."
@@ -2213,6 +2260,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		RESERVESHOOTER_NAME 	= "ОФИЦЕР ЗАПАСА" 
 		RESERVESHOOTER_DESC 	= "Наносит ровно 10 000 урона за выстрел независимо от дистанции с мини-критами на 3 секунды за убийство. Однако это оружие не может получить усиление критами и не может наносить урон Танкам. Удерживайте клавишу альтернативной атаки, чтобы прицелиться." 
+		// TODO: Update! "Deals a fixed amount of damage per shot no matter the range with 3s mini-crits on kill. However this weapon cannot be crit boosted, and cannot damage Tanks. Hold Alt-Fire to zoom in." 
 		//
 		BISON_NAME 				= "БЛАГОЧЕСТИВЫЙ БИЗОН" 
 		BISON_DESC 				= "Выпускает непрерывный луч пронзающего урона с автоприцеливанием." 
@@ -2230,6 +2278,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		SHOVEL_NAME 			= "ЛОПАТА"
 		SHOVEL_DESC 			= "Стандартный вариант для защиты и мобильности."
+		// TODO: Update! "Standard option. 4x Damage vs Soldier bots. Gain crits on kill."
 		//
 		EQUALIZER_NAME 			= "УРАВНИТЕЛЬ"
 		EQUALIZER_DESC 			= "Насмешка с атакой наносит огромный урон и подбрасывает роботов в воздух."
@@ -2240,6 +2289,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		HALFZATOICHI_NAME 		= "ПОЛУДЗАТОИТИ"
 		HALFZATOICHI_DESC 		= "Средний урон с высокой мобильностью, здоровьем и увеличенному радиусу атаки."
+		// TODO: Update: "High damage and health."
 		//
 		MARKETGARDENER_NAME 	= "ЗЕМЛЕКОП"
 		MARKETGARDENER_DESC 	= "Наносит значительно увеличенный критический урон. После убийства Вы впадаете в состояние ярости и получаете дополнительные ОЗ, сопротивляемость и увеличенный урон от всех атак. Однако любой промах — мгновенная смерть."
@@ -2260,12 +2310,14 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BACKBURNER_NAME 		= "ДОЖИГАТЕЛЬ"
 		BACKBURNER_DESC			= "Зелёное пламя — помечает роботов меткой смерти и оглушает роботов в воздухе на короткое время. Это оружие наносит удвоенный урон по роботам-поджигателям."
+		// TODO: Update!  "Green Fire - Stuns airborne enemies for a short time. This weapon deals x2 damage against Pyro bots."
 		//
 		DEGREASER_NAME 			= "ЧИСТИЛЬЩИК"
 		DEGREASER_DESC			= "Дальнобойный огнемёт, наносящий большой прямой урон, но 0 урона от догорания. Не может использовать сжатый воздух."
 		//
 		PHLOGISTINATOR_NAME 	= "ФЛОГИСТОНАТОР"
 		PHLOGISTINATOR_DESC		= "Зелёный огонь — помечает роботов меткой смерти и оглушает роботов в воздухе на короткое время. Силён против Танков, но сниженная скорость передвижения."
+		// TODO: Update! "Green Fire - Stuns airborne enemies for a short time. Strong against Tanks."
 		//
 		RAINBLOWER_NAME 		= "РАДУЖИГАТЕЛЬ"
 		RAINBLOWER_DESC			= "Дальнобойный огнемёт, наносящий маленький прямой урон, но большой от догорания. Также способен мгновенно уничтожать постройки роботов-инженеров и поджигать роботов-поджигателей. Небольшая сила отталкивания при помощи сжатого воздуха, но без задержки."
@@ -2299,6 +2351,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		FIREAXE_NAME 			= "ПОЖАРНЫЙ ТОПОР"
 		FIREAXE_DESC 			= "Стандартный вариант для защиты и мобильности."
+		// TODO: Update! "Standard option. 4x Damage vs Pyro bots. Gain crits on kill."
 		//	
 		AXTINGUISHER_NAME 		= "Огнетопор"
 		AXTINGUISHER_DESC		= "Значительно увеличенный урон по горящим роботам."
@@ -2308,6 +2361,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		POWERJACK_NAME 			= "РАЗЪЕДИНИТЕЛЬ"
 		POWERJACK_DESC 			= "Быстрые атаки и скорость передвижения. Наносит кровотечение и поджигает роботов при попадании, даёт мини-криты за убийство."
+		// TODO: Update! "Fast move speed when active. Inflict bleed & ignite enemies on hit and gain mini-crits on kill."
 		//
 		BACKSCRATCHER_NAME 		= "СПИНОЧЁС"
 		BACKSCRATCHER_DESC 		= "Наносит смертельный урон, атакуя со спины. После убийства Вы впадаете в состояние ярости и получаете дополнительную скорость передвижения, сопротивляемость к урону и увеличенный урон от всех атак."
@@ -2331,6 +2385,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		NEONANNIHILATOR_NAME 	= "НЕОНОВЫЙ АННИГИЛЯТОР"
 		NEONANNIHILATOR_DESC 	= "Ваша гравитация снижена."
+		// TODO: Update! "Your gravity is reduced. Holding this weapon active reduces gravity more. Holding crouch with this weapon active reverses gravity."
 		//
 		HOTHAND_NAME 			= "ГОРЯЧАЯ РУКА"
 		HOTHAND_DESC 			= "Подбрасывает роботов в воздух при попадании."
@@ -2385,6 +2440,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		BOTTLE_NAME 			= "БУТЫЛКА"
 		BOTTLE_DESC 			= "Стандартный вариант для защиты и мобильности."
+		// TODO: Update! "Standard option. 4x Damage vs Demoman bots. Gain crits on kill."
 		//
 		EYELANDER_NAME 			= "ОДНОГЛАЗЫЙ ГОРЕЦ"
 		EYELANDER_DESC 			= "Высокий урон с ускоренными атаками, получая криты и мини-криты за убийство. Убирает боеприпасы основного и дополнительного оружия."
@@ -2408,6 +2464,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		SCOTTISHHANDSHAKE_NAME 	= "ШОТЛАНДСКОЕ РУКОБИТИЕ"
 		SCOTTISHHANDSHAKE_DESC 	= "Пока активно в руках: сопротивление 90 % урона с дальних дистанций, иммунитет к отбрасыванию и большое увеличение максимального здоровья. Однако вы не можете пополнять боезапас и получаете меньше здоровья от аптечек."
+		// TODO: Update! "On Hit: Victim repeatedly explodes every few seconds. On Kill: Gain a bomb head. Right-click to detonate."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -2457,6 +2514,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		FISTS_NAME 				= "КУЛАКИ"
 		FISTS_DESC 				= "Стандартный вариант для защиты и мобильности. Эффективны в бою."
+		// TODO: Update! "Standard option. Gain crits on kill. Able to taunt attack for massive damage."
 		//
 		KILLINGGLOVES_NAME 		= "КУЛАКИ ГРОЗНОГО БОКСЁРА"
 		KILLINGGLOVES_DESC 		= "Особая способность: «Мега-разрушение» — когда доступна, нажмите клавишу действия, стоя на бомбе, чтобы мгновенно отправить её на базу. Даёт временное усиление скорости, сопротивляемости к урону и от критов."
@@ -2558,6 +2616,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		BONESAW_NAME 			= "ПИЛА"
 		BONESAW_DESC			= "Стандартный вариант для защиты и мобильности. Даёт 10 % убер-заряда за попадание."
+		// TODO: Update! "Standard option. Gain 10% Uber on hit."
 		//
 		UBERSAW_NAME 			= "УБЕР-ПИЛА"
 		UBERSAW_DESC			= "Наносит кровотечение при попадании. Даёт 2 % убер-заряда за попадание."
@@ -2613,9 +2672,11 @@ if ("SetScriptVersion" in getroottable())
 		//
 		DARWIN_NAME 			= "ДАРВИНИСТСКИЙ ЩИТ"
 		DARWIN_DESC 			= "Почти полная невосприимчивость к огню, но на 50 % больше урона от пуль и взрывов."
+		// TODO: Update! "High resistance to FIRE damage, but take 50% more damage from BULLET and BLAST."
 		//
 		COZYCAMPER_NAME 		= "НАБОР ДЛЯ КЕМПИНГА"
 		COZYCAMPER_DESC 		= "Небольшое увеличение скорости передвижения, максимального здоровья и регенерации здоровья. Иммунитет к догоранию."
+		// TODO: Update! "Increased move speed, max health and health regen. Immune to afterburn."
 		//
 		CLEANERSCARBINE_NAME 	= "КАРАБИН ЧИСТИЛЬЩИКА"
 		CLEANERSCARBINE_DESC 	= "Усиление мини-критами длится 30 секунд."
@@ -2625,6 +2686,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		KUKRI_NAME 				= "КУКРИ"
 		KUKRI_DESC 				= "Стандартный вариант для защиты и мобильности."
+		// TODO: Update! "Standard option. 4x Damage vs Sniper bots. Gain crits on kill."
 		//
 		TRIBALMANSSHIV_NAME 	= "ЗАТОЧКА ДИКАРЯ"
 		TRIBALMANSSHIV_DESC 	= "Предмет экипировки — у вас отсутствует гравитация. Позволяет свободно летать."
@@ -2671,7 +2733,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BIGEARNER_NAME 			= "ГЛАВНЫЙ ДЕЛЕЦ"
 		BIGEARNER_DESC 			= "У вас огромный запас здоровья, а промахи вызывают быстрое исцеление, однако вы получаете урон от своих же союзников."
-		// TODO: Update! "You have a massive amount of health and 'missed' swings cause you to heal. Gain a short burst of massively increased heal rate on kill (which can also build overheal). Cannot heal from any other sources."
+		// TODO: Update! "On Kill: Gain a full stack of overheal. Able to gain multiple stacks."
 		//
 		WANGAPRICK_NAME 		= "ИГОЛКА ВУДУ"
 		WANGAPRICK_DESC 		= "Убийство робота заставляет вас немедленно войти в режим невидимости на несколько секунд. Вы можете атаковать роботов и продлевать невидимость уничтожением роботов. Не позволяет использовать маскировку."
@@ -2701,12 +2763,15 @@ if ("SetScriptVersion" in getroottable())
 		//----------------------------
 		FRYINGPAN_NAME 				= "СКОВОРОДА"
 		FRYINGPAN_DESC 				= "Наносит 30-кратный урон роботам того же класса, что и вы, и даёт криты за убийство."
+		// TODO: Update! "Deal x30 damage to enemies of the same class as you and gain mini-crits on kill."
 		//
 		SAXXY_NAME 					= "САКСИ"
 		SAXXY_DESC 					= "Наносит 30-кратный урон роботам того же класса, что и вы, и даёт криты за убийство."
+		// TODO: Update! "Deal x30 damage to enemies of the same class as you and gain mini-crits on kill."
 		//
 		MEMORYMAKER_NAME 			= "СОЗДАТЕЛЬ ВОСПОМИНАНИЙ"
 		MEMORYMAKER_DESC			= "Наносит 30-кратный урон роботам того же класса, что и вы, и даёт криты за убийство."
+		// TODO: Update! "Deal x30 damage to enemies of the same class as you and gain mini-crits on kill."
 		//
 		CONOBJECTOR_NAME			= "ИДЕЙНЫЙ УКЛОНИСТ"
 		CONOBJECTOR_DESC			= "Каждые 10 убийств дают случайное заклинание (требуется Книга заклинаний)"
@@ -2732,21 +2797,21 @@ if ("SetScriptVersion" in getroottable())
 	}
 	polish = {
 		IH_TRANSLATE_ITEM		= IH_color + "[%s] " + IH_text_color + "%s"
-		IH_INCLUDES				= IH_color_header + "[►]\x0826beffBB Twoje wyposażenie składa się z..."
+		IH_INCLUDES				= IH_color_header + "[►] Twoje wyposażenie składa się z..."
 		IH_DIS_MSG_2			= IH_disable_color + "Wpisz „/itemhelp 1”, by wyłączyć te wiadomości podczas fali. \nWpisz „/itemhelp 0”, by całkowicie wyłączyć te wiadomości."
 		IH_DIS_MSG				= IH_disable_color + "Wpisz „/itemhelp 0”, by wyłączyć te wiadomości. \nWpisz „/itemhelp 2”, by zawsze wyświetlać tę wiadomość."
 		// TODO: Update!
 		/* 
-		IH_INCLUDES				= IH_color_header + "[►]\x0826beffAA Your loadout includes..."
+		IH_INCLUDES				= IH_color_header + "[►] Your loadout includes..."
 		IH_DIS_MSG_2			= IH_disable_color + "Type '/itemhelp 1' to disable item descriptions during a wave. \nType '/itemhelp 0' to disable them entirely."
 		IH_DIS_MSG				= IH_disable_color + "Type '/itemhelp 0' to disable item descriptions. \nType '/itemhelp 2' to always display them."
 		 */
 		IH_BAD_ARGS				= IH_color_header + "[Asystent przedmiotów]" + IH_error_color + " {Error}\x01 Błędne argumenty!\n/itemhelp 2 - włącz\n/itemhelp 1 - włącz tylko podczas przygotowania przed falą\n/itemhelp 0 - wyłącz"
 		IH_OOB_ARG				= IH_color_header + "[Asystent przedmiotów]" + IH_error_color + " {Error}\x01 Wprowadzono wartość poza zakresem! : %s"
 		IH_HELP_MSG				= IH_color_header + "[Asystent przedmiotów]\x01 Asystent przedmiotów zapewnia krótkie opisy dla każdego \x03Chaos\x01 przedmiotu!" 
-		IH_DISABLE				= IH_color_header + "[►]\x01 Asystent przedmiotów jest wyłączony."
-		IH_WAVE_SETUP			= IH_color_header + "[►]\x01 Asystent przedmiotów jest włączony tylko podczas przygotowania przed falą."
-		IH_ENABLE 				= IH_color_header + "[►]\x01 Asystent przedmiotów jest włączony."
+		IH_DISABLE				= IH_color_header + "[►] Asystent przedmiotów jest wyłączony."
+		IH_WAVE_SETUP			= IH_color_header + "[►] Asystent przedmiotów jest włączony tylko podczas przygotowania przed falą."
+		IH_ENABLE 				= IH_color_header + "[►] Asystent przedmiotów jest włączony."
 		LOW_METAL 				= "Za mało metalu"
 		TOMISLAV_HEAT			= "Nagrzanie Tomisława: %s%%"
 		STUCK_RESPAWNED 		= "Odrodzono cię, by zapobiec utknięciu."
@@ -2777,6 +2842,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		FORCENATURE_NAME		= "SIŁA NATURY"
 		FORCENATURE_DESC		= "Zwiększony odrzut przy trafieniu we wroga. Zadaje nieco mniejsze obrażenia na sekundę w porównaniu do dubeltówki."
+		// TODO: Update! "Enhanced knockback on hit."
 		//
 		SHORTSTOP_NAME 			= "WSTRZYMYWACZ"
 		SHORTSTOP_DESC 			= "Bardzo duża szybkostrzelność i zadaje trafienia krytyczne mokrym wrogom, ale wolne przeładowanie."
@@ -2798,6 +2864,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BONK_NAME 				= "BONK! ATOMOWY KOP"
 		BONK_DESC 				= "Supernaładowany napój, zapewniający niewrażliwość na obrażenia bez odbierania możliwości atakowania podczas trwania efektu."
+		// TODO: Update! "Supercharged drink, granting invulnerability and a minor boost to all stats."
 		//
 		CRITACOLA_NAME 			= "KRYT-O-COLA"
 		CRITACOLA_DESC 			= "Supernaładowany napój zapewniający trafienia krytyczne."
@@ -2819,6 +2886,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		BAT_NAME 				= "KIJ"
 		BAT_DESC 				= "Szansa na uniknięcie śmierci i teleportowanie do strefy odradzania z 1 pkt. zdrowia."
+		// TODO: Update! "Able to ignore death and teleport to spawn with 1hp.
 		//
 		SANDMAN_NAME			= "PIASKUN"
 		SANDMAN_DESC 			= "Pozwala na szybkie miotanie piłek baseballowych, z dużym zapasem piłek i ich szybkim odnawianiem, zadając pojedynczym wrogom duże obrażenia serią piłek."
@@ -2861,7 +2929,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BLACKBOX_NAME			= "CZARNA SKRZYNKA"
 		BLACKBOX_DESC			= "Spowalnia wrogów i wywołuje u nich krwawienie. Zadaje 2x większe obrażenia robożołnierzom."
-		// TODO: Update! "Slow down enemies and inflict bleed."
+		// TODO: Update! "Fires 3 rockets at once in a straight line, inflicting bleed on hit. Enemies are marked for death for the duration of bleed."
 		//
 		ROCKETJUMPER_NAME		= "RAKIETOWY SKOCZEK"
 		ROCKETJUMPER_DESC		= "Niska szybkostrzelność i wolne przeładowanie, lecz zadaje duże obrażenia i posiada duży promień wybuchu. Świetna opcja do kontrolowania grup przeciwników."
@@ -2903,6 +2971,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		RESERVESHOOTER_NAME 	= "REZERWISTA" 
 		RESERVESHOOTER_DESC 	= "Zadaje stałe 10 000 pkt. obrażeń na strzał niezależnie od odległości i przyznaje 3 sekundy trafień minikrytycznych po zabiciu wroga. Nie może uzyskać krytycznych obrażeń i nie zadaje obrażeń czołgom. Przytrzymaj atak alternatywny, by przybliżyć widok." 
+		// TODO: Update! "Deals a fixed amount of damage per shot no matter the range with 3s mini-crits on kill. However this weapon cannot be crit boosted, and cannot damage Tanks. Hold Alt-Fire to zoom in." 
 		//
 		BISON_NAME 				= "PRAWY BIZON" 
 		BISON_DESC 				= "Wystrzeliwuje ciągłą wiązkę penetrującą wrogów z pełnym automatycznym celowaniem." 
@@ -2920,6 +2989,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		SHOVEL_NAME 			= "SAPERKA"
 		SHOVEL_DESC 			= "Standardowa opcja zapewniająca ochronę i mobilność."
+		// TODO: Update! "Standard option. 4x Damage vs Soldier bots. Gain crits on kill."
 		//
 		EQUALIZER_NAME 			= "WYRÓWNYWACZ"
 		EQUALIZER_DESC 			= "Zabójcza drwina zadaje ogromne obrażenia i wyrzuca wrogów w powietrze."
@@ -2930,6 +3000,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		HALFZATOICHI_NAME 		= "PRAWIE ZATOICHI"
 		HALFZATOICHI_DESC 		= "Średnie obrażenia, duża mobilność i zwiększony zasięg ataku."
+		// TODO: Update: "High damage and health."
 		//
 		MARKETGARDENER_NAME 	= "OGRODNIK Z ARNHEM"
 		MARKETGARDENER_DESC 	= "Znacznie zwiększone obrażenia krytyczne. Po zabiciu wroga wchodzisz w stan furii, otrzymując dodatkowe zdrowie, odporność i zwiększone obrażenia do wszystkich ataków. Chybienie kończy się natychmiastową śmiercią."
@@ -2950,12 +3021,14 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BACKBURNER_NAME 		= "DUPALACZ"
 		BACKBURNER_DESC			= "Zielony ogień – nakłada na wrogów piętno śmierci i ogłusza znajdujących się w powietrzu przeciwników na krótki czas. Zadaje 2x większe obrażenia robopyro."
+		// TODO: Update!  "Green Fire - Stuns airborne enemies for a short time. This weapon deals x2 damage against Pyro bots."
 		//
 		DEGREASER_NAME 			= "ODTŁUSZCZACZ"
 		DEGREASER_DESC			= "Miotacz ognia o dużym zasięgu z dużymi obrażeniami bezpośrednimi, lecz bez obrażeń od podpalenia. Nie posiada podmuchu sprężonego powietrza."
 		//
 		PHLOGISTINATOR_NAME 	= "FLOGISTYNATOR"
 		PHLOGISTINATOR_DESC		= "Zielony ogień – nakłada na wrogów piętno śmierci i ogłusza znajdujących się w powietrzu przeciwników na krótki czas. Skuteczny przeciwko czołgom, ale zmniejsza twoją szybkość ruchu."
+		// TODO: Update! "Green Fire - Stuns airborne enemies for a short time. Strong against Tanks."
 		//
 		RAINBLOWER_NAME 		= "TĘCZOMIOT"
 		RAINBLOWER_DESC			= "Miotacz ognia o dużym zasięgu i z niskimi obrażeniami bezpośrednimi, lecz dużymi obrażeniami od podpalenia. Może natychmiast niszczyć konstrukcje Inżyniera i podpalać wrogich Pyro. Podmuch sprężonego powietrza jest słaby, ale czas oczekiwania na jego kolejne użycie jest bardzo krótki."
@@ -2989,6 +3062,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		FIREAXE_NAME 			= "TOPÓR STRAŻACKI"
 		FIREAXE_DESC 			= "Standardowa opcja zapewniająca ochronę i mobilność."
+		// TODO: Update! "Standard option. 4x Damage vs Pyro bots. Gain crits on kill."
 		//	
 		AXTINGUISHER_NAME 		= "POSKRAMIACZ PŁOMIENI"
 		AXTINGUISHER_DESC		= "Znacznie zwiększone obrażenia przeciw płonącym wrogom."
@@ -2998,6 +3072,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		POWERJACK_NAME 			= "LEWAREK"
 		POWERJACK_DESC 			= "Duża szybkość ataku i poruszania się. Wywołuje krwawienie i podpala wrogów przy trafieniu oraz zapewnia trafienia minikrytyczne po zabiciu przeciwnika."
+		// TODO: Update! "Fast move speed when active. Inflict bleed & ignite enemies on hit and gain mini-crits on kill."
 		//
 		BACKSCRATCHER_NAME 		= "DRAPACZKA"
 		BACKSCRATCHER_DESC 		= "Zadaje śmiertelne obrażenia z tyłu. Po zabiciu wroga wchodzisz w stan furii, zyskując dodatkową szybkość ruchu, odporność i zwiększone obrażenia do wszystkich ataków."
@@ -3021,6 +3096,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		NEONANNIHILATOR_NAME 	= "NISZCZYCIEL"
 		NEONANNIHILATOR_DESC 	= "Twoja grawitacja jest zmniejszona."
+		// TODO: Update! "Your gravity is reduced. Holding this weapon active reduces gravity more. Holding crouch with this weapon active reverses gravity."
 		//
 		HOTHAND_NAME 			= "GORĄCY PLASKACZ"
 		HOTHAND_DESC 			= "Wyrzuca wrogów w powietrze przy trafieniu."
@@ -3070,6 +3146,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		BOTTLE_NAME 			= "BUTELKA"
 		BOTTLE_DESC 			= "Standardowa opcja zapewniająca ochronę i mobilność."
+		// TODO: Update! "Standard option. 4x Damage vs Demoman bots. Gain crits on kill."
 		//
 		EYELANDER_NAME 			= "WYSZCZERBIEC"
 		EYELANDER_DESC 			= "Duże obrażenia i szybkie ataki przyznające trafienia krytyczne i minikrytyczne po zabiciu wroga, lecz bez możliwości gry jako „hybrid-knight”."
@@ -3092,6 +3169,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		SCOTTISHHANDSHAKE_NAME 	= "SZKOCKI UŚCISK DŁONI"
 		SCOTTISHHANDSHAKE_DESC 	= "Gdy broń jest dobyta, 90% odporności na obrażenia z dystansu, odporność na odrzut i znaczny wzrost maksymalnego zdrowia. Nie możesz jednak odzyskiwać amunicji i otrzymujesz mniej zdrowia z apteczek."
+		// TODO: Update! "On Hit: Victim repeatedly explodes every few seconds. On Kill: Gain a bomb head. Right-click to detonate."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -3141,6 +3219,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		FISTS_NAME 				= "PIĘŚCI"
 		FISTS_DESC 				= "Standardowa opcja zapewniająca ochronę i mobilność. Skuteczne w walce."
+		// TODO: Update! "Standard option. Gain crits on kill. Able to taunt attack for massive damage."
 		//
 		KILLINGGLOVES_NAME 		= "KRYTYCZNE GRZMOTY BOKSERSKIE"
 		KILLINGGLOVES_DESC 		= "Zdolność specjalna: „Megazgniot” – gdy jest dostępna, naciśnij klawisz działania stojąc na bombie, by natychmiast odesłać ją na początek. W przeciwnym razie otrzymasz tymczasowy bonus do szybkości ruchu, obrony i trafienia krytyczne."
@@ -3242,6 +3321,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		BONESAW_NAME 			= "PIŁA DO KOŚCI"
 		BONESAW_DESC			= "Standardowa opcja zapewniająca ochronę i mobilność. Każde trafienie we wroga przyznaje 10% ładunku ÜberCharge."
+		// TODO: Update! "Standard option. Gain 10% Uber on hit."
 		//
 		UBERSAW_NAME 			= "ÜBERPIŁA"
 		UBERSAW_DESC			= "Przy trafieniu we wroga wywołuje krwawienie. Przyznaje 2% ładunku ÜberCharge przy trafieniu we wroga."
@@ -3297,9 +3377,11 @@ if ("SetScriptVersion" in getroottable())
 		//
 		DARWIN_NAME 			= "DARWIŃSKA TARCZA OCHRONNA"
 		DARWIN_DESC 			= "Zapewnia niemal pełną odporność na obrażenia od OGNIA, ale otrzymujesz o 50% więcej obrażeń od NABOJÓW i EKSPLOZJI."
+		// TODO: Update! "High resistance to FIRE damage, but take 50% more damage from BULLET and BLAST."
 		//
 		COZYCAMPER_NAME 		= "WYGODNICKI WCZASOWICZ"
 		COZYCAMPER_DESC 		= "Lekko zwiększona szybkość ruchu, regenerację i maksymalne zdrowie. Zapewnia odporność na podpalenie."
+		// TODO: Update! "Increased move speed, max health and health regen. Immune to afterburn."
 		//
 		CLEANERSCARBINE_NAME 	= "SPLUWA SPRZĄTACZA"
 		CLEANERSCARBINE_DESC 	= "Trafienia minikrytyczne trwają przez 30 sekund."
@@ -3309,6 +3391,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		KUKRI_NAME 				= "KUKRI"
 		KUKRI_DESC 				= "Standardowa opcja zapewniająca ochronę i mobilność."
+		// TODO: Update! "Standard option. 4x Damage vs Sniper bots. Gain crits on kill."
 		//
 		TRIBALMANSSHIV_NAME 	= "PLEMIENNE OSTRZE"
 		TRIBALMANSSHIV_DESC 	= "Przedmiot pomocniczy – grawitacja nie oddziałuje na tobie i możesz swobodnie latać."
@@ -3355,7 +3438,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BIGEARNER_NAME 			= "GRUBA RYBA"
 		BIGEARNER_DESC 			= "Masz ogromną ilość zdrowia, a „chybione” zamachy powodują szybkie leczenie, jednak otrzymujesz obrażenia od ognia sojuszniczego."
-		// TODO: Update! "You have a massive amount of health and 'missed' swings cause you to heal. Gain a short burst of massively increased heal rate on kill (which can also build overheal). Cannot heal from any other sources."
+		// TODO: Update! "On Kill: Gain a full stack of overheal. Able to gain multiple stacks."
 		//
 		WANGAPRICK_NAME 		= "KŁUJKA VOODOO"
 		WANGAPRICK_DESC 		= "Zabicie wroga natychmiast aktywuje niewidzialność na kilka sekund. Możesz atakować przeciwników będąc niewidzialnym, by wydłużyć czas trwania niewidzialność. Nie możesz używać przebrań."
@@ -3385,12 +3468,15 @@ if ("SetScriptVersion" in getroottable())
 		//----------------------------
 		FRYINGPAN_NAME 				= "PATELNIA"
 		FRYINGPAN_DESC 				= "Zadaje 30x większe obrażenia wrogom tej samej klasy co ty oraz przyznaje trafienia krytyczne po zabiciu wroga."
+		// TODO: Update! "Deal x30 damage to enemies of the same class as you and gain mini-crits on kill."
 		//
 		SAXXY_NAME 					= "SAXXY"
 		SAXXY_DESC 					= "Zadaje 30x większe obrażenia wrogom tej samej klasy co ty oraz przyznaje trafienia krytyczne po zabiciu wroga."
+		// TODO: Update! "Deal x30 damage to enemies of the same class as you and gain mini-crits on kill."
 		//
 		MEMORYMAKER_NAME 			= "WSPOMNIENIOTWÓRCA"
 		MEMORYMAKER_DESC			= "Zadaje 30x większe obrażenia wrogom tej samej klasy co ty oraz przyznaje trafienia krytyczne po zabiciu wroga."
+		// TODO: Update! "Deal x30 damage to enemies of the same class as you and gain mini-crits on kill."
 		//
 		CONOBJECTOR_NAME			= "OBDŻEKTOR"
 		CONOBJECTOR_DESC			= "Co 10 zabójstw otrzymujesz losowe zaklęcie (wymaga założenia księgi zaklęć)."
@@ -3416,21 +3502,21 @@ if ("SetScriptVersion" in getroottable())
 	}
 	japanese = {
 		IH_TRANSLATE_ITEM		= IH_color + "[%s] " + IH_text_color + "%s"
-		IH_INCLUDES				= IH_color_header + "[►]\x0826beffBB 装備内容："
+		IH_INCLUDES				= IH_color_header + "[►] 装備内容："
 		IH_DIS_MSG_2			= IH_disable_color + "Type '/itemhelp 1' ウェーブ中にこれらのメッセージを表示しないようにする \nType '/itemhelp 0' これらのメッセージを完全に無効にする"
 		IH_DIS_MSG				= IH_disable_color + "Type '/itemhelp 0' これらのメッセージを非表示にする \nType '/itemhelp 2' このメッセージを常に表示する"
 		// TODO: Update!
 		/* 
-		IH_INCLUDES				= IH_color_header + "[►]\x0826beffAA Your loadout includes..."
+		IH_INCLUDES				= IH_color_header + "[►] Your loadout includes..."
 		IH_DIS_MSG_2			= IH_disable_color + "Type '/itemhelp 1' to disable item descriptions during a wave. \nType '/itemhelp 0' to disable them entirely."
 		IH_DIS_MSG				= IH_disable_color + "Type '/itemhelp 0' to disable item descriptions. \nType '/itemhelp 2' to always display them."
 		 */
 		IH_BAD_ARGS				= IH_color_header + "[Item Helper]" + IH_error_color + " {エラー}\x01 引数が正しくありません!\n/itemhelp 2 - Enable\n/itemhelp 1 - セットアップ中のみ有効にする\n/itemhelp 0 - Disable"
 		IH_OOB_ARG				= IH_color_header + "[Item Helper]" + IH_error_color + " {エラー}\x01 範囲外の値が設定されました! : %s"
 		IH_HELP_MSG				= IH_color_header + "[Item Helper]\x01 アイテムヘルパーは、各カオスアイテムについて簡単な説明を提供します \x03Chaos\x01 Item!" 
-		IH_DISABLE				= IH_color_header + "[►]\x01 アイテムヘルパーが無効になっています"
-		IH_WAVE_SETUP			= IH_color_header + "[►]\x01 アイテムヘルパーは、セットアップ中のみ有効になっています"
-		IH_ENABLE 				= IH_color_header + "[►]\x01 アイテムヘルパーが有効になっています"
+		IH_DISABLE				= IH_color_header + "[►] アイテムヘルパーが無効になっています"
+		IH_WAVE_SETUP			= IH_color_header + "[►] アイテムヘルパーは、セットアップ中のみ有効になっています"
+		IH_ENABLE 				= IH_color_header + "[►] アイテムヘルパーが有効になっています"
 		LOW_METAL 				= "メタルが足りません"
 		TOMISLAV_HEAT			= "Tomislav ヒート: %s%%"
 		STUCK_RESPAWNED 		= "スタック解消のため、リスポーンしました."
@@ -3461,6 +3547,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		FORCENATURE_NAME		= "フォース・ア・ネイチャー"
 		FORCENATURE_DESC		= "弾の命中時にノックバック付くが、散弾銃よりはDPSが低くなっている"
+		// TODO: Update! "Enhanced knockback on hit."
 		//
 		SHORTSTOP_NAME 			= "SHORTSTOP"
 		SHORTSTOP_DESC 			= "とんでもない発射速度で、濡れている敵に対してクリティカルヒットする、だがリロードが遅い"
@@ -3482,6 +3569,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BONK_NAME 				= "喉ごしガツン! アトミックパンチ"
 		BONK_DESC 				= "強化されたソーダ...効果中攻撃能力を失うことなく、無敵の状態を付与される"
+		// TODO: Update! "Supercharged drink, granting invulnerability and a minor boost to all stats."
 		//
 		CRITACOLA_NAME 			= "クリティコーラ"
 		CRITACOLA_DESC 			= "強化されたソーダ...効果中クリティカルを付与される"
@@ -3503,6 +3591,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		BAT_NAME 				= "バット"
 		BAT_DESC 				= "死を無効化し、HP1でスポーン地点へテレポートするチャンスを得られる"
+		// TODO: Update! "Able to ignore death and teleport to spawn with 1hp.
 		//
 		SANDMAN_NAME			= "SANDMAN"
 		SANDMAN_DESC 			= "大容量かつ高速リチャージにより、野球のボールを連射することができ、単体のターゲットに多大なバーストダメージを与える"
@@ -3545,7 +3634,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BLACKBOX_NAME			= "BLACK BOX"
 		BLACKBOX_DESC			= "敵の動きを鈍らせ、出血ダメージを与える この武器はソルジャーボットに対して2倍のダメージを与える"
-		// TODO: Update! "Slow down enemies and inflict bleed."
+		// TODO: Update! "Fires 3 rockets at once in a straight line, inflicting bleed on hit. Enemies are marked for death for the duration of bleed."
 		//
 		ROCKETJUMPER_NAME		= "ROCKET JUMPER"
 		ROCKETJUMPER_DESC		= "発射速度とリロード速度は遅いものの、威力が大きく、爆風範囲も広い 群衆に対して最適な選択肢だ"
@@ -3587,6 +3676,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		RESERVESHOOTER_NAME 	= "リザーブ・シューター" 
 		RESERVESHOOTER_DESC 	= "射程に関係なく、1発につき10,000の固定ダメージを与え、敵を倒すと3秒間ミニクリティカルが発生する ただし、この武器はクリティカル倍率の恩恵を受けず、タンクにはダメージを与えられない サブ攻撃キーでズームイン使用可能" 
+		// TODO: Update! "Deals a fixed amount of damage per shot no matter the range with 3s mini-crits on kill. However this weapon cannot be crit boosted, and cannot damage Tanks. Hold Alt-Fire to zoom in." 
 		//
 		BISON_NAME 				= "ライチャス・バイソン" 
 		BISON_DESC 				= "完全自動照準で、貫通ダメージを与えるビームを連続して発射する" 
@@ -3604,6 +3694,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		SHOVEL_NAME 			= "シャベル"
 		SHOVEL_DESC 			= "防御と機動性のための標準的な選択肢"
+		// TODO: Update! "Standard option. 4x Damage vs Soldier bots. Gain crits on kill."
 		//
 		EQUALIZER_NAME 			= "イコライザー"
 		EQUALIZER_DESC 			= "タウント攻撃は、大ダメージを与え、敵を空中に吹き飛ばす"
@@ -3614,6 +3705,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		HALFZATOICHI_NAME 		= "ハーフ座頭市"
 		HALFZATOICHI_DESC 		= "平均的なダメージを与え高い体力と機動性を兼ね備え、攻撃範囲も拡大された"
+		// TODO: Update: "High damage and health."
 		//
 		MARKETGARDENER_NAME 	= "マーケットガーデナー"
 		MARKETGARDENER_DESC 	= "クリティカルダメージが大幅に上昇する 敵を倒すとレイジ状態となり、HPと耐性が上昇し、すべての攻撃のダメージが増加する ただし、攻撃が外れると即死する"
@@ -3634,12 +3726,14 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BACKBURNER_NAME 		= "バックバーナー"
 		BACKBURNER_DESC			= "グリーンファイア - 敵に「死のマーキング」を付け、空中の敵を短時間スタンさせる この武器はパイロボットに対して2倍のダメージを与える"
+		// TODO: Update!  "Green Fire - Stuns airborne enemies for a short time. This weapon deals x2 damage against Pyro bots."
 		//
 		DEGREASER_NAME 			= "DEGREASER"
 		DEGREASER_DESC			= "長距離火炎放射器で、高い炎ダメージを与えるが、炎上ダメージは0である この火炎放射器はエアブラストを発動できない"
 		//
 		PHLOGISTINATOR_NAME 	= "フロギストネイター"
 		PHLOGISTINATOR_DESC		= "グリーンファイア - 敵に「死のマーキング」を付け、空中の敵を短時間スタンさせる タンクに対して強力だが、移動速度が低下する"
+		// TODO: Update! "Green Fire - Stuns airborne enemies for a short time. Strong against Tanks."
 		//
 		RAINBLOWER_NAME 		= "レインブロワー"
 		RAINBLOWER_DESC			= "長距離の火炎放射器で、炎ダメージは低いが、炎上ダメージは高い また、エンジニアの建造物を瞬時に破壊したり、敵のパイロを炎上したりすることもできる エアブラストの威力は弱いものの、非常に速い"
@@ -3673,6 +3767,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		FIREAXE_NAME 			= "消防斧"
 		FIREAXE_DESC 			= "防御と機動性のための標準的な選択肢"
+		// TODO: Update! "Standard option. 4x Damage vs Pyro bots. Gain crits on kill."
 		//	
 		AXTINGUISHER_NAME 		= "アクスティングイシャー"
 		AXTINGUISHER_DESC		= "燃えている敵へのダメージが大幅に増加する"
@@ -3682,6 +3777,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		POWERJACK_NAME 			= "POWERJACK"
 		POWERJACK_DESC 			= "素早い攻撃と移動速度、命中時に敵に出血と炎上効果を与え、敵を倒すとミニクリティカルを獲得する"
+		// TODO: Update! "Fast move speed when active. Inflict bleed & ignite enemies on hit and gain mini-crits on kill."
 		//
 		BACKSCRATCHER_NAME 		= "バックスクラッチャー"
 		BACKSCRATCHER_DESC 		= "背後から致命的なダメージを与える 敵を倒すとレイジ状態となり、移動速度と耐性が上昇し、すべての攻撃のダメージが増加する"
@@ -3705,6 +3801,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		NEONANNIHILATOR_NAME 	= "ネオンアナイレイター"
 		NEONANNIHILATOR_DESC 	= "重力が軽減される"
+		// TODO: Update! "Your gravity is reduced. Holding this weapon active reduces gravity more. Holding crouch with this weapon active reverses gravity."
 		//
 		HOTHAND_NAME 			= "ホットハンド"
 		HOTHAND_DESC 			= "命中時に敵を空中に吹き飛ばす"
@@ -3754,6 +3851,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		BOTTLE_NAME 			= "ボトル"
 		BOTTLE_DESC 			= "防御と機動性のための標準的な選択肢"
+		// TODO: Update! "Standard option. 4x Damage vs Demoman bots. Gain crits on kill."
 		//
 		EYELANDER_NAME 			= "アイランダー"
 		EYELANDER_DESC 			= "素早い攻撃で高いダメージを与え、敵を倒すとクリティカルやミニクリティカルが発生するが、ハイブリッドナイトとしては使用できない"
@@ -3776,6 +3874,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		SCOTTISHHANDSHAKE_NAME 	= "スコティッシュ・ハンドシェイク"
 		SCOTTISHHANDSHAKE_DESC 	= "発動中：遠距離攻撃のダメージを90%軽減し、ノックバックを無効化し、最大HPを大幅に増加させる ただし、弾薬を回復できず、敵グループから得られるHP回復量も減少する"
+		// TODO: Update! "On Hit: Victim repeatedly explodes every few seconds. On Kill: Gain a bomb head. Right-click to detonate."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -3825,6 +3924,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		FISTS_NAME 				= "拳"
 		FISTS_DESC 				= "防御と機動性のための標準的な選択肢 戦闘で効果的"
+		// TODO: Update! "Standard option. Gain crits on kill. Able to taunt attack for massive damage."
 		//
 		KILLINGGLOVES_NAME 		= "キリング・グローブ・オブ・ボクシング"
 		KILLINGGLOVES_DESC 		= "特殊能力：「メガクラッシュ」 - 使用可能時に爆弾の上でアクションスロットのキーを押すと、爆弾を即座にスタート地点へ戻す それ以外の場合は、一時的に移動速度、防御力、クリティカル率が上昇する"
@@ -3926,6 +4026,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		BONESAW_NAME 			= "骨用電ノコ"
 		BONESAW_DESC			= "防御と機動性のための標準的な選択肢 攻撃が命中すると、ユーバーが10%上昇する"
+		// TODO: Update! "Standard option. Gain 10% Uber on hit."
 		//
 		UBERSAW_NAME 			= "ユーバーソー"
 		UBERSAW_DESC			= "命中時に出血効果を与え、ユーバーが2%上昇する"
@@ -3981,9 +4082,11 @@ if ("SetScriptVersion" in getroottable())
 		//
 		DARWIN_NAME 			= "DARWIN'S DANGER SHIELD"
 		DARWIN_DESC 			= "炎攻撃にはほぼ無敵だが、弾丸と爆発ダメージを50％増しで受ける"
+		// TODO: Update! "High resistance to FIRE damage, but take 50% more damage from BULLET and BLAST."
 		//
 		COZYCAMPER_NAME 		= "コージー・キャンパー"
 		COZYCAMPER_DESC 		= "移動速度、最大HP、HP回復量がわずかに上昇する 炎上効果を受けない"
+		// TODO: Update! "Increased move speed, max health and health regen. Immune to afterburn."
 		//
 		CLEANERSCARBINE_NAME 	= "クリーナーズ・カービン"
 		CLEANERSCARBINE_DESC 	= "ミニクリティカルブーストの効果は30秒間持続する"
@@ -3993,6 +4096,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		KUKRI_NAME 				= "ククリ刀"
 		KUKRI_DESC 				= "防御と機動性のための標準的な選択肢"
+		// TODO: Update! "Standard option. 4x Damage vs Sniper bots. Gain crits on kill."
 		//
 		TRIBALMANSSHIV_NAME 	= "トライバルマンズ・シヴ"
 		TRIBALMANSSHIV_DESC 	= "便利アイテム - 重力がなくなり、自由に空を飛ぶことができる"
@@ -4039,7 +4143,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BIGEARNER_NAME 			= "ビッグアーナー"
 		BIGEARNER_DESC 			= "HPが非常に高く、攻撃が外れるたびに急速に回復するが、味方からの誤射を受けることになる"
-		// TODO: Update! "You have a massive amount of health and 'missed' swings cause you to heal. Gain a short burst of massively increased heal rate on kill (which can also build overheal). Cannot heal from any other sources."
+		// TODO: Update! "On Kill: Gain a full stack of overheal. Able to gain multiple stacks."
 		//
 		WANGAPRICK_NAME 		= "ワンガプリック"
 		WANGAPRICK_DESC 		= "敵を倒すと、数秒間即座に透明状態になる この透明状態では敵を攻撃でき、連続キルを達成することで不可視状態を維持できるが変装はできない"
@@ -4069,12 +4173,15 @@ if ("SetScriptVersion" in getroottable())
 		//----------------------------
 		FRYINGPAN_NAME 			= "フライパン"
 		FRYINGPAN_DESC 			= "自分と同じクラスの敵に30倍のダメージを与え、敵を倒すとクリティカルが発生する"
+		// TODO: Update! "Deal x30 damage to enemies of the same class as you and gain mini-crits on kill."
 		//
 		SAXXY_NAME 				= "ザクシー"
 		SAXXY_DESC 				= "自分と同じクラスの敵に30倍のダメージを与え、敵を倒すとクリティカルが発生する"
+		// TODO: Update! "Deal x30 damage to enemies of the same class as you and gain mini-crits on kill."
 		//
 		MEMORYMAKER_NAME 		= "メモリーメーカー"
 		MEMORYMAKER_DESC		= "自分と同じクラスの敵に30倍のダメージを与え、敵を倒すとクリティカルが発生する"
+		// TODO: Update! "Deal x30 damage to enemies of the same class as you and gain mini-crits on kill."
 		//
 		CONOBJECTOR_NAME		= "コンシエンタスオブジェクター"
 		CONOBJECTOR_DESC		= "10キルごとに、ランダムな呪文チャージを1つ獲得する（魔術書が必要）"
@@ -4100,21 +4207,21 @@ if ("SetScriptVersion" in getroottable())
 	} 
 	danish = {
 		IH_TRANSLATE_ITEM		= IH_color + "[%s] " + IH_text_color + "%s"
-		IH_INCLUDES				= IH_color_header + "[►]\x0826beffBB Your loadout includes..."
+		IH_INCLUDES				= IH_color_header + "[►] Your loadout includes..."
 		IH_DIS_MSG_2			= IH_disable_color + "Skriv '/itemhelp 1' for at deaktivere disse beskeder under en bølge. \nSkriv '/itemhelp 0' for at deaktivere disse beskeder helt."
 		IH_DIS_MSG				= IH_disable_color + "Skriv '/itemhelp 0' for at deaktivere disse beskeder. \nSkriv '/itemhelp 2' for altid at vise denne besked."
 		// TODO: Update!
 		/* 
-		IH_INCLUDES				= IH_color_header + "[►]\x0826beffAA Your loadout includes..."
+		IH_INCLUDES				= IH_color_header + "[►] Your loadout includes..."
 		IH_DIS_MSG_2			= IH_disable_color + "Type '/itemhelp 1' to disable item descriptions during a wave. \nType '/itemhelp 0' to disable them entirely."
 		IH_DIS_MSG				= IH_disable_color + "Type '/itemhelp 0' to disable item descriptions. \nType '/itemhelp 2' to always display them."
 		 */
 		IH_BAD_ARGS				= IH_color_header + "[Genstandshjælper]" + IH_error_color + " {Fejl}\x01 Forkerte argumenter!\n/itemhelp 2 - Aktiver\n/genstandshjælp 1 - Aktiver kun under bølge-setup\n/itemhelp 0 - Deaktiver"
 		IH_OOB_ARG				= IH_color_header + "[Genstandshjælper]" + IH_error_color + " {Error}\x01 Ugyldig værdi angivet! : %s"
 		IH_HELP_MSG				= IH_color_header + "[Genstandsjælper]\x01 Genstandshjælper giver enkle beskrivelser for hver \x03Chaos\x01 genstand!" 
-		IH_DISABLE				= IH_color_header + "[►]\x01 Genstandshjælper deaktiveret!."
-		IH_WAVE_SETUP			= IH_color_header + "[►]\x01 Genstandshjælper kun aktiveret under bølge-setup."
-		IH_ENABLE 				= IH_color_header + "[►]\x01 Genstandshjælper aktiveret!."
+		IH_DISABLE				= IH_color_header + "[►] Genstandshjælper deaktiveret!."
+		IH_WAVE_SETUP			= IH_color_header + "[►] Genstandshjælper kun aktiveret under bølge-setup."
+		IH_ENABLE 				= IH_color_header + "[►] Genstandshjælper aktiveret!."
 		LOW_METAL 				= "Ikke nok metal"
 		TOMISLAV_HEAT			= "Tomislav varme: %s%%"
 		STUCK_RESPAWNED 		= "Du blev genoplivet for at undgå at sidde fast."
@@ -4145,6 +4252,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		FORCENATURE_NAME		= "NATURKRAFTEN"
 		FORCENATURE_DESC		= "Forbedret tilbageslag ved træf. Lidt lavere skadesudbytte pr. sekund end Haglsprederen."
+		// TODO: Update! "Enhanced knockback on hit."
 		//
 		SHORTSTOP_NAME 			= "HÅNDBREMSEN"
 		SHORTSTOP_DESC 			= "Vanvittig skudhastighed og garanterede kritiske træffere mod våde fjender, men langsom genladning."
@@ -4166,6 +4274,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BONK_NAME 				= "BONK!-ATOMPUNCH"
 		BONK_DESC 				= "En kraftfuld drik, der giver usårlighed uden at forhindre dig i at angribe."
+		// TODO: Update! "Supercharged drink, granting invulnerability and a minor boost to all stats."
 		//
 		CRITACOLA_NAME 			= "KRIT-A-COLA"
 		CRITACOLA_DESC 			= "En drik med ekstra kraft, der giver fulde kritiske slag."
@@ -4187,6 +4296,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		BAT_NAME 				= "BAT"
 		BAT_DESC 				= "Mulighed for at ignorere døden og teleportere sig til spawn med 1 hp."
+		// TODO: Update! "Able to ignore death and teleport to spawn with 1hp.
 		//
 		SANDMAN_NAME			= "OLE LUKØJE"
 		SANDMAN_DESC 			= "Kan affyre baseballs i hurtig rækkefølge med stor kapacitet og hurtig genopladning, hvilket påfører enkelte mål betydelig skade i hurtige skudsalver."
@@ -4229,7 +4339,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BLACKBOX_NAME			= "DEN SORTE BOKS"
 		BLACKBOX_DESC			= "Sæt farten ned på fjender og påfør blødning. Dette våben gør x2 skade mod Soldier robotter."
-		// TODO: Update! "Slow down enemies and inflict bleed."
+		// TODO: Update! "Fires 3 rockets at once in a straight line, inflicting bleed on hit. Enemies are marked for death for the duration of bleed."
 		//
 		ROCKETJUMPER_NAME		= "RAKETHOPPEREN"
 		ROCKETJUMPER_DESC		= "Lav skudhastighed og genladningstid, men høj skade og stor eksplosionsradius. Fremragende valg til at kontrollere store grupper."
@@ -4271,6 +4381,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		RESERVESHOOTER_NAME 	= "BAGHÅNDSGEVÆRET" 
 		RESERVESHOOTER_DESC 	= "Gør 10.000 skade pr. skud uanset afstand og udløser mini-kritiske slag på 3 sekunder ved drab. Våbnet kan dog ikke forstærkes med kritiske slag og kan ikke skade tanks. Hold Alt-Skyd nede for at zoome ind." 
+		// TODO: Update! "Deals a fixed amount of damage per shot no matter the range with 3s mini-crits on kill. However this weapon cannot be crit boosted, and cannot damage Tanks. Hold Alt-Fire to zoom in." 
 		//
 		BISON_NAME 				= "RETSKAFNE BISON" 
 		BISON_DESC 				= "Affyrer en kontinuerlig stråle af gennemtrængende skade med fuld automatisk sigtning." 
@@ -4288,6 +4399,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		SHOVEL_NAME 			= "SKOVL"
 		SHOVEL_DESC 			= "Standard valg for pålidelig skade."
+		// TODO: Update! "Standard option. 4x Damage vs Soldier bots. Gain crits on kill."
 		//
 		EQUALIZER_NAME 			= "UDLIGNEREN"
 		EQUALIZER_DESC 			= "Hån angrebet forårsager enorm skade og slår fjenderne op i luften."
@@ -4298,6 +4410,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		HALFZATOICHI_NAME 		= "HALV-ZATOICHI"
 		HALFZATOICHI_DESC 		= "Gennemsnitlig skade med høj helbred og mobilitet samt øget rækkevidde."
+		// TODO: Update: "High damage and health."
 		//
 		MARKETGARDENER_NAME 	= "KRIGERENS KAMPSKOVL"
 		MARKETGARDENER_DESC 	= "Markant øget kritisk skade. Efter at have dræbt en fjende går du ind i en rasende tilstand og får ekstra liv, modstand og øget skade på alle angreb. Men hvis du rammer forbi, dør du med det samme."
@@ -4318,12 +4431,14 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BACKBURNER_NAME 		= "BAGBRÆNDEREN"
 		BACKBURNER_DESC			= "Grøn ild – Markerer fjender til døden og lammer fjender i luften i kort tid. Dette våben gør dobbelt så meget skade mod Pyro robotter."
+		// TODO: Update!  "Green Fire - Stuns airborne enemies for a short time. This weapon deals x2 damage against Pyro bots."
 		//
 		DEGREASER_NAME 			= "FEDTFJERNEREN"
 		DEGREASER_DESC			= "Langdistance flammekaster, der gør stor direkte skade, men ingen efterbrændingsskade. Denne flammekaster kan ikke lave luftstød."
 		//
 		PHLOGISTINATOR_NAME 	= "PHLOGISTINATOREN"
 		PHLOGISTINATOR_DESC		= "Grøn ild – Markerer fjender til døden og lammer fjender i luften i kort tid. Effektiv mod tanks, men din bevægelseshastighed nedsættes."
+		// TODO: Update! "Green Fire - Stuns airborne enemies for a short time. Strong against Tanks."
 		//
 		RAINBLOWER_NAME 		= "REGNBLÆSEREN"
 		RAINBLOWER_DESC			= "Langdistance flammekaster, der gør lav direkte skade, men stor efterbrændingsskade. Kan desuden øjeblikkeligt ødelægge Engineers bygninger og brænde fjendtlige Pyros. Luftstødet er svagt, men meget hurtigt."
@@ -4357,6 +4472,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		FIREAXE_NAME 			= "BRANDØKSE"
 		FIREAXE_DESC 			= "Standardvalg til forsvar og mobilitet."
+		// TODO: Update! "Standard option. 4x Damage vs Pyro bots. Gain crits on kill."
 		//	
 		AXTINGUISHER_NAME 		= "UDBRÆNDEREN"
 		AXTINGUISHER_DESC		= "Gør markant mere skade mod brændende spillere."
@@ -4366,6 +4482,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		POWERJACK_NAME 			= "DONHAMMEREN"
 		POWERJACK_DESC 			= "Hurtige angreb og bevægelseshastighed. Påfører fjender blødning og antændelse ved træf og giver minikritiske slag ved drab."
+		// TODO: Update! "Fast move speed when active. Inflict bleed & ignite enemies on hit and gain mini-crits on kill."
 		//
 		BACKSCRATCHER_NAME 		= "RYGKRADSEREN"
 		BACKSCRATCHER_DESC 		= "Gør dødelig skade bagfra. Efter et drab går du i en rasende tilstand og opnår ekstra bevægelseshastighed, modstand og øget skade på alle angreb."
@@ -4389,6 +4506,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		NEONANNIHILATOR_NAME 	= "NEON ANNIHILATOREN"
 		NEONANNIHILATOR_DESC 	= "Din tyngdekræft er reduceret"
+		// TODO: Update! "Your gravity is reduced. Holding this weapon active reduces gravity more. Holding crouch with this weapon active reverses gravity."
 		//
 		HOTHAND_NAME 			= "VARME HÅND"
 		HOTHAND_DESC 			= "Ved træf: Opsend fjender i luften."
@@ -4438,6 +4556,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		BOTTLE_NAME 			= "FLASKE"
 		BOTTLE_DESC 			= "Standard valg for forsvar og mobilitet."
+		// TODO: Update! "Standard option. 4x Damage vs Demoman bots. Gain crits on kill."
 		//
 		EYELANDER_NAME 			= "HØJLANDSKLINGEN"
 		EYELANDER_DESC 			= "Høj skade med hurtige angreb, der giver krits og mini-krits ved drab, men kan ikke bruges som hybrid-knight."
@@ -4460,6 +4579,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		SCOTTISHHANDSHAKE_NAME 	= "SKOTSKE HÅNDTRYK"
 		SCOTTISHHANDSHAKE_DESC 	= "Mens aktiv: Modstå 90% afstandsskade, bliv immun over for tilbageslag og øg dit maksimale helbred betydeligt. Du kan dog ikke genforsyne dig med ammunition og modtager mindre helbred fra pakker."
+		// TODO: Update! "On Hit: Victim repeatedly explodes every few seconds. On Kill: Gain a bomb head. Right-click to detonate."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -4509,6 +4629,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		FISTS_NAME 				= "NÆVER"
 		FISTS_DESC 				= "Standardvalg til forsvar og mobilitet. Effektiv i kamp."
+		// TODO: Update! "Standard option. Gain crits on kill. Able to taunt attack for massive damage."
 		//
 		KILLINGGLOVES_NAME 		= "KALININS GRUSOMME BOKSEHANDSKER"
 		KILLINGGLOVES_DESC 		= "Speciel evne: 'Mega-Knus' – Når den er tilgængelig, kan du trykke på din handlingsknap, mens du står på bomben, for øjeblikkeligt at sende den tilbage til start. Ellers modtager du en midlertidig buff til bevægelseshastighed, forsvar og krits."
@@ -4610,6 +4731,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		BONESAW_NAME 			= "KNOGLESAV"
 		BONESAW_DESC			= "Standard valgmulighed for forsvar og mobilitet. Modtag 10 % Uber ved hit."
+		// TODO: Update! "Standard option. Gain 10% Uber on hit."
 		//
 		UBERSAW_NAME 			= "ÜBERSAVEN"
 		UBERSAW_DESC			= "Påfør blødning ved hit. Modtag 2 % Über ved hit."
@@ -4665,9 +4787,11 @@ if ("SetScriptVersion" in getroottable())
 		//
 		DARWIN_NAME 			= "DARWIN'S FARESKJOLD"
 		DARWIN_DESC 			= "Næsten immun over for ILD-skade, men tager 50 % mere skade fra SKUD og SPRÆNG."
+		// TODO: Update! "High resistance to FIRE damage, but take 50% more damage from BULLET and BLAST."
 		//
 		COZYCAMPER_NAME 		= "BEKVEMME CAMPIST"
 		COZYCAMPER_DESC 		= "Mindre stigning i bevægelseshastighed, maksimalt helbred og helbredsregenerering. Immun over for efterforbrænding."
+		// TODO: Update! "Increased move speed, max health and health regen. Immune to afterburn."
 		//
 		CLEANERSCARBINE_NAME 	= "KRYBSKYTTENS KARABIN"
 		CLEANERSCARBINE_DESC 	= "Mini-kritisk boost varer i 30 sekunder."
@@ -4677,6 +4801,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		KUKRI_NAME 				= "KUKRI"
 		KUKRI_DESC 				= "Standardvalg for forsvar og mobilitet."
+		// TODO: Update! "Standard option. 4x Damage vs Sniper bots. Gain crits on kill."
 		//
 		TRIBALMANSSHIV_NAME 	= "STAMMEMANDENS MACHETE"
 		TRIBALMANSSHIV_DESC 	= "Utility Genstand - Du er ikke påvirket af tyngdekraften og kan flyve frit."
@@ -4723,7 +4848,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BIGEARNER_NAME 			= "STORE INDTJENER"
 		BIGEARNER_DESC 			= "Du har en enorm mængde helbred, og sving, der 'misser', får dig til at hele hurtigt, men du modtager friendly fire fra dine holdkammerater."
-		// TODO: Update! "You have a massive amount of health and 'missed' swings cause you to heal. Gain a short burst of massively increased heal rate on kill (which can also build overheal). Cannot heal from any other sources."
+		// TODO: Update! "On Kill: Gain a full stack of overheal. Able to gain multiple stacks."
 		//
 		WANGAPRICK_NAME 		= "VOODOO-PRIKKET"
 		WANGAPRICK_DESC 		= "Drab på en fjende får dig til øjeblikkeligt at blive usynlig i et par sekunder. Du kan angribe fjender, mens du er i denne usynlige tilstand, og lænke drab sammen for at forblive usynlig. Ingen forklædning."
@@ -4753,12 +4878,15 @@ if ("SetScriptVersion" in getroottable())
 		//----------------------------
 		FRYINGPAN_NAME 				= "STEGEPANDE"
 		FRYINGPAN_DESC 				= "Gør x30 skade til fjender af samme klasse som dig selv og få kritiske slag ved drab."
+		// TODO: Update! "Deal x30 damage to enemies of the same class as you and gain mini-crits on kill."
 		//
 		SAXXY_NAME 					= "SAXXY"
 		SAXXY_DESC 					= "Gør x30 skade til fjender af samme klasse som dig selv og få kritiske slag ved drab."
+		// TODO: Update! "Deal x30 damage to enemies of the same class as you and gain mini-crits on kill."
 		//
 		MEMORYMAKER_NAME 			= "MINDESKABEREN"
 		MEMORYMAKER_DESC			= "Gør x30 skade til fjender af samme klasse som dig selv og få kritiske slag ved drab."
+		// TODO: Update! "Deal x30 damage to enemies of the same class as you and gain mini-crits on kill."
 		//
 		CONOBJECTOR_NAME			= "MILITÆRNÆGTEREN"
 		CONOBJECTOR_DESC			= "For hver 10. drab modtager du en tilfældig trylleformular (Kræver Tryllebog)."
@@ -4784,15 +4912,15 @@ if ("SetScriptVersion" in getroottable())
 	}
 	spanish = {
 		IH_TRANSLATE_ITEM		= IH_color + "[%s] " + IH_text_color + "%s"
-		IH_INCLUDES				= IH_color_header + "[►]\x0826beffAA Tu equipamiento incluye..."
+		IH_INCLUDES				= IH_color_header + "[►] Tu equipamiento incluye..."
 		IH_DIS_MSG_2			= IH_disable_color + "Pon '/itemhelp 1' para desactivar estos mensajes durante una oleada. \nPon '/itemhelp 0' para desactivarlos en todo momento."
 		IH_DIS_MSG				= IH_disable_color + "Type '/itemhelp 0' para desactivar estos mensajes. \nPon '/itemhelp 2' para que se muestren siempre."
 		IH_BAD_ARGS				= IH_color_header + "[Asistente de artículos]" + IH_error_color + " {Error}\x01 ¡Argumentos incorrectos!\n/itemhelp 2: Activar.\n/itemhelp 1: Activar solo en preparación.\n/itemhelp 0: Desactivar."
 		IH_OOB_ARG				= IH_color_header + "[Asistente de artículos]" + IH_error_color + " {Error}\x01 ¡Valor fuera de límites! : %s"
 		IH_HELP_MSG				= IH_color_header + "[Asistente de artículos]\x01 El asistente de artículos da descripciones para cada artículo de \x03Caos\x01!" 
-		IH_DISABLE				= IH_color_header + "[►]\x01 Asistente de artículos desactivado."
-		IH_WAVE_SETUP			= IH_color_header + "[►]\x01 Asistente de artículos activado para la preparación."
-		IH_ENABLE 				= IH_color_header + "[►]\x01 Asistente de artículos activado."
+		IH_DISABLE				= IH_color_header + "[►] Asistente de artículos desactivado."
+		IH_WAVE_SETUP			= IH_color_header + "[►] Asistente de artículos activado para la preparación."
+		IH_ENABLE 				= IH_color_header + "[►] Asistente de artículos activado."
 		LOW_METAL 				= "No hay metal suficiente"
 		TOMISLAV_HEAT			= "Temperatura de la Tomislav: %s %%"
 		STUCK_RESPAWNED 		= "Has reaparecido para no quedar atascado."
@@ -4823,6 +4951,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		FORCENATURE_NAME		= "DISPENSADORA DE CAÑA"
 		FORCENATURE_DESC		= "Con tanta fuerza que empuja al disparar. Hace algo menos de daño máximo que la Recortada."
+		// TODO: Update! "Enhanced knockback on hit."
 		//
 		SHORTSTOP_NAME 			= "PARATENSECO"
 		SHORTSTOP_DESC 			= "Una velocidad de disparo frenética y críticos asegurados contra enemigos mojados, pero lenta de recargar."
@@ -4844,6 +4973,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BONK_NAME 				= "¡BONK! LA BEBIDA SALVAVIDAS"
 		BONK_DESC 				= "Bebida radiactiva, da invulnerabilidad sin quitarte la habilidad de atacar."
+		// TODO: Update! "Supercharged drink, granting invulnerability and a minor boost to all stats."
 		//
 		CRITACOLA_NAME 			= "CRITICOLA"
 		CRITACOLA_DESC 			= "Bebida radioactiva, da críticos durante un tiempo."
@@ -4865,6 +4995,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		BAT_NAME 				= "BATE"
 		BAT_DESC 				= "Da una probabilidad de ignorar la muerte y regresar a base con 1 PS."
+		// TODO: Update! "Able to ignore death and teleport to spawn with 1hp.
 		//
 		SANDMAN_NAME			= "SOMNÍFERO"
 		SANDMAN_DESC 			= "Permite lanzar a toda velocidad bolas de béisbol con gran velocidad de recarga, causando daño a objetivos individuales."
@@ -4906,6 +5037,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BLACKBOX_NAME			= "CAJA NEGRA"
 		BLACKBOX_DESC			= "Ralentiza enemigos y causa hemorragia."
+		// TODO Update! "Fires 3 rockets at once in a straight line, inflicting bleed on hit. Enemies are marked for death for the duration of bleed."
 		//
 		ROCKETJUMPER_NAME		= "SALTACOHETES"
 		ROCKETJUMPER_DESC		= "Velocidad de disparo y recarga reducida, pero gran capacidad de daño y alcance de explosiones. Excelente para el control de masas."
@@ -4946,6 +5078,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		RESERVESHOOTER_NAME 	= "TIRADOR DE RESERVA" 
 		RESERVESHOOTER_DESC 	= "Causa 10 000 de daño por disparo sin importar la distancia, con 3 segundos de minicríticos por víctima. Sin embargo, esta arma no puede recibir críticos. Mantén el disparo secundario para apuntar con ella." 
+		// TODO: Update! "Deals a fixed amount of damage per shot no matter the range with 3s mini-crits on kill. However this weapon cannot be crit boosted, and cannot damage Tanks. Hold Alt-Fire to zoom in." 
 		//
 		BISON_NAME 				= "BISONTE JUSTICIERO" 
 		BISON_DESC 				= "Dispara un rayo continuo de daño penetrante con puntería automática." 
@@ -4962,6 +5095,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		SHOVEL_NAME 			= "PALA"
 		SHOVEL_DESC 			= "Una opción estándar para defensa y movilidad."
+		// TODO: Update! "Standard option. 4x Damage vs Soldier bots. Gain crits on kill."
 		//
 		EQUALIZER_NAME 			= "ECUALIZADOR"
 		EQUALIZER_DESC 			= "El daño aumenta masivamente mientras más herido te encuentres."
@@ -4971,6 +5105,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		HALFZATOICHI_NAME 		= "KATANA DEL MEDIO ZATOICHI"
 		HALFZATOICHI_DESC 		= "Daño medio con gran movilidad de salud y alcance aumentado."
+		// TODO: Update: "High damage and health."
 		//
 		MARKETGARDENER_NAME 	= "HORTELANO"
 		MARKETGARDENER_DESC 	= "Causa daño crítico masivo durante un salto con cohete. Al matar, aumenta temporalmente tu salud, y resistencia, y daño con todas tus armas. La mejora se indica con el ícono \x07ffc400[!] \x01 parpadeando."
@@ -4988,12 +5123,14 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BACKBURNER_NAME 		= "TUESTALOMOS"
 		BACKBURNER_DESC			= "Fuego verde: Marca a los enemigos de muerte y aturde a los que están en el aire. Esta arma causa daño x2 contra Pyros robot."
+		// TODO: Update!  "Green Fire - Stuns airborne enemies for a short time. This weapon deals x2 damage against Pyro bots."
 		//
 		DEGREASER_NAME 			= "DESENGRASADOR"
 		DEGREASER_DESC			= "Lanzallamas de largo alcance, con gran daño directo pero 0 daño por quemaduras. Esta arma no dispara aire comprimido."
 		//
 		PHLOGISTINATOR_NAME 	= "FLOGISTONADOR"
 		PHLOGISTINATOR_DESC		= "Fuego verde: Marca a los enemigos de muerte y aturde a los que están en el aire. Fuerte contra tanques, pero reduce la velocidad de movimiento."
+		// TODO: Update! "Green Fire - Stuns airborne enemies for a short time. Strong against Tanks."
 		//
 		RAINBLOWER_NAME 		= "LANZARCOÍRIS"
 		RAINBLOWER_DESC			= "Lanzallamas de largo alcance, con poco daño directo pero gran daño por quemaduras. Además permite destruir instantáneamente construcciones de Engineers y quemar a otros Pyros. El aire comprimido es leve, pero rápido."
@@ -5027,6 +5164,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		FIREAXE_NAME 			= "HACHA DE BOMBERO"
 		FIREAXE_DESC 			= "Una opción estándar para defensa y movilidad."
+		// TODO: Update! "Standard option. 4x Damage vs Pyro bots. Gain crits on kill."
 		//	
 		AXTINGUISHER_NAME 		= "HACHERMINADOR"
 		AXTINGUISHER_DESC		= "Aumenta significativamente el daño contra enemigos en llamas."
@@ -5036,6 +5174,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		POWERJACK_NAME 			= "BATEMARTILLO"
 		POWERJACK_DESC 			= "Gran velocidad de ataque y movimiento. Causa hemorragia y quema a los enemigos que golpea. Otorga minicríticos al matar."
+		// TODO: Update! "Fast move speed when active. Inflict bleed & ignite enemies on hit and gain mini-crits on kill."
 		//
 		BACKSCRATCHER_NAME 		= "RASCAESPALDAS"
 		BACKSCRATCHER_DESC 		= "Causa daño letal por la espalda. Al matar, aumenta temporalmente tu velocidad de movimiento, resistencia y daño con todas tus armas. La mejora se indica con el ícono \x07ffc400[!] \x01 parpadeando."
@@ -5057,6 +5196,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		NEONANNIHILATOR_NAME 	= "ANIQUILADOR DE NEÓN"
 		NEONANNIHILATOR_DESC 	= "Tu gravedad se reduce."
+		// TODO: Update! "Your gravity is reduced. Holding this weapon active reduces gravity more. Holding crouch with this weapon active reverses gravity."
 		//
 		HOTHAND_NAME 			= "MANO CALIENTE"
 		HOTHAND_DESC 			= "Lanza a los enemigos al aire de un golpe."
@@ -5106,6 +5246,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		BOTTLE_NAME 			= "BOTELLA"
 		BOTTLE_DESC 			= "Una opción estándar para defensa y movilidad."
+		// TODO: Update! "Standard option. 4x Damage vs Demoman bots. Gain crits on kill."
 		//
 		EYELANDER_NAME 			= "INTUERTAL"
 		EYELANDER_DESC 			= "Causa mucho daño, con ataques rápidos, otorgando críticos y minicríticos al matar. No puedes recargar tu lanzagranadas ni lanzabombas lapa."
@@ -5127,6 +5268,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		SCOTTISHHANDSHAKE_NAME 	= "SALUDO ESCOCÉS"
 		SCOTTISHHANDSHAKE_DESC 	= "En la mano: Resistes 90 % del daño a distancia, te hace inmune al retroceso y aumenta tu salud máxima. Sin embargo, no puedes recuperar munición y recibes menos PS de botiquines."
+		// TODO: Update! "On Hit: Victim repeatedly explodes every few seconds. On Kill: Gain a bomb head. Right-click to detonate."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -5171,6 +5313,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		FISTS_NAME 				= "PUÑOS"
 		FISTS_DESC 				= "Una opción estándar para defensa y movilidad. Eficaz en combate."
+		// TODO: Update! "Standard option. Gain crits on kill. Able to taunt attack for massive damage."
 		//
 		KILLINGGLOVES_NAME 		= "KAÑEROS GUANTES DE BOXEO"
 		KILLINGGLOVES_DESC 		= "Habilidad especial: «Megaimpacto». Al estar disponible, pulsa el botón de acción junto a la bomba para devolverla al principio. En otra situación, otorga velocidad, críticos y defensa temporal."
@@ -5265,6 +5408,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		BONESAW_NAME 			= "SERRUCHO"
 		BONESAW_DESC			= "Una opción estándar para defensa y movilidad. Al impactar: Aumenta un 10 % de Supercarga."
+		// TODO: Update! "Standard option. Gain 10% Uber on hit."
 		//
 		UBERSAW_NAME 			= "ÜBERSAW"
 		UBERSAW_DESC			= "Al impactar: Causa hemorragia y aumenta un 2 % la Supercarga."
@@ -5319,9 +5463,11 @@ if ("SetScriptVersion" in getroottable())
 		//
 		DARWIN_NAME 			= "ESCUDO DE DARWIN"
 		DARWIN_DESC 			= "Casi inmune al daño por FUEGO, pero recibe un 50 % más de daño de BALAS y EXPLOSIONES."
+		// TODO: Update! "High resistance to FIRE damage, but take 50% more damage from BULLET and BLAST."
 		//
 		COZYCAMPER_NAME 		= "CAMPISTA COMODÓN"
 		COZYCAMPER_DESC 		= "Aumenta levemente la velocidad de movimiento, la salud máxima y la regeneración de salud. Inmune a las quemaduras."
+		// TODO: Update! "Increased move speed, max health and health regen. Immune to afterburn."
 		//
 		CLEANERSCARBINE_NAME 	= "CARABINA DEL LIMPIADOR"
 		CLEANERSCARBINE_DESC 	= "La bonificación de minicríticos dura 30 segundos."
@@ -5331,6 +5477,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		KUKRI_NAME 				= "KUKRI"
 		KUKRI_DESC 				= "Una opción estándar para defensa y movilidad."
+		// TODO: Update! "Standard option. 4x Damage vs Sniper bots. Gain crits on kill."
 		//
 		TRIBALMANSSHIV_NAME 	= "CUCHILLA TRIBAL"
 		TRIBALMANSSHIV_DESC 	= "Artículo de utilidad: No tendrás gravedad y podrás volar libremente."
@@ -5375,6 +5522,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BIGEARNER_NAME 			= "CABEZA DE FAMILIA"
 		BIGEARNER_DESC 			= "Tienes gran cantidad de salud y cada ataque al aire te cura. Al matar ganas un breve pero masivo efecto de regeneración que te puede sobrecurar. No puedes curarte de otras formas."
+		// TODO: Update! "On Kill: Gain a full stack of overheal. Able to gain multiple stacks."
 		//
 		WANGAPRICK_NAME 		= "AGUIJÓN WANGA"
 		WANGAPRICK_DESC 		= "Al matar a un enemigo entras en sigilo durante unos segundos, pero no puedes disfrazarte. Matar te otorga un hechizo de Invisibilidad (requiere un Libro de Hechizos)"
@@ -5401,12 +5549,15 @@ if ("SetScriptVersion" in getroottable())
 		//----------------------------
 		FRYINGPAN_NAME 				= "SARTÉN"
 		FRYINGPAN_DESC 				= "Causa x30 de daño a enemigos de tu misma clase y otorga críticos al matar."
+		// TODO: Update! "Deal x30 damage to enemies of the same class as you and gain mini-crits on kill."
 		//
 		SAXXY_NAME 					= "SAXXY"
 		SAXXY_DESC 					= "Causa x30 de daño a enemigos de tu misma clase y otorga críticos al matar."
+		// TODO: Update! "Deal x30 damage to enemies of the same class as you and gain mini-crits on kill."
 		//
 		MEMORYMAKER_NAME 			= "INMORTALIZADOR"
 		MEMORYMAKER_DESC			= "Causa x30 de daño a enemigos de tu misma clase y otorga críticos al matar."
+		// TODO: Update! "Deal x30 damage to enemies of the same class as you and gain mini-crits on kill."
 		//
 		CONOBJECTOR_NAME			= "MANIFESTANTE CONCIENZUDO"
 		CONOBJECTOR_DESC			= "Cada 10 víctimas, lanza un hechizo al azar (requiere Libro de Hechizos)."
@@ -5433,19 +5584,19 @@ if ("SetScriptVersion" in getroottable())
 	// tchinese is lacking and maybe needs to be redone
 	/*tchinese = {
 		IH_TRANSLATE_ITEM		= IH_color + "[%s] " + IH_text_color + "%s"
-		IH_INCLUDES				= IH_color_header + "[►]\x0826beffBB 你的裝備配置包含了..."
+		IH_INCLUDES				= IH_color_header + "[►] 你的裝備配置包含了..."
 		IH_DIS_MSG_2			= IH_disable_color + "輸入 '/itemhelp 1' 以在回合中隱藏訊息. \n輸入 '/itemhelp 0' 以完全隱藏此訊息."
 		IH_DIS_MSG				= IH_disable_color + "輸入 '/itemhelp 0' 以隱藏這些訊息. \n輸入 '/itemhelp 2' 以持續顯示此訊息."
 		// TODO: Update!
-		// IH_INCLUDES				= IH_color_header + "[►]\x0826beffAA Your loadout includes..."
+		// IH_INCLUDES				= IH_color_header + "[►] Your loadout includes..."
 		// IH_DIS_MSG_2			= IH_disable_color + "Type '/itemhelp 1' to disable item descriptions during a wave. \nType '/itemhelp 0' to disable them entirely."
 		// IH_DIS_MSG				= IH_disable_color + "Type '/itemhelp 0' to disable item descriptions. \nType '/itemhelp 2' to always display them."
 		IH_BAD_ARGS				= IH_color_header + "[裝備配置]" + IH_error_color + " {錯誤}\x01 參數出錯！!\n/itemhelp 2 -顯示\n/itemhelp 1 - 僅在回合準備階段中顯示\n/itemhelp 0 - 隱藏"
 		IH_OOB_ARG				= IH_color_header + "[裝備配置]" + IH_error_color + " {錯誤}\x01 超出配置最大範圍！ : %s"
 		IH_HELP_MSG				= IH_color_header + "[裝備配置]\x01 裝備配置會顯示的改動 \x03每個武器\x01 的改動!" 
-		IH_DISABLE				= IH_color_header + "[►]\x01 以隱藏裝備配置訊息."
-		IH_WAVE_SETUP			= IH_color_header + "[►]\x01 裝備配置訊息只在準備階段顯示."
-		IH_ENABLE 				= IH_color_header + "[►]\x01 已啟用裝備配置訊息."
+		IH_DISABLE				= IH_color_header + "[►] 以隱藏裝備配置訊息."
+		IH_WAVE_SETUP			= IH_color_header + "[►] 裝備配置訊息只在準備階段顯示."
+		IH_ENABLE 				= IH_color_header + "[►] 已啟用裝備配置訊息."
 		LOW_METAL 				= "金屬不足"
 		TOMISLAV_HEAT			= "托米斯拉夫 熱量: %s%%"
 		STUCK_RESPAWNED 		= "已將你重生，以防你被卡住."
@@ -5474,6 +5625,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		FORCENATURE_NAME		= "自然之力"
 		FORCENATURE_DESC		= "擊中時提升擊退效果，dps稍微低於雙管霰彈槍."
+		// TODO: Update! "Enhanced knockback on hit."
 		//
 		SHORTSTOP_NAME 			= "游擊手"
 		SHORTSTOP_DESC 			= "極高額的開火速度且能對浸濕的敵人造成暴擊，但裝填速度緩慢."
@@ -5495,6 +5647,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BONK_NAME 				= "Bonk! 原子能量飲料"
 		BONK_DESC 				= "超級充能飲料，允許你獲得無敵的同時進行攻擊."
+		// TODO: Update! "Supercharged drink, granting invulnerability and a minor boost to all stats."
 		//
 		CRITACOLA_NAME 			= "爆擊可樂"
 		CRITACOLA_DESC 			= "超級充能飲料，獲得全額暴擊."
@@ -5516,6 +5669,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		BAT_NAME 				= "球棒"
 		BAT_DESC 				= "有機會免死一次且以一血的狀態回到重生點."
+		// TODO: Update! "Able to ignore death and teleport to spawn with 1hp.
 		//
 		SANDMAN_NAME			= "睡魔"
 		SANDMAN_DESC 			= "允許連續發射有著高容量和快速充能的棒球，可以對單體目標造成可觀的傷害."
@@ -5558,6 +5712,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BLACKBOX_NAME			= "黑盒子"
 		BLACKBOX_DESC			= "能夠造成減速和流血效果. 對火箭兵機器人傷害加倍."
+		// TODO: Update! "Fires 3 rockets at once in a straight line, inflicting bleed on hit. Enemies are marked for death for the duration of bleed."
 		//
 		ROCKETJUMPER_NAME		= "火箭跳躍者"
 		ROCKETJUMPER_DESC		= "開火和裝填速度緩慢，但有高額傷害和爆炸範圍，非常適合對付大量目標."
@@ -5599,6 +5754,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		RESERVESHOOTER_NAME 	= "後勤防空員" 
 		RESERVESHOOTER_DESC 	= "造成無視距離的10000點傷害且擊殺獲得3秒小暴擊加成，但此武器無法被暴擊加成和對坦克造成傷害，按住次要開火鍵來瞄準." 
+		// TODO: Update! "Deals a fixed amount of damage per shot no matter the range with 3s mini-crits on kill. However this weapon cannot be crit boosted, and cannot damage Tanks. Hold Alt-Fire to zoom in." 
 		//
 		BISON_NAME 				= "正義狂牛" 
 		BISON_DESC 				= "發射全自動瞄準的連續的可穿透敵人的激光." 
@@ -5616,6 +5772,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		SHOVEL_NAME 			= "鐵鍬"
 		SHOVEL_DESC 			= "防禦和機動性的標準選擇."
+		// TODO: Update! "Standard option. 4x Damage vs Soldier bots. Gain crits on kill."
 		//
 		EQUALIZER_NAME 			= "傷害均衡十字鎬"
 		EQUALIZER_DESC 			= "嘲諷攻擊造成巨額傷害且能把敵人擊飛到空中."
@@ -5626,6 +5783,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		HALFZATOICHI_NAME 		= "半盲劍俠"
 		HALFZATOICHI_DESC 		= "造成傷害，且有更高生命值，並擴大攻擊範圍."
+		// TODO: Update: "High damage and health."
 		//
 		MARKETGARDENER_NAME 	= "市場花園園丁"
 		MARKETGARDENER_DESC 	= "造成高額加成的暴擊傷害，殺死敵人可進入狂暴，獲得額外生命，抗性和傷害加成，但揮空會殺死你."
@@ -5645,12 +5803,14 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BACKBURNER_NAME 		= "背後火焰發射器"
 		BACKBURNER_DESC			= "綠焰：打上死亡標記且能短暫擊暈空中敵人. 對火焰兵機器人傷害加倍."
+		// TODO: Update!  "Green Fire - Stuns airborne enemies for a short time. This weapon deals x2 damage against Pyro bots."
 		//
 		DEGREASER_NAME 			= "除油者"
 		DEGREASER_DESC			= "能造成高額直擊傷害的長距離火焰噴射器, 但餘火傷害歸零. 此火焰噴射器無法壓縮氣爆."
 		//
 		PHLOGISTINATOR_NAME 	= "燃素噴射器"
 		PHLOGISTINATOR_DESC		= "綠焰：打上死亡標記且能短暫擊暈空中敵人. 對坦克非常有效，但減少你的移動速度."
+		// TODO: Update! "Green Fire - Stuns airborne enemies for a short time. Strong against Tanks."
 		//
 		RAINBLOWER_NAME 		= "彩虹放射器"
 		RAINBLOWER_DESC			= "造成少量直擊傷害的長距離火焰噴射器, 但餘火傷害更高. 且能立即摧毀工程師的建築、點燃敵方火焰兵. 壓縮氣爆較弱，但發射速度很快."
@@ -5684,6 +5844,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		FIREAXE_NAME 			= "消防斧"
 		FIREAXE_DESC 			= "防禦和機動性的標準選擇."
+		// TODO: Update! "Standard option. 4x Damage vs Pyro bots. Gain crits on kill."
 		//	
 		AXTINGUISHER_NAME 		= "火斧"
 		AXTINGUISHER_DESC		= "大幅提升對著火目標的傷害."
@@ -5693,6 +5854,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		POWERJACK_NAME 			= "強力千斤頂"
 		POWERJACK_DESC 			= "高攻速和移動速度，擊中造成燃燒和流血且擊殺獲得小暴擊."
+		// TODO: Update! "Fast move speed when active. Inflict bleed & ignite enemies on hit and gain mini-crits on kill."
 		//
 		BACKSCRATCHER_NAME 		= "不求人"
 		BACKSCRATCHER_DESC 		= "背後攻擊能造成致命傷害，擊殺可進入狂暴，獲得額外速度，抗性和傷害."
@@ -5716,6 +5878,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		NEONANNIHILATOR_NAME 	= "震電之寶"
 		NEONANNIHILATOR_DESC 	= "減少你受到的重力."
+		// TODO: Update! "Your gravity is reduced. Holding this weapon active reduces gravity more. Holding crouch with this weapon active reverses gravity."
 		//
 		HOTHAND_NAME 			= "炙手可熱"
 		HOTHAND_DESC 			= "擊中可擊飛敵人."
@@ -5765,6 +5928,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		BOTTLE_NAME 			= "瓶子"
 		BOTTLE_DESC 			= "防禦和機動性的標準選擇."
+		// TODO: Update! "Standard option. 4x Damage vs Demoman bots. Gain crits on kill."
 		//
 		EYELANDER_NAME 			= "魔眼闊劍"
 		EYELANDER_DESC 			= "高傷害且能快速攻擊，擊殺能獲得暴擊，但無法使用榴彈."
@@ -5787,6 +5951,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		SCOTTISHHANDSHAKE_NAME 	= "蘇格蘭式握手禮"
 		SCOTTISHHANDSHAKE_DESC 	= "使用時，獲得90%遠程傷害抗性，免疫擊退且獲得高額最大生命，但你無法補充彈藥且補血包提供的生命減少."
+		// TODO: Update! "On Hit: Victim repeatedly explodes every few seconds. On Kill: Gain a bomb head. Right-click to detonate."
 		//----------------------------
 		//----------------------------
 		//----------------------------
@@ -5836,6 +6001,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		FISTS_NAME 				= "拳頭"
 		FISTS_DESC 				= "防禦和機動性的標準選擇."
+		// TODO: Update! "Standard option. Gain crits on kill. Able to taunt attack for massive damage."
 		//
 		KILLINGGLOVES_NAME 		= "殺人拳套"
 		KILLINGGLOVES_DESC 		= "特殊技能：超級粉碎 - 當可用時，在炸彈上按下動作鍵可以立即重置炸彈，同時短暫給予速度，抗性和暴擊加成s."
@@ -5936,6 +6102,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		BONESAW_NAME 			= "骨鋸"
 		BONESAW_DESC			= "防禦和機動性的標準選擇. 擊中獲得10% Uber."
+		// TODO: Update! "Standard option. Gain 10% Uber on hit."
 		//
 		UBERSAW_NAME 			= "超能骨鋸"
 		UBERSAW_DESC			= "擊中造成流血. 擊中獲得2%Uber."
@@ -5991,9 +6158,11 @@ if ("SetScriptVersion" in getroottable())
 		//
 		DARWIN_NAME 			= "達爾文鱷魚盾"
 		DARWIN_DESC 			= "幾乎免疫火焰傷害，但子彈和爆炸會對你額外造成50%傷害."
+		// TODO: Update! "High resistance to FIRE damage, but take 50% more damage from BULLET and BLAST."
 		//
 		COZYCAMPER_NAME 		= "舒適的露營家"
 		COZYCAMPER_DESC 		= "稍微提升最大生命，速度和生命恢復，免疫餘火."
+		// TODO: Update! "Increased move speed, max health and health regen. Immune to afterburn."
 		//
 		CLEANERSCARBINE_NAME 	= "湮滅者卡賓槍"
 		CLEANERSCARBINE_DESC 	= "小暴擊加成持續30秒."
@@ -6003,6 +6172,7 @@ if ("SetScriptVersion" in getroottable())
 		///
 		KUKRI_NAME 				= "喀爾克大彎刀"
 		KUKRI_DESC 				= "防禦和機動性的標準選擇."
+		// TODO: Update! "Standard option. 4x Damage vs Sniper bots. Gain crits on kill."
 		//
 		TRIBALMANSSHIV_NAME 	= "部落戰刀"
 		TRIBALMANSSHIV_DESC 	= "特殊物品：你無視重力且可以自由飛翔."
@@ -6049,7 +6219,7 @@ if ("SetScriptVersion" in getroottable())
 		//
 		BIGEARNER_NAME 			= "暴利之刃"
 		BIGEARNER_DESC 			= "獲得巨額生命上限且空揮時大幅治療自身，但你會受到友方的誤傷."
-		// TODO: Update! "You have a massive amount of health and 'missed' swings cause you to heal. Gain a short burst of massively increased heal rate on kill (which can also build overheal). Cannot heal from any other sources."
+		// TODO: Update! "On Kill: Gain a full stack of overheal. Able to gain multiple stacks."
 		//
 		WANGAPRICK_NAME 		= "巫毒咒錐"
 		WANGAPRICK_DESC 		= "擊殺敵人時能使你立即持續幾秒的隱形，隱形期間可以攻擊敵人且連殺可以維持隱形，無法使用偽裝."
@@ -6079,12 +6249,15 @@ if ("SetScriptVersion" in getroottable())
 		//----------------------------
 		FRYINGPAN_NAME 				= "油炸平底鍋"
 		FRYINGPAN_DESC 				= "對和你相同職業的目標造成30倍傷害同時擊殺時獲得暴擊."
+		// TODO: Update! "Deal x30 damage to enemies of the same class as you and gain mini-crits on kill."
 		//
 		SAXXY_NAME 					= "薩氏金像獎小金人"
 		SAXXY_DESC 					= "對和你相同職業的目標造成30倍傷害同時擊殺時獲得暴擊."
+		// TODO: Update! "Deal x30 damage to enemies of the same class as you and gain mini-crits on kill."
 		//
 		MEMORYMAKER_NAME 			= "過往回憶"
 		MEMORYMAKER_DESC			= "對和你相同職業的目標造成30倍傷害同時擊殺時獲得暴擊."
+		// TODO: Update! "Deal x30 damage to enemies of the same class as you and gain mini-crits on kill."
 		//
 		CONOBJECTOR_NAME			= "良心反對者的舉牌"
 		CONOBJECTOR_DESC			= "每擊殺10個敵人，隨機抽出一個魔咒 (需要裝備魔法書)."

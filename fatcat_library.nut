@@ -88,18 +88,23 @@ if (!("FoldedNetProps" in ROOT)) // make sure folding is only done once
 	}
 } */
 
-::MOTD_OVERRIDE <- ""
+//::MOTD_OVERRIDE <- ""
 ::MOTD_FUNC <- null
 // Use example below
 // ALWAYS validate the player
 /**@param {CTFPlayer} player */
-// function ROOT::MOTD_FUNC( player )
-// {
-// 	if (!IsValidPlayer(player))
-// 		return
 
-// 	player.EmitSoundTo("ui/system_message_alert.wav")
-// }
+//::MOTD_OVERRIDE <- "\x07FF75FF[SERVER MESSAGE] \x01This is a test of the event alert system. No action is required."
+::MOTD_OVERRIDE <- "\x07FF75FF[SERVER MESSAGE] \x01Join us on Sunday, November 8 at \x07A35AF2twitch.tv/ASmidgeofDidge"
+//::MOTD_OVERRIDE <- "\x07FF2525[LIVE NOW] \x01DidgeTheDigital\n\x07E84848youtube.com/@asmidgeofdidge\n\x07A35AF2twitch.tv/ASmidgeofDidge"
+
+function ROOT::MOTD_FUNC( player )
+{
+  	if (!IsValidPlayer(player))
+ 		return
+
+ 	player.EmitSoundTo("ui/system_message_alert.wav")
+}
 
 function ROOT::PrintGarbage()
 {
@@ -10708,12 +10713,12 @@ function ROOT::PostPlayerSpawn( player )
 				override_func = MOTD_FUNC
 
 			if (override_func != null)
-				RunWithDelay(3.0, @() override_func(eventdata.player)) // always validate the player in this
+				RunWithDelay(15.0, @() override_func(eventdata.player)) // always validate the player in this
 				
 			if (Override)
-				RunWithDelay(3.0, @() eventdata.player.PrintToChat(motd))
+				RunWithDelay(15.0, @() eventdata.player.PrintToChat(motd))
 			else if (motd != "")
-				RunWithDelay(3.0, @() eventdata.player.PrintToChatF("\x01\x07E000E0► FatCatLib ◄   \x03%s", motd))
+				RunWithDelay(15.0, @() eventdata.player.PrintToChatF("\x01\x07E000E0► FatCatLib ◄   \x03%s", motd))
 			scope.HasSpawned <- true
 		}
 
@@ -13160,7 +13165,128 @@ __CollectGameEventCallbacks(ChaosCustomEvents)
   ============================
 */
 // tank_path_1
-function ROOT::PracticeTank( node_name = "" )
+function ROOT::PracticeHeli( node_name = "startingpath" )
+{
+	if (FindByName(null, "helicopter"))
+		return
+	if (node_name == "" || FindByName(null, node_name) == null)
+		return PrintToConsoleAllF("Failed to Spawn Tank At Node \"%s\"", node_name)
+
+	local start = FindByName(null, node_name)
+
+	local tank = SpawnEntityFromTable("tank_boss", {
+		targetname = "helicopter"
+		health = (1<<31) - 1
+		speed = 90
+	})
+    RunWithDelay(0.1, @() tank.SetAbsOrigin(Vector( -352, -6368, -2800 )))
+	PrintToChatAll("\x07ffff45Initiating Helicopter Simulation.")
+    //PrintToChatAll("Tank Spawned at " + node_name)
+
+	local scope = GetScope(tank)
+	scope.Damages <- {}
+
+	/** 
+	 * @var {CBaseAnimating} self
+	 * @var {table} this
+	 * @param {NPCDamageCallback} info
+	 */
+	local function OnPostTakeDamage( info ) {
+		// PrintClass(info)
+		local index = -1
+		if (info.attacker)
+			index = info.attacker.entindex()
+
+		if (!(index in Damages))
+			Damages[index] <- info.damage
+		else
+			Damages[index] += info.damage
+	}
+
+	local function callback() {
+		// PrintTable(Damages)
+		local invalid_index = 2049
+
+		Damages[invalid_index] <- 0
+		local toRemove = []
+		foreach (/**@type {integer} */index, /**@type {float} */damage in Damages) {
+			local entity = EntIndexToHScript(index)
+			local old_entity = entity
+			if (entity && !entity.IsPlayer()) {
+				if (entity.GetOwner() && entity.GetOwner().IsPlayer())
+					entity = entity.GetOwner()
+				else if (GetLauncher(entity) && GetLauncher(entity).IsPlayer())
+					entity = GetLauncher(entity)
+				else if (GetBuilder(entity) && GetBuilder(entity).IsPlayer())
+					entity = GetBuilder(entity)
+				else {
+					// printf("failed to get actual player for entity %s\n", entity.tostring())
+					Damages[invalid_index] += damage
+					if (index != invalid_index)
+						toRemove.append(index)
+				}
+			}
+			if (entity && entity.IsPlayer()) {
+				if (old_entity != entity) {
+					if (entity.entindex() in Damages)
+						Damages[entity.entindex()] += damage
+					else
+						Damages[entity.entindex()] <- damage
+				}
+			}
+			else {
+				Damages[invalid_index] += damage
+				if (index != invalid_index)
+					toRemove.append(index)
+			}
+		}
+
+		foreach (id in toRemove) {
+			if (id == invalid_index)
+				continue
+			// printf("Removing %d from Damages!\n",id)
+			delete Damages[id]
+		}
+		local entity_names = {}
+
+		// PrintTable(Damages)
+		foreach (id, damage in Damages) {
+			local entity = EntIndexToHScript(id)
+			// printl("Found entity "+entity+" with index "+id+" on the list")
+			if (id == invalid_index) {
+				entity_names["Unknown"] <- damage
+				// printl("Added Unknown into entity_names because id was invalid")
+			}
+			else if (entity && entity.IsPlayer()) {
+				entity_names[entity.GetUserName()] <- damage
+				// printl("Added "+entity.GetUserName()+" into entity_names")
+			}
+			// else
+				// printl("Found unknown entity "+entity+" on Entity list")
+		}
+
+		// PrintTable(entity_names)
+
+		local total_damage = 0
+
+		PrintToChatAll("\x07ffff45Helicopter Simulation Result:")
+		foreach (name, damage in entity_names) {
+			if (name == "Unknown" && damage == 0)
+				continue
+			total_damage += damage
+			PrintToChatAllF("\x0780ff45- %s : %.0f \n", name, damage)
+		}
+
+		PrintToChatAllF("\x07ffff45Total Damage: %.0f\n", total_damage)
+	}
+
+	SetDestroyCallback(tank, callback)
+
+	scope.OnPostTakeDamage <- OnPostTakeDamage
+	// AddThinkToEnt(tank, TestTankThink)
+}
+
+function ROOT::PracticeTank( node_name = "startingpath" )
 {
 	if (FindByName(null, "practice tank"))
 		return
@@ -13172,11 +13298,132 @@ function ROOT::PracticeTank( node_name = "" )
 	local tank = SpawnEntityFromTable("tank_boss", {
 		targetname = "practice tank"
 		health = (1<<31) - 1
-		origin = start.GetOrigin()
-		angles = start.GetAbsAngles()
-		speed = 90
 	})
+    RunWithDelay(0.1, @() tank.SetAbsOrigin(Vector( -1760, -3040, -2496 )))
+    RunWithDelay(0.1, @() tank.SetAbsAngles(QAngle( 0, 0, 0 )))
 	PrintToChatAll("\x07ffff45Initiating Tank Simulation.")
+    //PrintToChatAll("Tank Spawned at " + node_name)
+
+	local scope = GetScope(tank)
+	scope.Damages <- {}
+
+	/** 
+	 * @var {CBaseAnimating} self
+	 * @var {table} this
+	 * @param {NPCDamageCallback} info
+	 */
+	local function OnPostTakeDamage( info ) {
+		// PrintClass(info)
+		local index = -1
+		if (info.attacker)
+			index = info.attacker.entindex()
+
+		if (!(index in Damages))
+			Damages[index] <- info.damage
+		else
+			Damages[index] += info.damage
+	}
+
+	local function callback() {
+		// PrintTable(Damages)
+		local invalid_index = 2049
+
+		Damages[invalid_index] <- 0
+		local toRemove = []
+		foreach (/**@type {integer} */index, /**@type {float} */damage in Damages) {
+			local entity = EntIndexToHScript(index)
+			local old_entity = entity
+			if (entity && !entity.IsPlayer()) {
+				if (entity.GetOwner() && entity.GetOwner().IsPlayer())
+					entity = entity.GetOwner()
+				else if (GetLauncher(entity) && GetLauncher(entity).IsPlayer())
+					entity = GetLauncher(entity)
+				else if (GetBuilder(entity) && GetBuilder(entity).IsPlayer())
+					entity = GetBuilder(entity)
+				else {
+					// printf("failed to get actual player for entity %s\n", entity.tostring())
+					Damages[invalid_index] += damage
+					if (index != invalid_index)
+						toRemove.append(index)
+				}
+			}
+			if (entity && entity.IsPlayer()) {
+				if (old_entity != entity) {
+					if (entity.entindex() in Damages)
+						Damages[entity.entindex()] += damage
+					else
+						Damages[entity.entindex()] <- damage
+				}
+			}
+			else {
+				Damages[invalid_index] += damage
+				if (index != invalid_index)
+					toRemove.append(index)
+			}
+		}
+
+		foreach (id in toRemove) {
+			if (id == invalid_index)
+				continue
+			// printf("Removing %d from Damages!\n",id)
+			delete Damages[id]
+		}
+		local entity_names = {}
+
+		// PrintTable(Damages)
+		foreach (id, damage in Damages) {
+			local entity = EntIndexToHScript(id)
+			// printl("Found entity "+entity+" with index "+id+" on the list")
+			if (id == invalid_index) {
+				entity_names["Unknown"] <- damage
+				// printl("Added Unknown into entity_names because id was invalid")
+			}
+			else if (entity && entity.IsPlayer()) {
+				entity_names[entity.GetUserName()] <- damage
+				// printl("Added "+entity.GetUserName()+" into entity_names")
+			}
+			// else
+				// printl("Found unknown entity "+entity+" on Entity list")
+		}
+
+		// PrintTable(entity_names)
+
+		local total_damage = 0
+
+		PrintToChatAll("\x07ffff45Tank Simulation Result:")
+		foreach (name, damage in entity_names) {
+			if (name == "Unknown" && damage == 0)
+				continue
+			total_damage += damage
+			PrintToChatAllF("\x0780ff45- %s : %.0f \n", name, damage)
+		}
+
+		PrintToChatAllF("\x07ffff45Total Damage: %.0f\n", total_damage)
+	}
+
+	SetDestroyCallback(tank, callback)
+
+	scope.OnPostTakeDamage <- OnPostTakeDamage
+	// AddThinkToEnt(tank, TestTankThink)
+}
+
+function ROOT::PracticeCombatTank( node_name = "startingpath" )
+{
+	if (FindByName(null, "combattank|minigun|minigun"))
+		return
+	if (node_name == "" || FindByName(null, node_name) == null)
+		return PrintToConsoleAllF("Failed to Spawn Tank At Node \"%s\"", node_name)
+
+	local start = FindByName(null, node_name)
+
+	local tank = SpawnEntityFromTable("tank_boss", {
+		targetname = "combattank|minigun|minigun"
+		health = (1<<31) - 1
+	})
+    RunWithDelay(0.1, @() tank.SetAbsOrigin(Vector( -1760, -3040, -2496 )))
+    RunWithDelay(0.1, @() tank.SetAbsAngles(QAngle( 0, 0, 0 )))
+	PrintToChatAll("\x07ffff45Initiating Tank Simulation.")
+    //PrintToChatAll("Tank Spawned at " + node_name)
 
 	local scope = GetScope(tank)
 	scope.Damages <- {}

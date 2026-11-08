@@ -2,12 +2,6 @@ IncludeScript("fatcat_library")
 
 IncludeScript("chaosmvm/translations")
 
-const item_help_color = "\x08FFFF00DD"
-const text_color = "\x08FFFFFFBB"
-const item_help_color_header = "\x0826c2ffDD"
-const text_color_header = "\x0826beffBB"
-const error_color = "\x07D43F3F"
-
 SetScriptVersion("item_helper", "3.4.4")
 ::helper <- {}
 
