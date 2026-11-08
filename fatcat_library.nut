@@ -117,7 +117,7 @@ function ROOT::PrintGarbage()
 if ("GetModName" in ROOT)
 {
 	local Mod = GetModName()
-	if (Mod == MOD_TF2C)
+	if (Mod == MOD_TF2C && IsMannVsMachineMode())
 	{
 		// IncludeScript("TF2C Fix") // not good rn
 		IncludeScript("TF2C/MVM_fix")

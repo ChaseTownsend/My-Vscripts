@@ -9,37 +9,80 @@
 // 		}
 // 	}
 // }
-::Host <- GetListenServerHost()
+// ::Host <- GetListenServerHost()
 
-::TestTable <- {
-	function OnScriptHook_OnTakeDamage(params) {
-		local victim = params.const_entity
-		if(/* params.const_entity.IsPlayer() &&  */params.inflictor) {
-			if(params.inflictor.GetClassname() == "tf_weapon_grenade_mirv_projectile" || params.inflictor.GetClassname() == "tf_weapon_grenade_mirv_bomb") {
-				params.early_out <- true
-				return
-			}
-		}
+// ::TestTable <- {
+// 	function OnScriptHook_OnTakeDamage(params) {
+// 		local victim = params.const_entity
+// 		if(/* params.const_entity.IsPlayer() &&  */params.inflictor) {
+// 			if(params.inflictor.GetClassname() == "tf_weapon_grenade_mirv_projectile" || params.inflictor.GetClassname() == "tf_weapon_grenade_mirv_bomb") {
+// 				params.early_out <- true
+// 				return
+// 			}
+// 		}
 
-		// PrintTable(params)
+// 		// PrintTable(params)
 
-		if(victim.GetClassname() == "tf_weapon_grenade_mirv_projectile" && params.weapon && params.weapon.GetClassname() == "tf_weapon_wrench" && victim.GetHealth() >= 0) {
-			printl(victim.GetHealth())
-			if(victim.GetHealth() == 0) {
-				victim.SetHealth(130)
-			}
-			victim.SetHealth(victim.GetHealth() - params.damage)
+// 		if(victim.GetClassname() == "tf_weapon_grenade_mirv_projectile" && params.weapon && params.weapon.GetClassname() == "tf_weapon_wrench" && victim.GetHealth() >= 0) {
+// 			printl(victim.GetHealth())
+// 			if(victim.GetHealth() == 0) {
+// 				victim.SetHealth(130)
+// 			}
+// 			victim.SetHealth(victim.GetHealth() - params.damage)
 
-			if(victim.GetHealth() > 0)
-				params.early_out <- true
+// 			if(victim.GetHealth() > 0)
+// 				params.early_out <- true
 				
-			// ClientPrint(null, 3, "\x07FF0000FUCK YOU ENGINEER")
-			ClientPrint(null, 3, "Mirv hit!")
+// 			// ClientPrint(null, 3, "\x07FF0000FUCK YOU ENGINEER")
+// 			ClientPrint(null, 3, "Mirv hit!")
+// 		}
+// 	}
+// }
+// __CollectGameEventCallbacks(TestTable)
+
+/** 
+ * @param {CTFPlayer} owner
+ * @var {CTFWeaponBase} self
+ */
+function OnPlayerEat(owner) {
+	FireScriptEvent("OnPlayerEat", {
+		player = owner
+		lunchbox = self
+	})
+	local flIgniteOnEat = self.GetAttribute( "mod ignite on eat", 0 )
+	if ( flIgniteOnEat )
+		owner.IgnitePlayerEx( flIgniteOnEat )
+}
+
+/**
+ * @param {CBaseEntity} entity
+ */
+function LunchboxSpawn(entity)
+{
+	if ( entity.GetClassname() != "tf_weapon_lunchbox" && entity.GetClassname() != "tf_weapon_lunchbox_drink" )
+		return;
+	
+	Hooks.Add( entity.GetOrCreatePrivateScriptScope(), "ApplyBiteEffects", OnPlayerEat, "OnPlayerEat" );
+}
+
+Hooks.Add( this, "OnEntitySpawned", LunchboxSpawn, "LunchboxSpawn" );
+
+::LunchboxEvents <- {
+	function OnScriptEvent_OnPlayerEat(params) {
+		local player = params.player
+		local lunchbox = params.lunchbox
+
+		local attribdata = DecodeAttribAttributeString(lunchbox.GetAttributeString("apply attributes on consume", ""))
+		foreach (attribute, data in attribdata) {
+			player.AddCustomAttribute(attribute, data[0].tofloat(), data[1])
+		}
+		local conddata = DecodeAttribCondString(lunchbox.GetAttributeString("apply conds on consume", ""))
+		foreach (cond, duration in conddata) {
+			player.AddCondEx(cond, duration, lunchbox)
 		}
 	}
 }
-__CollectGameEventCallbacks(TestTable)
-
+__CollectGameEventCallbacks(LunchboxEvents)
 // /** 
 //  * @var {CTFPlayer} self
 //  */
