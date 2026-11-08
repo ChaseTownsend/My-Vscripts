@@ -271,23 +271,23 @@ function BlutsuagerHit( owner, victim )
 	})
 }
 
-RegisterSpawnCallback("tf_projectile_healing_bolt", "BlutsaugerFUCK", function( entity ) {
-	/** @type {CBaseEntity} */
-	local entity = entity
+// RegisterSpawnCallback("tf_projectile_healing_bolt", "BlutsaugerFUCK", function( entity ) {
+// 	/** @type {CBaseEntity} */
+// 	local entity = entity
 
-	/** @type {CTFPlayer|null} */
-	local owner = entity.GetOwner()
-	if (!owner || !owner.IsPlayer() || owner.GetWeaponIDXInSlotNew(SLOT_PRIMARY) != TF_WEAPON_BLUTSAUGER)
-		return
+// 	/** @type {CTFPlayer|null} */
+// 	local owner = entity.GetOwner()
+// 	if (!owner || !owner.IsPlayer() || owner.GetWeaponIDXInSlotNew(SLOT_PRIMARY) != TF_WEAPON_BLUTSAUGER)
+// 		return
 
-	GetScope(entity).GrantTheFuckingUber <- true
+// 	GetScope(entity).GrantTheFuckingUber <- true
 
-	SetDestroyCallback(entity, function() {
-		// owner.PrintToChat(TF_TEAM_COLOR_RED+"Your Arrow:\x01 I died on frame "+GetFrameCount()+" Do i grant the uber? "+GetScope(self).GrantTheFuckingUber)
-		if (GetScope(self).GrantTheFuckingUber)
-			owner.GetWeaponInSlotNew(SLOT_SECONDARY).IncreaseUberChargePercent(BlutsaugerSettings.refund)
-	})
-})
+// 	SetDestroyCallback(entity, function() {
+// 		// owner.PrintToChat(TF_TEAM_COLOR_RED+"Your Arrow:\x01 I died on frame "+GetFrameCount()+" Do i grant the uber? "+GetScope(self).GrantTheFuckingUber)
+// 		if (GetScope(self).GrantTheFuckingUber)
+// 			owner.GetWeaponInSlotNew(SLOT_SECONDARY).IncreaseUberChargePercent(BlutsaugerSettings.refund)
+// 	})
+// })
 
 function GameplayThink()
 {
